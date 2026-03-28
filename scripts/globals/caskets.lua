@@ -155,7 +155,7 @@ local function getCasketID(mob)
         if timeElapsedCheck(GetNPCByID(i)) then
             if
                 GetNPCByID(i):getLocalVar('[caskets]SPAWNSTATUS') == casketInfo.spawnStatus.DESPAWNED or
-                GetNPCByID(i):getLocalVar('[caskets]SPAWNSTATUS') == 0
+                GetNPCByID(i):getLocalVar('[caskets]SPAWNSTATUS') == 2
             then
                 chestId = i
                 break
@@ -260,18 +260,18 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
 
     -- Brown.
     if chestStyle == 966 then
-        npc:setLocalVar('[caskets]ATTEMPTS', attempts)
-        npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
-        npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
-        npc:setLocalVar('[caskets]LOCKED', 1)
+       -- npc:setLocalVar('[caskets]ATTEMPTS', attempts)
+       -- npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
+       -- npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
+       -- npc:setLocalVar('[caskets]LOCKED', 0)
         npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.ITEM)
-        npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
+       -- npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
     else
-        npc:setLocalVar('[caskets]LOCKED', 0)
+        -- npc:setLocalVar('[caskets]LOCKED', 0)
         npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.TEMP)
     end
 
-    npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_CLOSED)
+    npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_OPEN)
     npc:setLocalVar('[caskets]SPAWNTIME', GetSystemTime())
     npc:setPos(x, y, z, r)
     npc:setStatus(xi.status.NORMAL)

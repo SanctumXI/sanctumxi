@@ -2640,7 +2640,7 @@ INSERT INTO `synth_recipes` VALUES (35507,0,0,0,0,0,113,0,0,70,0,4099,4241,3981,
 INSERT INTO `synth_recipes` VALUES (35508,0,0,0,0,0,114,70,0,0,0,4099,4241,3981,8982,9130,10423,0,0,0,0,25627,25628,25628,25628,1,1,1,1,'Vexed Mitra','ROV');
 INSERT INTO `synth_recipes` VALUES (35509,0,0,0,0,70,114,0,0,0,0,4099,4241,4013,8722,9130,10421,0,0,0,0,25623,25624,25624,25624,1,1,1,1,'Vexed Bonnet','ROV');
 INSERT INTO `synth_recipes` VALUES (35510,0,0,0,0,70,115,0,0,0,0,4099,4241,1366,8722,8728,9130,0,0,0,0,26864,26865,26865,26865,1,1,1,1,'Bewitched Dalmatica','ROV');
-INSERT INTO `synth_recipes` VALUES (35511,0,0,0,0,70,115,0,0,0,0,4098,4240,745,823,829,3449,3544,9006,9006,0,26877,26878,26878,26878,1,1,1,1,'Foppish Tunica', 'SOA');
+INSERT INTO `synth_recipes` VALUES (35511,0,0,0,0,70,115,0,0,0,0,4098,4240,745,823,829,3449,3544,9006,9006,0,26877,26878,26878,26878,1,1,1,1,'Foppish Tunica','SOA');
 INSERT INTO `synth_recipes` VALUES (35512,0,0,0,0,0,115,70,0,0,0,4099,4241,3981,8982,9130,10244,0,0,0,0,25700,25701,25701,25701,1,1,1,1,'Vexed Bliaut','ROV');
 INSERT INTO `synth_recipes` VALUES (35513,0,0,0,0,0,118,0,0,0,0,4099,4241,1712,3544,9006,0,0,0,0,0,26335,26336,26336,26336,1,1,1,1,'Klouskap Sash','ROV');
 -- INSERT INTO `synth_recipes` VALUES (35514,0,0,0,255,0,255,255,0,0,0,4099,4241,4077,4078,4079,26339,0,0,0,0,26340,26341,26341,26341,1,1,1,1,'Moonbow Belt','ROV'); -- 2022.03.06 FFXIclopedia and BGWiki agree to Cloth between level 115-120 sub craft Smithing 58-70, Leather level unknown
@@ -4792,7 +4792,7 @@ INSERT INTO `synth_recipes` VALUES (75566,1,0,0,0,99,0,0,0,0,0,4100,4242,16520,0
 INSERT INTO `synth_recipes` VALUES (75567,1,0,0,50,0,0,0,0,0,0,4100,4242,12306,0,0,0,0,0,0,0,715,651,651,651,1,1,2,2,'Kite Shield (desynth)',NULL); -- BGwiki
 -- INSERT INTO `synth_recipes` VALUES (75568,1,0,0,0,0,0,45,0,0,0,4098,4240,2544,0,0,0,0,0,0,0,851,1629,1629,1629,1,1,1,1,'Smilodon Collar (desynth)','WOTG'); -- FFXIClopedia, unverified cap
 -- INSERT INTO `synth_recipes` VALUES (75569,1,0,0,0,31,0,0,0,0,0,4100,4242,2545,0,0,0,0,0,0,0,650,2536,745,745,1,1,1,1,'Lynx Collar (desynth)','WOTG'); -- FFXIClopedia, unverified cap
-INSERT INTO `synth_recipes` VALUES (75570,0,2038,0,0,0,0,0,0,2,0,4101,4243,888,1893,4509,4509,0,0,0,0,2952,2952,2952,2952,2,3,4,5,'Phial of miasmal counteragent', 'ABYSSEA'); -- BGWiki
+INSERT INTO `synth_recipes` VALUES (75570,0,2038,0,0,0,0,0,0,2,0,4101,4243,888,1893,4509,4509,0,0,0,0,2952,2952,2952,2952,2,3,4,5,'Phial of miasmal counteragent','ABYSSEA'); -- BGWiki
 -- INSERT INTO `synth_recipes` VALUES (75571,0,0,58,0,0,0,0,0,0,0,4096,4238,732,4509,0,0,0,0,0,0,2644,2644,2644,2644,33,66,99,99,'Ryuno','ABYSSEA'); -- BGWiki, FFXIclopedia, unverified alchemy cap
 -- INSERT INTO `synth_recipes` VALUES (75572,1,0,0,0,0,0,0,98,0,0,4100,4242,3928,0,0,0,0,0,0,0,891,891,884,903,1,2,1,1,'Velkk Necklace (Desynth)','SOA'); -- Unverified Bonecraft cap, JPWiki 98 or less
 -- INSERT INTO `synth_recipes` VALUES (75573,1,0,0,0,0,0,98,0,0,0,4100,4242,3929,0,0,0,0,0,0,0,2538,2538,2538,2538,1,1,1,1,'Velkk Mask (Desynth)','SOA'); -- Unverified Leatherworking cap, JPWiki 98 or less, uncertain HQ3 HQ4

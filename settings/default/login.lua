@@ -19,14 +19,14 @@ xi.settings.login =
     -- 2 - enabled - greater than or equal  (matching or greater than CLIENT_VER allowed, default)
     --
     -- WE STRONGLY ADVISE AGAINST LOCKING THE SERVER TO OLDER VERSIONS. IT IS A UNIVERSALLY BAD IDEA.
-    VER_LOCK = 2,
+    VER_LOCK = 0,
 
     -- 0 - disabled (normal operation)
     -- 1 - enabled (only GM characters allowed online, no new character creation)
     MAINT_MODE = 0,
 
     -- Logging of user IP address to database (true/false)
-    LOG_USER_IP = false,
+    LOG_USER_IP = true,
 
     -- Allow account creation via the loader (true/false)
     ACCOUNT_CREATION = true,
@@ -38,24 +38,26 @@ xi.settings.login =
     CHARACTER_CREATION = true,
 
     -- Number of simultaneous game sessions per IP (0 for no limit)
-    LOGIN_LIMIT = 0,
+    LOGIN_LIMIT = 2,
 
     -- Expansion display on the client's login screen. This does NOT effect in game content whatsoever!
     RISE_OF_ZILART          = true,
     CHAINS_OF_PROMATHIA     = true,
     TREASURES_OF_AHT_URGHAN = true,
     WINGS_OF_THE_GODDESS    = true,
-    A_CRYSTALLINE_PROPHECY  = true,
-    A_MOOGLE_KUPOD_ETAT     = true,
-    A_SHANTOTTO_ASCENSION   = true,
-    VISIONS_OF_ABYSSEA      = true,
-    SCARS_OF_ABYSSEA        = true,
-    HEROES_OF_ABYSSEA       = true,
-    SEEKERS_OF_ADOULIN      = true,
+    A_CRYSTALLINE_PROPHECY  = false,
+    A_MOOGLE_KUPOD_ETAT     = false,
+    A_SHANTOTTO_ASCENSION   = false,
+    VISIONS_OF_ABYSSEA      = false,
+    SCARS_OF_ABYSSEA        = false,
+    HEROES_OF_ABYSSEA       = false,
+    SEEKERS_OF_ADOULIN      = false,
 
     -- Feature display on client's login screen. This does NOT effect in game content whatsoever!
     -- Mog wardrobes are per character, so anything custom will not be able to reflect per-account login screen.
     SECURE_TOKEN   = false, -- 2FA not supported yet
+    MOG_WARDROBE = true,
+    MOG_WARDROBE_2 = true,
     MOG_WARDROBE_3 = true,
     MOG_WARDROBE_4 = true,
     MOG_WARDROBE_5 = true,
@@ -64,7 +66,7 @@ xi.settings.login =
     MOG_WARDROBE_8 = true,
 
     -- If true, blocks character creation with names of NPCs and Mobs in the database (Fafnir, Shantotto, etc.)
-    DISABLE_MOB_NPC_CHAR_NAMES = false,
+    DISABLE_MOB_NPC_CHAR_NAMES = true,
 
     -- Character names with any of these words in, in any position, will be rejected
     --

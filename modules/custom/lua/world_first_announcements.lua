@@ -62,7 +62,7 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player)
         'PLAYER_LEVEL_UP',
         string.format('%s has been the first player to level up!', player:getName()))
 
-    local levelMilestones = { 10, 20, 30, 40, 50, 60, 70, 75, 80, 90, 99 }
+    local levelMilestones = { 50, 75 }
     for _, level in pairs(levelMilestones) do
         if player:getMainLvl() == level then
             checkWorldFirstServerVar(player,

@@ -14,14 +14,14 @@ xi.job_utils.beastmaster = xi.job_utils.beastmaster or {}
 
 xi.job_utils.beastmaster.petFoodData =
 {
-    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =   50, regen =  1, mndMult = 2, mndThreshold = 10 },
-    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  180, regen =  3, mndMult = 1, mndThreshold = 33 },
-    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing =  300, regen =  5, mndMult = 1, mndThreshold = 35 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing =  530, regen =  8, mndMult = 2, mndThreshold = 40 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing =  750, regen = 11, mndMult = 2, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing =  900, regen = 14, mndMult = 3, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ETA_BISCUIT]     = { minHealing = 1200, regen = 17, mndMult = 4, mndThreshold = 50 },
-    [xi.item.PET_FOOD_THETA_BISCUIT]   = { minHealing = 1600, regen = 20, mndMult = 4, mndThreshold = 55 },
+    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =   80, regen =  1, mndMult = 2, mndThreshold = 10 },
+    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  200, regen =  3, mndMult = 1, mndThreshold = 33 },
+    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing =  340, regen =  5, mndMult = 1, mndThreshold = 35 }, -- TO BE VERIFIED.
+    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing =  580, regen =  8, mndMult = 2, mndThreshold = 40 }, -- TO BE VERIFIED.
+    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing =  790, regen = 11, mndMult = 2, mndThreshold = 45 },
+    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing =  950, regen = 14, mndMult = 3, mndThreshold = 45 },
+    [xi.item.PET_FOOD_ETA_BISCUIT]     = { minHealing = 1350, regen = 17, mndMult = 4, mndThreshold = 50 },
+    [xi.item.PET_FOOD_THETA_BISCUIT]   = { minHealing = 1800, regen = 20, mndMult = 4, mndThreshold = 55 },
 }
 
 -----------------------------------

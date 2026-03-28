@@ -133,7 +133,7 @@ INSERT INTO `pet_list` VALUES (99,'HurlerPercival',7522,99,116,7200,0,2);    -- 
 INSERT INTO `pet_list` VALUES (100,'AcuexFamiliar',7523,99,119,7200,0,2);    -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (101,'FluffyBredo',7524,99,119,7200,0,2);      -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (102,'WeevilFamiliar',7525,99,119,7200,0,2);   -- nat max 119, merit max 119
-INSERT INTO `pet_list` VALUES (103,'StalwartAngelina',7526,99,119,7200,0,2); -- nat max 119, merit max 119
+INSERT INTO `pet_list` VALUES (103,'StalwartAngelin',7526,99,119,7200,0,2); -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (104,'FleetReinhard',7527,99,117,7200,0,2);    -- nat max 117, merit max 117
 INSERT INTO `pet_list` VALUES (105,'SharpwitHermes',7528,99,119,7200,0,3);   -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (106,'P.CrabFamiliar',7529,99,119,7200,0,2);   -- nat max 119, merit max 119
@@ -153,8 +153,8 @@ INSERT INTO `pet_list` VALUES (119,'PonderingPeter',7542,99,103,7200,0,2);   -- 
 INSERT INTO `pet_list` VALUES (120,'HeraldHenry',7543,99,113,7200,0,2);      -- nat max 113, merit max 113
 INSERT INTO `pet_list` VALUES (121,'Hip.Familiar',7544,99,119,7200,0,2);     -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (122,'DaringRoland',7545,99,119,7200,0,2);     -- nat max 119, merit max 119
-INSERT INTO `pet_list` VALUES (123,'MosquitoFamiliar',7546,99,119,7200,0,2); -- nat max 119, merit max 119
+INSERT INTO `pet_list` VALUES (123,'MosquitoFamilia',7546,99,119,7200,0,2); -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (124,'Left-HandedYoko',7547,99,119,7200,0,2);  -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (125,'BraveHeroGlenn',7548,99,119,7200,0,2);   -- nat max 119, merit max 119
-INSERT INTO `pet_list` VALUES (126,'Y.BeetleFamiliar',7549,99,119,7200,0,2); -- nat max 119, merit max 119
+INSERT INTO `pet_list` VALUES (126,'Y.BeetleFamilia',7549,99,119,7200,0,2); -- nat max 119, merit max 119
 INSERT INTO `pet_list` VALUES (127,'EnergizedSefina',7550,99,119,7200,0,2);  -- nat max 119, merit max 119

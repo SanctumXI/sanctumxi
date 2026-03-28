@@ -10,8 +10,9 @@ local unlocks =
 {
     [xi.mission.log_id.ZILART] =
     {
-        [xi.mission.id.zilart.ARK_ANGELS] = { xi.inv.WARDROBE3, 5 },
+        [xi.mission.id.zilart.ARK_ANGELS] = { xi.inv.WARDROBE5, 80 },
     },
+
 }
 
 local bagNames =
@@ -41,14 +42,16 @@ m:addOverride('xi.player.charCreate', function(player)
 
     -- NOTE: These will all be clamped between 0-80,
     --     : so using -80 is fine
-    player:changeContainerSize(xi.inv.WARDROBE,  -80)
-    player:changeContainerSize(xi.inv.WARDROBE2, -80)
-    player:changeContainerSize(xi.inv.WARDROBE3, -80)
-    player:changeContainerSize(xi.inv.WARDROBE4, -80)
+
+    player:changeContainerSize(xi.inv.WARDROBE, 0)
+    player:changeContainerSize(xi.inv.WARDROBE2, 0)
+    player:changeContainerSize(xi.inv.WARDROBE3, 0)
+    player:changeContainerSize(xi.inv.WARDROBE4, 0)
     player:changeContainerSize(xi.inv.WARDROBE5, -80)
     player:changeContainerSize(xi.inv.WARDROBE6, -80)
     player:changeContainerSize(xi.inv.WARDROBE7, -80)
     player:changeContainerSize(xi.inv.WARDROBE8, -80)
+
 end)
 
 m:addOverride('npcUtil.completeMission', function(player, logId, missionId, params)

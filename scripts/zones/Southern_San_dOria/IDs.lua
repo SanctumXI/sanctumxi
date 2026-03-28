@@ -56,6 +56,7 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         FFR_ROSEL                      = 7825,  -- Hrmm... Now, this is interesting! It pays to keep an eye on the competition. Thanks for letting me know!
         EXOROCHE_START                 = 7841,  -- You've some business with me? Sorry, but I'm busy.
         EXOROCHE_PLEASE_TELL           = 7844,  -- Please tell my son that I'll join him as soon as I'm done, so he's to stay right there.
+        RAIMBROY_DIALOG                = 7864,  --      
         GO_TO_KING_RANPERRES           = 7892,  -- Go to King Ranperre's Tomb and bring back <item>. How, you ask? Use your head. Now begone!
         TO_GET_TO_KING_RANPERRES       = 7911,  -- To get to King Ranperre's Tomb, head out the Eastgate into East Ronfaure, then make your way south as far as you can go. You should find it before long.
         YOU_FIND_A_WELL                = 7919,  -- You find a well.

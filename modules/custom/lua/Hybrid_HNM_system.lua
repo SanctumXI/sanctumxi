@@ -45,7 +45,7 @@ hnmSystem:addOverride('xi.zones.Dragons_Aery.Zone.onInitialize', function(zone)
 
     if
         hnmKillCount > 3 and
-        (math.random(1, 5) == 3 or hnmKillCount > 6)
+        (math.random(1, 5) == 3 or hnmKillCount > 5)
     then
         monster = dragonsAeryID.mob.NIDHOGG
     end
@@ -59,9 +59,6 @@ hnmSystem:addOverride('xi.zones.Dragons_Aery.Zone.onInitialize', function(zone)
     else
         GetMobByID(monster):setRespawnTime(hnmPopTime - currentTime)
     end
-
-    -- Hide ??? NPC.
-    GetNPCByID(dragonsAeryID.npc.FAFNIR_QM):setStatus(xi.status.DISAPPEAR)
 end)
 
 hnmSystem:addOverride('xi.zones.Dragons_Aery.mobs.Fafnir.onMobDespawn', function(mob)
@@ -78,7 +75,7 @@ hnmSystem:addOverride('xi.zones.Dragons_Aery.mobs.Fafnir.onMobDespawn', function
     local monster = dragonsAeryID.mob.FAFNIR
 
     if
-        hnmKillCount > 3 and
+        hnmKillCount > 1 and
         (math.random(1, 5) == 3 or hnmKillCount > 6)
     then
         monster = dragonsAeryID.mob.NIDHOGG
@@ -112,7 +109,6 @@ hnmSystem:addOverride('xi.zones.Dragons_Aery.npcs.qm0.onTrade', function(player,
         player:confirmTrade()
     end
 end)
-
 -----------------------------------
 -- Valley of Sorrows: Adamantoise, Aspidochelone
 -----------------------------------
@@ -135,7 +131,7 @@ hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.Zone.onInitialize', function(z
 
     if
         hnmKillCount > 3 and
-        (math.random(1, 5) == 3 or hnmKillCount > 6)
+        (math.random(1, 5) == 3 or hnmKillCount > 5)
     then
         monster = valleySorrowsID.mob.ASPIDOCHELONE
     end
@@ -149,9 +145,6 @@ hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.Zone.onInitialize', function(z
     else
         GetMobByID(monster):setRespawnTime(hnmPopTime - currentTime)
     end
-
-    -- Hide ??? NPC.
-    GetNPCByID(valleySorrowsID.npc.ADAMANTOISE_QM):setStatus(xi.status.DISAPPEAR)
 end)
 
 hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.mobs.Adamantoise.onMobDespawn', function(mob)
@@ -168,8 +161,8 @@ hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.mobs.Adamantoise.onMobDespawn'
     local monster = valleySorrowsID.mob.ADAMANTOISE
 
     if
-        hnmKillCount > 3 and
-        (math.random(1, 5) == 3 or hnmKillCount > 6)
+        hnmKillCount > 1 and
+        (math.random(1, 5) == 3 or hnmKillCount > 5)
     then
         monster = valleySorrowsID.mob.ASPIDOCHELONE
     end
@@ -202,7 +195,6 @@ hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.npcs.qm1.onTrade', function(pl
         player:confirmTrade()
     end
 end)
-
 -----------------------------------
 -- Behemoth's Dominion: Behemoth, King Behemoth
 -----------------------------------
@@ -224,7 +216,7 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.Zone.onInitialize', function(
     local monster = behemothDomID.mob.BEHEMOTH
 
     if
-        hnmKillCount > 3 and
+        hnmKillCount > 1 and
         (math.random(1, 5) == 3 or hnmKillCount > 6)
     then
         monster = behemothDomID.mob.KING_BEHEMOTH
@@ -239,9 +231,6 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.Zone.onInitialize', function(
     else
         GetMobByID(monster):setRespawnTime(hnmPopTime - currentTime)
     end
-
-    -- Hide ??? NPC.
-    GetNPCByID(behemothDomID.npc.BEHEMOTH_QM):setStatus(xi.status.DISAPPEAR)
 end)
 
 hnmSystem:addOverride('xi.zones.Behemoths_Dominion.mobs.Behemoth.onMobDespawn', function(mob)
@@ -292,5 +281,4 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.npcs.qm2.onTrade', function(p
         player:confirmTrade()
     end
 end)
-
 return hnmSystem

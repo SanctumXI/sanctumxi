@@ -1209,6 +1209,16 @@ INSERT INTO `instance_entities` VALUES (7400,17080993);
 -- ------------------------------------------------------------
 
 -- mobs
+INSERT INTO `instance_entities` VALUES (7500,17084417);
+INSERT INTO `instance_entities` VALUES (7500,17084418);
+INSERT INTO `instance_entities` VALUES (7500,17084419);
+INSERT INTO `instance_entities` VALUES (7500,17084420);
+INSERT INTO `instance_entities` VALUES (7500,17084421);
+INSERT INTO `instance_entities` VALUES (7500,17084422);
+INSERT INTO `instance_entities` VALUES (7500,17084423);
+INSERT INTO `instance_entities` VALUES (7500,17084424);
+INSERT INTO `instance_entities` VALUES (7500,17084425);
+INSERT INTO `instance_entities` VALUES (7500,17084426);
 INSERT INTO `instance_entities` VALUES (7500,17084427);
 INSERT INTO `instance_entities` VALUES (7500,17084428);
 INSERT INTO `instance_entities` VALUES (7500,17084429);
@@ -1494,6 +1504,8 @@ INSERT INTO `instance_entities` VALUES (7500,17084708);
 INSERT INTO `instance_entities` VALUES (7500,17084709);
 INSERT INTO `instance_entities` VALUES (7500,17084710);
 INSERT INTO `instance_entities` VALUES (7500,17084711);
+
+-- npcs
 INSERT INTO `instance_entities` VALUES (7500,17084712);
 INSERT INTO `instance_entities` VALUES (7500,17084713);
 INSERT INTO `instance_entities` VALUES (7500,17084714);
@@ -1504,18 +1516,6 @@ INSERT INTO `instance_entities` VALUES (7500,17084718);
 INSERT INTO `instance_entities` VALUES (7500,17084719);
 INSERT INTO `instance_entities` VALUES (7500,17084720);
 INSERT INTO `instance_entities` VALUES (7500,17084721);
-
--- npcs
-INSERT INTO `instance_entities` VALUES (7500,17084417);
-INSERT INTO `instance_entities` VALUES (7500,17084418);
-INSERT INTO `instance_entities` VALUES (7500,17084419);
-INSERT INTO `instance_entities` VALUES (7500,17084420);
-INSERT INTO `instance_entities` VALUES (7500,17084421);
-INSERT INTO `instance_entities` VALUES (7500,17084422);
-INSERT INTO `instance_entities` VALUES (7500,17084423);
-INSERT INTO `instance_entities` VALUES (7500,17084424);
-INSERT INTO `instance_entities` VALUES (7500,17084425);
-INSERT INTO `instance_entities` VALUES (7500,17084426);
 INSERT INTO `instance_entities` VALUES (7500,17084722);
 INSERT INTO `instance_entities` VALUES (7500,17084856);
 INSERT INTO `instance_entities` VALUES (7500,17084857);

@@ -55,7 +55,7 @@ INSERT INTO `mob_spawn_slots` VALUES (11,11,0);
 INSERT INTO `mob_spawn_slots` VALUES (54,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (54,2,0);
 
--- La Theine Plateau
+-- Valkurum Dunes
 INSERT INTO `mob_spawn_slots` VALUES (102,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (102,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (102,3,0);
@@ -102,8 +102,6 @@ INSERT INTO `mob_spawn_slots` VALUES (102,43,0);
 INSERT INTO `mob_spawn_slots` VALUES (102,44,0);
 INSERT INTO `mob_spawn_slots` VALUES (102,45,0);
 INSERT INTO `mob_spawn_slots` VALUES (102,46,0);
-
--- Valkurum Dunes
 INSERT INTO `mob_spawn_slots` VALUES (103,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,3,0);
@@ -115,6 +113,8 @@ INSERT INTO `mob_spawn_slots` VALUES (103,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,9,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,10,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,11,0);
+
+-- North Gustaberg
 INSERT INTO `mob_spawn_slots` VALUES (103,12,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,13,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,14,0);
@@ -161,8 +161,6 @@ INSERT INTO `mob_spawn_slots` VALUES (103,54,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,55,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,56,0);
 INSERT INTO `mob_spawn_slots` VALUES (103,57,0);
-
--- North Gustaberg
 INSERT INTO `mob_spawn_slots` VALUES (106,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,3,0);
@@ -182,6 +180,8 @@ INSERT INTO `mob_spawn_slots` VALUES (106,16,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,17,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,18,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,19,0);
+
+-- Beaucedine Glacier
 INSERT INTO `mob_spawn_slots` VALUES (106,20,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,21,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,22,0);
@@ -198,6 +198,8 @@ INSERT INTO `mob_spawn_slots` VALUES (106,32,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,33,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,34,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,35,0);
+
+-- Qufim Island
 INSERT INTO `mob_spawn_slots` VALUES (106,36,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,37,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,38,0);
@@ -213,9 +215,13 @@ INSERT INTO `mob_spawn_slots` VALUES (106,47,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,48,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,49,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,50,0);
+
+-- Behemoth's Dominion
 INSERT INTO `mob_spawn_slots` VALUES (106,51,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,52,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,53,0);
+
+-- RuAun Gardens
 INSERT INTO `mob_spawn_slots` VALUES (106,54,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,55,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,56,0);
@@ -228,13 +234,13 @@ INSERT INTO `mob_spawn_slots` VALUES (106,62,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,63,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,64,0);
 INSERT INTO `mob_spawn_slots` VALUES (106,65,0);
-
--- Konschtat Highlands
 INSERT INTO `mob_spawn_slots` VALUES (108,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,4,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,5,0);
+
+-- Ghelsba Outpost
 INSERT INTO `mob_spawn_slots` VALUES (108,6,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,7,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,8,0);
@@ -275,8 +281,6 @@ INSERT INTO `mob_spawn_slots` VALUES (108,42,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,43,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,44,0);
 INSERT INTO `mob_spawn_slots` VALUES (108,45,0);
-
--- Beaucedine Glacier
 INSERT INTO `mob_spawn_slots` VALUES (111,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (111,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (111,3,0);
@@ -293,14 +297,14 @@ INSERT INTO `mob_spawn_slots` VALUES (111,13,0);
 INSERT INTO `mob_spawn_slots` VALUES (111,14,0);
 INSERT INTO `mob_spawn_slots` VALUES (111,15,0);
 INSERT INTO `mob_spawn_slots` VALUES (111,16,0);
-
--- Ro'Maeve
 INSERT INTO `mob_spawn_slots` VALUES (122,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,4,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,5,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,6,0);
+
+-- Fort Ghelsba
 INSERT INTO `mob_spawn_slots` VALUES (122,7,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,9,0);
@@ -315,8 +319,6 @@ INSERT INTO `mob_spawn_slots` VALUES (122,17,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,18,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,19,0);
 INSERT INTO `mob_spawn_slots` VALUES (122,20,0);
-
--- Qufim Island
 INSERT INTO `mob_spawn_slots` VALUES (126,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (126,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (126,3,0);
@@ -332,13 +334,9 @@ INSERT INTO `mob_spawn_slots` VALUES (126,12,0);
 INSERT INTO `mob_spawn_slots` VALUES (126,13,0);
 INSERT INTO `mob_spawn_slots` VALUES (126,14,0);
 INSERT INTO `mob_spawn_slots` VALUES (126,15,0);
-
--- Behemoth's Dominion
 INSERT INTO `mob_spawn_slots` VALUES (127,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (127,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (127,3,0);
-
--- RuAun Gardens
 INSERT INTO `mob_spawn_slots` VALUES (130,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (130,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (130,3,0);
@@ -356,8 +354,6 @@ INSERT INTO `mob_spawn_slots` VALUES (130,14,0);
 INSERT INTO `mob_spawn_slots` VALUES (130,15,0);
 INSERT INTO `mob_spawn_slots` VALUES (130,16,0);
 INSERT INTO `mob_spawn_slots` VALUES (130,17,0);
-
--- Ghelsba Outpost
 INSERT INTO `mob_spawn_slots` VALUES (140,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,3,0);
@@ -375,6 +371,8 @@ INSERT INTO `mob_spawn_slots` VALUES (140,14,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,15,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,16,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,17,0);
+
+-- Yughott Grotto
 INSERT INTO `mob_spawn_slots` VALUES (140,18,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,19,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,20,0);
@@ -420,8 +418,6 @@ INSERT INTO `mob_spawn_slots` VALUES (140,59,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,60,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,61,0);
 INSERT INTO `mob_spawn_slots` VALUES (140,62,0);
-
--- Fort Ghelsba
 INSERT INTO `mob_spawn_slots` VALUES (141,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,3,0);
@@ -429,6 +425,8 @@ INSERT INTO `mob_spawn_slots` VALUES (141,4,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,5,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,6,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,7,0);
+
+-- Palborough Mines
 INSERT INTO `mob_spawn_slots` VALUES (141,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,9,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,10,0);
@@ -488,8 +486,6 @@ INSERT INTO `mob_spawn_slots` VALUES (141,63,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,64,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,65,0);
 INSERT INTO `mob_spawn_slots` VALUES (141,66,0);
-
--- Yughott Grotto
 INSERT INTO `mob_spawn_slots` VALUES (142,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,3,0);
@@ -530,6 +526,8 @@ INSERT INTO `mob_spawn_slots` VALUES (142,37,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,38,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,39,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,40,0);
+
+-- Giddeus
 INSERT INTO `mob_spawn_slots` VALUES (142,41,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,42,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,43,0);
@@ -542,8 +540,6 @@ INSERT INTO `mob_spawn_slots` VALUES (142,49,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,50,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,51,0);
 INSERT INTO `mob_spawn_slots` VALUES (142,52,0);
-
--- Palborough Mines
 INSERT INTO `mob_spawn_slots` VALUES (143,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (143,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (143,3,0);
@@ -643,15 +639,19 @@ INSERT INTO `mob_spawn_slots` VALUES (143,96,0);
 INSERT INTO `mob_spawn_slots` VALUES (143,97,0);
 INSERT INTO `mob_spawn_slots` VALUES (143,98,0);
 INSERT INTO `mob_spawn_slots` VALUES (143,99,0);
-
--- Giddeus
 INSERT INTO `mob_spawn_slots` VALUES (145,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,2,0);
+
+-- Qulun Dome
 INSERT INTO `mob_spawn_slots` VALUES (145,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,4,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,5,0);
+
+-- Monastic Cavern
 INSERT INTO `mob_spawn_slots` VALUES (145,6,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,7,0);
+
+-- Oldton Movalpolos
 INSERT INTO `mob_spawn_slots` VALUES (145,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,9,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,10,0);
@@ -691,6 +691,8 @@ INSERT INTO `mob_spawn_slots` VALUES (145,43,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,44,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,45,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,46,0);
+
+-- The Boyahda Tree
 INSERT INTO `mob_spawn_slots` VALUES (145,47,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,48,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,49,0);
@@ -709,7 +711,11 @@ INSERT INTO `mob_spawn_slots` VALUES (145,61,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,62,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,63,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,64,0);
+
+-- Dragons Aery
 INSERT INTO `mob_spawn_slots` VALUES (145,65,0);
+
+-- Den of Rancor
 INSERT INTO `mob_spawn_slots` VALUES (145,66,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,67,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,68,0);
@@ -724,6 +730,8 @@ INSERT INTO `mob_spawn_slots` VALUES (145,76,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,77,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,78,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,79,0);
+
+-- Castle Zvahl Baileys
 INSERT INTO `mob_spawn_slots` VALUES (145,80,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,81,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,82,0);
@@ -752,19 +760,19 @@ INSERT INTO `mob_spawn_slots` VALUES (145,104,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,105,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,106,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,107,0);
+
+-- Ranguemont Pass
 INSERT INTO `mob_spawn_slots` VALUES (145,108,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,109,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,110,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,111,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,112,0);
 INSERT INTO `mob_spawn_slots` VALUES (145,113,0);
-
--- Qulun Dome
 INSERT INTO `mob_spawn_slots` VALUES (148,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (148,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (148,3,0);
 
--- Davoi
+-- Korroloka Tunnel
+INSERT INTO `mob_spawn_slots` VALUES (148,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,3,0);
@@ -788,6 +796,8 @@ INSERT INTO `mob_spawn_slots` VALUES (149,20,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,21,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,22,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,23,0);
+
+-- Lower Delkfutt's Tower
 INSERT INTO `mob_spawn_slots` VALUES (149,24,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,25,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,26,0);
@@ -848,6 +858,8 @@ INSERT INTO `mob_spawn_slots` VALUES (149,80,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,81,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,82,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,83,0);
+
+-- Dangruf Wadi
 INSERT INTO `mob_spawn_slots` VALUES (149,84,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,85,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,86,0);
@@ -865,70 +877,14 @@ INSERT INTO `mob_spawn_slots` VALUES (149,97,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,98,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,99,0);
 INSERT INTO `mob_spawn_slots` VALUES (149,100,0);
-
--- Monastic Cavern
 INSERT INTO `mob_spawn_slots` VALUES (150,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (150,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,28,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,29,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,30,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,31,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,32,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,33,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,34,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,35,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,36,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,37,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,38,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,39,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,40,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,41,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,42,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,43,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,44,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,45,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,46,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,47,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,48,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,49,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,50,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,51,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,52,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,53,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,54,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,55,0);
-INSERT INTO `mob_spawn_slots` VALUES (150,56,0);
-
--- Oldton Movalpolos
 INSERT INTO `mob_spawn_slots` VALUES (151,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,4,0);
+
+-- Ordelle's Caves
 INSERT INTO `mob_spawn_slots` VALUES (151,5,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,6,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,7,0);
@@ -965,7 +921,7 @@ INSERT INTO `mob_spawn_slots` VALUES (151,37,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,38,0);
 INSERT INTO `mob_spawn_slots` VALUES (151,39,0);
 
--- The Boyahda Tree
+-- Gusgen Mines
 INSERT INTO `mob_spawn_slots` VALUES (153,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (153,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (153,3,0);
@@ -984,11 +940,7 @@ INSERT INTO `mob_spawn_slots` VALUES (153,15,0);
 INSERT INTO `mob_spawn_slots` VALUES (153,16,0);
 INSERT INTO `mob_spawn_slots` VALUES (153,17,0);
 INSERT INTO `mob_spawn_slots` VALUES (153,18,0);
-
--- Dragons Aery
 INSERT INTO `mob_spawn_slots` VALUES (154,1,0);
-
--- Den of Rancor
 INSERT INTO `mob_spawn_slots` VALUES (160,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,3,0);
@@ -998,19 +950,21 @@ INSERT INTO `mob_spawn_slots` VALUES (160,6,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,7,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,9,0);
+
+-- Gustav Tunnel
 INSERT INTO `mob_spawn_slots` VALUES (160,10,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,11,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,12,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,13,0);
 INSERT INTO `mob_spawn_slots` VALUES (160,14,0);
-
--- Castle Zvahl Baileys
 INSERT INTO `mob_spawn_slots` VALUES (161,1,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,2,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,3,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,4,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,5,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,6,0);
+
+-- Labyrinth of Onzozo
 INSERT INTO `mob_spawn_slots` VALUES (161,7,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,8,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,9,0);
@@ -1029,358 +983,5 @@ INSERT INTO `mob_spawn_slots` VALUES (161,21,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,22,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,23,0);
 INSERT INTO `mob_spawn_slots` VALUES (161,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (161,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (161,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (161,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (161,28,0);
-
--- Castle Zvahl Keep
-INSERT INTO `mob_spawn_slots` VALUES (162,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (162,23,0);
-
--- Ranguemont Pass
-INSERT INTO `mob_spawn_slots` VALUES (166,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (166,8,0);
-
--- Bostaunieux Oubliette
-INSERT INTO `mob_spawn_slots` VALUES (167,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (167,2,0);
-
--- Korroloka Tunnel
-INSERT INTO `mob_spawn_slots` VALUES (173,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (173,24,0);
-
--- Lower Delkfutt's Tower
-INSERT INTO `mob_spawn_slots` VALUES (184,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,28,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,29,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,30,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,31,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,32,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,33,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,34,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,35,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,36,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,37,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,38,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,39,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,40,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,41,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,42,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,43,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,44,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,45,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,46,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,47,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,48,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,49,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,50,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,51,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,52,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,53,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,54,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,55,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,56,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,57,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,58,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,59,0);
-INSERT INTO `mob_spawn_slots` VALUES (184,60,0);
-
--- Dangruf Wadi
-INSERT INTO `mob_spawn_slots` VALUES (191,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (191,23,0);
-
--- Ordelle's Caves
-INSERT INTO `mob_spawn_slots` VALUES (193,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,28,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,29,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,30,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,31,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,32,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,33,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,34,0);
-INSERT INTO `mob_spawn_slots` VALUES (193,35,0);
-
--- Gusgen Mines
-INSERT INTO `mob_spawn_slots` VALUES (196,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (196,28,0);
-
--- Crawler's Nest
-INSERT INTO `mob_spawn_slots` VALUES (197,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (197,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (197,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (197,4,0);
-
--- Fei'Yin
-INSERT INTO `mob_spawn_slots` VALUES (204,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,28,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,29,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,30,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,31,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,32,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,33,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,34,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,35,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,36,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,37,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,38,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,39,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,40,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,41,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,42,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,43,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,44,0);
-INSERT INTO `mob_spawn_slots` VALUES (204,45,0);
-
--- Ifrit's Cauldron
-INSERT INTO `mob_spawn_slots` VALUES (205,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,18,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,19,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,20,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,21,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,22,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,23,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,24,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,25,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,26,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,27,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,28,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,29,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,30,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,31,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,32,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,33,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,34,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,35,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,36,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,37,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,38,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,39,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,40,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,41,0);
-INSERT INTO `mob_spawn_slots` VALUES (205,42,0);
-
--- Gustav Tunnel
-INSERT INTO `mob_spawn_slots` VALUES (212,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (212,11,0);
-
--- Labyrinth of Onzozo
-INSERT INTO `mob_spawn_slots` VALUES (213,1,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,2,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,3,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,4,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,5,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,6,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,7,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,8,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,9,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,10,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,11,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,12,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,13,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,14,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,15,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,16,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,17,0);
-INSERT INTO `mob_spawn_slots` VALUES (213,18,0);
 
 UNLOCK TABLES;

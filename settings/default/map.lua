@@ -57,23 +57,23 @@ xi.settings.map =
     -- Max open listings per player, 0 = no limit. (Default 7)
     -- Note = Settings over 7 may need client-side plugin to work under all circumstances.
     -- If this is the case, consider using the ah_pagination module (which supports setting AH_LIST_LIMIT to 0 or >7).
-    AH_LIST_LIMIT = 7,
+    AH_LIST_LIMIT = 70,
 
     -- The total enmity cap for a given entity on the enmity table.
     -- 30,000 is believed to be approximately current retail cap.
     -- This directly affects a tank's ability to hold enmity over time.
     -- The lower the value, the faster damage dealers will reach the cap and the mob will bounce.
-    ENMITY_CAP = 30000,
+    ENMITY_CAP = 100000,
 
     -- Misc EXP related settings
-    EXP_RATE                = 1.0,
+    EXP_RATE                = .7,
     EXP_LOSS_RATE           = 1.0,
     EXP_PARTY_GAP_PENALTIES = true,
 
     -- A party member's experience points are nullified if the level difference with the highest-level party member exceeds this value.
     -- When set to 0, there is no nullification of EXP regardless of how wide the gap is between party members.
     -- When set to 10, if you are level 65 or below in a party with a level 75, you will receive no EXP.
-    EXP_PARTY_GAP_NO_EXP = 0,
+    EXP_PARTY_GAP_NO_EXP = 10,
 
     -- Capacity Point Settings
     CAPACITY_RATE = 1.0,
@@ -85,13 +85,13 @@ xi.settings.map =
     VANADIEL_TIME_EPOCH = 0,
 
     -- For old fame calculation use .25
-    FAME_MULTIPLIER = 1.00,
+    FAME_MULTIPLIER = .75,
 
     -- Percentage of experience normally lost to keep upon death. 0 means full loss, where 1 means no loss.
     EXP_RETAIN = 0,
 
     -- Minimum level at which experience points can be lost
-    EXP_LOSS_LEVEL = 31,
+    EXP_LOSS_LEVEL = 6,
 
     -- Minimum level at which regional influence is lost in conquest when a player dies
     -- Level 5 and below don't lose influence: http://wiki.ffo.jp/html/498.html
@@ -101,10 +101,10 @@ xi.settings.map =
     LEVEL_SYNC_ENABLE = true,
 
     -- Disables ability to equip higher level gear when level cap/sync effect is on player.
-    DISABLE_GEAR_SCALING = false,
+    DISABLE_GEAR_SCALING = true,
 
     -- Disables Treasure Hunter procs (Era behavior wants this true)
-    DISABLE_TREASURE_HUNTER_PROCS = false,
+    DISABLE_TREASURE_HUNTER_PROCS = true,
 
     -- Enable auto attack damage calculations in Lua
     ENABLE_AUTO_ATTACK_LUA = false,
@@ -119,13 +119,13 @@ xi.settings.map =
     ALL_JOBS_WIDESCAN = true,
 
     -- Base player movement speed
-    BASE_SPEED = 50,
+    BASE_SPEED = 55,
 
     -- Player movement speed limit
-    SPEED_LIMIT = 80,
+    SPEED_LIMIT = 85,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
-    MOUNT_SPEED = 80,
+    MOUNT_SPEED = 85,
 
     -- Player animation speed divisor
     -- Raising this increases the players movement animation speed
@@ -133,7 +133,7 @@ xi.settings.map =
 
     -- Multiplier for speed of engaged mobs when their target is out of range.
     -- The default for almost all mobs on retail is 2.5x their normal speed.
-    MOB_RUN_SPEED_MULTIPLIER = 2.5,
+    MOB_RUN_SPEED_MULTIPLIER = 2.6,
 
     -- Allows you to manipulate the constant multiplier in the skill-up rate formulas, having a potent effect on skill-up rates.
     SKILLUP_CHANCE_MULTIPLIER = 1.0,
@@ -150,10 +150,10 @@ xi.settings.map =
     GARDEN_MH_AURA_MATTERS   = false,
 
     -- Use current retail skill up rates and margins (Retail = High Skill-Up rate; Skill-Up when at or under 10 levels above synth recipe level.)
-    CRAFT_MODERN_SYSTEM = true,
+    CRAFT_MODERN_SYSTEM = false,
 
     -- Craft level limit from witch specialization points beginning to count. (Retail = 700; Level 75 era:600)
-    CRAFT_COMMON_CAP = 700,
+    CRAFT_COMMON_CAP = 600,
 
     -- Amount of points allowed in crafts over the level defined above. Points are shared across all crafting skills. (Retail = 400; All skills can go to max = 3200)
     CRAFT_SPECIALIZATION_POINTS = 400,
@@ -162,13 +162,13 @@ xi.settings.map =
     CRAFT_HQ_CHANCE_MULTIPLIER = 1.0,
 
     -- Enable/disable all fishing, including quests. ENABLE AT YOUR OWN RISK.
-    FISHING_ENABLE = false,
+    FISHING_ENABLE = true,
 
     -- Sets the minimum level a character must be to fish.
-    FISHING_MIN_LEVEL = 1,
+    FISHING_MIN_LEVEL = 10,
 
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
-    FISHING_SKILL_MULTIPLIER = 1.0,
+    FISHING_SKILL_MULTIPLIER = 1.5,
 
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,
@@ -254,7 +254,7 @@ xi.settings.map =
     -- Max allowed merits points players can hold
     -- 10 classic
     -- 30 abyssea
-    MAX_MERIT_POINTS = 30,
+    MAX_MERIT_POINTS = 15,
 
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,
@@ -263,7 +263,7 @@ xi.settings.map =
     BLOCK_TELL_TO_HIDDEN_GM = false,
 
     -- Prevent players from performing WS while unengaged using packet injection.
-    PREVENT_UNENGAGED_WS = false,
+    PREVENT_UNENGAGED_WS = true,
 
     -- Command Audit [logging] commands with lower permission than this will not be logged.
     -- Zero for no logging at all. Commands given to non GMs are not logged.
@@ -295,7 +295,7 @@ xi.settings.map =
     HEALING_TICK_DELAY = 10,
 
     -- Enable/disable keeping jug pets through zoning
-    KEEP_JUGPET_THROUGH_ZONING = false,
+    KEEP_JUGPET_THROUGH_ZONING = true,
 
     -- Despawn jug pets that have a minimum level below level sync or zone level restriction.
     -- Such as despawning Courier Carrie in a level 20 cap when their minimum level to summon is 23.

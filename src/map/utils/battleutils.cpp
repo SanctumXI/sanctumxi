@@ -603,7 +603,16 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
     {
         // see https://www.ffxiah.com/forum/topic/56613/rune-enhancement-damage-formula-testing/ for data and comments
         double       runeDPS = 0.0;
-        CItemWeapon* PWeapon = static_cast<CItemWeapon*>(static_cast<CCharEntity*>(PAttacker)->getEquip(SLOT_MAIN));
+        CItemWeapon* PWeapon = nullptr;
+
+        // Prefer player equip if attacker is a player
+        if (auto* PChar = dynamic_cast<CCharEntity*>(PAttacker))
+        {
+            if (auto* equip = PChar->getEquip(SLOT_MAIN))
+            {
+                PWeapon = dynamic_cast<CItemWeapon*>(equip);
+            }
+        }
 
         // If no player equip, try the entity's internal weapon slot (used by mobs/trusts)
         if (PWeapon == nullptr)
@@ -2528,9 +2537,9 @@ uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 att
 
     bool hasSneakAttack      = PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK);
     bool hasTrickAttack      = PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK);
-    bool isBehind            = behind(PAttacker->loc.p, PDefender->loc.p, 64);
+    // bool isBehind            = behind(PAttacker->loc.p, PDefender->loc.p, 64);
     bool hasAssassin         = PAttacker->hasTrait(TRAIT_ASSASSIN);
-    bool hasValidSneakAttack = hasSneakAttack && isBehind;
+    bool hasValidSneakAttack = hasSneakAttack;
     bool hasValidTrickAttack = hasTrickAttack && hasAssassin;
 
     if (hasValidSneakAttack || (hasValidTrickAttack && getAvailableTrickAttackChar(PAttacker, PDefender)))
@@ -2574,7 +2583,7 @@ uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ig
     }
     else if (PAttacker->objtype == TYPE_PC && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
     {
-        if (behind(PAttacker->loc.p, PDefender->loc.p, 64) || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
+       // if (behind(PAttacker->loc.p, PDefender->loc.p, 64) || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
         {
             critHitRate = 100;
         }

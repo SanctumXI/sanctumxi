@@ -43,6 +43,11 @@ page1 =
             playerArg:setPos(0, 0, 0, 0, xi.zone.LOWER_JEUNO)
         end,
     },
+    {    'Send me to Bastok!',
+        function(playerArg)
+            playerArg:setPos(0, 0, 0, 0, xi.zone.BASTOK_MINES)
+        end,
+    },
     {
         'Next Page',
         function(playerArg)
@@ -154,16 +159,13 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         --     : So populate it with something unique-ish even if you aren't going to use it.
         --     : You can then hide the name with entity:hideName(true)
         -- NOTE: This name CAN include spaces and underscores.
-        -- NOTE: This name will be used by the operating system to look up script names, so it needs
-        --     : to only use simple ASCII characters.
-        name = 'Horro',
-
-        -- Optional: Define a different name that is visible to players.
-        -- The basic name 'Horro' (DE_Horro) will still be used internally for lookups.
         -- NOTE: You can use xi.icon.* to add icons to the name, with string.format() or the
         --     : `..` string concat operator.
+        name = string.format('%sHorro', xi.icon.STAR_LARGE),
+
+        -- Optional: Define a different name that is visible to players.
+        -- 'Horro' (DE_Horro) will still be used internally for lookups.
         -- packetName = 'New Horro',
-        packetName = string.format('%sHorro', xi.icon.STAR_LARGE),
 
         -- You can use regular model ids (See documentation/model_ids.txt, or play around with !costume)
         look = 2430,

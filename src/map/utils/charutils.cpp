@@ -4852,7 +4852,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         exp = std::fmin(exp, 600.0f);
                     }
 
-                    if (mobCheck > EMobDifficulty::DecentChallenge)
+                    if (mobCheck > EMobDifficulty::TooWeak)
                     {
                         if (PMember->expChain.chainTime > timer::now() || PMember->expChain.chainTime == timer::time_point::min())
                         {
@@ -4869,16 +4869,16 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     exp *= 1.25f;
                                     break;
                                 case 3:
-                                    exp *= 1.3f;
+                                    exp *= 1.35f;
                                     break;
                                 case 4:
-                                    exp *= 1.4f;
+                                    exp *= 1.45f;
                                     break;
                                 case 5:
-                                    exp *= 1.5f;
+                                    exp *= 1.55f;
                                     break;
                                 default:
-                                    exp *= 1.55f;
+                                    exp *= 1.65f;
                                     break;
                             }
                         }
@@ -4920,25 +4920,25 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                             switch (PMember->expChain.chainNumber)
                             {
                                 case 0:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 1:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 2:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 3:
-                                    PMember->expChain.chainTime = timer::now() + 20s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 4:
-                                    PMember->expChain.chainTime = timer::now() + 10s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 6s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 2s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                             }
                         }
@@ -4956,16 +4956,16 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 3:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 4:
-                                    PMember->expChain.chainTime = timer::now() + 20s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 8s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 4s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                             }
                         }
@@ -4986,13 +4986,13 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 4:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 10s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 5s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                             }
                         }
@@ -5013,13 +5013,13 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 80s;
                                     break;
                                 case 4:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 40s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 30s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                             }
                         }
@@ -5040,13 +5040,13 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 100s;
                                     break;
                                 case 4:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 50s;
+                                    PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                             }
                         }
@@ -5466,7 +5466,7 @@ void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMo
     // exp added from raise shouldn't display a message. Don't need a message for zero exp either
     if (!expFromRaise && exp > 0)
     {
-        if (mobCheck >= EMobDifficulty::EvenMatch && isexpchain)
+        if (mobCheck >= EMobDifficulty::TooWeak && isexpchain)
         {
             if (PChar->expChain.chainNumber != 0)
             {
@@ -6634,8 +6634,8 @@ void SavePlayTime(CCharEntity* PChar)
 
     db::preparedStmt("UPDATE chars SET playtime = ? WHERE charid = ? LIMIT 1", playtime, PChar->id);
 
-    // Removes new player icon if played for more than 240 hours
-    if (PChar->isNewPlayer() && playDuration >= 240h)
+    // Removes new player icon if played for more than 10 hours
+    if (PChar->isNewPlayer() && playDuration >= 10h)
     {
         PChar->playerConfig.NewAdventurerOffFlg = true;
         PChar->updatemask |= UPDATE_HP;

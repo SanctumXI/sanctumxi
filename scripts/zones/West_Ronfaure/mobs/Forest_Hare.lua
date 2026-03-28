@@ -14,7 +14,7 @@ end
 
 entity.onMobDespawn = function(mob)
     local params = { }
-    xi.mob.phOnDespawn(mob, ID.mob.JAGGEDY_EARED_JACK, 9, 2400, params) -- 40 minute minimum
+    xi.mob.phOnDespawn(mob, ID.mob.JAGGEDY_EARED_JACK, 9, 1, params) -- true lotto
 end
 
 return entity

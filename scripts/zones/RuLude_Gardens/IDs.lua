@@ -80,6 +80,7 @@ zones[xi.zone.RULUDE_GARDENS] =
     },
     npc =
     {
+        EXPLORER_MOOGLE = GetFirstID('Explorer_Moogle'),
     },
 }
 
