@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS `accounts_trust_tokens` (
+DROP TABLE IF EXISTS`accounts_trust_tokens`;
+CREATE TABLE `accounts_trust_tokens` (
   `token` CHAR(64) NOT NULL,
   `accid` INT UNSIGNED NOT NULL,
   `expires` DATETIME NOT NULL,

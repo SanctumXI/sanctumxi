@@ -9,7 +9,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure of `audit_vendor`
 --
 
-CREATE TABLE IF NOT EXISTS `audit_vendor` (
+DROP TABLE IF EXISTS`audit_vendor`;
+CREATE TABLE `audit_vendor` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `itemid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `quantity` int(10) unsigned NOT NULL DEFAULT '0',

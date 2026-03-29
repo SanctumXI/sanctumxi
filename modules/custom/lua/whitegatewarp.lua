@@ -2,6 +2,7 @@
 -- Add some test NPCs to Whitegate
 -----------------------------------
 require('modules/module_utils')
+require('scripts/zones/Aht_Urhgan_Whitegate/Zone')
 
 local m = Module:new('whitegatewarp')
 
@@ -17,7 +18,7 @@ end
 
 menu =
 {
-    title = 'Test Menu (Paginated)',
+    title = 'Where would you like to go?',
     options = {},
 }
 
@@ -35,6 +36,12 @@ page1 =
             playerArg:setPos(0, 0, 0, 0, xi.zone.BASTOK_MINES)
         end,
     },
+       {
+        'Send me to Nashmau!',
+        function(playerArg)
+            playerArg:setPos(0, 0, 0, 0, xi.zone.NASHMAU)
+        end,
+    },
     {
         'Next Page',
         function(playerArg)
@@ -47,9 +54,9 @@ page1 =
 page2 =
 {
     {
-        'Send me to Nashmau!',
+        'Send me to Hell!',
         function(playerArg)
-            playerArg:setPos(0, 0, 0, 0, xi.zone.NASHMAU)
+            playerArg:setPos(0, 0, 0, 0, xi.zone.IFRITS_CAULDRON)
         end,
     },
     {
@@ -68,12 +75,11 @@ m:addOverride('xi.zones.Aht_Urhgan_Whitegate.Zone.onInitialize', function(zone)
         objtype  = xi.objType.NPC,
         name     = 'Warp Book',
         look     = 2433,
-        x        = 80.000,
-        y        = 0.000,
-        z        = 70.000,
-        rotation = 0,
+        x        = 80.750,
+        y        = 0,
+        z        = 70.25,
+        rotation = 128,
         widescan = 1,
-
         onTrigger = function(player, npc)
             menu.options = page1
             delaySendMenu(player, menu)
