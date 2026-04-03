@@ -4662,8 +4662,8 @@ EMobDifficulty CheckMob(uint8 charlvl, CBattleEntity* PMob)
         }
     }
 
-    auto IEPLevel = IncrediblyEasyPreyCheck.first;
-    auto IEPExp   = IncrediblyEasyPreyCheck.second;
+    auto IEPExp   = IncrediblyEasyPreyCheck.first;
+    auto IEPLevel = IncrediblyEasyPreyCheck.second;
 
     if (baseExp >= IEPExp && moblvl > IEPLevel)
     {
@@ -7448,12 +7448,6 @@ bool AddWeaponSkillPoints(CCharEntity* PChar, SLOTTYPE slotid, int wspoints)
             PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
             PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
         }
-
-        db::preparedStmt("UPDATE char_inventory SET extra = ? WHERE charid = ? AND location = ? AND slot = ? LIMIT 1",
-                         PWeapon->m_extra,
-                         PChar->id,
-                         PWeapon->getLocationID(),
-                         PWeapon->getSlotID());
 
         return true;
     }
