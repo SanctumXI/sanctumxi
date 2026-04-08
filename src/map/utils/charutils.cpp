@@ -2927,6 +2927,7 @@ void AddItemToRecycleBin(CCharEntity* PChar, uint32 container, uint8 slotID, uin
             PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, static_cast<CONTAINER_ID>(container), slotID);
             PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, LOC_RECYCLEBIN, NewSlotID);
             PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(nullptr, PItem->getID(), quantity, MsgStd::ThrowAway);
+            luautils::OnItemDrop(PChar, PItem, IsRecycleBin::Yes);
         }
         else
         {
@@ -2938,11 +2939,18 @@ void AddItemToRecycleBin(CCharEntity* PChar, uint32 container, uint8 slotID, uin
     else // Bin is full
     {
         // Evict recycle bin slot 1
+        CItem* PEvictedItem = RecycleBin->GetItem(1);
         RecycleBin->InsertItem(nullptr, 1);
         db::preparedStmt("DELETE FROM char_inventory WHERE charid = ? AND location = ? AND slot = ? LIMIT 1",
                          PChar->id,
                          LOC_RECYCLEBIN,
                          1);
+
+        if (PEvictedItem)
+        {
+            luautils::OnItemDrop(PChar, PEvictedItem);
+            destroy(PEvictedItem);
+        }
 
         // Move everything around to accomodate
         for (int i = 2; i <= 10; ++i)
@@ -2983,6 +2991,7 @@ void AddItemToRecycleBin(CCharEntity* PChar, uint32 container, uint8 slotID, uin
             PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PUpdatedItem, LOC_RECYCLEBIN, i);
         }
         PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(nullptr, PItem->getID(), quantity, MsgStd::ThrowAway);
+        luautils::OnItemDrop(PChar, PItem, IsRecycleBin::Yes);
     }
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
 }
@@ -2992,6 +3001,15 @@ void EmptyRecycleBin(CCharEntity* PChar)
     TracyZoneScoped;
 
     CItemContainer* recycleBin = PChar->getStorage(LOC_RECYCLEBIN);
+
+    for (uint8 slotID = 1; slotID <= recycleBin->GetSize(); ++slotID)
+    {
+        if (CItem* PItem = recycleBin->GetItem(slotID))
+        {
+            luautils::OnItemDrop(PChar, PItem);
+        }
+    }
+
     db::preparedStmt("DELETE FROM char_inventory WHERE charid = ? AND location = 17", PChar->id);
     recycleBin->Clear();
 }
