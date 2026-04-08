@@ -291,7 +291,7 @@ xi.mobSkill =
     HYPOTHERMAL_COMBUSTION_2      =  602, -- Snoll Tzar
     COUNTERSTANCE_1               =  603, -- Geush Urvan
 
-    SHOULDER_TACKLE_2             =  606,
+    SHOULDER_TACKLE_1             =  606,
     SLAM_DUNK_1                   =  607,
 
     NETHER_BLAST_1                =  610,

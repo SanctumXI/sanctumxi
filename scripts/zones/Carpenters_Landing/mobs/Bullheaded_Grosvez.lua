@@ -52,10 +52,10 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
     local skillList =
     {
         xi.mobSkill.SLAM_DUNK_1,
-        xi.mobSkill.SHOULDER_TACKLE_2
+        xi.mobSkill.SHOULDER_TACKLE_1
     }
 
-    return skillList[math.randomInt(1, #skillList)]
+    return skillList[math.random(1, #skillList)]
 end
 
 entity.onMobWeaponSkill = function(mob, target, skill, action)

@@ -364,7 +364,7 @@ INSERT INTO `mob_spawn_points` VALUES (16785717,0,'Para','Para',48,51,51,-412.54
 INSERT INTO `mob_spawn_points` VALUES (16785718,0,'Para','Para',48,51,51,-412.864,-0.094,-359.222,26);
 INSERT INTO `mob_spawn_points` VALUES (16785719,0,'Para','Para',48,51,51,-413.243,0.000,-361.204,254);
 INSERT INTO `mob_spawn_points` VALUES (16785720,0,'Para','Para',48,51,51,-416.734,-0.465,-365.799,54);
-INSERT INTO `mob_spawn_points` VALUES (16785721,0,'Bullheaded_Grosvez','Bullheaded Grosvez',49,40,40,37.861,-8.684,-568.912,198);
+INSERT INTO `mob_spawn_points` VALUES (16785721,0,'Bullheaded_Grosvez','Bullheaded Grosvez',49,45,45,37.861,-8.684,-568.912,198);
 INSERT INTO `mob_spawn_points` VALUES (16785722,0,'Mycophile','Mycophile',50,35,35,145.500,-9.483,-699.000,74);
 INSERT INTO `mob_spawn_points` VALUES (16785723,0,'Hercules_Beetle','Hercules Beetle',51,34,34,-238.000,-5.950,-93.500,180);
 INSERT INTO `mob_spawn_points` VALUES (16785724,0,'Orcfeltrap','Orcfeltrap',52,0,0,118.940,-6.433,-437.238,14);
