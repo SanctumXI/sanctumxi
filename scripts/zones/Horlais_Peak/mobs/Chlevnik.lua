@@ -29,6 +29,15 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:setMod(xi.mod.STUN_RES_RANK, 10)
+
+    mob:setMod(xi.mod.TRIPLE_ATTACK, 5)
+    mob:setMobMod(xi.mobMod.NO_MOVE, 0)
+    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMod(xi.mod.REGAIN, 50)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
+
+    mob:setTP(3000)
     mob:setUnkillable(true)
     mob:setAutoAttackEnabled(true)
     mob:setMagicCastingEnabled(true)
