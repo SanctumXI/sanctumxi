@@ -2506,6 +2506,7 @@ INSERT INTO `item_basic` VALUES (2513,0,'rafflesia_vine','rafflesia_vine',@GENER
 INSERT INTO `item_basic` VALUES (2514,0,'rafflesia_petal','rafflesia_petal',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@ALCHEMY,565);
 INSERT INTO `item_basic` VALUES (2515,0,'sandworm_fang','sandworm_fang',@GENERAL_TYPE,12,0,@BONECRAFT,178);
 INSERT INTO `item_basic` VALUES (2516,0,'sandworm_shell','sandworm_shell',@GENERAL_TYPE,12,0,@BONECRAFT,178);
+INSERT INTO `item_basic` VALUES (2517,0,'fes_gobbiedial_key','fes_gobbie_key',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (2518,0,'smilodon_hide','smilodon_hide',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@LEATHERCRAFT,480);
 INSERT INTO `item_basic` VALUES (2519,0,'yagudo_osode','yagudo_osode',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@BEAST_MADE,0);
 INSERT INTO `item_basic` VALUES (2520,0,'yagudo_kote','yagudo_kote',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@BEAST_MADE,0);
@@ -3521,6 +3522,8 @@ INSERT INTO `item_basic` VALUES (3531,0,'soaring_trophy','soaring_trophy',@GENER
 INSERT INTO `item_basic` VALUES (3532,0,'veiled_trophy','veiled_trophy',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (3533,0,'mog_kupon_a-sap','kupon_a-sap',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (3534,0,'mog_kupon_a-jad','kupon_a-jad',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (3535,0,'mog_kupon_a-dia','kupon_a-dia',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (3536,0,'mog_kupon_a-eme','kupon_a-eme',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (3537,0,'mog_kupon_a-rub','kupon_a-rub',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (3538,0,'mog_kupon_w-eth','kupon_w-eth',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (3539,0,'mog_kupon_i-aby','kupon_i-aby',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
@@ -6449,6 +6452,7 @@ INSERT INTO `item_basic` VALUES (6690,0,'sheet_of_starlight_tunes','starlight_tu
 INSERT INTO `item_basic` VALUES (6691,0,'sheet_of_mapitoto_tunes','mapitoto_tunes',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (6692,0,'vial_of_experimental_fluid','exper._fluid',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);  -- TODO: Verify NPC sale price
 INSERT INTO `item_basic` VALUES (6693,0,'impish_box','impish_box',@USABLE_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (6694,0,'chocobo_chair_ii','choco._chair_ii',@GENERAL_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (6695,0,'adenium_bench','aden._bench',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (6696,0,'sheet_of_near_east_tunes','near_east_tunes',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (6697,0,'scroll_of_instant_reraise_iii','instant_reraise_iii',@USABLE_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
@@ -7153,6 +7157,8 @@ INSERT INTO `item_basic` VALUES (9274,0,'dial_key_#anv','dial_key_#anv',@GENERAL
 INSERT INTO `item_basic` VALUES (9275,0,'mars_orb','mars_orb',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9276,0,'venus_orb','venus_orb',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9277,0,'silver_a.m.a.n._voucher','silver_voucher',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9278,0,'prishes_teardrop','prishes_teardrop',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9279,0,'mog_kupon_w-mogb','kupon_w-mogb',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9280,8655,'damage_gauge_ii','damage_gauge_ii',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9281,0,'paragon_warrior_card','p._war_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9282,0,'paragon_monk_card','p._mnk_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
@@ -7645,6 +7651,7 @@ INSERT INTO `item_basic` VALUES (9768,0,'lightning_crest_card','lightning_crest_
 INSERT INTO `item_basic` VALUES (9769,0,'water_crest_card','water_crest_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@CARDS,12);
 INSERT INTO `item_basic` VALUES (9770,0,'light_crest_card','light_crest_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@CARDS,12);
 INSERT INTO `item_basic` VALUES (9771,0,'dark_crest_card','dark_crest_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@CARDS,12);
+INSERT INTO `item_basic` VALUES (9772,0,'teal_mog_pell','mog_pell_(teal)',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9773,0,'moldy_bolt','moldy_bolt',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@MISC_3,0);
 INSERT INTO `item_basic` VALUES (9774,0,'offering_to_the_orcs','orc_offering',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@BEAST_MADE,933);
 INSERT INTO `item_basic` VALUES (9775,0,'offering_to_the_quadav','quadav_offering',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@BEAST_MADE,933);
@@ -7721,6 +7728,49 @@ INSERT INTO `item_basic` VALUES (9890,0,'tarazacum_orb','tarazacum_orb',@GENERAL
 INSERT INTO `item_basic` VALUES (9891,0,'zinnia_orb','zinnia_orb',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9892,0,'lions_roar','lions_roar',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9893,0,'pile_of_wyrm_ash','wyrm_ash',@GENERAL_TYPE,12,@FLAG_NOSALE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9894,0,'rakaznar_key_#a','rakaznar_key_#a',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9895,0,'rakaznar_key_#b','rakaznar_key_#b',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9896,0,'rakaznar_key_#c','rakaznar_key_#c',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9897,0,'rakaznar_key_#d','rakaznar_key_#d',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9898,0,'rakaznar_plate_#a','rakaznar_plate_#a',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9899,0,'rakaznar_plate_#b','rakaznar_plate_#b',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9900,0,'rakaznar_plate_#c','rakaznar_plate_#c',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9901,0,'rakaznar_plate_#d','rakaznar_plate_#d',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9902,0,'rakaznar_sheet_#a','rakaznar_sheet_#a',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9903,0,'rakaznar_sheet_#b','rakaznar_sheet_#b',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9904,0,'rakaznar_sheet_#c','rakaznar_sheet_#c',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9905,0,'rakaznar_sheet_#d','rakaznar_sheet_#d',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9906,0,'rakaznar_shard_#a','rakaznar_shard_#a',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9907,0,'rakaznar_shard_#b','rakaznar_shard_#b',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9908,0,'rakaznar_shard_#c','rakaznar_shard_#c',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9909,0,'rakaznar_shard_#d','rakaznar_shard_#d',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9910,0,'rakaznar_shard_#e','rakaznar_shard_#e',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9911,0,'rakaznar_shard_#f','rakaznar_shard_#f',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9912,0,'rakaznar_shard_#g','rakaznar_shard_#g',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9913,0,'rakaznar_shard_#h','rakaznar_shard_#h',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9914,0,'rakaznar_fragment_#1','rakaznar_frag._#1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9915,0,'rakaznar_fragment_#2','rakaznar_frag._#2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9916,0,'rakaznar_fragment_#3','rakaznar_frag._#3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9917,0,'rakaznar_fragment_#4','rakaznar_frag._#4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9918,0,'sheet_of_rakaznar_metal_#a','rakaznar_metal_#a',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9919,0,'sheet_of_rakaznar_metal_#b','rakaznar_metal_#b',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9920,0,'sheet_of_rakaznar_metal_#c','rakaznar_metal_#c',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9921,0,'sheet_of_rakaznar_metal_#d','rakaznar_metal_#d',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9922,0,'sheet_of_rakaznar_metal_#e','rakaznar_metal_#e',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9923,0,'sheet_of_rakaznar_metal_#f','rakaznar_metal_#f',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9924,0,'sheet_of_rakaznar_metal_#g','rakaznar_metal_#g',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9925,0,'sheet_of_rakaznar_metal_#h','rakaznar_metal_#h',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9926,0,'rakaznar_seal','rakaznar_seal',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9927,0,'rakaznar_sapphire','rakaz._sapphire',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);    -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9928,0,'rakaznar_starstone','rakaz._starstone',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);  -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9929,0,'chunk_of_eikondrite','eikondrite',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);       -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9930,0,'chunk_of_octahedrite','octahedrite',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);     -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9931,0,'chunk_of_hexahedrite','hexahedrite',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);     -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9932,0,'chunk_of_mesosiderite','mesosiderite',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);   -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9933,0,'golden_shell','golden_shell',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                                        -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9934,0,'aurum_shell','aurum_shell',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                                          -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9935,0,'voracious_psyche','voracious_psyche',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);    -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9936,0,'hunk_of_fat_worm_meat','fat_worm_meat',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);  -- TODO: Verify NPC sale price
 INSERT INTO `item_basic` VALUES (9937,0,'ambuscade_voucher_replica','a._voucher_replica',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9938,0,'ambuscade_chit_headgear','a._chit_head',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9939,0,'ambuscade_chit_bodygear','a._chit_body',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
@@ -7732,6 +7782,96 @@ INSERT INTO `item_basic` VALUES (9944,0,'ambuscade_chit_bodygear_+1','a._chit_bo
 INSERT INTO `item_basic` VALUES (9945,0,'ambuscade_chit_handgear_+1','a._chit_hand_+1',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9946,0,'ambuscade_chit_leggear_+1','a._chit_leg_+1',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9947,0,'ambuscade_chit_footgear_+1','a._chit_foot_+1',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9948,0,'ambuscade_chit_ring','a._chit_ring',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9949,0,'moogle_iris','moogle_iris',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9950,0,'chunk_of_guimauve_meat','guimauve_meat',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);  -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (9951,0,'mog_kupon_a-aev','kupon_a-aev',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9952,0,'mog_kupon_a-ahm','kupon_a-ahm',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9953,0,'mog_kupon_a-agk','kupon_a-agk',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9954,0,'mog_kupon_a-att','kupon_a-att',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9955,0,'mog_kupon_a-amr','kupon_a-amr',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (9956,0,'temenos_north_tower_f1_data','tem._n-f1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9957,0,'temenos_north_tower_f2_data','tem._n-f2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9958,0,'temenos_north_tower_f3_data','tem._n-f3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9959,0,'temenos_north_tower_f4_data','tem._n-f4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9960,0,'temenos_north_tower_f5_data','tem._n-f5',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9961,0,'temenos_north_tower_f6_data','tem._n-f6',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9962,0,'temenos_north_tower_f7_data','tem._n-f7',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9963,0,'temenos_west_tower_f1_data','tem._w-f1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9964,0,'temenos_west_tower_f2_data','tem._w-f2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9965,0,'temenos_west_tower_f3_data','tem._w-f3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9966,0,'temenos_west_tower_f4_data','tem._w-f4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9967,0,'temenos_west_tower_f5_data','tem._w-f5',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9968,0,'temenos_west_tower_f6_data','tem._w-f6',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9969,0,'temenos_west_tower_f7_data','tem._w-f7',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9970,0,'temenos_east_tower_f1_data','tem._e-f1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9971,0,'temenos_east_tower_f2_data','tem._e-f2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9972,0,'temenos_east_tower_f3_data','tem._e-f3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9973,0,'temenos_east_tower_f4_data','tem._e-f4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9974,0,'temenos_east_tower_f5_data','tem._e-f5',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9975,0,'temenos_east_tower_f6_data','tem._e-f6',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9976,0,'temenos_east_tower_f7_data','tem._e-f7',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9977,0,'temenos_central_tower_f1_data','tem._c-f1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9978,0,'temenos_central_tower_f2_data','tem._c-f2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9979,0,'temenos_central_tower_f3_data','tem._c-f3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9980,0,'temenos_central_tower_f4_data','tem._c-f4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9981,0,'apollyon_nw_#1_data','apollyon_nw_#1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9982,0,'apollyon_nw_#2_data','apollyon_nw_#2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9983,0,'apollyon_nw_#3_data','apollyon_nw_#3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9984,0,'apollyon_nw_#4_data','apollyon_nw_#4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9985,0,'apollyon_nw_#5_data','apollyon_nw_#5',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9986,0,'apollyon_sw_#1_data','apollyon_sw_#1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9987,0,'apollyon_sw_#2_data','apollyon_sw_#2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9988,0,'apollyon_sw_#3_data','apollyon_sw_#3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9989,0,'apollyon_sw_#4_data','apollyon_sw_#4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9990,0,'apollyon_ne_#1_data','apollyon_ne_#1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9991,0,'apollyon_ne_#2_data','apollyon_ne_#2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9992,0,'apollyon_ne_#3_data','apollyon_ne_#3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9993,0,'apollyon_ne_#4_data','apollyon_ne_#4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9994,0,'apollyon_ne_#5_data','apollyon_ne_#5',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9995,0,'apollyon_se_#1_data','apollyon_se_#1',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9996,0,'apollyon_se_#2_data','apollyon_se_#2',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9997,0,'apollyon_se_#3_data','apollyon_se_#3',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9998,0,'apollyon_se_#4_data','apollyon_se_#4',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (9999,0,'fistful_of_alabaster_matter','alabaster_matter',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);  -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10000,0,'fistful_of_murky_matter','murky_matter',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);         -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10001,0,'jewel_of_revelation','jewel_of_rev.',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10002,0,'jewel_of_camaraderie','jewel_of_cam.',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10003,0,'jewel_of_persistence','jewel_of_per.',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10004,0,'jewel_of_destiny','jewel_of_des.',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10005,0,'jewel_of_affection','jewel_of_aff.',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10006,0,'shard_of_hope','shard_of_hope',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@NONE,0);         -- TODO: Verify AH category
+INSERT INTO `item_basic` VALUES (10007,0,'shard_of_trust','shard_of_trust',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@NONE,0);       -- TODO: Verify AH category
+INSERT INTO `item_basic` VALUES (10008,0,'shard_of_bravery','shard_of_bravery',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@NONE,0);   -- TODO: Verify AH category
+INSERT INTO `item_basic` VALUES (10009,0,'shard_of_justice','shard_of_justice',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@NONE,0);   -- TODO: Verify AH category
+INSERT INTO `item_basic` VALUES (10010,0,'shard_of_mercy','shard_of_mercy',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOSALE,@NONE,0);       -- TODO: Verify AH category
+INSERT INTO `item_basic` VALUES (10011,0,'tellurium_ingot','tellurium_ingot',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                    -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10012,0,'chunk_of_black_jadeite','black_jadeite',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);               -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10013,0,'bolt_of_vicuna_cloth','vicuna_cloth',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                  -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10014,0,'plank_of_ash_wood','ash_wood',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                         -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10015,0,'square_of_white_serpent_leather','wh._serp._leather',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);  -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10016,0,'white_dragon_scale','wh._drag._scale',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                 -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10017,0,'vial_of_hydro_oil','hydro_oil',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                        -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10018,0,'alabaster_part_i','ala._part_i',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                       -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10019,0,'alabaster_part_ii','ala._part_ii',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                     -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10020,0,'alabaster_part_iii','ala._part_iii',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                   -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10021,0,'alabaster_part_iv','ala._part_iv',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                     -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10022,0,'alabaster_core','ala._core',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);                           -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10024,0,'radiance_card','radiance_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10025,0,'aqua_card','aqua_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10026,0,'storm_card','storm_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10027,0,'gloom_card','gloom_card',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10028,0,'murky_part_i','murky_part_i',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);      -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10029,0,'murky_part_ii','murky_part_ii',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);    -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10030,0,'murky_part_iii','murky_part_iii',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);  -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10031,0,'murky_part_iv','murky_part_iv',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);    -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10032,0,'murky_core','murky_core',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);          -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10033,0,'mog_kupon_a-af+3','kupon_a-af+3',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10034,0,'mog_kupon_a-rel+3','kupon_a-rel+3',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10035,0,'mog_kupon_a-emp+2','kupon_a-emp+2',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
+INSERT INTO `item_basic` VALUES (10036,0,'chunk_of_bronzite','bronzite',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX,@NONE,0);                                           -- TODO: Verify AH category, Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10037,0,'fafnirs_scale','fafnirs_scale',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);  -- TODO: Verify NPC sale price
+INSERT INTO `item_basic` VALUES (10038,0,'kirins_mane','kirins_mane',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);      -- TODO: Verify NPC sale price
 INSERT INTO `item_basic` VALUES (10049,0,'♪raptor','♪raptor',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10050,0,'♪tiger','♪tiger',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10051,0,'♪crab','♪crab',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
@@ -7768,6 +7908,8 @@ INSERT INTO `item_basic` VALUES (10081,0,'♪noble_chocobo','♪noble_chocobo',@
 INSERT INTO `item_basic` VALUES (10082,0,'♪ixion','♪ixion',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10083,0,'♪phuabo','♪phuabo',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10084,0,'♪craklaw','♪craklaw',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (10085,0,'♪alicorn','♪alicorn',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
+INSERT INTO `item_basic` VALUES (10086,0,'♪bubble_crab','♪bubble_crab',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10112,906,'cipher_of_zeids_alter_ego','cipher_zeid',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10113,907,'cipher_of_lions_alter_ego','cipher_lion',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (10114,908,'cipher_of_tenzens_alter_ego','cipher_tenzen',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
