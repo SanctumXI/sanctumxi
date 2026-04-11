@@ -34801,7 +34801,7 @@ INSERT INTO `mob_spawn_points` VALUES (17199501,0,'Hill_Lizard','Hill Lizard',23
 INSERT INTO `mob_spawn_points` VALUES (17199502,0,'Hill_Lizard','Hill Lizard',23,18,19,-379.000,-7.000,244.000,127);
 INSERT INTO `mob_spawn_points` VALUES (17199503,0,'Hill_Lizard','Hill Lizard',23,18,19,-372.000,-8.000,209.000,127);
 INSERT INTO `mob_spawn_points` VALUES (17199504,51,'Goblin_Mugger','Goblin Mugger',18,24,25,-388.000,-14.000,278.000,127);
-INSERT INTO `mob_spawn_points` VALUES (17199505,52,'Goblin_Leecher','Goblin Leecher',19,24,25,-316.581,-8.625,243.828,106);
+INSERT INTO `mob_spawn_points` VALUES (17199505,0,'Goblin_Leecher','Goblin Leecher',19,24,25,-316.581,-8.625,243.828,106);
 INSERT INTO `mob_spawn_points` VALUES (17199506,53,'Goblin_Gambler','Goblin Gambler',20,24,25,-379.526,-11.894,309.577,91);
 INSERT INTO `mob_spawn_points` VALUES (17199507,51,'Ghoul','Ghoul',14,20,21,-400.470,-8.466,201.231,28);
 INSERT INTO `mob_spawn_points` VALUES (17199508,52,'Ghoul','Ghoul',21,22,23,-402.766,-16.500,317.849,6);

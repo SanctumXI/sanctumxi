@@ -135,7 +135,7 @@ INSERT INTO `abilities` VALUES (114,'corsairs_roll',17,5,1,60,193,420,0,114,2000
 INSERT INTO `abilities` VALUES (115,'puppet_roll',17,52,1,60,193,420,0,115,2000,0,6,0.0,1,8,1,80,0,8,'TOAU');
 INSERT INTO `abilities` VALUES (116,'dancers_roll',17,61,1,60,193,420,0,116,2000,0,6,0.0,1,8,1,80,0,8,'WOTG');
 INSERT INTO `abilities` VALUES (117,'scholars_roll',17,64,1,60,193,420,0,117,2000,0,6,0.0,1,8,1,80,0,8,'WOTG');
-INSERT INTO `abilities` VALUES (118,'bolters_roll',17,76,1,60,193,420,0,118,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
+INSERT INTO `abilities` VALUES (118,'bolters_roll',17,75,1,60,193,420,0,118,2000,0,6,0.0,1,8,1,80,0,8,NULL);
 INSERT INTO `abilities` VALUES (119,'casters_roll',17,79,1,60,193,420,0,119,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
 INSERT INTO `abilities` VALUES (120,'coursers_roll',17,81,1,60,193,420,0,120,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
 INSERT INTO `abilities` VALUES (121,'blitzers_roll',17,83,1,60,193,420,0,121,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
@@ -306,7 +306,7 @@ INSERT INTO `abilities` VALUES (288,'hagakure',12,95,1,180,54,0,0,249,2000,0,6,0
 INSERT INTO `abilities` VALUES (291,'issekigan',13,95,1,300,57,0,0,246,2000,0,6,0.0,0,0,1,0,0,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (292,'dragon_breaker',14,87,4,300,58,320,0,236,2000,0,6,10.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (293,'soul_jump',14,85,4,120,167,100,0,209,2000,0,3,8.0,0,0,1,0,1220,0,NULL);
-INSERT INTO `abilities` VALUES (295,'steady_wing',14,95,1,300,70,100,0,262,2000,0,6,0.0,0,0,0,0,0,0,NULL);
+INSERT INTO `abilities` VALUES (295,'steady_wing',14,30,1,300,70,100,0,262,2000,0,6,0.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (296,'mana_cede',15,87,1,300,71,100,0,241,2000,0,6,0.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (297,'efflux',16,83,1,180,185,100,0,256,2000,0,6,0.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (298,'unbridled_learning',16,95,1,300,81,100,0,263,2000,0,6,0.0,0,0,0,0,0,0,NULL);
@@ -316,7 +316,7 @@ INSERT INTO `abilities` VALUES (303,'misers_roll',17,92,1,60,193,420,0,139,2000,
 INSERT INTO `abilities` VALUES (304,'companions_roll',17,95,1,60,193,420,0,265,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
 INSERT INTO `abilities` VALUES (305,'avengers_roll',17,97,1,60,193,420,0,266,2000,0,6,0.0,1,8,1,80,0,8,'ABYSSEA');
 INSERT INTO `abilities` VALUES (309,'cooldown',18,95,1,300,114,100,0,264,2000,0,6,0.0,0,0,0,0,0,0,NULL);
-INSERT INTO `abilities` VALUES (310,'deus_ex_automata',18,5,1,60,115,0,0,83,2000,0,6,0.0,0,0,1,80,0,0,'ABYSSEA');
+INSERT INTO `abilities` VALUES (310,'deus_ex_automata',18,5,1,60,115,0,0,83,2000,0,6,0.0,0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (311,'curing_waltz_v',19,87,27,14,189,102,0,35,2000,0,14,20.0,0,0,0,0,0,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (312,'feather_step',19,83,4,5,220,591,0,17,2000,0,14,3.0,0,0,1,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (313,'striking_flourish',19,89,1,30,226,100,0,243,2000,0,14,0.0,0,0,1,80,0,0,NULL);
@@ -399,7 +399,7 @@ INSERT INTO `abilities` VALUES (390,'naturalists_roll',17,67,1,60,193,420,0,328,
 INSERT INTO `abilities` VALUES (391,'runeists_roll',17,70,1,60,193,420,0,329,2000,0,6,0.0,1,8,1,80,0,8,'SOA');
 INSERT INTO `abilities` VALUES (392,'crooked_cards',17,95,1,600,96,100,0,335,2000,0,6,0.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (393,'spirit_bond',14,65,257,60,149,100,0,86,2000,0,6,4.0,0,0,0,0,0,0,'ROV');
-INSERT INTO `abilities` VALUES (394,'majesty',7,70,1,60,150,100,0,338,2000,0,6,0.0,0,0,0,340,0,0,NULL);
+INSERT INTO `abilities` VALUES (394,'majesty',7,50,1,300,150,100,0,338,2000,0,6,0.0,0,0,0,340,0,0,NULL);
 INSERT INTO `abilities` VALUES (512,'healing_ruby',15,1,3,60,174,0,0,94,2000,0,6,20.0,0,0,1,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (513,'poison_nails',15,5,4,60,173,0,0,94,2000,0,6,3.0,0,0,1,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (514,'shining_ruby',15,24,1,60,174,0,0,94,2000,0,6,20.0,0,14,1,60,0,0,NULL);

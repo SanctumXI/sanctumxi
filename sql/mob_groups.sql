@@ -12117,11 +12117,11 @@ INSERT INTO `mob_groups` VALUES (122,7167,171,'Goblin_Lansquenet',0,128,0,0,0,0,
 -- ------------------------------------------------------------
 
 INSERT INTO `mob_groups` VALUES (1,1038,172,'Ding_Bats',300,0,654,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (2,6420,172,'Burrower_Worm',300,0,2501,0,0,0,'ABYSSEA');
-INSERT INTO `mob_groups` VALUES (3,6469,172,'Colliery_Bat',300,0,654,0,0,0,'ABYSSEA');
-INSERT INTO `mob_groups` VALUES (4,6365,172,'Soot_Crab',300,0,2104,0,0,0,'ABYSSEA');
+INSERT INTO `mob_groups` VALUES (2,6420,172,'Burrower_Worm',300,0,2501,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (3,6469,172,'Colliery_Bat',300,0,654,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (4,6365,172,'Soot_Crab',300,0,2104,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (5,3371,172,'River_Crab',300,0,2103,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (6,6399,172,'Veindigger_Leech',300,0,963,0,0,0,'ABYSSEA');
+INSERT INTO `mob_groups` VALUES (6,6399,172,'Veindigger_Leech',300,0,963,0,0,0,NULL);
 
 -- The Gloom Phantom's Approach
 INSERT INTO `mob_groups` VALUES (7,0,172,'Gloom_Phantom',0,128,0,0,0,0,NULL); -- TODO: capture level from retail

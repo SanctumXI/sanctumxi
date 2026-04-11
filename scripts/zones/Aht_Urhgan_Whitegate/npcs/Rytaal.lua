@@ -45,9 +45,10 @@ entity.onTrigger = function(player, npc)
             end
         end
     elseif
-        player:getCurrentMission(xi.mission.log_id.TOAU) > xi.mission.id.toau.PRESIDENT_SALAHEEM or
-        (player:getCurrentMission(xi.mission.log_id.TOAU) == xi.mission.id.toau.PRESIDENT_SALAHEEM and
-        player:getCharVar('ToAU3Progress') >= 1)
+        player:getCurrentMission(xi.mission.log_id.TOAU) >= xi.mission.id.toau.PRESIDENT_SALAHEEM 
+        --or
+        --(player:getCurrentMission(xi.mission.log_id.TOAU) == xi.mission.id.toau.PRESIDENT_SALAHEEM and
+        --player:getCharVar('ToAU3Progress') >= 1)
     then
         local currentTime = GetSystemTime()
         local refreshTime = player:getCharVar('nextTagTime')

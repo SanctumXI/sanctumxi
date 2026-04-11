@@ -48,6 +48,12 @@ page1 =
             playerArg:setPos(0, 0, 0, 0, xi.zone.BASTOK_MINES)
         end,
     },
+        {
+        'Send me to Aht Urghan!',
+        function(playerArg)
+            playerArg:setPos(0, 0, 0, 0, xi.zone.AHT_URHGAN_WHITEGATE)
+        end,
+    },
     {
         'Next Page',
         function(playerArg)
@@ -196,7 +202,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         onTrigger = function(player, npc)
             -- NOTE: We have to use getPacketName, because the regular name is modified and being used
             --     : for internal lookups
-            player:printToPlayer('Welcome to GM Home!', 0, npc:getPacketName())
+            player:printToPlayer('Welcome to Gaytown!', 0, npc:getPacketName())
         end,
     })
 

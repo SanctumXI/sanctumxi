@@ -132,6 +132,10 @@ public:
     // pathfinder, not guaranteed to be implemented
     std::unique_ptr<CPathFind> PathFind;
 
+    uint16 m_queuedRangedAttack = 0;
+    uint16 m_queuedSpellTargId = 0;
+    SpellID m_queuedSpell = (SpellID)0;
+
 protected:
     // input controller
     std::unique_ptr<CController> Controller;

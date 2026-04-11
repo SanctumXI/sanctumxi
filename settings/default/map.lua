@@ -66,7 +66,7 @@ xi.settings.map =
     ENMITY_CAP = 100000,
 
     -- Misc EXP related settings
-    EXP_RATE                = .7,
+    EXP_RATE                = 0.7,
     EXP_LOSS_RATE           = 1.0,
     EXP_PARTY_GAP_PENALTIES = true,
 

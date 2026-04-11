@@ -10,7 +10,7 @@ entity.onTrigger = function(player, npc)
     {
         { xi.item.ARASY_SAINTI,      100100 },
         { xi.item.ARASY_KNIFE,       100100 },
-        { xi.item.ARASY_SWORD,       100100 },
+        { xi.item.ARASY_S4WORD,       100100 },
         { xi.item.ARASY_CLAYMORE,    100100 },
         { xi.item.ARASY_TABAR,       100100 },
         { xi.item.ARASY_AXE,         100100 },

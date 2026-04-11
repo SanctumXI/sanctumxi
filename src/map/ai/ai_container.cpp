@@ -20,7 +20,6 @@
 */
 
 #include "ai/ai_container.h"
-
 #include "ai/controllers/mob_controller.h"
 #include "ai/controllers/pet_controller.h"
 #include "ai/controllers/player_controller.h"
@@ -463,9 +462,34 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
             break;
         }
     }
+    auto* PChar = dynamic_cast<CCharEntity*>(PEntity);
+    if (
+        (m_queuedRangedAttack || m_queuedSpellTargId) &&
+        PChar &&
+        PChar->PAI &&
+        PChar->PAI->CanChangeState()
+    ) 
+    {
+        if (
+            m_queuedRangedAttack &&
+            m_Tick - PChar->m_LastRangedAttackTime > std::chrono::milliseconds(1100)
+        ) 
+        {
+            RangedAttack(m_queuedRangedAttack);
+            m_queuedRangedAttack = 0;
+            
+        }
+        else if (m_queuedSpellTargId) 
+        {
+            Cast(m_queuedSpellTargId, m_queuedSpell);
+            m_queuedSpell       = (SpellID)0;
+            m_queuedSpellTargId = 0;
+            
+        }
+        
+    }
 
     PEntity->PostTick();
-
     co_return;
 }
 

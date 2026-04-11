@@ -16081,7 +16081,7 @@ INSERT INTO `item_mods` VALUES (13249,384,600); -- HASTE_GEAR: 600
 
 -- Sonic Belt +1
 INSERT INTO `item_mods` VALUES (13250,1,4);     -- DEF: 4
-INSERT INTO `item_mods` VALUES (13250,384,600); -- HASTE_GEAR: 600
+INSERT INTO `item_mods` VALUES (13250,384,700); -- HASTE_GEAR: 700
 
 -- Ocean Belt
 INSERT INTO `item_mods` VALUES (13251,1,4);   -- DEF: 4
@@ -22345,8 +22345,9 @@ INSERT INTO `item_mods` VALUES (14467,26,-10); -- RACC: -10
 
 -- Yinyang Robe
 INSERT INTO `item_mods` VALUES (14468,1,43);  -- DEF: 43
-INSERT INTO `item_mods` VALUES (14468,5,25);  -- MP: 25
+INSERT INTO `item_mods` VALUES (14468,5,50);  -- MP: 50
 INSERT INTO `item_mods` VALUES (14468,357,5); -- BP_DELAY: 5
+INSERT INTO `item_mods` VALUES (14468,346,1); -- Avatar Perp. -1
 INSERT INTO `item_mods` VALUES (14468,369,1); -- REFRESH: 1
 
 -- Reverend Mail

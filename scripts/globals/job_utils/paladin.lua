@@ -148,7 +148,7 @@ xi.job_utils.paladin.useInvincible = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useMajesty = function(player, target, ability)
-    player:addStatusEffect(xi.effect.MAJESTY, { power = 25, duration = 180, origin = player })
+    player:addStatusEffect(xi.effect.MAJESTY, { power = 25, duration = 30, origin = player })
 
     return xi.effect.MAJESTY
 end

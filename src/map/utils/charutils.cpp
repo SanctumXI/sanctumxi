@@ -4680,15 +4680,15 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.75;
+                return 0.85;
             case 3:
-                return 0.55;
+                return 0.80;
             case 4:
-                return 0.45;
+                return 0.75;
             case 5:
-                return 0.39;
+                return 0.70;
             case 6:
-                return 0.35;
+                return 0.67;
             default:
                 return 1.8 / membersInZone;
         }
@@ -4700,15 +4700,15 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.60;
+                return 0.75;
             case 3:
-                return 0.45;
+                return 0.70;
             case 4:
-                return 0.40;
+                return 0.65;
             case 5:
-                return 0.37;
+                return 0.60;
             case 6:
-                return 0.35;
+                return 0.57;
             default:
                 return 1.8 / membersInZone;
         }
@@ -4720,6 +4720,33 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
  *  Allocate experience points                                           *
  *                                                                       *
  ************************************************************************/
+
+static float GetChainDifficultyModifier(EMobDifficulty mobCheck)
+{
+    switch (mobCheck)
+    {
+        case EMobDifficulty::EasyPrey:
+            return 0.90f;
+
+        case EMobDifficulty::DecentChallenge:
+            return 0.95f;
+
+        case EMobDifficulty::EvenMatch:
+            return 1.05f;
+
+        case EMobDifficulty::Tough:
+            return 1.10f;
+
+        case EMobDifficulty::VeryTough:
+            return 1.15f;
+
+        case EMobDifficulty::IncrediblyTough:
+            return 1.25f;
+
+        default:
+            return 1.00f;
+    }
+}
 
 void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
 {
@@ -4837,7 +4864,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         const float monsterbonus = 1.0f + PMob->getMobMod(MOBMOD_EXP_BONUS) / 100.0f;
                         exp *= monsterbonus;
                     }
-
+                        
                     // Per monster caps pulled from: https://ffxiclopedia.fandom.com/wiki/Experience_Points
                     if (PMember->GetMLevel() <= 50)
                     {
@@ -4863,24 +4890,25 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     exp *= 1.0f;
                                     break;
                                 case 1:
-                                    exp *= 1.2f;
+                                    exp *= 1.10;
                                     break;
                                 case 2:
-                                    exp *= 1.25f;
+                                    exp *= 1.25;
                                     break;
                                 case 3:
-                                    exp *= 1.35f;
+                                    exp *= 1.30f;
                                     break;
                                 case 4:
-                                    exp *= 1.45f;
+                                    exp *= 1.35f;
                                     break;
                                 case 5:
-                                    exp *= 1.55f;
+                                    exp *= 1.40f;
                                     break;
                                 default:
-                                    exp *= 1.65f;
+                                    exp *= 1.50f;
                                     break;
                             }
+                             exp *= GetChainDifficultyModifier(mobCheck);
                         }
                         else
                         {

@@ -200,7 +200,7 @@ local function checkUpgrade(player, mob, nextKeyItem)
     then
         local zoneTextTable  = zones[mob:getZoneID()].text
         local currentKeyItem = mob:getLocalVar('[VoidWalker]PopedWith')
-        local rand           = math.random(1, 10)
+        local rand           = math.random(1, 20)
 
         if rand == 5 then
             if player:hasKeyItem(currentKeyItem) then

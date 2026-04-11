@@ -20,11 +20,12 @@
 */
 
 #include "player_controller.h"
-
 #include "ability.h"
 #include "ai/ai_container.h"
 #include "ai/states/death_state.h"
 #include "ai/states/inactive_state.h"
+#include "ai/states/magic_state.h"
+#include "ai/states/range_state.h"
 #include "entities/charentity.h"
 #include "items/item_weapon.h"
 #include "latent_effect_container.h"
@@ -50,6 +51,29 @@ auto CPlayerController::Tick(timer::time_point /*tick*/) -> Task<void>
 bool CPlayerController::Cast(uint16 targid, SpellID spellid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
+
+    // Check for spell queuing during animation phase
+    if (PChar->PAI->IsCurrentState<CMagicState>()) 
+    {
+        if (PChar->PAI->GetCurrentState()->IsCompleted()) 
+        {
+             // Queue the spell during animation phase
+                PChar->PAI->m_queuedSpellTargId = targid;
+            PChar->PAI->m_queuedSpell           = spellid;
+            PChar->PAI->m_queuedRangedAttack    = 0;
+            return true;
+            
+        }
+        else 
+        {
+             // Still casting, send wait message
+                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+            return false;
+            
+        }
+        
+    }
+    
     if (canAct() && !PChar->PRecastContainer->HasRecast(RECAST_MAGIC, static_cast<Recast>(spellid), 0s))
     {
         if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
@@ -76,18 +100,11 @@ bool CPlayerController::Engage(uint16 targid)
     {
         if (distance(PChar->loc.p, PTarget->loc.p) < 30)
         {
-            if (m_lastAttackTime + std::chrono::milliseconds(PChar->GetWeaponDelay(false)) < timer::now())
+            if (CController::Engage(targid))
             {
-                if (CController::Engage(targid))
-                {
-                    PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(true);
-                    PChar->pushPacket<GP_SERV_COMMAND_ASSIST>(PChar, PTarget);
-                    return true;
-                }
-            }
-            else
-            {
-                errMsg = std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PTarget, 0, 0, MsgBasic::WaitLonger);
+                PChar->PLatentEffectContainer->CheckLatentsWeaponDraw(true);
+                PChar->pushPacket<GP_SERV_COMMAND_ASSIST>(PChar, PTarget);
+                return true;
             }
         }
         else
@@ -156,7 +173,28 @@ bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
 bool CPlayerController::RangedAttack(uint16 targid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
-    if (canAct() && PChar->PAI->CanChangeState())
+    // Check for ranged attack queuing during animation phase
+    if (PChar->PAI->IsCurrentState<CRangeState>()) 
+    {
+        if (PChar->PAI->GetCurrentState()->IsCompleted()) 
+        {
+             // Queue the ranged attack during animation phase
+                PChar->PAI->m_queuedRangedAttack = targid;
+            PChar->PAI->m_queuedSpell            = (SpellID)0;
+            PChar->PAI->m_queuedSpellTargId      = 0;
+            return true;
+            
+        }
+        else 
+        {
+             // Still shooting, send wait message
+                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+            return false;
+            
+        }
+        
+    }
+    else if (canAct() && PChar->PAI->CanChangeState())
     {
         if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())
         {

@@ -7,7 +7,7 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
 {
     text =
     {
-        HOMEPOINT_SET                  = 24,    -- Home point set!
+    HOMEPOINT_SET                  = 24,    -- Home point set!
         ASSIST_CHANNEL                 = 6424,  -- You will be able to use the Assist Channel until #/#/# at #:# (JST).
         ITEM_CANNOT_BE_OBTAINED        = 6429,  -- You cannot obtain the <item>. Come back after sorting your inventory.
         CANNOT_OBTAIN_THE_ITEM         = 6431,  -- You cannot obtain the item. Come back after sorting your inventory.
@@ -56,7 +56,6 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         FFR_ROSEL                      = 7825,  -- Hrmm... Now, this is interesting! It pays to keep an eye on the competition. Thanks for letting me know!
         EXOROCHE_START                 = 7841,  -- You've some business with me? Sorry, but I'm busy.
         EXOROCHE_PLEASE_TELL           = 7844,  -- Please tell my son that I'll join him as soon as I'm done, so he's to stay right there.
-        RAIMBROY_DIALOG                = 7864,  --      
         GO_TO_KING_RANPERRES           = 7892,  -- Go to King Ranperre's Tomb and bring back <item>. How, you ask? Use your head. Now begone!
         TO_GET_TO_KING_RANPERRES       = 7911,  -- To get to King Ranperre's Tomb, head out the Eastgate into East Ronfaure, then make your way south as far as you can go. You should find it before long.
         YOU_FIND_A_WELL                = 7919,  -- You find a well.
@@ -126,17 +125,17 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
         CHOCOBO_FEEDING_SLEEP          = 10749, -- Your chocobo is sleeping soundly. You cannot feed it now.
         CHOCOBO_FEEDING_RUN_AWAY       = 10750, -- Your chocobo has run away. You cannot feed it now.
         CHOCOBO_FEEDING_STILL_EGG      = 10751, -- You cannot feed a chocobo that has not hatched yet.
-        CHOCOBO_FEEDING_ITEM           = 11834, -- #: %
-        TUTORIAL_NPC                   = 13560, -- Greetings and well met! Guardian of the Kingdom, Alaune, at your most humble service.
-        YOU_WISH_TO_EXCHANGE_SPARKS    = 15414, -- You wish to exchange your sparks?
-        DO_NOT_POSSESS_ENOUGH          = 15443, -- You do not possess enough <item> to complete the transaction.
-        NOT_ENOUGH_SPARKS              = 15444, -- You do not possess enough sparks of eminence to complete the transaction.
-        MAX_SPARKS_LIMIT_REACHED       = 15445, -- You have reached the maximum number of sparks that you can exchange this week (<number>). Your ability to purchase skill books and equipment will be restricted until next week.
-        YOU_NOW_HAVE_AMT_CURRENCY      = 15455, -- You now have <number> [sparks of eminence/conquest points/points of imperial standing/Allied Notes/bayld/Fields of Valor points/assault points (Leujaoam)/assault points (Mamool Ja Training Grounds)/assault points (Lebros Cavern)/assault points (Periqia)/assault points (Ilrusi Atoll)/cruor/kinetic units/obsidian fragments/mweya plasm corpuscles/ballista points/Unity accolades/pinches of Escha silt/resistance credits].
-        MAP_MARKER_TUTORIAL            = 15687, -- Selecting Map from the main menu opens the map of the area in which you currently reside. Select Markers and press the right arrow key to see all the markers placed on your map.
-        YOU_HAVE_JOINED_UNITY          = 15996, -- ou have joined [Pieuje's/Ayame's/Invincible Shield's/Apururu's/Maat's/Aldo's/Jakoh Wahcondalo's/Naja Salaheem's/Flaviria's/Yoran-Oran's/Sylvie's] Unity!
-        HAVE_ALREADY_CHANGED_UNITY     = 16072, -- ou have already changed Unities. Please wait until the next tabulation period.
-        TEAR_IN_FABRIC_OF_SPACE        = 16535, -- There appears to be a tear in the fabric of space...
+        CHOCOBO_FEEDING_ITEM           = 11843, -- #: %
+        TUTORIAL_NPC                   = 13569, -- Greetings and well met! Guardian of the Kingdom, Alaune, at your most humble service.
+        YOU_WISH_TO_EXCHANGE_SPARKS    = 15423, -- You wish to exchange your sparks?
+        DO_NOT_POSSESS_ENOUGH          = 15452, -- You do not possess enough <item> to complete the transaction.
+        NOT_ENOUGH_SPARKS              = 15453, -- You do not possess enough sparks of eminence to complete the transaction.
+        MAX_SPARKS_LIMIT_REACHED       = 15454, -- You have reached the maximum number of sparks that you can exchange this week (<number>). Your ability to purchase skill books and equipment will be restricted until next week.
+        YOU_NOW_HAVE_AMT_CURRENCY      = 15464, -- You now have <number> [sparks of eminence/conquest points/points of imperial standing/Allied Notes/bayld/Fields of Valor points/assault points (Leujaoam)/assault points (Mamool Ja Training Grounds)/assault points (Lebros Cavern)/assault points (Periqia)/assault points (Ilrusi Atoll)/cruor/kinetic units/obsidian fragments/mweya plasm corpuscles/ballista points/Unity accolades/pinches of Escha silt/resistance credits].
+        MAP_MARKER_TUTORIAL            = 15696, -- Selecting Map from the main menu opens the map of the area in which you currently reside. Select Markers and press the right arrow key to see all the markers placed on your map.
+        YOU_HAVE_JOINED_UNITY          = 16005, -- ou have joined [Pieuje's/Ayame's/Invincible Shield's/Apururu's/Maat's/Aldo's/Jakoh Wahcondalo's/Naja Salaheem's/Flaviria's/Yoran-Oran's/Sylvie's] Unity!
+        HAVE_ALREADY_CHANGED_UNITY     = 16081, -- ou have already changed Unities. Please wait until the next tabulation period.
+        TEAR_IN_FABRIC_OF_SPACE        = 16544, -- There appears to be a tear in the fabric of space...
     },
     mob =
     {

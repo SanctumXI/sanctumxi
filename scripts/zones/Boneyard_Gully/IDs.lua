@@ -7,7 +7,7 @@ zones[xi.zone.BONEYARD_GULLY] =
 {
     text =
     {
-        ITEM_CANNOT_BE_OBTAINED       = 6385, -- You cannot obtain the <item>. Come back after sorting your inventory.
+       ITEM_CANNOT_BE_OBTAINED       = 6385, -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED                 = 6391, -- Obtained: <item>.
         GIL_OBTAINED                  = 6392, -- Obtained <number> gil.
         KEYITEM_OBTAINED              = 6394, -- Obtained key item: <keyitem>.
@@ -47,8 +47,6 @@ zones[xi.zone.BONEYARD_GULLY] =
         EVEN_AT_MY_BEST               = 7821, -- Even at my best...
         SHIKAREE_X_2HR                = 7822, -- Time to end the hunt! Go for the jugular!
         DINNER_TIME_ADVENTURER_STEAK  = 7823, -- Dinner time! Tonight we're having Adventurer Steak!
-        SHIKAREE_ROS_ENGAGE           = 7824, -- "Justice" is the diamond that shines even after being shattered!
-        SHIKAREE_PARTY_WIPE           = 7827, -- Have you been slacking off since you saved the world, sweetheart? Looks like your sense of "justice" needs a little dusting off.
     },
 
     mob =

@@ -5,6 +5,7 @@ require('modules/module_utils')
 require('scripts/zones/Aht_Urhgan_Whitegate/Zone')
 
 local m = Module:new('whitegatewarp')
+m:setEnabled(true)
 
 local menu  = {}
 local page1 = {}
@@ -72,14 +73,14 @@ m:addOverride('xi.zones.Aht_Urhgan_Whitegate.Zone.onInitialize', function(zone)
     super(zone)
 
     zone:insertDynamicEntity({
-        objtype  = xi.objType.NPC,
-        name     = 'Warp Book',
-        look     = 2433,
-        x        = 80.750,
-        y        = 0,
-        z        = 70.25,
+        objtype = xi.objType.NPC,
+        name = 'Warp Book',
+        x = 80.750,
+        y = 0,
+        z = 70.25,
         rotation = 128,
         widescan = 1,
+        
         onTrigger = function(player, npc)
             menu.options = page1
             delaySendMenu(player, menu)

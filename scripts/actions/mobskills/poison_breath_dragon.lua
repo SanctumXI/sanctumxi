@@ -28,8 +28,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        local power    = 50
-        local duration = math.random(120, 180)
+        local power    = (lvl / 2)
+        local duration = math.random(45, 160)
 
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, duration)
     end

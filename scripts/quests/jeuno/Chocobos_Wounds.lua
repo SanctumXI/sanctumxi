@@ -145,46 +145,44 @@ quest.sections =
                 end,
             },
 
-            onEventFinish =
-            {
-                [57] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
-                    quest:setVar(player, 'Prog', 2)
-                end,
+           onEventFinish =
+{
+            [57] = function(player, csid, option, npc)
+                player:confirmTrade()
+                quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                quest:setVar(player, 'Prog', 2)
+            end,
 
-                [58] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
-                    quest:setVar(player, 'Prog', 3)
-                end,
+            [58] = function(player, csid, option, npc)
+                player:confirmTrade()
+                quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                quest:setVar(player, 'Prog', 3)
+            end,
 
-                [59] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
-                    quest:setVar(player, 'Prog', 4)
+            [59] = function(player, csid, option, npc)
+                player:confirmTrade()
+                quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                quest:setVar(player, 'Prog', 4)
+            end,
 
-                    -- TODO: This needs retail verification to confirm no zoning
-                    -- event has occurred
-                    player:startEvent(99)
-                end,
+            [60] = function(player, csid, option, npc)
+                player:confirmTrade()
+                quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                quest:setVar(player, 'Prog', 5)
+            end,
 
-                [60] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
-                    quest:setVar(player, 'Prog', 5)
-                end,
+            [63] = function(player, csid, option, npc)
+                player:confirmTrade()
+                quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                quest:setVar(player, 'Prog', 6)
+            end,
 
-                [63] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
-                    quest:setVar(player, 'Prog', 6)
-                end,
-
-                [64] = function(player, csid, option, npc)
-                    if quest:complete(player) then
-                        player:confirmTrade()
-                    end
-                end,
-            },
+            [64] = function(player, csid, option, npc)
+                if quest:complete(player) then
+                player:confirmTrade()
+            end
+        end,
+        },
         },
     },
 

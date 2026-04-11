@@ -21,7 +21,7 @@ xi.settings.main =
     -- This generally results in a more accurate presentation of your selected expansions,
     -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded).
     -- This feature correlates to the content_tag column in the SQL files.
-    RESTRICT_CONTENT = 1,
+    RESTRICT_CONTENT = 0,
 
     -- Enable Expansion (1 = Enabled, 0 = Disabled)
     ENABLE_COP       = 1,
@@ -30,7 +30,7 @@ xi.settings.main =
     ENABLE_ACP       = 0,
     ENABLE_AMK       = 0,
     ENABLE_ASA       = 0,
-    ENABLE_ABYSSEA   = 0,
+    ENABLE_ABYSSEA   = 1,
     ENABLE_SOA       = 0,
     ENABLE_ROV       = 0,
     ENABLE_TVR       = 0,
@@ -40,7 +40,7 @@ xi.settings.main =
     ENABLE_FIELD_MANUALS  = 1, -- Enables Fields of Valor
     ENABLE_GROUNDS_TOMES  = 0, -- Enables Grounds of Valor
     ENABLE_SURVIVAL_GUIDE = 0, -- Enables Survival Guides (Not Implemented)
-    REGIME_WAIT           = 1, -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
+    REGIME_WAIT           = 0, -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
     FOV_REWARD_ALLIANCE   = 0, -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
     GOV_REWARD_ALLIANCE   = 0, -- Allow Grounds of Valor rewards while being a member of an alliance. (default retail behavior: 1)
 
@@ -72,7 +72,7 @@ xi.settings.main =
     ENABLE_MAGIAN_TRIALS = 0,
 
     -- VoidWalker
-    ENABLE_VOIDWALKER = 0,
+    ENABLE_VOIDWALKER = 1,
 
     -- Moblin Maze Mongers
     ENABLE_MMM = 0,
@@ -125,7 +125,7 @@ xi.settings.main =
     GIL_RATE            = 1.000, -- Multiplies gil earned from quests.  Won't always display in game.
     BAYLD_RATE          = 1.000, -- Multiples bayld earned from quests.
     -- Note: EXP rates are also influenced by conf setting
-    EXP_RATE            = .70, -- Multiplies exp from script (except FoV/GoV).
+    EXP_RATE            = 0.750, -- Multiplies exp from script (except FoV/GoV).
     CAPACITY_RATE       = 1.000, -- Multiplies capacity points gained.
     BOOK_EXP_RATE       = 1.000, -- Multiplies exp from FoV/GoV book pages.
     TABS_RATE           = 1.000, -- Multiplies tabs earned from fov.
@@ -214,7 +214,7 @@ xi.settings.main =
     GARRISON_TIME_LIMIT    = 1800,  -- Time in seconds before lose ongoing garrison (default: 1800)
     GARRISON_ONCE_PER_WEEK = true,  -- Set to false to bypass the limit of one garrison per Conquest Tally Week.
     GARRISON_PARTY_LIMIT   = 18,    -- Set to max party members you want to do garrison (default: 18).
-    GARRISON_NATION_BYPASS = false, -- Set to true to bypass the nation requirement.
+    GARRISON_NATION_BYPASS = true, -- Set to true to bypass the nation requirement.
     GARRISON_RANK          = 2,     -- Set to minumum Nation Rank to start Garrison (default: 2).
 
     -- DYNAMIS SETTINGS
@@ -252,7 +252,7 @@ xi.settings.main =
     USE_OLD_MAGIC_DAMAGE            = false, -- true/false. if true, uses older magic damage formulas
 
     -- CELEBRATIONS
-    EXPLORER_MOOGLE_LV              = 10, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
+    EXPLORER_MOOGLE_LV              = 0, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
     HALLOWEEN_2005                  = 0,  -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
     HALLOWEEN_YEAR_ROUND            = 0,  -- Set to 1 to have Harvest Festival initialize outside of normal times.
     EGG_HUNT                        =
@@ -293,6 +293,9 @@ xi.settings.main =
     -- Set to false to require manual progression of contest
     AUTO_FISHING_CONTEST = true,
     MAX_FAKE_ENTRIES     = 15,
+
+    -- Einherjar
+    EINHERJAR_ENABLED = true,
 
     -- NYZUL
     RUNIC_DISK_SAVE      = true, -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.

@@ -8341,7 +8341,7 @@ INSERT INTO `mob_droplist` VALUES (1018,4,0,1000,4543,0);       -- Goblin Mushpo
 
 -- ZoneID: 190 - Goblin Ambusher
 INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,937,@COMMON);  -- Block Of Animal Glue (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,1027,@VRARE);  -- Ranperre Chest Key (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,12440,@VRARE); -- Leather Bandana (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1019,0,0,1000,12696,@VRARE); -- Leather Gloves (Very Rare, 1%)
@@ -8547,7 +8547,7 @@ INSERT INTO `mob_droplist` VALUES (1032,4,0,1000,4465,0);     -- Bowl Of Goblin 
 INSERT INTO `mob_droplist` VALUES (1032,4,0,1000,4543,0);     -- Goblin Mushpot (Despoil)
 
 -- ZoneID: 190 - Goblin Butcher
-INSERT INTO `mob_droplist` VALUES (1033,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1033,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1033,0,0,1000,1027,@VRARE);  -- Ranperre Chest Key (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1033,0,0,1000,12432,@VRARE); -- Faceguard (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1033,0,0,1000,12688,@VRARE); -- Scale Finger Gauntlets (Very Rare, 1%)
@@ -8996,7 +8996,7 @@ INSERT INTO `mob_droplist` VALUES (1082,4,0,1000,4465,0);       -- Bowl Of Gobli
 INSERT INTO `mob_droplist` VALUES (1082,4,0,1000,4543,0);       -- Goblin Mushpot (Despoil)
 
 -- ZoneID: 190 - Goblin Gambler
-INSERT INTO `mob_droplist` VALUES (1083,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1083,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1083,0,0,1000,952,@RARE);    -- Bag Of Poison Flour (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1083,0,0,1000,12473,@VRARE); -- Poets Circlet (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1083,0,0,1000,12729,@VRARE); -- Linen Cuffs (Very Rare, 1%)
@@ -9210,7 +9210,7 @@ INSERT INTO `mob_droplist` VALUES (1099,4,0,1000,4465,0);       -- Bowl Of Gobli
 INSERT INTO `mob_droplist` VALUES (1099,4,0,1000,4543,0);       -- Goblin Mushpot (Despoil)
 
 -- ZoneID: 190 - Goblin Leecher
-INSERT INTO `mob_droplist` VALUES (1100,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1100,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1100,0,0,1000,4666,@RARE);   -- Scroll Of Paralyze (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1100,0,0,1000,4680,@RARE);   -- Scroll Of Barsleep (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1100,0,0,1000,4667,@RARE);   -- Scroll Of Silence (Rare, 5%)
@@ -9521,7 +9521,7 @@ INSERT INTO `mob_droplist` VALUES (1117,4,0,1000,4465,0);     -- Bowl Of Goblin 
 INSERT INTO `mob_droplist` VALUES (1117,4,0,1000,4543,0);     -- Goblin Mushpot (Despoil)
 
 -- ZoneID: 190 - Goblin Mugger
-INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,12449,@VRARE); -- Brass Cap (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,12705,@VRARE); -- Brass Mittens (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1118,0,0,1000,12833,@VRARE); -- Brass Subligar (Very Rare, 1%)
@@ -10036,7 +10036,7 @@ INSERT INTO `mob_droplist` VALUES (1170,4,0,1000,4543,0);       -- Goblin Mushpo
 
 -- ZoneID: 190 - Goblin Tinkerer
 INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,1027,@VRARE);    -- Ranperre Chest Key (Very Rare, 1%)
-INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,2757,@RARE);     -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,2757,@RARE);     -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,12432,@VRARE);   -- Faceguard (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,12688,@VRARE);   -- Scale Finger Gauntlets (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1175,0,0,1000,12816,@VRARE);   -- Scale Cuisses (Very Rare, 1%)
@@ -11600,7 +11600,7 @@ INSERT INTO `mob_droplist` VALUES (1389,0,0,1000,2307,@UNCOMMON);  -- Vial Of Jo
 -- ZoneID: 100 - Jaggedy-Eared Jack
 INSERT INTO `mob_droplist` VALUES (1390,0,0,1000,856,@VCOMMON); -- Rabbit Hide (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1390,0,0,1000,4358,@COMMON); -- Slice Of Hare Meat (Common, 10%)
-INSERT INTO `mob_droplist` VALUES (1390,0,0,1000,13112,@VRARE); -- Rabbit Charm (Very Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (1390,0,0,1000,13112,@UNCOMMON); -- Rabbit Charm (UNCOMMON, 10%)
 INSERT INTO `mob_droplist` VALUES (1390,2,0,1000,4389,0);       -- San Dorian Carrot (Steal)
 
 -- 1391-1394 Available
@@ -15687,7 +15687,7 @@ INSERT INTO `mob_droplist` VALUES (1898,4,0,1000,5196,0);       -- Strip Of Buff
 
 -- ZoneID: 142 - Orcish Fighter
 INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,1662,@COMMON); -- Cathedral Tapestry (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,1024,@RARE);   -- Ghelsba Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,1528,@RARE);   -- Red Cryptex (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1899,0,0,1000,12441,@VRARE); -- Lizard Helm (Very Rare, 1%)
@@ -15856,7 +15856,7 @@ INSERT INTO `mob_droplist` VALUES (1918,4,0,1000,5196,0);       -- Strip Of Buff
 
 -- ZoneID: 142 - Orcish Grunt
 -- ZoneID: 142 - Orcish Neckchopper
-INSERT INTO `mob_droplist` VALUES (1919,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1919,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1919,0,0,1000,12944,@VRARE); -- Scale Greaves (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1919,0,0,1000,12432,@VRARE); -- Faceguard (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1919,0,0,1000,12688,@VRARE); -- Scale Finger Gauntlets (Very Rare, 1%)
@@ -15991,7 +15991,7 @@ INSERT INTO `mob_droplist` VALUES (1936,4,0,1000,4438,0);     -- Dhalmel Steak (
 INSERT INTO `mob_droplist` VALUES (1936,4,0,1000,5196,0);     -- Strip Of Buffalo Jerky (Despoil)
 
 -- ZoneID: 142 - Orcish Serjeant
-INSERT INTO `mob_droplist` VALUES (1937,0,0,1000,2757,@RARE); -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1937,0,0,1000,2757,@RARE); -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1937,0,0,1000,1024,@RARE); -- Ghelsba Chest Key (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1937,0,0,1000,530,@RARE);  -- Copy Of The Castle Floor Plans (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1937,2,0,1000,750,0);      -- Silver Beastcoin (Steal)
@@ -16029,7 +16029,7 @@ INSERT INTO `mob_droplist` VALUES (1940,4,0,1000,4438,0);       -- Dhalmel Steak
 INSERT INTO `mob_droplist` VALUES (1940,4,0,1000,5196,0);       -- Strip Of Buffalo Jerky (Despoil)
 
 -- ZoneID: 142 - Orcish Stonechucker
-INSERT INTO `mob_droplist` VALUES (1941,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
+--INSERT INTO `mob_droplist` VALUES (1941,0,0,1000,2757,@RARE);   -- Orcish Armor Plate (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1941,0,0,1000,12440,@VRARE); -- Leather Bandana (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1941,0,0,1000,12696,@VRARE); -- Leather Gloves (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (1941,0,0,1000,12824,@VRARE); -- Leather Trousers (Very Rare, 1%)

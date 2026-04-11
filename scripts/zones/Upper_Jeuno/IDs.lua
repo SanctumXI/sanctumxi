@@ -7,7 +7,7 @@ zones[xi.zone.UPPER_JEUNO] =
 {
     text =
     {
-        CONQUEST_BASE                    = 0,     -- Tallying conquest results...
+CONQUEST_BASE                    = 0,     -- Tallying conquest results...
         ASSIST_CHANNEL                   = 6539,  -- You will be able to use the Assist Channel until #/#/# at #:# (JST).
         ITEM_CANNOT_BE_OBTAINED          = 6544,  -- You cannot obtain the <item>. Come back after sorting your inventory.
         ITEM_OBTAINED                    = 6550,  -- Obtained: <item>.
@@ -41,7 +41,7 @@ zones[xi.zone.UPPER_JEUNO] =
         DECIMATION_LEARNED               = 8219,  -- You have learned the weapon skill Decimation!
         LEND_PRISHE_AMULET               = 8356,  -- You lend the <item> to Prishe.
         YOU_OBTAIN_ITEM                  = 11200, -- You obtain <item>!
-        UNLOCK_DANCER                    = 11850, -- You can now become a dancer!
+        UNLOCK_DANCER                    = 11859, -- You can now become a dancer!
     },
     mob =
     {
