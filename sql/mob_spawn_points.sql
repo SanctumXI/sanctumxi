@@ -2722,27 +2722,27 @@ INSERT INTO `mob_spawn_points` VALUES (16830478,0,'Swipostik','Swipostik',4,62,6
 INSERT INTO `mob_spawn_points` VALUES (16830479,0,'Bugbby','Bugbby',5,63,64,499.802,-117.968,20.198,67);
 
 -- Return to the Depths
-INSERT INTO `mob_spawn_points` VALUES (16830480,0,'Twilotak','Twilotak',6,40,40,-460.000,121.532,20.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830481,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,-465.500,121.500,28.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830482,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,-463.500,121.500,30.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830483,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,-461.500,121.486,32.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830484,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,-458.500,121.500,32.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830485,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,-456.500,121.500,30.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830486,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,-454.500,121.500,28.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830487,0,'Twilotak','Twilotak',6,40,40,0.000,0.000,0.000,64);
-INSERT INTO `mob_spawn_points` VALUES (16830488,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,14.482,1.500,27.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830489,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,16.482,1.500,29.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830490,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,18.482,1.486,31.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830491,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,21.482,1.500,31.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830492,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,23.482,1.500,29.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830493,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,25.482,1.500,27.937,64);
-INSERT INTO `mob_spawn_points` VALUES (16830494,0,'Twilotak','Twilotak',6,40,40,499.951,-118.468,19.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830495,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,494.451,-118.500,27.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830496,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,496.451,-118.500,29.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830497,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,498.451,-118.514,31.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830498,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,501.451,-118.500,31.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830499,0,'Moblin_Wisewoman','Moblin Wisewoman',7,40,40,503.451,-118.500,29.941,64);
-INSERT INTO `mob_spawn_points` VALUES (16830500,0,'Moblin_Clergyman','Moblin Clergyman',8,40,40,505.451,-118.500,27.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830480,0,'Twilotak','Twilotak',6,45,45,-460.000,122.032,20.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830481,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,-465.500,122.000,28.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830482,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,-463.500,122.000,30.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830483,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,-461.500,121.986,32.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830484,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,-458.500,122.000,32.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830485,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,-456.500,122.000,30.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830486,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,-454.500,122.000,28.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830487,0,'Twilotak','Twilotak',6,45,45,9.000,1.500,20.000,64);
+INSERT INTO `mob_spawn_points` VALUES (16830488,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,14.482,1.500,27.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830489,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,16.482,1.500,29.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830490,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,18.482,1.486,31.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830491,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,21.482,1.500,31.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830492,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,23.482,1.500,29.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830493,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,25.482,1.500,27.937,64);
+INSERT INTO `mob_spawn_points` VALUES (16830494,0,'Twilotak','Twilotak',6,45,45,499.951,-118.468,19.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830495,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,494.451,-118.500,27.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830496,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,496.451,-118.500,29.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830497,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,498.451,-118.514,31.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830498,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,501.451,-118.500,31.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830499,0,'Moblin_Wisewoman','Moblin Wisewoman',7,39,41,503.451,-118.500,29.941,64);
+INSERT INTO `mob_spawn_points` VALUES (16830500,0,'Moblin_Clergyman','Moblin Clergyman',8,39,41,505.451,-118.500,27.941,64);
 
 -- Bionic Bug
 INSERT INTO `mob_spawn_points` VALUES (16830501,0,'Bugboy','Bugboy',9,80,80,-460.000,121.532,20.000,64);
