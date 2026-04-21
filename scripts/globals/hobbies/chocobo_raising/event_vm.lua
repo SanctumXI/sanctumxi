@@ -450,7 +450,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     local enlargedCrest    = chocoState.discernment >= 128 and 1 or 0
                     local enlargedFeet     = chocoState.strength >= 128 and 1 or 0
                     local moreTailFeathers = chocoState.endurance >= 128 and 1 or 0
-
+                    
                     player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, chocoState.sex, 0, 0)
                 end
 
@@ -503,7 +503,31 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     bit.lshift(chocoState.ability2, 12) +
                     bit.lshift(chocoState.stage, 16)
 
-                -- Condition flags (can be combined)
+                debug(string.format('strength: %i', chocoState.strength))
+                debug(string.format('endurance: %i', chocoState.endurance))
+                debug(string.format('discernment: %i', chocoState.discernment))
+                debug(string.format('receptivity: %i', chocoState.receptivity))
+                debug(string.format('affection: %i', chocoState.affection))
+
+                --
+                -- NOTE: This does NOT use the negative masks of the menus!
+                --
+
+                local legWounded         = bit.lshift(0x01, 0)
+                local slightlyIll        = bit.lshift(0x01, 1)
+                local stomachAche        = bit.lshift(0x01, 2)
+                local depressed          = bit.lshift(0x01, 3)
+                local excellentCondition = bit.lshift(0x01, 4)
+                local sleepingSoundly    = bit.lshift(0x01, 5)
+                local veryIll            = bit.lshift(0x01, 6)
+                local boredRestless      = bit.lshift(0x01, 7)
+                local hopelesslySpoiled  = bit.lshift(0x01, 8)
+                local ranAway            = bit.lshift(0x01, 9)
+                local inLove             = bit.lshift(0x01, 10)
+                local makingAFuss        = bit.lshift(0x01, 11)
+                local fullOfEnergy       = bit.lshift(0x01, 12)
+                local brightAndFocussed  = bit.lshift(0x01, 13)
+
                 -- No flags: Stable
                 local arg4 = 0x00000000
 
@@ -566,15 +590,18 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:updateEvent(arg0, arg1, arg2, arg3, arg4, 0, 0, 0)
             end,
 
-            [243] = function() -- Care for your chocobo (menu)
-                local watchOverChocobo  = 0x01
-                local tellAStory        = 0x02
-                local scoldTheChocobo   = 0x04
-                local competeWithOthers = 0x08
-                local goOnAWalkShort    = 0x10
-                local goOnAWalkRegular  = 0x20
-                local goOnAWalkLong     = 0x40
-                local mask              = 0x7FFFFFFF - watchOverChocobo
+            [vmOpCodes.CARE_FOR_CHOCOBO_MENU] = function()
+                debug(string.format('  Energy: %i', chocoState.energy))
+
+                local watchOverChocobo  = -bit.lshift(0x01, 0)
+                local tellAStory        = -bit.lshift(0x01, 1)
+                local scoldTheChocobo   = -bit.lshift(0x01, 2)
+                local competeWithOthers = -bit.lshift(0x01, 3)
+                local goOnAWalkShort    = -bit.lshift(0x01, 4)
+                local goOnAWalkRegular  = -bit.lshift(0x01, 5)
+                local goOnAWalkLong     = -bit.lshift(0x01, 6)
+
+                local mask = 0x7FFFFFFF + watchOverChocobo
 
                 if chocoState.stage >= xi.chocoboRaising.stage.CHICK then
                     mask = mask - scoldTheChocobo - goOnAWalkShort
