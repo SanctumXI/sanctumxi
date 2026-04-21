@@ -228,12 +228,12 @@ xi.chocoboRaising.onRaisingEventPlayout = function(player, csOffset, chocoState)
         [xi.chocoboRaising.cutscenes.THAT_SHOULD_BE_ENOUGH] = function()
             debug('Removing KI White Handkerchief')
             player:delKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
-            player:setCharVar('HQuest[ChocoboWhistle]Prog', 1)
+            -- TODO: What is the general marker that this quest is completed?
         end,
 
         [xi.chocoboRaising.cutscenes.HAVENT_SEEN_YOU] = function()
-            player:delKeyItem(xi.ki.WHITE_HANDKERCHIEF)
-            player:setCharVar('[choco]WH_TIME', 0)
+            debug('Removing KI White Handkerchief')
+            player:delKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
         end,
 
         [xi.chocoboRaising.cutscenes.HANGS_HEAD_IN_SHAME] = function()
