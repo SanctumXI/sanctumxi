@@ -311,17 +311,30 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
 
                 -- 8 - 25 are all '-----' (blank)
 
-                -- Go forward 1 unit (debug) (Unused, see command: !chocoboraising)
-                local goForward1UnitDebug = -bit.lshift(0x01, 26)
-                utils.unused(goForward1UnitDebug)
+                --
+                -- Debug options
+                --
 
-                -- Abilities print (debug) (Unused, see command: !chocoboraising)
-                local abilitiesPrintDebug = -bit.lshift(0x01, 27)
-                utils.unused(abilitiesPrintDebug)
+                local gmModeToggled = player:getVisibleGMLevel() >= 3
+                if gmModeToggled then
+                    -- Go forward   1 unit (debug) (Unused, see command: !chocoboraising)
+                    local goForward1UnitDebug = -bit.lshift(0x01, 26)
 
-                -- User work print (debug) (Unused, see command: !chocoboraising)
-                local userWorkPrintDebug = -bit.lshift(0x01, 28)
-                utils.unused(userWorkPrintDebug)
+                    -- Abilities print (debug) (Unused, see command: !chocoboraising)
+                    local abilitiesPrintDebug = -bit.lshift(0x01, 27)
+
+                    -- User work print (debug) (Unused, see command: !chocoboraising)
+                    local userWorkPrintDebug = -bit.lshift(0x01, 28)
+
+                    menuFlags = menuFlags +
+                        goForward1UnitDebug +
+                        abilitiesPrintDebug +
+                        userWorkPrintDebug
+                end
+
+                --
+                -- Danger zone
+                --
 
                 local retireOrGiveUp = 0
                 if chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then
@@ -417,18 +430,28 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 xi.chocoboRaising.updateChocoState(player, chocoState)
             end,
 
-            [244] = function() -- Present chocobo appearance
-                -- TODO: There is more information going on in here
+            [vmOpCodes.PRESENT_CHOCOBO_APPEARANCE] = function()
+                -- We don't want to leak color or physical trait information to the client before it's
+                -- meant to be seen, so we're going to put in default dummy data in the early lifecycle
+                -- stages.
+                if chocoState.stage == xi.chocoboRaising.stage.EGG then
+                    -- No information
+                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, 0, 0, 0)
+                elseif chocoState.stage < xi.chocoboRaising.stage.ADOLESCENT then
+                    -- A little information
+                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, chocoState.sex, 0, 0)
+                elseif chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then
+                    -- Partial information
+                    player:updateEvent(chocoState.color, 0, 0, 0, chocoState.stage, chocoState.sex, 0, 0)
+                else -- Full information
+                    -- TODO: These appearance changes are locked in on day 29 if
+                    -- they are 'Average' (128) or above. This will need to be
+                    -- written to the db and this part rewritten.
+                    local enlargedCrest    = chocoState.discernment >= 128 and 1 or 0
+                    local enlargedFeet     = chocoState.strength >= 128 and 1 or 0
+                    local moreTailFeathers = chocoState.endurance >= 128 and 1 or 0
 
-                -- TODO: These appearance changes are locked in on day 29 if
-                -- they are 'Average' (128) or above. This will need to be
-                -- written to the db and this part rewritten.
-
-                -- Crest type
-                local enlargedCrest = 0
-
-                if chocoState.discernment >= 128 then
-                    enlargedCrest = 1
+                    player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, chocoState.sex, 0, 0)
                 end
 
                 -- Feet type
@@ -952,17 +975,41 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 --
             end,
 
-            [482] = function() -- DEBUG: Go forward 1 unit
-                -- TODO: Split stored age and time of creation so age can be manipulated
+            [vmOpCodes.REGISTER_CHOCOBO_WHISTLE] = function()
+                debug('Registering field chocobo details')
+                player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
+
+                -- TODO: These appearance changes are locked in on day 29 if
+                -- they are 'Average' (128) or above. This will need to be
+                -- written to the db and this part rewritten.
+                local traits =
+                {
+                    largeBeak   = chocoState.discernment >= 128 and 1 or 0,
+                    fullTail    = chocoState.endurance >= 128 and 1 or 0,
+                    largeTalons = chocoState.strength >= 128 and 1 or 0,
+                }
+
+                player:registerChocobo(chocoState.color, traits)
+            end,
+
+            [vmOpCodes.DEBUG_GO_FORWARD_1_UNIT] = function()
+                -- TODO: Split stored age and time of creation so age can be manipulated from here
                 player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
             end,
 
-            [229] = function() -- DEBUG: Abilities print
-                player:updateEvent(1, xi.chocoboRaising.packStats1(chocoState), xi.chocoboRaising.packStats2(chocoState), 0, 0, 0, 0, 0)
+            [vmOpCodes.DEBUG_ABILITIES_PRINT] = function()
+                local packedRawStats =
+                    bit.lshift(chocoState.strength,     0) +
+                    bit.lshift(chocoState.endurance,    8) +
+                    bit.lshift(chocoState.discernment, 16) +
+                    bit.lshift(chocoState.receptivity, 24)
+
+                player:updateEvent(1, packedRawStats, xi.chocoboRaising.packStats2(chocoState), 0, 0, 0, 0, 0)
             end,
 
             [232] = function() -- DEBUG: User work print
                 -- TODO: Should we be tracking all user interactions with the chocobo?
+                player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
             end,
 
             [240] = function() -- Give up your chocobo
