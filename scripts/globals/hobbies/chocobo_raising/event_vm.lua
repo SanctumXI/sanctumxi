@@ -278,6 +278,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     playMultipleCutscenes = 0x00010000
                 end
 
+                -- TODO: What's this?
                 local exitFlag = 0
 
                 player:updateEvent(248, report, #chocoState.csList, playMultipleCutscenes, chocoState.stage, 0, 0, exitFlag)
@@ -570,7 +571,10 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             [vmOpCodes.CARE_FOR_CHOCOBO_MENU] = function()
                 debug(string.format('  Energy: %i', chocoState.energy))
 
+<<<<<<< HEAD
                 -- TODO: Refactor to use the -bit pattern
+=======
+>>>>>>> 828c198cfd (Raising: Don't accumulate energy usage through full report)
                 local watchOverChocobo  = 0x01
                 local tellAStory        = 0x02
                 local scoldTheChocobo   = 0x04
