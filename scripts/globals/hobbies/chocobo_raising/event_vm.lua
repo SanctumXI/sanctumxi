@@ -435,23 +435,10 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 -- meant to be seen, so we're going to put in default dummy data in the early lifecycle
                 -- stages.
                 if chocoState.stage == xi.chocoboRaising.stage.EGG then
-                    -- No information
-                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, 0, 0, 0)
-                elseif chocoState.stage < xi.chocoboRaising.stage.ADOLESCENT then
-                    -- A little information
-                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, chocoState.sex, 0, 0)
-                elseif chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then
-                    -- Partial information
-                    player:updateEvent(chocoState.color, 0, 0, 0, chocoState.stage, chocoState.sex, 0, 0)
-                else -- Full information
-                    -- TODO: These appearance changes are locked in on day 29 if
-                    -- they are 'Average' (128) or above. This will need to be
-                    -- written to the db and this part rewritten.
-                    local enlargedCrest    = chocoState.discernment >= 128 and 1 or 0
-                    local enlargedFeet     = chocoState.strength >= 128 and 1 or 0
-                    local moreTailFeathers = chocoState.endurance >= 128 and 1 or 0
-                    
-                    player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, chocoState.sex, 0, 0)
+                    -- From caps:
+                    -- TODO: What's all this then?
+                    player:updateEvent(0, 1023, 0, 0, 1, 1, 0, 0)
+                    return
                 end
 
                 -- Feet type
@@ -468,8 +455,17 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     moreTailFeathers = 1
                 end
 
-                -- Event update parameters.
-                player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, 1, 0, 0)
+                -- We don't want to leak color or physical trait information to the client before it's
+                -- meant to be seen, so we're going to put in default dummy data in the early lifecycle
+                -- stages.
+                -- TODO: What is this: '... 1, 0, 0)' for? Gender?
+                if chocoState.stage < xi.chocoboRaising.stage.ADOLESCENT then -- No information
+                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, 1, 0, 0)
+                elseif chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then -- Partial information
+                    player:updateEvent(chocoState.color, 0, 0, 0, chocoState.stage, 1, 0, 0)
+                else -- Full information
+                    player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, 1, 0, 0)
+                end
             end,
 
             -- TODO: This is hit directly after the CS for an egg hatching when we return to the main
