@@ -362,9 +362,6 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:updateEvent(menuFlags, 0, 0, 0, 0, 0, 0, 0)
             end,
 
-<<<<<<< HEAD
-            [241] = function() -- Feed chocobo
-=======
             [vmOpCodes.FORCED_NAMING] = function()
                 -- NOTE: The renaming is done in event playout, otherwise the CS won't see the
                 --     : new name in time to present it.
@@ -374,7 +371,6 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             end,
 
             [vmOpCodes.FEED_CHOCOBO] = function()
->>>>>>> 6f6d2d0850 (Raising: Confirm force-naming at ADULT_3)
                 -- Complete the trade here to prevent any cheesing
                 player:confirmTrade()
 
@@ -453,11 +449,14 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, 1, 0, 0)
             end,
 
-            [46] = function() -- Ask about chocobo's condition (menu)
+            -- TODO: This is hit directly after the CS for an egg hatching when we return to the main
+            --     : menu, so what does this mean? What does it do?
+            [vmOpCodes.PREPARE_CHOCOBO_MENU] = function()
                 player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
             end,
 
-            [600] = function()
+            -- TODO: Is this even getting hit?
+            [vmOpCodes.UNKNOWN_600] = function()
                 -- Get KI during another CS (determined randomly)
                 local ki    = xi.ki.DIRTY_HANDKERCHIEF
                 local getKi = 1
@@ -466,10 +465,13 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:addKeyItem(ki)
             end,
 
-            [251] = function() -- Ask about chocobo's condition (confirm)
+            [vmOpCodes.ASK_ABOUT_CONDITION_MENU] = function()
+                -- TODO: When is this used?
                 -- Block all other information
-                --local blockFlag = bit.lshift(0x01, 31) -- Sorry, but you will have to do this later. I have something new to report.
-                local arg0 = 251
+                -- local blockFlag = bit.lshift(0x01, 31) -- Sorry, but you will have to do this later. I have something new to report.
+
+                local arg0 = vmOpCodes.ASK_ABOUT_CONDITION_MENU
+
                 local arg1 = xi.chocoboRaising.packStats1(chocoState)
                 local arg2 = bit.lshift(xi.chocoboRaising.affectionRank.PARENT, 0) + bit.lshift(chocoState.hunger, 16)
                 local arg3 = bit.lshift(chocoState.personality, 0) +
@@ -480,21 +482,63 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
 
                 -- Condition flags (can be combined)
                 -- No flags: Stable
-                -- local legWounded = bit.lshift(0x01, 0)
-                -- local slightlyIll = bit.lshift(0x01, 1)
-                -- local stomachAche = bit.lshift(0x01, 2)
-                -- local depressed = bit.lshift(0x01, 3)
-                -- local excellentCondition = bit.lshift(0x01, 4)
-                -- local sleepingSoundly = bit.lshift(0x01, 5)
-                -- local veryIll = bit.lshift(0x01, 6)
-                -- local boredRestless = bit.lshift(0x01, 7)
-                -- local hopelesslySpoiled = bit.lshift(0x01, 8)
-                -- local ranAway = bit.lshift(0x01, 9)
-                -- local inLove = bit.lshift(0x01, 10)
-                -- local makingAFuss = bit.lshift(0x01, 11)
-                -- local fullOfEnergy = bit.lshift(0x01, 12)
-                -- local brightAndFocussed = bit.lshift(0x01, 13)
-                local arg4 = 0 -- fullOfEnergy + brightAndFocussed
+                local arg4 = 0x00000000
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.INJURED) then
+                    arg4 = arg4 + legWounded
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.SICK) then
+                    arg4 = arg4 + slightlyIll
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.ILL) then
+                    arg4 = arg4 + stomachAche
+                end
+
+                -- TODO: depressed
+                utils.unused(depressed)
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.HIGH_SPIRITS) then
+                    arg4 = arg4 + excellentCondition
+                end
+
+                -- TODO: sleepingSoundly
+                utils.unused(sleepingSoundly)
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.VERY_ILL) then
+                    arg4 = arg4 + veryIll
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.BORED) then
+                    arg4 = arg4 + boredRestless
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.SPOILED) then
+                    arg4 = arg4 + hopelesslySpoiled
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.RUN_AWAY) then
+                    arg4 = arg4 + ranAway
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.LOVESICK) then
+                    arg4 = arg4 + inLove
+                end
+
+                -- TODO: makingAFuss
+                utils.unused(makingAFuss)
+
+                if
+                    xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_1) or
+                    xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_2)
+                then
+                    arg4 = arg4 + fullOfEnergy
+                end
+
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.BRIGHT_AND_FOCUSED) then
+                    arg4 = arg4 + brightAndFocussed
+                end
 
                 player:updateEvent(arg0, arg1, arg2, arg3, arg4, 0, 0, 0)
             end,
