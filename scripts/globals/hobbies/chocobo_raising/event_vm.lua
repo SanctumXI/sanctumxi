@@ -284,36 +284,57 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:updateEvent(0, 0, 0, 0, 0, 0, 0, 0)
             end,
 
-            [215] = function()
-                -- Define menu options
-                -- bit.lshift(0x01, 0): Ask about your chocobo's condition
+            [vmOpCodes.INTRO_MENU_PT_3] = function()
+                -- NOTE:
+                -- To add options to these menus, we remove bits from the full mask.
+                -- Therefore, we've defined the options as subtractive values, so we
+                -- can add and remove at the same time...
+                local menuFlags = 0xFFFFFFFF
+
+                --
+                -- Regular menu options
+                --
+
                 local askAboutChocoboCondition = -bit.lshift(0x01, 0)
+                local careForYourChocobo       = -bit.lshift(0x01, 1)
+                local setUpCareSchedule        = -bit.lshift(0x01, 2)
 
-                -- bit.lshift(0x01, 1): Care for your chocobo
-                local careForYourChocobo = -bit.lshift(0x01, 1)
-
-                -- Set up a care schedule
-                local setUpCareSchedule = -bit.lshift(0x01, 2)
-                local nameChocobo       = 0
+                menuFlags = menuFlags +
+                    askAboutChocoboCondition +
+                    careForYourChocobo +
+                    setUpCareSchedule
 
                 if
                     chocoState.stage > xi.chocoboRaising.stage.EGG and
                     chocoState.first_name == 'Chocobo' and
                     chocoState.last_name == 'Chocobo'
                 then
-                    nameChocobo = -bit.lshift(0x01, 3) -- Name your chocobo
+                    local nameYourChocobo = -bit.lshift(0x01, 3)
+                    menuFlags             = menuFlags + nameYourChocobo
                 end
 
-                -- bit.lshift(0x01, 4): Request Documentation
-                -- bit.lshift(0x01, 5): Register to call your chocobo
-                -- bit.lshift(0x01, 6): Receive your chocobo whistle
-                -- bit.lshift(0x01, 7): Purchase a chocobo whistle
+                if player:getCharVar('HQuest[ChocoboWhistle]Prog') >= 4 then
+                    local requestDocumentation      = -bit.lshift(0x01, 4)
+                    local registerToCallYourChocobo = -bit.lshift(0x01, 5)
+                    local receiveYourChocoboWhistle = -bit.lshift(0x01, 6)
+                    local purchaseAChocoboWhistle   = -bit.lshift(0x01, 7)
+
+                    menuFlags = menuFlags +
+                        requestDocumentation +
+                        registerToCallYourChocobo +
+                        receiveYourChocoboWhistle +
+                        purchaseAChocoboWhistle
+                end
 
                 -- 8 - 25 are all '-----' (blank)
 
                 --
                 -- Debug options
                 --
+
+                -- Go forward 1 unit (debug) (Unused, see command: !chocoboraising)
+                local goForward1UnitDebug = -bit.lshift(0x01, 26)
+                utils.unused(goForward1UnitDebug)
 
                 local gmModeToggled = player:getVisibleGMLevel() >= 3
                 if gmModeToggled then
@@ -336,23 +357,19 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 -- Danger zone
                 --
 
-                local retireOrGiveUp = 0
-                if chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then
-                    retireOrGiveUp = -bit.lshift(0x01, 30) -- Give up chocobo raising
+                if chocoState.stage >= xi.chocoboRaising.stage.ADULT_1 then
+                    local retireYourChocobo = -bit.lshift(0x01, 29) -- Retire your chocobo
+                    menuFlags = menuFlags + retireYourChocobo
                 else
-                    retireOrGiveUp = -bit.lshift(0x01, 29) -- Retire your chocobo
+                    local giveUpChocoboRaising = -bit.lshift(0x01, 30) -- Give up chocobo raising
+                    menuFlags = menuFlags + giveUpChocoboRaising
                 end
 
-                -- bit.lshift(0x01, 31): Nothing. (exit)
+                -- Exit is always available
                 local exit = -bit.lshift(0x01, 31)
+                menuFlags = menuFlags + exit
 
-                -- Enable menu options (remove bits from 0xFFFFFFFF)
-                local menuFlags = 0xFFFFFFFF +
-                    askAboutChocoboCondition +
-                    careForYourChocobo +
-                    setUpCareSchedule +
-                    nameChocobo +
-                    retireOrGiveUp
+                -- TODO: Do we need these anymore?
 
                 if chocoState.stage >= xi.chocoboRaising.stage.CHICK then
                     utils.unused()
@@ -368,9 +385,6 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     utils.unused()
                     -- menuFlags = menuFlags
                 end
-
-                -- Exit is always available
-                menuFlags = menuFlags + exit
 
                 player:updateEvent(menuFlags, 0, 0, 0, 0, 0, 0, 0)
             end,
