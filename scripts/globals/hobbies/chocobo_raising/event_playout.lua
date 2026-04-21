@@ -221,8 +221,14 @@ xi.chocoboRaising.onRaisingEventPlayout = function(player, csOffset, chocoState)
 
         [xi.chocoboRaising.cutscenes.CRYING_AT_NIGHT] = function()
             -- NOTE: The messaging is handled in the CS
-            player:addKeyItem(xi.ki.WHITE_HANDKERCHIEF)
-            player:setCharVar('[choco]WH_TIME', GetSystemTime() * utils.days(1))
+            debug('Giving KI White Handkerchief')
+            player:addKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
+        end,
+
+        [xi.chocoboRaising.cutscenes.THAT_SHOULD_BE_ENOUGH] = function()
+            debug('Removing KI White Handkerchief')
+            player:delKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
+            player:setCharVar('HQuest[ChocoboWhistle]Prog', 1)
         end,
 
         [xi.chocoboRaising.cutscenes.HAVENT_SEEN_YOU] = function()
