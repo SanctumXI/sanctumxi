@@ -256,7 +256,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     chocoState.age   = eventStartStart
                     chocoState.stage = xi.chocoboRaising.ageToStage(chocoState.age)
 
-                    for _, cs in ipairs(eventCSList) do
+                    for _, cs in pairs(eventCSList) do
                         table.insert(chocoState.csList, { cs, eventStartEnd - eventStartStart + 1 })
                     end
 
@@ -571,10 +571,6 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             [vmOpCodes.CARE_FOR_CHOCOBO_MENU] = function()
                 debug(string.format('  Energy: %i', chocoState.energy))
 
-<<<<<<< HEAD
-                -- TODO: Refactor to use the -bit pattern
-=======
->>>>>>> 828c198cfd (Raising: Don't accumulate energy usage through full report)
                 local watchOverChocobo  = 0x01
                 local tellAStory        = 0x02
                 local scoldTheChocobo   = 0x04
@@ -1056,13 +1052,13 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             [vmOpCodes.SKIP_REPORT] = function()
                 for _, currentEvent in pairs (chocoState.report.events) do
                     local eventStartStart = currentEvent[1]
-                    -- local eventStartEnd = currentEvent[2]
-                    local eventCSList = currentEvent[3]
+                    local eventStartEnd   = currentEvent[2]
+                    local eventCSList     = currentEvent[3]
 
                     chocoState.age   = eventStartStart
                     chocoState.stage = xi.chocoboRaising.ageToStage(chocoState.age)
 
-                    for _, cs in ipairs(eventCSList) do
+                    for _, cs in pairs(eventCSList) do
                         table.insert(chocoState.csList, { cs, eventStartEnd - eventStartStart + 1 })
                     end
                 end
