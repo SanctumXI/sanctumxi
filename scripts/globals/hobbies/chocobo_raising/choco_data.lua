@@ -88,6 +88,8 @@ xi.chocoboRaising.initChocoState = function(player)
     -- TODO: Remove careplan energy from this
     chocoState.energy = 100
 
+    local chocoboWhistleQuestBegan = player:getCharVar('HQuest[ChocoboWhistle]Prog') > 0
+
     for idx = 1, reportLength do
         local possibleCarePlanEvent = possibleCarePlanFuture[idx]
 
@@ -135,9 +137,10 @@ xi.chocoboRaising.initChocoState = function(player)
         -- Start White Handkerchief quest
         local whiteHandkerchiefStarted = false
         if
-            -- TODO: Should this be a charvar to track this?
-            not player:hasKeyItem(xi.ki.WHITE_HANDKERCHIEF) and
-            age == 7
+            not whiteHandkerchiefStarted and
+            not player:hasKeyItem(xi.keyItem.WHITE_HANDKERCHIEF) and
+            age == 7 and
+            not chocoboWhistleQuestBegan
         then
             table.insert(events, { age, { xi.chocoboRaising.cutscenes.CRYING_AT_NIGHT } })
             whiteHandkerchiefStarted = true
