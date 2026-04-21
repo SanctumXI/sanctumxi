@@ -441,31 +441,16 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     return
                 end
 
-                -- Feet type
-                local enlargedFeet = 0
+                -- TODO: These appearance changes are locked in on day 29 if
+                -- they are 'Average' (128) or above. This will need to be
+                -- written to the db and this part rewritten.
+                local enlargedCrest    = chocoState.discernment >= 128 and 1 or 0
+                local enlargedFeet     = chocoState.strength >= 128 and 1 or 0
+                local moreTailFeathers = chocoState.endurance >= 128 and 1 or 0
 
-                if chocoState.strength >= 128 then
-                    enlargedFeet = 1
-                end
-
-                -- Tail feathers type
-                local moreTailFeathers = 0
-
-                if chocoState.endurance >= 128 then
-                    moreTailFeathers = 1
-                end
-
-                -- We don't want to leak color or physical trait information to the client before it's
-                -- meant to be seen, so we're going to put in default dummy data in the early lifecycle
-                -- stages.
-                -- TODO: What is this: '... 1, 0, 0)' for? Gender?
-                if chocoState.stage < xi.chocoboRaising.stage.ADOLESCENT then -- No information
-                    player:updateEvent(xi.chocobo.color.YELLOW, 0, 0, 0, chocoState.stage, 1, 0, 0)
-                elseif chocoState.stage < xi.chocoboRaising.stage.ADULT_1 then -- Partial information
-                    player:updateEvent(chocoState.color, 0, 0, 0, chocoState.stage, 1, 0, 0)
-                else -- Full information
-                    player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, 1, 0, 0)
-                end
+                -- Event update parameters.
+                -- TODO: What's that 1 for?
+                player:updateEvent(chocoState.color, enlargedCrest, enlargedFeet, moreTailFeathers, chocoState.stage, 1, 0, 0)
             end,
 
             -- TODO: This is hit directly after the CS for an egg hatching when we return to the main
@@ -504,16 +489,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     bit.lshift(chocoState.ability2, 12) +
                     bit.lshift(chocoState.stage, 16)
 
-                debug(string.format('strength: %i', chocoState.strength))
-                debug(string.format('endurance: %i', chocoState.endurance))
-                debug(string.format('discernment: %i', chocoState.discernment))
-                debug(string.format('receptivity: %i', chocoState.receptivity))
-                debug(string.format('affection: %i', chocoState.affection))
-
-                --
-                -- NOTE: This does NOT use the negative masks of the menus!
-                --
-
+                -- TODO: Refactor to use the -bit pattern
                 -- Condition flags (can be combined)
                 local legWounded         = bit.lshift(0x01, 0)
                 local slightlyIll        = bit.lshift(0x01, 1)
@@ -592,16 +568,15 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             [vmOpCodes.CARE_FOR_CHOCOBO_MENU] = function()
                 debug(string.format('  Energy: %i', chocoState.energy))
 
-                -- Condition flags (can be combined)
-                local watchOverChocobo  = -bit.lshift(0x01, 0)
-                local tellAStory        = -bit.lshift(0x01, 1)
-                local scoldTheChocobo   = -bit.lshift(0x01, 2)
-                local competeWithOthers = -bit.lshift(0x01, 3)
-                local goOnAWalkShort    = -bit.lshift(0x01, 4)
-                local goOnAWalkRegular  = -bit.lshift(0x01, 5)
-                local goOnAWalkLong     = -bit.lshift(0x01, 6)
-
-                local mask = 0x7FFFFFFF + watchOverChocobo
+                -- TODO: Refactor to use the -bit pattern
+                local watchOverChocobo  = 0x01
+                local tellAStory        = 0x02
+                local scoldTheChocobo   = 0x04
+                local competeWithOthers = 0x08
+                local goOnAWalkShort    = 0x10
+                local goOnAWalkRegular  = 0x20
+                local goOnAWalkLong     = 0x40
+                local mask              = 0x7FFFFFFF - watchOverChocobo
 
                 if chocoState.stage >= xi.chocoboRaising.stage.CHICK then
                     mask = mask +
@@ -868,6 +843,8 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
 
                 local storyMask = 0xFFFFFFFE -- 0xFFFFFF9C
 
+                -- TODO: This looks very similar to SCOLD_CHOCOBO and COMPETE_WITH_OTHERS, should we move those updates
+                --     : inside onRaisingEventPlayout?
                 chocoState = xi.chocoboRaising.onRaisingEventPlayout(player, xi.chocoboRaising.cutscenes.INTERESTED_IN_YOUR_STORY, chocoState)
 
                 player:updateEventString(chocoState.first_name, chocoState.last_name, chocoState.first_name, chocoState.last_name, 0, 0, 0, 0, 0, 0, 0)
@@ -996,7 +973,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             end,
 
             [vmOpCodes.SKIP_REPORT] = function()
-                for _, currentEvent in ipairs(chocoState.report.events) do
+                for _, currentEvent in pairs (chocoState.report.events) do
                     local eventStartStart = currentEvent[1]
                     -- local eventStartEnd = currentEvent[2]
                     local eventCSList = currentEvent[3]
