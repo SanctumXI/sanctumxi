@@ -214,6 +214,9 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
         --------------------------------------------------------
         -- Main body update logic
         --------------------------------------------------------
+        local opCodeName = vmOpCodeNames[option] or '?'
+        debug(string.format('ChocoVM Op: %i: %s', option, opCodeName))
+
         switch (option): caseof
         {
             -- ?
