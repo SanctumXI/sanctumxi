@@ -253,8 +253,8 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     chocoState.age   = eventStartStart
                     chocoState.stage = xi.chocoboRaising.ageToStage(chocoState.age)
 
-                    for _, cs in pairs(eventCSList) do
-                        table.insert(chocoState.csList, cs)
+                    for _, cs in ipairs(eventCSList) do
+                        table.insert(chocoState.csList, { cs, eventStartEnd - eventStartStart + 1 })
                     end
 
                     report = bit.lshift(eventStartStart, 0) + bit.lshift(eventStartEnd, 20)
@@ -391,14 +391,14 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     local itemData     = xi.chocoboRaising.validFoods[itemId]
                     local hungerAmount = itemData[1]
                     local energyAmount = itemData[3]
-                    local glowColor   = itemData[10]
+                    local glowColor    = itemData[10]
 
                     player:messageSpecial(ID.text.CHOCOBO_FEEDING_ITEM, itemId, idx)
 
                     -- TODO: Handle item effects
 
                     if xi.chocoboRaising.hasCondition(chocoState) then
-                        for _, condition in pairs(chocoState.conditions) do
+                        for _, condition in ipairs(chocoState.conditions) do
                             if xi.chocoboRaising.getCondition(chocoState, condition) then
                                 local foodCureTable = xi.chocoboRaising.conditionsHealedByItems[condition]
 
@@ -488,15 +488,20 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 player:addKeyItem(ki)
             end,
 
-            [vmOpCodes.ASK_ABOUT_CONDITION_MENU] = function()
+            [vmOpCodes.ASK_ABOUT_CONDITION_CONFIRM] = function()
                 -- TODO: When is this used?
                 -- Block all other information
                 -- local blockFlag = bit.lshift(0x01, 31) -- Sorry, but you will have to do this later. I have something new to report.
 
-                local arg0 = vmOpCodes.ASK_ABOUT_CONDITION_MENU
+                local arg0 = vmOpCodes.ASK_ABOUT_CONDITION_CONFIRM
 
                 local arg1 = xi.chocoboRaising.packStats1(chocoState)
-                local arg2 = bit.lshift(xi.chocoboRaising.affectionRank.PARENT, 0) + bit.lshift(chocoState.hunger, 16)
+
+                local affection = xi.chocoboRaising.affectionToAffectionRank(chocoState.affection)
+                local arg2      = bit.lshift(affection, 0) +
+                    bit.lshift(chocoState.hunger, 16)
+
+                -- TODO: Does this leak the ability information early? Should we block this out?
                 local arg3 = bit.lshift(chocoState.personality, 0) +
                     bit.lshift(chocoState.weather_preference, 4) +
                     bit.lshift(chocoState.ability1, 8) +
@@ -513,6 +518,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 -- NOTE: This does NOT use the negative masks of the menus!
                 --
 
+                -- Condition flags (can be combined)
                 local legWounded         = bit.lshift(0x01, 0)
                 local slightlyIll        = bit.lshift(0x01, 1)
                 local stomachAche        = bit.lshift(0x01, 2)
@@ -576,10 +582,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 -- TODO: makingAFuss
                 utils.unused(makingAFuss)
 
-                if
-                    xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_1) or
-                    xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_2)
-                then
+                if xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_1) or xi.chocoboRaising.getCondition(chocoState, xi.chocoboRaising.conditions.FULL_OF_ENERGY_2) then
                     arg4 = arg4 + fullOfEnergy
                 end
 
@@ -593,6 +596,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
             [vmOpCodes.CARE_FOR_CHOCOBO_MENU] = function()
                 debug(string.format('  Energy: %i', chocoState.energy))
 
+                -- Condition flags (can be combined)
                 local watchOverChocobo  = -bit.lshift(0x01, 0)
                 local tellAStory        = -bit.lshift(0x01, 1)
                 local scoldTheChocobo   = -bit.lshift(0x01, 2)
@@ -604,20 +608,29 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 local mask = 0x7FFFFFFF + watchOverChocobo
 
                 if chocoState.stage >= xi.chocoboRaising.stage.CHICK then
-                    mask = mask - scoldTheChocobo - goOnAWalkShort
+                    mask = mask +
+                        scoldTheChocobo +
+                        goOnAWalkShort
                 end
 
                 if chocoState.stage >= xi.chocoboRaising.stage.ADOLESCENT then
-                    mask = mask - tellAStory - goOnAWalkRegular
                     -- TODO: Is this unlocked per-chocobo, or per-player?
+                    local knowsAStory = true
+                    if knowsAStory then
+                        mask = mask + tellAStory
+                    end
+
+                    mask = mask + goOnAWalkRegular
+
                     -- TODO: competeWithOthers: Available at adolescent stage; You must go on a regular walk to unlock this.
-                    if true then
-                        mask = mask - competeWithOthers
+                    local hasGoneOnRegularWalk = true
+                    if hasGoneOnRegularWalk then
+                        mask = mask + competeWithOthers
                     end
                 end
 
                 if chocoState.stage >= xi.chocoboRaising.stage.ADULT_1 then
-                    mask = mask - goOnAWalkLong
+                    mask = mask + goOnAWalkLong
                 end
 
                 player:updateEvent(mask, chocoState.energy, 0, 0, 0, 0, 0, 0)
@@ -857,7 +870,7 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     -- TODO: Chance to learn skill
                 end
 
-                local storyMask = 0xFFFFFF9C
+                local storyMask = 0xFFFFFFFE -- 0xFFFFFF9C
 
                 chocoState = xi.chocoboRaising.onRaisingEventPlayout(player, xi.chocoboRaising.cutscenes.INTERESTED_IN_YOUR_STORY, chocoState)
 
@@ -966,12 +979,28 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                 --
             end,
 
-            [504] = function() -- Skip report
-                -- TODO: Set up movement between chocoState.report.events and chocoState.csList to
-                --     : include the length of each playout in days, so it can be used in handleCSUpdate()
-                --     : to multiply values etc.
-                -- Prepare chocoState.csList
-                for _, currentEvent in pairs (chocoState.report.events) do
+            [vmOpCodes.WHISTLE_GAME_RESULT] = function()
+                -- TODO: Handle this:
+                --     : A successful search does not guarantee you'll find the item. That means the item is not in that area, and you should look in the other two areas.
+                --     : We'll need to pre-assign which area the search will succeed in, and also remember
+                --     : if the chocobo finished the white handkerchief quest with the player.
+
+                -- TODO: If you finished the white handerchief quest, you'll get the
+                --     : DIRTY_HANDKERCHIEF instead of HANDKERCHIEF.
+                local keyItem = xi.keyItem.HANDKERCHIEF
+
+                -- TODO: What are the chances here, seems fair but not guaranteed from caps.
+                if math.random(1, 100) < 25 then -- success
+                    player:updateEvent(keyItem, 0, 0, 0, 0, 1, 0, 0)
+                    player:addKeyItem(keyItem)
+                    player:setCharVar('HQuest[ChocoboWhistle]Prog', 3)
+                else -- failure
+                    player:updateEvent(0, 0, 0, 0, 0, 2, 0, 0)
+                end
+            end,
+
+            [vmOpCodes.SKIP_REPORT] = function()
+                for _, currentEvent in ipairs(chocoState.report.events) do
                     local eventStartStart = currentEvent[1]
                     -- local eventStartEnd = currentEvent[2]
                     local eventCSList = currentEvent[3]
@@ -979,8 +1008,8 @@ xi.chocoboRaising.eventVM = function(player, csid, option, npc)
                     chocoState.age   = eventStartStart
                     chocoState.stage = xi.chocoboRaising.ageToStage(chocoState.age)
 
-                    for _, cs in pairs(eventCSList) do
-                        table.insert(chocoState.csList, cs)
+                    for _, cs in ipairs(eventCSList) do
+                        table.insert(chocoState.csList, { cs, eventStartEnd - eventStartStart + 1 })
                     end
                 end
 
