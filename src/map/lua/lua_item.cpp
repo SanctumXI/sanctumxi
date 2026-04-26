@@ -125,11 +125,6 @@ bool CLuaItem::isSubType(uint8 subtype)
     return m_readItem->isSubType(static_cast<ITEM_SUBTYPE>(subtype));
 }
 
-auto CLuaItem::state() const -> ItemState
-{
-    return m_readItem->state();
-}
-
 void CLuaItem::setReservedValue(uint8 reserved)
 {
     if (!m_writeItem)

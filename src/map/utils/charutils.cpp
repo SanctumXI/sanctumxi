@@ -1998,9 +1998,6 @@ if (quantity < 0)
             }
         }
         luautils::OnItemDrop(PChar, PItem);
-
-        // Remove soon to be stale PItem pointer from sync state
-        PChar->inventorySyncState().removeEquipChange(PItem);
     }
     return ItemID;
 }
