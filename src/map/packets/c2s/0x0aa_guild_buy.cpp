@@ -41,7 +41,7 @@ void GP_CLI_COMMAND_GUILD_BUY::process(MapSession* PSession, CCharEntity* PChar)
 {
     uint8 quantity = ItemNum;
 
-    const CItem* PItem = itemutils::GetItemPointer(ItemNo);
+    const CItem* PItem = xi::items::lookup(this->ItemNo);
     if (!PItem)
     {
         ShowWarning("User '%s' attempting to buy an invalid item from guild vendor!", PChar->getName());

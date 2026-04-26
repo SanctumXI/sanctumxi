@@ -224,7 +224,10 @@ void GP_CLI_COMMAND_ITEM_MOVE::process(MapSession* PSession, CCharEntity* PChar)
             return;
         }
 
-        if (uint8 newSlotId = PChar->getStorage(Category2)->InsertItem(PItem); newSlotId != ERROR_SLOTID)
+        auto* PSrc      = PChar->getStorage(this->Category1);
+        auto* PDst      = PChar->getStorage(this->Category2);
+        uint8 newSlotId = PSrc->MoveItemTo(this->ItemIndex1, *PDst);
+        if (newSlotId != ERROR_SLOTID)
         {
             const auto rset = db::preparedStmt("UPDATE char_inventory SET location = ?, slot = ? WHERE charid = ? AND location = ? AND slot = ?",
                                                Category2,
@@ -234,15 +237,13 @@ void GP_CLI_COMMAND_ITEM_MOVE::process(MapSession* PSession, CCharEntity* PChar)
                                                ItemIndex1);
             if (rset && rset->rowsAffected())
             {
-                PChar->getStorage(Category1)->InsertItem(nullptr, ItemIndex1);
-
-                PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, static_cast<CONTAINER_ID>(Category1), ItemIndex1, PItem);
-                PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, static_cast<CONTAINER_ID>(Category2), newSlotId);
+                auto* PInserted = PDst->GetItem(newSlotId);
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, static_cast<CONTAINER_ID>(this->Category1), this->ItemIndex1, PInserted);
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, static_cast<CONTAINER_ID>(this->Category2), newSlotId);
             }
             else
             {
-                PChar->getStorage(Category2)->InsertItem(nullptr, newSlotId);
-                PChar->getStorage(Category1)->InsertItem(PItem, ItemIndex1);
+                PDst->MoveItemTo(newSlotId, *PSrc, this->ItemIndex1);
             }
         }
         else
