@@ -17299,7 +17299,7 @@ void CLuaBaseEntity::setStatRank(uint8 statType, uint8 rank)
 /************************************************************************
  *  Function: getEcosystem()
  *  Purpose : Returns integer value of system associated with an Entity
- *  Example : if pet:getEcosystem() ~= xi.ecosystem.AVATAR then -- Not an avatar
+ *  Example : if pet:getEcosystem() ~= xi.ecosystem.ELEMENTAL then -- Not an elemental
  *  Notes   :
  ************************************************************************/
 
