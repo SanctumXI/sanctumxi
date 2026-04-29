@@ -1189,8 +1189,11 @@ void LoadEquip(CCharEntity* PChar)
                 if ((PItem != nullptr) && PItem->isType(ITEM_LINKSHELL))
                 {
                     PItem->setSubType(ITEM_LOCKED);
-                    PChar->equip[equipSlotId]    = inventoryLoc.first;
-                    PChar->equipLoc[equipSlotId] = inventoryLoc.second;
+                    if (!PChar->bindEquip(equipSlotId, PItem))
+                    {
+                        continue;
+                    }
+
                     if (equipSlotId == SLOT_LINK1)
                     {
                         PLinkshell1 = (CItemLinkshell*)PItem;
@@ -1217,7 +1220,7 @@ void LoadEquip(CCharEntity* PChar)
                 uint8 SlotID     = PLinkshell1->getSlotID();
                 uint8 LocationID = PLinkshell1->getLocationID();
                 PLinkshell1->setSubType(ITEM_UNLOCKED);
-                PChar->equip[SLOT_LINK1] = 0;
+                PChar->clearEquip(SLOT_LINK1);
                 db::preparedStmt("DELETE char_equip FROM char_equip WHERE charid = ? AND slotid = ? AND containerid = ? LIMIT 1",
                                  PChar->id,
                                  SlotID,
@@ -1237,7 +1240,7 @@ void LoadEquip(CCharEntity* PChar)
                 uint8 SlotID     = PLinkshell2->getSlotID();
                 uint8 LocationID = PLinkshell2->getLocationID();
                 PLinkshell2->setSubType(ITEM_UNLOCKED);
-                PChar->equip[SLOT_LINK2] = 0;
+                PChar->clearEquip(SLOT_LINK2);
                 db::preparedStmt("DELETE char_equip FROM char_equip WHERE charid = ? AND slotid = ? AND containerid = ? LIMIT 1",
                                  PChar->id,
                                  SlotID,
@@ -1520,8 +1523,9 @@ void SendInventory(CCharEntity* PChar)
     if (PItem != nullptr)
     {
         PItem->setSubType(ITEM_LOCKED);
+        auto eloc1 = PChar->equipLocation(SLOT_LINK1);
 
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, static_cast<CONTAINER_ID>(PChar->equipLoc[SLOT_LINK1]), PChar->equip[SLOT_LINK1]);
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, *eloc1);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PItem, ItemLockFlg::Linkshell);
         PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, 1);
     }
@@ -1530,8 +1534,9 @@ void SendInventory(CCharEntity* PChar)
     if (PItem != nullptr)
     {
         PItem->setSubType(ITEM_LOCKED);
+        auto eloc2 = PChar->equipLocation(SLOT_LINK2);
 
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, static_cast<CONTAINER_ID>(PChar->equipLoc[SLOT_LINK2]), PChar->equip[SLOT_LINK2]);
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PItem, *eloc2);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PItem, ItemLockFlg::Linkshell);
         PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, 2);
     }
@@ -2152,8 +2157,7 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
 
         // todo: issues as item 0 reference is being handled as a real equipment piece
         //      thought to be source of nin bug
-        PChar->equip[equipSlotID]    = 0;
-        PChar->equipLoc[equipSlotID] = 0;
+        PChar->clearEquip(equipSlotID);
 
         if (((CItemEquipment*)PItem)->getScriptType() & SCRIPT_EQUIP)
         {
@@ -2217,7 +2221,7 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
             break;
             case SLOT_AMMO:
             {
-                if (PChar->equip[SLOT_RANGED] == 0)
+                if (!PChar->getEquip(SLOT_RANGED))
                 {
                     PChar->look.ranged = 0;
                 }
@@ -2227,7 +2231,7 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
             break;
             case SLOT_RANGED:
             {
-                if (PChar->equip[SLOT_RANGED] == 0)
+                if (!PChar->getEquip(SLOT_RANGED))
                 {
                     PChar->look.ranged = 0;
                 }
@@ -2552,7 +2556,7 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                             UnequipItem(PChar, SLOT_RANGED, Recalculate::No);
                         }
                     }
-                    if (PChar->equip[SLOT_RANGED] == 0)
+                    if (!PChar->getEquip(SLOT_RANGED))
                     {
                         PChar->look.ranged = PItem->getModelId();
                     }
@@ -2588,8 +2592,10 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
             break;
         }
 
-        PChar->equip[equipSlotID]    = slotID;
-        PChar->equipLoc[equipSlotID] = containerID;
+        if (!PChar->bindEquip(equipSlotID, PItem))
+        {
+            return false;
+        }
 
         // Changed visible equipment
         if (equipSlotID >= SLOT_HEAD && equipSlotID <= SLOT_FEET)
@@ -5897,14 +5903,15 @@ void SaveCharLinkshells(CCharEntity* PChar)
 {
     for (uint8 lsSlot = 16; lsSlot < 18; ++lsSlot)
     {
-        if (PChar->equip[lsSlot] == 0)
+        auto eloc = PChar->equipLocation(lsSlot);
+        if (!eloc)
         {
             sql->Query("DELETE FROM char_linkshells WHERE charid = %u AND lsslot = %u LIMIT 1", PChar->id, lsSlot);
         }
         else
         {
             const char* fmtQuery = "INSERT INTO char_linkshells SET charid = %u, lsslot = %u, location = %u, slot = %u ON DUPLICATE KEY UPDATE location = %u, slot = %u";
-            sql->Query(fmtQuery, PChar->id, lsSlot, PChar->equipLoc[lsSlot], PChar->equip[lsSlot], PChar->equipLoc[lsSlot], PChar->equip[lsSlot]);
+            sql->Query(fmtQuery, PChar->id, lsSlot, static_cast<uint8>(eloc->Container), eloc->Slot, static_cast<uint8>(eloc->Container), eloc->Slot);
         }
     }
 }
@@ -6154,7 +6161,8 @@ void SaveCharEquip(CCharEntity* PChar)
 
     for (uint8 i = 0; i < 18; ++i)
     {
-        if (PChar->equip[i] == 0)
+        auto eloc = PChar->equipLocation(i);
+        if (!eloc)
         {
             db::preparedStmt("DELETE FROM char_equip WHERE charid = ? AND equipslotid = ? LIMIT 1", PChar->id, i);
         }
@@ -6165,10 +6173,10 @@ void SaveCharEquip(CCharEntity* PChar)
                              "ON DUPLICATE KEY UPDATE slotid  = ?, containerid = ?",
                              PChar->id,
                              i,
-                             PChar->equip[i],
-                             PChar->equipLoc[i],
-                             PChar->equip[i],
-                             PChar->equipLoc[i]);
+                             eloc->Slot,
+                             static_cast<uint8>(eloc->Container),
+                             eloc->Slot,
+                             static_cast<uint8>(eloc->Container));
         }
     }
 }
