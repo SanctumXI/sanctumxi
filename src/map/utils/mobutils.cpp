@@ -26,6 +26,7 @@
 #include "common/utils.h"
 
 #include "action/action.h"
+#include "ai/ai_container.h"
 #include "battlefield.h"
 #include "battleutils.h"
 #include "grades.h"
@@ -1029,6 +1030,14 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     {
         ShowError("mobutils::CalculateMobStats Mob (%s, %d, %d) has no detection methods!", PMob->getName(), PMob->id, PMob->m_Family);
     }
+}
+
+void SetupRangedAttack(CMobEntity* PMob)
+{
+    PMob->defaultMobMod(xi::MobMod::SpecialSkill, 0); // Need to remove the base ranged attack
+    PMob->defaultMobMod(xi::MobMod::RangedAttackRange, 14);
+    PMob->PAI->GetController()->SetRangedAttackEnabled(true);
+    static_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_RANGED])->setBaseDelay(290);
 }
 
 void SetupJob(CMobEntity* PMob)
