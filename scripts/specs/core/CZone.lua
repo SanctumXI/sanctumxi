@@ -91,6 +91,11 @@ end
 function CZone:reloadNavmesh()
 end
 
+---@param config table
+---@return nil
+function CZone:rebuildNavmesh(config)
+end
+
 ---@nodiscard
 ---@param position table
 ---@return boolean
