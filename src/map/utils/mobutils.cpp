@@ -810,6 +810,8 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
     }
 
+    PMob->m_dualWield = false;
+
     // Deprecate xi::MobMod::DualWield later, replace if check with value from DB
     if (PMob->getMobMod(xi::MobMod::DualWield))
     {
