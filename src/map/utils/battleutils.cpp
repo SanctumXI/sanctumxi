@@ -683,7 +683,7 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
             runeDPS = PWeapon->getDPS();
         }
 
-        if (PAttacker->m_dualWield)
+        if (PAttacker->IsDualWielding())
         {
             runeDPS /= 2; // DPS is divided evenly between hands derived from mainhand only
         }
