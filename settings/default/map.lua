@@ -63,10 +63,10 @@ xi.settings.map =
     -- 30,000 is believed to be approximately current retail cap.
     -- This directly affects a tank's ability to hold enmity over time.
     -- The lower the value, the faster damage dealers will reach the cap and the mob will bounce.
-    ENMITY_CAP = 100000,
+    ENMITY_CAP = 250000,
 
     -- Misc EXP related settings
-    EXP_RATE                = 0.7,
+    EXP_RATE                = 1.0,
     EXP_LOSS_RATE           = 1.0,
     EXP_PARTY_GAP_PENALTIES = true,
 
@@ -85,7 +85,7 @@ xi.settings.map =
     VANADIEL_TIME_EPOCH = 0,
 
     -- For old fame calculation use .25
-    FAME_MULTIPLIER = .75,
+    FAME_MULTIPLIER = .66,
 
     -- Percentage of experience normally lost to keep upon death. 0 means full loss, where 1 means no loss.
     EXP_RETAIN = 0,
@@ -122,7 +122,7 @@ xi.settings.map =
     BASE_SPEED = 55,
 
     -- Player movement speed limit
-    SPEED_LIMIT = 85,
+    SPEED_LIMIT = 75,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
     MOUNT_SPEED = 85,
@@ -133,7 +133,7 @@ xi.settings.map =
 
     -- Multiplier for speed of engaged mobs when their target is out of range.
     -- The default for almost all mobs on retail is 2.5x their normal speed.
-    MOB_RUN_SPEED_MULTIPLIER = 2.6,
+    MOB_RUN_SPEED_MULTIPLIER = 2.75,
 
     -- Allows you to manipulate the constant multiplier in the skill-up rate formulas, having a potent effect on skill-up rates.
     SKILLUP_CHANCE_MULTIPLIER = 1.0,
@@ -168,7 +168,7 @@ xi.settings.map =
     FISHING_MIN_LEVEL = 10,
 
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
-    FISHING_SKILL_MULTIPLIER = 1.5,
+    FISHING_SKILL_MULTIPLIER = 1.6,
 
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,
@@ -300,7 +300,7 @@ xi.settings.map =
     -- Despawn jug pets that have a minimum level below level sync or zone level restriction.
     -- Such as despawning Courier Carrie in a level 20 cap when their minimum level to summon is 23.
     -- While the default value of false is retail accurate, there are some balance concerns such as using 1000 needles at low levels from the cactuar pet.
-    DESPAWN_JUGPETS_BELOW_MINIMUM_LEVEL = false,
+    DESPAWN_JUGPETS_BELOW_MINIMUM_LEVEL = true,
 
     -- Send stack traces to the client after caught Lua errors if
     -- their GM level is the same or higher than this number.

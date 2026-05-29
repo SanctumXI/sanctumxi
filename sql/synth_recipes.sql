@@ -4851,6 +4851,8 @@ INSERT INTO `synth_recipes` VALUES (77624,0,0,0,0,0,0,0,0,0,73,4096,4238,610,615
 -- INSERT INTO `synth_recipes` VALUES (77626,0,0,0,0,0,0,0,0,0,100,4096,4238,617,620,2111,4387,5152,5233,5236,5237,6686,6686,6687,6687,6,8,6,8,'Gyudon','TVR'); --  Placeholder, unknown cooking cap
 -- INSERT INTO `synth_recipes` VALUES (77627,1,0,0,0,100,0,0,0,0,0,4100,4242,9933,0,0,0,0,0,0,0,2305,2305,1225,1225,2,4,2,4,'Golden Shell (Desynth)','TVR'); --  Placeholder, unknown goldsmithing cap, missing item_basic
 INSERT INTO `synth_recipes` VALUES (77628,0,2035,0,0,0,0,0,0,24,0,4101,4243,637,637,913,913,913,913,2131,0,4165,4165,4165,4165,8,10,12,12,'Silent Oil','ABYSSEA'); -- 2012.06.13 Trituration
+INSERT INTO `synth_recipes` VALUES (77629,0,0,100,0,0,0,0,0,0,0,4099,4241,17546,17548,17550,17552,17554,17556,17558,17560,18633,18633,18633,18633,1,1,1,1,'Chatoyant Staff',NULL);
+
 
 -- -----------
 -- RECIPES END

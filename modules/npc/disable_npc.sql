@@ -21,6 +21,7 @@ WHERE BINARY `name` IN
     'Magian_Moogle_Blue',
     'Magian_Moogle_Green',
     'Magian_Moogle_Orange',
+    'Porter_Moogle',
     'MandragoraAssi',
     'Mapitoto',
     'Duplidoc',
@@ -41,7 +42,9 @@ WHERE BINARY `name` IN
     'Duplidoc',
     'Afdeen',
     'Marshal',
-    'Antonia'
+    'Antonia',
+    'Synergy_Furnace',
+    'Synergy_Engineer'
 
     
 )

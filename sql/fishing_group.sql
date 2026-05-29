@@ -359,7 +359,7 @@ INSERT INTO `fishing_group` VALUES (31,688,500,200,6);     -- Arrowwood Log
 INSERT INTO `fishing_group` VALUES (31,4402,750,260,5);    -- Red Terrapin
 INSERT INTO `fishing_group` VALUES (31,4426,1000,500,15);  -- Tricolored Carp
 INSERT INTO `fishing_group` VALUES (31,4427,750,275,6);    -- Gold Carp
-INSERT INTO `fishing_group` VALUES (31,4463,500,50,6);     -- Takitaro
+INSERT INTO `fishing_group` VALUES (31,4463,500,100,6);     -- Takitaro
 INSERT INTO `fishing_group` VALUES (31,4472,1000,500,15);  -- Crayfish
 INSERT INTO `fishing_group` VALUES (31,12522,200,10,1);    -- Rusty Cap
 INSERT INTO `fishing_group` VALUES (31,16655,400,290,7);   -- Rusty Pick
@@ -709,7 +709,7 @@ INSERT INTO `fishing_group` VALUES (62,14242,500,300,9);   -- Rusty Subligar
 INSERT INTO `fishing_group` VALUES (63,90,900,300,9);      -- Rusty Bucket
 INSERT INTO `fishing_group` VALUES (63,624,1000,300,9);    -- Clump Of Pamtam Kelp
 INSERT INTO `fishing_group` VALUES (63,887,200,50,6);      -- Coral Fragment
-INSERT INTO `fishing_group` VALUES (63,4318,100,50,6);     -- Bibiki Urchin
+INSERT INTO `fishing_group` VALUES (63,4318,100,75,6);     -- Bibiki Urchin
 INSERT INTO `fishing_group` VALUES (63,4360,1000,500,15);  -- Bastore Sardine
 INSERT INTO `fishing_group` VALUES (63,4399,650,275,6);    -- Bluetail
 INSERT INTO `fishing_group` VALUES (63,4443,1000,500,15);  -- Cobalt Jellyfish
@@ -774,17 +774,17 @@ INSERT INTO `fishing_group` VALUES (68,624,1000,300,9);    -- Clump Of Pamtam Ke
 INSERT INTO `fishing_group` VALUES (68,4305,700,50,6);     -- Ryugu Titan
 INSERT INTO `fishing_group` VALUES (68,4314,850,500,15);   -- Bibikibo
 INSERT INTO `fishing_group` VALUES (68,4317,1000,500,15);  -- Trilobite
-INSERT INTO `fishing_group` VALUES (68,4318,100,50,6);     -- Bibiki Urchin
+INSERT INTO `fishing_group` VALUES (68,4318,100,75,6);     -- Bibiki Urchin
 INSERT INTO `fishing_group` VALUES (68,4360,1000,500,15);  -- Bastore Sardine
 INSERT INTO `fishing_group` VALUES (68,4385,1000,500,15);  -- Zafmlug Bass
 INSERT INTO `fishing_group` VALUES (68,4399,650,275,6);    -- Bluetail
 INSERT INTO `fishing_group` VALUES (68,4443,1000,500,15);  -- Cobalt Jellyfish
 INSERT INTO `fishing_group` VALUES (68,4471,750,145,4);    -- Bladefish
-INSERT INTO `fishing_group` VALUES (68,4476,500,50,6);     -- Titanictus
+INSERT INTO `fishing_group` VALUES (68,4476,500,60,6);     -- Titanictus
 INSERT INTO `fishing_group` VALUES (68,4480,900,400,12);   -- Gugru Tuna
 INSERT INTO `fishing_group` VALUES (68,4485,700,260,5);    -- Noble Lady
 INSERT INTO `fishing_group` VALUES (68,4514,1000,500,15);  -- Quus
-INSERT INTO `fishing_group` VALUES (68,5120,700,20,2);     -- Titanic Sawfish
+INSERT INTO `fishing_group` VALUES (68,5120,700,25,2);     -- Titanic Sawfish
 INSERT INTO `fishing_group` VALUES (68,5121,700,275,6);    -- Moorish Idol
 INSERT INTO `fishing_group` VALUES (68,5127,700,50,6);     -- Gugrusaurus
 INSERT INTO `fishing_group` VALUES (68,5128,850,290,7);    -- Cone Calamary
@@ -891,7 +891,7 @@ INSERT INTO `fishing_group` VALUES (80,14242,500,300,9);   -- Rusty Subligar
 -- The Boyahda Tree, Waterfall Basin
 
 INSERT INTO `fishing_group` VALUES (81,688,500,200,6);     -- Arrowwood Log
-INSERT INTO `fishing_group` VALUES (81,4308,500,50,6);     -- Giant Chirai
+INSERT INTO `fishing_group` VALUES (81,4308,500,60,6);     -- Giant Chirai
 INSERT INTO `fishing_group` VALUES (81,4401,1000,1000,36); -- Moat Carp
 INSERT INTO `fishing_group` VALUES (81,4426,1000,500,15);  -- Tricolored Carp
 INSERT INTO `fishing_group` VALUES (81,4428,1000,500,15);  -- Dark Bass
@@ -953,7 +953,7 @@ INSERT INTO `fishing_group` VALUES (87,16606,400,300,9);   -- Rusty Greatsword
 
 -- Quicksand Caves, Whole Zone
 
-INSERT INTO `fishing_group` VALUES (88,4309,500,50,6);     -- Cave Cherax
+INSERT INTO `fishing_group` VALUES (88,4309,500,60,6);     -- Cave Cherax
 INSERT INTO `fishing_group` VALUES (88,4472,1000,500,15);  -- Crayfish
 INSERT INTO `fishing_group` VALUES (88,14242,500,300,9);   -- Rusty Subligar
 
@@ -1003,7 +1003,7 @@ INSERT INTO `fishing_group` VALUES (92,14117,500,300,9);   -- Rusty Leggings
 INSERT INTO `fishing_group` VALUES (93,90,900,300,9);      -- Rusty Bucket
 INSERT INTO `fishing_group` VALUES (93,4291,1000,500,15);  -- Sandfish
 INSERT INTO `fishing_group` VALUES (93,4306,900,190,6);    -- Giant Donko
-INSERT INTO `fishing_group` VALUES (93,4309,500,50,6);     -- Cave Cherax
+INSERT INTO `fishing_group` VALUES (93,4309,500,60,6);     -- Cave Cherax
 INSERT INTO `fishing_group` VALUES (93,12522,200,10,1);    -- Rusty Cap
 INSERT INTO `fishing_group` VALUES (93,14242,500,300,9);   -- Rusty Subligar
 
@@ -1330,7 +1330,7 @@ INSERT INTO `fishing_group` VALUES (122,5130,850,260,5);   -- Tavnazian Goby
 INSERT INTO `fishing_group` VALUES (123,4401,1000,1000,36);-- Moat Carp
 INSERT INTO `fishing_group` VALUES (123,4427,750,275,6);   -- Gold Carp
 INSERT INTO `fishing_group` VALUES (123,4428,1000,500,15); -- Dark Bass
-INSERT INTO `fishing_group` VALUES (123,4463,500,50,6);    -- Takitaro
+INSERT INTO `fishing_group` VALUES (123,4463,500,100,6);    -- Takitaro
 INSERT INTO `fishing_group` VALUES (123,5130,850,260,5);   -- Tavnazian Goby
 INSERT INTO `fishing_group` VALUES (123,13456,300,275,6);  -- Silver Ring
 
@@ -1370,7 +1370,7 @@ INSERT INTO `fishing_group` VALUES (126,14242,500,300,9);  -- Rusty Subligar
 -- Aydeewa Subterrane, Whole Zone
 
 INSERT INTO `fishing_group` VALUES (127,2216,1000,200,6);  -- Lamp Marimo
-INSERT INTO `fishing_group` VALUES (127,4309,500,50,6);    -- Cave Cherax
+INSERT INTO `fishing_group` VALUES (127,4309,500,60,6);    -- Cave Cherax
 INSERT INTO `fishing_group` VALUES (127,4313,750,275,6);   -- Blindfish
 INSERT INTO `fishing_group` VALUES (127,14117,500,300,9);  -- Rusty Leggings
 INSERT INTO `fishing_group` VALUES (127,14242,500,300,9);  -- Rusty Subligar
@@ -1468,7 +1468,7 @@ INSERT INTO `fishing_group` VALUES (136,4360,1000,500,15); -- Bastore Sardine
 INSERT INTO `fishing_group` VALUES (136,4361,1000,500,15); -- Nebimonite
 INSERT INTO `fishing_group` VALUES (136,4399,650,275,6);   -- Bluetail
 INSERT INTO `fishing_group` VALUES (136,4451,500,245,5);   -- Silver Shark
-INSERT INTO `fishing_group` VALUES (136,4476,500,50,6);    -- Titanictus
+INSERT INTO `fishing_group` VALUES (136,4476,500,60,6);    -- Titanictus
 INSERT INTO `fishing_group` VALUES (136,4479,700,160,5);   -- Bhefhel Marlin
 INSERT INTO `fishing_group` VALUES (136,4480,900,400,12);  -- Gugru Tuna
 INSERT INTO `fishing_group` VALUES (136,4485,700,260,5);   -- Noble Lady
@@ -1484,7 +1484,7 @@ INSERT INTO `fishing_group` VALUES (137,4361,1000,500,15); -- Nebimonite
 INSERT INTO `fishing_group` VALUES (137,4399,650,275,6);   -- Bluetail
 INSERT INTO `fishing_group` VALUES (137,4451,500,245,5);   -- Silver Shark
 INSERT INTO `fishing_group` VALUES (137,4475,700,50,6);    -- Sea Zombie
-INSERT INTO `fishing_group` VALUES (137,4476,500,50,6);    -- Titanictus
+INSERT INTO `fishing_group` VALUES (137,4476,500,60,6);    -- Titanictus
 INSERT INTO `fishing_group` VALUES (137,4479,700,160,5);   -- Bhefhel Marlin
 INSERT INTO `fishing_group` VALUES (137,4480,900,400,12);  -- Gugru Tuna
 INSERT INTO `fishing_group` VALUES (137,4485,700,260,5);   -- Noble Lady
@@ -1496,7 +1496,7 @@ INSERT INTO `fishing_group` VALUES (137,14242,500,300,9);  -- Rusty Subligar
 -- Silver Sea route to Nashmau, Whole Zone / Silver Sea route to Al Zahbi, Whole Zone
 
 INSERT INTO `fishing_group` VALUES (138,2341,1000,300,9);  -- Hydrogauge
-INSERT INTO `fishing_group` VALUES (138,5140,500,50,6);    -- Kalkanbaligi
+INSERT INTO `fishing_group` VALUES (138,5140,500,75,6);    -- Kalkanbaligi
 INSERT INTO `fishing_group` VALUES (138,5448,850,290,7);   -- Kalamar
 INSERT INTO `fishing_group` VALUES (138,5449,1000,500,15); -- Hamsi
 INSERT INTO `fishing_group` VALUES (138,5450,900,190,6);   -- Lakerda

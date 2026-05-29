@@ -110,7 +110,7 @@ end
 xi.job_utils.monk.useDodge = function(player, target, ability)
     local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
     local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
-    player:addStatusEffect(xi.effect.DODGE, { power = jpLevel + dodgeMod, duration = 30, origin = player })
+    player:addStatusEffect(xi.effect.DODGE, { power = jpLevel + dodgeMod, duration = 60, origin = player })
 
     return xi.effect.DODGE
 end
@@ -118,7 +118,7 @@ end
 xi.job_utils.monk.useFocus = function(player, target, ability)
     local jpLevel  = target:getJobPointLevel(xi.jp.FOCUS_EFFECT)
     local focusMod = target:getMod(xi.mod.FOCUS_EFFECT)
-    player:addStatusEffect(xi.effect.FOCUS, { power = jpLevel + focusMod, duration = 30, origin = player })
+    player:addStatusEffect(xi.effect.FOCUS, { power = jpLevel + focusMod, duration = 60, origin = player })
 
     return xi.effect.FOCUS
 end

@@ -479,14 +479,12 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
             m_queuedRangedAttack = 0;
             
         }
-        else if (m_queuedSpellTargId) 
+        else if (m_queuedSpellTargId)
         {
             Cast(m_queuedSpellTargId, m_queuedSpell);
             m_queuedSpell       = (SpellID)0;
             m_queuedSpellTargId = 0;
-            
         }
-        
     }
 
     PEntity->PostTick();

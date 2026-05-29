@@ -122,6 +122,7 @@
 #include "packets/s2c/0x038_schedulor.h"
 #include "packets/s2c/0x039_mapschedulor.h"
 #include "packets/s2c/0x03a_magicschedulor.h"
+#include "map/packets/s2c/0x022_item_trade_res.h"
 #include "packets/s2c/0x03c_shop_list.h"
 #include "packets/s2c/0x03e_shop_open.h"
 #include "packets/s2c/0x04c_auc.h"
@@ -4883,10 +4884,10 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
             PItemLinkPearl->setQuantity(1);
             if (charutils::AddItem(PChar, LOC_INVENTORY, PItemLinkPearl) != ERROR_SLOTID)
             {
-                // equip linkpearl to slot 2
+                // equip linkpearl to slot 1
                 if (equip)
                 {
-                    linkshell::AddOnlineMember(PChar, PItemLinkPearl, 2);
+                    linkshell::AddOnlineMember(PChar, PItemLinkPearl, 1);
                     PItemLinkPearl->setSubType(ITEM_LOCKED);
                     PChar->equip[SLOT_LINK2]    = PItemLinkPearl->getSlotID();
                     PChar->equipLoc[SLOT_LINK2] = LOC_INVENTORY;
@@ -5034,26 +5035,39 @@ void CLuaBaseEntity::confirmTrade() const
         if (PChar->TradeContainer->getInvSlotID(slotID) != 0xFF)
         {
             CItem* PItem = PChar->TradeContainer->getItem(slotID);
+
             if (PItem)
             {
                 uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
-                auto   quantity       = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
+                int32  quantity       = static_cast<int32>(std::min<uint32>(
+                    PChar->TradeContainer->getQuantity(slotID),
+                    confirmedItems));
 
-                PItem->setReserve(PItem->getReserve() - quantity);
-                if (confirmedItems > 0)
+                uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
+
+                if (quantity > 0)
                 {
-                    uint8 invSlotID = PChar->TradeContainer->getInvSlotID(slotID);
-                    if (static_cast<uint32>(quantity) >= PChar->TradeContainer->getItem(slotID)->getQuantity())
+                    if (static_cast<uint32>(quantity) >= PItem->getQuantity())
                     {
-                        // Set the trade slot to nullptr as the underlying item is about to be destroyed by UpdateItem
+                        PItem->setReserve(0);
                         PChar->TradeContainer->setItem(slotID, nullptr);
+                    }
+                    else
+                    {
+                        PItem->setReserve(0);
                     }
 
                     charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -quantity);
                 }
+                else
+                {
+                    // Nothing was consumed, so release the item completely.
+                    PItem->setReserve(0);
+                }
             }
         }
     }
+
     PChar->TradeContainer->Clean();
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
 }
@@ -19870,7 +19884,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getFreeSlotsCount", CLuaBaseEntity::getFreeSlotsCount);
     SOL_REGISTER("confirmTrade", CLuaBaseEntity::confirmTrade);
     SOL_REGISTER("tradeComplete", CLuaBaseEntity::tradeComplete);
-    SOL_REGISTER("getTrade", CLuaBaseEntity::getTrade);
 
     // Equipping
     SOL_REGISTER("canEquipItem", CLuaBaseEntity::canEquipItem);

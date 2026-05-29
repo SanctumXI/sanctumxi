@@ -273,7 +273,7 @@ local processTable = function(player, npc, prefix, row, delay)
             end
 
             if flags ~= 0 then
-                player:addStatusEffectEx(effect, effect, power, tick, duration, subId, subPower, tier, flags)
+                player:addStatusEffect(effect, effect, power, tick, duration, subId, subPower, tier, flags)
             else
                 player:addStatusEffect(effect, power, tick, duration, subId, subPower, tier)
             end
@@ -445,7 +445,13 @@ local processTable = function(player, npc, prefix, row, delay)
             local subPower   = row.region or 0
 
             player:timer(teleportDelay, function(playerArg)
-                playerArg:addStatusEffectEx(xi.effect.TELEPORT, 0, teleportId, 0, 1, 0, subPower)
+                playerArg:addStatusEffect(xi.effect.TELEPORT, {
+                    power    = teleportId,
+                    duration = 1,
+                    origin   = playerArg,
+                    icon     = 0,
+                    subPower = subPower,
+                })
             end)
 
         elseif type(row.teleport) == "table" then
@@ -771,7 +777,7 @@ local function setEncounter(entity, params)
         flags = xi.effectFlag.ON_ZONE
     end
 
-    entity:addStatusEffectEx(
+    entity:addStatusEffect(
         xi.effect.LEVEL_RESTRICTION,
         xi.effect.LEVEL_RESTRICTION,
         params.levelCap,
@@ -784,7 +790,7 @@ local function setEncounter(entity, params)
     )
 
     if params.subjob ~= nil and params.subjob == false then
-        entity:addStatusEffectEx(
+        entity:addStatusEffect(
             xi.effect.SJ_RESTRICTION,
             xi.effect.SJ_RESTRICTION,
             0,
@@ -2131,7 +2137,7 @@ LQS.teleporter = function(config)
     -- Default configuration
     local defaults = {
         itemsPerPage      = 5,
-        teleportDelay     = 1250,
+        teleportDelay     = 1500,
         greeting          = "Where would you like to go?",
         noDestinations    = "You haven't unlocked any destinations.",
         insufficientGil   = "You don't have enough Gil.",
@@ -2182,31 +2188,44 @@ LQS.teleporter = function(config)
             end
         end
 
-        -- Helper: Execute teleport
-        local function executeTeleport(player, destination)
-            applyPreEffects(player)
-            playAnimation(player)
+       -- Helper: Execute teleport
+local function executeTeleport(player, destination)
+    applyPreEffects(player)
+    playAnimation(player)
 
-            player:timer(config.teleportDelay, function(playerArg)
-                if destination.teleport then
-                    if type(destination.teleport) == "number" then
-                        playerArg:addStatusEffectEx(
-                            xi.effect.TELEPORT, 0,
-                            destination.teleport, 0, 3, 0,
-                            destination.region or 0
-                        )
-                    elseif type(destination.teleport) == "table" then
-                        playerArg:setPos(unpack(destination.teleport))
-                    end
-                elseif destination.pos then
-                    if destination.pos[5] ~= nil then
-                        playerArg:setPos(destination.pos[1], destination.pos[2], destination.pos[3], destination.pos[4], destination.pos[5])
-                    else
-                        playerArg:setPos(destination.pos[1], destination.pos[2], destination.pos[3], destination.pos[4])
-                    end
-                end
-            end)
+    player:timer(config.teleportDelay, function(playerArg)
+        if destination.teleport then
+            if type(destination.teleport) == "number" then
+                playerArg:addStatusEffect(xi.effect.TELEPORT, {
+                    power    = destination.teleport,
+                    duration = 1,
+                    origin   = playerArg,
+                    icon     = 0,
+                    subPower = destination.region or 0,
+                })
+            elseif type(destination.teleport) == "table" then
+                playerArg:setPos(unpack(destination.teleport))
+            end
+        elseif destination.pos then
+            if destination.pos[5] ~= nil then
+                playerArg:setPos(
+                    destination.pos[1],
+                    destination.pos[2],
+                    destination.pos[3],
+                    destination.pos[4],
+                    destination.pos[5]
+                )
+            else
+                playerArg:setPos(
+                    destination.pos[1],
+                    destination.pos[2],
+                    destination.pos[3],
+                    destination.pos[4]
+                )
+            end
         end
+    end)
+end
 
         -- Helper: Show payment menu
         local function showPaymentMenu(player, npc, destination)

@@ -23,7 +23,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.mob.phOnDespawn(mob, ID.mob.TONBERRY_KINQ, 10, 21600) -- 6 hours, 10% pop chance
+    xi.mob.phOnDespawn(mob, ID.mob.TONBERRY_KINQ, 5, 1) -- True Lottery, 5% Pop Chance
 end
 
 return entity

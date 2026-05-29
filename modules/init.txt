@@ -35,21 +35,24 @@
 # Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
 #
 # Live example:
-npc
-lqs_util.cpp
-LQS.lua
-LQS
+items
+limbus
+sanctum
+Gauntlet
 warps
-sanctumxi
+customHNM
+chainbreakers
+npc
+LQS
+LQS.lua
+lqs_util.cpp
+custom/lua/palacedoors.lua
 custom/sql/disable_npc.sql
 custom/lua/mission_wardrobe_unlocks.lua
 custom/cpp/ah_announcement.cpp
 custom/lua/announce_player_login.lua
 custom/lua/new_player_linkshell.lua
-custom/lua/Hybrid_HNM_system.lua
 custom/commands/
-custom/lua/conquest_regional_npcs_always_up.lua
 custom/lua/test_npcs_in_gm_home.lua
 toau/sql/pre_rmt_drops.sql
-custom/lua/tiamat.lua
 custom/sql/mob_level_and_respawn.sql

@@ -18,9 +18,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 2
     params.ftpMod = { 1.0, 1.0, 1.0 }
-    params.vit_wsc = 0.4
+    params.str_wsc = 0.4
     -- Defense ignored is 0%, 30%, 50% as per http://www.bg-wiki.com/bg/One_Inch_Punch
-    params.ignoredDefense = { 0.0, 0.3, 0.5 }
+    params.ignoredDefense = { 0.1, 0.3, 0.5 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2418.html
@@ -28,6 +28,10 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+                -- Add critical hit buff after WS for 45 seconds
+    player:addStatusEffect(xi.effect.BLOOD_RAGE, { power = 20, duration = 45, origin = player })
+   
     return tpHits, extraHits, criticalHit, damage
 end
 

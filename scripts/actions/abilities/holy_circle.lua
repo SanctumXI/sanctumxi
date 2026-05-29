@@ -12,7 +12,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
+abilityObject.onUseAbility = function(player, target, ability, party)
     return xi.job_utils.paladin.useHolyCircle(player, target, ability)
 end
 

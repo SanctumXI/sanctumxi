@@ -32,6 +32,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local power         = 1
     local duration      = math.floor(tp / 500 * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
+      local lvl = player:getSkillLevel(11)
+    local enpower = lvl / 15
+    target:addStatusEffect(xi.effect.SHOCK, { power = enpower, duration = 60, origin = player })
 
     return tpHits, extraHits, criticalHit, damage
 end

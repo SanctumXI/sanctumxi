@@ -82,6 +82,7 @@ local casketInfo =
         TEMP    = 1,
         ITEM    = 2,
         EVOLITH = 3, -- NOTE: not implemented! item id: 2783
+        RARE_ITEM = 4
     },
     evolithAugs =
     {
@@ -236,16 +237,16 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
         return
     end
 
-    local chestStyle = 965
+    local chestStyle = 969
     local correctNum = math.random(10, 99)
     local attempts   = math.random(4, 6)
 
     -- Get casket type.
     local kupowersBonus = 0 -- TODO: Kupowers add a 20% chance.
-    if math.random(1, 100) <= 15 + kupowersBonus then
-        chestStyle = 966 -- Brown locked
+    if math.random(1, 100) <= 5 + kupowersBonus then
+        chestStyle = 969 -- Gold
     else
-        chestStyle = 965 -- Blue
+        chestStyle = 966 -- Brown unlocked
     end
 
     npc:resetLocalVars()
@@ -258,8 +259,16 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
     npc:setLocalVar('[caskets]ITEMS_SET', 0)
     npc:setLocalVar('[caskets]MOBLVL', mobLvl)
 
+    -- Gold rare casket.
+    if chestStyle == 969 then
+        -- npc:setLocalVar('[caskets]ATTEMPTS', attempts)
+        -- npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
+        -- npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
+        -- npc:setLocalVar('[caskets]LOCKED', 0)
+        npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.RARE_ITEM)
+        -- npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
     -- Brown.
-    if chestStyle == 966 then
+    elseif chestStyle == 966 then
        -- npc:setLocalVar('[caskets]ATTEMPTS', attempts)
        -- npc:setLocalVar('[caskets]CORRECT_NUM', correctNum)
        -- npc:setLocalVar('[caskets]FAILED_ATEMPTS', 0)
@@ -268,7 +277,7 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
        -- npc:setLocalVar('[caskets]HINTS_TABLE', 1234567)
     else
         -- npc:setLocalVar('[caskets]LOCKED', 0)
-        npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.TEMP)
+        npc:setLocalVar('[caskets]LOOT_TYPE', casketInfo.dropTypes.RARE_ITEM)
     end
 
     npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_OPEN)
@@ -394,32 +403,30 @@ local function getDrops(npc, dropType, zoneId)
     end
 
     -----------------------------------
-    -- Temp drops
+    -- Gold drops
     -----------------------------------
-    if dropType == casketInfo.dropTypes.TEMP then
-        -- Get item table.
-        local tempDrops = xi.casket_loot.casketItems[zoneId].temps
+    if dropType == casketInfo.dropTypes.RARE_ITEM then
+        -- Get rare item table.
+        local pool = xi.casket_loot.casketItems[zoneId].rare
         if casketInfo.splitZones[zoneId] then
-            local mobLvl = npc:getLocalVar('[caskets]MOBLVL')
-            if mobLvl > 50 then
-                tempDrops = xi.casket_loot.casketItems[zoneId].tempsHi
+                    local mobLvl = npc:getLocalVar('[caskets]MOBLVL')
+                    if mobLvl > 50 then
+                pool = xi.casket_loot.casketItems[zoneId].rareHi
             else
-                tempDrops = xi.casket_loot.casketItems[zoneId].tempsLow
+                pool = xi.casket_loot.casketItems[zoneId].rareLow
             end
         end
 
         -- Get number of items in casket.
-        local randomTable = { 1, 3, 1, 2, 1, 2, 1, 1, 3, 1, 2, 1 }
-        local itemCount = utils.randomEntry(randomTable)
+        local randomTable = { 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 1, 2 }
+        local itemCount   = utils.randomEntry(randomTable)
+        local items       = { 0, 0, 0, 0 }
 
-        local temps = { 0, 0, 0 }
-
-        -- roll for items
         for i = 1, itemCount do
-            temps[i] = xi.itemUtils.pickItemRandom(tempDrops)
+            items[i] = xi.itemUtils.pickItemRandom(pool)
         end
 
-        setTempItems(npc, temps[1], temps[2], temps[3])
+        setItems(npc, items[1], items[2], items[3], items[4])
     -----------------------------------
     -- Item drops
     -----------------------------------
@@ -677,6 +684,13 @@ xi.caskets.onTrigger = function(player, npc)
                 getChestItem(npc, 3),
                 getChestItem(npc, 4),
                 0, 0, 0, 0)
+        elseif dropType == casketInfo.dropTypes.RARE_ITEM then
+            player:startEvent(unlockedEvent,
+                getChestItem(npc, 1),
+                getChestItem(npc, 2),
+                getChestItem(npc, 3),
+                getChestItem(npc, 4),
+                0, 0, 0, 0)
         end
     end
 end
@@ -907,6 +921,9 @@ xi.caskets.onEventFinish = function(player, csid, option, npc)
             giveTempItem(player, chestObj, itemPos, subOption)
         elseif dropType == casketInfo.dropTypes.ITEM then
             giveItem(player, chestObj, itemPos, subOption)
+        elseif dropType == casketInfo.dropTypes.RARE_ITEM then
+            giveItem(player, chestObj, itemPos, subOption)
+        
         end
     end
 end

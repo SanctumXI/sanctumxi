@@ -7005,7 +7005,21 @@ INSERT INTO `mob_droplist` VALUES (819,0,0,1000,2160,@RARE);    -- Troll Pauldro
 INSERT INTO `mob_droplist` VALUES (820,0,0,1000,17306,@VCOMMON); -- Snoll Arm (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (820,0,0,1000,15507,@COMMON);  -- Purgatory Collar (Common, 15%)
 
--- 821 Available
+-- ZoneID: 29 - Bahamut
+INSERT INTO `mob_droplist` VALUES (821,1,1,1000,17597,750);     -- Dragon Staff (75%)
+INSERT INTO `mob_droplist` VALUES (821,1,1,1000,17598,250);     -- Bahamut's Staff (25%)
+INSERT INTO `mob_droplist` VALUES (821,1,2,1000,15264,300);     -- Bahamut's Mask (30%)
+INSERT INTO `mob_droplist` VALUES (821,1,2,1000,18061,250);     -- Bahamut's Zaghnal (25%)
+INSERT INTO `mob_droplist` VALUES (821,1,2,1000,15599,450);     -- Bahamut's Hose (45%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,1704,@VCOMMON); -- Kunwu Iron (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,1703,@VCOMMON); -- Kunwu Ore (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,647,@VCOMMON);  -- Molybdenum Ore (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,647,@VCOMMON);  -- Molybdenum Ore (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,1714,@COMMON);  -- Cashmere Cloth (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,1713,@COMMON);  -- Cashmere Thread (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (821,0,0,1000,1816,@VCOMMON); -- Wyrm Horn (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (821,1,3,1000,1313,@COMMON);  -- Siren's Hair (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (821,1,3,1000,722,@RARE);     -- Divine Log (Rare, 5%)
 
 -- ZoneID: 254 - Faunus Wyvern
 INSERT INTO `mob_droplist` VALUES (822,0,0,1000,3267,@UNCOMMON); -- Pursuers Wing (Uncommon, 10%)
@@ -11615,38 +11629,48 @@ INSERT INTO `mob_droplist` VALUES (1395,4,0,1000,4377,0);         -- Slice Of Co
 -- ZoneID:  35 - Jailer Of Faith
 INSERT INTO `mob_droplist` VALUES (1396,0,0,1000,1856,@ALWAYS);    -- Third Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1396,0,0,1000,18360,@ALWAYS);   -- Faith Baghnakhs (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1396,0,0,1000,15512,@UNCOMMON); -- Faith Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1396,0,0,1000,15512,@COMMON); -- Faith Torque (Common, 15%)
 
 -- ZoneID:  35 - Jailer Of Fortitude
 INSERT INTO `mob_droplist` VALUES (1397,0,0,1000,1853,@ALWAYS);    -- Second Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1397,0,0,1000,18222,@ALWAYS);   -- Fortitude Axe (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1397,0,0,1000,15511,@UNCOMMON); -- Fortitude Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1397,0,0,1000,15511,@COMMON); -- Fortitude Torque (Common, 15%)
 
 -- ZoneID:  33 - Jailer Of Hope
 INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,1847,@ALWAYS);    -- Fifth Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,17595,@ALWAYS);   -- Hope Staff (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,15509,@UNCOMMON); -- Hope Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,15509,@COMMON); -- Hope Torque (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,1313,@UNCOMMON);  -- Siren's Hair (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1398,0,0,1000,722,@RARE);     -- Divine Log (Rare, 5%)
 
 -- ZoneID:  33 - Jailer Of Justice
 INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,1848,@ALWAYS);    -- Fourth Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,17710,@ALWAYS);   -- Justice Sword (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,15508,@UNCOMMON); -- Justice Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,15508,@COMMON); -- Justice Torque (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,1313,@UNCOMMON);  -- Siren's Hair (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1399,0,0,1000,722,@RARE);     -- Divine Log (Rare, 5%)
 
 -- ZoneID:  33 - Jailer Of Love
 INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,18100,@ALWAYS); -- Love Halberd (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,1911,@COMMON);  -- Aura Of Adulation (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,1912,@COMMON);  -- Aura Of Voracity (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,15514,@COMMON); -- Love Torque (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,1313,@COMMON);  -- Siren's Hair (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,722,@UNCOMMON);     -- Divine Log (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1400,0,0,1000,1312,@UNCOMMON);      -- Piece Of Angel Skin (Uncommon, 10%)
+
 
 -- ZoneID:  33 - Jailer Of Prudence
 INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,1849,@ALWAYS);    -- Sixth Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,18397,@ALWAYS);   -- Prudence Rod (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,15510,@UNCOMMON); -- Prudence Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,15510,@COMMON); -- Prudence Torque (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,1313,@UNCOMMON);  -- Siren's Hair (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1401,0,0,1000,722,@RARE);     -- Divine Log (Rare, 5%)
 
 -- ZoneID:  34 - Jailer Of Temperance
 INSERT INTO `mob_droplist` VALUES (1402,0,0,1000,1850,@ALWAYS);    -- First Virtue (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1402,0,0,1000,17948,@ALWAYS);   -- Temperance Axe (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (1402,0,0,1000,15513,@UNCOMMON); -- Temperance Torque (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1402,0,0,1000,15513,@COMMON); -- Temperance Torque (Common, 10%)
 
 -- ZoneID:  73 - Jakko
 INSERT INTO `mob_droplist` VALUES (1403,0,0,1000,14551,@ALWAYS); -- Njords Jerkin (Always, 100%)
@@ -18443,7 +18467,7 @@ INSERT INTO `mob_droplist` VALUES (2297,2,0,1000,748,0);          -- Gold Beastc
 -- ZoneID: 159 - Sozu Rogberry
 INSERT INTO `mob_droplist` VALUES (2298,0,0,1000,1119,@ALWAYS);  -- Tonberry Coat (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2298,0,0,1000,1162,@COMMON);  -- Tonberry Lantern (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2298,0,0,1000,16480,@ALWAYS); -- Thiefs Knife (Always, 100%)
+INSERT INTO `mob_droplist` VALUES (2298,0,0,1000,16480,@UNCOMMON); -- Thiefs Knife (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2298,0,0,1000,1443,@RARE);    -- Pinch Of Dried Mugwort (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2298,2,0,1000,748,0);         -- Gold Beastcoin (Steal)
 
@@ -19512,6 +19536,7 @@ INSERT INTO `mob_droplist` VALUES (2438,4,0,1000,952,0);          -- Bag Of Pois
 -- ZoneID: 159 - Tonberry Kinq
 INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,1119,@VCOMMON); -- Tonberry Coat (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,1162,@COMMON);  -- Tonberry Lantern (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,11015,@ALWAYS); -- Bastards Earring (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,4901,@RARE);    -- Water Spirit Pact (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,1443,@RARE);    -- Pinch Of Dried Mugwort (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2440,0,0,1000,4902,@RARE);    -- Light Spirit Pact (Rare, 5%)
@@ -23775,18 +23800,18 @@ INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,17567,@COMMON);  -- Kirins Pole
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,12562,@COMMON);  -- Kirins Osode (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4748,@UNCOMMON); -- Scroll Of Raise Iii (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2819,0,0,1000,4818,@UNCOMMON); -- Scroll Of Quake (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2819,1,1,150,658,300);     -- Damascus Ingot (Group 1, Common, 15% - 30%)
+INSERT INTO `mob_droplist` VALUES (2819,0,0,150,658,300);     -- Damascus Ingot (Common, 15% - 30%)
+INSERT INTO `mob_droplist` VALUES (2819,0,0,150,747,300);     -- Orichalcum Ingot (Common, 15% - 30%)
+INSERT INTO `mob_droplist` VALUES (2819,0,0,150,831,400);     -- Square Of Shining Cloth (Common, 15% - 40%)
+INSERT INTO `mob_droplist` VALUES (2819,0,0,150,658,300);     -- Damascus Ingot (Common, 15% - 30%)
 INSERT INTO `mob_droplist` VALUES (2819,1,1,150,747,300);     -- Orichalcum Ingot (Group 1, Common, 15% - 30%)
 INSERT INTO `mob_droplist` VALUES (2819,1,1,150,831,400);     -- Square Of Shining Cloth (Group 1, Common, 15% - 40%)
-INSERT INTO `mob_droplist` VALUES (2819,1,2,150,658,300);     -- Damascus Ingot (Group 2, Common, 15% - 30%)
-INSERT INTO `mob_droplist` VALUES (2819,1,2,150,747,300);     -- Orichalcum Ingot (Group 2, Common, 15% - 30%)
-INSERT INTO `mob_droplist` VALUES (2819,1,2,150,831,400);     -- Square Of Shining Cloth (Group 2, Common, 15% - 40%)
+INSERT INTO `mob_droplist` VALUES (2819,1,2,150,1315,400);    -- Dryadic Abjuration Body (Group 2, Common, 15% - 40%)
+INSERT INTO `mob_droplist` VALUES (2819,1,2,150,1337,300);    -- Wyrmal Abjuration Legs (Group 2, Common, 15% - 30%)
+INSERT INTO `mob_droplist` VALUES (2819,1,2,150,1340,300);    -- Neptunal Abjuration Body (Group 2, Common, 15% - 30%)
 INSERT INTO `mob_droplist` VALUES (2819,1,3,150,1315,400);    -- Dryadic Abjuration Body (Group 3, Common, 15% - 40%)
 INSERT INTO `mob_droplist` VALUES (2819,1,3,150,1337,300);    -- Wyrmal Abjuration Legs (Group 3, Common, 15% - 30%)
 INSERT INTO `mob_droplist` VALUES (2819,1,3,150,1340,300);    -- Neptunal Abjuration Body (Group 3, Common, 15% - 30%)
-INSERT INTO `mob_droplist` VALUES (2819,1,4,150,1315,400);    -- Dryadic Abjuration Body (Group 4, Common, 15% - 40%)
-INSERT INTO `mob_droplist` VALUES (2819,1,4,150,1337,300);    -- Wyrmal Abjuration Legs (Group 4, Common, 15% - 30%)
-INSERT INTO `mob_droplist` VALUES (2819,1,4,150,1340,300);    -- Neptunal Abjuration Body (Group 4, Common, 15% - 30%)
 
 -- ZoneID: 178 - Mother Globe
 INSERT INTO `mob_droplist` VALUES (2820,0,0,1000,1419,@ALWAYS);    -- Springstone (Always, 100%)

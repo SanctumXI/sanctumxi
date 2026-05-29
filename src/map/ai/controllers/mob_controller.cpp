@@ -42,6 +42,7 @@
 #include "utils/battleutils.h"
 #include "utils/petutils.h"
 #include "zone.h"
+#include <cmath>
 
 CMobController::CMobController(CMobEntity* PEntity)
 : CController(PEntity)
@@ -301,7 +302,16 @@ auto CMobController::CanDetectTarget(CBattleEntity* PTarget, const bool forceSig
         }
     }
 
-    const bool isTargetAndInRange = PMob->GetBattleTargetID() == PTarget->targid && currentDistance <= PMob->GetMeleeRange(PTarget);
+    const bool isTargetAndInRange =
+        PMob->GetBattleTargetID() == PTarget->targid &&
+        currentDistance <= PMob->GetMeleeRange(PTarget);
+
+    const float heightDiff = std::abs(PMob->loc.p.y - PTarget->loc.p.y);
+
+    if (heightDiff > 1.5f && !isTargetAndInRange)
+    {
+        return false;
+    }
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {

@@ -48,15 +48,13 @@ return LQS.teleporter({
     -- Custom destinations
     destinations = {
         -- Using direct coordinates (cross-zone)
-        {
+         {
             name  = "Lower Jeuno",
             pos   = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
             costs = { gil = 1000 },
             level = 20,
-            check = function(player)
-                -- Only allow if player has completed a certain quest
-                player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.CHOCOBOS_WOUNDS)
-                return true -- Always allow for this example
+              check = function(player)
+                return player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.CHOCOBOS_WOUNDS)
             end,
         },
 

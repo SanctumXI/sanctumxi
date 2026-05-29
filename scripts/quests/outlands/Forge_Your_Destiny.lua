@@ -186,7 +186,7 @@ quest.sections =
                 [27] = function(player, csid, option, npc)
                     -- TODO: Add constant for Vana'diel day in seconds, this is a three game day wait.
                     player:confirmTrade()
-                    quest:setVar(player, 'waitTime', GetSystemTime() + 10368)
+                    quest:setVar(player, 'waitTime', GetSystemTime() + 60)
                 end,
 
                 [29] = function(player, csid, option, npc)

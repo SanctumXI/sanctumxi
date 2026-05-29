@@ -42,6 +42,7 @@ zones[xi.zone.MINE_SHAFT_2716] =
         SWIPOSTIK      = GetFirstID('Swipostik'),
         TRIKOTRAK      = GetFirstID('Trikotrak'),
         HUME_AUTOMATON = GetFirstID('Hume_Automaton'),
+        MOBLIN_FANTOCCINIMAN = GetFirstID('Moblin_Fantocciniman')
     },
     npc =
     {

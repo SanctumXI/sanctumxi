@@ -27,14 +27,14 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 78, msp.`maxLevel` = 80 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Catoblepas'; -- *76-80
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 75, msp.`maxLevel` = 77 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Splacknuck'; -- *69-69
 -- Out of Era
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 80, msp.`maxLevel` = 83 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Ghost_Crab';
-UPDATE `mob_groups` SET `dropid` = 93, `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Ghost_Crab';
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 84, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Ghost_Crab';
+--UPDATE `mob_groups` SET `dropid` = 93, `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Ghost_Crab';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 81, msp.`maxLevel` = 83 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Bight_Rarab';
 UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Bight_Rarab';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 81, msp.`maxLevel` = 84 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Hypnos_Eft';
 UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Hypnos_Eft';
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 83, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Camelopard';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Camelopard';
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 85, msp.`maxLevel` = 87 WHERE mg.`zoneid` = 4 AND mg.`name` = 'Locus_Camelopard';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 4 AND `name` = 'Locus_Camelopard';
 
 UPDATE `mob_groups` SET `respawntime`= 300 WHERE `zoneid` = 4 AND `name` IN (
     'Locus_Bight_Rarab',
@@ -481,10 +481,10 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 
 -- BHAFLAU_THICKETS (Zone 52)
 -----------------------------------
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 81, msp.`maxLevel` = 82 WHERE mg.`zoneid` = 52 AND mg.`name` = 'Locus_Colibri';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 52 AND `name` = 'Locus_Colibri';
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 82, msp.`maxLevel` = 83 WHERE mg.`zoneid` = 52 AND mg.`name` = 'Locus_Wivre';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 52 AND `name` = 'Locus_Wivre';
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 84, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 52 AND mg.`name` = 'Locus_Colibri';
+--UPDATE `mob_groups` SET `HP` = 5250 WHERE `zoneid` = 52 AND `name` = 'Locus_Colibri';
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 84, msp.`maxLevel` = 86 WHERE mg.`zoneid` = 52 AND mg.`name` = 'Locus_Wivre';
+--UPDATE `mob_groups` SET `HP` = 5250 WHERE `zoneid` = 52 AND `name` = 'Locus_Wivre';
 
 -- ARRAPAGO_REEF (Zone 54)
 -----------------------------------
@@ -1159,13 +1159,14 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 44, msp.`maxLevel` = 47 WHERE mg.`zoneid` = 127 AND mg.`name` = 'Lost_Soul_blm'; -- *45-47
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 44, msp.`maxLevel` = 47 WHERE mg.`zoneid` = 127 AND mg.`name` = 'Lost_Soul_war'; -- *45-47
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 45, msp.`maxLevel` = 47 WHERE mg.`zoneid` = 127 AND mg.`name` = 'Master_Coeurl'; -- *45-50
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 70, msp.`maxLevel` = 75 WHERE mg.`zoneid` = 127 AND mg.`name` = 'Behemoth'; -- *70-70
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 80, msp.`maxLevel` = 82 WHERE mg.`zoneid` = 127 AND mg.`name` = 'Behemoth'; -- *70-70
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 85, msp.`maxLevel` = 87 WHERE mg.`zoneid` = 127 AND mg.`name` = 'King_Behemoth'; -- *85-85
 
 -- VALLEY_OF_SORROWS (Zone 128)
 -----------------------------------
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 68, msp.`maxLevel` = 70 WHERE mg.`zoneid` = 128 AND mg.`name` = 'Velociraptor'; -- *66-69
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 70, msp.`maxLevel` = 75 WHERE mg.`zoneid` = 128 AND mg.`name` = 'Adamantoise'; -- *70-70
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 78, msp.`maxLevel` = 79 WHERE mg.`zoneid` = 128 AND mg.`name` = 'Adamantoise'; -- *74-77
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 82, msp.`maxLevel` = 84 WHERE mg.`zoneid` = 128 AND mg.`name` = 'Aspidochelone'; -- *82-84
 
 -- RUAUN_GARDENS (Zone 130)
 -----------------------------------
@@ -1279,7 +1280,7 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 
 -- XARCABARD_S (Zone 137)
 -----------------------------------
--- TODO
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 83, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 137 AND mg.`name` = 'Savage_Ruszor'; -- *83-85
 
 -- CASTLE_ZVAHL_BAILEYS_S (Zone 138)
 -----------------------------------
@@ -1742,11 +1743,12 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 -- THE_SHRINE_OF_RUAVITAU (Zone 178)
 -----------------------------------
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 74, msp.`maxLevel` = 76 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Defender'; -- *71-76
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 78, msp.`maxLevel` = 80 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Aura_Pot'; -- *75-80
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 80, msp.`maxLevel` = 82 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Aura_Pot'; -- *75-80
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 79, msp.`maxLevel` = 81 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Aura_Gear'; -- *76-81
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 84, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Aura_Statue'; -- *84-85
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 80, msp.`maxLevel` = 82 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Aura_Butler'; -- *77-82
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 85, msp.`maxLevel` = 87 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Mother_Globe'; -- *83-83
-UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 85, msp.`maxLevel` = 87 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Faust'; -- *83-85
+UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 86, msp.`maxLevel` = 87 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Faust'; -- *83-85
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 86, msp.`maxLevel` = 88 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Ullikummi'; -- *85-87
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 94, msp.`maxLevel` = 94 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Kirin'; -- *92-92
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 84, msp.`maxLevel` = 85 WHERE mg.`zoneid` = 178 AND mg.`name` = 'Genbu_pet'; -- *83-84
@@ -1966,23 +1968,23 @@ UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`
 );
 -- Out of Era
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 58, msp.`maxLevel` = 60 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Tomb_Worm';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Tomb_Worm';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Tomb_Worm';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 60, msp.`maxLevel` = 62 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Thousand_Eyes';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Thousand_Eyes';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Thousand_Eyes';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 62, msp.`maxLevel` = 64 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Dire_Bat';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Dire_Bat';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Dire_Bat';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 63, msp.`maxLevel` = 65 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Cutlass_Scorpion';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Cutlass_Scorpion';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Cutlass_Scorpion';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 64, msp.`maxLevel` = 66 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Armet_Beetle';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Armet_Beetle';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Armet_Beetle';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 80, msp.`maxLevel` = 82 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Lemures';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Lemures';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Lemures';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 79, msp.`maxLevel` = 81 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Hati';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Hati';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Hati';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 81, msp.`maxLevel` = 83 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Spartoi_Sorcerer';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Spartoi_Sorcerer';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Spartoi_Sorcerer';
 UPDATE `mob_spawn_points` msp INNER JOIN `mob_groups` mg ON msp.`groupid` = mg.`groupid` AND mg.`zoneid` = ((msp.`mobid` >> 12) & 0xFFF) SET msp.`minLevel` = 81, msp.`maxLevel` = 83 WHERE mg.`zoneid` = 190 AND mg.`name` = 'Locus_Spartoi_Warrior';
-UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Spartoi_Warrior';
+--UPDATE `mob_groups` SET `HP` = 0 WHERE `zoneid` = 190 AND `name` = 'Locus_Spartoi_Warrior';
 
 -- DANGRUF_WADI (Zone 191)
 -----------------------------------

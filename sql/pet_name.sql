@@ -34,7 +34,7 @@ INSERT INTO `pet_name` VALUES (18,'Eisenzahn');
 INSERT INTO `pet_name` VALUES (19,'Pfeil');
 INSERT INTO `pet_name` VALUES (20,'Wuffi');
 INSERT INTO `pet_name` VALUES (21,'George');
-INSERT INTO `pet_name` VALUES (22,'Donryu');
+INSERT INTO `pet_name` VALUES (22,'Bluey');
 INSERT INTO `pet_name` VALUES (23,'Qiqiru');
 INSERT INTO `pet_name` VALUES (24,'Karav-Marav');
 INSERT INTO `pet_name` VALUES (25,'Oboro');

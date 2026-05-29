@@ -18,13 +18,16 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 1
     params.ftpMod = { 1.5, 2, 2.5 }
-    params.str_wsc = 0.3
+    params.str_wsc = 0.35
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.6
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    target:addStatusEffect(xi.effect.EVASION_DOWN, { power = 20, duration = 30, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

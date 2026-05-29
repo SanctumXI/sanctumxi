@@ -17,7 +17,7 @@ end
 
 entity.onMobDespawn = function(mob)
     local params = { }
-    xi.mob.phOnDespawn(mob, ID.mob.VALKURM_EMPEROR, 10, 3600, params) -- 1 hour
+    xi.mob.phOnDespawn(mob, ID.mob.VALKURM_EMPEROR, 10, 1, params) -- True Lotto
 end
 
 return entity

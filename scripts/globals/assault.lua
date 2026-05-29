@@ -106,7 +106,10 @@ xi.assault.onInstanceFailure = function(instance)
 
     for _, entity in pairs(chars) do
         entity:messageSpecial(zones[instance:getZone():getID()].text.MISSION_FAILED, 10, 10)
+        entity:release()
+        entity:timer(3000, function(player)
         entity:startEvent(102)
+    end)
     end
 end
 
@@ -138,7 +141,7 @@ xi.assault.runeReleaseFinish = function(player, csid, option, npc)
         local chars = instance:getChars()
         local zone = player:getZoneID()
         local ID = zones[zone]
-        local playerpoints = math.max((#chars - 3) * 0.1, 0)
+        local playerpoints = math.max((#chars - 3) * 0.12, 0)
         local points = 0
         local assaultID = player:getCurrentAssault()
         local mobs = instance:getMobs()

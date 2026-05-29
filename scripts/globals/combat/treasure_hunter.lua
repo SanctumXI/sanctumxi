@@ -31,7 +31,7 @@ xi.combat.treasureHunter.dropBracketTable =
     [2] = { 1500 },
     [3] = { 1000 },
     [4] = {  500 },
-    [5] = {  100 },
+    [5] = {  200 },
     [6] = {   50 },
     [7] = {    0 }, -- Set to 0, for weird cases in DB.
 }

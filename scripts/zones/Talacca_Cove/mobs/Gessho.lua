@@ -15,6 +15,10 @@ entity.onMobFight = function(mob, target)
             local clones = math.random(1, 6)
             for i = 1, clones, 1 do
                 SpawnMob(mob:getID() + i)
+
+                if clones and target then
+                    clone:updateEnmity(target)
+                end
             end
         end
 

@@ -421,7 +421,7 @@ INSERT INTO `guild_shops` VALUES (517,4290,1008,1289,120,0,0);     -- elshimo_fr
 INSERT INTO `guild_shops` VALUES (517,4579,1312,8680,120,0,0);     -- elshimo_newt
 INSERT INTO `guild_shops` VALUES (517,4451,3000,19840,120,0,0);    -- silver_shark
 INSERT INTO `guild_shops` VALUES (517,4461,4050,26784,120,0,0);    -- bastore_bream
-INSERT INTO `guild_shops` VALUES (517,4384,5250,34720,120,0,0);    -- black_sole
+INSERT INTO `guild_shops` VALUES (517,4384,1200,3000,60,0,0);    -- black_sole
 INSERT INTO `guild_shops` VALUES (517,4500,24,208,120,0,0);        -- greedie
 INSERT INTO `guild_shops` VALUES (517,4514,60,396,120,0,0);        -- quus
 INSERT INTO `guild_shops` VALUES (517,4580,1940,4960,120,0,0);     -- coral_butterfly

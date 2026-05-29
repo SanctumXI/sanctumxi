@@ -3123,7 +3123,72 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
         return;
     }
 
-    // if player attempts to change thier ranged weapon during a ranged state then prevent equip
+     // slotID of zero = unequip
+    if (slotID > 0)
+    {
+        // skip the rest of the function if we are trying to equip the same item to a different slot
+        switch (static_cast<SLOTTYPE>(equipSlotID))
+        {
+            case SLOT_MAIN:
+            {
+                auto PSub = PChar->getEquip(SLOT_SUB);
+                if (PItem == PSub)
+                {
+                    return;
+                }
+                break;
+            }
+            case SLOT_SUB:
+            {
+                auto PMain = PChar->getEquip(SLOT_MAIN);
+                if (PItem == PMain)
+                {
+                    return;
+                }
+                break;
+            }
+            case SLOT_EAR1:
+            {
+                auto PEar2 = PChar->getEquip(SLOT_EAR2);
+                if (PItem == PEar2)
+                {
+                    return;
+                }
+                break;
+            }
+            case SLOT_EAR2:
+            {
+                auto PEar1 = PChar->getEquip(SLOT_EAR1);
+                if (PItem == PEar1)
+                {
+                    return;
+                }
+                break;
+            }
+            case SLOT_RING1:
+            {
+                auto PRing2 = PChar->getEquip(SLOT_RING2);
+                if (PItem == PRing2)
+                {
+                    return;
+                }
+                break;
+            }
+            case SLOT_RING2:
+            {
+                auto PRing1 = PChar->getEquip(SLOT_RING1);
+                if (PItem == PRing1)
+                {
+                    return;
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    // if player attempts to change their ranged weapon during a ranged state then prevent equip
     // this prevents players from starting a RA with short delay x-bow and ending with high dmg longbow
     if (equipSlotID == SLOT_RANGED || (equipSlotID == SLOT_AMMO && !PChar->getEquip(SLOT_RANGED)))
     {
@@ -3137,11 +3202,30 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
     {
         auto PItemWeapon = dynamic_cast<CItemWeapon*>(PItem);
         auto PMainItem   = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_MAIN));
+
         if (PItemWeapon && PItemWeapon->getSkillType() == SKILL_NONE && (!PMainItem || !PMainItem->isTwoHanded()))
         {
             PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::Requires2HForGrip);
             return;
         }
+
+         if (PItemWeapon && PItemWeapon->getSkillType() != SKILL_NONE)
+        {
+            // Don't attempt to equip item in equip menu if you don't have dual wield trait (client sees BLU, THF, DNC, NIN, /DNC or /NIN etc as able to equip sub weapons even if sub is too low or no trait on BLU)
+            if (!PChar->hasTrait(TRAIT_DUAL_WIELD))
+            {
+                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, PItemWeapon->getID(), 0, MsgBasic::NeedDualWield);
+                return;
+            }
+
+            // Don't allow Dual Wield injections to offhand when you dont have a mainahdn (this was visual only)
+            // Don't allow non-shields in offhand with no weapon
+            if ((PMainItem && PMainItem->isTwoHanded()) || !PMainItem)
+            {
+                return;
+            }
+        }
+
 
         // Disallow everything but shields if you're using H2H
         // Equipping a shield will unequip the H2H weapon and you will go barefisted with a shield
@@ -3199,8 +3283,14 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
                 PChar->PLatentEffectContainer->CheckLatentsEquip(equipSlotID);
                 PChar->addPetModifiers(&PItem->petModList);
 
-                // Only call the lua onEquip if its a valid equip - e.g. has passed EquipArmor and other checks above
+                // Only call the lua onEquip if it's a valid equip - e.g. has passed EquipArmor and other checks above
                 luautils::OnItemEquip(PChar, PItem);
+
+                // queue look update on valid equip
+                if (PItem != nullptr && PItem->isType(ITEM_EQUIPMENT))
+                {
+                    PChar->inventorySyncState().queueEquipChange(static_cast<CONTAINER_ID>(containerID), slotID, static_cast<SLOTTYPE>(equipSlotID), PItem, Equipping::Yes);
+                }
             }
         }
     }
@@ -3226,11 +3316,6 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
 
     charutils::BuildingCharSkillsTable(PChar);
     PChar->UpdateHealth();
-
-    if (PItem != nullptr && PItem->isType(ITEM_EQUIPMENT))
-    {
-        PChar->inventorySyncState().queueEquipChange(static_cast<CONTAINER_ID>(containerID), slotID, static_cast<SLOTTYPE>(equipSlotID), PItem, Equipping::Yes);
-    }
 
     PChar->updatemask |= UPDATE_HP;
     PChar->updatemask |= UPDATE_LOOK;
@@ -4669,7 +4754,7 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
     // Alliance share
     if (membersInZone > 6)
     {
-        return 1.8f / membersInZone;
+        return 2.0f / membersInZone;
     }
 
     // Party share
@@ -4680,17 +4765,17 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.85;
-            case 3:
-                return 0.80;
-            case 4:
                 return 0.75;
+            case 3:
+                return 0.65;
+            case 4:
+                return 0.60;
             case 5:
-                return 0.70;
+                return 0.55;
             case 6:
-                return 0.67;
+                return 0.50;
             default:
-                return 1.8 / membersInZone;
+                return 2.5 / membersInZone;
         }
     }
     else
@@ -4700,17 +4785,17 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.75;
-            case 3:
                 return 0.70;
-            case 4:
-                return 0.65;
-            case 5:
+            case 3:
                 return 0.60;
+            case 4:
+                return 0.55;
+            case 5:
+                return 0.50;
             case 6:
-                return 0.57;
+                return 0.45;
             default:
-                return 1.8 / membersInZone;
+                return 2.0 / membersInZone;
         }
     }
 }
@@ -4726,22 +4811,22 @@ static float GetChainDifficultyModifier(EMobDifficulty mobCheck)
     switch (mobCheck)
     {
         case EMobDifficulty::EasyPrey:
-            return 0.90f;
+            return 0.85f;
 
         case EMobDifficulty::DecentChallenge:
-            return 0.95f;
+            return 0.90f;
 
         case EMobDifficulty::EvenMatch:
-            return 1.05f;
+            return 1.06f;
 
         case EMobDifficulty::Tough:
-            return 1.10f;
-
-        case EMobDifficulty::VeryTough:
             return 1.15f;
 
+        case EMobDifficulty::VeryTough:
+            return 1.20f;
+
         case EMobDifficulty::IncrediblyTough:
-            return 1.25f;
+            return 1.30f;
 
         default:
             return 1.00f;
@@ -4890,7 +4975,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     exp *= 1.0f;
                                     break;
                                 case 1:
-                                    exp *= 1.10;
+                                    exp *= 1.20;
                                     break;
                                 case 2:
                                     exp *= 1.25;
@@ -4914,7 +4999,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         {
                             if (PMember->GetMLevel() <= 10)
                             {
-                                PMember->expChain.chainTime = timer::now() + 50s;
+                                PMember->expChain.chainTime = timer::now() + 60s;
                             }
                             else if (PMember->GetMLevel() <= 20)
                             {
@@ -5562,6 +5647,7 @@ void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMo
         if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SANCTION) && (region >= REGION_TYPE::WEST_AHT_URHGAN && region <= REGION_TYPE::ALZADAAL))
         {
             charutils::AddPoints(PChar, "imperial_standing", (int32)(exp * 0.1f));
+            charutils::AddPoints(PChar, "zeni_point", (int32)(exp * 0.1f));
             PChar->pushPacket<GP_SERV_COMMAND_CONQUEST>(PChar);
         }
 
@@ -6989,7 +7075,9 @@ void ReloadParty(CCharEntity* PChar)
 
     // Attempt to disband party if the last trust was just released
     // NOTE: Trusts are not counted as party members, so the current member count will be 1
-    if (PChar->PParty && PChar->PParty->HasOnlyOneMember() && PChar->PTrusts.empty())
+    // Commented out to prevent party breaking when only 1 member remains
+
+    /* if (PChar->PParty && PChar->PParty->HasOnlyOneMember() && PChar->PTrusts.empty())
     {
         // Looks good so far, check OTHER processes to see if we should disband
         if (PChar->PParty->GetMemberCountAcrossAllProcesses() == 1)
@@ -6997,7 +7085,7 @@ void ReloadParty(CCharEntity* PChar)
             PChar->PParty->DisbandParty();
             destroy(PChar->PParty);
         }
-    }
+    }*/
 }
 
 bool IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget)

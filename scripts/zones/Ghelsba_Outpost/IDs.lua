@@ -7,7 +7,7 @@ zones[xi.zone.GHELSBA_OUTPOST] =
 {
     text =
     {
-        CONQUEST_BASE                    = 0,    -- Tallying conquest results...
+         CONQUEST_BASE                    = 0,    -- Tallying conquest results...
         YOU_CANNOT_ENTER_THE_BATTLEFIELD = 161,  -- You cannot enter the battlefield at present. Please wait a little longer.
         TIME_IN_THE_BATTLEFIELD_IS_UP    = 164,  -- Your time in the battlefield is up! Now exiting...
         PARTY_MEMBERS_ARE_ENGAGED        = 179,  -- The battlefield where your party members are engaged in combat is locked. Access is denied.
@@ -30,10 +30,10 @@ zones[xi.zone.GHELSBA_OUTPOST] =
         LOGIN_NUMBER                     = 7536, -- In celebration of your most recent login (login no. <number>), we have provided you with <number> points! You currently have a total of <number> points.
         MEMBERS_LEVELS_ARE_RESTRICTED    = 7556, -- Your party is unable to participate because certain members' levels are restricted.
         FISHING_MESSAGE_OFFSET           = 7601, -- You can't fish here.
-        NO_BATTLEFIELD_ENTRY             = 7735, -- This looks like an Orcish dwelling. The door is firmly shut.
-        ENTERING_THE_BATTLEFIELD_FOR     = 7760, -- Entering the battlefield for [Save the Children/The Holy Crest/Wings of Fury/Petrifying Pair/Toadal Recall/Mirror, Mirror]!
-        LOGGING_IS_POSSIBLE_HERE         = 7762, -- Logging is possible here if you have <item>.
-        YOU_CAN_NOW_BECOME_A_DRAGOON     = 7802, -- You can now become a dragoon!
+        NO_BATTLEFIELD_ENTRY             = 7736, -- This looks like an Orcish dwelling. The door is firmly shut.
+        ENTERING_THE_BATTLEFIELD_FOR     = 7761, -- Entering the battlefield for [Save the Children/The Holy Crest/Wings of Fury/Petrifying Pair/Toadal Recall/Mirror, Mirror]!
+        LOGGING_IS_POSSIBLE_HERE         = 7763, -- Logging is possible here if you have <item>.
+        YOU_CAN_NOW_BECOME_A_DRAGOON     = 7803, -- You can now become a dragoon!
     },
     mob =
     {

@@ -29,8 +29,7 @@ zoneObject.onZoneIn = function(player, prevZone)
         enagakure and
         not enagakure:isSpawned() and
         VanadielUniqueDay() > enagakure:getLocalVar('despawnDay') and
-        hour < 4 and
-        hour >= 20 and
+        (hour < 4 or hour >= 20) and
         player:hasKeyItem(xi.ki.SEANCE_STAFF) and
         player:getCharVar('Enagakure_Killed') == 0
     then
@@ -68,7 +67,7 @@ zoneObject.onGameHour = function(zone)
             end
         else
             if
-                hour < 4 and hour >= 20 and                               -- Night-time.
+                (hour < 4 or hour >= 20) and                               -- Night-time.
                 VanadielUniqueDay() > enagakure:getLocalVar('despawnDay') -- Can spawn today.
             then
                 for _, player in pairs(zone:getPlayers()) do

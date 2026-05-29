@@ -12,7 +12,7 @@ xi.casket_loot.casketItems =
     [xi.zone.WEST_RONFAURE] =
     {
         regionalItems = { xi.item.BLIND_RING },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -77,7 +77,7 @@ xi.casket_loot.casketItems =
     [xi.zone.EAST_RONFAURE] =
     {
         regionalItems = { xi.item.SURVIVER },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -142,7 +142,7 @@ xi.casket_loot.casketItems =
     [xi.zone.LA_THEINE_PLATEAU] =
     {
         regionalItems = { xi.item.DESPERADO_RING },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -207,7 +207,7 @@ xi.casket_loot.casketItems =
     [xi.zone.VALKURM_DUNES] =
     {
         regionalItems = { xi.item.PHLEGETHONS_TROUSERS },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -275,7 +275,7 @@ xi.casket_loot.casketItems =
     [xi.zone.JUGNER_FOREST] =
     {
         regionalItems = { xi.item.PINWHEEL_BELT },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1200 },
             { itemId = xi.item.POTION_P3,               weight =  950 },
@@ -344,7 +344,7 @@ xi.casket_loot.casketItems =
     [xi.zone.BATALLIA_DOWNS] =
     {
         regionalItems = { xi.item.MOKUSA },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1200 },
             { itemId = xi.item.POTION_P3,               weight =  950 },
@@ -413,7 +413,7 @@ xi.casket_loot.casketItems =
     [xi.zone.NORTH_GUSTABERG] =
     {
         regionalItems = { xi.item.RAMBLERS_CLOAK },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -480,7 +480,7 @@ xi.casket_loot.casketItems =
     [xi.zone.SOUTH_GUSTABERG] =
     {
         regionalItems = { xi.item.BRONZE_BANDOLIER },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -547,7 +547,7 @@ xi.casket_loot.casketItems =
     [xi.zone.KONSCHTAT_HIGHLANDS] =
     {
         regionalItems = { xi.item.ATTAR_OF_ROSES },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -613,7 +613,7 @@ xi.casket_loot.casketItems =
     [xi.zone.PASHHOW_MARSHLANDS] =
     {
         regionalItems = { xi.item.WURGER },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -682,7 +682,7 @@ xi.casket_loot.casketItems =
     [xi.zone.ROLANBERRY_FIELDS] =
     {
         regionalItems = { xi.item.RAMBLERS_GAITERS },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -752,7 +752,7 @@ xi.casket_loot.casketItems =
     [xi.zone.BEAUCEDINE_GLACIER] =
     {
         regionalItems = { xi.item.HARALDRS_MUFFLER },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P3,            weight =  740 },
@@ -805,7 +805,7 @@ xi.casket_loot.casketItems =
     [xi.zone.XARCABARD] =
     {
         regionalItems = { xi.item.GOTHIC_GAUNTLETS, xi.item.NEGOROSHIKI },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P3,            weight =  740 },
@@ -859,7 +859,7 @@ xi.casket_loot.casketItems =
     [xi.zone.CAPE_TERIGGAN] =
     {
         regionalItems = { xi.item.SIROCCO_AXE },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P3,            weight = 1060 },
             { itemId = xi.item.X_POTION,                weight =  800 },
@@ -910,7 +910,7 @@ xi.casket_loot.casketItems =
     [xi.zone.EASTERN_ALTEPA_DESERT] =
     {
         regionalItems = { xi.item.CASABA_MELON_TANK },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P3,            weight =  800 },
@@ -963,7 +963,7 @@ xi.casket_loot.casketItems =
     [xi.zone.QUICKSAND_CAVES] =
     {
         regionalItems = { xi.item.TANNERS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1100 },
             { itemId = xi.item.HI_POTION_P3,            weight = 1000 },
@@ -1015,7 +1015,7 @@ xi.casket_loot.casketItems =
     [xi.zone.WEST_SARUTABARUTA] =
     {
         regionalItems = { xi.item.FIREFLY },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -1082,7 +1082,7 @@ xi.casket_loot.casketItems =
     [xi.zone.EAST_SARUTABARUTA] =
     {
         regionalItems = { xi.item.PILE_CHAIN },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -1149,7 +1149,7 @@ xi.casket_loot.casketItems =
     [xi.zone.TAHRONGI_CANYON] =
     {
         regionalItems = { xi.item.PROTECT_EARRING },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -1215,7 +1215,7 @@ xi.casket_loot.casketItems =
     [xi.zone.BUBURIMU_PENINSULA] =
     {
         regionalItems = { xi.item.PESTLE },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -1281,7 +1281,7 @@ xi.casket_loot.casketItems =
     [xi.zone.MERIPHATAUD_MOUNTAINS] =
     {
         regionalItems = { xi.item.MAMMUT },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -1350,7 +1350,7 @@ xi.casket_loot.casketItems =
     [xi.zone.SAUROMUGUE_CHAMPAIGN] =
     {
         regionalItems = { xi.item.HERDERS_SUBLIGAR },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -1419,7 +1419,7 @@ xi.casket_loot.casketItems =
     [xi.zone.THE_SANCTUARY_OF_ZITAH] =
     {
         regionalItems = { xi.item.ROSSIGNOL },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P3,            weight =  800 },
@@ -1472,7 +1472,7 @@ xi.casket_loot.casketItems =
     [xi.zone.ROMAEVE] =
     {
         regionalItems = { xi.item.DIANA_CORONA },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P3,            weight = 1060 },
             { itemId = xi.item.X_POTION,                weight =  800 },
@@ -1523,7 +1523,7 @@ xi.casket_loot.casketItems =
     [xi.zone.YUHTUNGA_JUNGLE] =
     {
         regionalItems = { xi.item.BUCCANEERS_SCIMITAR },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -1573,7 +1573,7 @@ xi.casket_loot.casketItems =
     [xi.zone.YHOATOR_JUNGLE] =
     {
         regionalItems = { xi.item.BELUGA },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -1628,7 +1628,7 @@ xi.casket_loot.casketItems =
     [xi.zone.WESTERN_ALTEPA_DESERT] =
     {
         regionalItems = { xi.item.GALKAN_DAGGER },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -1682,7 +1682,7 @@ xi.casket_loot.casketItems =
     [xi.zone.QUFIM_ISLAND] =
     {
         regionalItems = { xi.item.CUSTODES },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -1750,7 +1750,7 @@ xi.casket_loot.casketItems =
     [xi.zone.BEHEMOTHS_DOMINION] =
     {
         regionalItems = { xi.item.GOTHIC_SABATONS },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1100 },
             { itemId = xi.item.HI_POTION_P3,            weight = 1000 },
@@ -1806,7 +1806,7 @@ xi.casket_loot.casketItems =
     [xi.zone.VALLEY_OF_SORROWS] =
     {
         regionalItems = { xi.item.DAEDALUS_HAMMER },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1100 },
             { itemId = xi.item.HI_POTION_P3,            weight = 1000 },
@@ -1858,7 +1858,7 @@ xi.casket_loot.casketItems =
     [xi.zone.RUAUN_GARDENS] =
     {
         regionalItems = { xi.item.CARACT_CHOKER },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1100 },
             { itemId = xi.item.HI_POTION_P3,            weight = 1000 },
@@ -1908,7 +1908,7 @@ xi.casket_loot.casketItems =
     [xi.zone.THE_BOYAHDA_TREE] =
     {
         regionalItems = { xi.item.DRAGONKIN_EARRING, xi.item.CARVERS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -1972,7 +1972,7 @@ xi.casket_loot.casketItems =
     [xi.zone.MIDDLE_DELKFUTTS_TOWER] =
     {
         regionalItems = { xi.item.REBEL_EARRING },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -2024,7 +2024,7 @@ xi.casket_loot.casketItems =
     [xi.zone.UPPER_DELKFUTTS_TOWER] =
     {
         regionalItems = { xi.item.POTESTAS_BOMBLET },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION_P2,               weight = 1060 },
             { itemId = xi.item.POTION_P3,               weight =  740 },
@@ -2063,7 +2063,7 @@ xi.casket_loot.casketItems =
     [xi.zone.TEMPLE_OF_UGGALEPIH] =
     {
         regionalItems = { xi.item.BONEWORKERS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -2112,7 +2112,7 @@ xi.casket_loot.casketItems =
     [xi.zone.DEN_OF_RANCOR] =
     {
         regionalItems = { xi.item.GOLDSMITHS_TORQUE, xi.item.RANCOROUS_MANTLE },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P2,            weight = 1100 },
             { itemId = xi.item.HI_POTION_P3,            weight = 1000 },
@@ -2172,7 +2172,7 @@ xi.casket_loot.casketItems =
     [xi.zone.RANGUEMONT_PASS] =
     {
         regionalItems = { xi.item.GRAPEVINE_CAPE },
-        temps =
+        rare =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  790 },
@@ -2208,7 +2208,7 @@ xi.casket_loot.casketItems =
     [xi.zone.BOSTAUNIEUX_OUBLIETTE] =
     {
         regionalItems = { xi.item.MELACO_MITTENS },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2271,7 +2271,7 @@ xi.casket_loot.casketItems =
     [xi.zone.TORAIMARAI_CANAL] =
     {
         regionalItems = { xi.item.BOND_CAPE },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2334,7 +2334,7 @@ xi.casket_loot.casketItems =
     [xi.zone.ZERUHN_MINES] =
     {
         regionalItems = { xi.item.PROUESSE_RING },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -2353,7 +2353,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2458,7 +2458,7 @@ xi.casket_loot.casketItems =
     [xi.zone.KORROLOKA_TUNNEL] =
     {
         regionalItems = { xi.item.BRACHYURA_EARRING },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -2477,7 +2477,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2558,7 +2558,7 @@ xi.casket_loot.casketItems =
     [xi.zone.KUFTAL_TUNNEL] =
     {
         regionalItems = { xi.item.WIZZAN_GRIP },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2621,7 +2621,7 @@ xi.casket_loot.casketItems =
     [xi.zone.SEA_SERPENT_GROTTO] =
     {
         regionalItems = { xi.item.MANA_AMPULLA },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -2675,7 +2675,7 @@ xi.casket_loot.casketItems =
     [xi.zone.VELUGANNON_PALACE] =
     {
         regionalItems = { xi.item.ALCHEMISTS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P3,            weight = 2000 },
             { itemId = xi.item.X_POTION,                weight = 1500 },
@@ -2750,7 +2750,7 @@ xi.casket_loot.casketItems =
     [xi.zone.THE_SHRINE_OF_RUAVITAU] =
     {
         regionalItems = { xi.item.TERMINUS_EARRING, xi.item.WEAVERS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2815,7 +2815,7 @@ xi.casket_loot.casketItems =
     [xi.zone.LOWER_DELKFUTTS_TOWER] =
     {
         regionalItems = { xi.item.GIANTS_EARRING },
-        temps =
+        rare =
         {
             { itemId = xi.item.HI_POTION_P1,            weight = 1060 },
             { itemId = xi.item.HI_POTION_P2,            weight =  700 },
@@ -2867,7 +2867,7 @@ xi.casket_loot.casketItems =
     [xi.zone.KING_RANPERRES_TOMB] =
     {
         regionalItems = { xi.item.CHOCOBO_TORQUE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -2886,7 +2886,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -2983,7 +2983,7 @@ xi.casket_loot.casketItems =
     [xi.zone.DANGRUF_WADI] =
     {
         regionalItems = { xi.item.FIELD_ROPE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -3002,7 +3002,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3079,7 +3079,7 @@ xi.casket_loot.casketItems =
     [xi.zone.INNER_HORUTOTO_RUINS] =
     {
         regionalItems = { xi.item.NUMEN_STAFF },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3154,7 +3154,7 @@ xi.casket_loot.casketItems =
     [xi.zone.ORDELLES_CAVES] =
     {
         regionalItems = { xi.item.CHOCOBO_ROPE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -3173,7 +3173,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3266,7 +3266,7 @@ xi.casket_loot.casketItems =
     [xi.zone.OUTER_HORUTOTO_RUINS] =
     {
         regionalItems = { xi.item.FISHERS_TORQUE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -3285,7 +3285,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3390,7 +3390,7 @@ xi.casket_loot.casketItems =
     [xi.zone.THE_ELDIEME_NECROPOLIS] =
     {
         regionalItems = { xi.item.OSSA_GRIP },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3451,7 +3451,7 @@ xi.casket_loot.casketItems =
     [xi.zone.GUSGEN_MINES] =
     {
         regionalItems = { xi.item.FIELD_TORQUE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -3470,7 +3470,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3564,7 +3564,7 @@ xi.casket_loot.casketItems =
     [xi.zone.CRAWLERS_NEST] =
     {
         regionalItems = { xi.item.COCOON_BAND },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3625,7 +3625,7 @@ xi.casket_loot.casketItems =
     [xi.zone.MAZE_OF_SHAKHRAMI] =
     {
         regionalItems = { xi.item.FISHERS_ROPE },
-        tempsLow =
+        rareLow =
         {
             { itemId = xi.item.POTION,                 weight = 1060 },
             { itemId = xi.item.POTION_P1,              weight =  740 },
@@ -3644,7 +3644,7 @@ xi.casket_loot.casketItems =
             { itemId = xi.item.FLASK_OF_APPLE_AU_LAIT, weight =  250 },
             { itemId = xi.item.BOTTLE_OF_APPLE_JUICE,  weight =  660 },
         },
-        tempsHi =
+        rareHi =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3738,7 +3738,7 @@ xi.casket_loot.casketItems =
     [xi.zone.GARLAIGE_CITADEL] =
     {
         regionalItems = { xi.item.METASOMA_KATARS },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3802,7 +3802,7 @@ xi.casket_loot.casketItems =
     [xi.zone.FEIYIN] =
     {
         regionalItems = { xi.item.DAGDAS_SHIELD },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3872,7 +3872,7 @@ xi.casket_loot.casketItems =
     [xi.zone.IFRITS_CAULDRON] =
     {
         regionalItems = { xi.item.SMITHYS_TORQUE },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -3938,7 +3938,7 @@ xi.casket_loot.casketItems =
     [xi.zone.GUSTAV_TUNNEL] =
     {
         regionalItems = { xi.item.CULINARIANS_TORQUE, xi.item.LIMINUS_EARRING },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  900 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  500 },
@@ -4004,7 +4004,7 @@ xi.casket_loot.casketItems =
     [xi.zone.LABYRINTH_OF_ONZOZO] =
     {
         regionalItems = { xi.item.FURTIVE_GRIP },
-        temps =
+        rare =
         {
             { itemId = xi.item.DAEDALUS_WING,              weight =  200 },
             { itemId = xi.item.BOTTLE_OF_CATHOLICON,       weight =  310 },

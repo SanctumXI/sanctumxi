@@ -21,9 +21,9 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params   = {}
     params.numHits = 1
-    params.ftpMod  = { 1, 1, 1 }
-    params.str_wsc = 0.5
-    params.vit_wsc = 0.5
+    params.ftpMod  = { 1, 1.25, 1.5 }
+    params.str_wsc = 0.3
+    params.vit_wsc = 0.7
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
@@ -43,6 +43,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         local duration      = math.floor(60 + 3 * tp / 100 * applyResistanceAddEffect(player, target, actionElement, 0))
         xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
     end
+
+        local boost = player:getMainLvl()
+
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 75, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.VIT_BOOST, { power = boost / 2, duration = 60, origin = player })
 
     return tpHits, extraHits, criticalHit, damage
 end

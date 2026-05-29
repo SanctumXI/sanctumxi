@@ -23,19 +23,23 @@ abilityObject.onUseAbility = function(player, target, ability)
             ability:setMsg(xi.msg.basic.JA_MISS) --Miss
             return 0
         else
-            -- Double power and halve remaining time
-            local mvMerits           = player:getMerit(xi.merit.MODUS_VERITAS_DURATION)
-            local durationMultiplier = 0.5 + (0.05 * mvMerits)
-            mvPower = mvPower + 1
+-- Double power and halve remaining time
+local mvMerits           = player:getMerit(xi.merit.MODUS_VERITAS_DURATION)
+local durationMultiplier = 0.5 + (0.05 * mvMerits)
 
-            local helixPower = helix:getPower() * 2 + (3 * player:getJobPointLevel(xi.jp.MODUS_VERITAS_EFFECT))
-            local duration   = helix:getDuration()
-            local remaining  = math.floor(helix:getTimeRemaining() / 1000) -- from milliseconds
+mvPower = mvPower + 1
 
-            duration = (duration-remaining) + math.floor(remaining * durationMultiplier)
-            helix:setSubPower(mvPower)
-            helix:setPower(helixPower)
-            helix:setDuration(duration * 1000) -- back to milliseconds
+local helixPower = helix:getPower() * 2 + (3 * player:getJobPointLevel(xi.jp.MODUS_VERITAS_EFFECT))
+
+local durationMs  = helix:getDuration()
+local remainingMs = helix:getTimeRemaining()
+local elapsedMs   = durationMs - remainingMs
+
+local newDurationMs = elapsedMs + math.floor(remainingMs * durationMultiplier)
+
+helix:setSubPower(mvPower)
+helix:setPower(helixPower)
+helix:setDuration(newDurationMs)
         end
     else
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT_2) -- No effect

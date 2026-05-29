@@ -7,7 +7,7 @@ zones[xi.zone.NYZUL_ISLE] =
 {
     text =
     {
-       ITEM_CANNOT_BE_OBTAINED       = 6385, -- You cannot obtain the <item>. Come back after sorting your inventory.
+        ITEM_CANNOT_BE_OBTAINED       = 6385, -- You cannot obtain the <item>. Come back after sorting your inventory.
         FULL_INVENTORY_AFTER_TRADE    = 6389, -- You cannot obtain the <item>. Try trading again after sorting your inventory.
         ITEM_OBTAINED                 = 6391, -- Obtained: <item>.
         GIL_OBTAINED                  = 6392, -- Obtained <number> gil.

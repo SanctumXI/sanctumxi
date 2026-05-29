@@ -21,7 +21,7 @@ xi.settings.main =
     -- This generally results in a more accurate presentation of your selected expansions,
     -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded).
     -- This feature correlates to the content_tag column in the SQL files.
-    RESTRICT_CONTENT = 0,
+    RESTRICT_CONTENT = 1,
 
     -- Enable Expansion (1 = Enabled, 0 = Disabled)
     ENABLE_COP       = 1,
@@ -113,7 +113,7 @@ xi.settings.main =
     MAX_LEVEL                      = 75, -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
     NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0,  -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
     NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0,  -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
-    START_GIL                      = 5000, -- Amount of gil given to newly created characters.
+    START_GIL                      = 10000000, -- Amount of gil given to newly created characters.
     START_INVENTORY                = 30, -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
     NEW_CHARACTER_CUTSCENE         = 0,  -- Set to 1 to enable opening cutscenes, 0 to disable.
     SUBJOB_QUEST_LEVEL             = 18, -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
@@ -125,9 +125,9 @@ xi.settings.main =
     GIL_RATE            = 1.000, -- Multiplies gil earned from quests.  Won't always display in game.
     BAYLD_RATE          = 1.000, -- Multiples bayld earned from quests.
     -- Note: EXP rates are also influenced by conf setting
-    EXP_RATE            = 0.750, -- Multiplies exp from script (except FoV/GoV).
+    EXP_RATE            = .750, -- Multiplies exp from script (except FoV/GoV).
     CAPACITY_RATE       = 1.000, -- Multiplies capacity points gained.
-    BOOK_EXP_RATE       = 1.000, -- Multiplies exp from FoV/GoV book pages.
+    BOOK_EXP_RATE       = .750, -- Multiplies exp from FoV/GoV book pages.
     TABS_RATE           = 1.000, -- Multiplies tabs earned from fov.
     ROE_EXP_RATE        = 1.000, -- Multiplies exp earned from records of eminence.
     SPARKS_RATE         = 1.000, -- Multiplies sparks earned from records of eminence.
@@ -219,7 +219,7 @@ xi.settings.main =
 
     -- DYNAMIS SETTINGS
     BETWEEN_2DYNA_WAIT_TIME     = 72,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
-    DYNA_MIDNIGHT_RESET         = true,     -- If true, makes the wait time count by number of server midnights instead of full 24 hour intervals
+    DYNA_MIDNIGHT_RESET         = false,     -- If true, makes the wait time count by number of server midnights instead of full 24 hour intervals
     DYNA_LEVEL_MIN              = 65,       -- Level min for entering in Dynamis
     TIMELESS_HOURGLASS_COST     = 500000,   -- Refund for the timeless hourglass for Dynamis.
     PRISMATIC_HOURGLASS_COST    = 50000,    -- Cost of the prismatic hourglass for Dynamis.
@@ -296,12 +296,21 @@ xi.settings.main =
 
     -- Einherjar
     EINHERJAR_ENABLED = true,
+    EINHERJAR_LEVEL_MIN = 60,
+    SMOLDERING_LAMP_BASE_COST = 60000,
+    EINHERJAR_REENTRY_TIME = 1,
+    EINHERJAR_KO_EXPEL_TIME = 5,
+    EINHERJAR_TIME_LIMIT = 30,
+    EINHERJAR_ICHOR_RATE = 1.0,
+    EINHERJAR_RESERVATION_TIMEOUT = 5,
+    EINHERJAR_MAX_PLAYERS_PER_CHAMBER = 36,
+    EINHERJAR_CLEAR_EXTRA_TIME = 5,
 
     -- NYZUL
     RUNIC_DISK_SAVE      = true, -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
     ENABLE_NYZUL_CASKETS = true, -- Enable Treasure casket pops from NMs.
     ENABLE_VIGIL_DROPS   = true, -- Enable Vigil Weapon drops from NMs.
-    ACTIVATE_LAMP_TIME   = 6000, -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
+    ACTIVATE_LAMP_TIME   = 8000, -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
 
     -- CHOCOBO RAISING (HEAVILY-IN-DEVELOPMENT, USE AT YOUR OWN RISK)
     -- GM command: `!chocoboraising`

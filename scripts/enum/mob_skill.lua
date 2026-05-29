@@ -579,7 +579,32 @@ xi.mobSkill =
     IMPALEMENT                    = 1274,
     EMPTY_THRASH                  = 1275,
     PROMYVION_BRUME_2             = 1276,
+    INFERNO_BLAST_ATTACK          = 1278,
+    TEBBAD_WING_1                 = 1279,
+    SPIKE_FLAIL_3                 = 1280,
+    FIERY_BREATH_1                = 1281,
+    TOUCHDOWN_3                   = 1282,
+    INFERNO_BLAST                 = 1283,
+    TEBBAD_WING_2                 = 1284,
+    ABSOLUTE_TERROR_3             = 1285,
+    HORRID_ROAR_3                 = 1286,
 
+    SLEET_BLAST_ATTACK            = 1288,
+    GREGALE_WING_1                = 1289,
+    SPIKE_FLAIL_4                 = 1290,
+    GLACIAL_BREATH_1              = 1291,
+    TOUCHDOWN_4                   = 1292,
+    SLEET_BLAST                   = 1293,
+    GREGALE_WING_2                = 1294,
+    ABSOLUTE_TERROR_4             = 1295,
+    HORRID_ROAR_4                 = 1296,
+
+    CYCLONE_WING_1                = 1309,
+    SPIKE_FLAIL_6                 = 1310,
+    SABLE_BREATH_1                = 1311,
+
+    ABSOLUTE_TERROR_6             = 1315,
+    HORRID_ROAR_6                 = 1316,
     GERJIS_GRIP                   = 1322,
 
     -- EES_?                         = 1327,
@@ -688,6 +713,8 @@ xi.mobSkill =
 
     CITADEL_BUSTER                = 1540,
 
+    CALL_OF_THE_WYRMKING          = 1550,
+    TERAFLARE                     = 1553,
     CAMISADO_2                    = 1554,
 
     -- EES_?                         = 1557,
@@ -799,6 +826,11 @@ xi.mobSkill =
 
     QUEASYSHROOM_2                = 2232,
 
+    DARK_MIST                     = 2422,
+    TRIUMPHANT_ROAR               = 2423,
+    TERROR_EYE                    = 2424,
+    BLOODY_CLAW                   = 2425,
+
     -- MIGHTY_STRIKES                = 2242,
     -- HUNDRED_FISTS                 = 2243,
     -- BENEDICTION                   = 2244,
@@ -858,8 +890,15 @@ xi.mobSkill =
     CYTOKINESIS                   = 2514,
 
     DISSOLVE                      = 2550,
+    STYGIAN_SPHERE                = 2571,
 
     -- TRANCE                        = 2710,
+    RENDING_TALONS                = 2725,
+    SHRIEKING_GALE                = 2726,
+    WINGS_OF_WOE                  = 2727,
+    WINGS_OF_AGONY                = 2728,
+    TYPHOEAN_RAGE                 = 2729,
+    RAVENOUS_WALL                 = 2730,
 
     BOOMING_BOMBINATION           = 2770,
 
@@ -872,6 +911,10 @@ xi.mobSkill =
     -- BENEDICTION                   = 2943,
     -- MANAFONT                      = 2944,
 
+    REVERSE_CURRENT                  = 3075,
+    SPARKSTORM                       = 3076,
+
+   
     -- MEIKYO_SHISUI                 = 3175,
 
     LIGHT_BLADE_2                 = 3214,

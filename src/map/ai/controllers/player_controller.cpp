@@ -58,7 +58,7 @@ bool CPlayerController::Cast(uint16 targid, SpellID spellid)
         if (PChar->PAI->GetCurrentState()->IsCompleted()) 
         {
              // Queue the spell during animation phase
-                PChar->PAI->m_queuedSpellTargId = targid;
+            PChar->PAI->m_queuedSpellTargId = targid;
             PChar->PAI->m_queuedSpell           = spellid;
             PChar->PAI->m_queuedRangedAttack    = 0;
             return true;
@@ -67,7 +67,7 @@ bool CPlayerController::Cast(uint16 targid, SpellID spellid)
         else 
         {
              // Still casting, send wait message
-                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
             return false;
             
         }
@@ -173,6 +173,7 @@ bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
 bool CPlayerController::RangedAttack(uint16 targid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
+
     // Check for ranged attack queuing during animation phase
     if (PChar->PAI->IsCurrentState<CRangeState>()) 
     {

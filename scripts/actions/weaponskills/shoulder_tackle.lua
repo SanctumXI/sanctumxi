@@ -33,6 +33,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local duration      = math.floor(tp / 500 * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 
+    player:addStatusEffect(xi.effect.GUARDING_RATE_BOOST, { power = 25, duration = 60, origin = player })
+  
     return tpHits, extraHits, criticalHit, damage
 end
 

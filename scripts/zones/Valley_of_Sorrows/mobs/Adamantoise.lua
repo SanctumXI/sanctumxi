@@ -76,13 +76,15 @@ entity.onMobSpawn = function(mob)
     -- Despawn the ???
     GetNPCByID(ID.npc.ADAMANTOISE_QM):setStatus(xi.status.DISAPPEAR)
 
-    mob:setMod(xi.mod.DEF, 4112)
+    mob:setMod(xi.mod.DEF, 650)
     mob:setMod(xi.mod.ATT, 450)
+    mob:setMod(xi.mod.REGEN, 5)
+    mob:setMod(xi.mod.EVA, 300)
     mob:setMod(xi.mod.DMGMAGIC, -3500)
 
-    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 36) -- 108 total weapon damage
+    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 38) -- 110 total weapon damage
 
-    mob:setLocalVar('[rage]timer', 1800) -- 30 minutes
+    mob:setLocalVar('[rage]timer', 1200) -- 20 minutes
 end
 
 entity.onMobDeath = function(mob, player, optParams)

@@ -52,6 +52,7 @@
 #include "enums/action/hit_distortion.h"
 #include "enums/action/info.h"
 #include "enums/msg_std.h"
+#include "enums/msg_basic.h"
 #include "enums/weather.h"
 #include "item_container.h"
 #include "items.h"
@@ -911,6 +912,19 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
             Action->spikesMessage = MsgBasic::RetaliateDamage;
             Action->spikesParam =
                 battleutils::TakePhysicalDamage(PDefender, PAttacker, PHYSICAL_ATTACK_TYPE::NORMAL, dmg, false, SLOT_MAIN, 1, nullptr, true, true, true);
+
+            // Custom Lv. 50+ WAR bonus: Retaliation restores 5% max HP on successful retaliation hit
+            if (PDefender->objtype == TYPE_PC && Action->spikesParam > 0)
+            {
+                auto* PChar = static_cast<CCharEntity*>(PDefender);
+
+                if (PChar->GetMJob() == JOB_WAR && PChar->GetMLevel() >= 50)
+                {
+                    const int32 healAmount = std::max<int32>(1, PChar->GetMaxHP() / 20);
+
+                    PChar->addHP(healAmount);
+                }
+            }
         }
     }
 

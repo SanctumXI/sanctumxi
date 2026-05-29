@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -2277,10 +2277,13 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     action.recast     = state.GetRecast();
     action.spellgroup = PSpell->getSpellGroup();
 
-    MsgBasic msg = MsgBasic::None;
+    MsgBasic msg                 = MsgBasic::None;
+    MsgBasic initialSpellMessage = PSpell->getMessage();
 
     for (auto* PTarget : PAI->TargetFind->m_targets)
     {
+        PSpell->setMessage(initialSpellMessage);
+
         action_target_t& actionTarget = action.addTarget(PTarget->id);
         action_result_t& actionResult = actionTarget.addResult();
 
@@ -2706,7 +2709,12 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 
         result.messageID = msg;
 
-        if (PSkill->hasMissMsg())
+        if (PSkill->getMsg() == MsgBasic::ShadowAbsorb) // Setting of shadow message is handled in mobskills.lua
+        {
+            result.resolution = ActionResolution::Miss;
+            result.param      = damage; // damage is the number of shadows consumed to display in chat log
+        }
+        else if (PSkill->hasMissMsg())
         {
             result.resolution = ActionResolution::Miss;
             result.param      = 0;

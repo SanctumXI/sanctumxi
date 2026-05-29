@@ -376,6 +376,12 @@ xi.job_utils.beastmaster.useCallBeast = function(player, target, ability)
     end
 
     xi.pet.spawnPet(player, petId)
+
+    local pet = player:getPet()
+    if pet then
+        pet:setBaseSpeed(55) -- same as player base speed
+    end
+
     player:removeAmmo(1)
 
     -- Briefly put the recastId for READY/SIC (102) into a recast state to
@@ -393,6 +399,11 @@ xi.job_utils.beastmaster.useBestialLoyalty = function(player, target, ability)
 
     xi.pet.spawnPet(player, petId)
 
+        local pet = player:getPet()
+    if pet then
+        pet:setBaseSpeed(55) -- same as player base speed
+    end
+    
     player:addRecast(xi.recast.ABILITY, 102, 1)
 end
 

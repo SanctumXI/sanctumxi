@@ -11,28 +11,28 @@ xi.combat.ranged.maxOuterPenalty = 20
 
 -- This table provides the default sweet spot ranges for various weapon types, agnostic of mob sizes altogether
 xi.combat.ranged.sweetSpotDefaults = {
-    ['throwing'] = { 0.0, 1.3 },
-    ['cannon'  ] = { 3.0, 4.3 }, -- needs re-verification
-    ['gun'     ] = { 3.0, 4.3 },
-    ['shortbow'] = { 4.0, 6.4 },
-    ['crossbow'] = { 5.0, 8.4 },
-    ['longbow' ] = { 6.0, 9.5 },
+    ['throwing'] = { 0.0, 5.0 },
+    ['cannon'  ] = { 3.0, 15.5 }, -- needs re-verification
+    ['gun'     ] = { 3.0, 15.5 },
+    ['shortbow'] = { 3.0, 10.5 },
+    ['crossbow'] = { 3.0, 10.5 },
+    ['longbow' ] = { 6.0, 15.5 },
 }
 
 -- This table provides the sweet spot ranges for weapons, assuming a mob size of 1
 -- TODO: this needs re-verification due to better understanding of hitbox sizes
 xi.combat.ranged.sweetSpots = {
-    [xi.item.YOICHINOYUMI_75               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_80               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_85               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_90               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_95               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_99               ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_99_II            ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_119              ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_119_II           ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_119_III          ] = { 5.5, 9.5 },
-    [xi.item.YOICHINOYUMI_119_III_NO_QUIVER] = { 5.5, 9.5 },
+    [xi.item.YOICHINOYUMI_75               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_80               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_85               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_90               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_95               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_99               ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_99_II            ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_119              ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_119_II           ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_119_III          ] = { 2.5, 19.5 },
+    [xi.item.YOICHINOYUMI_119_III_NO_QUIVER] = { 2.5, 19.5 },
 }
 
 xi.combat.ranged.getSweetSpotByAttacker = function(attacker)
@@ -107,7 +107,7 @@ xi.combat.ranged.accuracyDistancePenalty = function(attacker, defender)
         return 0
     end
 
-    -- Linear interpolation between centroidEnd and 25
+     -- Linear interpolation between centroidEnd and 25
     local penaltyPercentage = (distance - centroidEnd) / (25 - centroidEnd)
     local penalty = math.abs(math.floor(penaltyPercentage * (attacker:getMainLvl() / 2)))
 

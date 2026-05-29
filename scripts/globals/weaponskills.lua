@@ -554,7 +554,6 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
 
     -- Do the extra hit for our offhand if applicable
     if calcParams.extraOffhandHit and hitsDone < 8 and finaldmg < targetHp then
-        calcParams.hitsLanded = 0
         local offhandDmg      = calcParams.weaponDamage[2] + calcParams.fSTR + wsc * alpha
         hitdmg, calcParams    = getSingleHitDamage(attacker, target, offhandDmg, ftp, wsParams, calcParams)
 
@@ -590,7 +589,6 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
 
     while hitsDone < 8 and offhandMultiHitsDone < numOffhandMultis and finaldmg < targetHp do
         local offhandDmg      = calcParams.weaponDamage[2] + calcParams.fSTR + wsc * alpha
-        calcParams.hitsLanded = 0
         hitdmg, calcParams    = getSingleHitDamage(attacker, target, offhandDmg, ftp, wsParams, calcParams)
 
         if calcParams.melee then
@@ -665,7 +663,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.accStat                 = attacker:getACC()
     calcParams.melee                   = true
     calcParams.mustMiss                = target:hasStatusEffect(xi.effect.PERFECT_DODGE) or (target:hasStatusEffect(xi.effect.ALL_MISS) and not wsParams.hitsHigh)
-    calcParams.sneakApplicable         = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK) 
+    calcParams.sneakApplicable         = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK) or target:hasStatusEffect(xi.effect.DOUBT)
     calcParams.taChar                  = taChar
     calcParams.trickApplicable         = calcParams.taChar ~= nil
     calcParams.assassinApplicable      = calcParams.trickApplicable and attacker:hasTrait(xi.trait.ASSASSIN)
@@ -681,7 +679,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     local isJump = wsParams.isJump or false
     if isJump then
-        calcParams.bonusfTP    = .5
+        calcParams.bonusfTP    = 0
         calcParams.bonusAcc    = attacker:getMod(xi.mod.JUMP_ACC_BONUS)
         calcParams.bonusWSmods = 0
     else
@@ -695,7 +693,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         calcParams.bonusAcc = calcParams.bonusAcc + accMod
     end
 
-    calcParams.firstHitRate = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc + 150, xi.attackAnimation.RIGHT_ATTACK)
+    calcParams.firstHitRate = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc + 100, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.hitRate      = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.skillType    = attack.weaponType
 
@@ -822,6 +820,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
     local calcParams =
     {
         ['shadowsAbsorbed'] = 0,
+        ['hitsLanded']      = 1,
         ['tpHitsLanded']    = 1,
         ['extraHitsLanded'] = 0,
         ['bonusTP']         = wsParams.bonusTP or 0,
@@ -920,7 +919,7 @@ end
 xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, primaryMsg, attack, wsResults, action)
     local finaldmg = wsResults.finalDmg
 
-    if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
+    if wsResults.hitsLanded > 0 then
         if finaldmg >= 0 then
             if primaryMsg then
                 action:messageID(defender:getID(), xi.msg.basic.DAMAGE)

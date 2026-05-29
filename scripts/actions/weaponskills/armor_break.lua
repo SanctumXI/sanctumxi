@@ -21,8 +21,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params   = {}
     params.numHits = 1
     params.ftpMod  = { 1, 1, 1 }
-    params.str_wsc = 0.2
-    params.vit_wsc = 0.2
+    params.str_wsc = 0.3
+    params.vit_wsc = 0.3
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.6
@@ -37,6 +37,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local power         = 25
     local duration      = math.floor((120 + 6 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
+
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 50, duration = 60, origin = player })
 
     return tpHits, extraHits, criticalHit, damage
 end

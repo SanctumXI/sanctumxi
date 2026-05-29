@@ -38,6 +38,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addFame(xi.fameArea.JEUNO, 10)
         player:completeQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.ONLY_THE_BEST)
         player:confirmTrade()
+        
     elseif csid == 63 and option == 12 then
         npcUtil.giveCurrency(player, 'gil', 120)
         player:addFame(xi.fameArea.BASTOK, 20)
@@ -45,6 +46,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addFame(xi.fameArea.JEUNO, 20)
         player:completeQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.ONLY_THE_BEST)
         player:confirmTrade()
+        
     elseif csid == 64 and option == 13 then
         npcUtil.giveCurrency(player, 'gil', 600)
         player:addFame(xi.fameArea.BASTOK, 30)
@@ -52,6 +54,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addFame(xi.fameArea.JEUNO, 30)
         player:completeQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.ONLY_THE_BEST)
         player:confirmTrade()
+        
     end
 end
 

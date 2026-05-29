@@ -17,8 +17,8 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 3
-    params.ftpMod = { 1.0, 2.0, 2.6 }
-    params.str_wsc = 0.3 params.dex_wsc = 0.2
+    params.ftpMod = { 1.0, 1.25, 1.5 }
+    params.str_wsc = 0.3 params.dex_wsc = 0.15
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2416.html
@@ -27,6 +27,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local lvl = player:getSkillLevel(1)
+    local power = lvl * .15
+
+    player:addStatusEffect(xi.effect.ATTACK_BOOST, { power = power, duration = 45, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

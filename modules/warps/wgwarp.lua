@@ -26,7 +26,7 @@ return LQS.teleporter({
 
     -- Menu customization
     menuTitle    = "Choose Your Destination",
-    itemsPerPage = 4,
+    itemsPerPage = 5,
 
     -- Teleport settings
     teleportDelay = 1500,
@@ -51,8 +51,17 @@ return LQS.teleporter({
         {
             name  = "Lower Jeuno",
             pos   = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
-            costs = { gil = 1000 },
+            costs = { gil = 1500 },
             level = 1,
+        },
+        
+        {
+            name  = "Tavnazian Safehold",
+            pos   = { 0.015, -21.876, 2.125, 67, 26 }, -- !pos 0.015 -21.876 2.125 26
+            costs = { gil = 1500 },
+             check = function(player)
+                return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_MOTHERCRYSTALS)
+            end,
         },
 
         {
@@ -108,4 +117,6 @@ return LQS.teleporter({
     insufficientGil = "You don't have enough Gil for this journey.",
     insufficientCP  = "You don't have enough conquest points for this journey.",
     cancelled       = "Perhaps another time. Safe travels!",
+
 })
+

@@ -403,18 +403,31 @@ void LoadJugStats(CPetEntity* PMob, Pet_t* petStats)
 
 void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats, uint8 mlvl, JOBTYPE mjob, JOBTYPE sjob)
 {
+    // If PUP is subjob, automaton skill caps should use subjob level,
+    // not the player's current main level.
+    uint8 effectivePupLevel = mlvl;
+
+    if (PMaster->GetMJob() == JOB_PUP)
+    {
+        effectivePupLevel = PMaster->GetMLevel() + PMaster->getMod(Mod::AUTOMATON_LVL_BONUS);
+    }
+    else if (PMaster->GetSJob() == JOB_PUP)
+    {
+        effectivePupLevel = PMaster->GetSLevel();
+    }
+
     skills_t& tempSkills = PMaster->automatonInfo.automatonSkills;
     stats_t&  tempStats  = PMaster->automatonInfo.automatonStats;
     health_t& tempHealth = PMaster->automatonInfo.automatonHealth;
 
-    tempSkills.automaton_melee  = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MELEE, mlvl), PMaster->GetSkill(SKILL_AUTOMATON_MELEE));
-    tempSkills.automaton_ranged = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_RANGED, mlvl), PMaster->GetSkill(SKILL_AUTOMATON_RANGED));
-    tempSkills.automaton_magic  = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MAGIC, mlvl), PMaster->GetSkill(SKILL_AUTOMATON_MAGIC));
+    tempSkills.automaton_melee  = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MELEE, effectivePupLevel), PMaster->GetSkill(SKILL_AUTOMATON_MELEE));
+    tempSkills.automaton_ranged = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_RANGED, effectivePupLevel), PMaster->GetSkill(SKILL_AUTOMATON_RANGED));
+    tempSkills.automaton_magic  = std::min(puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MAGIC, effectivePupLevel), PMaster->GetSkill(SKILL_AUTOMATON_MAGIC));
 
     // Set capped flags
     for (int i = 22; i <= 24; ++i)
     {
-        if ((tempSkills.skill[i] & 0x7FFF) == (puppetutils::getSkillCap(PMaster, (SKILLTYPE)i, mlvl)))
+        if ((tempSkills.skill[i] & 0x7FFF) == puppetutils::getSkillCap(PMaster, (SKILLTYPE)i, effectivePupLevel))
         {
             tempSkills.skill[i] |= 0x8000;
         }
@@ -432,12 +445,12 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
     int32 meritbonus = PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PMaster);
 
     // If skill rank is 0, merit bonus needs to be added to be displayed like retail does
-    if (puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_RANGED, mlvl) == 0)
+    if (puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_RANGED, effectivePupLevel) == 0)
     {
         tempSkills.automaton_ranged = meritbonus + PMaster->getMod(Mod::AUTO_RANGED_SKILL);
     }
 
-    if (puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MAGIC, mlvl) == 0)
+    if (puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_MAGIC, effectivePupLevel) == 0)
     {
         auto modBonus = PMaster->getMod(Mod::AUTO_MAGIC_SKILL);
 

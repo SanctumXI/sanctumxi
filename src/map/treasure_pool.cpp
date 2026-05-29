@@ -176,7 +176,7 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
     }
 
     // Check if everyone in the treasure pool already has this tiem
-    if (PNewItem->getFlag() & ITEM_FLAG_RARE)
+    /* if (PNewItem->getFlag() & ITEM_FLAG_RARE)
     {
         bool doesNotHaveRareItem = false;
 
@@ -195,7 +195,7 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
         {
             return m_count; // no change
         }
-    }
+    }*/
 
     for (SlotID = 0; SlotID < 10; ++SlotID)
     {

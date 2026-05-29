@@ -12,7 +12,7 @@ xi.settings = xi.settings or {}
 xi.settings.login =
 {
     -- Expected Client version (wrong version cannot log in)
-    CLIENT_VER = '30260203_0',
+    CLIENT_VER = '30251101_2',
 
     -- 0 - disabled (every version allowed)
     -- 1 - enabled - strict (only exact CLIENT_VER allowed)
@@ -48,7 +48,7 @@ xi.settings.login =
     A_CRYSTALLINE_PROPHECY  = false,
     A_MOOGLE_KUPOD_ETAT     = false,
     A_SHANTOTTO_ASCENSION   = false,
-    VISIONS_OF_ABYSSEA      = false,
+    VISIONS_OF_ABYSSEA      = true,
     SCARS_OF_ABYSSEA        = false,
     HEROES_OF_ABYSSEA       = false,
     SEEKERS_OF_ADOULIN      = false,

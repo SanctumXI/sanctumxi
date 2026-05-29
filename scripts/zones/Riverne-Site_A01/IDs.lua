@@ -40,6 +40,7 @@ zones[xi.zone.RIVERNE_SITE_A01] =
         CARMINE_DOBSONFLY_OFFSET = GetFirstID('Carmine_Dobsonfly'),
         HELIODROMOS_OFFSET       = GetFirstID('Heliodromos'),
         ZIRYU                    = GetTableOfIDs('Ziryu'),
+        OURYU                    = GetFirstID('Ouryu')
     },
     npc =
     {

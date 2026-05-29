@@ -2286,7 +2286,7 @@ INSERT INTO `item_latents` VALUES (17619,25,12,26,0);    -- Daytime: ACC +12
 INSERT INTO `item_latents` VALUES (17624,165,7,13,3);
 
 -- Nightmare Sword
-INSERT INTO `item_latents` VALUES (17649,25,12,26,1);    -- Nighttime: ACC +12
+INSERT INTO `item_latents` VALUES (17649,25,15,26,1);    -- Nighttime: ACC +15
 
 -- Sapara Of Trials
 INSERT INTO `item_latents` VALUES (17654,2,-20,47,0);
@@ -2886,7 +2886,7 @@ INSERT INTO `item_latents` VALUES (18484,287,5,58,0);    -- Wamoura Axe DMG+5 in
 INSERT INTO `item_latents` VALUES (18484,288,1,58,0);    -- Wamoura Axe Double Attack +1% in Assault
 
 -- Wardancer
-INSERT INTO `item_latents` VALUES (18486,171,-500,25,0); -- DELAY: -500 song/roll active (-30 * 1000 / 60)
+INSERT INTO `item_latents` VALUES (18486,171,-510,25,0); -- DELAY: -500 song/roll active (-30 * 1000 / 60)
 
 -- Perdu Voulge
 INSERT INTO `item_latents` VALUES (18491,23,10,6,1000);  -- Attack+10 while TP <100%

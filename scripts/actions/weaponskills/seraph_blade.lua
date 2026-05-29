@@ -28,6 +28,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+        -- Add enlight buff after WS for 90 seconds
+    local lvl = player:getSkillLevel(3)
+    local power = lvl / 4.0
+        player:addStatusEffect(xi.effect.ENLIGHT, { power = power, duration = 90, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

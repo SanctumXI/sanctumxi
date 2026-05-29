@@ -78,7 +78,7 @@ INSERT INTO `item_weapon` VALUES (16421,'gold_patas',1,0,0,0,0,4,1,602,18,0);
 INSERT INTO `item_weapon` VALUES (16422,'tigerfangs',1,0,0,0,0,4,1,576,18,0);
 INSERT INTO `item_weapon` VALUES (16423,'manoples',1,0,0,0,0,4,1,602,20,0);
 INSERT INTO `item_weapon` VALUES (16425,'venom_claws_+1',1,0,0,0,0,4,1,541,13,0);
-INSERT INTO `item_weapon` VALUES (16426,'avengers',1,0,0,0,0,4,1,576,18,0);
+INSERT INTO `item_weapon` VALUES (16426,'avengers',1,0,0,0,0,4,1,550,19,0);
 INSERT INTO `item_weapon` VALUES (16427,'lunaris_claws',1,0,0,0,0,4,1,576,26,0);
 INSERT INTO `item_weapon` VALUES (16428,'afflictors',1,0,0,0,0,4,1,576,22,0);
 INSERT INTO `item_weapon` VALUES (16429,'slc._baghnakhs',1,0,0,0,0,4,1,540,5,0);
@@ -585,7 +585,7 @@ INSERT INTO `item_weapon` VALUES (16939,'ram-dao_+1',4,0,0,0,0,2,1,466,79,0);
 INSERT INTO `item_weapon` VALUES (16940,'gerwitzs_sword',4,0,0,0,0,2,1,888,30,0);
 INSERT INTO `item_weapon` VALUES (16941,'flamberge_+1',4,0,0,0,0,2,1,466,81,0);
 INSERT INTO `item_weapon` VALUES (16942,'balmung',4,0,0,0,0,2,1,480,80,0);
-INSERT INTO `item_weapon` VALUES (16943,'ascalon',4,0,0,0,0,2,1,458,76,0);
+INSERT INTO `item_weapon` VALUES (16943,'ascalon',4,0,0,0,0,2,1,430,76,0);
 INSERT INTO `item_weapon` VALUES (16944,'lockheart',4,0,0,0,0,2,1,444,72,0);
 INSERT INTO `item_weapon` VALUES (16945,'arondight',4,0,0,0,0,2,1,480,79,0);
 INSERT INTO `item_weapon` VALUES (16946,'windurstian_sword',4,0,0,0,0,2,1,418,34,0);
@@ -1284,7 +1284,7 @@ INSERT INTO `item_weapon` VALUES (17645,'espadon_+1',3,0,0,0,0,2,1,257,44,0);
 INSERT INTO `item_weapon` VALUES (17646,'carnage_sword',3,0,0,0,0,2,1,264,43,0);
 INSERT INTO `item_weapon` VALUES (17647,'aramiss_rapier',3,0,0,0,0,1,1,202,30,0);
 INSERT INTO `item_weapon` VALUES (17648,'dragvandil',3,0,0,0,0,2,1,264,40,0);
-INSERT INTO `item_weapon` VALUES (17649,'nightmare_sword',3,0,0,0,0,2,1,231,36,0);
+INSERT INTO `item_weapon` VALUES (17649,'nightmare_sword',3,0,0,0,0,2,1,231,38,0);
 INSERT INTO `item_weapon` VALUES (17650,'nadrs',3,0,0,0,0,2,1,236,18,0);
 INSERT INTO `item_weapon` VALUES (17651,'dainslaif',3,0,0,0,0,2,1,264,43,0);
 INSERT INTO `item_weapon` VALUES (17652,'joyeuse',3,0,0,0,0,1,2,224,35,0);
@@ -1333,7 +1333,7 @@ INSERT INTO `item_weapon` VALUES (17694,'guespiere',3,0,0,0,0,2,1,226,38,0);
 INSERT INTO `item_weapon` VALUES (17695,'bayards_sword',3,0,0,0,0,2,1,240,43,0);
 INSERT INTO `item_weapon` VALUES (17696,'buzzard_tuck',3,0,0,0,0,2,1,224,23,0);
 INSERT INTO `item_weapon` VALUES (17697,'mighty_talwar',3,0,0,0,0,2,1,240,40,0);
-INSERT INTO `item_weapon` VALUES (17698,'princely_sword',3,0,0,0,0,2,1,264,47,0);
+INSERT INTO `item_weapon` VALUES (17698,'princely_sword',3,0,0,0,0,2,1,264,42,0);
 INSERT INTO `item_weapon` VALUES (17699,'dissector',3,0,0,0,0,2,1,231,23,500);
 INSERT INTO `item_weapon` VALUES (17700,'durandal',3,0,0,0,0,2,1,240,40,0);
 INSERT INTO `item_weapon` VALUES (17701,'shotel',3,0,0,0,0,2,1,288,30,0);
@@ -4582,7 +4582,7 @@ INSERT INTO `item_weapon` VALUES (21605,'arasy_sword_+1',3,0,242,242,188,2,1,236
 INSERT INTO `item_weapon` VALUES (21606,'enriching_sword',3,0,242,242,188,2,1,240,156,0);
 INSERT INTO `item_weapon` VALUES (21607,'enr._sword_+1',3,0,242,242,188,2,1,233,157,0);
 INSERT INTO `item_weapon` VALUES (21608,'onion_sword_ii',3,0,0,0,0,2,1,240,1,0);          -- DMG:1 Delay:240
-INSERT INTO `item_weapon` VALUES (21609,'save_the_queen_ii',3,0,0,0,0,2,1,264,1,0);       -- DMG:1 Delay:264
+INSERT INTO `item_weapon` VALUES (21609,'save_the_queen_ii',3,0,0,0,0,2,1,236,46,0);       -- DMG:46 Delay:236
 INSERT INTO `item_weapon` VALUES (21610,'hepatizon_rapier',3,0,242,242,201,2,1,224,146,0); -- DMG:146 Delay:224
 INSERT INTO `item_weapon` VALUES (21611,'hep._rapier_+1',3,0,242,242,201,2,1,218,147,0);  -- DMG:147 Delay:218
 INSERT INTO `item_weapon` VALUES (21612,'raetic_blade',3,0,242,242,215,2,1,236,157,0);    -- DMG:157 Delay:236
