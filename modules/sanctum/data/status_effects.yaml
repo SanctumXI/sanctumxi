@@ -1,0 +1,61 @@
+# Sanctum runtime overrides for upstream status-effect definitions.
+# The YAML keys intentionally match upstream so the module deep-merges the
+# records without introducing duplicate IDs. The name field selects the
+# Sanctum effect script while retaining the existing numeric effect ID.
+
+status_effects:
+  dodge:
+    id: 60
+    name: iron_guard
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+
+  resolved:
+    id: 635
+    name: empowered
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+    element: fire
+
+  blunt_trauma:
+    id: 789
+    flags:
+      - death
+      - no_loss_message
+    overwrite: higher
+
+  trust_aura_chr:
+    id: 807
+    name: critical_boost
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+    element: fire
+
+  trust_aura_haste:
+    id: 808
+    name: kick_damage
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+    element: fire
+
+  trust_aura_acc:
+    id: 810
+    name: resolve
+    flags:
+      - death
+      - on_zone
+      - no_loss_message
+      - on_jobchange
+      - no_cancel

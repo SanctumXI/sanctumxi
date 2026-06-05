@@ -1352,6 +1352,7 @@ def tasks_menu():
             #     "Offload historical auction data to auction_house_history",
             #     offload_to_auction_house_history,
             # ],
+            "v": ["Validate YAML data", validate_yaml_data],
             "l": [
                 "Configure single-process server",
                 configure_single_process,

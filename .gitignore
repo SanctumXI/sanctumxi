@@ -269,3 +269,7 @@ clang_tidy_summary.md
 
 # Server Settings
 settings/
+
+# YAML codegen
+*.codegen.json
+*.codegen.lua

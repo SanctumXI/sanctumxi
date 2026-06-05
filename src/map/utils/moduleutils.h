@@ -27,6 +27,9 @@
 #include "lua/luautils.h"
 
 #include <memory>
+#include <string>
+#include <string_view>
+#include <vector>
 
 // Forward declare
 class CPPModule;
@@ -110,6 +113,7 @@ auto OnIncomingPacket(MapSession* PSession, CCharEntity* PChar, CBasicPacket& pa
 void LoadLuaModules(IPP mapIPP);
 void CleanupLuaModules();
 void TryApplyLuaModules();
+auto GetDataModules(const std::string_view name, const std::string_view extension) -> std::vector<std::string>;
 void ReportLuaModuleUsage();
 
 }; // namespace moduleutils
