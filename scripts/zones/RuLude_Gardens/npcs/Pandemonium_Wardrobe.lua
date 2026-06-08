@@ -1,7 +1,7 @@
 -----------------------------------
 -- Pandemonium Wardrobe
 -----------------------------------
-
+---@type TNpcEntity
 local entity = {}
 
 -----------------------------------
@@ -310,7 +310,7 @@ local function addAugmentedItem(player, itemId, rolledAugments)
 end
 
 local function handleAugmentTrade(player, npc, trade)
-    local npcName = npc:getPacketName()
+    local npcName = "P. Wardrobe"
     local recipe, catalystItemId = findMatchingTrade(trade)
 
     if recipe == nil or catalystItemId == nil then
@@ -352,7 +352,7 @@ end
 -----------------------------------
 
 entity.onTrigger = function(player, npc)
-    local npcName = npc:getPacketName()
+    local npcName = "P. Wardrobe"
 
     npc:entityAnimationPacket('casm')
 

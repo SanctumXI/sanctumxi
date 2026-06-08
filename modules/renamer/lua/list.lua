@@ -1,9 +1,8 @@
 local list =
 {
-    [xi.zone.KUFTAL_TUNNEL] =
+    [xi.zone.RULUDE_GARDENS] =
     {
-        { 'Robber Crab', 'I HAVE BEEN RENAMED!' },
-        { 'Cave Worm', 'IMMA WORM!' },
+        { 'Pandemonium Wardrobe', 'Pandemonium Wardrobe' },
     },
 }
 return list

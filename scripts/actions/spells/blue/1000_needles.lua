@@ -28,7 +28,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.BLUE_MAGIC
     params.scattr = xi.skillchainType.COMPRESSION
     params.diff = 0
-    params.bonus = -50 -- 50 magic accuracy penalty
+    params.bonus = -25 -- 50 magic accuracy penalty
     params.numhits = 1
     params.multiplier = 1.5
     params.tp150 = 1.5
@@ -44,7 +44,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.chr_wsc = 1.0
 
     local damage = 1000
-    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, xi.element.LIGHT, xi.mod.INT, 0, -50)
+    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, xi.element.LIGHT, xi.mod.INT, 0, -25)
     if resist == 1 then
         local targets = spell:getTotalTargets()
         damage = damage / targets

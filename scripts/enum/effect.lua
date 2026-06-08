@@ -62,7 +62,7 @@ xi.effect =
     DEFENDER                 = 57,
     AGGRESSOR                = 58,
     FOCUS                    = 59,
-    DODGE                    = 60,
+    IRON_GUARD               = 60,
     COUNTERSTANCE            = 61,
     SENTINEL                 = 62,
     SOULEATER                = 63,
@@ -677,6 +677,7 @@ xi.effect =
     HYSTERIA                 = 804, -- Used for Hysteroanima to stop after readying a weaponskill with no msg.
     TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
+    CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
 
     -- 789
     -- 807-1022

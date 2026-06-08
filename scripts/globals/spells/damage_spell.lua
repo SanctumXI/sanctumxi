@@ -858,6 +858,16 @@ xi.spells.damage.calculateHelixMeritMultiplier = function(caster, spellId)
     return helixMeritMultiplier
 end
 
+xi.spells.damage.calculateHolyMeritMultiplier = function(caster, spellId)
+    local holyMeritMultiplier = 1
+
+    if spellId == xi.magic.spell.HOLY then
+        holyMeritMultiplier = 1 + 2 * caster:getMerit(xi.merit.BANISH_EFFECT) /100
+    end
+
+    return holyMeritMultiplier
+end
+
 xi.spells.damage.calculateAreaOfEffectResistance = function(target, spell)
     local areaOfEffectMultiplier = 1
 
@@ -1143,6 +1153,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local undeadDivinePenalty       = xi.spells.damage.calculateUndeadDivinePenalty(target, skillType)
     local scarletDeliriumMultiplier = xi.combat.damage.scarletDeliriumMultiplier(caster)
     local helixMeritMultiplier      = xi.spells.damage.calculateHelixMeritMultiplier(caster, spellId)
+    local holyMeritMultiplier       = xi.spells.damage.calculateHolyMeritMultiplier(caster, spellId)
     local areaOfEffectResistance    = xi.spells.damage.calculateAreaOfEffectResistance(target, spell)
     local actionTypeMultiplier      = xi.spells.damage.calculateSpellActionTypeMultiplier(caster)
 
@@ -1168,6 +1179,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * undeadDivinePenalty)
     finalDamage = math.floor(finalDamage * scarletDeliriumMultiplier)
     finalDamage = math.floor(finalDamage * helixMeritMultiplier)
+    finalDamage = math.floor(finalDamage * holyMeritMultiplier)
     finalDamage = math.floor(finalDamage * areaOfEffectResistance)
     finalDamage = math.floor(finalDamage * actionTypeMultiplier)
     finalDamage = math.floor(finalDamage * absorb)

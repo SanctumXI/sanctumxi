@@ -1084,8 +1084,8 @@ xi.combat.physical.calculateGuardRate = function(defender, attacker)
         guardRate = math.floor(10 + skillDelta / (60 / 9))
     end
 
-    -- Dodge's guard bonus goes over the cap
-    guardRate = utils.clamp(guardRate, 5, 25) + defender:getMod(xi.mod.ADDITIVE_GUARD)
+    -- Iron Guard guarding bonus goes over the cap
+   guardRate = utils.clamp(guardRate, 5, 25) + defender:getMod(xi.mod.ADDITIVE_GUARD)
 
     return guardRate
 end
@@ -1145,7 +1145,7 @@ xi.combat.physical.calculateBlockRate = function(defender, attacker)
     then
         -- already checked in canBlock but check again here to make sure
         if defender:getMobMod(xi.mobMod.CAN_SHIELD_BLOCK) > 0 then
-            blockRate = defender:getMod(xi.mod.SHIELDBLOCKRATE)
+            blockRate = defender:getMod(xi.mod.SHIELDBLOCKRATE) 
             -- automations are a special case
             if defender:isAutomaton() then
                 skillModifier = (defender:getSkillLevel(xi.skill.AUTOMATON_MELEE) - attackSkill) * 0.215
@@ -1184,7 +1184,7 @@ xi.combat.physical.calculateBlockRate = function(defender, attacker)
     blockRate = (blockRate + skillModifier + palisadeMod) * reprisalMult
 
     -- Apply the lower and upper caps
-    blockRate = utils.clamp(blockRate, 5, 100)
+    blockRate = utils.clamp(blockRate, 5, 100) + defender:getMerit(xi.merit.SHIELD_CHANCE)
 
     return blockRate
 end

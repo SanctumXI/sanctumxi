@@ -1480,10 +1480,10 @@ uint16 CBattleEntity::DEF()
     DEF += m_modStat[Mod::DEF];
 
     // TODO: support old style counterstance
-    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
+    /*  if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
         return DEF / 2;
-    }
+    }*/
 
     // use max to prevent underflow
     return std::max(1, DEF + (DEF * m_modStat[Mod::DEFP] / 100) + std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]));

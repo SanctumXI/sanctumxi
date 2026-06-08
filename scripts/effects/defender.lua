@@ -13,11 +13,18 @@ effectObject.onEffectGain = function(target, effect)
         effect:addMod(xi.mod.VIT, Level / 4)
         effect:addMod(xi.mod.ATTP, -15)
         effect:addMod(xi.mod.DEFP, power)
+        
+  -- Lv. 60+ WAR bonus: -10% physical damage taken
+        if Level >= 60 then
+            effect:addMod(xi.mod.DMGPHYS, -1000)
+        end
     else
         effect:addMod(xi.mod.ATTP, -25)
         effect:addMod(xi.mod.DEFP, 25)
     end
 end
+
+    
 
 effectObject.onEffectTick = function(target, effect)
 end

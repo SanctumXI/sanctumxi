@@ -1,5 +1,5 @@
 -----------------------------------
--- xi.effect.GUARDING_RATE_BOOST
+-- xi.effect.IRON_GUARD
 -----------------------------------
 ---@type TEffect
 local effectObject = {}

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -68,7 +68,7 @@ enum ABILITY
     ABILITY_AGGRESSOR          = 34,
     ABILITY_PROVOKE            = 35,
     ABILITY_FOCUS              = 36,
-    ABILITY_DODGE              = 37,
+    ABILITY_IRON_GUARD         = 37,
     ABILITY_CHAKRA             = 38,
     ABILITY_BOOST              = 39,
     ABILITY_COUNTERSTANCE      = 40,

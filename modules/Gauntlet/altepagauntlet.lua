@@ -1,7 +1,7 @@
 require('modules/module_utils')
 require('scripts/globals/npc_util')
 
-local m = Module:new('AltepaGauntlet2')
+local m = Module:new('AltepaGauntlet')
 m:setEnabled(true)
 
 local zoneName = 'Western_Altepa_Desert'

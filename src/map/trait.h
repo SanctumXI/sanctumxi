@@ -97,7 +97,7 @@ enum TRAITTYPE
     TRAIT_AMBUSH              = 76,
     TRAIT_IRON_WILL           = 77,
     TRAIT_GUARDIAN            = 78,
-    TRAIT_MUTED_SOUL          = 79,
+    TRAIT_BLOOD_DISCIPLINE    = 79,
     TRAIT_DESPERATE_BLOWS     = 80,
     TRAIT_BEAST_AFFINITY      = 81,
     TRAIT_BEAST_HEALER        = 82,
@@ -156,6 +156,7 @@ enum TRAITTYPE
     TRAIT_SHIELD_BARRIER      = 136,
     TRAIT_TANDEM_STRIKE       = 137,
     TRAIT_TANDEM_BLOW         = 138,
+   // TRAIT_CHALLENGE           = 139,
 };
 
 #define MAX_TRAIT_ID 139

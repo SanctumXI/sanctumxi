@@ -23,10 +23,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
     params.ecosystem       = xi.ecosystem.AQUAN
     params.effect          = xi.effect.POISON
-    params.power           = 6
+    params.power           = 7
     params.tick            = 0
-    params.duration        = 60
-    params.resistThreshold = 0.5
+    params.duration        = 90
+    params.resistThreshold = 0.4
     params.isGaze          = false
     params.isConal         = false
 

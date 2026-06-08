@@ -24,9 +24,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         local stormwindDamage = mob:getLocalVar('stormwindDamage') -- TODO: Maybe change name of localVar to stormwindCounter for clarity.
 
         if stormwindDamage == 2 then
-            params.fTP = { 3.25, 3.25, 3.25 }
+            params.fTP = { 6.0, 6.0, 6.0 }
         elseif stormwindDamage == 3 then
-            params.fTP = { 3.60, 3.60, 3.60 }
+            params.fTP = { 8.5, 8.5, 8.5 }
         end
     end
 

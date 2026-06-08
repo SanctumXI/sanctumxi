@@ -62,13 +62,14 @@ entity.spawnPoints =
 entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
+    mob:addMod(xi.mod.REGAIN, 75)
     xi.mob.updateNMSpawnPoint(mob)
     mob:setRespawnTime(math.random(32400, 43200)) -- 9 to 12 hours
     DisallowRespawn(mob:getID(), true) -- prevents accidental 'pop' during no wind weather and immediate despawn
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 175)
 end
 
 entity.onMobRoam = function(mob)

@@ -29,6 +29,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    target:addStatusEffect(xi.effect.BURN, { power = 3, duration = 60, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

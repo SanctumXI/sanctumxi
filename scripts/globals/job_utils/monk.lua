@@ -69,7 +69,7 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
             player:delStatusEffect(xi.effect.REGEN)
         end
 
-        player:addStatusEffect(xi.effect.REGEN, { power = 10, duration = merits, origin = player, tier = 1 })
+        player:addStatusEffect(xi.effect.REGEN, { power = 15, duration = merits, origin = player, tier = 1 })
     end
 
     return recoveryAmount
@@ -85,10 +85,15 @@ xi.job_utils.monk.useChiBlast = function(player, target, ability)
     local boost = player:getStatusEffect(xi.effect.BOOST)
     local multiplier = 1.0
     if boost ~= nil then
-        multiplier = (boost:getPower() / 100) * 4 -- power is the raw % atk boost
+        multiplier = (boost:getPower() / 100) * 5 -- power is the raw % atk boost
     end
 
-    local dmg = math.floor(player:getStat(xi.mod.MND) * (0.5 + (math.random() / 2))) * multiplier
+    local level = player:getMainLvl()
+    if level > 65 then
+        target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })  
+    end
+
+    local dmg = math.floor(player:getStat(xi.mod.VIT) * (0.7 + (math.random() / 2))) * multiplier
 
     dmg = xi.ability.adjustDamage(dmg, player, ability, target, xi.attackType.BREATH, xi.damageType.ELEMENTAL, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, player, xi.attackType.BREATH, xi.damageType.ELEMENTAL)
@@ -104,15 +109,16 @@ xi.job_utils.monk.useCounterstance = function(player, target, ability)
     target:delStatusEffect(xi.effect.COUNTERSTANCE) --if not found this will do nothing
     target:addStatusEffect(xi.effect.COUNTERSTANCE, { power = power, duration = 300, origin = player })
 
+
     return xi.effect.COUNTERSTANCE
 end
 
-xi.job_utils.monk.useDodge = function(player, target, ability)
-    local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
-    local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
-    player:addStatusEffect(xi.effect.DODGE, { power = jpLevel + dodgeMod, duration = 60, origin = player })
-
-    return xi.effect.DODGE
+xi.job_utils.monk.useIronGuard = function(player, target, ability)
+    --local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
+    --local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
+    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 180, origin = player }) -- Not working so using Guarding Rate Boost until can figure out the problem
+    -- player:addStatusEffect(xi.effect.GUARDING_RATE_BOOST, { power = 1, duration = 180, origin = player })
+    return xi.effect.IRON_GUARD
 end
 
 xi.job_utils.monk.useFocus = function(player, target, ability)
@@ -127,7 +133,7 @@ xi.job_utils.monk.useFootwork = function(player, target, ability)
     local kickDmg = 20 + player:getWeaponDmg()
     local kickAttPercent = 25 + player:getMod(xi.mod.FOOTWORK_ATT_BONUS)
 
-    player:addStatusEffect(xi.effect.FOOTWORK, { power = kickDmg, duration = 60, origin = player, subPower = kickAttPercent })
+    player:addStatusEffect(xi.effect.FOOTWORK, { power = kickDmg, duration = 120, origin = player, subPower = kickAttPercent })
 
     return xi.effect.FOOTWORK
 end
@@ -210,13 +216,13 @@ xi.job_utils.monk.useMantra = function(player, target, ability)
     local merits = player:getMerit(xi.merit.MANTRA)
 
     target:delStatusEffect(xi.effect.MAX_HP_BOOST) -- TODO: confirm which versions of HP boost mantra can overwrite
-    target:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = merits, duration = 180, origin = player })
+    target:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = merits, duration = 300, origin = player })
 
     return xi.effect.MAX_HP_BOOST
 end
 
 xi.job_utils.monk.usePerfectCounter = function(player, target, ability)
-    player:addStatusEffect(xi.effect.PERFECT_COUNTER, { power = 2, duration = 30, origin = player })
+    player:addStatusEffect(xi.effect.PERFECT_COUNTER, { power = 10, duration = 30, origin = player })
 
     return xi.effect.PERFECT_COUNTER
 end

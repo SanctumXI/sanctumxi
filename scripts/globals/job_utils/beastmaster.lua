@@ -14,14 +14,14 @@ xi.job_utils.beastmaster = xi.job_utils.beastmaster or {}
 
 xi.job_utils.beastmaster.petFoodData =
 {
-    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =   80, regen =  1, mndMult = 2, mndThreshold = 10 },
-    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  200, regen =  3, mndMult = 1, mndThreshold = 33 },
-    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing =  340, regen =  5, mndMult = 1, mndThreshold = 35 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing =  580, regen =  8, mndMult = 2, mndThreshold = 40 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing =  790, regen = 11, mndMult = 2, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing =  950, regen = 14, mndMult = 3, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ETA_BISCUIT]     = { minHealing = 1350, regen = 17, mndMult = 4, mndThreshold = 50 },
-    [xi.item.PET_FOOD_THETA_BISCUIT]   = { minHealing = 1800, regen = 20, mndMult = 4, mndThreshold = 55 },
+    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =  120, regen =  1, mndMult = 2, mndThreshold = 15 },
+    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  240, regen =  3, mndMult = 1, mndThreshold = 38 },
+    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing =  340, regen =  5, mndMult = 1, mndThreshold = 42 }, -- TO BE VERIFIED.
+    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing =  580, regen =  8, mndMult = 2, mndThreshold = 45 }, -- TO BE VERIFIED.
+    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing =  790, regen = 11, mndMult = 2, mndThreshold = 50 },
+    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing =  950, regen = 14, mndMult = 3, mndThreshold = 55 },
+    [xi.item.PET_FOOD_ETA_BISCUIT]     = { minHealing = 1350, regen = 17, mndMult = 4, mndThreshold = 60 },
+    [xi.item.PET_FOOD_THETA_BISCUIT]   = { minHealing = 1800, regen = 20, mndMult = 4, mndThreshold = 63 },
 }
 
 -----------------------------------
@@ -703,10 +703,11 @@ xi.job_utils.beastmaster.useSpur = function(player)
     end
 end
 
-xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action)
-    -- all but regen are a 25% bonus
-    local power = 25
+xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action) -- Custom Sanctum effects
+    -- all but regen are a 15% bonus
+    local power = 15
     local pet = player:getPet()
+    local duration = player:getMerit(xi.merit.RUN_WILD) + 270 
     if pet then
         -- mods aren't tied to an effect, just applied to the pet. They leave when the pet dies or despawns
         pet:addMod(xi.mod.ATTP, power)
@@ -719,8 +720,8 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action)
         -- TODO find out this potency, but appears to be consistently 1% per tick with hare familiar at lvl 99
         pet:addMod(xi.mod.REGEN, 0.01 * pet:getMaxHP())
 
-        -- After 5 minutes, the pet just despawns
-        pet:setJugRemainingTime(300)
+        -- After 5 minutes+ merit duration, the pet just despawns
+        pet:setJugRemainingTime(duration)
     end
 
     -- seems to display nothing in console, but this it the msg id from capture
@@ -729,9 +730,9 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action)
     return ability:getID()
 end
 
-xi.job_utils.beastmaster.useFeralHowl = function(player, target, ability, action)
-    local modAcc       = player:getMerit(xi.merit.FERAL_HOWL)
-    local feralHowlMod = player:getMod(xi.mod.FERAL_HOWL_DURATION)
+xi.job_utils.beastmaster.useFeralHowl = function(player, target, ability, action) -- Custom Sanctum lv 65 ability
+    local modAcc       = 25   --player:getMerit(xi.merit.FERAL_HOWL)
+    --local feralHowlMod = player:getMod(xi.mod.FERAL_HOWL_DURATION)
     local duration     = 10
 
     -- Calculate duration bonus from gear

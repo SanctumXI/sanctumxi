@@ -61,7 +61,7 @@ static uint8 cap[100] = {
     7, 7, 7, 7, 7,                          // 60-64  7
     8, 8, 8, 8, 8,                          // 65-69  8
     9, 9, 9, 9, 9,                          // 70-74  9
-    10, 10, 10, 10, 10,                     // 75-79 10
+    15, 15, 15, 15, 15,                     // 75-79 15
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15, // 80-89 15
     15, 15, 15, 15, 15, 15, 15, 15, 15, 15, // 90-99 15
 };
@@ -76,7 +76,7 @@ struct MeritCategoryInfo_t
 
 // clang-format off
 static const MeritCategoryInfo_t meritCatInfo[] = {
-    { 3, 75, 0 },   // MCATEGORY_HP_MP       catNumber 00 (HP 15, MP 15, Max_merits 45)
+    { 3, 40, 0 },   // MCATEGORY_HP_MP       catNumber 00 (HP 15, MP 15, Max_merits 45)
     { 7, 105, 1 },  // MCATEGORY_ATTRIBUTES  catNumber 01
     { 19, 152, 2 }, // MCATEGORY_COMBAT      catNumber 02
     { 14, 112, 4 }, // MCATEGORY_MAGIC       catNumber 03

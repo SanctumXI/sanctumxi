@@ -87,19 +87,20 @@ xi.job_utils.dark_knight.useConsumeMana = function(player, target, ability)
     return xi.effect.CONSUME_MANA
 end
 
-xi.job_utils.dark_knight.useDarkSeal = function(player, target, ability, action)
+xi.job_utils.dark_knight.useDarkSeal = function(player, target, ability, action) -- Custom Sanctum merits
     -- Power: Each merit level after the first reduces Dark Magic casting time by -10% (total of -40% bonus).
     -- Sub Power: Enhances Dark Seal effect by increasing duration of Dark Magic by 10% per merit level (total of 50% bonus).
-    local power    = player:getMerit(xi.merit.DARK_SEAL) - 10
-    local subPower = player:getMerit(xi.merit.DARK_SEAL) * player:getMod(xi.mod.ENHANCES_DARK_SEAL) / 10
-
-    player:addStatusEffect(xi.effect.DARK_SEAL, { power = power, duration = 60, origin = player, subPower = subPower })
+    -- local power    = player:getMerit(xi.merit.DARK_SEAL) - 10
+    local subPower = player:getMerit(xi.merit.DARK_SEAL) * (player:getMod(xi.mod.ENHANCES_DARK_SEAL) / 10)
+  
+    player:addStatusEffect(xi.effect.DARK_SEAL, { power = 1, duration = 60, origin = player, subPower = subPower })
 
     return xi.effect.DARK_SEAL
 end
 
+
 xi.job_utils.dark_knight.useDiabolicEye = function(player, target, ability, action)
-    local power    = 15 + player:getMerit(xi.merit.DIABOLIC_EYE) * 5
+    local power    = 10 + player:getMerit(xi.merit.DIABOLIC_EYE) * 10
     local duration = 180 + player:getMerit(xi.merit.DIABOLIC_EYE) * player:getMod(xi.mod.ENHANCES_DIABOLIC_EYE)
 
     player:addStatusEffect(xi.effect.DIABOLIC_EYE, { power = power, duration = duration, origin = player })
@@ -136,20 +137,43 @@ xi.job_utils.dark_knight.useSoulEnslavement = function(player, target, ability)
     return xi.effect.SOUL_ENSLAVEMENT
 end
 
-xi.job_utils.dark_knight.useSouleater = function(player, target, ability)
+xi.job_utils.dark_knight.useSouleater = function(player, target, ability) -- Custom Sanctum Version w/ Merits
     local duration = 60 + target:getJobPointLevel(xi.jp.SOULEATER_DURATION)
-    local subPower = target:getMod(xi.mod.ENHANCES_MUTED_SOUL) * target:getMerit(xi.merit.MUTED_SOUL) / 10 -- Origin: Abyss Flanchard +2
+    local subPower = target:getMod(xi.mod.ENHANCES_MUTED_SOUL) * target:getMerit(xi.merit.BLOOD_DISCIPLINE) / 10 -- Origin: Abyss Flanchard +2
 
-    player:addStatusEffect(xi.effect.SOULEATER, { power = 1, duration = duration, origin = player, subPower = subPower })
+    player:addStatusEffect(xi.effect.SOULEATER, {
+        power = 1,
+        duration = duration,
+        origin = player,
+        subPower = subPower
+    })
+
+    -- Blood Discipline merits restore MP
+    local merits = target:getMerit(xi.merit.BLOOD_DISCIPLINE) / 10
+
+    if merits > 0 then
+        local restore = math.floor(player:getMaxMP() * (0.05 * merits))
+
+        player:addMP(restore)
+
+        player:messageBasic(xi.msg.basic.RECOVERS_MP, 0, restore)
+    end
 
     return xi.effect.SOULEATER
 end
 
-xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, action)
+xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, action) -- Custom Sanctum Merits and Changes
     -- Damage
     local darkKnightLvl = utils.getActiveJobLevel(player, xi.job.DRK)
     local jpValue       = target:getJobPointLevel(xi.jp.WEAPON_BASH_EFFECT)
-    local damage        = math.floor((darkKnightLvl + 11) / 4 + player:getMod(xi.mod.WEAPON_BASH) + jpValue * 10)
+        -- Weapon Bash merits: +25% damage per merit
+    local merits = player:getMerit(xi.merit.WEAPON_BASH_EFFECT) / 6
+    local damage        = math.floor((darkKnightLvl + 325) / 3 + player:getMod(xi.mod.WEAPON_BASH) + jpValue * 10)
+
+    if merits > 0 then
+        damage = math.floor(damage * (1 + (0.25 * merits)))
+    end
+
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
 

@@ -1,8 +1,8 @@
 -----------------------------------
 -- Area: Temenos
 -- Name: Central Temenos 1st Floor
--- !addkeyitem white_card
--- !addkeyitem cosmo_cleanse
+-- !addkeyitemIdwhite_card
+-- !addkeyitemIdcosmo_cleanse
 -- !pos 580.000 -2.375 104.000 37
 -----------------------------------
 local ID = zones[xi.zone.TEMENOS]
@@ -124,12 +124,12 @@ content.loot =
     {
         {
             quantity = 7,
-            { item = xi.item.ANCIENT_BEASTCOIN, weight = 1000 },
+            { itemId= xi.item.ANCIENT_BEASTCOIN, weight = 1000 },
         },
 
         {
-            { item = xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
-            { item = xi.item.METAL_CHIP, weight = xi.loot.weight.NORMAL    },
+            { itemId= xi.item.NONE,       weight = xi.loot.weight.VERY_HIGH },
+            { itemId= xi.item.METAL_CHIP, weight = xi.loot.weight.NORMAL    },
         },
     }
 }

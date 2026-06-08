@@ -6,7 +6,9 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.ACC, effect:getPower())
-    effect:addMod(xi.mod.HPP, -15)
+    effect:addMod(xi.mod.ATTP, 10)
+
+    effect:addMod(xi.mod.HPP, -10)
 end
 
 effectObject.onEffectTick = function(target, effect)

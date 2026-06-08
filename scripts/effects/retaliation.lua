@@ -6,15 +6,18 @@
 ---@type TEffect
 local effectObject = {}
 
-effectObject.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.MOVE_SPEED_WEIGHT_PENALTY, 8)
+effectObject.onEffectGain = function(target, effect, player)
+    local boost = target:getMerit(xi.merit.RETALIATION_DAMAGE)
+    effect:addMod(xi.mod.MOVE_SPEED_WEIGHT_PENALTY, 8)
+    effect:addMod(xi.mod.RETALIATION, boost)
+
 end
 
 effectObject.onEffectTick = function(target, effect)
 end
 
 effectObject.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.MOVE_SPEED_WEIGHT_PENALTY, 8)
+
 end
 
 return effectObject

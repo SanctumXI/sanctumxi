@@ -289,6 +289,11 @@ local function handleFatigue(player, text, todayDigCount)
         player:messageSpecial(text.FOUND_ITEM_WITH_EASE)
     else
         xi.chocoboDig.updateFatigue(player, todayDigCount + 1)
+
+        local maxDigs = xi.settings.main.DIG_FATIGUE
+        local digsLeft = maxDigs - (todayDigCount + 1)
+
+        player:printToPlayer(string.format("Digs remaining today: %u", digsLeft), xi.msg.channel.SYSTEM_3)
     end
 end
 

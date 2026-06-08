@@ -875,9 +875,9 @@ xi.shop.handleValerianoShop = function(player, npc)
     local zoneId = player:getZoneID()
 
     -- Fail-safe in case npc didnt despawn.
-    if GetNationRank(zoneTable[zoneId][1]) ~= 1 then
-        return
-    end
+    --if GetNationRank(zoneTable[zoneId][1]) ~= 1 then
+    --    return
+    --end
 
     -- Build shop.
     player:showText(npc, zones[zoneId].text.VALERIANO_SHOP_DIALOG)

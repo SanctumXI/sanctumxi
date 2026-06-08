@@ -9,11 +9,13 @@
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
+        local meritReduction = player:getMerit(xi.merit.DARK_SEAL)
+    ability:setRecast(ability:getRecast() - meritReduction)
     return 0, 0
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dark_knight.useDarkSeal(player, target, ability, action)
+    return xi.job_utils.dark_knight.useDarkSeal(player, target, ability, action) 
 end
 
 return abilityObject

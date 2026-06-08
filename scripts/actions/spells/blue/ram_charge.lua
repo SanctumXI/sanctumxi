@@ -32,12 +32,12 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tp300 = 1.75
     params.azuretp = 1.875
     params.duppercap = 75
-    params.str_wsc = 0.3
+    params.str_wsc = 0.5
     params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
+    params.vit_wsc = 0.5
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
-    params.mnd_wsc = 0.5
+    params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
 
     return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)

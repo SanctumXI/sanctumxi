@@ -72,6 +72,7 @@ spellObject.onSpellCast = function(caster, target, spell)
             not target:hasStatusEffect(xi.effect.STONESKIN)
         then
             local solaceStoneskin = 0
+            local solaceDuration = 25 + (caster:getMerit(xi.merit.ANIMUS_SOLACE))
             local equippedBody = caster:getEquipID(xi.slot.BODY)
             if equippedBody == 11186 then
                 solaceStoneskin = math.floor(final * 0.30)
@@ -83,7 +84,8 @@ spellObject.onSpellCast = function(caster, target, spell)
 
             solaceStoneskin = solaceStoneskin * (1 + caster:getMerit(xi.merit.ANIMUS_SOLACE) / 100)
 
-            target:addStatusEffect(xi.effect.STONESKIN, { power = solaceStoneskin, duration = 25, origin = caster, tier = 1 })
+            target:addStatusEffect(xi.effect.STONESKIN, { power = solaceStoneskin, duration = solaceDuration, origin = caster, tier = 1 })
+
         end
 
         final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))

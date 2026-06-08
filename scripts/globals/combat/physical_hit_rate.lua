@@ -124,6 +124,13 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
         accBonus = accBonus + attacker:getMerit(xi.merit.AMBUSH)
     end
 
+    -- Custom Challenge Trait for Paladin, Sanctum Custom
+    local challengeMerit = attacker:getMerit(xi.merit.CHALLENGE) 
+    if challengeMerit > 0 and target:isFacing(attacker, 120) then
+        accBonus = accBonus + challengeMerit
+        -- print(string.format("Challenge merit: %u", challengeMerit)) -- Debug print to verify correct application of merit
+    end
+
     -- Yonin evasion is likely agnostic to ranged or melee but needs confirmation
     if
         attacker:hasStatusEffect(xi.effect.YONIN) and

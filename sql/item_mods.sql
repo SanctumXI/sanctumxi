@@ -12489,6 +12489,7 @@ INSERT INTO `item_mods` VALUES (12429,2,-20); -- HP: -20
 INSERT INTO `item_mods` VALUES (12429,23,8);  -- ATT: 8
 INSERT INTO `item_mods` VALUES (12429,25,5);  -- ACC: 5
 INSERT INTO `item_mods` VALUES (12429,68,-8); -- EVA: -8
+INSERT INTO `item_mods` VALUES (12429,384,300); -- HASTE_GEAR: 300
 
 -- Royal Knights Bascinet
 INSERT INTO `item_mods` VALUES (12430,1,22); -- DEF: 22
@@ -14792,6 +14793,7 @@ INSERT INTO `item_mods` VALUES (12941,13,-10); -- MND: -10
 INSERT INTO `item_mods` VALUES (12941,23,5);   -- ATT: 5
 INSERT INTO `item_mods` VALUES (12941,25,3);   -- ACC: 3
 INSERT INTO `item_mods` VALUES (12941,68,-3);  -- EVA: -3
+INSERT INTO `item_mods` VALUES (12941,384,300); -- HASTE_GEAR: 100
 
 -- Royal Knights Sollerets
 INSERT INTO `item_mods` VALUES (12942,1,11); -- DEF: 11
@@ -19272,6 +19274,7 @@ INSERT INTO `item_mods` VALUES (13924,2,-21); -- HP: -21
 INSERT INTO `item_mods` VALUES (13924,23,9);  -- ATT: 9
 INSERT INTO `item_mods` VALUES (13924,25,6);  -- ACC: 6
 INSERT INTO `item_mods` VALUES (13924,68,-9); -- EVA: -9
+INSERT INTO `item_mods` VALUES (13924,384,400); -- HASTE_GEAR: 400
 
 -- Rasetsu Jinpachi
 INSERT INTO `item_mods` VALUES (13925,1,31);   -- DEF: 31
@@ -20413,6 +20416,10 @@ INSERT INTO `item_mods` VALUES (14132,11,3); -- AGI: 3
 INSERT INTO `item_mods` VALUES (14133,1,6);  -- DEF: 6
 INSERT INTO `item_mods` VALUES (14133,9,3);  -- DEX: 3
 INSERT INTO `item_mods` VALUES (14133,11,3); -- AGI: 3
+INSERT INTO `item_mods` VALUES (14133,25,2);  -- ACC: 1
+INSERT INTO `item_mods` VALUES (14133,26,5); -- RACC: 1
+
+
 
 -- Air Solea
 INSERT INTO `item_mods` VALUES (14134,1,5);  -- DEF: 5
@@ -20634,6 +20641,7 @@ INSERT INTO `item_mods` VALUES (14175,13,-11); -- MND: -11
 INSERT INTO `item_mods` VALUES (14175,23,6);   -- ATT: 6
 INSERT INTO `item_mods` VALUES (14175,25,4);   -- ACC: 4
 INSERT INTO `item_mods` VALUES (14175,68,-4);  -- EVA: -4
+INSERT INTO `item_mods` VALUES (14175,384,300); -- HASTE_GEAR: 200
 
 -- Field Boots
 INSERT INTO `item_mods` VALUES (14176,1,1);    -- DEF: 1
@@ -21814,6 +21822,7 @@ INSERT INTO `item_mods` VALUES (14371,9,11);   -- DEX: 11
 INSERT INTO `item_mods` VALUES (14371,23,16);  -- ATT: 16
 INSERT INTO `item_mods` VALUES (14371,25,16);  -- ACC: 16
 INSERT INTO `item_mods` VALUES (14371,68,-11); -- EVA: -11
+INSERT INTO `item_mods` VALUES (14371,384,200); -- HASTE_GEAR: 200
 
 -- Cardinal Vest
 INSERT INTO `item_mods` VALUES (14372,1,44); -- DEF: 44
@@ -26581,7 +26590,7 @@ INSERT INTO `item_mods` VALUES (15240,2,22);    -- HP: 22
 INSERT INTO `item_mods` VALUES (15240,5,22);    -- MP: 22
 INSERT INTO `item_mods` VALUES (15240,25,4);    -- ACC: 4
 INSERT INTO `item_mods` VALUES (15240,30,4);    -- MACC: 4
-INSERT INTO `item_mods` VALUES (15240,384,300); -- HASTE_GEAR: 300
+INSERT INTO `item_mods` VALUES (15240,384,400); -- HASTE_GEAR: 400
 
 -- Nashira Turban
 INSERT INTO `item_mods` VALUES (15241,1,19);    -- DEF: 19
@@ -30556,7 +30565,7 @@ INSERT INTO `item_mods` VALUES (16106,1,23);    -- DEF: 23
 INSERT INTO `item_mods` VALUES (16106,8,4);     -- STR: 4
 INSERT INTO `item_mods` VALUES (16106,9,4);     -- DEX: 4
 INSERT INTO `item_mods` VALUES (16106,10,4);    -- VIT: 4
-INSERT INTO `item_mods` VALUES (16106,384,400); -- HASTE_GEAR: 400
+INSERT INTO `item_mods` VALUES (16106,384,500); -- HASTE_GEAR: 500
 
 -- Denali Bonnet
 INSERT INTO `item_mods` VALUES (16107,1,21);    -- DEF: 21
@@ -30564,7 +30573,7 @@ INSERT INTO `item_mods` VALUES (16107,11,4);    -- AGI: 4
 INSERT INTO `item_mods` VALUES (16107,13,4);    -- MND: 4
 INSERT INTO `item_mods` VALUES (16107,23,3);    -- ATT: 3
 INSERT INTO `item_mods` VALUES (16107,68,3);    -- EVA: 3
-INSERT INTO `item_mods` VALUES (16107,384,400); -- HASTE_GEAR: 400
+INSERT INTO `item_mods` VALUES (16107,384,500); -- HASTE_GEAR: 500
 
 -- Goliard Chapeau
 INSERT INTO `item_mods` VALUES (16108,1,20);  -- DEF: 20
@@ -35682,6 +35691,11 @@ INSERT INTO `item_mods` VALUES (17738,25,7);     -- ACC: 7
 INSERT INTO `item_mods` VALUES (17738,111,8);    -- DIVINE: 8
 INSERT INTO `item_mods` VALUES (17738,161,-700); -- DMGPHYS: -700
 INSERT INTO `item_mods` VALUES (17738,164,-700); -- DMGRANGE: -700
+INSERT INTO `item_mods` VALUES (17738,431,1);  -- ITEM_ADDEFFECT_TYPE: DAMAGE
+INSERT INTO `item_mods` VALUES (17738,499,7);  -- ITEM_SUBEFFECT: SUBEFFECT_LIGHT_DAMAGE
+INSERT INTO `item_mods` VALUES (17738,500,15); -- ITEM_ADDEFFECT_DMG: 8
+INSERT INTO `item_mods` VALUES (17738,501,50); -- ITEM_ADDEFFECT_CHANCE: 50
+INSERT INTO `item_mods` VALUES (17738,950,7);  -- ITEM_ADDEFFECT_ELEMENT: ELEMENT_LIGHT
 
 -- Steel Kilij
 INSERT INTO `item_mods` VALUES (17739,5,10); -- MP: 10

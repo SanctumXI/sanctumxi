@@ -4036,6 +4036,12 @@ void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl, bool forceSkil
             SkillUpChance *= ((100.0f + PChar->getMod(Mod::MAGIC_SKILLUP_RATE)) / 100.0f);
         }
 
+        // Custom Sanctum: Bonus skillup chance for low-level players
+        if (PChar->GetMLevel() < 30)
+        {
+            SkillUpChance *= 1.5f;
+        }
+
         if (Diff > 0 && (random < SkillUpChance || forceSkillUp))
         {
             double chance      = 0;

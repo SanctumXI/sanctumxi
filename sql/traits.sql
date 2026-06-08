@@ -175,7 +175,7 @@ INSERT INTO `traits` VALUES (8,'max mp boost',21,30,1,1096,10,'SOA',0);
 INSERT INTO `traits` VALUES (8,'max mp boost',21,60,2,1096,20,'SOA',0);
 INSERT INTO `traits` VALUES (8,'max mp boost',21,90,3,1096,40,'SOA',0);
 INSERT INTO `traits` VALUES (9,'auto regen',3,25,1,370,1,NULL,0);
-INSERT INTO `traits` VALUES (9,'auto regen',3,76,2,370,2,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (9,'auto regen',3,75,2,370,2,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (9,'auto regen',22,35,1,370,1,'SOA',0);
 INSERT INTO `traits` VALUES (9,'auto regen',22,65,2,370,2,'SOA',0);
 INSERT INTO `traits` VALUES (9,'auto regen',22,95,3,370,3,'SOA',0);
@@ -216,8 +216,8 @@ INSERT INTO `traits` VALUES (16,'triple attack',6,55,1,302,5,NULL,0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,95,2,302,6,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (17,'counter',2,10,1,291,10,NULL,0);
 INSERT INTO `traits` VALUES (17,'counter',2,50,2,291,12,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,75,1,259,10,NULL,0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,90,2,259,15,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (18,'dual wield',6,40,1,259,10,NULL,710);
+INSERT INTO `traits` VALUES (18,'dual wield',6,76,2,259,15,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',6,98,3,259,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',13,10,1,259,10,NULL,0);
 INSERT INTO `traits` VALUES (18,'dual wield',13,25,2,259,15,NULL,0);
@@ -451,7 +451,7 @@ INSERT INTO `traits` VALUES (75,'aura steal',6,75,1,0,0,'TOAU',2372);
 INSERT INTO `traits` VALUES (76,'ambush',6,75,1,0,0,'TOAU',2374);
 INSERT INTO `traits` VALUES (77,'iron will',7,75,1,0,0,'TOAU',2436);
 INSERT INTO `traits` VALUES (78,'guardian',7,75,1,0,0,'TOAU',2438);
-INSERT INTO `traits` VALUES (79,'muted soul',8,75,1,0,0,'TOAU',2500);
+INSERT INTO `traits` VALUES (79,'blood_discipline',8,75,1,0,0,'TOAU',2500);
 INSERT INTO `traits` VALUES (80,'desperate blows',8,15,1,906,500,'TOAU',0);
 INSERT INTO `traits` VALUES (80,'desperate blows',8,30,2,906,1000,'SOA',0);
 INSERT INTO `traits` VALUES (80,'desperate blows',8,45,3,906,1500,'SOA',0);
@@ -581,7 +581,7 @@ INSERT INTO `traits` VALUES (108,'conserve tp',14,97,5,944,26,'ABYSSEA',0); -- C
 INSERT INTO `traits` VALUES (108,'conserve tp',19,77,1,944,15,'ABYSSEA',0); -- Conserve TP I, DNC77, 15%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,87,2,944,18,'ABYSSEA',0); -- Conserve TP II, DNC87, 18%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,97,3,944,21,'ABYSSEA',0); -- Conserve TP III, DNC97, 21%
-INSERT INTO `traits` VALUES (109,'occult acumen',4,85,1,902,25,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (109,'occult acumen',4,75,1,902,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',4,95,2,902,50,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,45,1,902,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,58,2,902,50,'ABYSSEA',0);
@@ -760,9 +760,10 @@ INSERT INTO `traits` VALUES (137,'tandem strike',9,45,2,271,20,'ROV',0);
 INSERT INTO `traits` VALUES (137,'tandem strike',9,60,3,271,30,'ROV',0);
 INSERT INTO `traits` VALUES (137,'tandem strike',9,75,4,271,40,'ROV',0);
 INSERT INTO `traits` VALUES (137,'tandem strike',9,90,5,271,50,'ROV',0);
-INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,'ROV',0);
-INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,'ROV',0);
-INSERT INTO `traits` VALUES (138,'tandem blow',9,80,3,272,15,'ROV',0);
+INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,NULL,0);
+INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,NULL,0);
+INSERT INTO `traits` VALUES (138,'tandem blow',9,75,3,272,15,NULL,0);
+-- INSERT INTO `traits` VALUES (139,'challenge',15,75,1,25,3,NULL,770);
 
 /*!40000 ALTER TABLE `traits` ENABLE KEYS */;
 UNLOCK TABLES;

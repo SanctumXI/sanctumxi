@@ -133,7 +133,7 @@ xi.merit =
 
     -- WAR 1
     BERSERK_RECAST              = meritCategory.WAR_1 + 0x00,
-    DEFENDER_RECAST             = meritCategory.WAR_1 + 0x02,
+    RETALIATION_DAMAGE          = meritCategory.WAR_1 + 0x02,
     WARCRY_RECAST               = meritCategory.WAR_1 + 0x04,
     AGGRESSOR_RECAST            = meritCategory.WAR_1 + 0x06,
     DOUBLE_ATTACK_RATE          = meritCategory.WAR_1 + 0x08,
@@ -173,20 +173,20 @@ xi.merit =
     -- THF 1
     FLEE_RECAST                 = meritCategory.THF_1 + 0x00,
     HIDE_RECAST                 = meritCategory.THF_1 + 0x02,
-    SNEAK_ATTACK_RECAST         = meritCategory.THF_1 + 0x04,
-    TRICK_ATTACK_RECAST         = meritCategory.THF_1 + 0x06,
+    SATA_RECAST                 = meritCategory.THF_1 + 0x04,
+    BULLY_RECAST                = meritCategory.THF_1 + 0x06,
     TRIPLE_ATTACK_RATE          = meritCategory.THF_1 + 0x08,
 
     -- PLD 1
-    SHIELD_BASH_RECAST          = meritCategory.PLD_1 + 0x00,
-    HOLY_CIRCLE_RECAST          = meritCategory.PLD_1 + 0x02,
+    MAJESTY_RECAST              = meritCategory.PLD_1 + 0x00,
+    CHALLENGE                   = meritCategory.PLD_1 + 0x02,
     SENTINEL_RECAST             = meritCategory.PLD_1 + 0x04,
-    COVER_EFFECT_LENGTH         = meritCategory.PLD_1 + 0x06,
+    SHIELD_CHANCE               = meritCategory.PLD_1 + 0x06,
     RAMPART_RECAST              = meritCategory.PLD_1 + 0x08,
 
     -- DRK 1
     SOULEATER_RECAST            = meritCategory.DRK_1 + 0x00,
-    ARCANE_CIRCLE_RECAST        = meritCategory.DRK_1 + 0x02,
+    NETHER_VOID_RECAST          = meritCategory.DRK_1 + 0x02,
     LAST_RESORT_RECAST          = meritCategory.DRK_1 + 0x04,
     LAST_RESORT_EFFECT          = meritCategory.DRK_1 + 0x06,
     WEAPON_BASH_EFFECT          = meritCategory.DRK_1 + 0x08,
@@ -194,7 +194,7 @@ xi.merit =
     -- BST 1
     KILLER_EFFECTS              = meritCategory.BST_1 + 0x00,
     REWARD_RECAST               = meritCategory.BST_1 + 0x02,
-    CALL_BEAST_RECAST           = meritCategory.BST_1 + 0x04,
+    PET_BOOST           = meritCategory.BST_1 + 0x04,
     SIC_RECAST                  = meritCategory.BST_1 + 0x06,
     TAME_RECAST                 = meritCategory.BST_1 + 0x08,
 
@@ -368,11 +368,11 @@ xi.merit =
     -- DRK 2
     DARK_SEAL                   = meritCategory.DRK_2 + 0x00,
     DIABOLIC_EYE                = meritCategory.DRK_2 + 0x02,
-    MUTED_SOUL                  = meritCategory.DRK_2 + 0x04,
+    BLOOD_DISCIPLINE            = meritCategory.DRK_2 + 0x04,
     DESPERATE_BLOWS             = meritCategory.DRK_2 + 0x06,
 
     -- BST 2
-    FERAL_HOWL                  = meritCategory.BST_2 + 0x00,
+    RUN_WILD                    = meritCategory.BST_2 + 0x00,
     KILLER_INSTINCT             = meritCategory.BST_2 + 0x02,
     BEAST_AFFINITY              = meritCategory.BST_2 + 0x04,
     BEAST_HEALER                = meritCategory.BST_2 + 0x06,

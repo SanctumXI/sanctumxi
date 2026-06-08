@@ -35,6 +35,7 @@
 # Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
 #
 # Live example:
+renamer
 items
 limbus
 sanctum
@@ -54,5 +55,4 @@ custom/lua/announce_player_login.lua
 custom/lua/new_player_linkshell.lua
 custom/commands/
 custom/lua/test_npcs_in_gm_home.lua
-toau/sql/pre_rmt_drops.sql
 custom/sql/mob_level_and_respawn.sql

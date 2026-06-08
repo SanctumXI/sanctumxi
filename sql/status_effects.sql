@@ -127,7 +127,7 @@ INSERT INTO `status_effects` VALUES (56,'berserk',297,0,0,0,0,0,1,0,0,NULL);
 INSERT INTO `status_effects` VALUES (57,'defender',289,0,0,0,0,0,4,0,0,NULL);
 INSERT INTO `status_effects` VALUES (58,'aggressor',289,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (59,'focus',297,0,0,0,0,0,0,0,0,NULL);
-INSERT INTO `status_effects` VALUES (60,'dodge',297,0,0,0,0,0,0,0,0,NULL);
+INSERT INTO `status_effects` VALUES (60,'iron_guard',297,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (61,'counterstance',289,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (62,'sentinel',289,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (63,'souleater',4194600,0,0,0,0,0,0,0,0,NULL);

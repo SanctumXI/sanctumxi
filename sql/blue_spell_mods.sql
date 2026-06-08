@@ -13,7 +13,7 @@ CREATE TABLE `blue_spell_mods` (
 -- ----------------------------
 -- Venom Shell
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (513,13,2); -- MND+2
+INSERT INTO `blue_spell_mods` VALUES (513,13,3); -- MND+3
 
 -- ----------------------------
 -- Maelstrom
@@ -76,7 +76,7 @@ INSERT INTO `blue_spell_mods` VALUES (532,9,3); -- DEX+3
 -- ----------------------------
 -- Self-Destruct
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (533,8,2); -- STR+2
+INSERT INTO `blue_spell_mods` VALUES (533,8,3); -- STR+3
 
 -- ----------------------------
 -- Mysterious Light

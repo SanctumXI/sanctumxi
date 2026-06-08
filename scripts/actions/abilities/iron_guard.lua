@@ -1,5 +1,5 @@
 -----------------------------------
--- Ability: Dodge
+-- Ability: Iron Guard
 -- Enhances user's evasion.
 -- Obtained: Monk Level 15
 -- Recast Time: 5:00
@@ -13,7 +13,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.monk.useDodge(player, target, ability)
+    return xi.job_utils.monk.useIronGuard(player, target, ability)
 end
 
 return abilityObject

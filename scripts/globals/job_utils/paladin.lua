@@ -91,11 +91,11 @@ xi.job_utils.paladin.useDivineEmblem = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useFealty = function(player, target, ability)
-    local merits    = player:getMerit(xi.merit.FEALTY) - 5
-    local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
-    local duration  = 60 + merits + enhFealty
+    local merits    = player:getMerit(xi.merit.FEALTY) 
+    --local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
+    --local duration  = 60 + merits + enhFealty
 
-    player:addStatusEffect(xi.effect.FEALTY, { power = 1, duration = duration, origin = player })
+    player:addStatusEffect(xi.effect.FEALTY, { power = 1, duration = 10, origin = player })
 
     return xi.effect.FEALTY
 end
@@ -148,7 +148,7 @@ xi.job_utils.paladin.useInvincible = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useMajesty = function(player, target, ability)
-    player:addStatusEffect(xi.effect.MAJESTY, { power = 25, duration = 30, origin = player })
+    player:addStatusEffect(xi.effect.MAJESTY, { power = 25, duration = 60, origin = player })
 
     return xi.effect.MAJESTY
 end

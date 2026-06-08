@@ -1,10 +1,9 @@
 -----------------------------------
 -- Ability: Bully
--- Intimidates target. (About 15% proc rate)
--- Removes the direction requirement from Sneak Attack for main job Thieves when active.
--- Obtained: Thief Level 93
--- Recast Time: 3:00
--- Duration: 0:30
+-- Raises critical hit rate for party 5%
+-- Obtained: Thief Level 50
+-- Recast Time: 5:00
+-- Duration: 2:00
 -----------------------------------
 ---@type TAbility
 local abilityObject = {}

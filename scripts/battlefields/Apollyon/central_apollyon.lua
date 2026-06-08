@@ -60,20 +60,20 @@ content.loot =
     {
         {
             quantity = 5,
-            { item = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            { itemId= xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
         },
 
         {
             quantity = 2,
-            { item = xi.item.PIECE_OF_OMEGAS_EYE,        weight = xi.loot.weight.NORMAL },
-            { item = xi.item.SEGMENT_OF_OMEGAS_FORELEG,  weight = xi.loot.weight.LOW    },
-            { item = xi.item.SEGMENT_OF_OMEGAS_HIND_LEG, weight = xi.loot.weight.LOW    },
-            { item = xi.item.SEGMENT_OF_OMEGAS_TAIL,     weight = xi.loot.weight.LOW    },
+            { itemId= xi.item.PIECE_OF_OMEGAS_EYE,        weight = xi.loot.weight.NORMAL },
+            { itemId= xi.item.SEGMENT_OF_OMEGAS_FORELEG,  weight = xi.loot.weight.LOW    },
+            { itemId= xi.item.SEGMENT_OF_OMEGAS_HIND_LEG, weight = xi.loot.weight.LOW    },
+            { itemId= xi.item.SEGMENT_OF_OMEGAS_TAIL,     weight = xi.loot.weight.LOW    },
         },
 
         {
-            { item = xi.item.NONE,                  weight = xi.loot.weight.EXTREMELY_HIGH },
-            { item = xi.item.PIECE_OF_OMEGAS_HEART, weight = xi.loot.weight.NORMAL         },
+            { itemId= xi.item.NONE,                  weight = xi.loot.weight.EXTREMELY_HIGH },
+            { itemId= xi.item.PIECE_OF_OMEGAS_HEART, weight = xi.loot.weight.NORMAL         },
         },
     },
 }

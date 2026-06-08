@@ -864,22 +864,20 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
     Action->spikesMessage = MsgBasic::SpikesEffectDmg;
     Action->spikesParam   = std::max<int16>(PDefender->getMod(Mod::SPIKES_DMG), 0);
 
-    // Handle Retaliation
-    if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_RETALIATION) && PDefender->PAI->IsEngaged() &&
-        battleutils::GetHitRate(PDefender, PAttacker) / 2 > xirand::GetRandomNumber(100) && facing(PDefender->loc.p, PAttacker->loc.p, 64))
+// Handle Retaliation
+    if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_RETALIATION) &&
+        PDefender->PAI->IsEngaged() &&
+        battleutils::GetHitRate(PDefender, PAttacker) / 2 > xirand::GetRandomNumber(100) &&
+        facing(PDefender->loc.p, PAttacker->loc.p, 64))
     {
-        // Retaliation rate is based on player acc vs mob evasion. Missed retaliations do not even display in log.
-        // Other theories exist but were not proven or reliably tested (I have to assume too many things to even consider JP translations about weapon
-        // delay), this at least has data to back it up.
-        // https://web.archive.org/web/20141228105335/http://www.bluegartr.com/threads/120193-Retaliation-Testing?s=7a6221e10ffdfaa6a7f5e8f0387f787d&p=4620727&viewfull=1#post4620727
         Action->resolution   = ActionResolution::Hit;
         Action->spikesEffect = ActionReactKind::Counter;
 
-        if (battleutils::IsAbsorbByShadow(PAttacker, PDefender)) // Struck a shadow
+        if (battleutils::IsAbsorbByShadow(PAttacker, PDefender))
         {
             Action->spikesMessage = MsgBasic::RetaliateShadowAbsorbs;
         }
-        else // Struck the target
+        else
         {
             SKILLTYPE skilltype = SKILLTYPE::SKILL_NONE;
 
@@ -894,24 +892,43 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
                     skilltype = SKILLTYPE::SKILL_HAND_TO_HAND;
                 }
 
-                // Check for skillup
                 charutils::TrySkillUP(static_cast<CCharEntity*>(PDefender), skilltype, PAttacker->GetMLevel());
             }
 
-            // Check if crit
             const bool crit = battleutils::GetCritHitRate(PDefender, PAttacker, true) > xirand::GetRandomNumber(100);
 
-            // Dmg math.
             const float DamageRatio = GetDamageRatio(PDefender, PAttacker, crit, 1.0f, skilltype, SLOT_MAIN, false);
-            uint16      dmg         = static_cast<uint32>((PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
-            dmg                     = attackutils::CheckForDamageMultiplier(static_cast<CCharEntity*>(PDefender), dynamic_cast<CItemWeapon*>(PDefender->m_Weapons[SLOT_MAIN]), dmg, PHYSICAL_ATTACK_TYPE::NORMAL, SLOT_MAIN);
-            const uint16 bonus      = dmg * (PDefender->getMod(Mod::RETALIATION) / 100);
-            dmg                     = dmg + bonus;
 
-            // TP and stoneskin are handled inside TakePhysicalDamage
+            int32 dmg = static_cast<int32>(
+                (PDefender->GetMainWeaponDmg() + battleutils::GetFSTR(PDefender, PAttacker, SLOT_MAIN)) * DamageRatio);
+
+            if (PDefender->objtype == TYPE_PC)
+            {
+                dmg = attackutils::CheckForDamageMultiplier(
+                    static_cast<CCharEntity*>(PDefender),
+                    dynamic_cast<CItemWeapon*>(PDefender->m_Weapons[SLOT_MAIN]),
+                    dmg,
+                    PHYSICAL_ATTACK_TYPE::NORMAL,
+                    SLOT_MAIN);
+            }
+
+            const int32 retaliationMod = PDefender->getMod(Mod::RETALIATION);
+            dmg += (dmg * retaliationMod) / 100;
+            dmg = std::max<int32>(0, dmg);
+
             Action->spikesMessage = MsgBasic::RetaliateDamage;
-            Action->spikesParam =
-                battleutils::TakePhysicalDamage(PDefender, PAttacker, PHYSICAL_ATTACK_TYPE::NORMAL, dmg, false, SLOT_MAIN, 1, nullptr, true, true, true);
+            Action->spikesParam   = battleutils::TakePhysicalDamage(
+                PDefender,
+                PAttacker,
+                PHYSICAL_ATTACK_TYPE::NORMAL,
+                dmg,
+                false,
+                SLOT_MAIN,
+                1,
+                nullptr,
+                true,
+                true,
+                true);
 
             // Custom Lv. 50+ WAR bonus: Retaliation restores 5% max HP on successful retaliation hit
             if (PDefender->objtype == TYPE_PC && Action->spikesParam > 0)
@@ -921,7 +938,6 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
                 if (PChar->GetMJob() == JOB_WAR && PChar->GetMLevel() >= 50)
                 {
                     const int32 healAmount = std::max<int32>(1, PChar->GetMaxHP() / 20);
-
                     PChar->addHP(healAmount);
                 }
             }

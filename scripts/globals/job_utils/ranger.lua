@@ -40,6 +40,7 @@ xi.job_utils.ranger.checkEagleEyeShot = function(player, target, ability)
 
     if ranged and ranged:isType(xi.itemType.WEAPON) then
         local skilltype = ranged:getSkillType()
+
         if
             skilltype == xi.skill.ARCHERY or
             skilltype == xi.skill.MARKSMANSHIP or
@@ -52,7 +53,18 @@ xi.job_utils.ranger.checkEagleEyeShot = function(player, target, ability)
                     skilltype == xi.skill.THROWING
                 )
             then
-                ability:setRecast(math.max(0, ability:getRecast() - player:getMod(xi.mod.ONE_HOUR_RECAST) * 60))
+                -- Preserve Eagle Eye Shot recast
+                local eagleEyeRecast = math.max(
+                    0,
+                    ability:getRecast() - player:getMod(xi.mod.ONE_HOUR_RECAST) * 60
+                )
+
+                -- Reset all other ability timers
+                player:resetRecasts()
+
+                -- Re-apply Eagle Eye Shot's own recast so it does not reset itself
+                ability:setRecast(eagleEyeRecast)
+
                 return 0, 0
             end
         end

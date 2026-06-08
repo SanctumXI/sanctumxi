@@ -79,7 +79,7 @@ xi.trait =
     AMBUSH                   =  76,
     IRON_WILL                =  77,
     GUARDIAN                 =  78,
-    MUTED_SOUL               =  79,
+    BLOOD_DISCIPLINE         =  79,
     DESPERATE_BLOWS          =  80,
     BEAST_AFFINITY           =  81,
     BEAST_HEALER             =  82,
@@ -139,4 +139,5 @@ xi.trait =
     SHIELD_BARRIER           = 136,
     TANDEM_STRIKE            = 137,
     TANDEM_BLOW              = 138,
+    --CHALLENGE                = 139,
 }

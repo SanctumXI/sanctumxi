@@ -106,7 +106,34 @@ CAbilityState::CAbilityState(CBattleEntity* PEntity, uint16 targid, uint16 abili
     {
         throw CStateInitException(std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(m_PEntity, m_PEntity, 0, 0, MsgBasic::UnableToUseJobAbility));
     }
-    auto* PTarget = m_PEntity->IsValidTarget(m_targid, PAbility->getValidTarget(), m_errorMsg);
+    CBaseEntity* PTarget = nullptr;
+
+    if (
+        PAbility->isPetAbility() &&
+        m_PEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PEntity);
+        auto* PPet  = PChar->PPet;
+
+        const CPetSkill* PPetSkill = battleutils::GetPetSkill(PAbility->getID());
+
+        if (
+            PPet &&
+            PPetSkill &&
+            !(PPetSkill->getValidTargets() & TARGET_ENEMY))
+        {
+            // Self/friendly Ready move
+            PTarget = PPet;
+        }
+    }
+
+    if (!PTarget)
+    {
+        PTarget = m_PEntity->IsValidTarget(
+            m_targid,
+            PAbility->getValidTarget(),
+            m_errorMsg);
+    }
 
     if (!PTarget || this->HasErrorMsg())
     {

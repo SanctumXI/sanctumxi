@@ -19,17 +19,20 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params               = {}
     params.numHits             = 1
     params.ftpMod              = { 1.0, 1.0, 1.0 }
-    params.str_wsc             = 0.16 params.agi_wsc = 0.25
+    params.str_wsc             = 0.25 params.agi_wsc = 0.25
     params.rangedAccuracyBonus = 30 -- https://www.ffxiah.com/forum/topic/52018/luck-of-the-draw-a-corsairs-guide-new/127/#3726841 (split shot is a clone of piercing arrow)
 
     -- Defense ignored is 0%, 35%, 50% as per wiki.bluegartr.com
-    params.ignoredDefense = { 0.0, 0.35, 0.5 }
+    params.ignoredDefense = { 0.1, 0.35, 0.5 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.2 params.agi_wsc = 0.5
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 10, duration = 30, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

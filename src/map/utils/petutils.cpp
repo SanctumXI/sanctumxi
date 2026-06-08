@@ -1020,6 +1020,13 @@ void CalculateJugPetStats(CBattleEntity* PMaster, CPetEntity* PPet)
     PPet->SetMLevel(std::min(PPet->getSpawnLevel(), highestLvl));
     LoadJugStats(PPet, PPetData); // follow monster calcs (w/o SJ)
 
+    auto merits = PChar->PMeritPoints->GetMeritValue(MERIT_PET_BOOST, PChar);
+
+    PPet->addModifier(Mod::ATT, merits * 4);
+    PPet->addModifier(Mod::ACC, merits * 4);
+    PPet->addModifier(Mod::DEF, merits * 4);
+    PPet->addModifier(Mod::EVA, merits * 4);
+
     FinalizePetStatistics(PMaster, PPet);
 }
 

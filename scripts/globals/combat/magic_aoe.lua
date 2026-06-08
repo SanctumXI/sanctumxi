@@ -83,7 +83,18 @@ xi.combat.magicAoE.calculateTypeAndRadius = function(caster, spell)
     if caster:hasStatusEffect(xi.effect.MAJESTY) then
         if
             spellFamily == xi.magic.spellFamily.CURE or
-            spellFamily == xi.magic.spellFamily.PROTECT
+            spellFamily == xi.magic.spellFamily.PROTECT or
+            spellFamily == xi.magic.spellFamily.SHELL
+        then
+            return { xi.magic.aoe.RADIAL, 10 }
+        end
+    end
+
+        -- Composure changes Protect spells to 10y AoE
+    if caster:hasStatusEffect(xi.effect.COMPOSURE) then
+        if
+            spellFamily == xi.magic.spellFamily.PROTECT or
+            spellFamily == xi.magic.spellFamily.SHELL
         then
             return { xi.magic.aoe.RADIAL, 10 }
         end

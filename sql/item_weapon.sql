@@ -1891,7 +1891,7 @@ INSERT INTO `item_weapon` VALUES (18254,'tiphia_sting',0,0,0,0,0,0,1,999,0,0);
 INSERT INTO `item_weapon` VALUES (18255,'heavy_shell',26,2,0,0,0,1,1,360,99,0);
 INSERT INTO `item_weapon` VALUES (18256,'orphic_egg',0,0,0,0,0,0,1,999,0,0);
 INSERT INTO `item_weapon` VALUES (18257,'bibiki_seashell',0,0,0,0,0,0,1,999,0,0);
-INSERT INTO `item_weapon` VALUES (18258,'thr._tomahawk',0,0,0,0,0,0,1,3,0,0);
+INSERT INTO `item_weapon` VALUES (18258,'thr._tomahawk',27,0,0,0,0,1,1,310,69,0);
 INSERT INTO `item_weapon` VALUES (18259,'angon',0,0,0,0,0,0,1,3,0,0);
 INSERT INTO `item_weapon` VALUES (18260,'relic_knuckles',1,0,0,0,0,4,1,1479,1,0);
 INSERT INTO `item_weapon` VALUES (18261,'militant_knuckles',1,0,0,0,0,4,1,576,1,0);
