@@ -229,6 +229,9 @@ player_data = [
     "ip_exceptions.sql",
     "linkshells.sql",
     "server_variables.sql",
+    "site_discord_links.sql",
+    "site_discord_users.sql",
+    "site_profile_settings.sql",
     "unity_system.sql",
 ]
 
@@ -1077,11 +1080,9 @@ def launch_using_zone_settings():
 
     zoneip = result.stdout.split("\n")[1]
 
-    result = db_query(
-        f"""
+    result = db_query(f"""
         SELECT DISTINCT zoneport from zone_settings ORDER BY zoneport ASC;
-        """
-    )
+        """)
 
     ports = result.stdout.split("\n")[1:-1]
 
