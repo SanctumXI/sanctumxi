@@ -3739,6 +3739,10 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
     PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
+    //Skillchain Damage EXP Bonus
+    scExpMobMod = PDefender->getMobMod(MOBMOD_SC_MB_EXP_BONUS) + damage;
+    PDefender->setMobMod(MOBMOD_SC_MB_EXP_BONUS, scExpMobMod);
+
     switch (PDefender->objtype)
     {
         case TYPE_PC:

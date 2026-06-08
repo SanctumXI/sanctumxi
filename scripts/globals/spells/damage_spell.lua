@@ -1210,5 +1210,11 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
     end
 
+    -- Add Magic Burst Damage to MOBMOD for EXP Bonus
+    if(magicBurst > 1)then
+        local magicBurstBonus = target:getMobMod(xi.mobMod.SC_MB_EXP_BONUS) + finalDamage;
+        target:setMobMod(xi.mobMod.SC_MB_EXP_BONUS, magicBurstBonus);
+    end
+
     return finalDamage
 end
