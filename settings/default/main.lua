@@ -307,10 +307,11 @@ xi.settings.main =
     EINHERJAR_CLEAR_EXTRA_TIME = 5,
 
     -- NYZUL
-    RUNIC_DISK_SAVE      = true, -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
-    ENABLE_NYZUL_CASKETS = true, -- Enable Treasure casket pops from NMs.
-    ENABLE_VIGIL_DROPS   = true, -- Enable Vigil Weapon drops from NMs.
-    ACTIVATE_LAMP_TIME   = 8000, -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
+    NYZUL_ENABLED        = true, -- true/false. Enable Nyzul Isle content and functionality.
+    RUNIC_DISK_SAVE      = true,  -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
+    ENABLE_NYZUL_CASKETS = true,  -- Enable Treasure casket pops from NMs.
+    ENABLE_VIGIL_DROPS   = true,  -- Enable Vigil Weapon drops from NMs.
+    ACTIVATE_LAMP_TIME   = 6000,  -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
 
     -- CHOCOBO RAISING (HEAVILY-IN-DEVELOPMENT, USE AT YOUR OWN RISK)
     -- GM command: `!chocoboraising`
@@ -342,6 +343,11 @@ xi.settings.main =
     EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
     REGIME_REWARD_THRESHOLD      = 15,    -- If the player is more than N levels below the minimum suggested range, do not award experience.
     PERSIST_SEAL_TIMERS          = false, -- Persist seal (Beastmen/Kindred) recast timers across zone changes and logout.
+
+    -- CUSTOM SANCTUM SETTINGS
+    SCMB_EXP_BONUS        = 5,            -- Bonus based on % of damage dealt as Skillchain/Magic Burst damage vs Mob HP 
+    SCBM_EXP_BONUS_CAP    = 150,          -- Bonus cap, XP Bonus cannot exceed this number
+
 
     -- SYSTEM
     DISABLE_INACTIVITY_WATCHDOG = false, -- true/false. If this is enabled, the watchdog which detects if the main loop isn't being ticked will no longer be able to kill the process.
