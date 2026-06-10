@@ -23,6 +23,7 @@
 
 #include "common/ipc.h"
 #include "common/utils.h"
+#include "jwt_auth_helpers.h"
 #include "otp_helpers.h"
 
 #include <bcrypt/BCrypt.hpp>
@@ -153,6 +154,7 @@ void auth_session::read_func()
     std::string            otp                 = loginHelpers::jsonGet<std::string>(jsonBuffer, "otp").value_or("");
     std::string            trust_token         = loginHelpers::jsonGet<std::string>(jsonBuffer, "trust_token").value_or("");
     bool                   trust_this_computer = loginHelpers::jsonGet<bool>(jsonBuffer, "trust_this_computer").value_or(false);
+    std::string            access_token        = loginHelpers::jsonGet<std::string>(jsonBuffer, "access_token").value_or("");
     std::array<uint8_t, 3> version             = loginHelpers::jsonGet<uint8, 3>(jsonBuffer, "version").value_or(std::array<uint8_t, 3>{ 0, 0, 0 });
 
     // Check major.minor but ignore trivial
@@ -165,14 +167,16 @@ void auth_session::read_func()
 
     DebugSockets(fmt::format("auth code: {} from {}", code, ipAddress));
 
+    const auto requiresCredentials = static_cast<login_cmd>(code) != login_cmd::LOGIN_ATTEMPT_JWT;
+
     // data checks
-    if (loginHelpers::isStringMalformed(username, 16))
+    if (requiresCredentials && loginHelpers::isStringMalformed(username, 16))
     {
         ShowWarningFmt("login_parse: malformed username from {}", ipAddress);
         return;
     }
 
-    if (loginHelpers::isStringMalformed(password, 32))
+    if (requiresCredentials && loginHelpers::isStringMalformed(password, 32))
     {
         ShowWarningFmt("login_parse: malformed password from {}", ipAddress);
         return;
@@ -243,78 +247,45 @@ void auth_session::read_func()
                 otpVerified = true;
             }
 
-            db::preparedStmt("UPDATE accounts SET accounts.timelastmodify = NULL WHERE accounts.id = ?", accountID);
+            completeSuccessfulLogin(accountID, otpVerified, trust_this_computer);
+        }
+        break;
+        case login_cmd::LOGIN_ATTEMPT_JWT:
+        {
+            DebugSockets(fmt::format("LOGIN_ATTEMPT_JWT from {}", ipAddress));
 
-            const auto payload = ipc::toBytesWithHeader(ipc::AccountLogin{
-                .accountId = accountID,
-            });
-
-            zmqDealerWrapper_.outgoingQueue_.enqueue(zmq::message_t(payload.data(), payload.size()));
-
-            // set Satchel to the same size as inventory on all chars on their account if character has OTP
-            // Note: Upgrades happen in-game with gobbiebag
-            if (otpVerified)
+            const auto jwtResult = validateSanctumJwt(access_token);
+            if (!jwtResult.success)
             {
-                db::preparedStmt("UPDATE char_storage a JOIN char_storage b ON a.charid = b.charid "
-                                 "SET a.satchel = b.inventory "
-                                 "WHERE a.charid IN (SELECT charid FROM chars WHERE accid = ?)",
-                                 accountID);
-            }
-            // TODO: Lock out same account logging in multiple times. Can check data/view session existence on same IP/account?
-            // Not a real problem because the account is locked out when a character is logged in.
-
-            /*
-            const auto rset = db::preparedStmt("SELECT charid "
-                    "FROM accounts_sessions "
-                    "WHERE accid = ? LIMIT 1", accountID);
-            if (rset && rset->rowsCount() != 0 && rset->next())
-            {
-                // TODO: kick player out of map server if already logged in
-                // uint32 charid = rset->get<uint32>("charid");
-
-                // This error message doesn't work when sent this way. Unknown how to transmit "1039" error message to a client already logged in.
-                // session_t& authenticatedSession = get_authenticated_session(socket_, session.sentAccountID);
-                // if (auto data = authenticatedSession.buffer_.data()session)
-                // {
-                //  generateErrorMessage(data->buffer_.data(), 139);
-                //  data->do_write(0x24);
-                //  return;
-                //}
-                ref<uint8>(buffer_.data(), 0) = LOGIN_ERROR_ALREADY_LOGGED_IN;
-                do_write(1);
+                ShowWarningFmt("JWT login failed from {}: {}", ipAddress, jwtResult.errorMessage);
+                sendLoginResult(login_result::LOGIN_ERROR_JWT_AUTH);
                 return;
             }
-            */
 
-            // Success
-            unsigned char hash[16];
-            uint32        hashData = earth_time::timestamp() ^ getpid();
-            md5(reinterpret_cast<uint8*>(&hashData), hash, sizeof(hashData));
+            uint32 accountID = jwtResult.accountID;
+            uint32 status    = 0;
 
-            json loginSuccessReply;
-            loginSuccessReply["result"]       = static_cast<uint8>(login_result::LOGIN_SUCCESS);
-            loginSuccessReply["account_id"]   = accountID;
-            loginSuccessReply["session_hash"] = hash; // This has to be sent as an array, json.dump() tries to convert to UTF which fails
-
-            if (trust_this_computer && otpVerified)
+            const auto rset = db::preparedStmt("SELECT accounts.status FROM accounts WHERE accounts.id = ?", accountID);
+            if (!rset || rset->rowsCount() == 0 || !rset->next())
             {
-                try
-                {
-                    auto newToken = otpHelpers::generateTrustToken();
-                    otpHelpers::saveTrustToken(accountID, newToken);
-                    loginSuccessReply["trust_token"] = newToken;
-                }
-                catch (const std::runtime_error& e)
-                {
-                    ShowError(fmt::format("Failed to generate trust token: {}", e.what()));
-                }
+                ShowWarningFmt("JWT login for account {} failed: account not found in database", accountID);
+                sendLoginResult(login_result::LOGIN_ERROR_JWT_AUTH);
+                return;
             }
 
-            sendJsonAsBuffer(loginSuccessReply);
+            status = rset->get<uint32>("status");
 
-            auto& session          = loginHelpers::get_authenticated_session(ipAddress, asStringFromUntrustedSource(hash, sizeof(hash)));
-            session.accountID      = accountID;
-            session.authorizedTime = timer::now();
+            if (!(status & ACCOUNT_STATUS_CODE::NORMAL))
+            {
+                if (status & ACCOUNT_STATUS_CODE::BANNED)
+                {
+                    otpHelpers::removeAllTrustTokens(accountID);
+                }
+                sendLoginResult(login_result::LOGIN_FAIL);
+                return;
+            }
+
+            completeSuccessfulLogin(accountID, false, false);
         }
         break;
         case login_cmd::LOGIN_CREATE:
@@ -597,6 +568,66 @@ void auth_session::do_write(std::size_t length)
                 ShowError(ec.message());
             }
         });
+}
+
+void auth_session::completeSuccessfulLogin(uint32 accountID, bool otpVerified, bool trustThisComputer)
+{
+    const auto sendJsonAsBuffer = [&](const json& json_)
+    {
+        std::string jsonString       = json_.dump();
+        const char* jsonStringBuffer = jsonString.c_str();
+        size_t      jsonStringSize   = strlen(jsonStringBuffer);
+
+        std::memset(buffer_.data(), 0, buffer_.size());
+        std::memcpy(buffer_.data(), jsonStringBuffer, jsonStringSize);
+
+        do_write(jsonStringSize);
+    };
+
+    db::preparedStmt("UPDATE accounts SET accounts.timelastmodify = NULL WHERE accounts.id = ?", accountID);
+
+    const auto payload = ipc::toBytesWithHeader(ipc::AccountLogin{
+        .accountId = accountID,
+    });
+
+    zmqDealerWrapper_.outgoingQueue_.enqueue(zmq::message_t(payload.data(), payload.size()));
+
+    if (otpVerified)
+    {
+        db::preparedStmt("UPDATE char_storage a JOIN char_storage b ON a.charid = b.charid "
+                         "SET a.satchel = b.inventory "
+                         "WHERE a.charid IN (SELECT charid FROM chars WHERE accid = ?)",
+                         accountID);
+    }
+
+    unsigned char hash[16];
+    uint32        hashData = earth_time::timestamp() ^ getpid();
+    md5(reinterpret_cast<uint8*>(&hashData), hash, sizeof(hashData));
+
+    json loginSuccessReply;
+    loginSuccessReply["result"]       = static_cast<uint8>(login_result::LOGIN_SUCCESS);
+    loginSuccessReply["account_id"]   = accountID;
+    loginSuccessReply["session_hash"] = hash;
+
+    if (trustThisComputer && otpVerified)
+    {
+        try
+        {
+            auto newToken = otpHelpers::generateTrustToken();
+            otpHelpers::saveTrustToken(accountID, newToken);
+            loginSuccessReply["trust_token"] = newToken;
+        }
+        catch (const std::runtime_error& e)
+        {
+            ShowError(fmt::format("Failed to generate trust token: {}", e.what()));
+        }
+    }
+
+    sendJsonAsBuffer(loginSuccessReply);
+
+    auto& session          = loginHelpers::get_authenticated_session(ipAddress, asStringFromUntrustedSource(hash, sizeof(hash)));
+    session.accountID      = accountID;
+    session.authorizedTime = timer::now();
 }
 
 Maybe<std::pair<uint32, uint32>> auth_session::validatePassword(std::string username, std::string password)

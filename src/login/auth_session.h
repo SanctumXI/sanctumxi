@@ -42,6 +42,7 @@ enum class login_cmd : uint8_t
     LOGIN_REMOVE_TOTP         = 0x32,
     LOGIN_REGENERATE_RECOVERY = 0x33,
     LOGIN_VERIFY_TOTP         = 0x34,
+    LOGIN_ATTEMPT_JWT         = 0x35,
 };
 
 /*return result*/
@@ -63,6 +64,7 @@ enum class login_result : uint8_t
     LOGIN_SUCCESS_VERIFY_TOTP       = 0x11,
     LOGIN_SUCCESS_REMOVE_TOTP       = 0x12,
     LOGIN_ERROR_TRUST_TOKEN_INVALID = 0x13,
+    LOGIN_ERROR_JWT_AUTH            = 0x14,
 };
 
 constexpr std::array<uint8, 3> SupportedXiloaderVersion = { 2, 1, 0 };
@@ -138,4 +140,6 @@ private:
     ZMQDealerWrapper& zmqDealerWrapper_;
 
     Maybe<std::pair<uint32, uint32>> validatePassword(std::string username, std::string password);
+
+    void completeSuccessfulLogin(uint32 accountID, bool otpVerified, bool trustThisComputer);
 };

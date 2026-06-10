@@ -11,6 +11,8 @@ set(SOURCES
     handler.h
     handler_session.h
     handler_session.cpp
+    jwt_auth_helpers.h
+    jwt_auth_helpers.cpp
     login_errors.h
     login_helpers.h
     login_helpers.cpp
