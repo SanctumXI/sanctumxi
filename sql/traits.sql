@@ -216,7 +216,7 @@ INSERT INTO `traits` VALUES (16,'triple attack',6,55,1,302,5,NULL,0);
 INSERT INTO `traits` VALUES (16,'triple attack',6,95,2,302,6,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (17,'counter',2,10,1,291,10,NULL,0);
 INSERT INTO `traits` VALUES (17,'counter',2,50,2,291,12,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (18,'dual wield',6,40,1,259,10,NULL,710);
+INSERT INTO `traits` VALUES (18,'dual wield',6,40,1,259,10,NULL,0);
 INSERT INTO `traits` VALUES (18,'dual wield',6,76,2,259,15,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',6,98,3,259,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (18,'dual wield',13,10,1,259,10,NULL,0);
@@ -763,7 +763,7 @@ INSERT INTO `traits` VALUES (137,'tandem strike',9,90,5,271,50,'ROV',0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,75,3,272,15,NULL,0);
--- INSERT INTO `traits` VALUES (139,'challenge',15,75,1,25,3,NULL,770);
+INSERT INTO `traits` VALUES (139,'challenge',15,75,1,25,3,NULL,770);
 
 /*!40000 ALTER TABLE `traits` ENABLE KEYS */;
 UNLOCK TABLES;

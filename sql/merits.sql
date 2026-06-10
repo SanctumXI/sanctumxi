@@ -101,7 +101,7 @@ INSERT INTO `merits` VALUES (706,'hide_recast',5,12,32,6,10);
 INSERT INTO `merits` VALUES (708,'sata_recast',5,2,32,6,10);
 INSERT INTO `merits` VALUES (710,'bully_recast',5,10,32,6,10);
 INSERT INTO `merits` VALUES (712,'triple_attack_rate',5,1,32,6,10);
-INSERT INTO `merits` VALUES (768,'majesty_recast',5,10,64,6,11);
+INSERT INTO `merits` VALUES (768,'majesty_recast',5,12,64,6,11);
 INSERT INTO `merits` VALUES (770,'challenge',5,3,64,6,11);
 INSERT INTO `merits` VALUES (772,'sentinel_recast',5,10,64,6,11);
 INSERT INTO `merits` VALUES (774,'shield_chance',5,1,64,6,11);

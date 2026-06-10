@@ -81,6 +81,7 @@
 #include "utils/petutils.h"
 #include "weapon_skill.h"
 #include "zoneutils.h"
+#include <cmath>
 
 /************************************************************************
  *                                                                       *
@@ -6074,6 +6075,28 @@ uint16 CalculateSpellCost(CBattleEntity* PEntity, CSpell* PSpell)
             cost += (int16)(base * (PEntity->getMod(Mod::WHITE_MAGIC_COST) / 100.0f));
         }
     }
+    // Sanctum Custom - Majesty increases Cure/Protect/Shell MP cost by 15%
+    if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_MAJESTY))
+    {
+        const auto spellId = PSpell->getID();
+
+        if (
+            PSpell->isCure() ||
+            spellId == SpellID::Protect ||
+            spellId == SpellID::Protect_II ||
+            spellId == SpellID::Protect_III ||
+            spellId == SpellID::Protect_IV ||
+            spellId == SpellID::Protect_V ||
+            spellId == SpellID::Shell ||
+            spellId == SpellID::Shell_II ||
+            spellId == SpellID::Shell_III ||
+            spellId == SpellID::Shell_IV ||
+            spellId == SpellID::Shell_V)
+        {
+            cost = static_cast<int16>(std::ceil(cost * 1.15f));
+        }
+    }
+
     if (xirand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
     {
         cost = 0;
