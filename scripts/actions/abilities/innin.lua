@@ -1,7 +1,7 @@
 -----------------------------------
 -- Ability: Innin
 -- Reduces enmity and impairs evasion. Grants a bonus to accuracy, critical hit rate, and ninjutsu damage when striking target from behind.
--- Obtained: Ninja Level 40
+-- Obtained: Ninja Level 15
 -- Recast Time: 3:00
 -- Duration: 5:00
 -----------------------------------

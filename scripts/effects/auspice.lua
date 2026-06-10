@@ -9,10 +9,11 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     -- Auspice Reduces TP via adding to your Subtle Blow Mod
-    local subtleBlowBonus = 10 + target:getMod(xi.mod.AUSPICE_EFFECT)
+    local subtleBlowBonus = 12 + target:getMod(xi.mod.AUSPICE_EFFECT)
 
     effect:setSubPower(subtleBlowBonus)
     target:addMod(xi.mod.SUBTLE_BLOW, subtleBlowBonus)
+    target:addMod(xi.mod.REGAIN, 2)
 
     -- Afflatus Misery Bonuses
     if target:hasStatusEffect(xi.effect.AFFLATUS_MISERY) then
@@ -29,6 +30,7 @@ effectObject.onEffectLose = function(target, effect)
     local subtleBlow = effect:getSubPower()
 
     target:delMod(xi.mod.SUBTLE_BLOW, subtleBlow)
+    target:delMod(xi.mod.REGAIN, 2)
 
     -- Clean Up Any Bonuses That From Afflatus Misery Combo
     if target:hasStatusEffect(xi.effect.AFFLATUS_MISERY) then

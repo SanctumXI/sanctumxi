@@ -139,5 +139,5 @@ xi.trait =
     SHIELD_BARRIER           = 136,
     TANDEM_STRIKE            = 137,
     TANDEM_BLOW              = 138,
-    --CHALLENGE                = 139,
+    CHALLENGE                = 139,
 }

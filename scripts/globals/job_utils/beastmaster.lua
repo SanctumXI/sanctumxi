@@ -707,21 +707,22 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action) 
     -- all but regen are a 15% bonus
     local power = 15
     local pet = player:getPet()
-    local duration = player:getMerit(xi.merit.RUN_WILD) + 270 
+    local duration = player:getMerit(xi.merit.RUN_WILD) + 60 
     if pet then
         -- mods aren't tied to an effect, just applied to the pet. They leave when the pet dies or despawns
         pet:addMod(xi.mod.ATTP, power)
         pet:addMod(xi.mod.ACC, pet:getACC() * power / 100)
+        pet:addMod(xi.mod.REGEN, 5) -- Effect changed for Sanctum
         -- Yep, it's an MAB % addition
         -- "If you have no sources of Magic Attack Bonus while using the slug pet, then Run Wild actually makes his innate MAB penalty even more negative, thus reducing damage."
         pet:addMod(xi.mod.MATT, pet:getMod(xi.mod.MATT) * power / 100)
-        pet:addMod(xi.mod.EVA, pet:getEVA() * power / 100)
         pet:addMod(xi.mod.DEFP, power)
+        -- pet:addMod(xi.mod.EVA, pet:getEVA() * power / 100)
         -- TODO find out this potency, but appears to be consistently 1% per tick with hare familiar at lvl 99
-        pet:addMod(xi.mod.REGEN, 0.01 * pet:getMaxHP())
+        -- pet:addMod(xi.mod.REGEN, 0.01 * pet:getMaxHP()) - Old regen formulat
 
         -- After 5 minutes+ merit duration, the pet just despawns
-        pet:setJugRemainingTime(duration)
+        -- pet:setJugRemainingTime(duration)
     end
 
     -- seems to display nothing in console, but this it the msg id from capture
