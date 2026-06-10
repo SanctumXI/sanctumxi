@@ -4971,7 +4971,8 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                     }
 
                     if (mobCheck > EMobDifficulty::TooWeak)
-                    // Skillchain / Magic Burst EXP Bonus
+
+                    /* Skillchain / Magic Burst EXP Bonus - Sanctum Custom
                     mobModSCMBBonus = PMob->getMobMod(MOBMOD_SC_MB_EXP_BONUS);
                     if (mobModSCMBBonus > 0)
                     {
@@ -4980,6 +4981,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         math.clamp(expbonus, 0.0f, settings::get<float>("main.sanctum.scmb_exp_bonus_cap"));
                         exp += expbonus;
                     }
+                    */
 
                     if (mobCheck > EMobDifficulty::DecentChallenge)
                     {

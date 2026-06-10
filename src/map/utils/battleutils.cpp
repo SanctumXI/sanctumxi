@@ -47,6 +47,7 @@
 #include "enmity_container.h"
 #include "entities/battleentity.h"
 #include "entities/mobentity.h"
+#include "mob_modifier.h"
 #include "entities/petentity.h"
 #include "entities/trustentity.h"
 #include "enums/action/hit_distortion.h"
@@ -3902,9 +3903,10 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
     PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
-    //Skillchain Damage EXP Bonus
+    /*  Skillchain Damage EXP Bonus Sanctum Custom
     scExpMobMod = PDefender->getMobMod(MOBMOD_SC_MB_EXP_BONUS) + damage;
     PDefender->setMobMod(MOBMOD_SC_MB_EXP_BONUS, scExpMobMod);
+    */
 
     switch (PDefender->objtype)
     {
