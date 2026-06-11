@@ -4970,6 +4970,17 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         exp = std::fmin(exp, 600.0f);
                     }
 
+                    // Skillchain / Magic Burst EXP Bonus
+                    uint16 mobModSCMBBonus = PMob->getMobMod(MOBMOD_SC_MB_EXP_BONUS);
+                    if (mobModSCMBBonus > 0)
+                    {
+                        float bonus = mobModSCMBBonus * (settings::get<float>("main.sanctum.SCMB_EXP_BONUS") / 100.0f);
+                        uint16 expbonus = exp * bonus;
+                        uint16 expbonuscap = settings::get<uint16>("main.sanctum.SCMB_EXP_BONUS_CAP");
+                        expbonus = std::clamp<uint16>(expbonus, static_cast<uint16>(0), expbonuscap);
+                        exp += expbonus;
+                    }
+
                     if (mobCheck > EMobDifficulty::TooWeak)
 
                     /* Skillchain / Magic Burst EXP Bonus - Sanctum Custom

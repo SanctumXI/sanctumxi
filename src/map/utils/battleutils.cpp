@@ -3904,10 +3904,11 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
     PDefender->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DAMAGE);
 
-    /*  Skillchain Damage EXP Bonus Sanctum Custom
-    scExpMobMod = PDefender->getMobMod(MOBMOD_SC_MB_EXP_BONUS) + damage;
-    PDefender->setMobMod(MOBMOD_SC_MB_EXP_BONUS, scExpMobMod);
-    */
+    //Skillchain Damage EXP Bonus
+    if(auto* mob = dynamic_cast<CMobEntity*>(PDefender)){
+        uint16 scExpMobMod = mob->getMobMod(MOBMOD_SC_MB_EXP_BONUS) + damage;
+        mob->setMobMod(MOBMOD_SC_MB_EXP_BONUS, scExpMobMod);
+    }
 
     switch (PDefender->objtype)
     {
