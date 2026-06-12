@@ -58,15 +58,16 @@ end
 -----------------------------------
 -- Ability Use Functions
 -----------------------------------
-xi.job_utils.paladin.useChivalry = function(player, target, ability)
-    local merits = player:getMerit(xi.merit.CHIVALRY) - 5
-    local tp     = target:getTP()
-    local base   = 0.05 + (player:getMod(xi.mod.ENHANCES_CHIVALRY) / 100)
-    -- MP gained = (TP * 0.05) + (0.0015 * TP * MND) * Merits
-    local amount = (tp * base) + (0.0015 * tp * target:getStat(xi.mod.MND)) * ((100 + merits) / 100)
+xi.job_utils.paladin.useChivalry = function(player, target, ability, action)
+    local meritLevel = math.floor(player:getMerit(xi.merit.CHIVALRY) / 5)
+    local tp = target:getTP()
+    local mnd = target:getStat(xi.mod.MND)
+    meritLevel = utils.clamp(meritLevel, 1, 5)
+
+    -- Sanctum Custom formula
+    local amount = tp * (0.05 + (0.15 * (meritLevel - 1)) + (0.0015 * mnd))
 
     target:setTP(0)
-
     return target:addMP(amount)
 end
 

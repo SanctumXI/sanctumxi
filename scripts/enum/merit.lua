@@ -382,8 +382,8 @@ xi.merit =
     TROUBADOUR                  = meritCategory.BRD_2 + 0x02,
     FOE_SIRVENTE                = meritCategory.BRD_2 + 0x04,
     ADVENTURERS_DIRGE           = meritCategory.BRD_2 + 0x06,
-    CON_ANIMA                   = meritCategory.BRD_2 + 0x08,
-    CON_BRIO                    = meritCategory.BRD_2 + 0x0A,
+    MARCATO                     = meritCategory.BRD_2 + 0x08,
+    ELOQUENCE                   = meritCategory.BRD_2 + 0x0A,
 
     -- RNG 2
     STEALTH_SHOT                = meritCategory.RNG_2 + 0x00,

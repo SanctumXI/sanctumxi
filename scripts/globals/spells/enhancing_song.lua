@@ -227,8 +227,8 @@ end
 xi.spells.enhancing.calculateSongDuration = function(caster, target, spell, instrumentBoost, soulVoicePower)
     local duration = 120 -- The variable we want to calculate.
 
-    -- Additional duration from "Song Bonus" (from instruments) and "Duration Bonus" Modifier
-    duration = math.floor(duration * ((instrumentBoost * 0.1) + (caster:getMod(xi.mod.SONG_DURATION_BONUS) / 100) + 1))
+    -- Additional duration from "Song Bonus" (from instruments) and "Duration Bonus" Modifier + Custom Sanctum Merits
+    duration = math.floor(duration * ((instrumentBoost * 0.1) + (caster:getMod(xi.mod.SONG_DURATION_BONUS) / 100) + 1)) + (caster:getMerit(xi.merit.ELOQUENCE) -6)
 
     -- Additional duration from Job points.
     if caster:hasStatusEffect(xi.effect.CLARION_CALL) then

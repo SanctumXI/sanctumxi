@@ -740,7 +740,8 @@ INSERT INTO `traits` VALUES (129,'damage limit+',18,45,1,1080,10,'ROV',0);
 INSERT INTO `traits` VALUES (129,'damage limit+',18,90,2,1080,20,'ROV',0);
 INSERT INTO `traits` VALUES (129,'damage limit+',19,45,1,1080,10,'ROV',0);
 INSERT INTO `traits` VALUES (129,'damage limit+',19,90,2,1080,20,'ROV',0);
-
+INSERT INTO `traits` VALUES (132,'eloquence',10,75,1,454,6,NULL,2634);
+INSERT INTO `traits` VALUES (133,'challenge',7,75,1,25,3,NULL,770);
 INSERT INTO `traits` VALUES (134,'ws damage boost',14,45,1,840,7,'ROV',0);
 INSERT INTO `traits` VALUES (134,'ws damage boost',14,55,2,840,10,'ROV',0);
 INSERT INTO `traits` VALUES (134,'ws damage boost',14,65,3,840,13,'ROV',0);
@@ -763,7 +764,7 @@ INSERT INTO `traits` VALUES (137,'tandem strike',9,90,5,271,50,'ROV',0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,75,3,272,15,NULL,0);
-INSERT INTO `traits` VALUES (139,'challenge',15,75,1,25,3,NULL,770);
+
 
 /*!40000 ALTER TABLE `traits` ENABLE KEYS */;
 UNLOCK TABLES;

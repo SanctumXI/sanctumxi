@@ -54,8 +54,11 @@ xi.job_utils.bard.useTenuto = function(player, target, ability)
     return xi.effect.TENUTO
 end
 
+-- Custom Merit
 xi.job_utils.bard.useMarcato = function(player, target, ability)
-    player:addStatusEffect(xi.effect.MARCATO, { power = 50, duration = 60, origin = player })
+    local merits = player:getMerit(xi.merit.MARCATO) - 3
+
+    player:addStatusEffect(xi.effect.MARCATO, { power = 15 + merits, duration = 60, origin = player })
 
     return xi.effect.MARCATO
 end
