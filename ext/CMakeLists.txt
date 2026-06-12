@@ -288,6 +288,7 @@ endif()
 
 set(CONNECT_ONLY_EXTERNAL_LIBS
     bcrypt
+    httplib::httplib
     nlohmann_json::nlohmann_json
 )
 
