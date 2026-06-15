@@ -4411,19 +4411,19 @@ int32 getOverWhelmDamageBonus(CBattleEntity* PAttacker, CBattleEntity* PDefender
             switch (meritCount)
             {
                 case 1:
-                    tmpDamage += tmpDamage * 0.05f;
+                    tmpDamage += tmpDamage * 0.03f;
                     break;
                 case 2:
-                    tmpDamage += tmpDamage * 0.10f;
+                    tmpDamage += tmpDamage * 0.06f;
                     break;
                 case 3:
-                    tmpDamage += tmpDamage * 0.15f;
+                    tmpDamage += tmpDamage * 0.09f;
                     break;
                 case 4:
-                    tmpDamage += tmpDamage * 0.17f;
+                    tmpDamage += tmpDamage * 0.12f;
                     break;
                 case 5:
-                    tmpDamage += tmpDamage * 0.19f;
+                    tmpDamage += tmpDamage * 0.15f;
                     break;
                 default:
                     break;
@@ -5554,7 +5554,7 @@ bool DoRandomDealToEntity(CCharEntity* PChar, CBattleEntity* PTarget)
 
     uint8 loadedDeck       = PChar->PMeritPoints->GetMeritValue(MERIT_LOADED_DECK, PChar);
     uint8 loadedDeckChance = 50 + loadedDeck;
-    uint8 resetTwoChance   = std::min<int8>(PChar->getMod(Mod::RANDOM_DEAL_BONUS), 50);
+    uint8 resetTwoChance   = std::min<int8>(PChar->getMod(Mod::RANDOM_DEAL_BONUS) + loadedDeck, 50);
 
     if (loadedDeck > 0) // Loaded Deck Merit Version
     {

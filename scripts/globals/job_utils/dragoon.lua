@@ -675,7 +675,7 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
     end
 
     if master:getMod(xi.mod.ENHANCES_STRAFE) > 0 then
-        wyvern:addTP(master:getMerit(xi.merit.STRAFE_EFFECT) * 50) -- add 50 TP per merit with augmented AF2 legs
+        wyvern:addTP(master:getMerit(xi.merit.STRAFE_EFFECT) * 5) -- add 50 TP per merit with augmented AF2 legs
     end
 
     return totalHPRestored

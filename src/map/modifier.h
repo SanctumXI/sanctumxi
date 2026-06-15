@@ -1149,6 +1149,8 @@ enum class Mod
 
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/enum/mod.lua ASWELL!
 
+    WYVERN_DAMAGE = 1173, // Increases auto attack damage of your wyvern, Sanctum Custom modifier
+
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
     //

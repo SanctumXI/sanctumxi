@@ -213,7 +213,21 @@ xi.job_utils.samurai.useKonzenIttai = function(player, target, ability, action)
     return infoValue == params.hit and 3 or 0
 end
 
-xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
+xi.job_utils.samurai.useBladeBash = function(player, target, ability, action) -- Custom Sanctum change
+        -- Damage
+    local tp = player:getTPPerHit()
+    local samuraiLvl = utils.getActiveJobLevel(player, xi.job.SAM)
+        -- Blade Bash merits: +25% damage per merit
+    local merits = player:getMerit(xi.merit.BLADE_BASH_EFFECT) 
+    local damage        = math.floor((samuraiLvl + 325) / 4)
+
+    if merits > 0 then
+        damage = math.floor(damage * (1 + (0.25 * merits)))
+    end
+
+    target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.SLASHING)
+    player:addTP(tp)
+    target:updateEnmityFromDamage(player, damage)
     -- Stun
     if
         not xi.data.statusEffect.isTargetImmune(target, xi.effect.STUN, xi.element.THUNDER) and
@@ -235,7 +249,7 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
         local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, xi.skillRank.A_PLUS, xi.element.FIRE, xi.mod.INT, xi.effect.PLAGUE, 0)
         if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.PLAGUE, resistanceRate, 0) then
             local duration = (15 + player:getMerit(xi.merit.BLADE_BASH)) * resistanceRate
-            target:addStatusEffect(xi.effect.PLAGUE, { power = 5, duration = duration, origin = player })
+            target:addStatusEffect(xi.effect.PLAGUE, { power = 10, duration = duration, origin = player })
         end
     end
 

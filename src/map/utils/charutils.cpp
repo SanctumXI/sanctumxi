@@ -3953,6 +3953,8 @@ void BuildingCharTraitsTable(CCharEntity* PChar)
 
     battleutils::AddTraits(PChar, traits::GetTraits(mjob), mlvl);
     battleutils::AddTraits(PChar, traits::GetTraits(sjob), slvl);
+    // Sanctum custom merit: Dual Wield bonus
+    PChar->addModifier(Mod::DUAL_WIELD, PChar->PMeritPoints->GetMeritValue(MERIT_DUAL_WIELD_BONUS, PChar));
 
     if (mjob == JOB_BLU || sjob == JOB_BLU)
     {

@@ -156,9 +156,10 @@ enum TRAITTYPE
     TRAIT_SHIELD_BARRIER      = 136,
     TRAIT_TANDEM_STRIKE       = 137,
     TRAIT_TANDEM_BLOW         = 138,
+    TRAIT_VISION              = 139,
 };
 
-#define MAX_TRAIT_ID 139
+#define MAX_TRAIT_ID 145
 
 class CTrait
 {

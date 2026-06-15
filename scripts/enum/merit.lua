@@ -207,32 +207,32 @@ xi.merit =
 
     -- RNG 1
     SCAVENGE_EFFECT             = meritCategory.RNG_1 + 0x00,
-    CAMOUFLAGE_RECAST           = meritCategory.RNG_1 + 0x02,
-    SHARPSHOT_RECAST            = meritCategory.RNG_1 + 0x04,
-    UNLIMITED_SHOT_RECAST       = meritCategory.RNG_1 + 0x06,
+    VELOCITY_SHOT_EFFECT        = meritCategory.RNG_1 + 0x02,
+    BARRAGE_EFFECT              = meritCategory.RNG_1 + 0x04,
+    DOUBLE_SHOT_EFFECT          = meritCategory.RNG_1 + 0x06,
     RAPID_SHOT_RATE             = meritCategory.RNG_1 + 0x08,
 
     -- SAM 1
     THIRD_EYE_RECAST            = meritCategory.SAM_1 + 0x00,
-    WARDING_CIRCLE_RECAST       = meritCategory.SAM_1 + 0x02,
+    SEKKANOKI_RECAST            = meritCategory.SAM_1 + 0x02,
     STORE_TP_EFFECT             = meritCategory.SAM_1 + 0x04,
     MEDITATE_RECAST             = meritCategory.SAM_1 + 0x06,
     ZASHIN_ATTACK_RATE          = meritCategory.SAM_1 + 0x08,
 
     -- NIN 1
     SUBTLE_BLOW_EFFECT          = meritCategory.NIN_1 + 0x00,
-    KATON_EFFECT                = meritCategory.NIN_1 + 0x02,
-    HYOTON_EFFECT               = meritCategory.NIN_1 + 0x04,
-    HUTON_EFFECT                = meritCategory.NIN_1 + 0x06,
-    DOTON_EFFECT                = meritCategory.NIN_1 + 0x08,
-    RAITON_EFFECT               = meritCategory.NIN_1 + 0x0A,
-    SUITON_EFFECT               = meritCategory.NIN_1 + 0x0C,
+    NINJUTSU_EFFECT             = meritCategory.NIN_1 + 0x02,
+    HOJO_EFFECT                 = meritCategory.NIN_1 + 0x04,
+    JUBAKU_EFFECT               = meritCategory.NIN_1 + 0x06,
+    KURAYAMI_EFFECT             = meritCategory.NIN_1 + 0x08,
+    DOKUMORI_EFFECT             = meritCategory.NIN_1 + 0x0A,
+    DUAL_WIELD_BONUS            = meritCategory.NIN_1 + 0x0C,
 
     -- DRG 1
-    ANCIENT_CIRCLE_RECAST       = meritCategory.DRG_1 + 0x00,
+    CONSERVE_TP_CHANCE          = meritCategory.DRG_1 + 0x00,
     JUMP_RECAST                 = meritCategory.DRG_1 + 0x02,
-    HIGH_JUMP_RECAST            = meritCategory.DRG_1 + 0x04,
-    SUPER_JUMP_RECAST           = meritCategory.DRG_1 + 0x05,
+    WYVERN_BOOST                = meritCategory.DRG_1 + 0x04,
+    WYVERN_HP                   = meritCategory.DRG_1 + 0x05,
     SPIRIT_LINK_RECAST          = meritCategory.DRG_1 + 0x08,
 
     -- SMN 1
@@ -243,8 +243,8 @@ xi.merit =
     SUMMONING_MAGIC_CAST_TIME   = meritCategory.SMN_1 + 0x08,
 
     -- BLU 1
-    CHAIN_AFFINITY_RECAST       = meritCategory.BLU_1 + 0x00,
-    BURST_AFFINITY_RECAST       = meritCategory.BLU_1 + 0x02,
+    AFFINITY_RECAST             = meritCategory.BLU_1 + 0x00,
+    CONSERVE_MP_EFFECT          = meritCategory.BLU_1 + 0x02,
     MONSTER_CORRELATION         = meritCategory.BLU_1 + 0x04,
     PHYSICAL_POTENCY            = meritCategory.BLU_1 + 0x06,
     MAGICAL_ACCURACY            = meritCategory.BLU_1 + 0x08,
@@ -254,7 +254,7 @@ xi.merit =
     QUICK_DRAW_RECAST           = meritCategory.COR_1 + 0x02,
     QUICK_DRAW_ACCURACY         = meritCategory.COR_1 + 0x04,
     RANDOM_DEAL_RECAST          = meritCategory.COR_1 + 0x06,
-    BUST_DURATION               = meritCategory.COR_1 + 0x08,
+    RAPID_SHOT_RATE2            = meritCategory.COR_1 + 0x08,
 
     -- PUP 1
     AUTOMATON_SKILLS            = meritCategory.PUP_1 + 0x00,
@@ -389,7 +389,7 @@ xi.merit =
     STEALTH_SHOT                = meritCategory.RNG_2 + 0x00,
     FLASHY_SHOT                 = meritCategory.RNG_2 + 0x02,
     SNAPSHOT                    = meritCategory.RNG_2 + 0x04,
-    RECYCLE                     = meritCategory.RNG_2 + 0x06,
+    VISION                 = meritCategory.RNG_2 + 0x06,
 
     -- SAM 2
     SHIKIKOYO                   = meritCategory.SAM_2 + 0x00,

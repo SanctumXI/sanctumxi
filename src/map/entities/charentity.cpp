@@ -2104,9 +2104,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         // check for recycle chance
         uint16 recycleChance = getMod(Mod::RECYCLE);
         if (charutils::hasTrait(this, TRAIT_RECYCLE))
-        {
-            recycleChance += PMeritPoints->GetMeritValue(MERIT_RECYCLE, this);
-        }
+       // {
+       //     recycleChance += PMeritPoints->GetMeritValue(MERIT_RECYCLE, this);  DISABLED ON SANCTUM
+       // }
 
         recycleChance += this->PJobPoints->GetJobPointValue(JP_AMMO_CONSUMPTION);
 

@@ -449,8 +449,16 @@ void CMagicState::SpendCost()
             cost = (int16)(cost * (1.0f - (float)((PChar->PJobPoints->GetJobPointValue(JP_QUICK_MAGIC_EFFECT) * 2) / 100)));
         }
 
-        // conserve mp
+      // conserve mp
         int16 rate = m_PEntity->getMod(Mod::CONSERVE_MP);
+
+        if (m_PEntity->objtype == TYPE_PC)
+        {
+            auto* PChar = static_cast<CCharEntity*>(m_PEntity);
+
+            // Sanctum Custom: +2% Conserve MP per merit for Blue Mage
+            rate += PChar->PMeritPoints->GetMeritValue(MERIT_CONSERVE_MP_EFFECT, PChar);
+        }
 
         if (xirand::GetRandomNumber(100) < rate)
         {

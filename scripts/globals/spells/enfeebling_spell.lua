@@ -315,9 +315,33 @@ xi.spells.enfeebling.calculatePotency = function(caster, target, spellId, spellE
     return potency
 end
 
+local ninjutsuDurationMerits =
+{
+    [xi.magic.spell.HOJO_ICHI     ] = xi.merit.HOJO_EFFECT,
+    [xi.magic.spell.HOJO_NI       ] = xi.merit.HOJO_EFFECT,
+    [xi.magic.spell.HOJO_SAN      ] = xi.merit.HOJO_EFFECT,
+
+    [xi.magic.spell.JUBAKU_ICHI   ] = xi.merit.JUBAKU_EFFECT,
+    [xi.magic.spell.JUBAKU_NI     ] = xi.merit.JUBAKU_EFFECT,
+    [xi.magic.spell.JUBAKU_SAN    ] = xi.merit.JUBAKU_EFFECT,
+
+    [xi.magic.spell.KURAYAMI_ICHI ] = xi.merit.KURAYAMI_EFFECT,
+    [xi.magic.spell.KURAYAMI_NI   ] = xi.merit.KURAYAMI_EFFECT,
+    [xi.magic.spell.KURAYAMI_SAN  ] = xi.merit.KURAYAMI_EFFECT,
+
+    [xi.magic.spell.DOKUMORI_ICHI ] = xi.merit.DOKUMORI_EFFECT,
+    [xi.magic.spell.DOKUMORI_NI   ] = xi.merit.DOKUMORI_EFFECT,
+    [xi.magic.spell.DOKUMORI_SAN  ] = xi.merit.DOKUMORI_EFFECT,
+}
+
 -- Calculate duration before resist
 xi.spells.enfeebling.calculateDuration = function(caster, target, spellId, spellEffect, skillType)
     local duration = pTable[spellId][column.BASE_DURATION] -- Get base duration.
+
+    local ninjutsuDurationMerit = ninjutsuDurationMerits[spellId]
+        if ninjutsuDurationMerit ~= nil then
+            duration = duration + caster:getMerit(ninjutsuDurationMerit)
+    end
 
     if spellEffect == xi.effect.BIND then
         duration = math.random(13, 60)

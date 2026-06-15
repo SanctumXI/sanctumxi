@@ -228,6 +228,12 @@ xi.combat.physicalHitRate.getRangedHitRate = function(attacker, target, bonus, i
 
     local accBonus, evaBonus = xi.combat.physicalHitRate.getHitRateModifiers(attacker, target, isWeaponskill, true)
 
+    -- Custom 20/20 Vision Merit: +3 RACC per merit
+    local visionMerit = attacker:getMerit(xi.merit.VISION)
+    if visionMerit > 0 then
+        accBonus = accBonus + visionMerit
+    end
+
     if bonus == nil then
         bonus = 0
     end

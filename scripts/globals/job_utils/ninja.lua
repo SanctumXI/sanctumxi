@@ -64,7 +64,7 @@ end
 xi.job_utils.ninja.useYonin = function(player, target, ability, action)
     target:delStatusEffect(xi.effect.INNIN)
     target:delStatusEffect(xi.effect.YONIN)
-    target:addStatusEffect(xi.effect.YONIN, { power = 30, duration = 300, origin = player, tick = 15 })
+    target:addStatusEffect(xi.effect.YONIN, { power = 30, duration = 3600, origin = player, tick = 15 })
 
     return xi.effect.YONIN
 end
@@ -72,7 +72,7 @@ end
 xi.job_utils.ninja.useInnin = function(player, target, ability, action)
     target:delStatusEffect(xi.effect.INNIN)
     target:delStatusEffect(xi.effect.YONIN)
-    target:addStatusEffect(xi.effect.INNIN, { power = 30, duration = 300, origin = player, tick = 15, subPower = 20 })
+    target:addStatusEffect(xi.effect.INNIN, { power = 30, duration = 3600, origin = player, tick = 15, subPower = 20 })
 
     return xi.effect.INNIN
 end

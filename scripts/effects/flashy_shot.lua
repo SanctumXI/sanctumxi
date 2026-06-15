@@ -7,8 +7,9 @@ local effectObject = {}
 effectObject.onEffectGain = function(target, effect)
     local boost = target:getMerit(xi.merit.FLASHY_SHOT)
 
+    effect:addMod(xi.mod.RA_IGNORE_LVL_DIFF, 1) 
     effect:addMod(xi.mod.RATTP, boost)
-    effect:addMod(xi.mod.ENMITY, 50)
+    effect:addMod(xi.mod.ENMITY, 100)
 end
 
 effectObject.onEffectTick = function(target, effect)

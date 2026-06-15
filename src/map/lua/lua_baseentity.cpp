@@ -9166,7 +9166,7 @@ void CLuaBaseEntity::delExp(uint32 exp)
 /************************************************************************
  *  Function: getMerit()
  *  Purpose : Checks for the existence of a merit and returns the value
- *  Example : caster:getMerit(xi.merit.DOTON_EFFECT)
+ *  Example : caster:getMerit(xi.merit.NINJUTSU_EFFECT)
  *  Notes   :
  ************************************************************************/
 

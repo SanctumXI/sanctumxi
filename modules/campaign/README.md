@@ -1,2 +1,0 @@
-# contrib
-CatsEyeXI contributor repository

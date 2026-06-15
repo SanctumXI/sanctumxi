@@ -45,8 +45,8 @@ xi.job_utils.warrior.useBerserk = function(player, target, ability)
     local levelScale   = math.floor((warriorLevel - 40) / 10) * 2
 
     -- Get Power and duration.
-    local power    = 25 + player:getMod(xi.mod.BERSERK_POTENCY) + utils.clamp(levelScale, 0, 10)
-    local duration = 180 + player:getMod(xi.mod.BERSERK_DURATION)
+    local power    = 15 + player:getMod(xi.mod.BERSERK_POTENCY) + utils.clamp(levelScale, 0, 10)
+    local duration = 300 + player:getMod(xi.mod.BERSERK_DURATION)
 
     player:addStatusEffect(xi.effect.BERSERK, { power = power, duration = duration, origin = player })
 

@@ -132,11 +132,12 @@ xi.trait =
     DAMAGE_LIMIT_PLUS        = 129,
     ANIMUS_SOLACE            = 130,
     ANIMUS_MISERY            = 131,
-    ELOQUENCE                = 132,
+    ELOQUENCE                = 132, -- Custom Sanctum trait
     CHALLENGE                = 133, -- Custom Sanctum trait
     WEAPONSKILL_DAMAGE_BOOST = 134,
     MAX_HP_BOOST_II          = 135,
     SHIELD_BARRIER           = 136,
     TANDEM_STRIKE            = 137,
     TANDEM_BLOW              = 138,
+    VISION                   = 139, -- Custom Sanctum trait
 }

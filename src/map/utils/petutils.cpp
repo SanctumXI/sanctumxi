@@ -892,9 +892,10 @@ void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
     {
         CCharEntity* PChar = static_cast<CCharEntity*>(PMaster);
         PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ATTACK, PChar));
-        PPet->addModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar));
+        // PPet->addModifier(Mod::ATT, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar)); Removed for Sanctum Custom merit change
         PPet->addModifier(Mod::MACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_MAGICAL_ACCURACY, PChar));
         PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ACCURACY, PChar));
+        PPet->addModifier(Mod::BP_DAMAGE, PChar->PMeritPoints->GetMeritValue(MERIT_AVATAR_PHYSICAL_ATTACK, PChar)); // Added for Sanctum Custom merit change
 
         PPet->addModifier(Mod::ACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_ACC_BONUS));
         PPet->addModifier(Mod::MACC, PChar->PJobPoints->GetJobPointValue(JP_SUMMON_MAGIC_ACC_BONUS));
@@ -958,13 +959,24 @@ void CalculateWyvernStats(CBattleEntity* PMaster, CPetEntity* PPet)
     // Wyverns can parry... yes really.
     PPet->setMobMod(MOBMOD_CAN_PARRY, 1);
 
-    // Job Point: Wyvern Max HP
+   // Job Point: Wyvern Max HP
     if (PMaster->objtype == TYPE_PC)
     {
-        uint8 jpValue = static_cast<CCharEntity*>(PMaster)->PJobPoints->GetJobPointValue(JP_WYVERN_MAX_HP_BONUS);
+        auto* PChar = static_cast<CCharEntity*>(PMaster);
+
+        uint8 jpValue = PChar->PJobPoints->GetJobPointValue(JP_WYVERN_MAX_HP_BONUS);
         if (jpValue > 0)
         {
             PPet->addModifier(Mod::HP, jpValue * 10);
+        }
+        // Sanctum Custom Mod/Merit: Wyvern Damage
+         PPet->setModifier(Mod::WYVERN_DAMAGE, PChar->PMeritPoints->GetMeritValue(MERIT_WYVERN_BOOST, PChar));
+
+        // Sanctum Custom Merit: Wyvern HP
+        auto meritHp = PChar->PMeritPoints->GetMeritValue(MERIT_WYVERN_HP, PChar);
+        if (meritHp > 0)
+        {
+            PPet->addModifier(Mod::HP, meritHp);
         }
 
         if (PMaster->GetMJob() == JOBTYPE::JOB_DRG)

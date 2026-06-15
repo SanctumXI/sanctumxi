@@ -9,7 +9,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration = 15 + caster:getMerit(xi.merit.SUITON_EFFECT) -- T1 bonus debuff duration
+    local duration = 15 + caster:getMerit(xi.merit.NINJUTSU_EFFECT) -- T1 bonus debuff duration
     target:addStatusEffect(xi.effect.NINJUTSU_ELE_DEBUFF, { power = 30, duration = duration, origin = caster, icon = 0, subPower = xi.mod.THUNDER_MEVA })
 
     return xi.spells.damage.useDamageSpell(caster, target, spell)

@@ -89,6 +89,7 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid)
             if (auto* PChar = dynamic_cast<CCharEntity*>(m_PEntity))
             {
                 chance += PChar->PMeritPoints->GetMeritValue(MERIT_RAPID_SHOT_RATE, PChar);
+                chance += PChar->PMeritPoints->GetMeritValue(MERIT_RAPID_SHOT_RATE2, PChar); // Sanctum Custom Merit for Cor
             }
 
             // Don't bother if we cant even proc

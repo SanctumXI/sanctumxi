@@ -290,7 +290,7 @@ xi.job_utils.ranger.useUnlimitedShot = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useFlashyShot = function(player, target, ability, action)
-    -- TODO: Flashy Shot should add "D" damage to the next ranged attack
+
     player:addStatusEffect(xi.effect.FLASHY_SHOT, { power = 1, duration = 60, origin = player })
 
     return xi.effect.FLASHY_SHOT
@@ -303,7 +303,9 @@ xi.job_utils.ranger.useStealthShot = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useDoubleShot = function(player, target, ability, action)
-    player:addStatusEffect(xi.effect.DOUBLE_SHOT, { power = 40, duration = 90, origin = player })
+    local dsPower = player:getMerit(xi.merit.DOUBLE_SHOT_EFFECT)
+
+    player:addStatusEffect(xi.effect.DOUBLE_SHOT, { power = 15 + dsPower, duration = 90, origin = player })
 
     return xi.effect.DOUBLE_SHOT
 end

@@ -1109,6 +1109,7 @@ xi.mod =
     REWARD_RECAST = 1152, -- TODO: Reduces Reward recast time (seconds)
 
     KNOCKBACK_REDUCTION = 1172, -- Reduces distance knocked back
+    WYVERN_DAMAGE        = 1173, -- Sanctum Custom mod, adds % damage to wyverns auto attacks
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 

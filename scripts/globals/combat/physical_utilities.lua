@@ -154,6 +154,15 @@ xi.combat.physical.calculateAttackDamage = function(actor, target, slot, physica
 
     damage = math.floor(baseDamage * damageRatio)
 
+-- Sanctum Custom: Wyvern Damage Boost
+if actor:isPet() and actor:getMainJob() == xi.job.DRG then
+    local bonus = actor:getMod(xi.mod.WYVERN_DAMAGE) or 0
+
+    if bonus > 0 then
+        damage = math.floor(damage * (100 + bonus) / 100)
+    end
+end
+
     -- Scarlet Delirium multiplier.
     damage = math.floor(damage * xi.combat.damage.scarletDeliriumMultiplier(actor))
 
@@ -847,7 +856,7 @@ xi.combat.physical.criticalRateFromInnin = function(actor, target)
 
     if
         actor:hasStatusEffect(xi.effect.INNIN) and
-        actor:isBehind(target, 23)
+        actor:isBehind(target, 190)
     then
         inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower()
     end

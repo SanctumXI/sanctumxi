@@ -194,6 +194,7 @@ INSERT INTO `traits` VALUES (12,'fast cast',5,89,5,170,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (13,'conserve mp',4,20,1,296,25,NULL,0);
 INSERT INTO `traits` VALUES (13,'conserve mp',4,76,2,296,28,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (13,'conserve mp',4,86,3,296,31,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (13,'conserve mp',16,75,1,0,0,'WOTG',1346);
 INSERT INTO `traits` VALUES (13,'conserve mp',20,25,1,296,25,'WOTG',0);
 INSERT INTO `traits` VALUES (13,'conserve mp',21,10,1,296,25,'SOA',0);
 INSERT INTO `traits` VALUES (13,'conserve mp',21,25,2,296,28,'SOA',0);
@@ -764,6 +765,7 @@ INSERT INTO `traits` VALUES (137,'tandem strike',9,90,5,271,50,'ROV',0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,75,3,272,15,NULL,0);
+INSERT INTO `traits` VALUES (139,'vision',11,75,1,0,0,NULL,2694);
 
 
 /*!40000 ALTER TABLE `traits` ENABLE KEYS */;

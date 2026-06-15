@@ -605,32 +605,32 @@ xi.spells.damage.calculateMagicBonusDiff = function(caster, target, spellId, ski
             spellId >= xi.magic.spell.KATON_ICHI and
             spellId <= xi.magic.spell.KATON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.KATON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         elseif
             spellId >= xi.magic.spell.HYOTON_ICHI and
             spellId <= xi.magic.spell.HYOTON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.HYOTON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         elseif
             spellId >= xi.magic.spell.HUTON_ICHI and
             spellId <= xi.magic.spell.HUTON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.HUTON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         elseif
             spellId >= xi.magic.spell.DOTON_ICHI and
             spellId <= xi.magic.spell.DOTON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.DOTON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         elseif
             spellId >= xi.magic.spell.RAITON_ICHI and
             spellId <= xi.magic.spell.RAITON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.RAITON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         elseif
             spellId >= xi.magic.spell.SUITON_ICHI and
             spellId <= xi.magic.spell.SUITON_SAN
         then
-            mab = mab + caster:getMerit(xi.merit.SUITON_EFFECT)
+            mab = mab + caster:getMerit(xi.merit.NINJUTSU_EFFECT)
         end
 
         -- "Enhances ninjutsu damage" ("Koga Hatsuburi" type gear)

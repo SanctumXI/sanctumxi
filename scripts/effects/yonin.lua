@@ -6,8 +6,10 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect) -- power = 30 initially
     effect:addMod(xi.mod.ACC, -effect:getPower())
+    effect:addMod(xi.mod.DELAYP, 10)
     effect:addMod(xi.mod.NINJA_TOOL, effect:getPower())
     effect:addMod(xi.mod.ENMITY, effect:getPower())
+    effect:addMod(xi.mod.DMGMAGIC, 10)
     effect:addMod(xi.mod.YONIN_UTSUSEMI_ENMITY, 1)
 
     local yoninMerits = target:getMerit(xi.merit.YONIN_EFFECT)
@@ -20,11 +22,11 @@ effectObject.onEffectGain = function(target, effect) -- power = 30 initially
 end
 
 effectObject.onEffectTick = function(target, effect)
-    -- Tick down the effect and reduce the overall power.
+    --[[ Tick down the effect and reduce the overall power.
     effect:setPower(effect:getPower() - 1)
     effect:addMod(xi.mod.ACC, 1)
     effect:addMod(xi.mod.NINJA_TOOL, -1)
-    effect:addMod(xi.mod.ENMITY, -1)
+    effect:addMod(xi.mod.ENMITY, -1) ]]
 end
 
 effectObject.onEffectLose = function(target, effect)

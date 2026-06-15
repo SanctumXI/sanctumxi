@@ -20,7 +20,8 @@
 */
 
 #include "weaponskill_state.h"
-
+#include "entities/charentity.h"
+#include "utils/charutils.h"
 #include "action/action.h"
 #include "ai/ai_container.h"
 #include "entities/battleentity.h"
@@ -110,7 +111,16 @@ void CWeaponSkillState::SpendCost()
         }
     }
 
-    if (xirand::GetRandomNumber(100) < m_PEntity->getMod(Mod::CONSERVE_TP))
+    int16 conserveTpChance = m_PEntity->getMod(Mod::CONSERVE_TP);
+
+    if (m_PEntity->objtype == TYPE_PC)
+    {
+        auto* PChar = static_cast<CCharEntity*>(m_PEntity);
+
+        conserveTpChance += PChar->PMeritPoints->GetMeritValue(MERIT_CONSERVE_TP_CHANCE, PChar);
+    }
+
+    if (xirand::GetRandomNumber(100) < conserveTpChance)
     {
         m_PEntity->addTP(xirand::GetRandomNumber(10, 200));
     }
@@ -141,7 +151,7 @@ bool CWeaponSkillState::Update(timer::time_point tick)
             {
                 m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
             }
-
+           
             // Reset Restraint bonus and trackers on weaponskill use
             if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
             {
@@ -154,6 +164,7 @@ bool CWeaponSkillState::Update(timer::time_point tick)
             if (action.actiontype == ActionCategory::SkillFinish) // category changes upon being out of range. This does not count for RoE and delay is not increased beyond the normal delay.
             {
                 // only send lua the WS events if we are in range
+            
                 uint32 weaponskillVar    = PTarget->GetLocalVar("weaponskillHit");
                 uint32 weaponskillDamage = weaponskillVar & 0xFFFFFF;
 
