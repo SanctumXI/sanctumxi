@@ -4972,31 +4972,18 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         exp = std::fmin(exp, 600.0f);
                     }
 
-                    // Skillchain / Magic Burst EXP Bonus
-                    uint16 mobModSCMBBonus = PMob->getMobMod(MOBMOD_SC_MB_EXP_BONUS);
-                    if (mobModSCMBBonus > 0)
+                    // Skillchain / Magic Burst EXP Bonus (Sanctum custom)
+                    // Bonus scales with the SC/MB damage dealt: bonus exp = exp * (accumulated dmg * pct), capped.
+                    const uint32 scmbDmg = PMob->getSCMBExpBonusDmg();
+                    if (scmbDmg > 0)
                     {
-                        float bonus = mobModSCMBBonus * (settings::get<float>("main.sanctum.SCMB_EXP_BONUS") / 100.0f);
-                        uint16 expbonus = exp * bonus;
-                        uint16 expbonuscap = settings::get<uint16>("main.sanctum.SCMB_EXP_BONUS_CAP");
-                        expbonus = std::clamp<uint16>(expbonus, static_cast<uint16>(0), expbonuscap);
+                        const float bonusMult = scmbDmg * (settings::get<float>("sanctum.SCMB_EXP_BONUS") / 100.0f);
+                        float       expbonus  = exp * bonusMult;
+                        expbonus              = std::clamp(expbonus, 0.0f, settings::get<float>("sanctum.SCMB_EXP_BONUS_CAP"));
                         exp += expbonus;
                     }
 
                     if (mobCheck > EMobDifficulty::TooWeak)
-
-                    /* Skillchain / Magic Burst EXP Bonus - Sanctum Custom
-                    mobModSCMBBonus = PMob->getMobMod(MOBMOD_SC_MB_EXP_BONUS);
-                    if (mobModSCMBBonus > 0)
-                    {
-                        bonus = mobModSCMBBonus * (settings::get<float>("main.sanctum.scmb_exp_bonus" / 100.0f));
-                        expbonus = exp * bonus;
-                        math.clamp(expbonus, 0.0f, settings::get<float>("main.sanctum.scmb_exp_bonus_cap"));
-                        exp += expbonus;
-                    }
-                    */
-
-                    if (mobCheck > EMobDifficulty::DecentChallenge)
                     {
                         if (PMember->expChain.chainTime > timer::now() || PMember->expChain.chainTime == timer::time_point::min())
                         {
@@ -5264,6 +5251,9 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
             }
         });
     // clang-format on
+
+    // Sanctum custom: SC/MB EXP bonus has been distributed to every member, clear the accumulator.
+    PMob->resetSCMBExpBonusDmg();
 }
 
 /************************************************************************

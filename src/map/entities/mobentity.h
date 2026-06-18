@@ -156,6 +156,11 @@ public:
     void  saveMobModifiers();                      // save current state of modifiers
     void  restoreMobModifiers();                   // restore to saved state
 
+    // Sanctum custom: accumulated Skillchain / Magic Burst damage used to compute the EXP bonus on kill.
+    void   addSCMBExpBonusDmg(uint32 dmg); // accumulate SC/MB damage dealt to this mob
+    uint32 getSCMBExpBonusDmg();           // read accumulated SC/MB damage
+    void   resetSCMBExpBonusDmg();         // clear after the bonus has been distributed
+
     void SetCallForHelpFlag(bool call);
     bool GetCallForHelpFlag() const;
     void HideHP(bool hide);
@@ -286,6 +291,7 @@ private:
     timer::time_point              m_DespawnTimer{ timer::time_point::min() }; // Despawn Timer to despawn mob after set duration
     std::unordered_map<int, int16> m_mobModStat;
     std::unordered_map<int, int16> m_mobModStatSave;
+    uint32                         m_scmbExpBonusDmg{ 0 }; // Sanctum custom: accumulated SC/MB damage for EXP bonus
     static constexpr float         roam_home_distance{ 60.f };
     SpawnSlot*                     spawnSlot = nullptr;
 };

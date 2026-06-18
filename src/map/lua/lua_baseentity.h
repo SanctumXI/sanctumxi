@@ -890,6 +890,7 @@ public:
     void  setMobMod(uint16 mobModID, int16 value);
     void  addMobMod(uint16 mobModID, int16 value);
     void  delMobMod(uint16 mobModID, int16 value);
+    void  addSCMBExpBonusDmg(uint32 dmg); // Sanctum custom: accumulate SC/MB damage for EXP bonus
 
     uint32 getBattleTime();
     auto   getCrystalElement() const -> ELEMENT;

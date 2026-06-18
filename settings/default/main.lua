@@ -348,10 +348,3 @@ xi.settings.main =
     DISABLE_INACTIVITY_WATCHDOG = false, -- true/false. If this is enabled, the watchdog which detects if the main loop isn't being ticked will no longer be able to kill the process.
     INACTIVITY_WATCHDOG_PERIOD  = 2000,  -- Time in milliseconds which the inactivity watchdog will wait between ticks of the main loop before potentially killing the target process.
 }
-
-xi.settings.main.sanctum =
-{
-    -- SANCTUM-SPECIFIC SETTINGS
-    SCMB_EXP_BONUS = 2.0, -- Percentage of Skillchain and Magic Burst damage used as a multiplier for EXP
-    SCMB_EXP_BONUS_CAP = 5000, -- int. Maximum EXP bonus from Skillchain and Magic Burst. Default 5000.0.
-}
