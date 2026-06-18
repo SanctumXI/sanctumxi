@@ -62,7 +62,7 @@ CInstanceLoader::~CInstanceLoader()
     TracyZoneScoped;
 }
 
-CInstance* CInstanceLoader::LoadInstance() const
+auto CInstanceLoader::LoadInstance() const -> CInstance*
 {
     TracyZoneScoped;
 
@@ -130,7 +130,7 @@ CInstance* CInstanceLoader::LoadInstance() const
             PMob->m_Link      = rset->get<uint8>("links");
             PMob->m_Type      = rset->get<uint8>("mobType");
             PMob->m_Immunity  = rset->get<IMMUNITY>("immunity");
-            PMob->m_EcoSystem = rset->get<ECOSYSTEM>("ecosystemID");
+            PMob->m_EcoSystem = rset->get<xi::Ecosystem>("ecosystemID");
 
             PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined baseSpeed
             PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined animationSpeed

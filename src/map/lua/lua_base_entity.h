@@ -863,7 +863,7 @@ public:
     uint16 getSuperFamily();
     uint16 getFamily();
     auto   isMobType(uint8 mobType) const -> bool; // True if mob is of type passed to function
-    bool   isUndead();
+    auto   isUndead() -> bool;
     bool   isNM();
 
     uint8  getModelSize();

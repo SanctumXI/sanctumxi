@@ -17387,7 +17387,7 @@ auto CLuaBaseEntity::isMobType(const uint8 mobType) const -> bool
  *  Example : if target:isUndead() then
  ************************************************************************/
 
-bool CLuaBaseEntity::isUndead()
+auto CLuaBaseEntity::isUndead() -> bool
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
@@ -17395,7 +17395,7 @@ bool CLuaBaseEntity::isUndead()
         return false;
     }
 
-    return static_cast<CBattleEntity*>(m_PBaseEntity)->m_EcoSystem == ECOSYSTEM::UNDEAD;
+    return static_cast<CBattleEntity*>(m_PBaseEntity)->m_EcoSystem == xi::Ecosystem::Undead;
 }
 
 /************************************************************************
