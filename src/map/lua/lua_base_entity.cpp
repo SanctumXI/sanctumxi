@@ -10166,8 +10166,8 @@ void CLuaBaseEntity::takeDamage(int32 damage, const sol::object& attacker, const
         removePetrify = true;
     }
 
-    ATTACK_TYPE attackType = (atkType != sol::lua_nil) ? static_cast<ATTACK_TYPE>(atkType.as<uint8>()) : ATTACK_TYPE::NONE;
-    DAMAGE_TYPE damageType = (dmgType != sol::lua_nil) ? static_cast<DAMAGE_TYPE>(dmgType.as<uint8>()) : DAMAGE_TYPE::NONE;
+    ATTACK_TYPE    attackType = (atkType != sol::lua_nil) ? static_cast<ATTACK_TYPE>(atkType.as<uint8>()) : ATTACK_TYPE::NONE;
+    xi::DamageType damageType = (dmgType != sol::lua_nil) ? static_cast<xi::DamageType>(dmgType.as<uint8>()) : xi::DamageType::None;
 
     PDefender->takeDamage(damage, PAttacker, attackType, damageType);
 
@@ -13222,12 +13222,12 @@ uint16 CLuaBaseEntity::getBaseRangedDelay()
  *  Notes   :
  ************************************************************************/
 
-float CLuaBaseEntity::checkLiementAbsorb(uint16 damageType)
+auto CLuaBaseEntity::checkLiementAbsorb(xi::DamageType damageType) -> float
 {
     CBattleEntity* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (PBattleEntity)
     {
-        return battleutils::CheckLiementAbsorb(PBattleEntity, (DAMAGE_TYPE)damageType);
+        return battleutils::CheckLiementAbsorb(PBattleEntity, damageType);
     }
 
     return 1.0f;
@@ -15132,7 +15132,7 @@ uint16 CLuaBaseEntity::getILvlParry()
  *            DamageType is optional and defaults to weapon type if not provided.
  ************************************************************************/
 
-int32 CLuaBaseEntity::physicalDmgTaken(double damage, sol::variadic_args va)
+auto CLuaBaseEntity::physicalDmgTaken(double damage, sol::variadic_args va) -> int32
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
@@ -15140,7 +15140,7 @@ int32 CLuaBaseEntity::physicalDmgTaken(double damage, sol::variadic_args va)
         return 0;
     }
 
-    DAMAGE_TYPE damageType = va[0].is<uint32>() ? va[0].as<DAMAGE_TYPE>() : DAMAGE_TYPE::NONE;
+    xi::DamageType damageType = va[0].is<uint32>() ? va[0].as<xi::DamageType>() : xi::DamageType::None;
 
     return battleutils::PhysicalDmgTaken(static_cast<CBattleEntity*>(m_PBaseEntity), static_cast<int32>(damage), damageType);
 }
@@ -15152,7 +15152,7 @@ int32 CLuaBaseEntity::physicalDmgTaken(double damage, sol::variadic_args va)
  *  Notes   : Passes argument to RangedDmgTaken member of battleutils
  ************************************************************************/
 
-int32 CLuaBaseEntity::rangedDmgTaken(double damage, sol::variadic_args va)
+auto CLuaBaseEntity::rangedDmgTaken(double damage, sol::variadic_args va) -> int32
 {
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
@@ -15160,7 +15160,7 @@ int32 CLuaBaseEntity::rangedDmgTaken(double damage, sol::variadic_args va)
         return 0;
     }
 
-    DAMAGE_TYPE damageType = va[0].is<uint32>() ? va[0].as<DAMAGE_TYPE>() : DAMAGE_TYPE::NONE;
+    xi::DamageType damageType = va[0].is<uint32>() ? va[0].as<xi::DamageType>() : xi::DamageType::None;
 
     return battleutils::RangedDmgTaken(static_cast<CBattleEntity*>(m_PBaseEntity), static_cast<int32>(damage), damageType);
 }
@@ -15590,7 +15590,7 @@ auto CLuaBaseEntity::getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>
  *targetTPMult) Notes   : Global function of same name in weaponskills.lua, calls this member function from within
  ************************************************************************/
 
-int32 CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier)
+auto CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, xi::DamageType dmgType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier) -> int32
 {
     auto* PBattleDefender = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattleDefender)
@@ -15607,9 +15607,8 @@ int32 CLuaBaseEntity::takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 dama
     }
 
     ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
-    DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
 
-    return battleutils::TakeWeaponskillDamage(PBattleAttacker, PBattleDefender, damage, attackType, damageType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier);
+    return battleutils::TakeWeaponskillDamage(PBattleAttacker, PBattleDefender, damage, attackType, dmgType, slot, primary, tpMultiplier, bonusTP, targetTPMultiplier);
 }
 
 /************************************************************************
@@ -15635,9 +15634,9 @@ void CLuaBaseEntity::takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, i
         return;
     }
 
-    auto*       PSpell     = spell->GetSpell();
-    ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
-    DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
+    auto*          PSpell     = spell->GetSpell();
+    ATTACK_TYPE    attackType = static_cast<ATTACK_TYPE>(atkType);
+    xi::DamageType damageType = static_cast<xi::DamageType>(dmgType);
 
     battleutils::TakeSpellDamage(PBattleDefender, PBattleAttacker, PSpell, damage, attackType, damageType);
 }
@@ -15649,7 +15648,7 @@ void CLuaBaseEntity::takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, i
  *  Notes   :
  ************************************************************************/
 
-int32 CLuaBaseEntity::takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, uint8 dmgType)
+auto CLuaBaseEntity::takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, xi::DamageType dmgType) -> int32
 {
     auto* PBattleDefender = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattleDefender)
@@ -15666,9 +15665,8 @@ int32 CLuaBaseEntity::takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage,
     }
 
     ATTACK_TYPE attackType = static_cast<ATTACK_TYPE>(atkType);
-    DAMAGE_TYPE damageType = static_cast<DAMAGE_TYPE>(dmgType);
 
-    return battleutils::TakeSwipeLungeDamage(PBattleDefender, PBattleAttacker, damage, attackType, damageType);
+    return battleutils::TakeSwipeLungeDamage(PBattleDefender, PBattleAttacker, damage, attackType, dmgType);
 }
 
 /************************************************************************

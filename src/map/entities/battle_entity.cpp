@@ -459,7 +459,7 @@ bool CBattleEntity::Rest(float rate)
     return didRest;
 }
 
-uint32 CBattleEntity::GetWeaponDelay(bool tp)
+auto CBattleEntity::GetWeaponDelay(bool tp) -> uint32
 {
     TracyZoneScoped;
     uint32 finalDelay = 8000; // 480 (base) * 1000 / 60 (millisecond conversion)
@@ -484,7 +484,7 @@ uint32 CBattleEntity::GetWeaponDelay(bool tp)
 
         // Sub-weapon
         else if (auto* subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]);
-                 subweapon && subweapon->getDmgType() > DAMAGE_TYPE::NONE && subweapon->getDmgType() < DAMAGE_TYPE::HTH)
+                 subweapon && subweapon->getDmgType() > xi::DamageType::None && subweapon->getDmgType() < xi::DamageType::HandToHand)
         {
             weaponDelay         = weaponDelay + subweapon->getDelay();
             dualWieldMultiplier = 1.0f - getMod(Mod::DUAL_WIELD) / 100.0f;
@@ -992,7 +992,7 @@ int32 CBattleEntity::addMP(int32 mp)
     return abs(mp);
 }
 
-int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/, DAMAGE_TYPE damageType /* = DAMAGE_NONE*/, bool isSkillchainDamage /* = false */)
+auto CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/, xi::DamageType damageType /* = DAMAGE_NONE*/, bool isSkillchainDamage /* = false */) -> int32
 {
     TracyZoneScoped;
 
@@ -1177,7 +1177,7 @@ uint16 CBattleEntity::ATT(SLOTTYPE slot)
     return std::max(1, ATT + (ATT * ATTP / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_ATTP] / 100), m_modStat[Mod::FOOD_ATT_CAP]));
 }
 
-uint16 CBattleEntity::RATT(uint16 bonusAtt)
+auto CBattleEntity::RATT(uint16 bonusAtt) -> uint16
 {
     auto* PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
     if (PWeakness && PWeakness->GetPower() >= 2)
@@ -1208,7 +1208,7 @@ uint16 CBattleEntity::RATT(uint16 bonusAtt)
         if (weapon)
         {
             // non-damaging weapon
-            if (weapon->getDmgType() == DAMAGE_TYPE::NONE || weapon->getSkillType() == SKILL_NONE)
+            if (weapon->getDmgType() == xi::DamageType::None || weapon->getSkillType() == SKILL_NONE)
             {
                 return 0;
             }
@@ -1266,7 +1266,7 @@ inline uint32 GetAccFromSkill(uint32 skill)
     return accuracy;
 }
 
-uint16 CBattleEntity::RACC(uint16 bonusAcc)
+auto CBattleEntity::RACC(uint16 bonusAcc) -> uint16
 {
     TracyZoneScoped;
     auto* PWeakness = StatusEffectContainer->GetStatusEffect(EFFECT_WEAKNESS);
@@ -1298,7 +1298,7 @@ uint16 CBattleEntity::RACC(uint16 bonusAcc)
         if (weapon)
         {
             // non-damaging weapon
-            if (weapon->getDmgType() == DAMAGE_TYPE::NONE || weapon->getSkillType() == SKILL_NONE)
+            if (weapon->getDmgType() == xi::DamageType::None || weapon->getSkillType() == SKILL_NONE)
             {
                 return 0;
             }

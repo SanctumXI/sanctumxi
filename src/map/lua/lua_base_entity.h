@@ -675,7 +675,7 @@ public:
     uint16 getBaseDelay();                  // get base delay of entity, melee only
     uint16 getBaseRangedDelay();            // get base delay of entity, ranged only
 
-    float checkLiementAbsorb(uint16 damageType); // return 1.0 if did not absorb, return >= -1.0 if did absorb
+    auto checkLiementAbsorb(xi::DamageType damageType) -> float; // return 1.0 if did not absorb, return >= -1.0 if did absorb
 
     // Enmity
     int32 getCE(const CLuaBaseEntity* target);
@@ -760,9 +760,9 @@ public:
     uint16 getILvlSkill();
     uint16 getILvlParry();
 
-    int32 physicalDmgTaken(double damage, sol::variadic_args va);
-    int32 rangedDmgTaken(double damage, sol::variadic_args va);
-    void  handleAfflatusMiseryDamage(double damage);
+    auto physicalDmgTaken(double damage, sol::variadic_args va) -> int32;
+    auto rangedDmgTaken(double damage, sol::variadic_args va) -> int32;
+    void handleAfflatusMiseryDamage(double damage);
 
     bool   isWeaponTwoHanded();
     uint16 getWeaponDmg();                  // gets the current equipped weapons' DMG rating
@@ -783,10 +783,10 @@ public:
     uint8  getWeaponSubSkillType(uint8 slotID);                      // gets the subskill of weapon equipped
     auto   getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>; // returns weapon skill's skillchain properties (up to 3)
 
-    int32 takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier);
+    auto takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, xi::DamageType dmgType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier) -> int32;
 
     void  takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, int32 damage, uint8 atkType, uint8 dmgType);
-    int32 takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, uint8 dmgType);
+    auto  takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, xi::DamageType dmgType) -> int32;
     int32 checkDamageCap(int32 damage);
     auto  handleSevereDamage(int32 damage, bool isPhysical) -> int32;
 
