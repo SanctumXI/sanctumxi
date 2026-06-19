@@ -18032,6 +18032,23 @@ void CLuaBaseEntity::addMobMod(uint16 mobModID, int16 value)
 }
 
 /************************************************************************
+ *  Function: addSCMBExpBonusDmg()
+ *  Purpose : Accumulate Skillchain / Magic Burst damage on a mob for the EXP bonus (Sanctum custom)
+ *  Example : target:addSCMBExpBonusDmg(finalDamage)
+ ************************************************************************/
+
+void CLuaBaseEntity::addSCMBExpBonusDmg(uint32 dmg)
+{
+    if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return;
+    }
+
+    static_cast<CMobEntity*>(m_PBaseEntity)->addSCMBExpBonusDmg(dmg);
+}
+
+/************************************************************************
  *  Function: setMobMod()
  *  Purpose : Applies a Mob Mod of a specified magnitude
  *  Example : mob:setMobMod(xi.mobMod.MUG_GIL, 100)
@@ -20499,6 +20516,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getMobMod", CLuaBaseEntity::getMobMod);
     SOL_REGISTER("setMobMod", CLuaBaseEntity::setMobMod);
     SOL_REGISTER("addMobMod", CLuaBaseEntity::addMobMod);
+    SOL_REGISTER("addSCMBExpBonusDmg", CLuaBaseEntity::addSCMBExpBonusDmg);
     SOL_REGISTER("delMobMod", CLuaBaseEntity::delMobMod);
 
     SOL_REGISTER("getBattleTime", CLuaBaseEntity::getBattleTime);

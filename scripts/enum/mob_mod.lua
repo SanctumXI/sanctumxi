@@ -107,5 +107,4 @@ xi.mobMod =
     TRUST_SHIELD_SIZE      = 96, -- TRUSTS ONLY: Set the size of the mob's shield. 3 = Default size, only used for trusts that use shields.
 
     -- Sanctum MOBMODs using values 150+
-    SC_MB_EXP_BONUS = 150, -- EXP bonus for Skillchain and Magic
 }
