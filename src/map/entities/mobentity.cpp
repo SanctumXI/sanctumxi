@@ -517,6 +517,21 @@ void CMobEntity::resetMobMod(uint16 type)
     m_mobModStat[type] = m_mobModStatSave[type];
 }
 
+void CMobEntity::addSCMBExpBonusDmg(uint32 dmg)
+{
+    m_scmbExpBonusDmg += dmg;
+}
+
+uint32 CMobEntity::getSCMBExpBonusDmg()
+{
+    return m_scmbExpBonusDmg;
+}
+
+void CMobEntity::resetSCMBExpBonusDmg()
+{
+    m_scmbExpBonusDmg = 0;
+}
+
 void CMobEntity::saveMobModifiers()
 {
     m_mobModStatSave = m_mobModStat;
@@ -659,6 +674,7 @@ void CMobEntity::Spawn()
     m_ItemStolen     = false;
     m_ItemDespoiled  = false;
     m_DropItemTime   = 1000ms;
+    m_scmbExpBonusDmg = 0; // Sanctum custom: clear accumulated SC/MB damage each life
     animationsub     = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
     SetCallForHelpFlag(false);
 
