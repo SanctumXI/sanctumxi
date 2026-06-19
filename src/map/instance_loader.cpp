@@ -202,6 +202,7 @@ CInstance* CInstanceLoader::LoadInstance() const
 
             PMob->allegiance      = rset->get<ALLEGIANCE_TYPE>("allegiance");
             PMob->namevis         = rset->get<uint8>("namevis");
+            PMob->m_roamFlags     = rset->get<uint16>("roamflag");
             PMob->modelHitboxSize = std::max<float>(0.0f, rset->getOrDefault<float>("modelHitboxSize", 0) / 10.f);
             PMob->modelSize       = rset->getOrDefault<uint8>("modelSize", 0);
             const auto aggro      = rset->get<uint32>("aggro");
