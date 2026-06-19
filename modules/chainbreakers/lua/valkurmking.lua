@@ -13,7 +13,7 @@ local spawnCenter =
 
 local spawnRadius = 35
 local minLevel = 14
-local maxlevel = 24
+local maxLevel = 24
 
 local function getRandomSpawn()
     local angle = math.random() * math.pi * 2
@@ -104,7 +104,7 @@ m:addOverride('xi.zones.Valkurm_Dunes.Zone.onInitialize', function(zone)
 
                             local level = member:getMainLvl()
 
-                            if level < minlevel or level > maxlevel then
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end

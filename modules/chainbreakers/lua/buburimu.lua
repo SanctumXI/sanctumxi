@@ -12,8 +12,8 @@ local spawnCenter =
 }
 
 local spawnRadius = 35
-local minlevel = 14
-local maxlevel = 24
+local minLevel = 14
+local maxLevel = 24
 
 local function getRandomSpawn()
     local angle = math.random() * math.pi * 2
@@ -104,7 +104,7 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
 
                             local level = member:getMainLvl()
 
-                            if level < minlevel or level > maxlevel then
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end
@@ -127,7 +127,7 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
                                     
             else
                 player:printToPlayer(
-                    'A party member is level 26 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 14-24. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end   

@@ -442,7 +442,7 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
     tempSkills.elemental       = amaSkill;
     tempSkills.dark            = amaSkill;
 
-    int32 meritbonus = PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PMaster);
+    int32 meritbonus = 0; // PMaster->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PMaster); Removed Sanctum Custom
 
     // If skill rank is 0, merit bonus needs to be added to be displayed like retail does
     if (puppetutils::getSkillCap(PMaster, SKILL_AUTOMATON_RANGED, effectivePupLevel) == 0)
@@ -1112,13 +1112,37 @@ void CalculateAutomatonStats(CBattleEntity* PMaster, CBattleEntity* PPet)
         {
             if (PMaster->objtype == TYPE_PC)
             {
-                PPet->addModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
+                // Removed for Sanctum Custom Merits
+                /* PPet->addModifier(Mod::ATTP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
                 PPet->addModifier(Mod::DEFP, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
                 PPet->addModifier(Mod::MATT, PChar->PMeritPoints->GetMeritValue(MERIT_OPTIMIZATION, PChar));
                 PPet->addModifier(Mod::ACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
                 PPet->addModifier(Mod::RACC, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
                 PPet->addModifier(Mod::EVA, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
-                PPet->addModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
+                PPet->addModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));*/
+
+                 // Sanctum Custom - Caster Protocol
+                auto casterProtocol = PChar->PMeritPoints->GetMeritValue(MERIT_CASTER_PROTOCOL, PChar);
+                PPet->addModifier(Mod::MACC, casterProtocol * 5);
+                PPet->addModifier(Mod::MATT, casterProtocol * 5);
+
+                // Sanctum Custom - Defender Protocol
+                auto defenderProtocol = PChar->PMeritPoints->GetMeritValue(MERIT_DEFENDER_PROTOCOL, PChar);
+                PPet->addModifier(Mod::DMG, -(defenderProtocol * 100)); // -1% DT per merit
+                PPet->addModifier(Mod::DEFP, defenderProtocol * 5);
+                PPet->addModifier(Mod::EVA, defenderProtocol * 5);
+
+                // Sanctum Custom - Medic Protocol
+                auto medicProtocol = PChar->PMeritPoints->GetMeritValue(MERIT_MEDIC_PROTOCOL, PChar);
+                PPet->addModifier(Mod::CURE_POTENCY, medicProtocol * 2);
+                PPet->addModifier(Mod::MDEF, medicProtocol * 5);
+
+                // Sanctum Custom - Striker Protocol
+                auto strikerProtocol = PChar->PMeritPoints->GetMeritValue(MERIT_STRIKER_PROTOCOL, PChar);
+                PPet->addModifier(Mod::ACC, strikerProtocol * 5);
+                PPet->addModifier(Mod::RACC, strikerProtocol * 5);
+                PPet->addModifier(Mod::ATTP, strikerProtocol * 5);
+                PPet->addModifier(Mod::RATTP, strikerProtocol * 5);
             }
 
             FinalizePetStatistics(PMaster, PAutomaton);

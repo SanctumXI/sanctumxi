@@ -13,7 +13,7 @@ local spawnCenter =
 
 local spawnRadius = 25
 local minLevel = 25
-local maxlevel = 35
+local maxLevel = 35
 
 local function getRandomSpawn()
     local angle = math.random() * math.pi * 2
@@ -106,7 +106,9 @@ m:addOverride('xi.zones.Ordelles_Caves.Zone.onInitialize', function(zone)
                         if member:getZoneID() == mob:getZoneID() and member:checkDistance(mob) <= 50 then
                             table.insert(eligibleMembers, member)
 
-                            if member:getMainLvl() >= 36 then
+                           local level = member:getMainLvl()
+
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end
@@ -128,7 +130,7 @@ m:addOverride('xi.zones.Ordelles_Caves.Zone.onInitialize', function(zone)
                     player:addExp(bonusExp)
             else
                 player:printToPlayer(
-                    'A party member is level 36 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 25-35. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end

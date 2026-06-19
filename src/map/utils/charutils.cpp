@@ -3748,9 +3748,9 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
                                 MERIT_GKATANA,
                                 MERIT_CLUB,
                                 MERIT_STAFF,
-                                MERIT_AUTOMATON_SKILLS,
-                                MERIT_AUTOMATON_SKILLS,
-                                MERIT_AUTOMATON_SKILLS,
+                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
+                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
+                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
                                 MERIT_ARCHERY,
                                 MERIT_MARKSMANSHIP,
                                 MERIT_THROWING,
@@ -3953,8 +3953,17 @@ void BuildingCharTraitsTable(CCharEntity* PChar)
 
     battleutils::AddTraits(PChar, traits::GetTraits(mjob), mlvl);
     battleutils::AddTraits(PChar, traits::GetTraits(sjob), slvl);
-    // Sanctum custom merit: Dual Wield bonus
+
+    // Sanctum custom merit: Dual Wield bonus, delete mod first then apply so if the function is called multiple times it won't keep adding the bonus on top of itself.
+    PChar->delModifier(Mod::DUAL_WIELD, PChar->PMeritPoints->GetMeritValue(MERIT_DUAL_WIELD_BONUS, PChar));
     PChar->addModifier(Mod::DUAL_WIELD, PChar->PMeritPoints->GetMeritValue(MERIT_DUAL_WIELD_BONUS, PChar));
+
+    // Sanctum custom merit: PUP Martial Arts bonus, delete mod first then apply so if the function is called multiple times it won't keep adding the bonus on top of itself.
+    if (mjob == JOB_PUP)
+    {
+        PChar->delModifier(Mod::MARTIAL_ARTS, PChar->PMeritPoints->GetMeritValue(MERIT_MARTIAL_ARTS_EFFECT, PChar));
+        PChar->addModifier(Mod::MARTIAL_ARTS, PChar->PMeritPoints->GetMeritValue(MERIT_MARTIAL_ARTS_EFFECT, PChar));
+    }
 
     if (mjob == JOB_BLU || sjob == JOB_BLU)
     {

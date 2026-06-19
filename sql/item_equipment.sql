@@ -7646,7 +7646,7 @@ INSERT INTO `item_equipment` VALUES (17919,'tant._broth',99,0,256,0,0,0,8,0,0,0)
 INSERT INTO `item_equipment` VALUES (17920,'meaty_broth',99,0,256,0,0,0,8,0,0,0);
 INSERT INTO `item_equipment` VALUES (17921,'muddy_broth',99,0,256,0,0,0,8,0,0,0);
 INSERT INTO `item_equipment` VALUES (17922,'blackwater_broth',99,0,256,0,0,0,8,0,0,0);
-INSERT INTO `item_equipment` VALUES (17923,'deluxe_animator',87,0,131072,0,0,0,4,0,0,0);
+INSERT INTO `item_equipment` VALUES (17923,'deluxe_animator',75,0,131072,0,0,0,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (17924,'tungi',60,0,2098561,91,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (17925,'fransisca',63,0,2098561,91,0,0,3,0,0,0);
 INSERT INTO `item_equipment` VALUES (17926,'acha_darmas',68,0,2098561,81,0,0,3,0,0,0);

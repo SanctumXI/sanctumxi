@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2025 LandSandBoat Dev Teams
@@ -66,7 +66,9 @@ GP_SERV_COMMAND_EXTENDED_JOB::PUP::PUP(CCharEntity* PChar, const bool mjob)
         packet.MaxMP = PChar->automatonInfo.automatonHealth.maxmp;
     }
 
-    const int32  meritbonus = PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PChar);
+    // Sanctum Custom: MERIT_AUTOMATON_SKILLS removed
+    // const int32 meritbonus = PChar->PMeritPoints->GetMeritValue(MERIT_AUTOMATON_SKILLS, PChar);
+    const int32  meritbonus = 0;
     const uint16 ameCap     = puppetutils::getSkillCap(PChar, SKILL_AUTOMATON_MELEE, jobLevel);
     const uint16 ameBonus   = PChar->getMod(Mod::AUTO_MELEE_SKILL);
     const uint16 araCap     = puppetutils::getSkillCap(PChar, SKILL_AUTOMATON_RANGED, jobLevel);

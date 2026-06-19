@@ -152,8 +152,8 @@ INSERT INTO `abilities` VALUES (131,'light_shot',17,40,4,1,195,0,0,123,2000,0,6,
 INSERT INTO `abilities` VALUES (132,'dark_shot',17,40,4,1,195,0,0,124,2000,0,6,20.0,0,0,0,0,1410,0,'TOAU');
 INSERT INTO `abilities` VALUES (133,'random_deal',17,50,1,1200,196,0,0,131,2000,0,6,0.0,1,8,1,300,1414,0,'TOAU');
 INSERT INTO `abilities` VALUES (135,'overdrive',18,0,1,1800,0,0,0,143,2000,0,6,0.0,0,0,0,0,0,0,'TOAU');
-INSERT INTO `abilities` VALUES (136,'activate',18,1,1,1200,205,0,0,83,2000,0,6,0.0,0,0,1,80,1478,0,'TOAU');
-INSERT INTO `abilities` VALUES (137,'repair',18,15,1,90,206,102,0,83,2000,0,6,0.0,0,0,0,0,1480,0,'TOAU');
+INSERT INTO `abilities` VALUES (136,'activate',18,1,1,1200,205,0,0,83,2000,0,6,0.0,0,0,1,80,0,0,'TOAU');
+INSERT INTO `abilities` VALUES (137,'repair',18,15,1,90,206,102,0,83,2000,0,6,0.0,0,0,0,0,3140,0,'TOAU');
 INSERT INTO `abilities` VALUES (138,'deploy',18,1,4,10,207,0,0,83,2000,0,6,16.0,0,0,0,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (139,'deactivate',18,1,1,60,208,0,0,83,2000,0,6,0.0,0,0,0,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (140,'retrieve',18,10,1,10,209,0,0,83,2000,0,6,0.0,0,0,0,0,0,512,'TOAU');
@@ -196,7 +196,7 @@ INSERT INTO `abilities` VALUES (176,'diffusion',16,75,1,300,184,0,0,166,2000,0,6
 INSERT INTO `abilities` VALUES (177,'snake_eye',17,75,1,300,197,0,0,167,2000,0,6,0.0,0,0,1,300,3072,1,'TOAU');
 INSERT INTO `abilities` VALUES (178,'fold',17,75,1,300,198,0,0,220,2000,0,6,0.0,0,0,1,300,3074,1,'TOAU');
 INSERT INTO `abilities` VALUES (179,'role_reversal',18,75,1,120,211,0,0,169,2000,0,6,0.0,0,0,0,0,3136,1,'TOAU');
-INSERT INTO `abilities` VALUES (180,'ventriloquy',18,75,4,60,212,0,0,170,2000,0,6,10.0,0,0,0,0,3138,1,'TOAU');
+INSERT INTO `abilities` VALUES (180,'ventriloquy',18,76,4,60,212,0,0,170,2000,0,6,10.0,0,0,0,0,0,0,'TOAU');
 INSERT INTO `abilities` VALUES (181,'trance',19,0,1,1800,0,100,0,184,2000,0,6,0.0,0,0,1,300,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (182,'sambas',19,5,1,0,216,0,0,0,2000,0,14,0.0,0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (183,'waltzes',19,15,1,0,217,0,0,0,2000,0,14,0.0,0,0,0,0,0,0,'WOTG');
@@ -281,7 +281,7 @@ INSERT INTO `abilities` VALUES (262,'divine_waltz_ii',19,78,27,20,190,102,0,34,2
 INSERT INTO `abilities` VALUES (263,'flourishes_iii',19,80,1,0,226,0,0,0,2000,0,14,0.0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (264,'climactic_flourish',19,80,1,90,226,100,0,230,2000,0,6,0.0,0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (265,'libra',20,76,4,60,237,100,0,231,2000,0,6,10.0,0,0,0,0,0,0,NULL);
-INSERT INTO `abilities` VALUES (266,'tactical_switch',18,79,1,180,213,100,0,232,2000,0,6,0.0,0,0,0,0,0,0,NULL);
+INSERT INTO `abilities` VALUES (266,'tactical_switch',18,75,1,300,213,100,0,232,2000,0,6,0.0,0,0,0,0,3138,1,NULL);
 INSERT INTO `abilities` VALUES (267,'blood_rage',1,87,1,300,11,319,0,239,2000,0,6,0.0,1,14,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (269,'impetus',2,88,1,300,31,100,0,240,2000,0,6,0.0,0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (270,'divine_caress',3,83,1,60,32,100,0,254,2000,0,6,0.0,0,0,0,0,0,0,NULL);
@@ -327,7 +327,7 @@ INSERT INTO `abilities` VALUES (318,'smiting_breath',14,90,4,60,238,100,0,94,200
 INSERT INTO `abilities` VALUES (319,'restoring_breath',14,90,1,60,239,100,0,94,2000,0,6,0.0,0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (320,'konzen-ittai',12,65,4,180,132,529,0,39,2000,0,14,3.0,0,0,1,300,0,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (321,'bully',6,50,1,300,240,320,0,239,2000,0,6,0.0,1,14,1,300,710,0,'ABYSSEA');
-INSERT INTO `abilities` VALUES (322,'maintenance',18,30,1,90,214,0,0,83,2000,0,6,0.0,0,0,0,0,1474,0,'ABYSSEA'); -- ta257
+INSERT INTO `abilities` VALUES (322,'maintenance',18,30,1,90,214,0,0,83,2000,0,6,0.0,0,0,0,0,3140,0,'ABYSSEA'); -- ta257
 INSERT INTO `abilities` VALUES (323,'brazen_rush',1,96,1,3600,254,100,0,271,2000,0,6,0.0,0,0,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (324,'inner_strength',2,96,1,3600,254,100,0,272,2000,0,6,0.0,0,0,0,0,0,0,NULL); -- check animation
 INSERT INTO `abilities` VALUES (325,'asylum',3,96,4,3600,254,100,0,273,2000,0,6,0.0,1,14,0,0,0,0,NULL);

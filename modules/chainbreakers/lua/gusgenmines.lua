@@ -4,8 +4,8 @@ local m = Module:new('weirdo')
 m:setEnabled(true)
 
 local spawnRadius = 20
-local minlevel = 34
-local maxlevel = 44
+local minLevel = 34
+local maxLevel = 44
 local weirdoSpawns =
 {
     {
@@ -116,7 +116,7 @@ local function setupWeirdo(zone, spawnData)
 
                             local level = member:getMainLvl()
 
-                            if level < minlevel or level > maxlevel then
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end
@@ -139,7 +139,7 @@ local function setupWeirdo(zone, spawnData)
                
             else
                 player:printToPlayer(
-                    'A party member is level 46 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 34-44. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end

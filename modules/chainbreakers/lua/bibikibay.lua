@@ -7,8 +7,8 @@ m:addOverride('xi.zones.Bibiki_Bay.Zone.onInitialize', function(zone)
     super(zone)
     print('[suiza] onInitialize fired')
 
-    local minlevel = 32
-    local maxlevel = 42
+    local minLevel = 30
+    local maxLevel = 40
 
     local mob = zone:insertDynamicEntity({
         objtype     = xi.objType.MOB,
@@ -19,8 +19,8 @@ m:addOverride('xi.zones.Bibiki_Bay.Zone.onInitialize', function(zone)
         y           = -20,
         z           = 763.90,
         rotation    = 221,
-        minLevel    = 42,
-        maxLevel    = 42,
+        minLevel    = 40,
+        maxLevel    = 40,
        
         specialSpawnAnimation = true,
         releaseIdOnDisappear  = false,
@@ -63,7 +63,7 @@ m:addOverride('xi.zones.Bibiki_Bay.Zone.onInitialize', function(zone)
 
                             local level = member:getMainLvl()
 
-                            if level < minlevel or level > maxlevel then
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end
@@ -86,7 +86,7 @@ m:addOverride('xi.zones.Bibiki_Bay.Zone.onInitialize', function(zone)
                                     
             else
                 player:printToPlayer(
-                    'A party member is level 40 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 30-40. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end   

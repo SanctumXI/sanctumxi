@@ -257,11 +257,11 @@ xi.merit =
     RAPID_SHOT_RATE2            = meritCategory.COR_1 + 0x08,
 
     -- PUP 1
-    AUTOMATON_SKILLS            = meritCategory.PUP_1 + 0x00,
-    MAINTENANCE_RECAST          = meritCategory.PUP_1 + 0x02,
-    REPAIR_EFFECT               = meritCategory.PUP_1 + 0x04,
-    ACTIVATE_RECAST             = meritCategory.PUP_1 + 0x06,
-    REPAIR_RECAST               = meritCategory.PUP_1 + 0x08,
+    MARTIAL_ARTS_EFFECT         = meritCategory.PUP_1 + 0x00,
+    CASTER_PROTOCOL             = meritCategory.PUP_1 + 0x02,
+    DEFENDER_PROTOCOL           = meritCategory.PUP_1 + 0x04,
+    MEDIC_PROTOCOL              = meritCategory.PUP_1 + 0x06,
+    STRIKER_PROTOCOL            = meritCategory.PUP_1 + 0x08,
 
     -- DNC 1
     STEP_ACCURACY               = meritCategory.DNC_1 + 0x00,
@@ -439,9 +439,9 @@ xi.merit =
 
     -- PUP 2
     ROLE_REVERSAL               = meritCategory.PUP_2 + 0x00,
-    VENTRILOQUY                 = meritCategory.PUP_2 + 0x02,
-    FINE_TUNING                 = meritCategory.PUP_2 + 0x04,
-    OPTIMIZATION                = meritCategory.PUP_2 + 0x06,
+    TACTICAL_SWITCH             = meritCategory.PUP_2 + 0x02,
+    REPAIR_MAINTAIN             = meritCategory.PUP_2 + 0x04,
+    OVERCLOCKING                = meritCategory.PUP_2 + 0x06,
 
     -- DNC 2
     SABER_DANCE                 = meritCategory.DNC_2 + 0x00,

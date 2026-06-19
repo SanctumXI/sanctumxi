@@ -188,13 +188,13 @@ xi.job_utils.puppetmaster.onAbilityUseRepair = function(player, target, ability,
         end
     end
 
-    local bonus  = 1 + player:getMerit(xi.merit.REPAIR_EFFECT) / 100
+    --[[ local bonus  = 1 + player:getMerit(xi.merit.REPAIR_EFFECT) / 100
     totalHealing = totalHealing * bonus
 
     bonus       = bonus + player:getMod(xi.mod.REPAIR_POTENCY) / 100
     regenAmount = regenAmount * bonus
 
-    totalHealing = pet:addHP(totalHealing)
+    totalHealing = pet:addHP(totalHealing)]]
 
     pet:wakeUp()
 

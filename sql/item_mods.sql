@@ -36053,6 +36053,9 @@ INSERT INTO `item_mods` VALUES (17857,9,4); -- DEX: 4
 -- Turbo Animator
 INSERT INTO `item_mods` VALUES (17858,9,2); -- DEX: 2
 
+-- Deluxe Animator
+INSERT INTO item_mods VALUES (17923,987,1); -- AUTO_ELEM_CAPACITY: 1
+
 -- Fransisca
 INSERT INTO `item_mods` VALUES (17925,24,7); -- RATT: 7
 INSERT INTO `item_mods` VALUES (17925,26,7); -- RACC: 7

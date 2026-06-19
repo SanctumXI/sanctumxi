@@ -60,7 +60,7 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
                         if member:getZoneID() == mob:getZoneID() and member:checkDistance(mob) <= 50 then
                             table.insert(eligibleMembers, member)
 
-                            if member:getMainLvl() >= 76 then
+                            if member:getMainLvl() <= 64 then
                                 allValid = false
                             end
                         end
@@ -83,7 +83,7 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
                                     
             else
                 player:printToPlayer(
-                    'A party member is level 76 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 65-75. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end   

@@ -765,6 +765,8 @@ INSERT INTO `traits` VALUES (137,'tandem strike',9,90,5,271,50,'ROV',0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,40,1,272,5,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,60,2,272,10,NULL,0);
 INSERT INTO `traits` VALUES (138,'tandem blow',9,75,3,272,15,NULL,0);
+INSERT INTO `traits` VALUES (138,'tandem blow',18,45,1,272,5,NULL,0);
+INSERT INTO `traits` VALUES (138,'tandem blow',18,65,2,272,10,NULL,0);
 INSERT INTO `traits` VALUES (139,'vision',11,75,1,0,0,NULL,2694);
 
 

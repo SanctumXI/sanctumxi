@@ -7,8 +7,8 @@ m:addOverride('xi.zones.Qufim_Island.Zone.onInitialize', function(zone)
     super(zone)
     print('[qufim_lord] onInitialize fired')
 
-    local minlevel = 25
-    local maxlevel = 35
+    local minLevel = 25
+    local maxLevel = 35
 
     local mob = zone:insertDynamicEntity({
         objtype     = xi.objType.MOB,
@@ -63,7 +63,7 @@ m:addOverride('xi.zones.Qufim_Island.Zone.onInitialize', function(zone)
 
                             local level = member:getMainLvl()
 
-                            if level < minlevel or level > maxlevel then
+                            if level < minLevel or level > maxLevel then
                                 allValid = false
                             end
                         end
@@ -86,7 +86,7 @@ m:addOverride('xi.zones.Qufim_Island.Zone.onInitialize', function(zone)
                                     
             else
                 player:printToPlayer(
-                    'A party member is level 36 or higher. No bonus EXP awarded.',
+                    'A party member is outside the level range of 25-35. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
             end 

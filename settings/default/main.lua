@@ -165,9 +165,9 @@ xi.settings.main =
     ENABLE_IMMUNOBREAK               = true,  -- true/false. Allow/Disallow immunobreaks to happen.
 
     -- TRUSTS
-    ENABLE_TRUST_CASTING           = 0,
-    ENABLE_TRUST_QUESTS            = 0,
-    ENABLE_TRUST_CUSTOM_ENGAGEMENT = 0,
+    ENABLE_TRUST_CASTING           = 1,
+    ENABLE_TRUST_QUESTS            = 1,
+    ENABLE_TRUST_CUSTOM_ENGAGEMENT = 1,
 
     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA          = 0, -- 0 = disabled, 1 = summer/ny, 2 = spring/autumn, 3 = both
     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE = 0, -- 0 = disabled, 1 = add announcement to player login
@@ -198,9 +198,9 @@ xi.settings.main =
 
     -- SE implemented coffer/chest illusion time in order to prevent coffer farming. No-one in the same area can open a chest or coffer for loot (gil, gems & items)
     -- till a random time between MIN_ILLSION_TIME and MAX_ILLUSION_TIME. During this time players can loot keyitem and item related to quests (AF, maps... etc.)
-    COFFER_MAX_ILLUSION_TIME = 3600,  -- 1 hour
+    COFFER_MAX_ILLUSION_TIME = 1800,  -- 1 hour
     COFFER_MIN_ILLUSION_TIME = 1800,  -- 30 minutes
-    CHEST_MAX_ILLUSION_TIME  = 3600,  -- 1 hour
+    CHEST_MAX_ILLUSION_TIME  = 1800,  -- 1 hour
     CHEST_MIN_ILLUSION_TIME  = 1800,  -- 30 minutes
 
     -- Multiplier to NM lottery spawn chance. (Default 1.0) eg. 0 = disable lottery spawns. -1 for always 100% chance.
@@ -311,7 +311,7 @@ xi.settings.main =
     RUNIC_DISK_SAVE      = true,  -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
     ENABLE_NYZUL_CASKETS = true,  -- Enable Treasure casket pops from NMs.
     ENABLE_VIGIL_DROPS   = true,  -- Enable Vigil Weapon drops from NMs.
-    ACTIVATE_LAMP_TIME   = 6000,  -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
+    ACTIVATE_LAMP_TIME   = 8000,  -- Time in miliseconds for lamps to stay lit. TODO: Get retail confirmation.
 
     -- CHOCOBO RAISING (HEAVILY-IN-DEVELOPMENT, USE AT YOUR OWN RISK)
     -- GM command: `!chocoboraising`
