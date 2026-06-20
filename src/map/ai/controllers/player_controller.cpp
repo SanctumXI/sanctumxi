@@ -26,7 +26,7 @@
 #include "ai/states/inactive_state.h"
 #include "ai/states/magic_state.h"
 #include "ai/states/range_state.h"
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "items/item_weapon.h"
 #include "latent_effect_container.h"
 #include "packets/s2c/0x029_battle_message.h"

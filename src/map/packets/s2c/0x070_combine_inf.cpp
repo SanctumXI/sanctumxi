@@ -21,7 +21,7 @@
 
 #include "0x070_combine_inf.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "enums/synthesis_result.h"
 #include "trade_container.h"
 

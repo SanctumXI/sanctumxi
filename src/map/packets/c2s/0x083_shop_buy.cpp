@@ -21,8 +21,8 @@
 
 #include "0x083_shop_buy.h"
 
-#include "entities/charentity.h"
-#include "lua/lua_baseentity.h"
+#include "entities/char_entity.h"
+#include "lua/lua_base_entity.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x03f_shop_buy.h"
 #include "trade_container.h"

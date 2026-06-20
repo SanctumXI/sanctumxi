@@ -21,7 +21,7 @@
 
 #include "0x0ab_guild_buylist.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "packets/s2c/0x083_guild_buylist.h"
 
 auto GP_CLI_COMMAND_GUILD_BUYLIST::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult

@@ -27,7 +27,7 @@
 #include "common/utils.h"
 #include "common/vana_time.h"
 
-#include "entities/battleentity.h"
+#include "entities/battle_entity.h"
 #include "lua/luautils.h"
 
 #include "packets/char_status.h"

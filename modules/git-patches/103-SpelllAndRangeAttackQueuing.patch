@@ -57,7 +57,7 @@ index f78f912183..53f1df355c 100644
  #include "ai/states/inactive_state.h"
 +#include "ai/states/magic_state.h"
 +#include "ai/states/range_state.h"
- #include "entities/charentity.h"
+ #include "entities/char_entity.h"
  #include "items/item_weapon.h"
  #include "latent_effect_container.h"
 @@ -49,6 +51,26 @@ void CPlayerController::Tick(timer::time_point /*tick*/)

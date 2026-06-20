@@ -21,7 +21,7 @@
 
 #include "0x06f_combine_ans.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "trade_container.h"
 
 GP_SERV_COMMAND_COMBINE_ANS::GP_SERV_COMMAND_COMBINE_ANS(const CCharEntity* PChar, const SynthesisResult result, const uint16 itemId, const uint8 quantity)

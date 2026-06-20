@@ -22,7 +22,7 @@
 #include "0x05e_maprect.h"
 
 #include "common/utils.h"
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "enums/msg_std.h"
 #include "map/navmesh/navmesh.h"
 #include "packets/s2c/0x053_systemmes.h"

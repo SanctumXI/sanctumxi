@@ -26,7 +26,7 @@
 #include "common/tracy.h"
 #include "common/zlib.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 
 #include "alliance.h"
 #include "linkshell.h"

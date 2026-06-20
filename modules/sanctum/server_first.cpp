@@ -5,9 +5,9 @@
 #include "common/database.h"
 
 #include "map/alliance.h"
-#include "map/entities/charentity.h"
+#include "map/entities/char_entity.h"
 #include "map/items/item_linkshell.h"
-#include "map/lua/lua_baseentity.h"
+#include "map/lua/lua_base_entity.h"
 #include "map/party.h"
 #include "map/utils/moduleutils.h"
 

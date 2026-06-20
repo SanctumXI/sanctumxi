@@ -27,8 +27,8 @@
 #include "campaign_system.h"
 #include "common/logging.h"
 #include "conquest_system.h"
-#include "entities/mobentity.h"
-#include "entities/npcentity.h"
+#include "entities/mob_entity.h"
+#include "entities/npc_entity.h"
 #include "enums/weather.h"
 #include "items/item_weapon.h"
 #include "lua/luautils.h"
@@ -336,8 +336,8 @@ auto LoadNPCList(Scheduler& scheduler, const std::vector<uint16>& zoneIds) -> Ta
 
                                     PNpc->m_TargID = rset->get<uint32>("flag") >> 16;
 
-                                    PNpc->animationSpeed = rset->get<uint8>("speedsub"); // Overwrites baseentity.cpp's defined animationSpeed
-                                    PNpc->baseSpeed      = rset->get<uint8>("speed");    // Overwrites baseentity.cpp's defined baseSpeed
+                                    PNpc->animationSpeed = rset->get<uint8>("speedsub"); // Overwrites base_entity.cpp's defined animationSpeed
+                                    PNpc->baseSpeed      = rset->get<uint8>("speed");    // Overwrites base_entity.cpp's defined baseSpeed
                                     PNpc->UpdateSpeed();
 
                                     PNpc->animation    = rset->get<uint8>("animation");

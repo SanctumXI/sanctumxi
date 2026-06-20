@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "lua_baseentity.h"
+#include "lua_base_entity.h"
 
 #include "lua_battlefield.h"
 #include "lua_instance.h"
@@ -90,13 +90,13 @@
 #include "ai/helpers/gambits_container.h"
 #include "ai/helpers/targetfind.h"
 
-#include "entities/automatonentity.h"
-#include "entities/charentity.h"
-#include "entities/fellowentity.h"
-#include "entities/mobentity.h"
-#include "entities/npcentity.h"
-#include "entities/petentity.h"
-#include "entities/trustentity.h"
+#include "entities/automaton_entity.h"
+#include "entities/char_entity.h"
+#include "entities/fellow_entity.h"
+#include "entities/mob_entity.h"
+#include "entities/npc_entity.h"
+#include "entities/pet_entity.h"
+#include "entities/trust_entity.h"
 #include "enums/automaton.h"
 #include "enums/chat_message_area.h"
 #include "enums/item_lockflg.h"
@@ -15398,7 +15398,7 @@ uint32 CLuaBaseEntity::addDamageFromMultipliers(uint32 damage, PHYSICAL_ATTACK_T
  *  Function: removeAmmo()
  *  Purpose : Expends one item in the ammo slot (arrow,bullet, etc)
  *  Example : player:removeAmmo()
- *  Notes   : Ammo consumed is calculated in charentity.cpp and passed to battleutils
+ *  Notes   : Ammo consumed is calculated in char_entity.cpp and passed to battleutils
  *            Defaults to 1 if no argument is given
  ************************************************************************/
 
@@ -17833,7 +17833,7 @@ bool CLuaBaseEntity::hasTrait(uint16 traitID)
  *  Function: hasImmunity()
  *  Purpose : Returns true if a Mob is immune to a specified type of spell
  *  Example : if target:hasImmunity(64) then
- *  Notes   : Arguments are dec to bin, so powers of 2 (max 256) -- Listed in mobentity.h
+ *  Notes   : Arguments are dec to bin, so powers of 2 (max 256) -- Listed in mob_entity.h
  ************************************************************************/
 
 bool CLuaBaseEntity::hasImmunity(uint32 immunityID)

@@ -1760,8 +1760,8 @@ auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMob
         PMob->m_Immunity  = rset->get<IMMUNITY>("immunity");
         PMob->m_EcoSystem = rset->get<ECOSYSTEM>("ecosystemID");
 
-        PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined baseSpeed
-        PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined animationSpeed
+        PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined baseSpeed
+        PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined animationSpeed
         PMob->UpdateSpeed();
 
         PMob->strRank = rset->get<uint8>("STR");
@@ -1930,8 +1930,8 @@ auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZone
         PMob->m_Immunity  = rset->get<IMMUNITY>("immunity");
         PMob->m_EcoSystem = rset->get<ECOSYSTEM>("ecosystemID");
 
-        PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined baseSpeed
-        PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined animationSpeed
+        PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined baseSpeed
+        PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined animationSpeed
         PMob->UpdateSpeed();
 
         PMob->strRank = rset->get<uint8>("STR");

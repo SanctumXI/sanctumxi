@@ -21,7 +21,7 @@
 
 #include "0x0aa_guild_buy.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 #include "items/item.h"
 #include "items/item_shop.h"
 #include "packets/s2c/0x01d_item_same.h"

@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "battleentity.h"
+#include "battle_entity.h"
 
 #include "common/database.h"
 #include "common/logging.h"
@@ -46,7 +46,7 @@
 #include "recast_container.h"
 #include "roe.h"
 #include "status_effect_container.h"
-#include "trustentity.h"
+#include "trust_entity.h"
 #include "utils/battleutils.h"
 #include "utils/messageutils.h"
 #include "utils/mobutils.h"

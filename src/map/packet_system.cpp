@@ -33,7 +33,7 @@
 #include "map_session.h"
 #include "packet_system.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 
 #include "packets/basic.h"
 #include "packets/c2s/0x00a_login.h"

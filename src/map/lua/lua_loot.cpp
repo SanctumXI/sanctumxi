@@ -22,7 +22,7 @@
 #include "lua_loot.h"
 
 // Converts known TH rarity rates to their respective percentages
-// Once the new TH logic has been applied to mobentity.cpp then this can be removed
+// Once the new TH logic has been applied to mob_entity.cpp then this can be removed
 static const std::array<uint16, 9> RATE_PERCENTAGES = {
     0,    // NEVER         0.00%
     1,    // ULTRA_RARE    0.10%

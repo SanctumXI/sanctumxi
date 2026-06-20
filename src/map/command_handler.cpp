@@ -24,8 +24,8 @@
 #include "autotranslate.h"
 #include "common/database.h"
 #include "common/utils.h"
-#include "entities/charentity.h"
-#include "lua/lua_baseentity.h"
+#include "entities/char_entity.h"
+#include "lua/lua_base_entity.h"
 #include "lua/luautils.h"
 
 #include <iostream>

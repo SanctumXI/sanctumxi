@@ -24,9 +24,9 @@
 #include "instance_loader.h"
 #include "zone_instance.h"
 
-#include "entities/charentity.h"
-#include "entities/mobentity.h"
-#include "entities/npcentity.h"
+#include "entities/char_entity.h"
+#include "entities/mob_entity.h"
+#include "entities/npc_entity.h"
 #include "instance.h"
 #include "items/item_weapon.h"
 #include "lua/luautils.h"
@@ -132,8 +132,8 @@ CInstance* CInstanceLoader::LoadInstance() const
             PMob->m_Immunity  = rset->get<IMMUNITY>("immunity");
             PMob->m_EcoSystem = rset->get<ECOSYSTEM>("ecosystemID");
 
-            PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined baseSpeed
-            PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites baseentity.cpp's defined animationSpeed
+            PMob->baseSpeed      = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined baseSpeed
+            PMob->animationSpeed = rset->get<uint8>("speed"); // Overwrites base_entity.cpp's defined animationSpeed
             PMob->UpdateSpeed();
 
             PMob->strRank = rset->get<uint8>("STR");

@@ -87,10 +87,10 @@
 #include "universal_container.h"
 #include "weapon_skill.h"
 
-#include "entities/automatonentity.h"
-#include "entities/charentity.h"
-#include "entities/mobentity.h"
-#include "entities/petentity.h"
+#include "entities/automaton_entity.h"
+#include "entities/char_entity.h"
+#include "entities/mob_entity.h"
+#include "entities/pet_entity.h"
 
 #include "battleutils.h"
 #include "blueutils.h"

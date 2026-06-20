@@ -7,10 +7,10 @@
 
 #include "common/database.h"
 
-#include "map/entities/charentity.h"
+#include "map/entities/char_entity.h"
 #include "map/ipc_client.h"
 #include "map/linkshell.h"
-#include "map/lua/lua_baseentity.h"
+#include "map/lua/lua_base_entity.h"
 #include "map/utils/moduleutils.h"
 
 namespace

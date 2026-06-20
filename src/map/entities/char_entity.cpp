@@ -19,6 +19,8 @@
 ===========================================================================
 */
 
+#include "char_entity.h"
+
 #include "common/logging.h"
 #include "common/timer.h"
 #include "common/utils.h"
@@ -62,10 +64,9 @@
 #include "ability.h"
 #include "aman.h"
 #include "attack.h"
-#include "automatonentity.h"
+#include "automaton_entity.h"
 #include "battlefield.h"
 #include "char_recast_container.h"
-#include "charentity.h"
 
 #include "action/action.h"
 #include "action/interrupts.h"
@@ -95,7 +96,7 @@
 #include "status_effect_container.h"
 #include "trade_container.h"
 #include "treasure_pool.h"
-#include "trustentity.h"
+#include "trust_entity.h"
 #include "unitychat.h"
 #include "universal_container.h"
 #include "utils/attackutils.h"
@@ -1824,7 +1825,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
 
             if (primary)
             {
-                // See battleentity.h for REACTION class
+                // See battle_entity.h for REACTION class
                 // On retail, weaponskills will contain 0x08, 0x10 (HIT, ABILITY) on hit and may include the following:
                 // 0x01, 0x02, 0x04 (MISS, GUARDED, BLOCK)
                 // TODO: refactor this so lua returns the number of hits so we don't have to check the reaction bits.

@@ -21,7 +21,7 @@
 
 #include "0x0a0_switch_proposal.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 
 auto GP_CLI_COMMAND_SWITCH_PROPOSAL::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {

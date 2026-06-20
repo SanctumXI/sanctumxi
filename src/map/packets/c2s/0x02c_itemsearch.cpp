@@ -21,7 +21,7 @@
 
 #include "0x02c_itemsearch.h"
 
-#include "entities/charentity.h"
+#include "entities/char_entity.h"
 
 auto GP_CLI_COMMAND_ITEMSEARCH::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
