@@ -617,22 +617,24 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
 
     -- Factor in "all hits" bonus damage mods
     -- TODO: does this apply to every hit of a multi hit WS as it's coming in to account for potentially excess damage here?
-    local bonusdmg = 0
-
-    if not isJump then
-        bonusdmg = attacker:getMod(xi.mod.ALL_WSDMG_ALL_HITS) -- For any WS
-
-        if
-            attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 and
-            not attacker:isPet()
-        then
-            -- For specific WS
-            bonusdmg = bonusdmg + attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
-        end
-
-        finaldmg = finaldmg * (100 + bonusdmg) / 100 -- Apply our "all hits" WS dmg bonuses
-        finaldmg = finaldmg + firstHitBonus -- Finally add in our "first hit" WS dmg bonus from before
+local bonusdmg = 0
+if not isJump then
+    bonusdmg = attacker:getMod(xi.mod.ALL_WSDMG_ALL_HITS)
+    if attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 and not attacker:isPet() then
+        bonusdmg = bonusdmg + attacker:getMod(xi.mod.WEAPONSKILL_DAMAGE_BASE + wsID)
     end
+    -- Building Flourish merit changes:
+    -- Requires 3 Finishing Moves.
+    -- Rank 1: +3% WS damage
+    -- Rank 5: +15% WS damage
+    local flourishEffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+    if flourishEffect and flourishEffect:getPower() >= 3 then
+        local meritRank = flourishEffect:getSubPower()
+        bonusdmg = bonusdmg + meritRank * 3
+    end
+    finaldmg = finaldmg * (100 + bonusdmg) / 100
+    finaldmg = finaldmg + firstHitBonus
+end
 
     -- Return our raw damage to then be modified by enemy reductions based off of melee/ranged
     calcParams.finalDmg = finaldmg

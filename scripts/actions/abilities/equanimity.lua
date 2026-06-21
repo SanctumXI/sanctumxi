@@ -25,7 +25,12 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    player:addStatusEffect(xi.effect.EQUANIMITY, { power = player:getMerit(xi.merit.EQUANIMITY), duration = 60, origin = player })
+    local merits = player:getMerit(xi.merit.EQUANIMITY)
+
+   -- This ability also restores MP. 1% per merit.
+    local power = merits
+
+    player:addStatusEffect(xi.effect.EQUANIMITY, { power = merits, duration = 60, origin = player })
 
     return xi.effect.EQUANIMITY
 end

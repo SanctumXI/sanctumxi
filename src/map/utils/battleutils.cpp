@@ -5123,13 +5123,21 @@ auto HandleSevereDamage(CBattleEntity* PDefender, int32 damage, bool isPhysical)
 
 int32 HandleFanDance(CBattleEntity* PDefender, int32 damage)
 {
-    // Handle Fan Dance
+    // Handle Fan Dance - Sanctum Custom Change w/ Merits
     if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_FAN_DANCE))
     {
         int   power  = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_FAN_DANCE)->GetPower();
         float resist = 1.0f - (power / 10000.0f);
         damage       = (int32)(damage * resist);
-        if (power > 2000)
+        int minimumPower = 1200;
+
+        if (PDefender->objtype == TYPE_PC)
+        {
+            auto* PChar = static_cast<CCharEntity*>(PDefender);
+            minimumPower += PChar->PMeritPoints->GetMeritValue(MERIT_FAN_DANCE, PChar) * 200;
+        }
+
+        if (power > minimumPower)
         {
             // reduce fan dance effectiveness by 10% each hit, to a min of 20%
             PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_FAN_DANCE)->SetPower(power - 1000);

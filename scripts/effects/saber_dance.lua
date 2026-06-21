@@ -21,14 +21,14 @@ end
 
 effectObject.onEffectTick = function(target, effect)
     local power = effect:getPower()
+    local floor = effect:getSubPower()
     local decayby = 0
 
     -- Double attack rate decays until 20% then stays there
-    if power > 20 then
-        decayby = 3
-        effect:setPower(power - decayby)
-        target:delMod(xi.mod.DOUBLE_ATTACK, decayby)
+    if effect:getPower() > floor then
+        effect:setPower(math.max(floor, effect:getPower() - 3))
     end
+        
 end
 
 effectObject.onEffectLose = function(target, effect)

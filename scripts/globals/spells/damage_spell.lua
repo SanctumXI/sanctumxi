@@ -1210,6 +1210,15 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     -- Handle Bind break and TP?
     target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
 
+    local equanimity = caster:getStatusEffect(xi.effect.EQUANIMITY)
+
+            if equanimity ~= nil and skillType == xi.skill.ELEMENTAL_MAGIC and finalDamage > 0 then
+            local mpReturn = math.floor(finalDamage * equanimity:getPower() / 10)
+
+            caster:addMP(mpReturn)
+            caster:delStatusEffect(xi.effect.EQUANIMITY)
+end
+
     -- Handle Afflatus Misery.
     target:handleAfflatusMiseryDamage(finalDamage)
 

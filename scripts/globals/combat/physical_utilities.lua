@@ -552,15 +552,16 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
     local flourishBonus = 1
     local firstCap      = xi.combat.physical.pDifWeaponCapTable[weaponType][1]
     -- Actor Weaponskill Specific Attack modifiers.
-    if isWeaponskill then
-        local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
-
-        if flourishEffect and flourishEffect:getPower() >= 2 then -- 2 or more Finishing Moves used.
-            local meritCount = flourishEffect:getSubPower()
-
-            flourishBonus = 1.25 + 0.01 * meritCount -- +1% attack bonus per merit -- TODO: do the merits apply even when FMs are < 2?
-        end
+if isWeaponskill then
+    local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+    if flourishEffect and flourishEffect:getPower() >= 2 then
+        local meritRank = flourishEffect:getSubPower()
+        -- Building Flourish merit changes:
+        -- Rank 1: +14% attack
+        -- Rank 5: +30% attack
+        flourishBonus = 1.10 + 0.04 * meritRank
     end
+end
 
     -- TODO: it is unknown if ws attack mod and flourish bonus are additive or multiplicative
     -- TODO: do flourish and attack mods come before or after food?
@@ -713,15 +714,16 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
 
     -- Actor Weaponskill Specific Attack modifiers.
     -- TODO: verify this actually works on ranged WS
-    if isWeaponskill then
-        local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
-
-        if flourishEffect and flourishEffect:getPower() >= 2 then -- 2 or more Finishing Moves used.
-            local meritCount = flourishEffect:getSubPower()
-
-            flourishBonus = 1.25 + 0.01 * meritCount -- +1% attack bonus per merit -- TODO: do the merits apply even when FMs are < 2?
-        end
+ if isWeaponskill then
+    local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+    if flourishEffect and flourishEffect:getPower() >= 2 then
+        local meritRank = flourishEffect:getSubPower()
+        -- Building Flourish merit changes:
+        -- Rank 1: +14% ranged attack
+        -- Rank 5: +30% ranged attack
+        flourishBonus = 1.10 + 0.04 * meritRank
     end
+end
 
     -- TODO: it is unknown if ws attack mod and flourish bonus are additive or multiplicative
     actorAttack = math.max(1, math.floor((actor:getStat(xi.mod.RATT) + bonusRangedAttack - distancePenalty) * wsAttackMod * flourishBonus))
@@ -889,16 +891,17 @@ end
 -- TODO: Study case where if we can attach modifiers to the effect itself, both this and the effect may need refactoring.
 xi.combat.physical.criticalRateFromFlourish = function(actor)
     local buildingFlourishBonus = 0
-
     if actor:hasStatusEffect(xi.effect.BUILDING_FLOURISH) then
-        local effectPower    = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH):getPower()
-        local effectSubPower = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH):getSubPower()
-
+        local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+        local effectPower = flourishEffect:getPower()
+        local meritRank = flourishEffect:getSubPower()
         if effectPower >= 3 then
-            buildingFlourishBonus = (10 + effectSubPower) / 100
+        -- Building Flourish merit changes:
+            -- Rank 1: +8% crit
+            -- Rank 5: +20% crit
+            buildingFlourishBonus = (5 + meritRank * 3) / 100
         end
     end
-
     return buildingFlourishBonus
 end
 

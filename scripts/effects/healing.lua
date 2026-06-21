@@ -81,7 +81,7 @@ effectObject.onEffectTick = function(target, effect)
             local healHP = 0
             if
                 target:getContinentID() == 1 and
-                target:hasStatusEffect(xi.effect.SIGNET)
+                target:hasStatusEffect(xi.effect.SIGNET) or target:hasStatusEffect(xi.effect.SANCTION)
             then
                 healHP = 10 + (3 * math.floor(target:getMainLvl() / 10)) +
                     (healtime - 2) * (1 + math.floor(target:getMaxHP() / 300)) + target:getMod(xi.mod.HPHEAL)

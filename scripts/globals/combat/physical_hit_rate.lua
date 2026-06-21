@@ -98,12 +98,12 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
             flourishEffect ~= nil and
             flourishEffect:getPower() >= 1
         then -- 1 or more Finishing moves used.
-            accBonus = 40 + flourishEffect:getSubPower() * 2
+            accBonus = 30 + flourishEffect:getSubPower() * 5
         end
 
         if
             attacker:hasStatusEffect(xi.effect.INNIN) and
-            attacker:isBehind(target, 23) -- angle needs confirmation
+            attacker:isBehind(target, 165) -- angle needs confirmation
         then
             -- Innin acc boost if attacker is behind target
             accBonus = accBonus + attacker:getStatusEffect(xi.effect.INNIN):getPower()

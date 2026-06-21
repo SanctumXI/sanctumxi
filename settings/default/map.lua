@@ -153,10 +153,10 @@ xi.settings.map =
     CRAFT_MODERN_SYSTEM = false,
 
     -- Craft level limit from witch specialization points beginning to count. (Retail = 700; Level 75 era:600)
-    CRAFT_COMMON_CAP = 600,
+    CRAFT_COMMON_CAP = 100,
 
     -- Amount of points allowed in crafts over the level defined above. Points are shared across all crafting skills. (Retail = 400; All skills can go to max = 3200)
-    CRAFT_SPECIALIZATION_POINTS = 400,
+    CRAFT_SPECIALIZATION_POINTS = 0,
 
     -- Multiplier applied to high quality chance
     CRAFT_HQ_CHANCE_MULTIPLIER = 1.0,
@@ -168,7 +168,7 @@ xi.settings.map =
     FISHING_MIN_LEVEL = 10,
 
     -- Multiplier for fishing skill-up chance. Default = 1.0, very hard.
-    FISHING_SKILL_MULTIPLIER = 1.6,
+    FISHING_SKILL_MULTIPLIER = 1.5,
 
     -- Enable/disable skill-ups from bloodpacts
     SKILLUP_BLOODPACT = true,
@@ -182,13 +182,13 @@ xi.settings.map =
     FELLOW_TP_MULTIPLIER = 1.0,
 
     -- Adjust max HP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
-    NM_HP_MULTIPLIER        = 1.0,
-    MOB_HP_MULTIPLIER       = 1.0,
+    NM_HP_MULTIPLIER        = 1.2,
+    MOB_HP_MULTIPLIER       = 1.1,
     ALTER_EGO_HP_MULTIPLIER = 1.0,
 
     -- Adjust max MP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
-    NM_MP_MULTIPLIER        = 1.0,
-    MOB_MP_MULTIPLIER       = 1.0,
+    NM_MP_MULTIPLIER        = 1.2,
+    MOB_MP_MULTIPLIER       = 1.1,
     ALTER_EGO_MP_MULTIPLIER = 1.0,
 
     -- Sets the fraction of MP a subjob provides to the main job. Retail is half and this acts as a divisor so default is 2
@@ -257,7 +257,7 @@ xi.settings.map =
     MAX_MERIT_POINTS = 15,
 
     -- Minimum time between uses of yell command (in seconds).
-    YELL_COOLDOWN = 30,
+    YELL_COOLDOWN = 60,
 
     -- Prevent players from sending tells to hidden GMs. You will still receive them from other GMs.
     BLOCK_TELL_TO_HIDDEN_GM = false,

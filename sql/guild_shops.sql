@@ -748,9 +748,9 @@ INSERT INTO `guild_shops` VALUES (5262,18236,21,21,240,60,180);     -- wind_fan
 
 -- Visala (Goldsmith Guild) Bastok Markets (S)
 INSERT INTO `guild_shops` VALUES (5272,736,315,1260,240,48,180);    -- chunk_of_silver_ore
-INSERT INTO `guild_shops` VALUES (5272,644,1500,9800,120,33,12);    -- chunk_of_mythril_ore
+INSERT INTO `guild_shops` VALUES (5272,644,2200,9800,120,33,12);    -- chunk_of_mythril_ore
 -- INSERT INTO `guild_shops` VALUES (5272,737,1500,9200,120,0,0);      -- chunk_of_gold_ore TODO: missing min_price and max_price
-INSERT INTO `guild_shops` VALUES (5272,738,6000,58032,120,0,0);     -- chunk_of_platinum_ore TODO: verify min_price and max_price
+INSERT INTO `guild_shops` VALUES (5272,738,9672,58032,120,0,0);     -- chunk_of_platinum_ore TODO: verify min_price and max_price
 -- INSERT INTO `guild_shops` VALUES (5272,648,6000,58032,120,0,0);     -- copper_ingot TODO: missing min_price and max_price
 -- INSERT INTO `guild_shops` VALUES (5272,650,6000,58032,120,0,0);     -- brass_ingot TODO: missing min_price and max_price
 INSERT INTO `guild_shops` VALUES (5272,744,4095,9996,120,0,0);      -- silver_ingot
@@ -762,8 +762,8 @@ INSERT INTO `guild_shops` VALUES (5272,663,20240,45600,120,0,0);    -- mythril_s
 -- INSERT INTO `guild_shops` VALUES (5272,752,20240,45600,120,0,0);    -- gold_sheet TODO: missing min_price and max_price
 -- INSERT INTO `guild_shops` VALUES (5272,754,20240,45600,120,0,0);    -- platinum_sheet TODO: missing min_price and max_price
 INSERT INTO `guild_shops` VALUES (5272,673,210,1388,121,48,3);      -- brass_scales
-INSERT INTO `guild_shops` VALUES (5272,760,29172,74880,120,0,0);    -- silver_chain
-INSERT INTO `guild_shops` VALUES (5272,681,10500,67760,121,6,3);    -- mythril_chain
+INSERT INTO `guild_shops` VALUES (5272,760,11172,44880,120,0,0);    -- silver_chain
+INSERT INTO `guild_shops` VALUES (5272,681,17500,57760,121,6,3);    -- mythril_chain
 -- INSERT INTO `guild_shops` VALUES (5272,761,10500,30800,120,0,0);    -- gold_chain TODO: missing min_price and max_price
 -- INSERT INTO `guild_shops` VALUES (5272,762,10500,30800,120,0,0);    -- platinum_chain TODO: missing min_price and max_price
 INSERT INTO `guild_shops` VALUES (5272,769,1288,7000,240,33,4);     -- red_rock
@@ -782,13 +782,13 @@ INSERT INTO `guild_shops` VALUES (5272,806,1396,8569,120,16,18);    -- tourmalin
 INSERT INTO `guild_shops` VALUES (5272,807,1396,8569,120,3,18);     -- sardonyx
 INSERT INTO `guild_shops` VALUES (5272,809,1396,8569,120,3,18);     -- clear_topaz
 INSERT INTO `guild_shops` VALUES (5272,814,1396,8569,120,3,18);     -- amber_stone
-INSERT INTO `guild_shops` VALUES (5272,788,9000,56160,24,0,0);      -- peridot
+INSERT INTO `guild_shops` VALUES (5272,788,9000,27000,24,0,0);      -- peridot
 INSERT INTO `guild_shops` VALUES (5272,790,9000,27000,24,0,0);      -- garnet
 INSERT INTO `guild_shops` VALUES (5272,811,9000,27000,24,0,0);      -- ametrine
 INSERT INTO `guild_shops` VALUES (5272,815,9000,27000,24,0,0);      -- sphene
 INSERT INTO `guild_shops` VALUES (5272,798,9000,27000,24,0,0);      -- turquoise
 INSERT INTO `guild_shops` VALUES (5272,808,9000,24000,24,0,0);      -- goshenite
-INSERT INTO `guild_shops` VALUES (5272,784,23400,124800,24,0,0);    -- jadeite
+INSERT INTO `guild_shops` VALUES (5272,784,23400,70200,24,0,0);    -- jadeite
 INSERT INTO `guild_shops` VALUES (5272,803,23400,70200,24,0,0);     -- sunstone
 INSERT INTO `guild_shops` VALUES (5272,810,23400,70200,24,0,0);     -- fluorite
 INSERT INTO `guild_shops` VALUES (5272,801,23400,70200,24,0,0);     -- chrysoberyl
@@ -796,14 +796,14 @@ INSERT INTO `guild_shops` VALUES (5272,791,23400,49608,24,0,0);     -- aquamarin
 INSERT INTO `guild_shops` VALUES (5272,805,23400,70200,24,0,0);     -- zircon
 INSERT INTO `guild_shops` VALUES (5272,797,23400,49608,24,0,0);     -- painite
 INSERT INTO `guild_shops` VALUES (5272,802,23400,70200,24,0,0);     -- moonstone
-INSERT INTO `guild_shops` VALUES (5272,785,48366,284544,24,0,0);    -- emerald
-INSERT INTO `guild_shops` VALUES (5272,786,48366,284544,24,0,0);    -- ruby
-INSERT INTO `guild_shops` VALUES (5272,804,48366,284544,24,0,0);    -- spinel
-INSERT INTO `guild_shops` VALUES (5272,789,48366,284544,24,0,0);    -- topaz
-INSERT INTO `guild_shops` VALUES (5272,794,48366,284544,24,0,0);    -- sapphire
-INSERT INTO `guild_shops` VALUES (5272,787,48366,284544,24,0,0);    -- diamond
-INSERT INTO `guild_shops` VALUES (5272,812,48366,284544,24,0,0);    -- deathstone
-INSERT INTO `guild_shops` VALUES (5272,813,48366,284544,24,0,0);    -- angelstone
+INSERT INTO `guild_shops` VALUES (5272,785,48366,164544,12,0,0);    -- emerald
+INSERT INTO `guild_shops` VALUES (5272,786,48366,164544,12,0,0);    -- ruby
+INSERT INTO `guild_shops` VALUES (5272,804,48366,164544,12,0,0);    -- spinel
+INSERT INTO `guild_shops` VALUES (5272,789,48366,164544,12,0,0);    -- topaz
+INSERT INTO `guild_shops` VALUES (5272,794,48366,164544,12,0,0);    -- sapphire
+INSERT INTO `guild_shops` VALUES (5272,787,48366,164544,12,0,0);    -- diamond
+INSERT INTO `guild_shops` VALUES (5272,812,48366,164544,12,0,0);    -- deathstone
+INSERT INTO `guild_shops` VALUES (5272,813,48366,164544,12,0,0);    -- angelstone
 INSERT INTO `guild_shops` VALUES (5272,13327,5850,5850,24,0,0);     -- silver_earring
 -- INSERT INTO `guild_shops` VALUES (5272,13328,5850,5850,24,0,0);     -- mythril_earring TODO: missing min_price and max_price
 -- INSERT INTO `guild_shops` VALUES (5272,13315,5850,5850,24,0,0);     -- gold_earring TODO: missing min_price and max_price

@@ -13,7 +13,11 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
-    player:addStatusEffect(xi.effect.SABER_DANCE, { power = 50, duration = 300, origin = player, tick = 3 })
+    local rank = player:getMerit(xi.merit.SABER_DANCE) / 5
+    local startDA = 35 + 3 * rank
+    local floorDA = 12 + 2 * rank
+
+    player:addStatusEffect(xi.effect.SABER_DANCE, { power = startDA, subPower, floorDA, duration = 300, origin = player, tick = 3 })
 end
 
 return abilityObject

@@ -5,12 +5,13 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
+    local merits = target:getMerit(xi.merit.FAN_DANCE)
     -- Waltz recast effect is handled in the waltz scripts
     target:delStatusEffect(xi.effect.HASTE_SAMBA)
     target:delStatusEffect(xi.effect.ASPIR_SAMBA)
     target:delStatusEffect(xi.effect.DRAIN_SAMBA)
     target:delStatusEffect(xi.effect.SABER_DANCE)
-    target:addMod(xi.mod.ENMITY, 15)
+    target:addMod(xi.mod.ENMITY, 15 + merits)
 end
 
 effectObject.onEffectTick = function(target, effect)

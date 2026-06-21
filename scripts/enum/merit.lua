@@ -271,7 +271,7 @@ xi.merit =
 
     -- SCH 1
     GRIMOIRE_RECAST             = meritCategory.SCH_1 + 0x00,
-    MODUS_VERITAS_DURATION      = meritCategory.SCH_1 + 0x02,
+    MODUS_VERITAS_EFFECT        = meritCategory.SCH_1 + 0x02,
     HELIX_MAGIC_ACC_ATT         = meritCategory.SCH_1 + 0x04,
     MAX_SUBLIMATION             = meritCategory.SCH_1 + 0x06,
 
