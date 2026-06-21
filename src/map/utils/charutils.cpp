@@ -1546,7 +1546,7 @@ auto firstFreeSlot(const CItemContainer* PContainer) -> uint8
     return ERROR_SLOTID;
 }
 
-void requireDatabaseChange(const std::unique_ptr<db::detail::ResultSetWrapper>& result, const std::string& failure)
+void requireDatabaseChange(const std::unique_ptr<db::ResultSet>& result, const std::string& failure)
 {
     if (!result || result->rowsAffected() != 1)
     {
