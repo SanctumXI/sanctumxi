@@ -130,6 +130,10 @@ add_definitions(
     -DSOL_PRINT_ERRORS=0
     -DRC_FAST_MATH=1
     -DSPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_DEBUG
+    # Enable cpp-httplib HTTPS support. OpenSSL libs/headers are already linked and
+    # included globally (see FindOpenSSLlibssl/libcrypto above), so httplib only needs
+    # this define to compile its TLS code path (used for JWT_AUTH_HOST validation).
+    -DCPPHTTPLIB_OPENSSL_SUPPORT=1
 )
 
 # For external libs
