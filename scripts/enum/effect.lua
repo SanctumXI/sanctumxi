@@ -678,6 +678,7 @@ xi.effect =
     TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
     CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
+    KICK_DAMAGE              = 808, -- Sanctum Custom effect
 
     -- 789
     -- 807-1022

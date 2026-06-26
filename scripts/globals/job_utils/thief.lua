@@ -157,7 +157,7 @@ end
 xi.job_utils.thief.useBully = function(player, target, ability)
     local jpValue = player:getJobPointLevel(xi.jp.BULLY_EFFECT)
 
-    target:addStatusEffect(xi.effect.CRITICAL_BOOST, { power = 1, duration = 120, origin = player, icon = xi.effect.INTIMIDATE })
+    target:addStatusEffect(xi.effect.CRITICAL_BOOST, { power = 5, duration = 120, origin = player, icon = xi.effect.INTIMIDATE })
 
     return xi.effect.INTIMIDATE
 end

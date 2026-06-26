@@ -44,8 +44,9 @@ WHERE BINARY `name` IN
     'Marshal',
     'Antonia',
     'Synergy_Furnace',
-    'Synergy_Engineer'
-
+    'Synergy_Engineer',
+    'Pursuivant',
+    'Tillecoe'
     
 )
 -- Treasure Coffers associated with Gobbie Mystery NPCs

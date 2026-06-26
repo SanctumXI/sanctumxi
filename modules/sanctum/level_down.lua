@@ -1,3 +1,14 @@
+-----------------------------------
+-- Level Down
+-----------------------------------
+require('modules/module_utils')
+require('scripts/globals/player')
+-----------------------------------
+local m = Module:new('level_down')
+
+local openingDecoration = '\129\154'
+local closingDecoration = '\129\154'
+
 m:addOverride('xi.player.onPlayerLevelDown', function(player)
     super(player)
 
@@ -10,6 +21,7 @@ m:addOverride('xi.player.onPlayerLevelDown', function(player)
         closingDecoration
     )
 
-    -- Sends announcement via ZMQ to all processes and zones
     player:printToArea(decoratedMessage, xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
 end)
+
+return m

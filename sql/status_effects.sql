@@ -706,6 +706,8 @@ INSERT INTO `status_effects` VALUES (801,'meditate',288,0,0,0,0,0,7,0,0,NULL);
 INSERT INTO `status_effects` VALUES (802,'elemental_resistance_down',8389408,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (803,'full_speed_ahead',768,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `status_effects` VALUES (805,'tomahawk',544,0,0,0,0,0,0,0,0,NULL);
+INSERT INTO `status_effects` VALUES (807,'critical_boost',297,0,0,0,0,0,1,0,0,NULL);
+INSERT INTO `status_effects` VALUES (808,'kick_damage',297,0,0,0,0,0,1,0,0,NULL);
 
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;

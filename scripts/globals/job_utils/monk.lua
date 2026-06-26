@@ -93,7 +93,7 @@ xi.job_utils.monk.useChiBlast = function(player, target, ability)
         target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })  
     end
 
-    local dmg = math.floor(player:getStat(xi.mod.VIT) * (0.7 + (math.random() / 2))) * multiplier
+    local dmg = math.floor(player:getStat(xi.mod.VIT) * (1.4 + (math.random() / 2))) * multiplier
 
     dmg = xi.ability.adjustDamage(dmg, player, ability, target, xi.attackType.BREATH, xi.damageType.ELEMENTAL, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, player, xi.attackType.BREATH, xi.damageType.ELEMENTAL)
@@ -104,7 +104,7 @@ xi.job_utils.monk.useChiBlast = function(player, target, ability)
 end
 
 xi.job_utils.monk.useCounterstance = function(player, target, ability)
-    local power = 45 + player:getMod(xi.mod.COUNTERSTANCE_EFFECT)
+    local power = 35 + player:getMod(xi.mod.COUNTERSTANCE_EFFECT)
 
     target:delStatusEffect(xi.effect.COUNTERSTANCE) --if not found this will do nothing
     target:addStatusEffect(xi.effect.COUNTERSTANCE, { power = power, duration = 300, origin = player })
@@ -116,15 +116,14 @@ end
 xi.job_utils.monk.useIronGuard = function(player, target, ability)
     --local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
     --local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
-    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 180, origin = player }) -- Not working so using Guarding Rate Boost until can figure out the problem
-    -- player:addStatusEffect(xi.effect.GUARDING_RATE_BOOST, { power = 1, duration = 180, origin = player })
+    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 300, origin = player }) 
     return xi.effect.IRON_GUARD
 end
 
 xi.job_utils.monk.useFocus = function(player, target, ability)
     local jpLevel  = target:getJobPointLevel(xi.jp.FOCUS_EFFECT)
     local focusMod = target:getMod(xi.mod.FOCUS_EFFECT)
-    player:addStatusEffect(xi.effect.FOCUS, { power = jpLevel + focusMod, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.FOCUS, { power = jpLevel + focusMod, duration = 180, origin = player })
 
     return xi.effect.FOCUS
 end

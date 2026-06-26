@@ -7,7 +7,7 @@ local effectObject = {}
 effectObject.onEffectGain = function(target, effect)
     target:delStatusEffect(xi.effect.REFRESH)
 
-    local merits = target:getMerit(xi.merit.SUBLIMATION_EFFECT) / 10
+    local merits = target:getMerit(xi.merit.MAX_SUBLIMATION) / 10
     local bonus    = merits * 2
 
     effect:addMod(xi.mod.MATT, bonus)

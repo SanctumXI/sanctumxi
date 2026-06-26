@@ -30,7 +30,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
                 -- Add critical hit buff after WS for 45 seconds
-    player:addStatusEffect(xi.effect.BLOOD_RAGE, { power = 20, duration = 45, origin = player })
+    player:addStatusEffect(xi.effect.CRITICAL_BOOST, { power = 10, duration = 45, origin = player })
    
     return tpHits, extraHits, criticalHit, damage
 end

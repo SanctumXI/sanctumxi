@@ -140,7 +140,7 @@ xi.merit =
 
     -- MNK 1
     FOCUS_RECAST                = meritCategory.MNK_1 + 0x00,
-    DODGE_RECAST                = meritCategory.MNK_1 + 0x02,
+    IRON_GUARD_EFFECT           = meritCategory.MNK_1 + 0x02,
     CHAKRA_RECAST               = meritCategory.MNK_1 + 0x04,
     COUNTER_RATE                = meritCategory.MNK_1 + 0x06,
     KICK_ATTACK_RATE            = meritCategory.MNK_1 + 0x08,

@@ -15,10 +15,10 @@ effectObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.ENMITY_LOSS_REDUCTION, 25)
     effect:addMod(xi.mod.COUNTER, effect:getPower())
 
-    -- Lv. 60+ bonus: Defense +10%
+    -- Lv. 60+ bonus: Defense +5%
     local level = target:getMainLvl()
     if level >= 60 then
-        effect:addMod(xi.mod.DEFENSE_BOOST, 10)
+        effect:addMod(xi.mod.DEFP, 5)
     end
     
     -- Lv. 75+ bonus: Counter rate +5

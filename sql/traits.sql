@@ -514,7 +514,7 @@ INSERT INTO `traits` VALUES (100,'tactical parry',19,97,4,486,50,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (100,'tactical parry',22,40,1,486,20,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (100,'tactical parry',22,60,2,486,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (100,'tactical parry',22,85,3,486,40,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (101,'tactical guard',2,60,1,899,30,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (101,'tactical guard',2,45,1,899,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (101,'tactical guard',2,75,2,899,45,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (101,'tactical guard',2,97,3,899,60,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (101,'tactical guard',18,80,1,899,30,'ABYSSEA',0);

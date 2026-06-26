@@ -180,17 +180,17 @@ bool CAttack::IsGuarded() const
 bool CAttack::CheckGuarded()
 {
     m_isGuarded = attackutils::IsGuarded(m_attacker, m_victim);
+
     if (m_isGuarded)
     {
-        if (m_damageRatio > 1.0f)
+        // Reduce damage ratio by 1.5, but never below 0.3. Sanctum Custom change
+        // If the ratio is already 0.3 or lower, leave it alone.
+        if (m_damageRatio > 0.3f)
         {
-            m_damageRatio -= 1.0f;
-        }
-        else
-        {
-            m_damageRatio = 0;
+            m_damageRatio = std::max(m_damageRatio - 1.5f, 0.3f);
         }
     }
+
     return m_isGuarded;
 }
 

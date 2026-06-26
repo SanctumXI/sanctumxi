@@ -415,9 +415,6 @@ xi.automaton.onUseManeuver = function(player, target, ability, action)
 
         local duration = player:getPet():getLocalVar('MANEUVER_DURATION')
 
-            -- Sanctum Custom: Maneuver duration merit
-            duration = duration + player:getMerit(xi.merit.MANEUVER_EFFECT)
-
             target:addStatusEffect(maneuverInfo[1], { power = bonus, duration = utils.clamp(duration, 60, 300), origin = player })
         end
 

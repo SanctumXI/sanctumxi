@@ -18,8 +18,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 2
     params.ftpMod = { 2.0, 2.5, 3.5 }
-     params.atkVaries = { 1.15, 1.25, 1.35 }
-    params.str_wsc = 1.0 params.vit_wsc = 0.5
+    params.atkVaries = { 1.15, 1.25, 1.35 }
+    params.str_wsc = 1.0 
+    params.vit_wsc = 0.5
     params.kick = true -- https://www.bluegartr.com/threads/112776-Dev-Tracker-Findings-Posts-%28NO-DISCUSSION%29?p=6712150&viewfull=1#post6712150
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
@@ -28,6 +29,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    player:addStatusEffect(xi.effect.KICK_DAMAGE, { power = 40, duration = 45, origin = player, icon = xi.effect.FOOTWORK })
+
     return tpHits, extraHits, criticalHit, damage
 end
 
