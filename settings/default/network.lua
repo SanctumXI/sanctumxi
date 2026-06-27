@@ -14,7 +14,7 @@ xi.settings.network =
     SQL_HOST     = '127.0.0.1',
     SQL_PORT     = 3306,
     SQL_LOGIN    = 'root',
-    SQL_PASSWORD = 'MetalGear69!',
+    SQL_PASSWORD = 'root',
     SQL_DATABASE = 'xidb',
 
     LOGIN_DATA_IP   = '0.0.0.0',
@@ -37,15 +37,10 @@ xi.settings.network =
     HTTP_HOST   = 'localhost',
     HTTP_PORT   = 8088,
 
-    -- Sanctum JWT authentication (Discord SSO via Sanctum website)
-    -- When set, xiloader can log in with command 0x35 (LOGIN_ATTEMPT_JWT) and an access_token.
-    -- Example: 'https://sanctum.example.com' or 'http://127.0.0.1:3000' for local testing.
-    -- Leave empty to disable JWT login.
-    JWT_AUTH_HOST = 'sanctumxi.com',
-
-    -- Central message server settings (ensure these are the same on both all map servers and the central (lobby) server
-    ZMQ_IP   = '127.0.0.1',
-    ZMQ_PORT = 54003,
+    -- Central message server settings
+    ZMQ_TRANSPORT = 'tcp',
+    ZMQ_IP        = '127.0.0.1',
+    ZMQ_PORT      = 54003,
 
     -- ===========================
     -- NOTE: The settings that follow will not necessarily need to be modified
