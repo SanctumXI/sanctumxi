@@ -41,7 +41,7 @@ xi.settings.network =
     -- When set, xiloader can log in with command 0x35 (LOGIN_ATTEMPT_JWT) and an access_token.
     -- Example: 'https://sanctum.example.com' or 'http://127.0.0.1:3000' for local testing.
     -- Leave empty to disable JWT login.
-    JWT_AUTH_HOST = '',
+    JWT_AUTH_HOST = 'sanctumxi.com',
 
     -- Central message server settings (ensure these are the same on both all map servers and the central (lobby) server
     ZMQ_IP   = '127.0.0.1',
