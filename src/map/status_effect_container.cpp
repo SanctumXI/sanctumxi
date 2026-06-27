@@ -481,7 +481,7 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, Effec
 
         m_StatusEffectSet.insert(PStatusEffect);
 
-        ApplyStateAlteringEffects(PStatusEffect);
+        HandleEffectGainSideEffects(PStatusEffect);
 
         luautils::OnEffectGain(m_POwner, PStatusEffect);
         m_POwner->PAI->EventHandler.triggerListener("EFFECT_GAIN", m_POwner, PStatusEffect);
@@ -743,8 +743,7 @@ void CStatusEffectContainer::KillAllStatusEffect()
     m_POwner->UpdateHealth();
 }
 
-// Apply any state alterations for the effect if applicable.
-void CStatusEffectContainer::ApplyStateAlteringEffects(CStatusEffect* StatusEffect)
+void CStatusEffectContainer::HandleEffectGainSideEffects(CStatusEffect* StatusEffect)
 {
     EFFECT effect = StatusEffect->GetStatusID();
 
@@ -768,11 +767,6 @@ void CStatusEffectContainer::ApplyStateAlteringEffects(CStatusEffect* StatusEffe
             if (effect == EFFECT_SLEEP_II || effect == EFFECT_LULLABY)
             {
                 StatusEffect->SetIcon(EFFECT_SLEEP);
-            }
-
-            if (!m_POwner->PAI->IsCurrentState<CInactiveState>() && !m_POwner->PAI->IsCurrentState<CMobSkillState>())
-            {
-                m_POwner->PAI->Inactive(0ms, false);
             }
         }
     }

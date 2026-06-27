@@ -59,7 +59,7 @@ public:
     void DelStatusEffectsByType(uint16 Type);
     bool DelStatusEffectByTier(EFFECT StatusID, uint16 power);
     void KillAllStatusEffect();
-    void ApplyStateAlteringEffects(CStatusEffect* StatusEffect);
+    void HandleEffectGainSideEffects(CStatusEffect* StatusEffect);
 
     bool HasStatusEffect(EFFECT StatusID);               // We check the presence of the effect
     bool HasStatusEffect(EFFECT StatusID, uint16 SubID); // Check the presence of an effect with a unique Subid
