@@ -663,6 +663,7 @@ xi.jobAbility =
     TORNADO_II         = 968,
     WINDS_BLESSING     = 969,
     HYSTERIC_ASSAULT   = 970,
+    DOUBLE_PALM_SHIELD = 971,
 }
 
 xi.ja = xi.jobAbility

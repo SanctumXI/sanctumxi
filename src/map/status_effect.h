@@ -752,13 +752,14 @@ enum EFFECT : uint16
     EFFECT_TOMAHAWK            = 805, // Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
     EFFECT_NUKE_WALL           = 806, // Custom effect for NM type mobs only. Applied by elemental magic damage sources
     EFFECT_CRITICAL_BOOST      = 807, // Sanctum Custom Effect for crit hit rate
-    EFFEC_KICK_DAMAGE          = 808, // Sanctum Custom effect to boost Kick Damage
+    EFFECT_KICK_DAMAGE         = 808, // Sanctum Custom effect to boost Kick Damage
+    EFFECT_DOUBLE_PALM_SHIELD  = 809, // Sanctum Custom effect
 
     // 789
     // 807-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
-#define MAX_EFFECTID 809 // 768 real + 39 custom
+#define MAX_EFFECTID 810 // 768 real + 39 custom
 DECLARE_FORMAT_AS_UNDERLYING(EFFECT);
 
 /************************************************************************

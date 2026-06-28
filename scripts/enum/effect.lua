@@ -679,6 +679,7 @@ xi.effect =
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
     CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
     KICK_DAMAGE              = 808, -- Sanctum Custom effect
+    DOUBLE_PALM_SHIELD       = 809, -- Sanctum Custom effect
 
     -- 789
     -- 807-1022

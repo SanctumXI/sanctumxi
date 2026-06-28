@@ -268,4 +268,4 @@ changed-files.txt
 clang_tidy_summary.md
 
 # Network Settings
-settings/network.lua
+settings/default/network.lua

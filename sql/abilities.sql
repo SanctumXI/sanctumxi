@@ -657,4 +657,5 @@ INSERT INTO `abilities` VALUES (964,'roundhouse',15,25,4,60,173,0,0,179,2000,0,6
 INSERT INTO `abilities` VALUES (967,'sonic_buffet',15,65,4,60,173,0,0,182,2000,0,6,10.0,0,0,0,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (968,'tornado_ii',15,75,4,60,173,0,0,183,2000,0,6,10.0,0,0,0,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (970,'hysteric_assault',15,99,4,60,173,0,0,185,2000,0,6,3.0,0,0,0,60,0,0,NULL);
+INSERT INTO `abilities` VALUES (971,'double_palm_shield',2,60,1,60,22,100,0,221,2000,0,6,0.0,0,0,1,80,0,0,NULL);
 --
