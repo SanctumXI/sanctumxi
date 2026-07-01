@@ -15,8 +15,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local power = 20
-    local duration = 120
+    local power = 25
+    local duration = 90
 
     skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.ATTACK_BOOST, power, 0, duration))
     return xi.effect.ATTACK_BOOST
