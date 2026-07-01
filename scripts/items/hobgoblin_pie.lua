@@ -8,7 +8,7 @@
 -- Agility 4
 -- Charisma -7
 -- Health Regen While Healing 2
--- Defense % 12 (cap 60)
+-- Defense % 12 (cap 100)
 -----------------------------------
 ---@type TItemFood
 local itemObject = {}
@@ -28,7 +28,7 @@ itemObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.CHR, -7)
     effect:addMod(xi.mod.HPHEAL, 2)
     effect:addMod(xi.mod.FOOD_DEFP, 12)
-    effect:addMod(xi.mod.FOOD_DEF_CAP, 60)
+    effect:addMod(xi.mod.FOOD_DEF_CAP, 100)
 end
 
 itemObject.onEffectLose = function(target, effect)
