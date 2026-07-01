@@ -15,7 +15,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     -- TODO: Jimmayus spreadsheet says this is physical? Need testing.
     params.baseDamage         = mob:getMainLvl() + 2
-    params.fTP                = { 1.5, 1.5, 1.5 }
+    params.fTP                = { 2.0, 2.0, 2.0 }
     params.element            = xi.element.NONE
     params.attackType         = xi.attackType.MAGICAL
     params.damageType         = xi.damageType.NONE
