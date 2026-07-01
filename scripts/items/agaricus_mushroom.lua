@@ -1,7 +1,7 @@
 -----------------------------------
 -- ID: 5680
 -- Item: agaricus mushroom
--- Food Effect: 5 Min, All Races
+-- Food Effect: 10 Min, All Races
 -----------------------------------
 -- STR -4
 -- MND +2
@@ -14,7 +14,7 @@ itemObject.onItemCheck = function(target, item, param, caster)
 end
 
 itemObject.onItemUse = function(target, user, item, action)
-    target:addStatusEffect(xi.effect.FOOD, { duration = 300, origin = user, sourceType = xi.effectSourceType.FOOD, sourceTypeParam = item:getID() })
+    target:addStatusEffect(xi.effect.FOOD, { duration = 600, origin = user, sourceType = xi.effectSourceType.FOOD, sourceTypeParam = item:getID() })
 end
 
 itemObject.onEffectGain = function(target, effect)
