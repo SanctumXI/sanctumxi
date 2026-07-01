@@ -17,16 +17,16 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     local mabEffect = mob:getStatusEffect(xi.effect.MAGIC_ATK_BOOST)
     if mabEffect then
-        mabTotal = mabEffect:getPower() + 10
+        mabTotal = mabEffect:getPower() + 25
     end
 
     local mdbEffect = mob:getStatusEffect(xi.effect.MAGIC_DEF_BOOST)
     if mdbEffect then
-        mdbTotal = mdbEffect:getPower() + 10
+        mdbTotal = mdbEffect:getPower() + 25
     end
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_ATK_BOOST, mabTotal, 0, 180))
-    xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_DEF_BOOST, mdbTotal, 0, 180)
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_ATK_BOOST, mabTotal, 0, 90))
+    xi.mobskills.mobBuffMove(mob, xi.effect.MAGIC_DEF_BOOST, mdbTotal, 0, 90)
 
     return xi.effect.MAGIC_ATK_BOOST
 end
