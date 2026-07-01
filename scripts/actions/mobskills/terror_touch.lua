@@ -1,7 +1,7 @@
 -----------------------------------
 -- Terror Touch
 -- Family: Ghost
--- Description: Deals physical damage to a single target. Additional Effect : Attack Down
+-- Description: Deals physical damage to a single target. Additional Effect : Terror
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,7 +15,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 1.0, 1.0, 1.0 }
+    params.fTP            = { 1.2, 1.2, 1.2 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
@@ -27,7 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.ATTACK_DOWN, 70, 0, 90)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.TERROR, 30, 0, 8)
     end
 
     return info.damage
