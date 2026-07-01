@@ -29,7 +29,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
         -- TODO: Dynamis - Nightmare Fly
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 1, 3, 60) -- TODO: Capture duration
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 2, 3, 60) -- TODO: Capture duration
     end
 
     return info.damage
