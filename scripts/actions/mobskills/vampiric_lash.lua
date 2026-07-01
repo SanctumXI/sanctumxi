@@ -17,7 +17,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg() -- TODO: Capture baseDamage
     params.numHits        = 1
-    params.fTP            = { 1.0, 1.0, 1.0 } -- TODO: Capture fTPs
+    params.fTP            = { 1.2, 1.2, 1.2 } -- TODO: Capture fTPs
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.PIERCING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
