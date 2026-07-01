@@ -19,9 +19,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.attackType     = xi.attackType.RANGED
     params.damageType     = xi.damageType.PIERCING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
-    params.skipParry      = true
-    params.skipGuard      = true
-    params.skipBlock      = true
+    params.skipParry      = false
+    params.skipGuard      = false
+    params.skipBlock      = false
 
     local info = xi.mobskills.mobRangedMove(mob, target, skill, action, params)
 
