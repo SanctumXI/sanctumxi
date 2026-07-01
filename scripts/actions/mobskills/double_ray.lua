@@ -15,9 +15,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getMainLvl() + 2
     params.fTP            = { 2.25, 2.25, 2.25 } -- TODO: Capture fTP scaling
-    params.element        = xi.element.NONE
+    params.element        = xi.element.LIGHT
     params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.ELEMENTAL
+    params.damageType     = xi.damageType.LIGHT
     params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
