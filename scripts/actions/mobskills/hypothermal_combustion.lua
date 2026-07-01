@@ -18,7 +18,7 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = skill:getMobHP() / 3
+    params.baseDamage     = skill:getMobHP() / 3.5
     params.fTP            = { 1, 1, 1 }
     params.element        = xi.element.ICE
     params.attackType     = xi.attackType.BREATH
