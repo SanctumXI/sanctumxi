@@ -346,8 +346,7 @@ INSERT INTO `blue_spell_mods` VALUES (597,13,1); -- MND+1
 -- ----------------------------
 -- Soporific
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (598,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (598,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (598,13,2); -- MND+2
 
 -- ----------------------------
 -- Queasyshroom
