@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: AGI+1
 -- Level: 44
--- Casting Time: 4 seconds
+-- Casting Time: 3 seconds
 -- Recast Time: 30 seconds
 -- Magic Bursts on: Detonation, Fragmentation, and Light
 -- Combos: Auto Refresh
