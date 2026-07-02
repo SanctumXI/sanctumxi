@@ -14,7 +14,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.percentMultipier = 0.125
-    params.damageCap        = 700
+    params.damageCap        = 800
     params.bonusDamage      = (mob:getMainLvl() + 2) * 2
     params.mAccuracyBonus   = { 0, 0, 0 }
     params.resistStat       = xi.mod.INT -- TODO: Light based skills are often MND, need captures.
@@ -29,10 +29,10 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
          -- TODO: Function name is duration. We might want to rename to something more universal.
-        local power = xi.mobskills.calculateDuration(skill:getTP(), 1250, 1250) -- TODO: Capture power values
+        local power = xi.mobskills.calculateDuration(skill:getTP(), 1250, 2500) -- TODO: Capture power values
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, power, 0, 120)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, power, 0, 160)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
     end
 
     return info.damage
