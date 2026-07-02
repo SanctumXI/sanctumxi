@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Refueling
 -- Increases attack speed
--- Spell cost: 29 MP
+-- Spell cost: 75 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4
@@ -21,7 +21,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local power = 1000 -- 10%
+    local power = 1500 -- 15%
     local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 300)
 
     if not target:addStatusEffect(xi.effect.HASTE, { power = power, duration = duration, origin = caster }) then
