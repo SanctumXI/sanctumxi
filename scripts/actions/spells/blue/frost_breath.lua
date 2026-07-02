@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Frost Breath
 -- Deals ice damage to enemies within a fan-shaped area originating from the caster. Additional effect: Paralysis
--- Spell cost: 136 MP
+-- Spell cost: 110 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 3
 -- Stat Bonus: INT-2
 -- Level: 66
--- Casting Time: 6.5 seconds
--- Recast Time: 42.75 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 33.75 seconds
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Conserve MP
 -----------------------------------
@@ -26,8 +26,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.ICE
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 3
-    params.lvlMod     = 0.625
+    params.hpMod      = 5
+    params.lvlMod     = 1
     params.isConal    = true
 
     -- Handle damage.
