@@ -509,8 +509,8 @@ INSERT INTO `blue_spell_mods` VALUES (637,8,3); -- STR+3
 -- ----------------------------
 -- Feather Storm
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (638,14,2); -- CHR+2
-INSERT INTO `blue_spell_mods` VALUES (638,2,5); -- HP+5,
+INSERT INTO `blue_spell_mods` VALUES (638,11,2); -- AGI+2
+INSERT INTO `blue_spell_mods` VALUES (638,5,5); -- MP+5,
 
 -- ----------------------------
 -- Tail Slap
