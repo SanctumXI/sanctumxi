@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Cocoon
 -- Enhances defense
--- Spell cost: 10 MP
+-- Spell cost: 25 MP
 -- Monster Type: Vermin
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 1
@@ -9,7 +9,7 @@
 -- Level: 8
 -- Casting Time: 1.75 seconds
 -- Recast Time: 60 seconds
--- Duration: 90 seconds
+-- Duration: 180 seconds
 -----------------------------------
 -- Combos: None
 -----------------------------------
@@ -22,7 +22,7 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local power = 50 -- 50%
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 90)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
 
     if not target:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = power, duration = duration, origin = caster }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
