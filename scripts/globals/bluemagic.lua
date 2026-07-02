@@ -561,8 +561,8 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
         return 0
     end
 
-    -- Initial damage
-    local dmg = caster:getHP() / params.hpMod
+    -- Initial damage (Breaths scale on MAX hp, not current HP)
+    local dmg = caster:getMaxHP() / params.hpMod
     if params.lvlMod > 0 then
         dmg = dmg + caster:getMainLvl() / params.lvlMod
     end
