@@ -25,14 +25,14 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     local info = xi.mobskills.mobBreathMove(mob, target, skill, action, params)
 
-    if xi.mobskills.processDamage(mob, target, skill, action, info) then
-        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+if xi.mobskills.processDamage(mob, target, skill, action, info) then
+    target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        local power    = 1
-        local duration = 60 -- TODO: Capture duration
+    local power    = math.max(1, math.floor(mob:getMainLvl() / 10))
+    local duration = 60 -- TODO: Capture duration
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, duration)
-    end
+    xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, power, 3, duration)
+end
 
     return info.damage
 end

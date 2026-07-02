@@ -837,6 +837,8 @@ public:
 
     // Mob Entity-Specific
     void   setMobLevel(uint8 level, sol::optional<bool> recover);
+    uint8  getStatRank(uint8 statType);
+    void   setStatRank(uint8 statType, uint8 rank);
     uint8  getEcosystem();
     uint16 getSuperFamily();
     uint16 getFamily();

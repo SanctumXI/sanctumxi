@@ -1893,9 +1893,17 @@ uint32 UpdateItem(CCharEntity* PChar, uint8 LocationID, uint8 slotID, int32 quan
 
     uint16 ItemID = PItem->getID();
 
-    if ((int32)(PItem->getQuantity() - PItem->getReserve() + quantity) < 0)
+if (quantity < 0)
     {
-        ShowDebug("UpdateItem: %s trying to move invalid quantity %u of itemID %u", PChar->getName(), quantity, ItemID);
+        if (static_cast<uint32>(-quantity) > PItem->getQuantity())
+        {
+            ShowDebug("UpdateItem: %s trying to remove invalid quantity %d of itemID %u", PChar->getName(), quantity, ItemID);
+            return 0;
+        }
+    }
+    else if (PItem->getQuantity() - PItem->getReserve() + quantity > PItem->getStackSize())
+    {
+        ShowDebug("UpdateItem: %s trying to add invalid quantity %d of itemID %u", PChar->getName(), quantity, ItemID);
         return 0;
     }
 

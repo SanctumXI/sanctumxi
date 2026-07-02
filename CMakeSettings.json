@@ -9,8 +9,7 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     },
     {
       "name": "x64-Release-Tracy",
@@ -21,8 +20,7 @@
       "cmakeCommandArgs": "-DTRACY_ENABLE=ON",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     },
     {
       "name": "x64-Debug",
@@ -30,11 +28,10 @@
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\build\\${name}",
       "installRoot": "${projectDir}\\build\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": "-DCMAKE_EXE_LINKER_FLAGS_DEBUG=\"/DEBUG:NONE\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     },
     {
       "name": "x64-Debug-Tracy",
@@ -45,8 +42,7 @@
       "cmakeCommandArgs": "-DTRACY_ENABLE=ON",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "msvc_x64_x64" ]
     }
   ]
 }
