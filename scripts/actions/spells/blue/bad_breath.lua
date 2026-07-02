@@ -40,13 +40,13 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.SLOW,      2000, 0, 30 },
-        [2] = { xi.effect.SILENCE,      1, 0, 30 },
-        [3] = { xi.effect.PARALYSIS,   15, 0, 30 },
-        [4] = { xi.effect.BIND,         1, 0, 30 },
-        [5] = { xi.effect.WEIGHT,      20, 0, 30 },
-        [6] = { xi.effect.POISON,       7, 0, 30 },
-        [7] = { xi.effect.BLINDNESS,   20, 0, 30 },
+        [1] = { xi.effect.SLOW,      2000, 0, 45 },
+        [2] = { xi.effect.SILENCE,      1, 0, 45 },
+        [3] = { xi.effect.PARALYSIS,   15, 0, 45 },
+        [4] = { xi.effect.BIND,         1, 0, 45 },
+        [5] = { xi.effect.WEIGHT,      20, 0, 45 },
+        [6] = { xi.effect.POISON,       7, 0, 45 },
+        [7] = { xi.effect.BLINDNESS,   20, 0, 45 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
