@@ -1,7 +1,7 @@
 -----------------------------------
 -- Stun Cannon
 -- Family: Omega
--- Description: Deals Thunder? damage to targets in front of mob. Additional Effect: Paralysis
+-- Description: Deals Thunder? damage to targets in front of mob. Additional Effect: Stun
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -31,7 +31,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 20, 0, 120) -- TODO: Capture power/duration
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 6)
     end
 
     return info.damage
