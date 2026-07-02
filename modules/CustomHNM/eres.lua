@@ -1,6 +1,6 @@
 require('modules/module_utils')
 
-local m = Module:new('ereshnm')
+local m = Module:new('eres')
 m:setEnabled(true)
 
 m:addOverride('xi.zones.Tahrongi_Canyon.Zone.onInitialize', function(zone)

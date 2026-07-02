@@ -2227,67 +2227,44 @@ local function executeTeleport(player, destination)
     end)
 end
 
-        -- Helper: Show payment menu
+        -- Helper: Show travel confirmation menu
         local function showPaymentMenu(player, npc, destination)
             local gilCost = destination.costs and destination.costs.gil or 0
-            local cpCost  = destination.costs and destination.costs.cp or 0
 
-            local options = {}
-
-            -- Gil option
-            if gilCost > 0 then
-                table.insert(options, {
-                    string.format("Pay %d Gil", gilCost),
+            local options = {
+                {
+                    "Yes",
                     function(playerArg)
-                        if playerArg:getGil() >= gilCost then
-                            playerArg:delGil(gilCost)
-                            executeTeleport(playerArg, destination)
+                        if gilCost > 0 then
+                            if playerArg:getGil() >= gilCost then
+                                playerArg:delGil(gilCost)
+                                executeTeleport(playerArg, destination)
+                            else
+                                playerArg:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
+                            end
                         else
-                            playerArg:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
+                            executeTeleport(playerArg, destination)
                         end
-                    end
-                })
-            end
-
-            -- CP option
-            if cpCost > 0 then
-                table.insert(options, {
-                    string.format("Pay %d CP", cpCost),
+                    end,
+                },
+                {
+                    "No",
                     function(playerArg)
-                        if playerArg:getCP() >= cpCost then
-                            playerArg:delCP(cpCost)
-                            executeTeleport(playerArg, destination)
-                        else
-                            playerArg:printToPlayer(config.insufficientCP, 0, npc:getPacketName())
-                        end
-                    end
-                })
-            end
-
-            -- Free teleport (no costs defined)
-            if gilCost == 0 and cpCost == 0 then
-                executeTeleport(player, destination)
-                return
-            end
-
-            -- Cancel option
-            table.insert(options, {
-                "Cancel",
-                function(playerArg)
-                    playerArg:printToPlayer(config.cancelled, 0, npc:getPacketName())
-                end
-            })
+                        playerArg:printToPlayer(config.cancelled, 0, npc:getPacketName())
+                    end,
+                },
+            }
 
             player:timer(100, function(playerArg)
                 playerArg:customMenu({
-                    title   = string.format("Teleport to %s", destination.name),
+                    title   = string.format("Travel to %s?", destination.name),
                     options = options,
                 })
             end)
         end
 
-        -- Filter function for destinations
-        local function filterDestination(player, dest)
+        -- Helper: Check whether a destination is unlocked
+        local function isDestinationUnlocked(player, dest)
             -- Level check
             if dest.level and player:getMainLvl() < dest.level then
                 return false
@@ -2299,6 +2276,44 @@ end
             end
 
             return true
+        end
+
+        -- Helper: Build the destination menu list.
+        -- Locked destinations are still shown.
+        -- Unlocked: "Name (500 Gil)"
+        -- Locked:   "Name - Requirement Text"
+        local function buildDestinationMenu(player)
+            local menuDestinations = {}
+
+            for _, destination in ipairs(config.destinations) do
+                local entry = {}
+
+                -- Copy the destination so we can safely change menu-only fields.
+                for k, v in pairs(destination) do
+                    entry[k] = v
+                end
+
+                local gilCost = destination.costs and destination.costs.gil or 0
+                local label   = destination.name
+
+                if isDestinationUnlocked(player, destination) then
+                    if gilCost > 0 then
+                        label = string.format("%s (%d Gil)", label, gilCost)
+                    end
+
+                    entry.label  = label
+                    entry.locked = false
+                else
+                    local lockText = destination.lockText or "Locked"
+
+                    entry.label  = string.format("%s (Locked)", label)
+                    entry.locked = true
+                end
+
+                table.insert(menuDestinations, entry)
+            end
+
+            return menuDestinations
         end
 
         -- Insert the NPC
@@ -2323,11 +2338,21 @@ end
                 -- Use paginated menu
                 LQS.paginatedMenu(player, {
                     title        = config.menuTitle or "Select Destination",
-                    items        = config.destinations,
+                    items        = buildDestinationMenu(player),
                     itemsPerPage = config.itemsPerPage,
-                    filter       = filterDestination,
                     npc          = npc,
                     onSelect     = function(playerArg, destination, npcArg)
+                        if destination.locked or not isDestinationUnlocked(playerArg, destination) then
+                            local lockText = destination.lockText or "Locked"
+
+                            playerArg:printToPlayer(
+                                string.format("%s is locked. %s.", destination.name, lockText),
+                                0,
+                                npcArg:getPacketName()
+                            )
+                            return
+                        end
+
                         showPaymentMenu(playerArg, npcArg, destination)
                     end,
                     onCancel     = function(playerArg, reason)

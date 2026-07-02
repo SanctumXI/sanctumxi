@@ -25,6 +25,8 @@ end
 
 local finalForm = function(mob)
     mob:setLocalVar('final', 1)
+    mob:setLocalVar('gunpodCount', 0)
+    mob:setLocalVar('gunpodTime', GetSystemTime() + utils.minutes(1.5))
     mob:setAnimationSub(2)
     mob:setMod(xi.mod.ATTP, 250)
     mob:setMod(xi.mod.UDMGPHYS, -5000)
@@ -65,14 +67,16 @@ end
 entity.onMobFight = function(mob, target)
     local now = GetSystemTime()
 
-    -- If in Final form then do Pod Ejection every 5 minutes
+    -- If in Final form then do Pod Ejection every 1.5 minutes, up to 7 total
     if mob:getLocalVar('final') == 1 then
         if
+            mob:getLocalVar('gunpodCount') < 7 and
             now >= mob:getLocalVar('gunpodTime') and
             mob:getCurrentAction() == xi.action.category.BASIC_ATTACK and
             GetMobByID(mob:getID() + 1):getStatus() == xi.status.DISAPPEAR
         then
-            mob:setLocalVar('gunpodTime', now + utils.minutes(5))
+            mob:setLocalVar('gunpodCount', mob:getLocalVar('gunpodCount') + 1)
+            mob:setLocalVar('gunpodTime', now + utils.minutes(1.5))
             mob:useMobAbility(1532) -- Pod Ejection
         end
 
