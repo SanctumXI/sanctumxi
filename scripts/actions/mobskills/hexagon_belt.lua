@@ -15,7 +15,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         mob:delStatusEffect(xi.effect.DEFENSE_BOOST)
     end
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.DEFENSE_BOOST, 21, 0, 180))
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.DEFENSE_BOOST, 33, 0, 120))
 
     return xi.effect.DEFENSE_BOOST
 end
