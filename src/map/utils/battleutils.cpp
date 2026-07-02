@@ -939,7 +939,7 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
 
                 if (PChar->GetMJob() == JOB_WAR && PChar->GetMLevel() >= 50)
                 {
-                    const int32 healAmount = std::max<int32>(1, PChar->GetMaxHP() / 20);
+                    const int32 healAmount = std::max<int32>(1, PChar->GetMaxHP() / 30);
                     PChar->addHP(healAmount);
                 }
             }

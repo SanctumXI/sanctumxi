@@ -19,6 +19,12 @@ effectObject.onEffectGain = function(target, effect)
     -- Job Point Bonus
     effect:addMod(xi.mod.ATT, jpEffect)
     effect:addMod(xi.mod.RATT, jpEffect)
+
+    -- Sanctum XI progressive bonus
+-- Level 65+ Warrior main: Warcry also grants Double Attack +10%
+if target:getMainJob() == xi.job.WAR and target:getMainLvl() >= 65 then
+    effect:addMod(xi.mod.DOUBLE_ATTACK, 10)
+    end
 end
 
 effectObject.onEffectTick = function(target, effect)

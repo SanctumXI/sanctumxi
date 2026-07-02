@@ -28,6 +28,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
+
+    player:addStatusEffect(xi.effect.BLOOD_RAGE, { power = 25, duration = 45, origin = player })
 end
 
 return weaponskillObject
