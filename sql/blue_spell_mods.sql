@@ -86,7 +86,7 @@ INSERT INTO `blue_spell_mods` VALUES (534,11,3); -- AGI+3
 -- ----------------------------
 -- Cold Wave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (535,12,-1); -- INT-1
+INSERT INTO `blue_spell_mods` VALUES (535,12,1); -- INT+1
 
 -- ----------------------------
 -- Poison Breath
