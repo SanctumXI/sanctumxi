@@ -275,7 +275,7 @@ INSERT INTO `blue_spell_mods` VALUES (581,14,2); -- CHR+2
 -- ----------------------------
 -- Chaotic Eye
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (582,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (582,14,1); -- CHA+1
 
 -- ----------------------------
 -- Sheep Song
