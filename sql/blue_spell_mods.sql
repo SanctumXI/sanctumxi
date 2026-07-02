@@ -235,7 +235,7 @@ INSERT INTO `blue_spell_mods` VALUES (572,0,0); -- No Stats
 -- ----------------------------
 -- Feather Tickle
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (573,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (573,11,3); -- AGI+3
 
 -- ----------------------------
 -- Feather Barrier
