@@ -354,8 +354,8 @@ INSERT INTO `blue_spell_mods` VALUES (598,5,5); -- MP+5
 -- ----------------------------
 -- Queasyshroom
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (599,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (599,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (599,2,-10); -- HP-10
+INSERT INTO `blue_spell_mods` VALUES (599,5,10); -- MP+10
 
 -- ----------------------------
 -- Wild Oats
