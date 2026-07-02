@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Feather Storm
 -- Additional effect: Poison. Chance of effect varies with TP
--- Spell cost: 12 MP
+-- Spell cost: 8 MP
 -- Monster Type: Beastmen
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 3
--- Stat Bonus: CHR+2, HP+5
+-- Stat Bonus: AGI+2, HP+5
 -- Level: 12
 -- Casting Time: 0.5 seconds
 -- Recast Time: 10 seconds
@@ -57,7 +57,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.POISON, 1, 3, 180 },
+        [1] = { xi.effect.POISON, 3, 3, 60 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
