@@ -243,7 +243,7 @@ INSERT INTO `mob_family_system` VALUES (186,'Morbol',103,'Morbol',17,'Plantoid',
 INSERT INTO `mob_family_system` VALUES (187,'Murex',104,'Murex',21,'Voragean',55,100,120,3,3,3,3,3,3,3,1,3,1,3,0.0,160,0);
 INSERT INTO `mob_family_system` VALUES (188,'Opo-opo',105,'Opo-opo',6,'Beast',55,110,90,5,2,5,2,6,6,2,1,3,1,3,5.0,257,1);
 INSERT INTO `mob_family_system` VALUES (189,'Orc',106,'Orc',7,'Beastmen',55,108,100,2,3,4,4,7,4,3,1,3,1,3,1.0,257,0);
-INSERT INTO `mob_family_system` VALUES (190,'Orc-Warmachine',106,'Orc',7,'Beastmen',55,123,100,4,6,4,3,5,1,3,1,2,1,3,1.0,257,0);
+INSERT INTO `mob_family_system` VALUES (190,'Orc-Warmachine',106,'Orc',7,'Beastmen',30,123,100,4,6,3,4,5,3,3,1,1,1,4,1.0,257,0);
 INSERT INTO `mob_family_system` VALUES (191,'Orobon',107,'Orobon',2,'Aquan',55,90,90,1,4,2,4,4,4,4,1,3,1,3,6.0,2,0);
 INSERT INTO `mob_family_system` VALUES (192,'Peiste',108,'Peiste',14,'Lizard',55,90,90,1,3,4,3,6,6,5,1,3,1,3,6.0,1,0);
 INSERT INTO `mob_family_system` VALUES (193,'Wyvern-Pet',109,'Wyvern',10,'Dragon',55,70,90,4,2,3,4,6,3,3,1,3,1,3,0.0,1,0);
