@@ -113,8 +113,7 @@ INSERT INTO `blue_spell_mods` VALUES (539,5,10); -- MP+10
 -- Spinal Cleave
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (540,10,2); -- VIT+2
-INSERT INTO `blue_spell_mods` VALUES (540,12,1); -- INT+1
-INSERT INTO `blue_spell_mods` VALUES (540,13,1); -- MND+1
+INSERT INTO `blue_spell_mods` VALUES (540,8,2); -- STR+2
 
 -- ----------------------------
 -- Blood Saber
