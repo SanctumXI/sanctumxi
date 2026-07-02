@@ -19,7 +19,7 @@ CREATE TABLE `blue_spell_list` (
 -- Records
 -- ----------------------------
 
-INSERT INTO `blue_spell_list` VALUES (513,1572,3,5,1,0,0,0); -- Venom Shell
+INSERT INTO `blue_spell_list` VALUES (513,1572,3,4,3,0,0,0); -- Venom Shell
 INSERT INTO `blue_spell_list` VALUES (515,462,5,4,1,0,0,0); -- Maelstrom
 INSERT INTO `blue_spell_list` VALUES (517,448,1,10,1,0,0,0); -- Metallic Body
 INSERT INTO `blue_spell_list` VALUES (519,452,3,18,1,1,4,0); -- Screwdriver
