@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: None
 -- Level: 56
--- Casting Time: 2 seconds
+-- Casting Time: 4 seconds
 -- Recast Time: 60 seconds
 -- Duration: 180 Seconds
 -----------------------------------
