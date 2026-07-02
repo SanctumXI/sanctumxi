@@ -3,7 +3,7 @@
 -- Deals critical damage. Chance of critical hit varies with TP
 -- Spell cost: 41 MP
 -- Monster Type: Vermin
--- Spell Type: Physical (Blunt)
+-- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 4
 -- Stat Bonus: HP-5, MP+15
 -- Level: 48
@@ -21,24 +21,21 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
+
     params.ecosystem = xi.ecosystem.VERMIN
-    params.tpmod = xi.spells.blue.tpMod.CRITICAL
-    params.critchance = 0
-    if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
-        params.critchance = 55
-    elseif caster:hasStatusEffect(xi.effect.CHAIN_AFFINITY) then
-        params.critchance = math.floor(caster:getTP() / 75)
-    end
+    params.tpmod     = xi.spells.blue.tpMod.CRITICAL
 
     params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.HTH
-    params.scattr = xi.skillchainType.COMPRESSION
-    params.numhits = 1
+    params.damageType = xi.damageType.SLASHING
+    params.scattr     = xi.skillchainType.COMPRESSION
+
+    params.numhits    = 1
     params.multiplier = 1.5
-    params.tp150 = 1.5
-    params.tp300 = 1.5
-    params.azuretp = 1.5
-    params.duppercap = 49
+    params.tp150      = 1.5
+    params.tp300      = 1.5
+    params.azuretp    = 1.5
+    params.duppercap  = 49
+
     params.str_wsc = 0.0
     params.dex_wsc = 0.5
     params.vit_wsc = 0.0
