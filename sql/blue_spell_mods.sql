@@ -180,8 +180,7 @@ INSERT INTO `blue_spell_mods` VALUES (555,10,2); -- VIT+2
 -- ----------------------------
 -- Eyes On Me
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (557,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (557,5,15); -- MP+15
+INSERT INTO `blue_spell_mods` VALUES (557,14,2); -- CHA+2
 
 -- ----------------------------
 -- Frenetic Rip
