@@ -369,8 +369,7 @@ INSERT INTO `blue_spell_mods` VALUES (604,13,2); -- MND+2
 -- ----------------------------
 -- Geist Wall
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (605,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (605,5,10); -- MP+10
+INSERT INTO `blue_spell_mods` VALUES (605,12,2); -- INT+2
 
 -- ----------------------------
 -- Awful Eye
