@@ -131,7 +131,7 @@ INSERT INTO `blue_spell_mods` VALUES (542,5,10); -- MP+10
 -- ----------------------------
 -- Mandibular Bite
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (543,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (543,8,1); -- STR+1
 
 -- ----------------------------
 -- Cursed Sphere
