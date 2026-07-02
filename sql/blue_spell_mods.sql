@@ -125,8 +125,8 @@ INSERT INTO `blue_spell_mods` VALUES (541,5,5); -- MP+5
 -- ----------------------------
 -- Digest
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (542,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (542,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (542,2,-10); -- HP-10
+INSERT INTO `blue_spell_mods` VALUES (542,5,10); -- MP+10
 
 -- ----------------------------
 -- Mandibular Bite
