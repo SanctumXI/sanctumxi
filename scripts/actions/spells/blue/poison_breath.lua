@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Poison Breath
 -- Deals water damage to enemies within a fan-shaped area originating from the caster. Additional effect: Poison
--- Spell cost: 22 MP
+-- Spell cost: 40 MP
 -- Monster Type: Undead
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 1
@@ -26,8 +26,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.WATER
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 10
-    params.lvlMod     = 1.25
+    params.hpMod      = 8
+    params.lvlMod     = 1
     params.isConal    = true
 
     -- Handle damage.
@@ -40,7 +40,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.POISON, 4, 0, 60 },
+        [1] = { xi.effect.POISON, 5, 0, 60 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
