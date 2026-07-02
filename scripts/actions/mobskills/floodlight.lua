@@ -26,7 +26,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
         -- TODO: Capture power/durations.
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 15, 3, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 30, 3, 120)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.FLASH, 0, 0, 20)  -- Effect handled in hit rate calculation
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
     end

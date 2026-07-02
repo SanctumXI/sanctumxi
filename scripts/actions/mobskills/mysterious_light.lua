@@ -15,9 +15,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getMainLvl() + 2
     params.fTP            = { 2.5, 2.5, 2.5 } -- TODO: Jimmayus spreadsheet says the scales with TP. Need captures.
-    params.element        = xi.element.WIND
+    params.element        = xi.element.LIGHT
     params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.WIND
+    params.damageType     = xi.damageType.LIGHT
     params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)

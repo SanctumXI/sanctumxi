@@ -3,6 +3,7 @@
 -- Family: Fly
 -- Description: Deals Dark damage to enemies within area of effect.
 -- Notes: BLU spell deals Water damage but mob version deals Dark damage.
+-- Additional Effect: Curse
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -26,6 +27,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+
+        -- Additional Effect: Curse
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.CURSE_I, 30, 0, 60)
     end
 
     return info.damage

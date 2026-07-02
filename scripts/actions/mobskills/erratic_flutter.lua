@@ -31,7 +31,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
     end
 
-    xi.mobskills.mobBuffMove(mob, xi.effect.HASTE, 4500, 0, 180)
+    xi.mobskills.mobBuffMove(mob, xi.effect.HASTE, 7000, 0, 120)
 
     return info.damage
 end

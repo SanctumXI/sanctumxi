@@ -832,7 +832,7 @@ INSERT INTO `mob_skills` VALUES (800,472,'heat_breath',4,0.0,15.0,2000,1500,4,0,
 INSERT INTO `mob_skills` VALUES (801,473,'riddle',1,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (802,474,'great_sandstorm',0,0.0,14.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (803,475,'great_whirlwind',4,0.0,14.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (804,476,'tortoise_song',1,0.0,20.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (804,476,'tortoise_song',1,0.0,40.0,2000,1500,4,0,0,0,0,0,0); -- SteelChange: Increases range to also affect songs on distant characters.
 INSERT INTO `mob_skills` VALUES (805,477,'head_butt_turtle',0,0.0,7.0,2000,1500,4,0,0,2,0,0,0);
 INSERT INTO `mob_skills` VALUES (806,478,'tortoise_stomp',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (807,479,'harden_shell',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0);
@@ -1862,7 +1862,7 @@ INSERT INTO `mob_skills` VALUES (1830,1309,'polar_blast',4,0.0,15.0,2000,1500,4,
 INSERT INTO `mob_skills` VALUES (1831,1318,'polar_bulwark',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1832,1313,'barofield',4,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (1833,1577,'.',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (1834,1310,'trembling',1,0.0,10.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (1834,1310,'trembling',1,0.0,40.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1835,1311,'serpentine_tail',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1836,1312,'nerve_gas',1,0.0,10.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (1837,1314,'feeble_bleat',1,0.0,18.0,2000,1500,4,0,0,0,0,0,0);

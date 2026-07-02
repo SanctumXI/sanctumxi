@@ -27,7 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
         -- TODO: Dreamland Dynamis Nightmare Worm ATTP power.
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.ATTACK_DOWN, 50, 0, 180)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.ATTACK_DOWN, 50, 0, 120)
     end
 
     return info.damage

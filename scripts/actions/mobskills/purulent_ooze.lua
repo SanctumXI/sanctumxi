@@ -27,7 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
          -- TODO: Capture durations
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIO, 12, 3, 120, 0, 10)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.MAX_HP_DOWN, 10, 0, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.MAX_HP_DOWN, 20, 0, 300)
     end
 
     return info.damage

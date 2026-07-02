@@ -21,9 +21,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
     params.canCrit        = true
     params.criticalChance = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
-    params.skipParry      = true
-    params.skipGuard      = true
-    params.skipBlock      = true
+    params.skipParry      = false
+    params.skipGuard      = false
+    params.skipBlock      = false
 
     local info = xi.mobskills.mobRangedMove(mob, target, skill, action, params)
 

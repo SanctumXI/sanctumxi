@@ -14,7 +14,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 1.00, 1.00, 1.00 } -- TODO: Capture fTP scaling
+    params.fTP            = { 1.5, 1.5, 1.5 } -- TODO: Capture fTP scaling
     params.element        = xi.element.THUNDER
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.THUNDER
@@ -25,7 +25,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, math.random(10, 20))
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, math.random(6, 12))
     end
 
     return info.damage

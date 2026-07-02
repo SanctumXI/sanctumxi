@@ -17,9 +17,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.numHits          = 1
     params.fTP              = { 1.5, 1.5, 1.5 }
     params.attackType       = xi.attackType.PHYSICAL
-    params.damageType       = xi.damageType.SLASHING
+    params.damageType       = xi.damageType.PIERCING
     params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1 -- TODO: Capture shadowBehavior
-    params.attackMultiplier = { 1.5, 1.5, 1.5 }
+    params.attackMultiplier = { 1.6, 1.6, 1.6 }
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 

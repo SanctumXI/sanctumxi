@@ -22,7 +22,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         -- power = 50? He's not implemented yet anyway :P
     -- end
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.COUNTERSTANCE, 10, 0, 60))
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.COUNTERSTANCE, 15, 0, 120))
 
     return xi.effect.COUNTERSTANCE
 end

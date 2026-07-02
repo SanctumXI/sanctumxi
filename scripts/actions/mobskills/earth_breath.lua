@@ -19,8 +19,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.percentMultipier = 0.10
     params.damageCap        = 500
-    params.bonusDamage      = 100
-    params.mAccuracyBonus   = { 0, 0, 0 }
+    params.bonusDamage      = 120
+    params.mAccuracyBonus   = { 10, 10, 10 }
     params.resistStat       = xi.mod.INT
     params.element          = xi.element.EARTH
     params.attackType       = xi.attackType.BREATH

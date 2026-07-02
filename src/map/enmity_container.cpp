@@ -135,7 +135,7 @@ void CEnmityContainer::AddBaseEnmity(CBattleEntity* PChar)
 float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
 {
     TracyZoneScoped;
-    int enmityBonus = PEntity->getMod(Mod::ENMITY);
+    int enmityBonus = PEntity->getMod(Mod::ENMITY) * 2;
 
     if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity))
     {
@@ -147,7 +147,7 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
         }
     }
 
-    float bonus = (100.0f + std::clamp(enmityBonus, -50, 100)) / 100.0f;
+    float bonus = (100.0f + std::clamp(enmityBonus, -50, 200)) / 100.0f;
 
     return bonus;
 }

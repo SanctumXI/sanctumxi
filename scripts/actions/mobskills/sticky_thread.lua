@@ -10,8 +10,8 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local duration = math.random (90, 240)
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 5000, 0, duration))
+    local duration = math.random (60, 120)
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 8000, 0, duration))
 
     return xi.effect.SLOW
 end

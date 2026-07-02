@@ -13,7 +13,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local dispel =  target:dispelAllStatusEffect(bit.bor(xi.effectFlag.DISPELABLE, xi.effectFlag.FOOD))
+    local dispel =  target:dispelAllStatusEffect(xi.effectFlag.DISPELABLE)
     local msg -- to be set later
 
     if dispel == 0 then

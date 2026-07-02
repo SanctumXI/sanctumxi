@@ -10,9 +10,9 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local duration = 4
+    local duration = 6
     if mob:isNM() then
-        duration = 10
+        duration = 8
     end
 
     skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, duration))

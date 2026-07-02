@@ -118,9 +118,9 @@ entity.onMobFight = function(mob, target)
     if
         GetSystemTime() > delay and
         mob:canUseAbilities()
-    then -- Use Meteor every 40s, based on capture
+    then -- Meteor moved from 40s to 60s to further support melee
         mob:castSpell(xi.magic.spell.METEOR, target)
-        mob:setLocalVar('delay', GetSystemTime() + 40)
+        mob:setLocalVar('delay', GetSystemTime() + 60)
     end
 end
 

@@ -24,7 +24,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 1.0, 1.0, 1.0 } -- TODO: Capture fTPs
+    params.fTP            = { 1.25, 1.50, 2.00 } -- TODO: Capture fTPs
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING -- TODO: Capture damageType
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
@@ -34,8 +34,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 60)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 50, 0, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 30)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 50, 0, 60)
     end
 
     return info.damage

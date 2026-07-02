@@ -11,7 +11,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.WARCRY, 33, 0, 120))
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.WARCRY, 40, 0, 60))
 
     return xi.effect.WARCRY
 end

@@ -16,8 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.percentMultipier = 0.12
     params.damageCap        = 500 -- TODO: Capture cap
     params.bonusDamage      = 0
-    -- TODO: Sources say this skill has a low magic accuracy.
-    params.mAccuracyBonus   = { 0, 0, 0 }
+    params.mAccuracyBonus   = { 20, 20, 20 }
     params.resistStat       = xi.mod.INT
     params.element          = xi.element.EARTH
     params.attackType       = xi.attackType.BREATH
@@ -31,7 +30,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
         -- TODO: Capture power/durations of various effects.
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SLOW, 1250, 0, 60)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 1, 3, 60)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.POISON, 5, 3, 60)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 15, 0, 60)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 60)

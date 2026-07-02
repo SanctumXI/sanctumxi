@@ -16,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 2.0, 2.0, 2.0 }
+    params.fTP            = { 2.2, 2.2, 2.2 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
@@ -33,8 +33,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         local power = 3 + math.floor(mob:getMainLvl() / 5)
 
         -- Note: Status effects do not decay.
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STR_DOWN, power, 0, 120)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.VIT_DOWN, power, 0, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STR_DOWN, power, 0, 90)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.VIT_DOWN, power, 0, 90)
     end
 
     return info.damage

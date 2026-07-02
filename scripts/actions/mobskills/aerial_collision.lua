@@ -16,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 1, 1, 1 }
+    params.fTP            = { 1.00, 1.25, 1.50 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.NONE -- TODO: Verify damageType
     params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS

@@ -14,7 +14,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.percentMultipier = 0.0476
-    params.damageCap        = 260
+    params.damageCap        = 500
     params.bonusDamage      = 0
     params.mAccuracyBonus   = { 0, 0, 0 }
     params.resistStat       = xi.mod.INT

@@ -21,9 +21,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
     params.skipFSTR       = true
     params.skipPDIF       = true
-    params.skipParry      = true -- TODO: Confirm this can't be parried, guarded or blocked.
-    params.skipGuard      = true
-    params.skipBlock      = true
+    params.skipParry      = false -- TODO: Confirm this can't be parried, guarded or blocked.
+    params.skipGuard      = false
+    params.skipBlock      = false
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 

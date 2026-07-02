@@ -15,7 +15,7 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local typeEffect = nil
     local silenced   = xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
-    local blinded    = xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 50, 0, 90)
+    local blinded    = xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 50, 0, 60)
 
     skill:setMsg(xi.msg.basic.SKILL_ENFEEB_IS)
 

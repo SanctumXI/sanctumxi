@@ -20,7 +20,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
     params.canCrit        = true
-    params.criticalChance = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
+    params.criticalChance = { 0.20, 0.40, 0.60 } -- TODO: Capture crit rate
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
