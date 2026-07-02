@@ -8,7 +8,7 @@
 -- Stat Bonus: INT+2, MND+2
 -- Level: 61
 -- Casting Time: 3 seconds
--- Recast Time: 90 seconds
+-- Recast Time: 45 seconds
 -- Magic Bursts on: Scission, Gravitation, Darkness
 -- Combos: Fast Cast
 -----------------------------------
