@@ -23,7 +23,7 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     mob:eraseAllStatusEffect()
 
-    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.REGEN, 40, 3, 30))
+    skill:setMsg(xi.mobskills.mobBuffMove(mob, xi.effect.REGEN, 50, 3, 45))
 
     local effect = mob:getStatusEffect(xi.effect.REGEN)
     if effect then
