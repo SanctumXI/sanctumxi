@@ -14,9 +14,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.percentMultipier = 0.15
-    params.damageCap        = 509 -- TODO: Capture Cap
+    params.damageCap        = 700 -- TODO: Capture Cap
     params.bonusDamage      = 0
-    params.mAccuracyBonus   = { 0, 0, 0 }
+    params.mAccuracyBonus   = { 10, 10, 10 }
     params.resistStat       = xi.mod.INT
     params.element          = xi.element.EARTH
     params.attackType       = xi.attackType.BREATH
@@ -28,7 +28,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 75, 0, 60)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 75, 0, 30)
     end
 
     return info.damage
