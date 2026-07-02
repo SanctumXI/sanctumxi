@@ -16,13 +16,13 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 1.6, 1.6, 1.6 } -- TODO: Capture fTPs
+    params.fTP            = { 1.8, 1.8, 1.8 } -- TODO: Capture fTPs
     params.attackType     = xi.attackType.RANGED
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
     params.skipParry      = true
-    params.skipGuard      = true
-    params.skipBlock      = true
+    params.skipGuard      = false
+    params.skipBlock      = false
 
     local info = xi.mobskills.mobRangedMove(mob, target, skill, action, params)
 
