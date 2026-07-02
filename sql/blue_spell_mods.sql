@@ -288,7 +288,7 @@ INSERT INTO `blue_spell_mods` VALUES (584,14,1); -- CHR+1
 -- ----------------------------
 -- Ram Charge
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (585,2,5); -- HP+5
+INSERT INTO `blue_spell_mods` VALUES (585,2,10); -- HP+10
 
 -- ----------------------------
 -- Claw Cyclone
