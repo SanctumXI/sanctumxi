@@ -29,7 +29,7 @@ INSERT INTO `blue_spell_mods` VALUES (517,0,0); -- No Stats
 -- Screwdriver
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (519,10,1); -- VIT+1
-INSERT INTO `blue_spell_mods` VALUES (519,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (519,11,2); -- AGI+1
 INSERT INTO `blue_spell_mods` VALUES (519,2,10); -- HP+10
 
 -- ----------------------------
