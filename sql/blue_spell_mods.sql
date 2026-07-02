@@ -298,7 +298,7 @@ INSERT INTO `blue_spell_mods` VALUES (587,10,1); -- VIT+1
 -- ----------------------------
 -- Lowing
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (588,2,-5); -- HP-5
+INSERT INTO `blue_spell_mods` VALUES (595,10,2); -- VIT+2
 
 -- ----------------------------
 -- Dimensional Death
