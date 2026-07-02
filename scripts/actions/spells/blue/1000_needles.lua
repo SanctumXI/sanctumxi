@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: 1000 Needles
 -- Shoots multiple needles at enemies within range
--- Spell cost: 350 MP
+-- Spell cost: 200 MP
 -- Monster Type: Plantoid
--- Spell Type: Magical (Light)
+-- Spell Type: Magical (piercing)
 -- Blue Magic Points: 5
 -- Stat Bonus: VIT+3, AGI+3
 -- Level: 62
--- Casting Time: 12 seconds
+-- Casting Time: 6 seconds
 -- Recast Time: 120 seconds
 -- Bursts on Light affects accuracy only
 -- Combos: Beast Killer
@@ -24,11 +24,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem = xi.ecosystem.PLANTOID
     params.tpmod = xi.spells.blue.tpMod.DAMAGE
     params.attackType = xi.attackType.MAGICAL
-    params.damageType = xi.damageType.LIGHT
+    params.damageType = xi.damageType.PIERCING
     params.skillType = xi.skill.BLUE_MAGIC
     params.scattr = xi.skillchainType.COMPRESSION
     params.diff = 0
-    params.bonus = -25 -- 50 magic accuracy penalty
+    params.bonus = -15 -- 30 magic accuracy penalty
     params.numhits = 1
     params.multiplier = 1.5
     params.tp150 = 1.5
@@ -44,7 +44,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.chr_wsc = 1.0
 
     local damage = 1000
-    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, xi.element.LIGHT, xi.mod.INT, 0, -25)
+    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, xi.element.LIGHT, xi.mod.INT, 0, -15)
     if resist == 1 then
         local targets = spell:getTotalTargets()
         damage = damage / targets
