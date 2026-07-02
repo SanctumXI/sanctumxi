@@ -201,7 +201,7 @@ INSERT INTO `blue_spell_mods` VALUES (563,11,1); -- AGI+1
 -- Body Slam
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (564,10,1); -- VIT+1
-INSERT INTO `blue_spell_mods` VALUES (564,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (564,2,10); -- HP+10
 
 -- ----------------------------
 -- Radiant Breath
