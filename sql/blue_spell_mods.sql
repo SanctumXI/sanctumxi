@@ -449,7 +449,7 @@ INSERT INTO `blue_spell_mods` VALUES (621,10,1);  -- VIT+1
 -- ----------------------------
 -- Grand Slam
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (622,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (622,10,1); -- VIT+1
 
 -- ----------------------------
 -- Head Butt
