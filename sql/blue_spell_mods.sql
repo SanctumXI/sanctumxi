@@ -301,7 +301,7 @@ INSERT INTO `blue_spell_mods` VALUES (588,10,2); -- VIT+2
 -- ----------------------------
 -- Dimensional Death
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (589,9,1); -- DEX+1
+INSERT INTO `blue_spell_mods` VALUES (589,13,1); -- MND+1
 INSERT INTO `blue_spell_mods` VALUES (589,14,1); -- CHR+1
 INSERT INTO `blue_spell_mods` VALUES (589,2,5); -- HP+5
 
