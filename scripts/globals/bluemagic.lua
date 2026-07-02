@@ -248,25 +248,45 @@ xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
         bonusWSC = 2
     end
 
-    -- Chain Affinity -- TODO: add 'Damage/Accuracy/Critical Hit Chance varies with TP'
-    if caster:getStatusEffect(xi.effect.CHAIN_AFFINITY) then
-        local tp   = caster:getTP() + caster:getMerit(xi.merit.ENCHAINMENT) -- Total TP available
-        tp         = utils.clamp(tp, 0, 3000)
+-- Chain Affinity / Azure Lore TP handling
+local hasChainAffinity = caster:getStatusEffect(xi.effect.CHAIN_AFFINITY) ~= nil
+local hasAzureLore     = caster:getStatusEffect(xi.effect.AZURE_LORE) ~= nil
+
+if hasChainAffinity then
+    local tp = caster:getTP() + caster:getMerit(xi.merit.ENCHAINMENT) -- Total TP available
+    tp = utils.clamp(tp, 0, 3000)
+
+    -- Chain Affinity doubles base WSC
+    bonusWSC = bonusWSC + 1
+
+    -- Make params.tpmod actually matter.
+    if params.tpmod == xi.spells.blue.tpMod.CRITICAL then
+        -- Critical hit chance varies with TP.
+        if not hasAzureLore then
+            params.critchance = (params.critchance or 0) + math.floor(tp / 75)
+        end
+    else
+        -- Default/current behavior: Damage varies with TP.
+        -- This preserves old behavior for spells that rely on multiplier/tp150/tp300.
         multiplier = calculatefTP(tp, params.multiplier, params.tp150, params.tp300)
-        bonusWSC   = bonusWSC + 1 -- Chain Affinity doubles base WSC
     end
+end
 
-    -- WSC
-    local wsc = calculateWSC(caster, params)
-    wsc       = wsc + wsc * bonusWSC -- Bonus WSC from AF3/CA
+-- WSC
+local wsc = calculateWSC(caster, params)
+wsc = wsc + wsc * bonusWSC -- Bonus WSC from AF3/CA
 
-    -- Monster correlation
-    local correlationMultiplier = calculateCorrelation(params.ecosystem, target:getEcosystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
+-- Monster correlation
+local correlationMultiplier = calculateCorrelation(params.ecosystem, target:getEcosystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
 
-    -- Azure Lore
-    if caster:getStatusEffect(xi.effect.AZURE_LORE) then
-        multiplier = params.azuretp
+-- Azure Lore
+if hasAzureLore then
+    multiplier = params.azuretp or multiplier
+
+    if params.tpmod == xi.spells.blue.tpMod.CRITICAL then
+        params.critchance = (params.critchance or 0) + 75
     end
+end
 
     -- Final D
     local finalD = math.floor(initialD + fStr + wsc)
@@ -285,9 +305,9 @@ xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
     params.bonusacc     = params.bonusacc == nil and 0 or params.bonusacc
     params.tphitslanded = 0
 
-    -- params.critchance will only be non-nil if base critchance is passed from spell lua
-    local nativecrit  = xi.combat.physical.calculateSwingCriticalRate(caster, target, 0, xi.slot.MAIN)
-    params.critchance = params.critchance == nil and 0 or utils.clamp(params.critchance / 100 + nativecrit, 0.05, 0.95)
+    -- Add normal/native physical crit rate to any bonus crit chance from the spell.
+    local nativecrit = xi.combat.physical.calculateSwingCriticalRate(caster, target, 0, xi.slot.MAIN)
+    params.critchance = utils.clamp((params.critchance or 0) / 100 + nativecrit, 0.05, 0.95)
 
     local cratio  = calculatecRatio(params.offcratiomod / target:getStat(xi.mod.DEF), caster:getMainLvl(), target:getMainLvl())
     local hitrate = calculateHitrate(caster, target, params.bonusacc)
