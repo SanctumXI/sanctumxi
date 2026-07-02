@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Wild Oats
 -- Additional effect: Vitality Down. Duration of effect varies on TP
--- Spell cost: 9 MP
+-- Spell cost: 8 MP
 -- Monster Type: Plantoids
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 3
@@ -55,7 +55,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
 
-    return damage
+    return damageblue
 end
 
 return spellObject
