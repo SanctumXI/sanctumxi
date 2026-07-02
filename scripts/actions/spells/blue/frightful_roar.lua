@@ -26,7 +26,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.power           = 10
     params.tick            = 0
     params.duration        = 180
-    params.resistThreshold = 0.5
+    params.resistThreshold = 0.25
     params.isGaze          = false
     params.isConal         = false
 
