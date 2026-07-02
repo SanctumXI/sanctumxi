@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Blood Drain
 -- Steals an enemy's HP. Ineffective against undead
--- Spell cost: 10 MP
+-- Spell cost: 20 MP
 -- Monster Type: Birds
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 2
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: HP-10
 -- Level: 20
--- Casting Time: 4 seconds
--- Recast Time: 90 seconds
+-- Casting Time: 2.5 seconds
+-- Recast Time: 30 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------
@@ -26,7 +26,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.DARK
     params.diff = 0 -- no stat increases magic accuracy
     params.skillType = xi.skill.BLUE_MAGIC
-    params.dmgMultiplier = 3
+    params.dmgMultiplier = 4
 
     return xi.spells.blue.useDrainSpell(caster, target, spell, params, 0, false)
 end
