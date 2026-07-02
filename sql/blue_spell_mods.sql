@@ -207,8 +207,7 @@ INSERT INTO `blue_spell_mods` VALUES (564,5,5); -- MP+5
 -- ----------------------------
 -- Radiant Breath
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (565,2,5); -- HP+5
-INSERT INTO `blue_spell_mods` VALUES (565,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (565,14,3); -- CHR+3
 
 -- ----------------------------
 -- Helldive
