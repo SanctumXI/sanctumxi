@@ -99,7 +99,7 @@ INSERT INTO `blue_spell_list` VALUES (617,1447,3,11,1,9,0,0); -- Vertical Cleave
 INSERT INTO `blue_spell_list` VALUES (618,638,2,0,1,0,0,0); -- Blastbomb
 INSERT INTO `blue_spell_list` VALUES (620,609,3,8,1,8,0,0); -- Battle Dance
 INSERT INTO `blue_spell_list` VALUES (621,1727,2,4,1,0,0,0); -- Sandspray
-INSERT INTO `blue_spell_list` VALUES (622,665,2,11,1,7,0,0); -- Grand Slam
+INSERT INTO `blue_spell_list` VALUES (622,665,1,11,1,7,0,0); -- Grand Slam
 INSERT INTO `blue_spell_list` VALUES (623,612,3,0,1,8,0,0); -- Head Butt
 INSERT INTO `blue_spell_list` VALUES (626,591,3,0,1,0,0,0); -- Bomb Toss
 INSERT INTO `blue_spell_list` VALUES (628,1081,3,15,1,8,0,0); -- Frypan
