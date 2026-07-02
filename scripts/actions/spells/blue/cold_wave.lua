@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Cold Wave
 -- Deals ice damage that lowers Agility and gradually reduces HP of enemies within range
--- Spell cost: 37 MP
+-- Spell cost: 30 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Ice)
--- Blue Magic Points: 1
--- Stat Bonus: INT-1
+-- Blue Magic Points: 2
+-- Stat Bonus: INT+1
 -- Level: 52
--- Casting Time: 4 seconds
+-- Casting Time: 2.5 seconds
 -- Recast Time: 60 seconds
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Auto Refresh
@@ -27,7 +27,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.BLUE_MAGIC
     local tick = 3
     local duration = 60
-    local resistThreshold = 0.5
+    local resistThreshold = 0.25
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, spell:getElement(), xi.mod.INT, xi.effect.FROST, 0)
 
     -- Cannot apply if target has Burn
