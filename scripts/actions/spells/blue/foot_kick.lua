@@ -4,11 +4,11 @@
 -- Spell cost: 5 MP
 -- Monster Type: Beasts
 -- Spell Type: Physical (Slashing)
--- Blue Magic Points: 2
+-- Blue Magic Points: 1
 -- Stat Bonus: AGI+1
 -- Level: 1
 -- Casting Time: 0.5 seconds
--- Recast Time: 6.5 seconds
+-- Recast Time: 6 seconds
 -- Skillchain Property: Detonation
 -- Combos: Lizard Killer
 -----------------------------------
@@ -21,26 +21,23 @@ end
 
 spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
+
     params.ecosystem = xi.ecosystem.BEAST
-    params.tpmod = xi.spells.blue.tpMod.CRITICAL
-    params.critchance = 0
-    if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
-        params.critchance = 55
-    elseif caster:hasStatusEffect(xi.effect.CHAIN_AFFINITY) then
-        params.critchance = math.floor(caster:getTP() / 75)
-    end
+    params.tpmod     = xi.spells.blue.tpMod.CRITICAL
 
     params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.SLASHING
-    params.scattr = xi.skillchainType.DETONATION
-    params.numhits = 1
+    params.damageType = xi.damageType.BLUNT
+    params.scattr     = xi.skillchainType.DETONATION
+
+    params.numhits    = 1
     params.multiplier = 1.0
-    params.tp150 = 1.0
-    params.tp300 = 1.0
-    params.azuretp = 1.0
-    params.duppercap = 9
-    params.str_wsc = 0.1
-    params.dex_wsc = 0.1
+    params.tp150      = 1.0
+    params.tp300      = 1.0
+    params.azuretp    = 1.0
+    params.duppercap  = 9
+
+    params.str_wsc = 0.0
+    params.dex_wsc = 0.3
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
