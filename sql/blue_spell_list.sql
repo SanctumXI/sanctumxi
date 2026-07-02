@@ -79,7 +79,7 @@ INSERT INTO `blue_spell_list` VALUES (592,292,2,0,1,0,0,0); -- Blank Gaze
 INSERT INTO `blue_spell_list` VALUES (593,295,3,5,1,0,0,0); -- Magic Fruit
 INSERT INTO `blue_spell_list` VALUES (594,584,3,8,1,3,8,0); -- Uppercut
 INSERT INTO `blue_spell_list` VALUES (595,322,5,1,1,0,0,0); -- 1000 Needles
-INSERT INTO `blue_spell_list` VALUES (596,329,2,0,1,3,0,0); -- Pinecone Bomb
+INSERT INTO `blue_spell_list` VALUES (596,329,1,0,1,3,0,0); -- Pinecone Bomb
 INSERT INTO `blue_spell_list` VALUES (597,687,2,1,1,5,0,0); -- Sprout Smack
 INSERT INTO `blue_spell_list` VALUES (598,434,4,4,1,0,0,0); -- Soporific
 INSERT INTO `blue_spell_list` VALUES (599,310,2,0,1,2,0,0); -- Queasyshroom
