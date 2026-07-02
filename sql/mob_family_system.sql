@@ -280,7 +280,7 @@ INSERT INTO `mob_family_system` VALUES (221,'Shadow',68,'Shadow',19,'Undead',55,
 INSERT INTO `mob_family_system` VALUES (224,'ShadowLord',0,'undefined',0,'Unclassified',55,120,140,1,1,1,1,1,1,1,1,1,1,1,8.0,1,0);
 INSERT INTO `mob_family_system` VALUES (225,'ShadowLord',0,'undefined',0,'Unclassified',55,120,140,1,1,1,1,1,1,1,1,1,1,1,8.0,1,0);
 INSERT INTO `mob_family_system` VALUES (226,'Sheep',90,'Sheep',6,'Beast',40,120,110,3,4,4,4,5,4,4,1,3,1,3,4.0,257,1);
-INSERT INTO `mob_family_system` VALUES (227,'Skeleton',56,'Skeleton',19,'Undead',50,95,140,1,3,4,4,1,5,1,1,3,1,3,4.0,6,0);
+INSERT INTO `mob_family_system` VALUES (227,'Skeleton',56,'Skeleton',19,'Undead',50,95,140,1,3,4,4,1,5,4,1,3,1,3,4.0,6,0);
 INSERT INTO `mob_family_system` VALUES (228,'Slime-DragonQuest',42,'Slime',1,'Amorph',55,100,120,4,4,4,5,4,3,4,1,3,1,3,6.0,258,1);
 INSERT INTO `mob_family_system` VALUES (229,'Slime',42,'Slime',1,'Amorph',55,100,120,4,4,4,5,4,3,4,1,3,1,3,6.0,258,1);
 -- 230 Free
