@@ -5,10 +5,10 @@
 -- Monster Type: Vermin
 -- Spell Type: Magical (Fire)
 -- Blue Magic Points: 4
--- Stat Bonus: HP+5 MP+5 CHR+1
+-- Stat Bonus: HP+10 CHR+3
 -- Level: 75
 -- Casting Time: 3 seconds
--- Recast Time: 60 seconds
+-- Recast Time: 40 seconds
 -----------------------------------
 -- Combos: Resist Sleep
 -----------------------------------
