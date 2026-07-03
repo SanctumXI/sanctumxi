@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Ram Charge
 -- Damage varies with TP
--- Spell cost: 68 MP
+-- Spell cost: 40 MP
 -- Monster Type: Beasts
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 4
