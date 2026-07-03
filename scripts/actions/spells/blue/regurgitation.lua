@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Regurgitation
 -- Deals Water damage to an enemy. Additional Effect: Bind
--- Spell cost: 69 MP
+-- Spell cost: 36 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 1
--- Stat Bonus: INT+1 MND+1 MP+3
+-- Stat Bonus: INT+2 MND+1
 -- Level: 68
 -- Casting Time: 5 seconds
 -- Recast Time: 24 seconds
@@ -33,13 +33,13 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.vit_wsc     = 0.0
     params.agi_wsc     = 0.0
     params.int_wsc     = 0.0
-    params.mnd_wsc     = 0.3
-    params.chr_wsc     = 0.0
+    params.mnd_wsc     = 0.0
+    params.chr_wsc     = 0.3
 
     -- Handle damage.
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
     if caster:isBehind(target) then
-        damage = math.floor(damage * 1.25)
+        damage = math.floor(damage * 1.5)
     end
 
     if damage <= 0 then
