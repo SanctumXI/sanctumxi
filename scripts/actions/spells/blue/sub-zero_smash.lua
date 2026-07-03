@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Sub-zero Smash
 -- Additional Effect: Paralysis. Damage varies with TP
--- Spell cost: 44 MP
+-- Spell cost: 146 MP
 -- Monster Type: Aquans
--- Spell Type: Physical (Blunt)
+-- Spell Type: Physical (Ice)
 -- Blue Magic Points: 4
 -- Stat Bonus: HP+10 VIT+3
 -- Level: 72
--- Casting Time: 1 second
--- Recast Time: 30 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 35 seconds
 -- Skillchain Element(s): Fragmentation
 -- Combos: Fast Cast
 -----------------------------------
@@ -24,7 +24,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem  = xi.ecosystem.AQUAN
     params.tpmod      = xi.spells.blue.tpMod.DAMAGE
     params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.BLUNT
+    params.damageType = xi.damageType.ICE
     params.scattr     = xi.skillchainType.FRAGMENTATION
     params.attribute  = xi.mod.INT
     params.skillType  = xi.skill.BLUE_MAGIC
@@ -35,10 +35,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.azuretp    = 2.0
     params.duppercap  = 72
     params.str_wsc    = 0.0
-    params.dex_wsc    = 0.0
-    params.vit_wsc    = 0.6
-    params.agi_wsc    = 0.0
-    params.int_wsc    = 0.0
+    params.dex_wsc    = 0.2
+    params.vit_wsc    = 0.0
+    params.agi_wsc    = 0.2
+    params.int_wsc    = 0.3
     params.mnd_wsc    = 0.0
     params.chr_wsc    = 0.0
 
@@ -52,7 +52,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.PARALYSIS, 10, 0, 180 },
+        [1] = { xi.effect.PARALYSIS, 15, 0, 90 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
