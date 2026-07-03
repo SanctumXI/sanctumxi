@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Vertical Cleave
 -- Damage varies with TP
--- Spell cost: 86 MP
+-- Spell cost: 75 MP
 -- Monster Type: Luminians
 -- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 3
--- Stat Bonus: VIT+1 HP-5 MP+5
+-- Stat Bonus: INT +3
 -- Level: 75
 -- Casting Time: 0.5 seconds
 -- Recast Time: 37.25 seconds
@@ -32,10 +32,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tp300 = 3.0
     params.azuretp = 3.0
     params.duppercap = 75
-    params.str_wsc = 0.5
+    params.str_wsc = 0.0
     params.dex_wsc = 0.0
     params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
+    params.agi_wsc = 0.6
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
