@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: VIT+1
 -- Level: 66
--- Casting Time: 3 seconds
+-- Casting Time: 0.5 second
 -- Recast Time: 90 seconds
 -- Magic Bursts on: Compression, Gravitation, and Darkness
 -- Combos: Clear Mind
@@ -27,7 +27,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tick            = 0
     params.duration        = 120
     params.resistThreshold = 0.5
-    params.isGaze          = false
+    params.isGaze          = true
     params.isConal         = true
 
     return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params)
