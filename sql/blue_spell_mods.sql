@@ -66,7 +66,7 @@ INSERT INTO `blue_spell_mods` VALUES (530,11,2); -- AGI+2
 -- ----------------------------
 -- Ice Break
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (531,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (531,12,2); -- INT+2
 
 -- ----------------------------
 -- Blitzstrahl
@@ -273,7 +273,7 @@ INSERT INTO `blue_spell_mods` VALUES (581,14,2); -- CHR+2
 -- ----------------------------
 -- Chaotic Eye
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (582,14,1); -- CHA+1
+INSERT INTO `blue_spell_mods` VALUES (582,14,2); -- CHA+2
 
 -- ----------------------------
 -- Sheep Song
@@ -535,9 +535,8 @@ INSERT INTO `blue_spell_mods` VALUES (644,13,1); -- MND+1
 -- ----------------------------
 -- Exuviation
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (645,2,5); -- HP+5
-INSERT INTO `blue_spell_mods` VALUES (645,5,5); -- MP+5
-INSERT INTO `blue_spell_mods` VALUES (645,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (645,2,10); -- HP+10
+INSERT INTO `blue_spell_mods` VALUES (645,14,3); -- CHR+3
 
 -- ----------------------------
 -- Magic Hammer
