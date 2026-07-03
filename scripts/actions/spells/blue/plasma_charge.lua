@@ -9,7 +9,7 @@
 -- Level: 75
 -- Casting Time: 3 seconds
 -- Recast Time: 60 seconds
--- Duration: 60 seconds
+-- Duration: 180 seconds
 -----------------------------------
 -- Combos: Auto Refresh
 -----------------------------------
@@ -21,8 +21,8 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local power = 5 -- 5 dmg
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 60)
+    local power = 10 -- 5 dmg
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
 
     if not target:addStatusEffect(xi.effect.SHOCK_SPIKES, { power = power, duration = duration, origin = caster }) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
