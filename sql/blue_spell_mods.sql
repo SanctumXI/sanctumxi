@@ -556,8 +556,7 @@ INSERT INTO `blue_spell_mods` VALUES (647,11,2); -- AGI+2
 -- ----------------------------
 -- Regurgitation
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (648,5,3); -- MP+3
-INSERT INTO `blue_spell_mods` VALUES (648,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (648,12,2); -- INT+2
 INSERT INTO `blue_spell_mods` VALUES (648,13,1); -- MND+1
 
 -- ----------------------------
