@@ -194,7 +194,7 @@ INSERT INTO `blue_spell_mods` VALUES (561,11,2); -- AGI+2
 -- ----------------------------
 -- Hecatomb Wave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (563,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (563,12,3); -- INT+2
 
 -- ----------------------------
 -- Body Slam
@@ -387,7 +387,7 @@ INSERT INTO `blue_spell_mods` VALUES (610,12,1); -- INT+1
 -- ----------------------------
 -- Disseverment
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (611,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (611,12,2); -- INT+2
 INSERT INTO `blue_spell_mods` VALUES (611,13,-1); -- MND-1
 
 -- ----------------------------
@@ -424,9 +424,7 @@ INSERT INTO `blue_spell_mods` VALUES (616,5,15); -- MP+15
 -- ----------------------------
 -- Vertical Cleave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (617,10,1); -- STR+1
-INSERT INTO `blue_spell_mods` VALUES (617,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (617,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (617,12,3); -- INT+3
 
 -- ----------------------------
 -- Blastbomb
