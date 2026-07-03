@@ -520,8 +520,7 @@ INSERT INTO `blue_spell_mods` VALUES (641,11,1); -- AGI+1
 -- ----------------------------
 -- Amplification
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (642,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (642,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (642,5,10); -- MP+10
 
 -- ----------------------------
 -- Cannonball
