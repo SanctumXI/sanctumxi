@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Cannonball
 -- Damage varies with TP
--- Spell cost: 48 MP
+-- Spell cost: 66 MP
 -- Monster Type: Vermin
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 3
