@@ -578,7 +578,7 @@ INSERT INTO `blue_spell_mods` VALUES (652,8,1); -- STR+1
 -- ----------------------------
 -- Asuran Claws
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (653,11,3); -- AGI+3
+INSERT INTO `blue_spell_mods` VALUES (653,9,3); -- DEX+3
 
 -- ----------------------------
 -- Sub-zero Smash
