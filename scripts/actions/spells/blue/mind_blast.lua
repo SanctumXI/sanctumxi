@@ -4,7 +4,7 @@
 -- Spell cost: 82 MP
 -- Monster Type: Demons
 -- Spell Type: Magical (Lightning)
--- Blue Magic Points: 4
+-- Blue Magic Points: 5
 -- Stat Bonus: MP+5 MND+1
 -- Level: 73
 -- Casting Time: 3 seconds
@@ -28,13 +28,13 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.multiplier  = 2.08
     params.azureBonus  = 0.5
     params.tMultiplier = 1.5
-    params.duppercap   = 69
+    params.duppercap   = 72
     params.str_wsc     = 0.0
     params.dex_wsc     = 0.0
     params.vit_wsc     = 0.0
     params.agi_wsc     = 0.0
     params.int_wsc     = 0.0
-    params.mnd_wsc     = 0.4
+    params.mnd_wsc     = 0.6
     params.chr_wsc     = 0.0
 
     -- Handle damage.
@@ -47,7 +47,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.PARALYSIS, 20, 0, 90 },
+        [1] = { xi.effect.PARALYSIS, 20, 0, 60 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
