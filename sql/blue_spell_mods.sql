@@ -544,7 +544,7 @@ INSERT INTO `blue_spell_mods` VALUES (645,14,1); -- CHR+1
 -- ----------------------------
 -- Magic Hammer
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (646,5,-5); -- MP-5
+INSERT INTO `blue_spell_mods` VALUES (646,5,10); -- MP+10
 INSERT INTO `blue_spell_mods` VALUES (646,13,2); -- MND+2
 
 -- ----------------------------
