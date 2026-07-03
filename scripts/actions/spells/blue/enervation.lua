@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Enervation
 -- Lowers the defense and magical defense of enemies within range
--- Spell cost: 48 MP
+-- Spell cost: 70 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 5
 -- Stat Bonus: HP-5, MP+5
 -- Level: 67
--- Casting Time: 6 seconds
+-- Casting Time: 4 seconds
 -- Recast Time: 60 seconds
 -- Magic Bursts on: Compression, Gravitation, and Darkness
 -- Combos: Counter
@@ -28,7 +28,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     if resist >= resistThreshold then
 
         local actionOne = target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 10, duration = duration * resist, origin = caster })
-        local actionTwo = target:addStatusEffect(xi.effect.MAGIC_DEF_DOWN, { power = 8, duration = duration * resist, origin = caster })
+        local actionTwo = target:addStatusEffect(xi.effect.MAGIC_DEF_DOWN, { power = 12, duration = duration * resist, origin = caster })
 
         -- If at least one of effects got applied, set the message type
         if actionOne or actionTwo then
