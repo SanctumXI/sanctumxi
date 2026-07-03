@@ -57,7 +57,7 @@ INSERT INTO `skill_ranks` VALUES (26,'marksmanship',9,0,0,0,0,2,0,10,0,0,1,0,7,0
 INSERT INTO `skill_ranks` VALUES (27,'throwing',5,10,10,9,11,5,0,0,0,10,6,6,1,0,0,0,6,6,2,9,0,0);
 INSERT INTO `skill_ranks` VALUES (28,'guarding',0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (29,'evasion',7,3,10,10,9,1,10,9,7,9,10,3,2,4,10,8,2,3,3,10,9,3);
-INSERT INTO `skill_ranks` VALUES (30,'shield',6,0,9,0,9,11,1,0,10,0,0,0,0,0,0,7,0,0,0,0,0,0);
+INSERT INTO `skill_ranks` VALUES (30,'shield',5,0,9,0,9,11,1,0,10,0,0,0,0,0,0,5,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (31,'parrying',6,2,0,0,7,2,7,10,7,10,0,1,2,5,0,9,2,9,4,10,10,1);
 INSERT INTO `skill_ranks` VALUES (32,'divine',0,0,1,0,10,0,2,0,0,0,0,0,0,0,0,0,0,0,0,9,0,4);
 INSERT INTO `skill_ranks` VALUES (33,'healing',0,0,1,0,6,0,5,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0);
