@@ -72,7 +72,7 @@ INSERT INTO `blue_spell_list` VALUES (582,653,2,17,1,0,0,0); -- Chaotic Eye
 INSERT INTO `blue_spell_list` VALUES (584,264,2,2,1,0,0,0); -- Sheep Song
 INSERT INTO `blue_spell_list` VALUES (585,266,4,3,1,12,0,0); -- Ram Charge
 INSERT INTO `blue_spell_list` VALUES (587,273,2,3,1,4,0,0); -- Claw Cyclone
-INSERT INTO `blue_spell_list` VALUES (588,497,2,4,1,0,0,0); -- Lowing
+INSERT INTO `blue_spell_list` VALUES (588,497,1,4,1,0,0,0); -- Lowing
 INSERT INTO `blue_spell_list` VALUES (589,255,5,16,1,1,8,0); -- Dimensional Death
 INSERT INTO `blue_spell_list` VALUES (591,800,4,6,1,0,0,0); -- Heat Breath
 INSERT INTO `blue_spell_list` VALUES (592,292,2,0,1,0,0,0); -- Blank Gaze
