@@ -7,7 +7,7 @@
 -- Blue Magic Points: 4
 -- Stat Bonus: MP+15
 -- Level: 48
--- Casting Time: 0.5 seconds
+-- Casting Time: 2 seconds
 -- Recast Time: 2:00
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None

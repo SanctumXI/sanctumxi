@@ -3,7 +3,7 @@
 -- Delivers a threefold attack. Damage varies with TP
 -- Spell cost: 61 MP
 -- Monster Type: Demon
--- Spell Type: Physical (Blunt)
+-- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 3
 -- Stat Bonus: INT+1
 -- Level: 63
@@ -24,7 +24,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem = xi.ecosystem.DEMON
     params.tpmod = xi.spells.blue.tpMod.DAMAGE
     params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.HTH
+    params.damageType = xi.damageType.SLASHING
     params.scattr = xi.skillchainType.INDURATION
     params.numhits = 3
     params.multiplier = 1.36
@@ -33,9 +33,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.azuretp = 2.61
     params.duppercap = 75
     params.str_wsc = 0.2
-    params.dex_wsc = 0.2
+    params.dex_wsc = 0.0
     params.vit_wsc = 0.0
-    params.agi_wsc = 0.0
+    params.agi_wsc = 0.2
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0

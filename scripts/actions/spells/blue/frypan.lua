@@ -1,6 +1,6 @@
 -----------------------------------
 -- Spell: Frypan
--- Delivers an area attack. Additional effect: "Stun." Accuracy varies with TP
+-- Delivers an area attack. Additional effect: "Silence." Accuracy varies with TP
 -- Spell cost: 65 MP
 -- Monster Type: Beastmen
 -- Spell Type: Physical (Blunt)
@@ -8,7 +8,7 @@
 -- Stat Bonus: DEX+2
 -- Level: 63
 -- Casting Time: 1 seconds
--- Recast Time: 26 seconds
+-- Recast Time: 40 seconds
 -- Skillchain Element(s): Impcation
 -- Combos: Max HP Boost
 -----------------------------------
@@ -40,11 +40,11 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.azuretp    = 1.78
     params.duppercap  = 75
     params.str_wsc    = 0.2
-    params.dex_wsc    = 0.0
+    params.dex_wsc    = 0.2
     params.vit_wsc    = 0.0
     params.agi_wsc    = 0.0
     params.int_wsc    = 0.0
-    params.mnd_wsc    = 0.2
+    params.mnd_wsc    = 0.0
     params.chr_wsc    = 0.0
 
     -- Handle damage.
@@ -57,7 +57,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.STUN, 1, 0, 5 },
+        [1] = { xi.effect.SILENCE, 1, 0, 30 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

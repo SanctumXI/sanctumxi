@@ -5,7 +5,7 @@
 -- Monster Type: Beasts
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 2
--- Stat Bonus: AGI+1
+-- Stat Bonus: CHA+1
 -- Level: 32
 -- Casting Time: 3 seconds
 -- Recast Time: 10 seconds

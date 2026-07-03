@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Hecatomb Wave
 -- Deals wind damage to enemies within a fan-shaped area originating from the caster. Additional effect: Blindness
--- Spell cost: 116 MP
+-- Spell cost: 110 MP
 -- Monster Type: Demons
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 3
 -- Stat Bonus: AGI+1
 -- Level: 54
--- Casting Time: 5.25 seconds
+-- Casting Time: 3 seconds
 -- Recast Time: 33.75 seconds
 -- Magic Bursts on: Detonation, Fragmentation, Light
 -- Combos: Max MP Boost
@@ -26,8 +26,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.WIND
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 4
-    params.lvlMod     = 1.5
+    params.hpMod      = 5
+    params.lvlMod     = 1
     params.isConal    = true
 
     -- Handle damage.
@@ -40,7 +40,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.BLINDNESS, 20, 0, 60 },
+        [1] = { xi.effect.BLINDNESS, 25, 0, 30 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

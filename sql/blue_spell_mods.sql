@@ -29,7 +29,7 @@ INSERT INTO `blue_spell_mods` VALUES (517,0,0); -- No Stats
 -- Screwdriver
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (519,10,1); -- VIT+1
-INSERT INTO `blue_spell_mods` VALUES (519,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (519,11,2); -- AGI+1
 INSERT INTO `blue_spell_mods` VALUES (519,2,10); -- HP+10
 
 -- ----------------------------
@@ -40,8 +40,8 @@ INSERT INTO `blue_spell_mods` VALUES (521,5,5); -- MP+5
 -- ----------------------------
 -- Death Ray
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (522,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (522,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (522,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (522,5,10); -- MP+10
 
 -- ----------------------------
 -- Sandspin
@@ -66,7 +66,7 @@ INSERT INTO `blue_spell_mods` VALUES (530,11,2); -- AGI+2
 -- ----------------------------
 -- Ice Break
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (531,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (531,12,2); -- INT+2
 
 -- ----------------------------
 -- Blitzstrahl
@@ -86,7 +86,7 @@ INSERT INTO `blue_spell_mods` VALUES (534,11,3); -- AGI+3
 -- ----------------------------
 -- Cold Wave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (535,12,-1); -- INT-1
+INSERT INTO `blue_spell_mods` VALUES (535,12,1); -- INT+1
 
 -- ----------------------------
 -- Poison Breath
@@ -113,25 +113,24 @@ INSERT INTO `blue_spell_mods` VALUES (539,5,10); -- MP+10
 -- Spinal Cleave
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (540,10,2); -- VIT+2
-INSERT INTO `blue_spell_mods` VALUES (540,12,1); -- INT+1
-INSERT INTO `blue_spell_mods` VALUES (540,13,1); -- MND+1
+INSERT INTO `blue_spell_mods` VALUES (540,8,2); -- STR+2
 
 -- ----------------------------
 -- Blood Saber
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (541,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (541,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (543,8,1); -- STR+1
+INSERT INTO `blue_spell_mods` VALUES (541,2,-15); -- HP-15
 
 -- ----------------------------
 -- Digest
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (542,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (542,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (542,2,-10); -- HP-10
+INSERT INTO `blue_spell_mods` VALUES (542,5,10); -- MP+10
 
 -- ----------------------------
 -- Mandibular Bite
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (543,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (543,8,1); -- STR+1
 
 -- ----------------------------
 -- Cursed Sphere
@@ -180,8 +179,7 @@ INSERT INTO `blue_spell_mods` VALUES (555,10,2); -- VIT+2
 -- ----------------------------
 -- Eyes On Me
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (557,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (557,5,15); -- MP+15
+INSERT INTO `blue_spell_mods` VALUES (557,14,2); -- CHA+2
 
 -- ----------------------------
 -- Frenetic Rip
@@ -196,19 +194,18 @@ INSERT INTO `blue_spell_mods` VALUES (561,11,2); -- AGI+2
 -- ----------------------------
 -- Hecatomb Wave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (563,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (563,12,3); -- INT+2
 
 -- ----------------------------
 -- Body Slam
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (564,10,1); -- VIT+1
-INSERT INTO `blue_spell_mods` VALUES (564,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (564,2,10); -- HP+10
 
 -- ----------------------------
 -- Radiant Breath
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (565,2,5); -- HP+5
-INSERT INTO `blue_spell_mods` VALUES (565,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (565,14,3); -- CHR+3
 
 -- ----------------------------
 -- Helldive
@@ -224,8 +221,7 @@ INSERT INTO `blue_spell_mods` VALUES (569,9,2); -- DEX+2
 -- ----------------------------
 -- Blood Drain
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (570,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (570,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (570,2,-10); -- HP-10
 
 -- ----------------------------
 -- Sound Blast
@@ -235,7 +231,7 @@ INSERT INTO `blue_spell_mods` VALUES (572,0,0); -- No Stats
 -- ----------------------------
 -- Feather Tickle
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (573,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (573,11,3); -- AGI+3
 
 -- ----------------------------
 -- Feather Barrier
@@ -277,7 +273,7 @@ INSERT INTO `blue_spell_mods` VALUES (581,14,2); -- CHR+2
 -- ----------------------------
 -- Chaotic Eye
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (582,11,1); -- AGI+1
+INSERT INTO `blue_spell_mods` VALUES (582,14,2); -- CHA+2
 
 -- ----------------------------
 -- Sheep Song
@@ -288,7 +284,7 @@ INSERT INTO `blue_spell_mods` VALUES (584,14,1); -- CHR+1
 -- ----------------------------
 -- Ram Charge
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (585,2,5); -- HP+5
+INSERT INTO `blue_spell_mods` VALUES (585,2,10); -- HP+10
 
 -- ----------------------------
 -- Claw Cyclone
@@ -298,12 +294,12 @@ INSERT INTO `blue_spell_mods` VALUES (587,10,1); -- VIT+1
 -- ----------------------------
 -- Lowing
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (588,2,-5); -- HP-5
+INSERT INTO `blue_spell_mods` VALUES (588,10,2); -- VIT+2
 
 -- ----------------------------
 -- Dimensional Death
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (589,9,1); -- DEX+1
+INSERT INTO `blue_spell_mods` VALUES (589,13,1); -- MND+1
 INSERT INTO `blue_spell_mods` VALUES (589,14,1); -- CHR+1
 INSERT INTO `blue_spell_mods` VALUES (589,2,5); -- HP+5
 
@@ -348,14 +344,13 @@ INSERT INTO `blue_spell_mods` VALUES (597,13,1); -- MND+1
 -- ----------------------------
 -- Soporific
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (598,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (598,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (598,13,2); -- MND+2
 
 -- ----------------------------
 -- Queasyshroom
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (599,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (599,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (599,2,-10); -- HP-10
+INSERT INTO `blue_spell_mods` VALUES (599,5,10); -- MP+10
 
 -- ----------------------------
 -- Wild Oats
@@ -372,8 +367,7 @@ INSERT INTO `blue_spell_mods` VALUES (604,13,2); -- MND+2
 -- ----------------------------
 -- Geist Wall
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (605,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (605,5,10); -- MP+10
+INSERT INTO `blue_spell_mods` VALUES (605,12,2); -- INT+2
 
 -- ----------------------------
 -- Awful Eye
@@ -393,7 +387,7 @@ INSERT INTO `blue_spell_mods` VALUES (610,12,1); -- INT+1
 -- ----------------------------
 -- Disseverment
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (611,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (611,12,2); -- INT+2
 INSERT INTO `blue_spell_mods` VALUES (611,13,-1); -- MND-1
 
 -- ----------------------------
@@ -430,9 +424,7 @@ INSERT INTO `blue_spell_mods` VALUES (616,5,15); -- MP+15
 -- ----------------------------
 -- Vertical Cleave
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (617,10,1); -- STR+1
-INSERT INTO `blue_spell_mods` VALUES (617,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (617,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (617,12,3); -- INT+3
 
 -- ----------------------------
 -- Blastbomb
@@ -452,7 +444,7 @@ INSERT INTO `blue_spell_mods` VALUES (621,10,1);  -- VIT+1
 -- ----------------------------
 -- Grand Slam
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (622,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (622,10,1); -- VIT+1
 
 -- ----------------------------
 -- Head Butt
@@ -482,7 +474,7 @@ INSERT INTO `blue_spell_mods` VALUES (631,13,2); -- MND+2
 -- ----------------------------
 -- Diamondhide
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (632,10,1); -- VIT+1
+INSERT INTO `blue_spell_mods` VALUES (632,10,2); -- VIT+2
 
 -- ----------------------------
 -- Enervation
@@ -499,7 +491,7 @@ INSERT INTO `blue_spell_mods` VALUES (634,14,1); -- CHR+1
 -- ----------------------------
 -- Warm-up
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (636,10,1); -- VIT+1
+INSERT INTO `blue_spell_mods` VALUES (636,9,1); -- DEX+1
 
 -- ----------------------------
 -- Firespit
@@ -509,8 +501,8 @@ INSERT INTO `blue_spell_mods` VALUES (637,8,3); -- STR+3
 -- ----------------------------
 -- Feather Storm
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (638,14,2); -- CHR+2
-INSERT INTO `blue_spell_mods` VALUES (638,2,5); -- HP+5,
+INSERT INTO `blue_spell_mods` VALUES (638,11,2); -- AGI+2
+INSERT INTO `blue_spell_mods` VALUES (638,5,5); -- MP+5,
 
 -- ----------------------------
 -- Tail Slap
@@ -526,8 +518,7 @@ INSERT INTO `blue_spell_mods` VALUES (641,11,1); -- AGI+1
 -- ----------------------------
 -- Amplification
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (642,2,-5); -- HP-5
-INSERT INTO `blue_spell_mods` VALUES (642,5,5); -- MP+5
+INSERT INTO `blue_spell_mods` VALUES (642,5,10); -- MP+10
 
 -- ----------------------------
 -- Cannonball
@@ -544,14 +535,13 @@ INSERT INTO `blue_spell_mods` VALUES (644,13,1); -- MND+1
 -- ----------------------------
 -- Exuviation
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (645,2,5); -- HP+5
-INSERT INTO `blue_spell_mods` VALUES (645,5,5); -- MP+5
-INSERT INTO `blue_spell_mods` VALUES (645,14,1); -- CHR+1
+INSERT INTO `blue_spell_mods` VALUES (645,2,10); -- HP+10
+INSERT INTO `blue_spell_mods` VALUES (645,14,3); -- CHR+3
 
 -- ----------------------------
 -- Magic Hammer
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (646,5,-5); -- MP-5
+INSERT INTO `blue_spell_mods` VALUES (646,5,10); -- MP+10
 INSERT INTO `blue_spell_mods` VALUES (646,13,2); -- MND+2
 
 -- ----------------------------
@@ -562,8 +552,7 @@ INSERT INTO `blue_spell_mods` VALUES (647,11,2); -- AGI+2
 -- ----------------------------
 -- Regurgitation
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (648,5,3); -- MP+3
-INSERT INTO `blue_spell_mods` VALUES (648,12,1); -- INT+1
+INSERT INTO `blue_spell_mods` VALUES (648,12,2); -- INT+2
 INSERT INTO `blue_spell_mods` VALUES (648,13,1); -- MND+1
 
 -- ----------------------------
@@ -586,7 +575,7 @@ INSERT INTO `blue_spell_mods` VALUES (652,8,1); -- STR+1
 -- ----------------------------
 -- Asuran Claws
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (653,11,3); -- AGI+3
+INSERT INTO `blue_spell_mods` VALUES (653,9,3); -- DEX+3
 
 -- ----------------------------
 -- Sub-zero Smash

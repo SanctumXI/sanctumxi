@@ -50,7 +50,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.ACCURACY_DOWN, 15, 0, 60 },
+        [1] = { xi.effect.ACCURACY_DOWN, 30, 0, 60 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

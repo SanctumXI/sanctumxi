@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Flying Hip Press
 -- Deals wind damage to enemies within range
--- Spell cost: 125 MP
+-- Spell cost: 80 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 3
 -- Stat Bonus: AGI+1
 -- Level: 58
--- Casting Time: 5.75 seconds
--- Recast Time: 34.5 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 45 seconds
 -- Magic Bursts On: Detonation, Fragmentation, and Light
 -- Combos: Max HP Boost
 -----------------------------------
@@ -26,8 +26,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.WIND
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 3
-    params.lvlMod     = 0
+    params.hpMod      = 5
+    params.lvlMod     = 1
 
     return xi.spells.blue.useBreathSpell(caster, target, spell, params)
 end

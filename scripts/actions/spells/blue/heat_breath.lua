@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Heat Breath
 -- Deals fire damage to enemies within a fan-shaped area originating from the caster
--- Spell cost: 169 MP
+-- Spell cost: 180 MP
 -- Monster Type: Beasts
 -- Spell Type: Magical (Fire)
 -- Blue Magic Points: 4
 -- Stat Bonus: STR+3
 -- Level: 71
--- Casting Time: 7.5 seconds
--- Recast Time: 49 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 27.5 seconds
 -- Magic Bursts on: Liquefaction, Fusion, Light
 -- Combos: Magic Attack Bonus
 -----------------------------------
@@ -26,8 +26,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.damageType = xi.damageType.FIRE
     params.diff       = 0 -- no stat increases magic accuracy
     params.skillType  = xi.skill.BLUE_MAGIC
-    params.hpMod      = 2
-    params.lvlMod     = 0
+    params.hpMod      = 5
+    params.lvlMod     = 1
     params.isConal    = true
 
     return xi.spells.blue.useBreathSpell(caster, target, spell, params)

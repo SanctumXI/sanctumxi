@@ -33,7 +33,7 @@ INSERT INTO `blue_spell_list` VALUES (531,676,3,13,1,0,0,0); -- Ice Break
 INSERT INTO `blue_spell_list` VALUES (532,535,4,0,1,0,0,0); -- Blitzstrahl
 INSERT INTO `blue_spell_list` VALUES (533,509,3,14,2,0,0,0); -- Self-Destruct
 INSERT INTO `blue_spell_list` VALUES (534,523,4,10,1,0,0,0); -- Mysterious Light
-INSERT INTO `blue_spell_list` VALUES (535,1646,1,14,1,0,0,0); -- Cold Wave
+INSERT INTO `blue_spell_list` VALUES (535,1646,2,14,1,0,0,0); -- Cold Wave
 INSERT INTO `blue_spell_list` VALUES (536,466,1,4,1,0,0,0); -- Poison Breath
 INSERT INTO `blue_spell_list` VALUES (537,489,2,14,1,0,0,0); -- Stinking Gas
 INSERT INTO `blue_spell_list` VALUES (538,530,4,6,1,0,0,0); -- Memento Mori
@@ -72,14 +72,14 @@ INSERT INTO `blue_spell_list` VALUES (582,653,2,17,1,0,0,0); -- Chaotic Eye
 INSERT INTO `blue_spell_list` VALUES (584,264,2,2,1,0,0,0); -- Sheep Song
 INSERT INTO `blue_spell_list` VALUES (585,266,4,3,1,12,0,0); -- Ram Charge
 INSERT INTO `blue_spell_list` VALUES (587,273,2,3,1,4,0,0); -- Claw Cyclone
-INSERT INTO `blue_spell_list` VALUES (588,497,2,4,1,0,0,0); -- Lowing
+INSERT INTO `blue_spell_list` VALUES (588,497,1,4,1,0,0,0); -- Lowing
 INSERT INTO `blue_spell_list` VALUES (589,255,5,16,1,1,8,0); -- Dimensional Death
 INSERT INTO `blue_spell_list` VALUES (591,800,4,6,1,0,0,0); -- Heat Breath
 INSERT INTO `blue_spell_list` VALUES (592,292,2,0,1,0,0,0); -- Blank Gaze
 INSERT INTO `blue_spell_list` VALUES (593,295,3,5,1,0,0,0); -- Magic Fruit
 INSERT INTO `blue_spell_list` VALUES (594,584,3,8,1,3,8,0); -- Uppercut
 INSERT INTO `blue_spell_list` VALUES (595,322,5,1,1,0,0,0); -- 1000 Needles
-INSERT INTO `blue_spell_list` VALUES (596,329,2,0,1,3,0,0); -- Pinecone Bomb
+INSERT INTO `blue_spell_list` VALUES (596,329,1,0,1,3,0,0); -- Pinecone Bomb
 INSERT INTO `blue_spell_list` VALUES (597,687,2,1,1,5,0,0); -- Sprout Smack
 INSERT INTO `blue_spell_list` VALUES (598,434,4,4,1,0,0,0); -- Soporific
 INSERT INTO `blue_spell_list` VALUES (599,310,2,0,1,2,0,0); -- Queasyshroom
@@ -99,7 +99,7 @@ INSERT INTO `blue_spell_list` VALUES (617,1447,3,11,1,9,0,0); -- Vertical Cleave
 INSERT INTO `blue_spell_list` VALUES (618,638,2,0,1,0,0,0); -- Blastbomb
 INSERT INTO `blue_spell_list` VALUES (620,609,3,8,1,8,0,0); -- Battle Dance
 INSERT INTO `blue_spell_list` VALUES (621,1727,2,4,1,0,0,0); -- Sandspray
-INSERT INTO `blue_spell_list` VALUES (622,665,2,11,1,7,0,0); -- Grand Slam
+INSERT INTO `blue_spell_list` VALUES (622,665,1,11,1,7,0,0); -- Grand Slam
 INSERT INTO `blue_spell_list` VALUES (623,612,3,0,1,8,0,0); -- Head Butt
 INSERT INTO `blue_spell_list` VALUES (626,591,3,0,1,0,0,0); -- Bomb Toss
 INSERT INTO `blue_spell_list` VALUES (628,1081,3,15,1,8,0,0); -- Frypan
@@ -116,7 +116,7 @@ INSERT INTO `blue_spell_list` VALUES (641,1753,5,18,1,6,0,0); -- Hysteric Barrag
 -- INSERT INTO `blue_spell_list` VALUES (641,1766,5,18,1,6,0,0); -- Hysteric Barrage
 INSERT INTO `blue_spell_list` VALUES (642,1821,3,0,1,0,0,0); -- Amplification
 INSERT INTO `blue_spell_list` VALUES (643,1818,3,0,1,11,0,0); -- Cannonball
-INSERT INTO `blue_spell_list` VALUES (644,1963,4,4,1,0,0,0); -- Mind Blast
+INSERT INTO `blue_spell_list` VALUES (644,1963,5,4,1,0,0,0); -- Mind Blast
 INSERT INTO `blue_spell_list` VALUES (645,1955,4,5,1,0,0,0); -- Exuviation
 INSERT INTO `blue_spell_list` VALUES (646,1958,4,6,1,0,0,0); -- Magic Hammer
 INSERT INTO `blue_spell_list` VALUES (647,1722,2,17,1,0,0,0); -- Zephyr Mantle

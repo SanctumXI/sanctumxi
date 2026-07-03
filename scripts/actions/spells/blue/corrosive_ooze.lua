@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Corrosive Ooze
--- Deals water damage to an enemy. Additional Effect: Attack Down and Defense Down
--- Spell cost: 55 MP
+-- Deals water damage to an enemy. Additional Effect: Defense Down
+-- Spell cost: 80 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 4
 -- Stat Bonus: HP-10 MP+10
 -- Level: 66
--- Casting Time: 5 seconds
--- Recast Time: 30 seconds
+-- Casting Time: 4 seconds
+-- Recast Time: 22 seconds
 -----------------------------------
 -- Combos: Clear Mind
 -----------------------------------
@@ -42,8 +42,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, spell:getSpellGroup(), xi.skill.BLUE_MAGIC, 0, spell:getElement(), xi.mod.INT, 0, 0)
 
     if resist >= 0.5 then
-        target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 5, duration = 90 * resist, origin = caster })
-        target:addStatusEffect(xi.effect.ATTACK_DOWN, { power = 5, duration = 90 * resist, origin = caster })
+        target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 15, duration = 60 * resist, origin = caster })
     end
 
     return damage

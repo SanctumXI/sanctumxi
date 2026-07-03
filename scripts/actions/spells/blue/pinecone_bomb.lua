@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Pinecone Bomb
 -- Additional effect: Sleep. Duration of effect varies with TP
--- Spell cost: 48 MP
+-- Spell cost: 41 MP
 -- Monster Type: Plantoids
--- Spell Type: Physical (Piercing)
--- Blue Magic Points: 2
+-- Spell Type: Physical (Blunt)
+-- Blue Magic Points: 1
 -- Stat Bonus: STR+1
 -- Level: 36
--- Casting Time: 2.5 seconds
--- Recast Time: 26.5 seconds
+-- Casting Time: 3.5 seconds
+-- Recast Time: 40 seconds
 -- Skillchain Element(s): Liquefaction
 -- Combos: None
 -----------------------------------
@@ -24,7 +24,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.ecosystem  = xi.ecosystem.PLANTOID
     params.tpmod      = xi.spells.blue.tpMod.DURATION
     params.attackType = xi.attackType.RANGED
-    params.damageType = xi.damageType.PIERCING
+    params.damageType = xi.damageType.BLUNT
     params.scattr     = xi.skillchainType.LIQUEFACTION
     params.numhits    = 1
     params.multiplier = 2.25

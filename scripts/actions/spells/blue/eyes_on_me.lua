@@ -5,10 +5,10 @@
 -- Monster Type: Demons
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 4
--- Stat Bonus: HP-5, MP+15
+-- Stat Bonus: CHA +3
 -- Level: 61
--- Casting Time: 4.5 seconds
--- Recast Time: 29.25 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 35 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: Magic Attack Bonus
 -----------------------------------
@@ -37,7 +37,13 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.4
 
-    return xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+    local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+    if target:isAlive() then
+        target:addEnmity(caster, 1, 1800)
+        target:updateTarget()
+    end
+
+    return damage
 end
 
 return spellObject

@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Infrasonics
 -- Lowers the evasion of enemies within a fan-shaped area originating from the caster
--- Spell cost: 42 MP
+-- Spell cost: 38 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 4
 -- Stat Bonus: INT+1
 -- Level: 65
--- Casting Time: 5 seconds
+-- Casting Time: 3 seconds
 -- Recast Time: 120 seconds
 -- Magic Bursts on: Induration, Distortion, Darkness
 -- Combos: None
@@ -25,7 +25,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.effect          = xi.effect.EVASION_DOWN
     params.power           = 20
     params.tick            = 0
-    params.duration        = 60
+    params.duration        = 90
     params.resistThreshold = 0.5
     params.isGaze          = false
     params.isConal         = true

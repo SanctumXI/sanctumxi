@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Ram Charge
 -- Damage varies with TP
--- Spell cost: 79 MP
+-- Spell cost: 40 MP
 -- Monster Type: Beasts
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 4
--- Stat Bonus: HP+5
+-- Stat Bonus: HP+15
 -- Level: 73
 -- Casting Time: 0.5 seconds
 -- Recast Time: 34.75 seconds

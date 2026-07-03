@@ -1,15 +1,15 @@
 -----------------------------------
 -- Spell: Amplification
 -- Enhances magic attack and magic defense
--- Spell cost: 48 MP
+-- Spell cost: 80 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 3
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: MP+10
 -- Level: 70
 -- Casting Time: 7 seconds
 -- Recast Time: 120 seconds
--- Duration: 90 seconds
+-- Duration: 180 seconds
 -----------------------------------
 -- Combos: None
 -----------------------------------
@@ -21,11 +21,11 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 120)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
     local returnEffect = xi.effect.MAGIC_ATK_BOOST
 
-    local actionOne = target:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 10, duration = duration, origin = caster })
-    local actionTwo = target:addStatusEffect(xi.effect.MAGIC_DEF_BOOST, { power = 10, duration = duration, origin = caster })
+    local actionOne = target:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 15, duration = duration, origin = caster })
+    local actionTwo = target:addStatusEffect(xi.effect.MAGIC_DEF_BOOST, { power = 15, duration = duration, origin = caster })
 
     if not actionOne and not actionTwo then -- both statuses fail to apply
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)

@@ -5,7 +5,7 @@
 -- Monster Type: Plantoids
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 4
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: MND +2
 -- Level: 24
 -- Casting Time: 3 seconds
 -- Recast Time: 90 seconds

@@ -51,7 +51,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle status effects.
     local effectTable =
     {
-        [1] = { xi.effect.DEFENSE_DOWN, 8, 0, 120 },
+        [1] = { xi.effect.DEFENSE_DOWN, 10, 0, 120 },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

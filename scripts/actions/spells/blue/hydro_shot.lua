@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Hydro Shot
--- Additional effect: Enmity Down. Chance of effect varies with TP
--- Spell cost: 55 MP
+-- Additional effect: Enmity Down.
+-- Spell cost: 60 MP
 -- Monster Type: Beastmen
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 3
 -- Stat Bonus: MND+2
 -- Level: 63
--- Casting Time: 0.5 seconds
+-- Casting Time: 2 seconds
 -- Recast Time: 26 seconds
 -- Skillchain Element(s): Reverberation
 -- Combos: Rapid Shot
@@ -23,8 +23,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     local params = {}
     params.ecosystem = xi.ecosystem.BEASTMEN
     params.tpmod = xi.spells.blue.tpMod.EFFECT_CHANCE
-    params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.HTH
+    params.attackType = xi.attackType.MAGICAL
+    params.damageType = xi.damageType.WATER
     params.scattr = xi.skillchainType.REVERBERATION
     params.numhits = 1
     params.multiplier = 1.25
@@ -40,10 +40,15 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
 
-    -- Enmity Down amount is trivial, not worth implementing
-    -- Sources: https://www.applySpellDamagethreads/37619-Blue-Mage-Best-thread-ever?p=4845494&viewfull=1#post4845494 and https://www.bg-wiki.com/ffxi/Hydro_Shot
+    local damage = xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 
-    return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
+    -- Lowers the user's current hate on this target by 25%.
+    if damage > 0 and target:isAlive() then
+        target:lowerEnmity(caster, 25)
+        target:updateTarget()
+    end
+
+    return damage
 end
 
 return spellObject

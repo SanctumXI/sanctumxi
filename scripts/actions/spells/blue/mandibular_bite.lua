@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Mandibular Bite
 -- Damage varies with TP
--- Spell cost: 38 MP
+-- Spell cost: 35 MP
 -- Monster Type: Vermin
 -- Spell Type: Physical (Slashing)
--- Blue Magic Points: 2
--- Stat Bonus: INT+1
+-- Blue Magic Points: 3
+-- Stat Bonus: STR+1
 -- Level: 44
 -- Casting Time: 0.5 seconds
 -- Recast Time: 19.25 seconds
@@ -34,9 +34,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.duppercap = 45
     params.str_wsc = 0.2
     params.dex_wsc = 0.0
-    params.vit_wsc = 0.0
+    params.vit_wsc = 0.2
     params.agi_wsc = 0.0
-    params.int_wsc = 0.2
+    params.int_wsc = 0.0
     params.mnd_wsc = 0.0
     params.chr_wsc = 0.0
 

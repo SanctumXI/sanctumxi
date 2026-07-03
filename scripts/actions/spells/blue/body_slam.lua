@@ -5,7 +5,7 @@
 -- Monster Type: Dragon
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 4
--- Stat Bonus: VIT+1, MP+5
+-- Stat Bonus: VIT+1, HP+10
 -- Level: 62
 -- Casting Time: 1 seconds
 -- Recast Time: 27.75 seconds
@@ -34,7 +34,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.duppercap = 75
     params.str_wsc = 0.0
     params.dex_wsc = 0.0
-    params.vit_wsc = 0.4
+    params.vit_wsc = 0.5
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0

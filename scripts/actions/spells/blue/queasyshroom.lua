@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Queasyshroom
 -- Additional effect: Poison. Duration of effect varies with TP
--- Spell cost: 20 MP
+-- Spell cost: 15 MP
 -- Monster Type: Plantoids
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 2
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: HP-10, MP+10
 -- Level: 8
--- Casting Time: 2 seconds
+-- Casting Time: 1 second
 -- Recast Time: 15 seconds
 -- Skillchain Element(s): Compression
 -- Combos: None
