@@ -3,9 +3,9 @@
 -- Delivers a sixfold attack. Accuracy varies with TP
 -- Spell cost: 81 MP
 -- Monster Type: Beasts
--- Spell Type: Physical (Blunt)
+-- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 2
--- Stat Bonus: AGI +3
+-- Stat Bonus: DEX +3
 -- Level: 70
 -- Casting Time: 1 second
 -- Recast Time: 30 seconds
@@ -31,7 +31,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     params.attackType = xi.attackType.PHYSICAL
-    params.damageType = xi.damageType.HTH
+    params.damageType = xi.damageType.SLASHING
     params.scattr = xi.skillchainType.LIQUEFACTION
     params.scattr2 = xi.skillchainType.IMPACTION
     params.numhits = 6
