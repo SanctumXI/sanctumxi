@@ -7,8 +7,8 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: AGI +3
 -- Level: 70
--- Casting Time: 3 seconds
--- Recast Time: 60 seconds
+-- Casting Time: 1 second
+-- Recast Time: 30 seconds
 -- Skillchain Element(s): Liquefaction/Impaction
 -- Combos: Counter
 -----------------------------------
@@ -40,10 +40,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tp300 = 0.625
     params.azuretp = 0.625
     params.duppercap = 21
-    -- D seems low for its level, but the spell never did good damage, so a low D is a good way of keeping overall damage down.
-    -- More discussion on https://ffxiclopedia.fandom.com/wiki/Talk:Asuran_Claws
-    params.str_wsc = 0.15
-    params.dex_wsc = 0.15
+    params.str_wsc = 0.2
+    params.dex_wsc = 0.2
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
