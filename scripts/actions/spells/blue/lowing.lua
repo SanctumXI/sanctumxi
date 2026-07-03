@@ -4,8 +4,8 @@
 -- Spell cost: 66 MP
 -- Monster Type: Beasts
 -- Spell Type: Magical (Fire)
--- Blue Magic Points: 2
--- Stat Bonus: HP-5
+-- Blue Magic Points: 1
+-- Stat Bonus: HP +10
 -- Level: 71
 -- Casting Time: 7 seconds
 -- Recast Time: 56 seconds
@@ -26,7 +26,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.power           = 5
     params.tick            = 0
     params.duration        = 60
-    params.resistThreshold = 0.5
+    params.resistThreshold = 0.25
     params.isGaze          = false
     params.isConal         = false
 
