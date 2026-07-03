@@ -476,7 +476,7 @@ INSERT INTO `blue_spell_mods` VALUES (631,13,2); -- MND+2
 -- ----------------------------
 -- Diamondhide
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (632,10,1); -- VIT+1
+INSERT INTO `blue_spell_mods` VALUES (632,10,2); -- VIT+2
 
 -- ----------------------------
 -- Enervation
