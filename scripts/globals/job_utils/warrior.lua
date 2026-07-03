@@ -79,7 +79,7 @@ xi.job_utils.warrior.useDefender = function(player, target, ability)
 
     -- Get Power and duration.
     local power    = 25 + utils.clamp(levelScale, 0, 10)
-    local duration = 180 + player:getMod(xi.mod.DEFENDER_DURATION)
+    local duration = 300 + player:getMod(xi.mod.DEFENDER_DURATION)
 
     player:addStatusEffect(xi.effect.DEFENDER, { power = power, duration = duration, origin = player })
 
