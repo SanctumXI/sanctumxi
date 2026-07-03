@@ -7,7 +7,7 @@
 -- Blue Magic Points: 5
 -- Stat Bonus: INT+3 MND+3
 -- Level: 74
--- Casting Time: 3 seconds
+-- Casting Time: 5 seconds
 -- Recast Time: 60 seconds
 -- Duration: 120 seconds (2 minutes)
 -----------------------------------
@@ -33,7 +33,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     end
 
     target:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 12, duration = duration, origin = caster })
-    target:addStatusEffect(xi.effect.ICE_SPIKES, { power = 5, duration = duration, origin = caster })
+    target:addStatusEffect(xi.effect.ICE_SPIKES, { power = 10, duration = duration, origin = caster })
     spell:setMsg(xi.msg.basic.MAGIC_GAIN_EFFECT)
 
     return xi.effect.DEFENSE_BOOST
