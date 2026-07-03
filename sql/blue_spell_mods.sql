@@ -493,7 +493,7 @@ INSERT INTO `blue_spell_mods` VALUES (634,14,1); -- CHR+1
 -- ----------------------------
 -- Warm-up
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (636,10,1); -- VIT+1
+INSERT INTO `blue_spell_mods` VALUES (636,9,1); -- DEX+1
 
 -- ----------------------------
 -- Firespit
