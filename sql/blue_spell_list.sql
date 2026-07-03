@@ -19,7 +19,7 @@ CREATE TABLE `blue_spell_list` (
 -- Records
 -- ----------------------------
 
-INSERT INTO `blue_spell_list` VALUES (513,1572,3,4,3,0,0,0); -- Venom Shell
+INSERT INTO `blue_spell_list` VALUES (513,1572,3,4,1,0,0,0); -- Venom Shell
 INSERT INTO `blue_spell_list` VALUES (515,462,5,4,1,0,0,0); -- Maelstrom
 INSERT INTO `blue_spell_list` VALUES (517,448,1,10,1,0,0,0); -- Metallic Body
 INSERT INTO `blue_spell_list` VALUES (519,452,3,18,1,1,4,0); -- Screwdriver
@@ -116,7 +116,7 @@ INSERT INTO `blue_spell_list` VALUES (641,1753,5,18,1,6,0,0); -- Hysteric Barrag
 -- INSERT INTO `blue_spell_list` VALUES (641,1766,5,18,1,6,0,0); -- Hysteric Barrage
 INSERT INTO `blue_spell_list` VALUES (642,1821,3,0,1,0,0,0); -- Amplification
 INSERT INTO `blue_spell_list` VALUES (643,1818,3,0,1,11,0,0); -- Cannonball
-INSERT INTO `blue_spell_list` VALUES (644,1963,4,4,1,0,0,0); -- Mind Blast
+INSERT INTO `blue_spell_list` VALUES (644,1963,5,4,1,0,0,0); -- Mind Blast
 INSERT INTO `blue_spell_list` VALUES (645,1955,4,5,1,0,0,0); -- Exuviation
 INSERT INTO `blue_spell_list` VALUES (646,1958,4,6,1,0,0,0); -- Magic Hammer
 INSERT INTO `blue_spell_list` VALUES (647,1722,2,17,1,0,0,0); -- Zephyr Mantle
