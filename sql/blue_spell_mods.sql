@@ -40,7 +40,7 @@ INSERT INTO `blue_spell_mods` VALUES (521,5,5); -- MP+5
 -- ----------------------------
 -- Death Ray
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (522,2,-10); -- HP-10
+INSERT INTO `blue_spell_mods` VALUES (522,12,1); -- INT+1
 INSERT INTO `blue_spell_mods` VALUES (522,5,10); -- MP+10
 
 -- ----------------------------
