@@ -5,7 +5,7 @@
 -- Monster Type: Beasts
 -- Spell Type: Magical (Fire)
 -- Blue Magic Points: 1
--- Stat Bonus: HP +10
+-- Stat Bonus: VIT +2
 -- Level: 71
 -- Casting Time: 7 seconds
 -- Recast Time: 56 seconds
