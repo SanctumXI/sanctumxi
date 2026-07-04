@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <concepts>
+#include <cstdint>
 #include <initializer_list>
 #include <iterator>
 #include <limits>
@@ -37,7 +38,6 @@
 
 #include <common/rng/detail/bounded_int.h>
 #include <common/rng/detail/canonical_float.h>
-#include <common/rng/detail/normal.h>
 #include <common/rng/detail/shuffle.h>
 #include <common/rng/detail/weighted_index.h>
 
@@ -45,7 +45,7 @@
 // @brief Random Engine Selection
 //
 // Define one of the following macros to select a specific RNG engine.
-// If none are defined, XIRAND_MT64 (std::mt19937_64) is used by default.
+// If none are defined, Squirrel5 is used by default.
 //
 // - XIRAND_PCG64
 // - XIRAND_PCG32
@@ -64,13 +64,14 @@ using SelectedRandomEngine = pcg32;
 #elif defined(XIRAND_MT32)
 using SelectedRandomEngine = std::mt19937;
 #elif defined(XIRAND_SQUIRREL5)
-#include "rng/squirrel5.h"
+#include <common/rng/squirrel5.h>
 using SelectedRandomEngine = Squirrel5;
 #elif defined(XIRAND_NULL)
-#include "rng/null.h"
+#include <common/rng/null.h>
 using SelectedRandomEngine = NullRandomEngine;
-#else
-using SelectedRandomEngine = std::mt19937_64;
+#else // Default
+#include <common/rng/squirrel5.h>
+using SelectedRandomEngine = Squirrel5;
 #endif
 
 static_assert(std::uniform_random_bit_generator<SelectedRandomEngine>, "SelectedRandomEngine must satisfy the UniformRandomBitGenerator concept");
@@ -94,9 +95,11 @@ void seed();
 /// @param min Minimum value (inclusive).
 /// @param max Maximum value (exclusive).
 /// @return Random value in [min, max).
-/// @note max is subtracted by one as per an inconsistency in the standard, see
-///       https://bugs.llvm.org/show_bug.cgi?id=18767#c1
-///       This change results in both real and integer templates having the same min/max range.
+/// @note Both the integer and real overloads are half-open [min, max) by construction
+///       (detail::bounded32 / detail::canonical53), so they share the same min/max range.
+///       This no longer relies on std::uniform_int_distribution's closed-interval
+///       convention (linked issue, the source of the old workaround:
+///       https://bugs.llvm.org/show_bug.cgi?id=18767#c1).
 template <std::integral T>
 [[nodiscard]] inline auto GetRandomNumber(T min, T max) -> T;
 
@@ -154,7 +157,14 @@ template <std::ranges::random_access_range R>
 /// @example GetWeightedElement(std::map<std::string, double>{{"Common", 70}, {"Rare", 30}})
 /// @throws std::out_of_range if the table is empty and key_type is not default constructible.
 template <typename Container>
-[[nodiscard]] inline auto GetWeightedElement(Container const& table) -> typename Container::key_type;
+[[nodiscard]] inline auto GetWeightedElement(const Container& table) -> typename Container::key_type;
+
+/// @brief Shuffles a random_access_range in place using the thread-local engine.
+/// @tparam R Random access range type.
+/// @param range The container or range to shuffle.
+template <std::ranges::random_access_range R>
+inline auto ShuffleInPlace(R&& range) -> void;
+
 } // namespace xirand
 
 //
@@ -169,11 +179,8 @@ template <std::integral T>
         return min;
     }
 
-    // Compute the outcome count in U's own modulus. The extra cast back to U matters
-    // for types narrower than int: `U(max) - U(min)` would otherwise promote to int and,
-    // for a negative min, widen to a bogus huge count. Keeping it in U wraps correctly.
-    using U       = std::make_unsigned_t<T>;
-    const U count = static_cast<U>(static_cast<U>(max) - static_cast<U>(min));
+    using U              = std::make_unsigned_t<T>;
+    const uint64_t count = static_cast<uint64_t>(static_cast<U>(max) - static_cast<U>(min));
     return static_cast<T>(static_cast<U>(min) + detail::bounded32(rng(), count));
 }
 
@@ -185,9 +192,8 @@ template <std::floating_point T>
         return min;
     }
 
-    // scaleCanonical guards the rounding edge where the scaled draw lands exactly on
-    // max (most likely when narrowing to float), keeping the [min, max) contract honest.
-    return detail::scaleCanonical(detail::canonical53(rng()), min, max);
+    const double unit = detail::canonical53(rng());
+    return static_cast<T>(static_cast<double>(min) + unit * (static_cast<double>(max) - static_cast<double>(min)));
 }
 
 template <typename T>
@@ -248,13 +254,7 @@ template <std::ranges::random_access_range R>
 
 [[nodiscard]] inline auto xirand::GetWeightedIndex(std::span<const double> weights) -> size_t
 {
-    if (weights.empty())
-    {
-        return 0;
-    }
-
-    std::discrete_distribution<size_t> dist(weights.begin(), weights.end());
-    return dist(rng());
+    return detail::weightedIndex(rng(), weights);
 }
 
 [[nodiscard]] inline auto xirand::GetWeightedIndex(std::initializer_list<double> weights) -> size_t
@@ -288,6 +288,11 @@ template <typename Container>
         weights.push_back(static_cast<double>(weight));
     }
 
-    std::discrete_distribution<size_t> dist(weights.begin(), weights.end());
-    return elements[dist(rng())];
+    return elements[detail::weightedIndex(rng(), std::span<const double>(weights))];
+}
+
+template <std::ranges::random_access_range R>
+inline auto xirand::ShuffleInPlace(R&& range) -> void
+{
+    detail::shuffle(std::ranges::begin(range), std::ranges::end(range), rng());
 }

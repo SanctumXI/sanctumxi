@@ -5611,7 +5611,7 @@ bool DoRandomDealToEntity(CCharEntity* PChar, CBattleEntity* PTarget)
         if (activeCooldownList.size() > 1)
         {
             // Shuffle active cooldowns and take first (loaded deck)
-            std::shuffle(std::begin(activeCooldownList), std::end(activeCooldownList), xirand::rng());
+            xirand::ShuffleInPlace(activeCooldownList);
             loadedDeckChance = 100;
         }
 
@@ -5643,7 +5643,7 @@ bool DoRandomDealToEntity(CCharEntity* PChar, CBattleEntity* PTarget)
         if (resetCandidateList.size() > 1)
         {
             // Shuffle if more than 1 ability
-            std::shuffle(std::begin(resetCandidateList), std::end(resetCandidateList), xirand::rng());
+            xirand::ShuffleInPlace(resetCandidateList);
         }
 
         // Reset first ability (shuffled or only)
