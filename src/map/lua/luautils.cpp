@@ -100,6 +100,7 @@
 #include <cctype>
 #include <cmath>
 #include <filesystem>
+#include <limits>
 #include <numeric>
 #include <string>
 #include <unordered_map>
