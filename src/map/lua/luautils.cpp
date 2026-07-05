@@ -98,6 +98,7 @@
 
 #include <array>
 #include <cctype>
+#include <cmath>
 #include <filesystem>
 #include <numeric>
 #include <string>
@@ -255,8 +256,16 @@ void init(IPP mapIPP, bool isRunningInCI)
             {
                 // Lua stock:
                 // When called with two integers: a pseudo-random integer in the range ([lower, upper] (closed)).
-                // Fractional bounds are rounded to the nearest integer; use math.randomFloat for float ranges.
-                return static_cast<lua_Number>(xirand::GetRandomNumber<int64>(std::llround(lower), std::llround(upper) + 1));
+                //
+                // Custom extension:
+                // We detect if the arguments are both integers, so we can then return an integer in the range [lower, upper] (closed).
+                // If one or both arguments are floating-point, we fall through to use lua_Number [lower, upper) (half-open).
+                if (lower == std::floor(lower) && upper == std::floor(upper))
+                {
+                    return static_cast<lua_Number>(xirand::GetRandomNumber<int64>(static_cast<int64>(lower), static_cast<int64>(upper) + 1));
+                }
+
+                return xirand::GetRandomNumber<lua_Number>(lower, upper);
             });
 
     // Custom extension: a pseudo-random integer in the range [lower, upper] (closed).
