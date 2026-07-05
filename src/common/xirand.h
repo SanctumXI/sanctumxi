@@ -156,8 +156,9 @@ template <std::floating_point T>
         return min;
     }
 
-    std::uniform_real_distribution<T> dist(min, max);
-    return dist(rng());
+    // scaleCanonical guards the rounding edge where the scaled draw lands exactly on
+    // max (most likely when narrowing to float), keeping the [min, max) contract honest.
+    return detail::scaleCanonical(detail::canonical53(rng()), min, max);
 }
 
 template <typename T>
