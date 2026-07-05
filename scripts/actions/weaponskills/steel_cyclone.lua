@@ -18,7 +18,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 1.5, 2.0, 3.0 }
+    params.ftpMod = { 1.75, 2.0, 2.5 }
     params.str_wsc = 0.6 params.vit_wsc = 0.6
     params.atkVaries = { 1.66, 1.66, 1.66 }
 
@@ -28,10 +28,27 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.atkVaries = { 1.5, 1.5, 1.5 }
     end
 
+    if player:getMainJob() == xi.job.WAR then
+        params.vit_wsc = 0.7
+        params.str_wsc = 0.7
+        params.atkVaries = { 1.75, 1.75, 1.75 }
+        params.bonusWSmods = math.floor(player:getStat(xi.mod.DEF) / 15)
+    end
+
+    if player:getMainJob() == xi.job.DRK then
+        params.vit_wsc = 0.3
+        params.int_wsc = 0.8
+        params.str_wsc = 0.0
+        params.bonusWSmods = math.floor(player:getStat(xi.mod.ATT) / 15)
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 10, duration = 60, origin = player })
-    player:addStatusEffect(xi.effect.ATTP, { power = 10, duration = 60, origin = player })
+    if player:getMainJob() == xi.job.WAR then
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 30, duration = 45, origin = player })
+    if player:getMainJob() == xi.job.DRK then
+    player:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 20, duration = 45, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 

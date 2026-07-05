@@ -118,7 +118,7 @@ INSERT INTO `blue_spell_mods` VALUES (540,8,2); -- STR+2
 -- ----------------------------
 -- Blood Saber
 -- ----------------------------
-INSERT INTO `blue_spell_mods` VALUES (543,8,1); -- STR+1
+INSERT INTO `blue_spell_mods` VALUES (541,8,1); -- STR+1
 INSERT INTO `blue_spell_mods` VALUES (541,2,-15); -- HP-15
 
 -- ----------------------------

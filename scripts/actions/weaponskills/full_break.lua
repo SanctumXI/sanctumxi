@@ -46,8 +46,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
         local boost = player:getMainLvl()
 
-    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 35, duration = 60, origin = player })
-    player:addStatusEffect(xi.effect.VIT_BOOST, { power = boost / 2, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 25, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.VIT_BOOST, { power = boost / 4, duration = 60, origin = player })
 
     return tpHits, extraHits, criticalHit, damage
 end

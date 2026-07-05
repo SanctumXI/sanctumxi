@@ -16,17 +16,27 @@
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local params = {}
+       local params = {}
     params.numHits = 2
     params.ftpMod = { 1.75, 2.25, 3.0 }
-    params.str_wsc = 0.4 params.mnd_wsc = 0.4
+    params.str_wsc = 0.4
+    params.mnd_wsc = 0.4
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod = { 4.0, 10.25, 13.75 }
         params.str_wsc = 0.5
     end
 
-    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    if player:getMainJob() == xi.job.PLD then
+        params.vit_wsc = 0.6
+        params.str_wsc = 0.3
+        params.mnd_wsc = 0.0
+        params.bonusWSmods = math.floor(player:getStat(xi.mod.DEF) / 10)
+    end
+
+    local damage, criticalHit, tpHits, extraHits =
+        xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
     return tpHits, extraHits, criticalHit, damage
 end
 

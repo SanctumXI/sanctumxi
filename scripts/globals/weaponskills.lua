@@ -665,7 +665,11 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.accStat                 = attacker:getACC()
     calcParams.melee                   = true
     calcParams.mustMiss                = target:hasStatusEffect(xi.effect.PERFECT_DODGE) or (target:hasStatusEffect(xi.effect.ALL_MISS) and not wsParams.hitsHigh)
-    calcParams.sneakApplicable         = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK) or target:hasStatusEffect(xi.effect.DOUBT)
+    
+    local hasSA = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK)
+    local ignorePosition = attacker:getMainJob() == xi.job.THF
+
+    calcParams.sneakApplicable = (hasSA and (ignorePosition or attacker:isBehind(target))) or target:hasStatusEffect(xi.effect.DOUBT)
     calcParams.taChar                  = taChar
     calcParams.trickApplicable         = calcParams.taChar ~= nil
     calcParams.assassinApplicable      = calcParams.trickApplicable and attacker:hasTrait(xi.trait.ASSASSIN)

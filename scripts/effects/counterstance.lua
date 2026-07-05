@@ -10,9 +10,9 @@ effectObject.onEffectGain = function(target, effect)
         effect:addMod(xi.mod.ATTP, 15)
     end
 
-        -- Custom penalty: Attack delay +15%
-    effect:addMod(xi.mod.DELAYP, 15)
-    effect:addMod(xi.mod.ENMITY_LOSS_REDUCTION, 25)
+        -- Custom penalty: Attack delay +20%
+    effect:addMod(xi.mod.DELAYP, 20)
+    effect:addMod(xi.mod.ENMITY_LOSS_REDUCTION, 30)
     effect:addMod(xi.mod.COUNTER, effect:getPower())
 
     -- Lv. 60+ bonus: Defense +5%

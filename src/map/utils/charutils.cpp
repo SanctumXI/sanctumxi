@@ -4826,15 +4826,15 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.75;
+                return 0.85;
             case 3:
-                return 0.65;
+                return 0.75;
             case 4:
-                return 0.60;
+                return 0.70;
             case 5:
-                return 0.55;
+                return 0.65;
             case 6:
-                return 0.50;
+                return 0.60;
             default:
                 return 2.5 / membersInZone;
         }
@@ -4846,17 +4846,17 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
             case 1:
                 return 1.00;
             case 2:
-                return 0.70;
+                return 0.85;
             case 3:
-                return 0.60;
+                return 0.75;
             case 4:
-                return 0.55;
+                return 0.70;
             case 5:
-                return 0.50;
+                return 0.65;
             case 6:
-                return 0.45;
+                return 0.60;
             default:
-                return 2.0 / membersInZone;
+                return 2.5 / membersInZone;
         }
     }
 }

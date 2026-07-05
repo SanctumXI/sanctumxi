@@ -128,7 +128,7 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
     local challengeMerit = attacker:getMerit(xi.merit.CHALLENGE) 
     if challengeMerit > 0 and target:isFacing(attacker, 120) then
         accBonus = accBonus + challengeMerit
-        -- print(string.format("Challenge merit: %u", challengeMerit)) -- Debug print to verify correct application of merit
+        -- print(string.format("Challenge acc bonus added > %u", challengeMerit)) -- Debug print to verify correct application of merit
     end
 
     -- Yonin evasion is likely agnostic to ranged or melee but needs confirmation

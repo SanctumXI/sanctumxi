@@ -580,24 +580,27 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
             damage += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar) * 2;
         }
     }
-    else if (Tier == 3) // enlight or endark
+    else if (Tier == 3) // enlight or endark - Sanctum Custom Handling
     {
-        damage = PAttacker->getMod(Mod::ENSPELL_DMG);
+        const EFFECT effectId = element == ELEMENT_DARK ? EFFECT_ENDARK : EFFECT_ENLIGHT;
 
-        if (damage > 1)
+        if (auto* PEffect = PAttacker->StatusEffectContainer->GetStatusEffect(effectId))
         {
-            PAttacker->delModifier(Mod::ENSPELL_DMG, 1);
-        }
-        else
-        {
-            if (element == ELEMENT_DARK)
+            damage = PEffect->GetPower();
+
+            if (damage > 1)
             {
-                PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_ENDARK);
+                PEffect->SetPower(damage - 1);
             }
             else
             {
-                PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_ENLIGHT);
+                PAttacker->StatusEffectContainer->DelStatusEffect(effectId);
             }
+        }
+        else
+        {
+            // Sanctum Custom light/dark enspells (Holy Circle, etc.)
+            damage = PAttacker->getMod(Mod::ENSPELL_DMG);
         }
 
         damage += bonus;
@@ -2628,7 +2631,11 @@ uint8 GetCritHitRate(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool ig
     }
     else if (PAttacker->objtype == TYPE_PC && (!ignoreSneakTrickAttack) && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
     {
-       // if (behind(PAttacker->loc.p, PDefender->loc.p, 64) || PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
+    const bool ignorePosition = PAttacker->GetMJob() == JOB_THF;
+
+        if (ignorePosition ||
+            behind(PAttacker->loc.p, PDefender->loc.p, 64) ||
+            PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
         {
             critHitRate = 100;
         }

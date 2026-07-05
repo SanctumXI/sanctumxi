@@ -19,14 +19,26 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 2
     params.ftpMod = { 1.5, 2.5, 3 }
-    params.str_wsc = 0.4 params.mnd_wsc = 0.5
+    params.str_wsc = 0.4
+    params.mnd_wsc = 0.5
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod = { 3.0, 7.25, 9.75 }
         params.mnd_wsc = 0.7
     end
 
+    if player:getMainJob() == xi.job.PLD then
+        params.vit_wsc = 0.5
+        params.str_wsc = 0.0
+        params.mnd_wsc = 0.5
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if player:getMainJob() == xi.job.PLD and damage > 0 then
+        player:addStatusEffect(xi.effect.GEO_REFRESH, { power = 2, duration = 45, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

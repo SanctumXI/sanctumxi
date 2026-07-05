@@ -9,7 +9,7 @@ effectObject.onEffectGain = function(target, effect)
 
     effect:addMod(xi.mod.ENSPELL, xi.element.LIGHT)
     effect:addMod(xi.mod.ENSPELL_DMG, effect:getPower() + jpValue)
-    effect:addMod(xi.mod.ACC, jpValue)
+    effect:addMod(xi.mod.ACC, 10)
 end
 
 effectObject.onEffectTick = function(target, effect)
