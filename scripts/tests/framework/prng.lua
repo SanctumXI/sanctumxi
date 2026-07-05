@@ -58,64 +58,35 @@ describe('math.random() contract', function()
         end
     end)
 
-    -- Float ranges are a local extension: LuaJIT has a single number type, so the
-    -- binding in luautils.cpp dispatches by value. Two-argument calls where either
-    -- bound is fractional roll a double in [a, b); integral-valued bounds (7.0 == 7)
-    -- keep stock integer semantics. The one-argument form always stays on the stock
-    -- integer path so a fractional argument cannot silently move the lower bound
-    -- from 1 to 0.
+    -- math.random mimics stock Lua exactly: every argument form yields integers
+    -- except the zero-argument call. Fractional bounds are rounded to the nearest
+    -- integer -- scripts wanting a float range must say so by name, via
+    -- math.randomFloat.
 
-    it('math.random(a, b) with a fractional bound returns doubles in [a, b)', function()
-        xi.test.world:setSeed(1)
-
-        local sawFraction = false
-        for _ = 1, kSamples do
-            local value = math.random(2.4, 7.6)
-            assert(value >= 2.4 and value < 7.6, string.format('math.random(2.4, 7.6) out of [2.4, 7.6): %.17g', value))
-            if value ~= math.floor(value) then
-                sawFraction = true
-            end
-        end
-
-        assert(sawFraction, 'math.random(2.4, 7.6) should produce fractional values')
-    end)
-
-    it('math.random(a, b) with a sub-integer span rolls a real float range', function()
-        -- The pattern math.random(0.7, 1.1) is used by self-destruct mobskills as a
-        -- damage multiplier; under the old int-only dispatch it collapsed to a
-        -- constant 1.
-        xi.test.world:setSeed(1)
-
-        local minSeen = math.huge
-        local maxSeen = -math.huge
-
-        for _ = 1, kSamples do
-            local value = math.random(0.7, 1.1)
-            assert(value >= 0.7 and value < 1.1, string.format('math.random(0.7, 1.1) out of [0.7, 1.1): %.17g', value))
-            minSeen = math.min(minSeen, value)
-            maxSeen = math.max(maxSeen, value)
-        end
-
-        assert(maxSeen > minSeen, 'math.random(0.7, 1.1) should vary, not collapse to a constant')
-    end)
-
-    it('math.random(a, b) with integral-valued bounds keeps stock integer semantics', function()
-        -- 7.0 == 7 in LuaJIT, so a float range with integral bounds is not
-        -- expressible; use a + math.random() * (b - a) for that.
+    it('math.random(a, b) rounds fractional bounds to the nearest integer', function()
         xi.test.world:setSeed(1)
 
         local seen = {}
         for _ = 1, kSamples do
-            local value = math.random(2.0, 7.0)
-            assert(value == math.floor(value), string.format('math.random(2.0, 7.0) returned a fraction: %.17g', value))
-            assert(value >= 2 and value <= 7, string.format('math.random(2.0, 7.0) out of [2, 7]: %s', tostring(value)))
+            -- 2.4 and 7.6 round to 2 and 8; the result is an integer in [2, 8].
+            local value = math.random(2.4, 7.6)
+            assert(value == math.floor(value), string.format('math.random(2.4, 7.6) returned a fraction: %.17g', value))
+            assert(value >= 2 and value <= 8, string.format('math.random(2.4, 7.6) out of [2, 8]: %s', tostring(value)))
             seen[value] = true
         end
 
-        assert(seen[2] and seen[7], 'math.random(2.0, 7.0) should reach both endpoints 2 and 7')
+        assert(seen[2] and seen[8], 'math.random(2.4, 7.6) should reach both rounded endpoints 2 and 8')
     end)
 
-    it('math.random(n) with a fractional argument stays on the integer path', function()
+    it('math.random(a, b) with a sub-integer span collapses to a constant', function()
+        -- Both bounds of math.random(0.7, 1.1) round to 1, so the roll is always 1.
+        -- Scripts wanting a fractional roll must use math.randomFloat(0.7, 1.1).
+        for _ = 1, 100 do
+            assert(math.random(0.7, 1.1) == 1, 'math.random(0.7, 1.1) should always return 1')
+        end
+    end)
+
+    it('math.random(n) with a fractional argument rounds it', function()
         xi.test.world:setSeed(1)
 
         for _ = 1, kSamples do
