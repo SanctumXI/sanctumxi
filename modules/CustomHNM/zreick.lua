@@ -56,7 +56,7 @@ m:addOverride('xi.zones.Konschtat_Highlands.Zone.onInitialize', function(zone)
             
         }
 
-            return skills[math.random(1, #skills)]
+            return skills[math.randomInt(1, #skills)]
         end,
 
         onMobSpellChoose = function(mob, target, spellId)
@@ -97,7 +97,7 @@ end,
     local function rollDrop(itemId, baseChance)
     local finalChance = math.min(baseChance + th *2, 100)
 
-        if math.random(1, 100) <= finalChance then
+        if math.randomInt(1, 100) <= finalChance then
             player:addTreasure(itemId, mob)
         end
     end
@@ -115,7 +115,7 @@ end,
 
         onMobDespawn = function(mob, player, optParams)
 
-            local RESPAWN_DELAY = math.random(50000, 60000) -- 18 - 22 hrs
+            local RESPAWN_DELAY = math.randomInt(50000, 60000) -- 18 - 22 hrs
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 mob:setDropID(0)

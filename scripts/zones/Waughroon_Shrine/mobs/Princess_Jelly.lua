@@ -42,7 +42,7 @@ entity.onMobSpawn = function(mob)
     end
 
     -- Pick one random available element.
-    local chosenElement   = elementTable[math.random(1, #elementTable)]
+    local chosenElement   = elementTable[math.randomInt(1, #elementTable)]
     local oppositeElement = xi.data.element.getElementWeakness(chosenElement)
 
     -- Mark element as picked and save it to battlefield.
@@ -138,7 +138,7 @@ entity.onMobSpellChoose = function(mob, target, spellId)
     list            = list > 0 and list or 1
     local spellList = spellTable[list]
 
-    return spellList[math.random(1, #spellList)]
+    return spellList[math.randomInt(1, #spellList)]
 end
 
 entity.onMobFight = function(mob, target)

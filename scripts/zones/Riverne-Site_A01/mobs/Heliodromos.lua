@@ -63,7 +63,7 @@ entity.onMobDespawn = function(mob)
     end
 
     if allHeliodromosDead then
-        SetServerVariable('Heliodromos_ToD', GetSystemTime() + math.random(43200, 54000)) -- 12 to 15 hours
+        SetServerVariable('Heliodromos_ToD', GetSystemTime() + math.randomInt(43200, 54000)) -- 12 to 15 hours
 
         -- allow placeholders to respawn
         for i = ID.mob.HELIODROMOS_OFFSET - 3, ID.mob.HELIODROMOS_OFFSET - 1 do

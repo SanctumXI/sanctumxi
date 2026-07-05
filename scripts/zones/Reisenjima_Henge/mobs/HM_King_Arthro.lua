@@ -99,7 +99,7 @@ entity.onMobFight = function(mob, target)
 end
 
 entity.onMobSpellChoose = function(mob, target, spellId)
-    return powerfulSpells[math.random(1, #powerfulSpells)]
+    return powerfulSpells[math.randomInt(1, #powerfulSpells)]
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)

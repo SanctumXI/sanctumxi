@@ -35,8 +35,8 @@ local npcPos =
 }
 
 local function getRandomSpawnPos(centerX, centerY, centerZ)
-    local angle = math.random() * math.pi * 2
-    local distance = math.random(minSpawnDistance, maxSpawnDistance)
+    local angle = math.randomFloat(0, 1) * math.pi * 2
+    local distance = math.randomInt(minSpawnDistance, maxSpawnDistance)
 
     local x = centerX + math.cos(angle) * distance
     local z = centerZ + math.sin(angle) * distance

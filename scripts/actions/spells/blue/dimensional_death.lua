@@ -55,7 +55,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     local effectTable =
     {
-        [1] = { xi.effect.PLAGUE, 10, 3, 30 + math.random(0, 30) },
+        [1] = { xi.effect.PLAGUE, 10, 3, 30 + math.randomInt(0, 30) },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

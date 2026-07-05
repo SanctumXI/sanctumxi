@@ -109,7 +109,7 @@ m:addOverride('xi.zones.La_Theine_Plateau.Zone.onInitialize', function(zone)
                                 xi.mobSkill.DISPELLING_WIND,
                             }    
                         
-                            return skills[math.random(1, #skills)]
+                            return skills[math.randomInt(1, #skills)]
                         end,
 
                         onMobSpellChoose = function(mob, target, spellId)
@@ -163,7 +163,7 @@ end,
                 
             }
 
-            return skills[math.random(1, #skills)]
+            return skills[math.randomInt(1, #skills)]
         end,
 
         onMobDeath = function(mob, player, optParams, target)
@@ -182,7 +182,7 @@ end,
             local function rollDrop(itemId, baseChance)
                 local finalChance = math.min(baseChance + th * 2, 100)
 
-                if math.random(1, 100) <= finalChance then
+                if math.randomInt(1, 100) <= finalChance then
                     player:addTreasure(itemId, mob)
                 end
             end
@@ -199,7 +199,7 @@ end,
         end,
 
         onMobDespawn = function(mob, player, optParams)
-            local RESPAWN_DELAY = math.random(50000, 60000)
+            local RESPAWN_DELAY = math.randomInt(50000, 60000)
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 mob:setDropID(0)

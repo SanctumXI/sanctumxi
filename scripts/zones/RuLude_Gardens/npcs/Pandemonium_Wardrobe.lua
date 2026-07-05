@@ -189,7 +189,7 @@ local function weightedChoice(entries)
         return nil
     end
 
-    local roll = math.random(1, totalWeight)
+    local roll = math.randomInt(1, totalWeight)
     local runningWeight = 0
 
     for _, entry in ipairs(entries) do

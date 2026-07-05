@@ -9,7 +9,7 @@ local ID = zones[xi.zone.OUTER_HORUTOTO_RUINS]
 -----------------------------------
 
 local function setTrioCooldown()
-    local pop = GetSystemTime() + math.random(2700, 3600) -- 45 to 60 minutes
+    local pop = GetSystemTime() + math.randomInt(2700, 3600) -- 45 to 60 minutes
 
     for i = ID.mob.BALLOON_NM_OFFSET + 1, ID.mob.BALLOON_NM_OFFSET + 3 do
         GetMobByID(i):setLocalVar('pop', pop)
@@ -44,9 +44,9 @@ local outerHorutotoGlobal =
             offset >= 0 and
             offset <= 4 and
             not trioPrimed() and
-            math.random(1, 100) <= 20
+            math.randomInt(1, 100) <= 20
         then
-            local nmId = ID.mob.BALLOON_NM_OFFSET + math.random(1, 3)
+            local nmId = ID.mob.BALLOON_NM_OFFSET + math.randomInt(1, 3)
             local nm   = GetMobByID(nmId)
             if not nm then
                 return

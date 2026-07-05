@@ -50,7 +50,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addListener('WEAPONSKILL_USE', 'FERREOUS_COFFIN_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == 170 then -- Randgrith
         -- Return to the dust whence you came! Randgrith!!!
-            if math.random(1, 100) <= 66 then
+            if math.randomInt(1, 100) <= 66 then
                 xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
             end
 

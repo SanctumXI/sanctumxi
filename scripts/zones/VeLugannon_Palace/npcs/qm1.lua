@@ -33,7 +33,7 @@ entity.onTrigger = function(player, npc)
         [8] = {      370,     16,     -194 },
     }
 
-    npc:setPos(unpack(curtanaPos[math.random(1, 8)]))
+    npc:setPos(unpack(curtanaPos[math.randomInt(1, 8)]))
     npc:hideNPC(hideTime)
 end
 

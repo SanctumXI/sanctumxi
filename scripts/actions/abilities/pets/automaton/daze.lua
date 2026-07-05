@@ -33,7 +33,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
         local chance = 0.033 * skill:getTP()
         if
             not target:hasStatusEffect(xi.effect.STUN) and
-            chance >= math.random() * 100
+            chance >= math.randomFloat(0, 1) * 100
         then
             target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 4, origin = automaton })
         end

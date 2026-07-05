@@ -82,12 +82,12 @@ entity.onMobFight = function(mob, target)
     local twohourTime = mob:getLocalVar('twohourTime')
 
     if twohourTime == 0 then
-        mob:setLocalVar('twohourTime', math.random(30, 90))
+        mob:setLocalVar('twohourTime', math.randomInt(30, 90))
     end
 
     if battletime >= twohourTime then
         mob:useMobAbility(1053) -- Legitimately captured super_buff ID
-        mob:setLocalVar('twohourTime', battletime + math.random(60, 120))
+        mob:setLocalVar('twohourTime', battletime + math.randomInt(60, 120))
     end
 
     local drawInTable =

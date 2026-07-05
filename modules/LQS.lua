@@ -659,7 +659,7 @@ LQS.pickItem = function(items, mod)
 
     -- pick weighted result
     local item = items[1]
-    local pick = math.random(1, sum)
+    local pick = math.randomInt(1, sum)
     sum = 0
 
     for i = 1, #items do
@@ -690,7 +690,7 @@ LQS.lootPool = function(player, pools)
             print(fmt("[LQS] pickItem returned a nil result in quest pool (Player: {}, Zone: {})", player:getName(), player:getZoneName()))
         else
             if result[4] ~= nil then
-                qty = math.random(result[3], result[4])
+                qty = math.randomInt(result[3], result[4])
             elseif result[3] ~= nil then
                 qty = result[3]
             end
@@ -730,7 +730,7 @@ LQS.randomNoRepeat = function(size, exclude)
         end
     end
 
-    return range[math.random(1, #range)]
+    return range[math.randomInt(1, #range)]
 end
 
 -----------------------------------
@@ -960,7 +960,7 @@ local function spawnMob(player, npc, entities, mobName, params)
                 end
 
                 if params.nextPos ~= nil then
-                    local pos = params.nextPos[math.random(1, #params.nextPos)]
+                    local pos = params.nextPos[math.randomInt(1, #params.nextPos)]
                     npc:setPos(unpack(pos))
                 end
             end
@@ -1553,7 +1553,7 @@ LQS.trade = function(obj)
                                     result[4] ~= nil and
                                     type(result[4]) == "table"
                                 then
-                                    givenQty = math.random(result[4][1], result[4][2])
+                                    givenQty = math.randomInt(result[4][1], result[4][2])
                                 end
 
                                 results[givenID] = (results[givenID] or 0) + givenQty
@@ -1587,7 +1587,7 @@ LQS.trade = function(obj)
                             xi.item.LIGHT_CLUSTER,
                             xi.item.DARK_CLUSTER,
                         }
-                        table.insert(items, clusters[math.random(#clusters)])
+                        table.insert(items, clusters[math.randomInt(1, #clusters)])
                     end
                 end
 
@@ -1642,7 +1642,7 @@ LQS.trade = function(obj)
                         if obj.spawn.hq ~= nil then
                             mobs = { obj.spawn.nq }
 
-                            if math.random(0, 100) < obj.spawn.rate then
+                            if math.randomInt(0, 100) < obj.spawn.rate then
                                 mobs = { obj.spawn.hq }
                             end
                         end
@@ -1742,7 +1742,7 @@ LQS.menu = function(obj)
                                 if obj.spawn.hq ~= nil then
                                     mobs = { obj.spawn.nq }
 
-                                    if math.random(0, 100) < obj.spawn.rate then
+                                    if math.randomInt(0, 100) < obj.spawn.rate then
                                         mobs = { obj.spawn.hq }
                                     end
                                 end
@@ -2548,10 +2548,10 @@ LQS.defeat = function(params)
 
                         if params.multiplier ~= nil then
                             local multiply mob:getLocalVar(params.multiplier.var)
-                            total = utils.clamp(params.points * multiply, params.multiplier.range[1], params.multiplier.range[2]) + math.random(1, params.points)
+                            total = utils.clamp(params.points * multiply, params.multiplier.range[1], params.multiplier.range[2]) + math.randomInt(1, params.points)
                         else
                             if type(params.points) == "table" then
-                                total = math.random(params.points[1], params.points[2])
+                                total = math.randomInt(params.points[1], params.points[2])
                             end
                         end
 
@@ -2848,7 +2848,7 @@ local getMobSteps = function(event, var, entity, steps, entities)
                 end
 
                 if entity.points.amount ~= nil then
-                    local amount = math.random(entity.points.amount[1], entity.points.amount[2])
+                    local amount = math.randomInt(entity.points.amount[1], entity.points.amount[2])
                     member:incrementCharVar(entity.points.var, amount)
                     member:sys(entity.points.message, member:getName(), amount)
                 end
@@ -2995,11 +2995,11 @@ local function entitySetup(dynamicEntity, tbl, entity)
         if entity.aeffect ~= nil then
             if type(entity.aeffect) == "table" then
                 dynamicEntity.onAdditionalEffect = function(mob, target, damage)
-                    return xi.mob.onAddEffect(mob, target, damage, entity.aeffect[1], { power = math.random(entity.aeffect[2], entity.aeffect[3]) })
+                    return xi.mob.onAddEffect(mob, target, damage, entity.aeffect[1], { power = math.randomInt(entity.aeffect[2], entity.aeffect[3]) })
                 end
             else
                 dynamicEntity.onAdditionalEffect = function(mob, target, damage)
-                    return xi.mob.onAddEffect(mob, target, damage, entity.aeffect, { power = math.random(16, 26) })
+                    return xi.mob.onAddEffect(mob, target, damage, entity.aeffect, { power = math.randomInt(16, 26) })
                 end
             end
         end

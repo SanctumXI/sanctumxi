@@ -16,7 +16,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     chance = chance + (automaton:getMainLvl() - target:getMainLvl()) * 5
 
-    if math.random() * 100 < chance then
+    if math.randomFloat(0, 1) * 100 < chance then
         target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6, origin = automaton })
     end
 
@@ -24,11 +24,11 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     if slowPower > 0 then
         local duration = 20
         if slowPower == 12 then
-            duration = math.random(20, 35)
+            duration = math.randomInt(20, 35)
         elseif slowPower == 19 then
-            duration = math.random(51, 57)
+            duration = math.randomInt(51, 57)
         elseif slowPower == 25 then
-            duration = math.random(70, 75)
+            duration = math.randomInt(70, 75)
         end
 
         target:addStatusEffect(xi.effect.SLOW, { power = slowPower * 100, duration = duration, origin = automaton, tier = 3 })
@@ -45,7 +45,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
         ratio = 0.2
     end
 
-    local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
+    local pdif = math.randomInt(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
 
     damage = damage * (pdif / 1000)
 

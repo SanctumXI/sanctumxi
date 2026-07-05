@@ -9,10 +9,10 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
-        delay = math.random(45, 90),
+        delay = math.randomInt(45, 90),
         specials =
         {
-            { id = 838, hpp = math.random(15, 55) }, -- uses Howling Moon once while near 50% HPP.
+            { id = 838, hpp = math.randomInt(15, 55) }, -- uses Howling Moon once while near 50% HPP.
         },
     })
 end

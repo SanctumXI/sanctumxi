@@ -79,7 +79,7 @@ content.groups =
 
             for i = 1, 6, 1 do
                 local group = groups[i]
-                local mob   = mobs[group[math.random(1, #group)]]
+                local mob   = mobs[group[math.randomInt(1, #group)]]
 
                 -- Award time extension once the aern fully despawns and is no longer reraising
                 mob:addListener('DESPAWN', 'DESPAWN_AERN_TIME', function(mobArg)

@@ -66,7 +66,7 @@ local function getRandRatio(wRatio)
     end
 
     -- Randomly pick a value between lower and upper limits for qRatio
-    local qRatio = lowerLimit + (math.random() * (upperLimit - lowerLimit))
+    local qRatio = lowerLimit + (math.randomFloat(0, 1) * (upperLimit - lowerLimit))
 
     return qRatio
 end
@@ -127,11 +127,11 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
     local tripleRate = avatar:getMod(xi.mod.TRIPLE_ATTACK)
     local quadRate   = avatar:getMod(xi.mod.QUAD_ATTACK)
 
-    if math.random(1, 100) <= quadRate then
+    if math.randomInt(1, 100) <= quadRate then
         bonusHits = bonusHits + 3
-    elseif math.random(1, 100) <= tripleRate then
+    elseif math.randomInt(1, 100) <= tripleRate then
         bonusHits = bonusHits + 2
-    elseif math.random(1, 100) <= doubleRate then
+    elseif math.randomInt(1, 100) <= doubleRate then
         bonusHits = bonusHits + 1
     end
 
@@ -146,13 +146,13 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
     local finaldmg         = 0
     local didCrit          = false
 
-    if math.random() < hitrateFirst then
+    if math.randomFloat(0, 1) < hitrateFirst then
         firstHitLanded = true
         numHitsLanded  = numHitsLanded + 1
     end
 
     while numHitsProcessed < (numberofhits + bonusHits) do
-        if math.random() < hitrateSubsequent then
+        if math.randomFloat(0, 1) < hitrateSubsequent then
             numHitsLanded = numHitsLanded + 1
         end
 
@@ -202,14 +202,14 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
 
         if firstHitLanded then
             local wRatio = cRatio
-            local isCrit = math.random() < critRate
+            local isCrit = math.randomFloat(0, 1) < critRate
             if isCrit then
                 wRatio  = wRatio + 1
                 didCrit = true
             end
 
             local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max
-            local pDif   = qRatio * (1 + (math.random() * 0.05)) -- Final pDif is qRatio randomized with a 1-1.05 multiplier
+            local pDif   = qRatio * (1 + (math.randomFloat(0, 1) * 0.05)) -- Final pDif is qRatio randomized with a 1-1.05 multiplier
 
             if isCrit then
                 pDif = pDif * critAttackBonus
@@ -221,14 +221,14 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
 
         while numHitsProcessed < numHitsLanded do
             local wRatio = cRatio
-            local isCrit = math.random() < critRate
+            local isCrit = math.randomFloat(0, 1) < critRate
             if isCrit then
                 wRatio  = wRatio + 1
                 didCrit = true
             end
 
             local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max.
-            local pDif   = qRatio * (1 + math.random() * 0.05) -- Final pDif is qRatio randomized with a 1-1.05 multiplier.
+            local pDif   = qRatio * (1 + math.randomFloat(0, 1) * 0.05) -- Final pDif is qRatio randomized with a 1-1.05 multiplier.
 
             if isCrit then
                 pDif = pDif * critAttackBonus
@@ -327,7 +327,7 @@ xi.summon.avatarFinalAdjustments = function(info, mob, skill, target, skilltype,
                 return 0
             end
 
-            if math.random() * 10 < 8 - prevAnt then
+            if math.randomFloat(0, 1) * 10 < 8 - prevAnt then
                 -- anticipated!
                 teye:setPower(prevAnt + 1)
                 skill:setMsg(xi.msg.basic.ANTICIPATE)

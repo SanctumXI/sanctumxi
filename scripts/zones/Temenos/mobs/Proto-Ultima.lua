@@ -48,7 +48,7 @@ executeCitadelBusterState = function(mob)
         mob:setAutoAttackEnabled(true)
         mob:setMobAbilityEnabled(true)
         -- Use Citadel Buster at a regular interval
-        mob:setLocalVar('citadelBusterTime', GetSystemTime() + math.random(90, 100))
+        mob:setLocalVar('citadelBusterTime', GetSystemTime() + math.randomInt(90, 100))
         return
     end
 
@@ -111,7 +111,7 @@ entity.onMobFight = function(mob, target)
         elseif phase == 4 then
             mob:setMobMod(xi.mobMod.SKILL_LIST, 1196)
             mob:setMod(xi.mod.REGAIN, 100)
-            mob:setLocalVar('citadelBusterTime', GetSystemTime() + math.random(20, 30))
+            mob:setLocalVar('citadelBusterTime', GetSystemTime() + math.randomInt(20, 30))
         end
 
         mob:setLocalVar('phase', phase)
@@ -136,7 +136,7 @@ entity.onMobWeaponSkill = function(mob, target, skill, action)
     -- After using Nuclear Waste use a random elemental conal attack
     if skill:getID() == 1268 then
         mob:timer(4000, function(mobArg)
-            local ability = math.random(1262, 1267)
+            local ability = math.randomInt(1262, 1267)
             mob:useMobAbility(ability)
         end)
     end

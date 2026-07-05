@@ -44,7 +44,7 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
     }
 
     dynamisDreamlandMob:addListener('MAGIC_TAKE', 'DYNAMIS_MAGIC_PROC_CHECK', function(target, caster, spell)
-        if math.random(1, 100) > 8 then
+        if math.randomInt(1, 100) > 8 then
             return
         end
 
@@ -65,7 +65,7 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
     end)
 
     dynamisDreamlandMob:addListener('WEAPONSKILL_TAKE', 'DYNAMIS_WS_PROC_CHECK', function(user, target, skill, tp, action)
-        if math.random(1, 100) > 25 then
+        if math.randomInt(1, 100) > 25 then
             return
         end
 
@@ -86,7 +86,7 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
     end)
 
     dynamisDreamlandMob:addListener('ABILITY_TAKE', 'DYNAMIS_ABILITY_PROC_CHECK', function(user, target, skill, action)
-        if math.random(1, 100) > 20 then
+        if math.randomInt(1, 100) > 20 then
             return
         end
 
@@ -115,7 +115,7 @@ g_mixins.dynamis_dreamland = function(dynamisDreamlandMob)
         local hundredChance = th.hundred
         local currency      = mob:getLocalVar('dynamis_currency')
         if currency == 0 then
-            currency = xi.item.TUKUKU_WHITESHELL + math.random(0, 2) * 3
+            currency = xi.item.TUKUKU_WHITESHELL + math.randomInt(0, 2) * 3
         end
 
         -- White (special) adds 100% hundred slot

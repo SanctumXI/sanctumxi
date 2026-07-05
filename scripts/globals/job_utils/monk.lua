@@ -106,7 +106,7 @@ xi.job_utils.monk.useChiBlast = function(player, target, ability)
         target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })  
     end
 
-    local dmg = math.floor(player:getStat(xi.mod.VIT) * (1.4 + (math.random() / 2))) * multiplier
+    local dmg = math.floor(player:getStat(xi.mod.VIT) * (1.4 + (math.randomFloat(0, 1) / 2))) * multiplier
 
     dmg = xi.ability.adjustDamage(dmg, player, ability, target, xi.attackType.BREATH, xi.damageType.ELEMENTAL, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
     target:takeDamage(dmg, player, xi.attackType.BREATH, xi.damageType.ELEMENTAL)

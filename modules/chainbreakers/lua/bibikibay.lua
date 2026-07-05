@@ -94,7 +94,7 @@ m:addOverride('xi.zones.Bibiki_Bay.Zone.onInitialize', function(zone)
              
         onMobDespawn = function(mob, player, optParams)
 
-            local RESPAWN_DELAY = math.random(1800000, 3600000) -- 30 to 60 min in ms
+            local RESPAWN_DELAY = math.randomInt(1800000, 3600000) -- 30 to 60 min in ms
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 mob:setDropID(0)

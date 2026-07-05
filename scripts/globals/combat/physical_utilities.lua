@@ -629,7 +629,7 @@ end
 
             sRatio = utils.clamp(sRatio, 0, 1 / 3) -- 1/3 (one-third), not 0.33
 
-            if math.random(1, 10000) / 10000 <= sRatio then
+            if math.randomInt(1, 10000) / 10000 <= sRatio then
                 return 1.0
             end
         end
@@ -650,7 +650,7 @@ end
 
         sRatio = utils.clamp(sRatio, 0, 0.3)
 
-        if math.random(1, 10000) / 10000 <= sRatio then
+        if math.randomInt(1, 10000) / 10000 <= sRatio then
             return 1.0
         end
 
@@ -662,7 +662,7 @@ end
     pDifLowerCap = pDifLowerCap + levelDifFactor
     pDifUpperCap = pDifUpperCap + levelDifFactor
 
-    pDif = math.random(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
+    pDif = math.randomInt(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
 
     ----------------------------------------
     -- Step 4: Apply weapon type caps.
@@ -672,7 +672,7 @@ end
     ----------------------------------------
     -- Step 5: Melee random factor.
     ----------------------------------------
-    local meleeRandom = 1 + math.random(0, 5) * 0.01 -- 5 distinct values
+    local meleeRandom = 1 + math.randomInt(0, 5) * 0.01 -- 5 distinct values
 
     pDif = pDif * meleeRandom
 
@@ -796,7 +796,7 @@ end
         pDifLowerCap = cRatio * 20 / 19 - 3 / 19
     end
 
-    pDif = math.random(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
+    pDif = math.randomInt(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
 
     ----------------------------------------
     -- Step 4: Apply weapon type caps.
@@ -1229,7 +1229,7 @@ xi.combat.physical.isBlocked = function(defender, attacker)
 
     if xi.combat.physical.canBlock(defender, attacker) then
 
-        if xi.combat.physical.calculateBlockRate(defender, attacker) * 100 >= math.random(1, 10000) then
+        if xi.combat.physical.calculateBlockRate(defender, attacker) * 100 >= math.randomInt(1, 10000) then
             blocked = true
         end
 
@@ -1252,7 +1252,7 @@ xi.combat.physical.isParried = function(defender, attacker)
     if xi.combat.physical.canParry(defender, attacker) then
         local isPC = defender:isPC()
 
-        if xi.combat.physical.calculateParryRate(defender, attacker) * 100 >= math.random(1, 10000) then
+        if xi.combat.physical.calculateParryRate(defender, attacker) * 100 >= math.randomInt(1, 10000) then
             parried = true
 
             -- https://www.bg-wiki.com/ffxi/Turms_Mittens
@@ -1290,7 +1290,7 @@ xi.combat.physical.isGuarded = function(defender, attacker)
 
     if xi.combat.physical.canGuard(defender, attacker) then
         local isPC = defender:isPC()
-        if xi.combat.physical.calculateGuardRate(defender, attacker) * 100 >= math.random(1, 10000) then
+        if xi.combat.physical.calculateGuardRate(defender, attacker) * 100 >= math.randomInt(1, 10000) then
             guarded = true
             if isPC then
                 -- handle tactical guard

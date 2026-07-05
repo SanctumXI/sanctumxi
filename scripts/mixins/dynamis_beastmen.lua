@@ -54,7 +54,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
     local MAX_LOOT_DISTANCE     = 50
 
     local function getCurrencyForMob(mob)
-        return familyCurrency[mob:getFamily()] or xi.item.TUKUKU_WHITESHELL + math.random(0, 2) * 3
+        return familyCurrency[mob:getFamily()] or xi.item.TUKUKU_WHITESHELL + math.randomInt(0, 2) * 3
     end
 
     local function getItemName(itemId)
@@ -130,7 +130,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
         local currency = getCurrencyForMob(mob)
 
         -- Independent 100-piece roll.
-        if math.random(1, 1000) <= PERSONAL_HUNDRED_RATE then
+        if math.randomInt(1, 1000) <= PERSONAL_HUNDRED_RATE then
             if player:getFreeSlotsCount() <= 0 then
                 player:printToPlayer('[Personal Loot] Inventory full. Could not receive currency.', 167)
                 return
@@ -142,7 +142,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
         end
 
         -- Independent single currency roll.
-        if math.random(1, 1000) <= PERSONAL_SINGLE_RATE then
+        if math.randomInt(1, 1000) <= PERSONAL_SINGLE_RATE then
             if player:getFreeSlotsCount() <= 0 then
                 player:printToPlayer('[Personal Loot] Inventory full. Could not receive currency.', 167)
                 return
@@ -164,7 +164,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
     dynamisBeastmenMob:addListener('MAGIC_TAKE', 'DYNAMIS_MAGIC_PROC_CHECK', function(target, caster, spell)
         if
             procjobs[target:getMainJob()] == 'ma' and
-            math.random(1, 100) <= 8 and
+            math.randomInt(1, 100) <= 8 and
             target:getLocalVar('dynamis_proc') == 0
         then
             xi.dynamis.procMonster(target, caster)
@@ -174,7 +174,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
     dynamisBeastmenMob:addListener('WEAPONSKILL_TAKE', 'DYNAMIS_WS_PROC_CHECK', function(user, target, skill, tp, action)
         if
             procjobs[target:getMainJob()] == 'ws' and
-            math.random(1, 100) <= 25 and
+            math.randomInt(1, 100) <= 25 and
             target:getLocalVar('dynamis_proc') == 0
         then
             xi.dynamis.procMonster(target, user)
@@ -184,7 +184,7 @@ g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
     dynamisBeastmenMob:addListener('ABILITY_TAKE', 'DYNAMIS_ABILITY_PROC_CHECK', function(user, target, skill, action)
         if
             procjobs[target:getMainJob()] == 'ja' and
-            math.random(1, 100) <= 20 and
+            math.randomInt(1, 100) <= 20 and
             target:getLocalVar('dynamis_proc') == 0
         then
             xi.dynamis.procMonster(target, user)

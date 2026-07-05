@@ -25,7 +25,7 @@ moveMorionWormQM = function()
         [6] = { -376.787,  -8.574, -54.842 },
     }
 
-    npc:setPos(unpack(morionQmPoints[math.random(1, 6)]))
+    npc:setPos(unpack(morionQmPoints[math.randomInt(1, 6)]))
     npc:timer(900000, function()
         moveMorionWormQM()
     end)

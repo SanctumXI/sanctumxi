@@ -91,7 +91,7 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
              
         onMobDespawn = function(mob, player, optParams)
 
-            local RESPAWN_DELAY = math.random(64800000, 79200000) -- 18 - 22 hrs
+            local RESPAWN_DELAY = math.randomInt(64800000, 79200000) -- 18 - 22 hrs
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 mob:setDropID(0)

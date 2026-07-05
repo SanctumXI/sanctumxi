@@ -25,7 +25,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addListener('WEAPONSKILL_USE', 'AREUHAT_WEAPONSKILL_USE', function(mobArg, target, skill, tp, action, damage)
         if skill:getID() == 3438 then -- Dragon Breath
         -- Perhaps I should just burn the eyes of these infidels with my true form.
-            if math.random(1, 100) <= 33 then
+            if math.randomInt(1, 100) <= 33 then
                 xi.trust.message(mobArg, xi.trust.messageOffset.SPECIAL_MOVE_1)
             end
         end

@@ -57,10 +57,10 @@ end
 
 entity.onMobDespawn = function(mob)
     mob:setRespawnTime(120)
-    local randspawn1 = ziryuOne[math.random((1), (8))]
-    local randspawn2 = ziryuTwo[math.random((1), (7))]
-    local randspawn3 = ziryuThree[math.random((1), (6))]
-    local randspawn4 = ziryuFour[math.random((1), (5))]
+    local randspawn1 = ziryuOne[math.randomInt((1), (8))]
+    local randspawn2 = ziryuTwo[math.randomInt((1), (7))]
+    local randspawn3 = ziryuThree[math.randomInt((1), (6))]
+    local randspawn4 = ziryuFour[math.randomInt((1), (5))]
 
     if mob:getID() == ID.mob.ZIRYU[1] then
         mob:setSpawn(randspawn1[1], randspawn1[2], randspawn1[3])

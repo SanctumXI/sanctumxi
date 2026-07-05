@@ -13,7 +13,7 @@ entity.spawnPoints =
 }
 
 entity.onMobInitialize = function(mob)
-    mob:setLocalVar('pop', GetSystemTime() + math.random(1200, 7200))
+    mob:setLocalVar('pop', GetSystemTime() + math.randomInt(1200, 7200))
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
@@ -28,7 +28,7 @@ end
 
 entity.onMobDespawn = function(mob)
     xi.mob.updateNMSpawnPoint(mob)
-    mob:setLocalVar('pop', GetSystemTime() + math.random(1200, 7200))
+    mob:setLocalVar('pop', GetSystemTime() + math.randomInt(1200, 7200))
 end
 
 return entity

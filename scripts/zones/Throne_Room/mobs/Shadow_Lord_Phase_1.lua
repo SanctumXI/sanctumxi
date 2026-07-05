@@ -120,7 +120,7 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
         [4] = { xi.mobSkill.DARK_NOVA,   15 },
     }
 
-    local randomRoll = math.random(1, 100)
+    local randomRoll = math.randomInt(1, 100)
     local weightSum  = 0
     for i = 1, #mobskillTable do
         weightSum = weightSum + mobskillTable[i][2]
@@ -161,7 +161,7 @@ entity.onMobSpellChoose = function(mob, target, spellId)
         table.insert(spellList, xi.magic.spell.RASP)
     end
 
-    return spellList[math.random(1, #spellList)]
+    return spellList[math.randomInt(1, #spellList)]
 end
 
 entity.onMobDespawn = function(mob)
