@@ -1,5 +1,6 @@
 -----------------------------------
 -- xi.effect.CRITICAL_BOOST
+-- DAT Error, CUSTOM EFFECT
 -----------------------------------
 ---@type TEffect
 local effectObject = {}

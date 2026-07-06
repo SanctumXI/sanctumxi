@@ -18,8 +18,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 3
     params.ftpMod = { 1.0, 1.0, 1.0 }
-    params.str_wsc = 0.4
-    params.critVaries = { 0.1, 0.3, 0.5 }
+    params.str_wsc = 0.5
+    params.critVaries = { 0.25, 0.35, 0.5 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.critVaries = { 0.15, 0.3, 0.5 }
@@ -28,7 +28,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     
-    player:addStatusEffect(xi.effect.SNEAK_ATTACK, { power = 1, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.BLOOD_RAGE, { power = 100, duration = 10, origin = player })
     
     return tpHits, extraHits, criticalHit, damage
 

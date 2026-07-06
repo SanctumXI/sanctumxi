@@ -1028,6 +1028,9 @@ void doSynthSkillUp(CCharEntity* PChar)
         double craftChanceMultiplier = settings::get<double>("map.CRAFT_CHANCE_MULTIPLIER");
         skillUpChance                = skillUpChance * craftChanceMultiplier;
 
+        // Clamp final skill-up chance - SANCTUM CUSTOM
+        skillUpChance = std::clamp(skillUpChance, 0.0, 0.95);
+
         // Chance penalties.
         uint8 penalty = 1;
 
