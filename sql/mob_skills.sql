@@ -240,7 +240,6 @@ INSERT INTO `mob_skills` VALUES (170,86,'randgrith',0,0.0,7.0,2000,0,4,0,0,0,13,
 -- INSERT INTO `mob_skills` VALUES (202,??,'jishnus_radiance'
 -- INSERT INTO `mob_skills` VALUES (203,??,'apex_arrow'
 -- INSERT INTO `mob_skills` VALUES (204,??,'sarv'
-<<<<<<< HEAD
 INSERT INTO `mob_skills` VALUES (208,196,'hot_shot',0,0.0,15.0,2000,0,4,0,0,0,3,1,0);
 INSERT INTO `mob_skills` VALUES (209,197,'split_shot',0,0.0,15.0,2000,0,4,0,0,0,5,1,0);
 INSERT INTO `mob_skills` VALUES (210,198,'sniper_shot',0,0.0,15.0,2000,0,4,0,0,0,3,1,0);
@@ -265,32 +264,6 @@ INSERT INTO `mob_skills` VALUES (230,22,'dragon_blow',0,0.0,7.0,2000,0,4,0,0,0,1
 INSERT INTO `mob_skills` VALUES (231,25,'maru_kala',0,0.0,7.0,2000,0,4,0,0,0,10,6,2);
 INSERT INTO `mob_skills` VALUES (232,41,'ruthless_stroke',0,0.0,7.0,2000,0,4,0,0,0,12,8,3);
 INSERT INTO `mob_skills` VALUES (233,12,'imperator',0,0.0,7.0,2000,0,4,0,0,0,10,6,2);
-=======
-INSERT INTO `mob_skills` VALUES (208,196,'hot_shot',0,0.0,15.0,2000,0,4,0,0,0,9,0,0);
-INSERT INTO `mob_skills` VALUES (209,197,'split_shot',0,0.0,15.0,2000,0,4,0,0,0,9,0,0);
-INSERT INTO `mob_skills` VALUES (210,198,'sniper_shot',0,0.0,15.0,2000,0,4,0,0,0,9,0,0);
-INSERT INTO `mob_skills` VALUES (212,200,'slug_shot',0,0.0,15.0,2000,0,4,0,0,0,9,0,0);
--- INSERT INTO `mob_skills` VALUES (213,??,'blast_shot'
--- INSERT INTO `mob_skills` VALUES (214,??,'heavy_shot'
-INSERT INTO `mob_skills` VALUES (215,224,'detonator',0,0.0,15.0,2000,0,4,0,0,0,9,0,0);
--- INSERT INTO `mob_skills` VALUES (216,??,'coronach'
--- INSERT INTO `mob_skills` VALUES (217,??,'trueflight'
--- INSERT INTO `mob_skills` VALUES (218,??,'leaden_salute'
--- INSERT INTO `mob_skills` VALUES (219,??,'numbing_shot'
--- INSERT INTO `mob_skills` VALUES (220,??,'wildfire'
--- INSERT INTO `mob_skills` VALUES (221,??,'last_stand'
--- INSERT INTO `mob_skills` VALUES (222,??,'terminus'
--- INSERT INTO `mob_skills` VALUES (224,??,'exenterator'
--- INSERT INTO `mob_skills` VALUES (225,??,'chant_du_cygne'
--- INSERT INTO `mob_skills` VALUES (226,??,'requiescat'
--- INSERT INTO `mob_skills` VALUES (227,??,'knights_of_rotund'
--- INSERT INTO `mob_skills` VALUES (228,??,'final_paradise'
--- INSERT INTO `mob_skills` VALUES (229,??,'fast_blade_ii'
--- INSERT INTO `mob_skills` VALUES (230,??,'dragon_blow'
--- INSERT INTO `mob_skills` VALUES (231,??,'maru_kala'
--- INSERT INTO `mob_skills` VALUES (232,??,'merciless_strike'
--- INSERT INTO `mob_skills` VALUES (233,??,'imperator'
->>>>>>> 25eb02485b (The Bonds of Fate (Qultada))
 -- INSERT INTO `mob_skills` VALUES (234,??,'dagda'
 -- INSERT INTO `mob_skills` VALUES (235,??,'oshala'
 INSERT INTO `mob_skills` VALUES (238,243,'uriel_blade',1,0.0,10.0,2000,0,4,0,0,0,13,12,4);

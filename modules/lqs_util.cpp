@@ -1,4 +1,4 @@
-/************************************************************************
+﻿/************************************************************************
 * Loxley Quest System Utilities
 *************************************************************************
 * Copyright (c) 2025 LoxleyXI
@@ -122,8 +122,8 @@ class LqsUtilModule : public CPPModule
                 return false;
             }
 
-            // Cannot obtain if item is RARE and player already has item
-            return !((PItem->getFlag() & ITEM_FLAG_RARE) && charutils::HasItem(PChar, itemID));
+           // Cannot obtain if item is RARE and player already has item
+            return !(PItem->hasFlag(ItemFlag::Rare) && static_cast<bool>(charutils::HasItem(PChar, itemID)));
         };
 
         /************************************************************************
