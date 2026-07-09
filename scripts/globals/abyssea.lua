@@ -602,7 +602,7 @@ local blueWeakness =
         xi.weaponskill.HEXA_STRIKE,
         xi.weaponskill.BLACK_HALO,
         xi.weaponskill.RAGING_FISTS,
-        xi.weaponskill.SPINNING_ATTACK,
+        xi.weaponskill.EXPLODING_PALM,
         xi.weaponskill.HOWLING_FIST,
         xi.weaponskill.DRAGON_KICK,
         xi.weaponskill.ASURAN_FISTS,

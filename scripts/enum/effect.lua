@@ -630,6 +630,7 @@ xi.effect =
     HAUNT                    = 631,
     BLACK_SANCTUS            = 632,
     ANIMATED                 = 633,
+    EMPOWERED                = 635,
 
     -- Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
@@ -679,8 +680,7 @@ xi.effect =
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
     CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
     KICK_DAMAGE              = 808, -- Sanctum Custom effect
-    DOUBLE_PALM_SHIELD       = 809, -- Sanctum Custom effect
-
+  
     -- 789
     -- 807-1022
     -- PLACEHOLDER           = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.

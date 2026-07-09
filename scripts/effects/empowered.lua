@@ -1,11 +1,10 @@
 -----------------------------------
--- xi.effect.GUARDING_RATE_BOOST
+-- xi.effect.EMPOWERED
 -----------------------------------
 ---@type TEffect
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
-    effect:addMod(xi.mod.ADDITIVE_GUARD, effect:getPower())
 end
 
 effectObject.onEffectTick = function(target, effect)

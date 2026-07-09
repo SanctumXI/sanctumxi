@@ -20,8 +20,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local params = {}
     params.numHits = 8
     params.ftpMod = { 1.15, 1.15, 1.15 }
-    params.str_wsc = 0.2 params.vit_wsc = 0.1
-    params.accVaries = { 15, 30, 60 } -- TODO: verify exact number
+    params.str_wsc = 0.3 params.vit_wsc = 0.2
+    params.accVaries = { 30, 45, 60 } -- TODO: verify exact number
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2424.html
@@ -30,6 +30,27 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    -- Sanctum Custom
+if player:getMainJob() == xi.job.MNK then
+    -- 5% ability haste for 30s
+    player:addStatusEffect(xi.effect.GEO_HASTE, { power = 5, duration = 30, origin = player })
+
+    -- 10 TP/tick regain for 30s
+    player:addStatusEffect(xi.effect.REGAIN,  { power = 1, duration = 30, origin = player })
+
+elseif player:getMainJob() == xi.job.PUP then
+    local pet = player:getPet()
+
+    -- Master gets 5% ability haste
+    player:addStatusEffect(xi.effect.GEO_HASTE,  { power = 5, duration = 30, origin = player })
+
+    if pet ~= nil then
+        -- Automaton gets 10 TP/tick regain
+        pet:addStatusEffect(xi.effect.REGAIN,  { power = 1, duration = 30, origin = player })
+
+    end
+end
 
     return tpHits, extraHits, criticalHit, damage
 end
