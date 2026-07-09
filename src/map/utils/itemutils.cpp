@@ -28,6 +28,7 @@
 
 #include "common/database.h"
 #include "common/logging.h"
+#include "packets/c2s/0x02b_translate.h"
 
 #include "entities/battleentity.h"
 #include "enums/item_types.h"

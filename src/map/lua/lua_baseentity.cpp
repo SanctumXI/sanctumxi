@@ -4152,46 +4152,64 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
 
         while (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && quantity > 0)
         {
-            auto PItem = xi::items::spawn(id);
-            if (PItem == nullptr)
+            if (CItem* PItem = itemutils::GetItem(id))
             {
-                ShowWarning("AddItem: Item <%i> is not found in a database", id);
-                break;
-            }
+                PItem->setQuantity(quantity);
+                quantity -= PItem->getStackSize();
 
-            PItem->setQuantity(quantity);
-            quantity -= PItem->getStackSize();
+                bool silent = table.get_or("silent", false);
 
-            bool silent = table.get_or("silent", false);
-
-            std::string signature;
-            sol::object signatureObj = table["signature"];
-            if (signatureObj.valid() && signatureObj.is<std::string>())
-            {
-                signature = signatureObj.as<std::string>();
-            }
-
-            if (!signature.empty())
-            {
-                PItem->setSignature(signature);
-            }
-
-            sol::object appraisalObj = table["appraisal"];
-            if (appraisalObj.get_type() == sol::type::number)
-            {
-                PItem->setAppraisalID(appraisalObj.as<uint8>());
-            }
-
-            sol::object exdataObj = table["exdata"];
-            if (exdataObj.is<sol::table>())
-            {
-                auto exdataTable = exdataObj.as<sol::table>();
-                if (!Exdata::fromTable(PItem.get(), exdataTable))
+                std::string signature;
+                sol::object signatureObj = table["signature"];
+                if (signatureObj.valid() && signatureObj.is<std::string>())
                 {
-                    for (const auto& [keyObj, valObj] : exdataTable)
+                    signature = signatureObj.as<std::string>();
+                }
+
+                if (!signature.empty())
+                {
+                    char encoded[SignatureStringLength];
+
+                    std::memset(&encoded, 0, sizeof(encoded));
+                    PItem->setSignature(EncodeStringSignature(signature, encoded));
+                }
+
+                sol::object appraisalObj = table["appraisal"];
+                if (appraisalObj.get_type() == sol::type::number)
+                {
+                    PItem->setAppraisalID(appraisalObj.as<uint8>());
+                }
+
+                if (PItem->isType(ITEM_EQUIPMENT))
+                {
+                    uint16 trial = table.get_or("trial", 0);
+                    if (trial != 0)
                     {
-                        uint8 index = keyObj.as<uint8>();
-                        uint8 value = valObj.as<uint8>();
+                        ((CItemEquipment*)PItem)->setTrialNumber(trial);
+                    }
+
+                    sol::object augmentsObj = table["augments"];
+                    if (augmentsObj.is<sol::table>())
+                    {
+                        auto augmentsTable = augmentsObj.as<sol::table>();
+                        for (const auto& entryPair : augmentsTable)
+                        {
+                            auto   pair   = entryPair.second.as<sol::table>();
+                            uint16 augid  = pair[0];
+                            uint8  augval = pair[1];
+                            ((CItemEquipment*)PItem)->PushAugment(augid, augval);
+                        }
+                    }
+                }
+
+                sol::object exdataObj = table["exdata"];
+                if (exdataObj.is<sol::table>())
+                {
+                    auto exdataTable = exdataObj.as<sol::table>();
+                    for (const auto& entryPair : exdataTable)
+                    {
+                        uint8 index = entryPair.first.as<uint8>();
+                        uint8 value = entryPair.second.as<uint8>();
 
                         if (index < CItem::extra_size)
                         {
@@ -4203,14 +4221,18 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
                         }
                     }
                 }
-            }
 
-            SlotID = charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem), silent);
-            if (SlotID == ERROR_SLOTID)
+                SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silent);
+                if (SlotID == ERROR_SLOTID)
+                {
+                    break;
+                }
+            }
+            else
             {
+                ShowWarning("AddItem: Item <%i> is not found in a database", id);
                 break;
             }
-            AddedItem = PChar->getStorage(LOC_INVENTORY)->GetItem(SlotID);
         }
     }
     else
@@ -4252,24 +4274,47 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
 
         while (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && quantity > 0)
         {
-            auto PItem = xi::items::spawn(itemID);
-            if (PItem == nullptr)
+            if (CItem* PItem = itemutils::GetItem(itemID))
+            {
+                PItem->setQuantity(quantity);
+                quantity -= PItem->getStackSize();
+
+                if (PItem->isType(ITEM_EQUIPMENT))
+                {
+                    if (augment0 != 0)
+                    {
+                        ((CItemEquipment*)PItem)->setAugment(0, augment0, augment0val);
+                    }
+                    if (augment1 != 0)
+                    {
+                        ((CItemEquipment*)PItem)->setAugment(1, augment1, augment1val);
+                    }
+                    if (augment2 != 0)
+                    {
+                        ((CItemEquipment*)PItem)->setAugment(2, augment2, augment2val);
+                    }
+                    if (augment3 != 0)
+                    {
+                        ((CItemEquipment*)PItem)->setAugment(3, augment3, augment3val);
+                    }
+                    if (trialNumber != 0)
+                    {
+                        ((CItemEquipment*)PItem)->setTrialNumber(trialNumber);
+                    }
+                }
+                SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, silence);
+
+                // Paranoid check
+                if (SlotID == ERROR_SLOTID)
+                {
+                    break;
+                }
+            }
+            else
             {
                 ShowWarning("AddItem: Item <%i> is not found in a database", itemID);
                 break;
             }
-
-            PItem->setQuantity(quantity);
-            quantity -= PItem->getStackSize();
-
-            SlotID = charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem), silence);
-
-            // Paranoid check
-            if (SlotID == ERROR_SLOTID)
-            {
-                break;
-            }
-            AddedItem = PChar->getStorage(LOC_INVENTORY)->GetItem(SlotID);
         }
     }
 
@@ -4417,21 +4462,26 @@ bool CLuaBaseEntity::addUsedItem(uint16 itemID)
 
     if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0)
     {
-        auto PItem = xi::items::spawn(itemID);
-        if (PItem == nullptr)
+        CItem* PItem = itemutils::GetItem(itemID);
+
+        if (PItem != nullptr)
         {
-            ShowWarning("AddItem: Item <%i> is not found in a database", itemID);
-        }
-        else if (!PItem->isSubType(ITEM_CHARGED))
-        {
-            ShowWarning("addUsedItem: tried to setLastUseTime but itemID <%i> is not type ITEM_CHARGED", itemID);
+            if (PItem->isSubType(ITEM_CHARGED))
+            {
+                auto* PUsable = static_cast<CItemUsable*>(PItem);
+                PUsable->setQuantity(1);
+                PUsable->setLastUseTime(timer::now());
+                SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PUsable, false);
+            }
+            else
+            {
+                ShowWarning("addUsedItem: tried to setLastUseTime but itemID <%i> is not type ITEM_CHARGED", itemID);
+                destroy(PItem);
+            }
         }
         else
         {
-            auto* PUsable = static_cast<CItemUsable*>(PItem.get());
-            PUsable->setQuantity(1);
-            PUsable->setLastUseTime(timer::now());
-            SlotID = charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem), false);
+            ShowWarning("AddItem: Item <%i> is not found in a database", itemID);
         }
     }
 
@@ -4526,15 +4576,17 @@ bool CLuaBaseEntity::addTempItem(uint16 itemID, const sol::object& arg1)
 
     if (PChar->getStorage(LOC_TEMPITEMS)->GetFreeSlotsCount() != 0 && quantity != 0)
     {
-        auto PItem = xi::items::spawn(itemID);
-        if (PItem == nullptr)
+        CItem* PItem = itemutils::GetItem(itemID);
+
+        if (PItem != nullptr)
         {
-            ShowWarning("AddItem: Item <%i> is not found in a database", itemID);
+            PItem->setQuantity(quantity);
+
+            SlotID = charutils::AddItem(PChar, LOC_TEMPITEMS, PItem);
         }
         else
         {
-            PItem->setQuantity(quantity);
-            SlotID = charutils::AddItem(PChar, LOC_TEMPITEMS, std::move(PItem));
+            ShowWarning("AddItem: Item <%i> is not found in a database", itemID);
         }
     }
 
@@ -4812,12 +4864,11 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
         return false;
     }
 
-    CCharEntity* PChar  = (CCharEntity*)m_PBaseEntity;
-    auto         PItem  = xi::items::spawn(PChar->m_GMlevel > 0 ? 514 : 515);
-    LSTYPE       lstype = PChar->m_GMlevel > 0 ? LSTYPE_PEARLSACK : LSTYPE_LINKPEARL;
-    if (PItem == nullptr)
+    CCharEntity*    PChar          = (CCharEntity*)m_PBaseEntity;
+    CItemLinkshell* PItemLinkPearl = PChar->m_GMlevel > 0 ? (CItemLinkshell*)itemutils::GetItem(514) : (CItemLinkshell*)itemutils::GetItem(515);
+    LSTYPE          lstype         = PChar->m_GMlevel > 0 ? LSTYPE_PEARLSACK : LSTYPE_LINKPEARL;
+    if (PItemLinkPearl != nullptr)
     {
-<<<<<<< HEAD
         const auto rset = db::preparedStmt("SELECT linkshellid, color FROM linkshells WHERE name = ? AND broken = 0", lsname);
         if (rset && rset->rowsCount() && rset->next())
         {
@@ -4855,45 +4906,8 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
             // Linkshell not found, clean up
             destroy(PItemLinkPearl);
         }
-=======
-        return false;
->>>>>>> be3d48dfda (Route all item creation/lookups through xi::items)
     }
-    auto* PItemLinkPearl = static_cast<CItemLinkshell*>(PItem.get());
-
-    const auto rset = db::preparedStmt("SELECT linkshellid, color FROM linkshells WHERE name = ? AND broken = 0", lsname);
-    if (!rset || !rset->rowsCount() || !rset->next())
-    {
-        return false;
-    }
-
-    PItemLinkPearl->setSignature(lsname);
-    PItemLinkPearl->SetLSID(rset->get<uint32>("linkshellid"));
-    PItemLinkPearl->SetLSColor(rset->get<uint16>("color"));
-    PItemLinkPearl->SetLSType(lstype);
-    PItemLinkPearl->setQuantity(1);
-
-    const uint8 slotID = charutils::AddItem(PChar, LOC_INVENTORY, std::move(PItem));
-    if (slotID == ERROR_SLOTID)
-    {
-        return false;
-    }
-
-    if (equip)
-    {
-        auto* PInserted = static_cast<CItemLinkshell*>(PChar->getStorage(LOC_INVENTORY)->GetItem(slotID));
-        linkshell::AddOnlineMember(PChar, PInserted, 2);
-        PInserted->setSubType(ITEM_LOCKED);
-        PChar->equip[SLOT_LINK2]    = PInserted->getSlotID();
-        PChar->equipLoc[SLOT_LINK2] = LOC_INVENTORY;
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PInserted, ItemLockFlg::Linkshell);
-        charutils::SaveCharEquip(PChar);
-        PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, PInserted->GetLSID());
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, LOC_INVENTORY, PInserted->getSlotID());
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
-        charutils::LoadInventory(PChar);
-    }
-    return true;
+    return false;
 }
 
 auto CLuaBaseEntity::addSoulPlate(const std::string& name, uint32 interestData, uint8 zeni, uint16 skillIndex, uint8 fp) -> CItem*
@@ -5132,7 +5146,7 @@ bool CLuaBaseEntity::canEquipItem(uint16 itemID, const sol::object& chkLevel)
 
     bool checkLevel = (chkLevel != sol::lua_nil) ? chkLevel.as<bool>() : false;
 
-    auto* PItem = xi::items::lookup<CItemEquipment>(itemID);
+    auto* PItem = static_cast<CItemEquipment*>(itemutils::GetItemPointer(itemID));
     auto* PChar = static_cast<CBattleEntity*>(m_PBaseEntity);
 
     if (PItem == nullptr)
@@ -5597,11 +5611,11 @@ void CLuaBaseEntity::retrieveItemFromSlip(uint16 slipId, uint16 itemId, uint16 e
 
     db::preparedStmt(Query, slip->m_extra, PChar->id, slip->getLocationID(), slip->getSlotID());
 
-    auto item = xi::items::spawn(itemId);
+    auto* item = itemutils::GetItem(itemId);
     if (item)
     {
         item->setQuantity(1);
-        charutils::AddItem(PChar, LOC_INVENTORY, std::move(item));
+        charutils::AddItem(PChar, LOC_INVENTORY, item);
     }
     else
     {
@@ -6773,7 +6787,7 @@ void CLuaBaseEntity::changeJob(uint8 newJob)
         PMob->SetMJob(newJob);
 
         // Change weapon type based on new job
-        CItemWeapon* PWeapon = std::make_unique<CItemWeapon>(0).release();
+        CItemWeapon* PWeapon = new CItemWeapon(0);
         PWeapon->setDelay(4000);
         PWeapon->setBaseDelay(4000);
 
@@ -16555,7 +16569,7 @@ auto CLuaBaseEntity::hasAttachment(const uint16 itemID) const -> bool
         return false;
     }
 
-    const CItem* PItem = xi::items::lookup(itemID);
+    CItem* PItem = itemutils::GetItemPointer(itemID);
     return puppetutils::HasAttachment(static_cast<CCharEntity*>(m_PBaseEntity), PItem);
 }
 
@@ -16704,7 +16718,7 @@ auto CLuaBaseEntity::unlockAttachment(const uint16 itemID) const -> bool
         return false;
     }
 
-    const CItem* PItem = xi::items::lookup(itemID);
+    CItem* PItem = itemutils::GetItemPointer(itemID);
     return puppetutils::UnlockAttachment(static_cast<CCharEntity*>(m_PBaseEntity), PItem);
 }
 
@@ -16771,7 +16785,7 @@ void CLuaBaseEntity::removeAllManeuvers() const
  *  Example : pet:getAttachment(1)
  ************************************************************************/
 
-auto CLuaBaseEntity::getAttachment(const uint8 slotId) const -> const CItem*
+auto CLuaBaseEntity::getAttachment(const uint8 slotId) const -> CItem*
 {
     auto* PAutomaton = dynamic_cast<CAutomatonEntity*>(m_PBaseEntity);
 
@@ -16784,7 +16798,7 @@ auto CLuaBaseEntity::getAttachment(const uint8 slotId) const -> const CItem*
     uint8 slotItem = PAutomaton->getAttachment(slotId);
     if (slotItem != 0)
     {
-        return xi::items::lookup(0x2100 + slotItem); // TODO: Stop storing by offset
+        return itemutils::GetItemPointer(0x2100 + slotItem); // TODO: Stop storing by offset
     }
 
     return nullptr;
@@ -16834,7 +16848,7 @@ auto CLuaBaseEntity::getAttachments() const -> sol::table
 
         if (attachmentItemId != 0)
         {
-            attachmentTable[attachmentSlot] = CLuaItem(xi::items::lookup(0x2100 + attachmentItemId));
+            attachmentTable[attachmentSlot] = CLuaItem(itemutils::GetItemPointer(0x2100 + attachmentItemId));
         }
     }
 
@@ -17088,147 +17102,6 @@ void CLuaBaseEntity::setMobLevel(uint8 level, sol::optional<bool> recover)
 
         mobutils::CalculateMobStats(PMob, recover.value_or(true));
         mobutils::GetAvailableSpells(PMob);
-    }
-}
-
-/************************************************************************
- *  Function: getStatRank()
- *  Purpose : Returns a Mob's rank value for a base stat
- *  Example : local strRank = mob:getStatRank(xi.stat.STR)
- *  Notes   : Primary stats (STR-CHR) use ranks A-G (1-7).
- *            ATT/DEF/ACC use ranks A-E (1-5).
- ************************************************************************/
-
-uint8 CLuaBaseEntity::getStatRank(uint8 statType)
-{
-    if (m_PBaseEntity->objtype != TYPE_MOB)
-    {
-        ShowWarning("getStatRank: invalid entity type (%s).", m_PBaseEntity->getName());
-        return 0;
-    }
-
-    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
-
-    switch (statType)
-    {
-        case 1:
-            return PMob->strRank; // STR
-        case 2:
-            return PMob->dexRank; // DEX
-        case 3:
-            return PMob->vitRank; // VIT
-        case 4:
-            return PMob->agiRank; // AGI
-        case 5:
-            return PMob->intRank; // INT
-        case 6:
-            return PMob->mndRank; // MND
-        case 7:
-            return PMob->chrRank; // CHR
-        case 8:
-            return PMob->attRank; // ATT
-        case 9:
-            return PMob->defRank; // DEF
-        case 10:
-            return PMob->accRank; // ACC
-        default:
-            ShowWarning("getStatRank: unsupported stat type (%d) for mob (%s).", statType, m_PBaseEntity->getName());
-            return 0;
-    }
-}
-
-/************************************************************************
- *  Function: setStatRank()
- *  Purpose : Updates a Mob's rank value for a base stat
- *  Example : mob:setStatRank(xi.stat.STR, xi.rank.A)
- *  Notes   : Must be called in onMobInitialize, before CalculateMobStats runs on spawn.
- *            If you call this onMobSpawn or while the mob is alive the changes will take effect on the NEXT spawn.
- *            Primary stats go to Rank G (7)
- *            ATT/DEF/ACC only go to Rank E (5)
- ************************************************************************/
-
-void CLuaBaseEntity::setStatRank(uint8 statType, uint8 rank)
-{
-    // Only allow stat ranks to be set on mobs for now
-    if (m_PBaseEntity->objtype != TYPE_MOB)
-    {
-        ShowWarning("setStatRank: invalid entity type (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    // Only allow stat ranks to be changed while the mob is not actively spawned (dead or unspawned).
-    // CalculateMobStats runs on each Spawn(), so changes made while isDead() take effect on the next spawn.
-    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
-    if (!PMob->isDead())
-    {
-        ShowWarning("setStatRank: called on a live mob (id: %d, name: %s). Stat changes will take effect on the next spawn.", m_PBaseEntity->id, m_PBaseEntity->getName());
-    }
-
-    // Allow us to set ATT/DEF/ACC as well.
-    // Primary stats go to Rank G (7)
-    // ATT/DEF/ACC only go to Rank E (5)
-    uint8 maxRank = 0;
-
-    switch (statType)
-    {
-        case 1: // STR
-        case 2: // DEX
-        case 3: // VIT
-        case 4: // AGI
-        case 5: // INT
-        case 6: // MND
-        case 7: // CHR
-            maxRank = 7;
-            break;
-        case 8:  // ATT
-        case 9:  // DEF
-        case 10: // ACC
-            maxRank = 5;
-            break;
-        default:
-            ShowWarning(
-                "setStatRank: unsupported stat type (%d) for mob (%s).", statType, m_PBaseEntity->getName());
-            return;
-    }
-
-    if (rank == 0 || rank > maxRank)
-    {
-        ShowWarning("setStatRank: invalid rank (%d) for stat type (%d) on mob (%s). Valid range is 1-%d.", rank, statType, m_PBaseEntity->getName(), maxRank);
-        return;
-    }
-
-    switch (statType)
-    {
-        case 1:
-            PMob->strRank = rank; // STR
-            break;
-        case 2:
-            PMob->dexRank = rank; // DEX
-            break;
-        case 3:
-            PMob->vitRank = rank; // VIT
-            break;
-        case 4:
-            PMob->agiRank = rank; // AGI
-            break;
-        case 5:
-            PMob->intRank = rank; // INT
-            break;
-        case 6:
-            PMob->mndRank = rank; // MND
-            break;
-        case 7:
-            PMob->chrRank = rank; // CHR
-            break;
-        case 8:
-            PMob->attRank = rank; // ATT
-            break;
-        case 9:
-            PMob->defRank = rank; // DEF
-            break;
-        case 10:
-            PMob->accRank = rank; // ACC
-            break;
     }
 }
 
@@ -20592,8 +20465,6 @@ void CLuaBaseEntity::Register()
 
     // Mob Entity-Specific
     SOL_REGISTER("setMobLevel", CLuaBaseEntity::setMobLevel);
-    SOL_REGISTER("getStatRank", CLuaBaseEntity::getStatRank);
-    SOL_REGISTER("setStatRank", CLuaBaseEntity::setStatRank);
     SOL_REGISTER("getEcosystem", CLuaBaseEntity::getEcosystem);
     SOL_REGISTER("getSuperFamily", CLuaBaseEntity::getSuperFamily);
     SOL_REGISTER("getFamily", CLuaBaseEntity::getFamily);
