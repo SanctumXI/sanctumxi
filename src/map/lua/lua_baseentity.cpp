@@ -24,6 +24,8 @@
 #include "lua_battlefield.h"
 #include "lua_instance.h"
 #include "lua_item.h"
+
+#include "items/exdata/worn_item.h"
 #include "lua_spell.h"
 #include "lua_statuseffect.h"
 #include "lua_trade_container.h"
@@ -67,7 +69,6 @@
 #include "treasure_pool.h"
 #include "weapon_skill.h"
 #include "zone.h"
-#include "zone_mesh.h"
 
 #include "ai/ai_container.h"
 
@@ -99,6 +100,7 @@
 #include "enums/automaton.h"
 #include "enums/chat_message_area.h"
 #include "enums/item_lockflg.h"
+#include "items/exdata.h"
 #include "items/item_furnishing.h"
 #include "items/item_linkshell.h"
 
@@ -4113,24 +4115,24 @@ uint32 CLuaBaseEntity::getItemCount(uint16 itemID)
  *  Notes   : See format and variable options below
  ************************************************************************/
 
-bool CLuaBaseEntity::addItem(sol::variadic_args va)
+auto CLuaBaseEntity::addItem(sol::variadic_args va) const -> CItem*
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
     {
         ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return false;
+        return nullptr;
     }
 
-    uint8 SlotID = ERROR_SLOTID;
+    uint8  SlotID    = ERROR_SLOTID;
+    CItem* AddedItem = nullptr;
 
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
     /* FORMAT 1:
     player:addItem({ id = itemID, quantity  = quantity               }) -- add quantity of itemID
     player:addItem({ id = itemID, silent    = true                   }) -- silently add 1 of itemID
     player:addItem({ id = itemID, signature = "Char"                 }) -- add 1 signed of itemID
-    player:addItem({ id = itemID, augments  = { [4] = 5, [10] = 10 } }) -- add 1 of itemID with augment id 4 and 10, with values of 5 and 10, respectively
-    player:addItem({ id = itemID, exdata    = { [10] = 10 }          }) -- add 1 item of itemID, with the exdata at index 10 (0-indexed!) set to 10
+    player:addItem({ id = itemID, exdata    = { ... }                }) -- add 1 of itemID with typed exdata (falls back to raw byte indices)
     */
 
     if (va.get_type(0) == sol::type::table)
@@ -4140,7 +4142,7 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
         if (!table["id"].valid())
         {
             ShowError("AddItem: id is nil");
-            return false;
+            return nullptr;
         }
         uint16 id = table.get<uint16>("id");
 
@@ -4240,16 +4242,6 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
             }
         }
 
-        uint16 augment0    = va.get_type(2) == sol::type::number ? va.get<uint16>(2) : 0;
-        uint8  augment0val = va.get_type(3) == sol::type::number ? va.get<uint8>(3) : 0;
-        uint16 augment1    = va.get_type(4) == sol::type::number ? va.get<uint16>(4) : 0;
-        uint8  augment1val = va.get_type(5) == sol::type::number ? va.get<uint8>(5) : 0;
-        uint16 augment2    = va.get_type(6) == sol::type::number ? va.get<uint16>(6) : 0;
-        uint8  augment2val = va.get_type(7) == sol::type::number ? va.get<uint8>(7) : 0;
-        uint16 augment3    = va.get_type(8) == sol::type::number ? va.get<uint16>(8) : 0;
-        uint8  augment3val = va.get_type(9) == sol::type::number ? va.get<uint8>(9) : 0;
-        uint16 trialNumber = va.get_type(10) == sol::type::number ? va.get<uint16>(10) : 0;
-
         while (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() != 0 && quantity > 0)
         {
             auto PItem = xi::items::spawn(itemID);
@@ -4273,7 +4265,7 @@ bool CLuaBaseEntity::addItem(sol::variadic_args va)
         }
     }
 
-    return SlotID != ERROR_SLOTID;
+    return AddedItem;
 }
 
 /************************************************************************
@@ -4374,7 +4366,8 @@ bool CLuaBaseEntity::delContainerItems(const sol::object& containerID)
     // ensure we unequip equipped items before deletion
     for (uint8 equipmentSlot = 0; equipmentSlot <= 15; equipmentSlot++)
     {
-        if (PChar->equipLoc[equipmentSlot] == location)
+        auto eloc = PChar->equipLocation(equipmentSlot);
+        if (eloc && static_cast<uint8>(eloc->Container) == location)
         {
             // UnequipItem doesn't consider SLOT_MAIN removing SLOT_SUB, so we say to Equip nothing in this equipment slot
             // this is the same thing that equipset_set packet does to remove a slot
@@ -4445,18 +4438,16 @@ bool CLuaBaseEntity::addUsedItem(uint16 itemID)
  *  Notes   : Used mainly for Testimonies and BCNM orbs
  ************************************************************************/
 
-uint8 CLuaBaseEntity::getWornUses(uint16 itemID)
+auto CLuaBaseEntity::getWornUses(const uint16 itemID) const -> uint8
 {
-    auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemID);
-
+    const auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
+    const uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemID);
     if (slotID != ERROR_SLOTID)
     {
         CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
-
         if (PItem != nullptr)
         {
-            return PItem->m_extra[0];
+            return PItem->exdata<Exdata::WornItem>().UseCount;
         }
     }
 
@@ -4470,35 +4461,23 @@ uint8 CLuaBaseEntity::getWornUses(uint16 itemID)
  *  Notes   : Prevent Orbs and Testimonies from being used again
  ************************************************************************/
 
-uint8 CLuaBaseEntity::incrementItemWear(uint16 itemID)
+auto CLuaBaseEntity::incrementItemWear(const uint16 itemID) const -> uint8
 {
-    auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemID);
-
+    const auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
+    const uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(itemID);
     if (slotID != ERROR_SLOTID)
     {
         CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotID);
-
         if (PItem == nullptr)
         {
             return 0;
         }
 
-        if (PItem->m_extra[0] == UINT8_MAX)
-        {
-            return PItem->m_extra[0];
-        }
+        auto& useCount = PItem->exdata<Exdata::WornItem>().UseCount;
+        useCount       = std::min<uint8>(useCount + 1, UINT8_MAX);
+        PItem->setDirty(true);
 
-        ++PItem->m_extra[0];
-
-        const char* Query = "UPDATE char_inventory "
-                            "SET extra = ? "
-                            "WHERE charid = ? AND location = ? AND slot = ? "
-                            "LIMIT 1";
-
-        db::preparedStmt(Query, PItem->m_extra, PChar->id, PItem->getLocationID(), PItem->getSlotID());
-
-        return PItem->m_extra[0];
+        return useCount;
     }
 
     return 0;
@@ -4844,8 +4823,13 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
         auto* PInserted = static_cast<CItemLinkshell*>(PChar->getStorage(LOC_INVENTORY)->GetItem(slotID));
         linkshell::AddOnlineMember(PChar, PInserted, 2);
         PInserted->setSubType(ITEM_LOCKED);
-        PChar->equip[SLOT_LINK2]    = PInserted->getSlotID();
-        PChar->equipLoc[SLOT_LINK2] = LOC_INVENTORY;
+        if (!PChar->bindEquip(SLOT_LINK2, PInserted))
+        {
+            linkshell::DelOnlineMember(PChar, PInserted);
+            PInserted->setSubType(ITEM_UNLOCKED);
+            return false;
+        }
+
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PInserted, ItemLockFlg::Linkshell);
         charutils::SaveCharEquip(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, PInserted->GetLSID());
@@ -4854,43 +4838,6 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
         charutils::LoadInventory(PChar);
     }
     return true;
-}
-
-auto CLuaBaseEntity::addSoulPlate(const std::string& name, uint32 interestData, uint8 zeni, uint16 skillIndex, uint8 fp) -> CItem*
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return nullptr;
-    }
-
-    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
-    {
-        // Deduct Blank Plate
-        battleutils::RemoveAmmo(PChar);
-
-        PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
-
-        // Used Soul Plate
-        CItem* PItem = itemutils::GetItem(ITEMID::SOUL_PLATE);
-
-        if (PItem == nullptr)
-        {
-            ShowError("PItem was null for soulplate");
-            return nullptr;
-        }
-
-        PItem->setQuantity(1);
-        PItem->setSoulPlateData(name, interestData, zeni, skillIndex, fp);
-        auto SlotID = charutils::AddItem(PChar, LOC_INVENTORY, PItem, true);
-        if (SlotID == ERROR_SLOTID)
-        {
-            return nullptr;
-        }
-
-        return PItem;
-    }
-    return nullptr;
 }
 
 /************************************************************************
@@ -17052,6 +16999,147 @@ void CLuaBaseEntity::setMobLevel(uint8 level, sol::optional<bool> recover)
 }
 
 /************************************************************************
+ *  Function: getStatRank()
+ *  Purpose : Returns a Mob's rank value for a base stat
+ *  Example : local strRank = mob:getStatRank(xi.stat.STR)
+ *  Notes   : Primary stats (STR-CHR) use ranks A-G (1-7).
+ *            ATT/DEF/ACC use ranks A-E (1-5).
+ ************************************************************************/
+
+uint8 CLuaBaseEntity::getStatRank(uint8 statType)
+{
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        ShowWarning("getStatRank: invalid entity type (%s).", m_PBaseEntity->getName());
+        return 0;
+    }
+
+    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+
+    switch (statType)
+    {
+        case 1:
+            return PMob->strRank; // STR
+        case 2:
+            return PMob->dexRank; // DEX
+        case 3:
+            return PMob->vitRank; // VIT
+        case 4:
+            return PMob->agiRank; // AGI
+        case 5:
+            return PMob->intRank; // INT
+        case 6:
+            return PMob->mndRank; // MND
+        case 7:
+            return PMob->chrRank; // CHR
+        case 8:
+            return PMob->attRank; // ATT
+        case 9:
+            return PMob->defRank; // DEF
+        case 10:
+            return PMob->accRank; // ACC
+        default:
+            ShowWarning("getStatRank: unsupported stat type (%d) for mob (%s).", statType, m_PBaseEntity->getName());
+            return 0;
+    }
+}
+
+/************************************************************************
+ *  Function: setStatRank()
+ *  Purpose : Updates a Mob's rank value for a base stat
+ *  Example : mob:setStatRank(xi.stat.STR, xi.rank.A)
+ *  Notes   : Must be called in onMobInitialize, before CalculateMobStats runs on spawn.
+ *            If you call this onMobSpawn or while the mob is alive the changes will take effect on the NEXT spawn.
+ *            Primary stats go to Rank G (7)
+ *            ATT/DEF/ACC only go to Rank E (5)
+ ************************************************************************/
+
+void CLuaBaseEntity::setStatRank(uint8 statType, uint8 rank)
+{
+    // Only allow stat ranks to be set on mobs for now
+    if (m_PBaseEntity->objtype != TYPE_MOB)
+    {
+        ShowWarning("setStatRank: invalid entity type (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    // Only allow stat ranks to be changed while the mob is not actively spawned (dead or unspawned).
+    // CalculateMobStats runs on each Spawn(), so changes made while isDead() take effect on the next spawn.
+    auto* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+    if (!PMob->isDead())
+    {
+        ShowWarning("setStatRank: called on a live mob (id: %d, name: %s). Stat changes will take effect on the next spawn.", m_PBaseEntity->id, m_PBaseEntity->getName());
+    }
+
+    // Allow us to set ATT/DEF/ACC as well.
+    // Primary stats go to Rank G (7)
+    // ATT/DEF/ACC only go to Rank E (5)
+    uint8 maxRank = 0;
+
+    switch (statType)
+    {
+        case 1: // STR
+        case 2: // DEX
+        case 3: // VIT
+        case 4: // AGI
+        case 5: // INT
+        case 6: // MND
+        case 7: // CHR
+            maxRank = 7;
+            break;
+        case 8:  // ATT
+        case 9:  // DEF
+        case 10: // ACC
+            maxRank = 5;
+            break;
+        default:
+            ShowWarning(
+                "setStatRank: unsupported stat type (%d) for mob (%s).", statType, m_PBaseEntity->getName());
+            return;
+    }
+
+    if (rank == 0 || rank > maxRank)
+    {
+        ShowWarning("setStatRank: invalid rank (%d) for stat type (%d) on mob (%s). Valid range is 1-%d.", rank, statType, m_PBaseEntity->getName(), maxRank);
+        return;
+    }
+
+    switch (statType)
+    {
+        case 1:
+            PMob->strRank = rank; // STR
+            break;
+        case 2:
+            PMob->dexRank = rank; // DEX
+            break;
+        case 3:
+            PMob->vitRank = rank; // VIT
+            break;
+        case 4:
+            PMob->agiRank = rank; // AGI
+            break;
+        case 5:
+            PMob->intRank = rank; // INT
+            break;
+        case 6:
+            PMob->mndRank = rank; // MND
+            break;
+        case 7:
+            PMob->chrRank = rank; // CHR
+            break;
+        case 8:
+            PMob->attRank = rank; // ATT
+            break;
+        case 9:
+            PMob->defRank = rank; // DEF
+            break;
+        case 10:
+            PMob->accRank = rank; // ACC
+            break;
+    }
+}
+
+/************************************************************************
  *  Function: getEcosystem()
  *  Purpose : Returns integer value of system associated with an Entity
  *  Example : if pet:getEcosystem() ~= xi.ecosystem.AVATAR then -- Not an avatar
@@ -19386,8 +19474,7 @@ bool CLuaBaseEntity::setChocoboRaisingInfo(const sol::table& table)
                         "weather_preference = ?, "
                         "hunger = ?, "
                         "care_plan = ?, "
-                        "held_item = ? "
-                        "LIMIT 1";
+                        "held_item = ? ";
 
     const auto rset = db::preparedStmt(Query,
                                        m_PBaseEntity->id,
@@ -19838,8 +19925,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
     SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);
-
-    SOL_REGISTER("addSoulPlate", CLuaBaseEntity::addSoulPlate);
 
     // Trading
     SOL_REGISTER("getContainerSize", CLuaBaseEntity::getContainerSize);
@@ -20411,6 +20496,8 @@ void CLuaBaseEntity::Register()
 
     // Mob Entity-Specific
     SOL_REGISTER("setMobLevel", CLuaBaseEntity::setMobLevel);
+    SOL_REGISTER("getStatRank", CLuaBaseEntity::getStatRank);
+    SOL_REGISTER("setStatRank", CLuaBaseEntity::setStatRank);
     SOL_REGISTER("getEcosystem", CLuaBaseEntity::getEcosystem);
     SOL_REGISTER("getSuperFamily", CLuaBaseEntity::getSuperFamily);
     SOL_REGISTER("getFamily", CLuaBaseEntity::getFamily);

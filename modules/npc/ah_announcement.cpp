@@ -44,7 +44,7 @@ class AHAnnouncementModule : public CPPModule
                 const uint16 itemid   = data.ref<uint16>(0x0C);
                 const uint8  quantity = data.ref<uint8>(0x10);
 
-                CItem* PItem = itemutils::GetItemPointer(itemid);
+                const CItem* PItem = xi::items::lookup(itemid);
                 if (PItem)
                 {
                     const GP_AUC_PARAM_BID payload{

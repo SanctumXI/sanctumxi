@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2025 LandSandBoat Dev Teams
@@ -513,7 +513,7 @@ void CLuaClientEntityPairActions::skillchain(CLuaBaseEntity* target, sol::variad
 
 void CLuaClientEntityPairActions::moveItem(const uint8 srcContainer, const uint8 srcSlot, const uint8 dstContainer, const uint32 quantity, const sol::optional<uint8> dstSlot) const
 {
-    const auto packet = parent_->packets().createPacket<GP_CLI_COMMAND_ITEM_MOVE>();
+    const auto packet = parent_->packets().createPacket(PacketC2S::GP_CLI_COMMAND_ITEM_MOVE);
     auto*      p      = packet->as<GP_CLI_COMMAND_ITEM_MOVE>();
     p->ItemNum        = quantity;
     p->Category1      = srcContainer;
@@ -526,7 +526,7 @@ void CLuaClientEntityPairActions::moveItem(const uint8 srcContainer, const uint8
 
 void CLuaClientEntityPairActions::sortContainer(const uint8 container) const
 {
-    const auto packet = parent_->packets().createPacket<GP_CLI_COMMAND_ITEM_STACK>();
+    const auto packet = parent_->packets().createPacket(PacketC2S::GP_CLI_COMMAND_ITEM_STACK);
     auto*      p      = packet->as<GP_CLI_COMMAND_ITEM_STACK>();
     p->Category       = container;
 
@@ -535,7 +535,7 @@ void CLuaClientEntityPairActions::sortContainer(const uint8 container) const
 
 void CLuaClientEntityPairActions::dropItem(const uint8 container, const uint8 slot, const uint32 quantity) const
 {
-    const auto packet = parent_->packets().createPacket<GP_CLI_COMMAND_ITEM_DUMP>();
+    const auto packet = parent_->packets().createPacket(PacketC2S::GP_CLI_COMMAND_ITEM_DUMP);
     auto*      p      = packet->as<GP_CLI_COMMAND_ITEM_DUMP>();
     p->ItemNum        = quantity;
     p->Category       = container;
@@ -546,7 +546,7 @@ void CLuaClientEntityPairActions::dropItem(const uint8 container, const uint8 sl
 
 void CLuaClientEntityPairActions::setLockstyle(const uint8 mode, sol::optional<sol::table> items) const
 {
-    const auto packet = parent_->packets().createPacket<GP_CLI_COMMAND_LOCKSTYLE>();
+    const auto packet = parent_->packets().createPacket(PacketC2S::GP_CLI_COMMAND_LOCKSTYLE);
     auto*      p      = packet->as<GP_CLI_COMMAND_LOCKSTYLE>();
     p->Mode           = mode;
     p->Count          = 0;
@@ -598,7 +598,7 @@ void CLuaClientEntityPairActions::craft(const uint16 crystalItemId, const sol::t
         return;
     }
 
-    const auto packet = parent_->packets().createPacket<GP_CLI_COMMAND_COMBINE_ASK>();
+    const auto packet = parent_->packets().createPacket(PacketC2S::GP_CLI_COMMAND_COMBINE_ASK);
     auto*      p      = packet->as<GP_CLI_COMMAND_COMBINE_ASK>();
     p->Crystal        = crystalItemId;
     p->CrystalIdx     = crystalSlot.value();

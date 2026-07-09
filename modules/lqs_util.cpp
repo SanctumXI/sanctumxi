@@ -115,7 +115,7 @@ class LqsUtilModule : public CPPModule
                 return false;
             }
 
-            CItem* PItem = itemutils::GetItem(itemID);
+            const CItem* PItem = xi::items::lookup(itemID);
 
             if (PItem == nullptr)
             {
