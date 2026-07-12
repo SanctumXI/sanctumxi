@@ -3075,7 +3075,7 @@ INSERT INTO `mob_groups` VALUES (98,7169,54,'Merrow_Typhoondancer',300,0,1657,0,
 -- Ilrusi_Atoll (Zone 55)
 -- ------------------------------------------------------------
 
-INSERT INTO `mob_groups` VALUES (1,3117,55,'Percipient_Fish',0,128,0,10500,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (1,3117,55,'Percipient_Fish',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (2,864,55,'Cursed_Chest',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (3,2340,55,'Lamia_No13',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (4,1292,55,'Fallen_Volunteer',0,128,0,0,0,0,NULL);
