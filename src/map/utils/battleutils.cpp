@@ -2026,6 +2026,29 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
             damage = damage * (1 + PDefender->getMod(Mod::HTH_SDT) / 10000.0f);
         }
 
+        // Sanctum Custom Cover Bonus:
+        // Proper Cover positioning reduces covered damage by 20%.
+        if (isCovered &&
+            damage > 0 &&
+            POriginalTarget != nullptr &&
+            PAttacker != nullptr &&
+            PDefender != nullptr)
+        {
+            const uint8 angleToCoverUser = worldAngle(PAttacker->loc.p, PDefender->loc.p);
+            const float distanceToCover  = distance(PDefender->loc.p, PAttacker->loc.p);
+
+            const bool properlyPositioned =
+                distanceToCover <= PAttacker->GetMeleeRange(PDefender) &&
+                distanceToCover >= worldAngleMinDistance &&
+                distanceToCover < distance(POriginalTarget->loc.p, PAttacker->loc.p) &&
+                areInLine(angleToCoverUser, PAttacker, POriginalTarget);
+
+            if (properlyPositioned)
+            {
+                damage = damage * 80 / 100;
+            }
+        }
+
         if (isBlocked)
         {
             uint8 absorb = 100;
@@ -6592,43 +6615,31 @@ ELEMENT GetRuneEnhancementElement(EFFECT runeEffect)
             return ELEMENT_NONE;
     }
 }
-
-CBattleEntity* GetCoverAbilityUser(CBattleEntity* PCoverAbilityTarget, CBattleEntity* PMob)
+// Sanctum Custom Cover Changes.
+// - Remove positional requirement.
+// - Allow Cover to protect anyone in the alliance.
+CBattleEntity* GetCoverAbilityUser(CBattleEntity* PCoverAbilityTarget, CBattleEntity* /* PMob */)
 {
     CBattleEntity* PCoverAbilityUser    = nullptr;
     uint32         coverAbilityTargetID = PCoverAbilityTarget->id;
 
-    // If the cover ability target is in a party, try to find a cover ability user
     if (PCoverAbilityTarget->PParty != nullptr)
     {
-        for (auto* PMember : PCoverAbilityTarget->PParty->members)
-        {
-            if (coverAbilityTargetID == PMember->GetLocalVar("COVER_ABILITY_TARGET") &&
-                PMember->StatusEffectContainer->HasStatusEffect(EFFECT_COVER) &&
-                PMember->isAlive())
+        PCoverAbilityTarget->ForAlliance(
+            [&](CBattleEntity* PMember)
             {
-                PCoverAbilityUser = PMember;
-                break;
-            }
-        }
-
-        if (PCoverAbilityUser != nullptr)
-        {
-            // using same variable names as trick attack function, for consistent understanding
-            uint8 angleTAmob = worldAngle(PMob->loc.p, PCoverAbilityUser->loc.p);
-            float distTAmob  = distance(PCoverAbilityUser->loc.p, PMob->loc.p);
-
-            // check if cover user is within melee range and that cover target is in-line behind
-            if (distTAmob <= PMob->GetMeleeRange(PCoverAbilityUser) &&           // make sure cover user is within melee range
-                distTAmob >= worldAngleMinDistance &&                            // require closer target not be closer than .5 yalms (.5*.5=.25 distsquared) to mob
-                distTAmob < distance(PCoverAbilityTarget->loc.p, PMob->loc.p) && // make sure cover user is closer to the mob than cover target
-                areInLine(angleTAmob, PMob, PCoverAbilityTarget))
-            {
-                return PCoverAbilityUser;
-            }
-        }
+                if (PCoverAbilityUser == nullptr &&
+                    PMember != nullptr &&
+                    PMember->isAlive() &&
+                    coverAbilityTargetID == PMember->GetLocalVar("COVER_ABILITY_TARGET") &&
+                    PMember->StatusEffectContainer->HasStatusEffect(EFFECT_COVER))
+                {
+                    PCoverAbilityUser = PMember;
+                }
+            });
     }
-    return nullptr;
+
+    return PCoverAbilityUser;
 }
 
 bool IsMagicCovered(CCharEntity* PCoverAbilityUser)
