@@ -71,7 +71,7 @@ commandObj.onTrigger = function(player)
         })
 
         table.insert(menu.options, {
-            'D#1: d0-d4',
+            'Debug #1',
             function(playerArg)
                 playerArg:deleteRaisedChocobo()
 
@@ -80,65 +80,31 @@ commandObj.onTrigger = function(player)
                 player:setChocoboRaisingInfo(newChoco)
 
                 local info = playerArg:getChocoboRaisingInfo()
-                info['created'] = info['created'] - (epochDay * 4)
-                playerArg:setChocoboRaisingInfo(info)
-
-                playerArg:printToPlayer('Setting up debug scenario 1 (4d update)', xi.msg.channel.SYSTEM_3, '')
-            end,
-        })
-
-        table.insert(menu.options, {
-            'D#2: d0-d10',
-            function(playerArg)
-                playerArg:deleteRaisedChocobo()
-
-                local egg      = {}
-                local newChoco = xi.chocoboRaising.newChocobo(playerArg, egg)
-                player:setChocoboRaisingInfo(newChoco)
-
-                local info = playerArg:getChocoboRaisingInfo()
                 info['created'] = info['created'] - (epochDay * 10)
                 playerArg:setChocoboRaisingInfo(info)
 
-                if playerArg:hasKeyItem(xi.keyItem.WHITE_HANDKERCHIEF) then
-                    playerArg:delKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
+                playerArg:printToPlayer('Setting up debug scenario 1 (10d update)', xi.msg.channel.SYSTEM_3, '')
+            end,
+        })
+
+        table.insert(menu.options, {
+            'Change sex',
+            function(playerArg)
+                local info = playerArg:getChocoboRaisingInfo()
+                info['sex'] = (info['sex'] + 1) % 2
+                playerArg:setChocoboRaisingInfo(info)
+                playerArg:printToPlayer('Changed sex to ' .. sex[info['sex']], xi.msg.channel.SYSTEM_3, '')
+            end,
+        })
+
+        table.insert(menu.options, {
+            'Dump chocoState',
+            function(playerArg)
+                local info = playerArg:getChocoboRaisingInfo()
+                playerArg:printToPlayer('created ' .. os.date('%Y %m %d %H %M %S', info['created']), xi.msg.channel.SYSTEM_3, '')
+                for k, v in pairs(info) do
+                    playerArg:printToPlayer(string.format('%s %s', k, v), xi.msg.channel.SYSTEM_3, '')
                 end
-
-                playerArg:printToPlayer('Setting up debug scenario 2 (10d update) w/ handkerchief', xi.msg.channel.SYSTEM_3, '')
-            end,
-        })
-
-        table.insert(menu.options, {
-            'D#3: d0-d65',
-            function(playerArg)
-                playerArg:deleteRaisedChocobo()
-
-                local egg      = {}
-                local newChoco = xi.chocoboRaising.newChocobo(playerArg, egg)
-                player:setChocoboRaisingInfo(newChoco)
-
-                local info = playerArg:getChocoboRaisingInfo()
-                info['created'] = info['created'] - (epochDay * 65)
-                playerArg:setChocoboRaisingInfo(info)
-
-                playerArg:printToPlayer('Setting up debug scenario 3 (65d update)', xi.msg.channel.SYSTEM_3, '')
-            end,
-        })
-
-        table.insert(menu.options, {
-            'D#4: d0-d130',
-            function(playerArg)
-                playerArg:deleteRaisedChocobo()
-
-                local egg      = {}
-                local newChoco = xi.chocoboRaising.newChocobo(playerArg, egg)
-                player:setChocoboRaisingInfo(newChoco)
-
-                local info = playerArg:getChocoboRaisingInfo()
-                info['created'] = info['created'] - (epochDay * 130)
-                playerArg:setChocoboRaisingInfo(info)
-
-                playerArg:printToPlayer('Setting up debug scenario 4 (130d update)', xi.msg.channel.SYSTEM_3, '')
             end,
         })
 
@@ -168,7 +134,6 @@ commandObj.onTrigger = function(player)
                 npcUtil.giveItem(playerArg, xi.item.CHOCOBO_EGG_SLIGHTLY_WARM)
             end,
         })
-<<<<<<< HEAD
 
         table.insert(menu.options, {
             'Debug #1',
@@ -183,19 +148,9 @@ commandObj.onTrigger = function(player)
                 info['created'] = info['created'] - (epochDay * 10)
                 playerArg:setChocoboRaisingInfo(info)
 
-<<<<<<< HEAD
                 playerArg:printToPlayer('Setting up debug scenario 1 (10d update)', xi.msg.channel.SYSTEM_3, '')
-=======
-                if playerArg:hasKeyItem(xi.keyItem.WHITE_HANDKERCHIEF) then
-                    playerArg:delKeyItem(xi.keyItem.WHITE_HANDKERCHIEF)
-                end
-
-                playerArg:printToPlayer('Setting up debug scenario 2 (10d update w/ handkerchief)', xi.msg.channel.SYSTEM_3, '')
->>>>>>> ddbae9eb03 (Raising: Handle White Handkerchief quest)
             end,
         })
-=======
->>>>>>> 6f6d2d0850 (Raising: Confirm force-naming at ADULT_3)
     end
 
     table.insert(menu.options, {
