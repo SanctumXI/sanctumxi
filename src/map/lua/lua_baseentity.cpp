@@ -7388,9 +7388,9 @@ bool CLuaBaseEntity::hasTitle(uint16 titleID)
 
 /************************************************************************
  *  Function: addTitle()
- *  Purpose : Adds a title to the character's profile only (doesn't change current)
+ *  Purpose : Adds a title and updates the current title unless it is locked
  *  Example : player:addTitle(xi.title.BLACK_DRAGON_SLAYER)
- *  Notes   : Use setTitle to both change and add
+ *  Notes   : Use forceSetTitle to deliberately change a locked title
  ************************************************************************/
 
 void CLuaBaseEntity::addTitle(uint16 titleID)
@@ -7403,16 +7403,12 @@ void CLuaBaseEntity::addTitle(uint16 titleID)
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
-    PChar->profile.title = titleID;
-    PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
-
-    charutils::addTitle(PChar, titleID);
-    charutils::SaveTitles(PChar);
+    charutils::setTitle(PChar, titleID);
 }
 
 /************************************************************************
  *  Function: setTitle()
- *  Purpose : Updates the player's current title and adds to their profile
+ *  Purpose : Adds a title and updates the current title unless it is locked
  *  Example : player:setTitle(xi.title.SOB_SUPERHERO)
  ************************************************************************/
 
@@ -7426,6 +7422,25 @@ void CLuaBaseEntity::setTitle(uint16 titleID)
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
     charutils::setTitle(PChar, titleID);
+}
+
+/************************************************************************
+ *  Function: forceSetTitle()
+ *  Purpose : Deliberately updates the player's current title and adds it
+ *  Example : player:forceSetTitle(xi.title.SOB_SUPERHERO)
+ *  Notes   : Bypasses the player's title lock for explicit title selection
+ ************************************************************************/
+
+void CLuaBaseEntity::forceSetTitle(uint16 titleID)
+{
+    if (!(m_PBaseEntity->objtype & TYPE_PC))
+    {
+        ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
+        return;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    charutils::setTitle(PChar, titleID, true);
 }
 
 /************************************************************************
@@ -20051,6 +20066,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("hasTitle", CLuaBaseEntity::hasTitle);
     SOL_REGISTER("addTitle", CLuaBaseEntity::addTitle);
     SOL_REGISTER("setTitle", CLuaBaseEntity::setTitle);
+    SOL_REGISTER("forceSetTitle", CLuaBaseEntity::forceSetTitle);
     SOL_REGISTER("delTitle", CLuaBaseEntity::delTitle);
 
     SOL_REGISTER("getFame", CLuaBaseEntity::getFame);

@@ -4548,13 +4548,16 @@ int32 delTitle(CCharEntity* PChar, uint16 Title)
     return delBit(Title, PChar->m_TitleList, sizeof(PChar->m_TitleList));
 }
 
-void setTitle(CCharEntity* PChar, uint16 Title)
+void setTitle(CCharEntity* PChar, uint16 Title, bool force)
 {
-    PChar->profile.title = Title;
-    PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
-
     addTitle(PChar, Title);
     SaveTitles(PChar);
+
+    if (force || PChar->getCharVar("[TITLE]Locked") == 0)
+    {
+        PChar->profile.title = Title;
+        PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
+    }
 }
 
 /************************************************************************
