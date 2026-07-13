@@ -1,20 +1,10 @@
 -----------------------------------
 -- Server First
 --
--- A durable, server-wide first-achievement system.  This is intentionally a
--- policy/configuration module: the accompanying C++ module atomically claims
--- events and archives rosters, while this file performs only O(1) lookups at
--- real completion points.  There are no timers, scans, or polling queries.
---
--- Before enabling, apply modules/custom/sql/server_first.sql.  The C++
--- companion must be compiled with the normal map server build.
+-- Sanctum's server-wide first-achievement system.
 --
 -- Title note:
---   setTitle() both makes a vanilla title active and permanently unlocks it
---   for the usual title changers.  Some requested achievements have no
---   matching retail title (for example, first level 75 on a specific job).
---   Those entries intentionally have no title rather than granting an
---   unrelated one.  Add a title only when a client-supported title is valid.
+--   setTitle() both makes a title active and permanently unlocks it. DAT edits have to be done for new custom titles perachievement.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/battlefield')
@@ -27,7 +17,7 @@ local m = Module:new('ServerFirst')
 
 local decoration =
 {
-    standard = '\129\154', -- gold star used by the existing server notices
+    standard = '\129\154', -- gold star
     legendary = '\129\159',
 }
 
@@ -45,9 +35,7 @@ local function addNMEVent(tableRef, mobName, displayName, zoneName, title)
     }
 end
 
--- A zone restriction is deliberate.  Several of these names also appear as
--- Nyzul or battlefield enemies and must not let an instance claim the open-
--- world server first.
+-- Some of these enemies are Nyzul/battlefield versions so they don't count as server firsts.
 local nmEvents = {}
 addNMEVent(nmEvents, 'Jaggedy-Eared_Jack',       'Jaggedy-Eared Jack',       'West_Ronfaure')
 addNMEVent(nmEvents, 'Leaping_Lizzy',            'Leaping Lizzy',            'South_Gustaberg')
@@ -105,9 +93,7 @@ addNMEVent(nmEvents, 'Pandemonium_Warden',       'Pandemonium Warden',       'Ay
 addNMEVent(nmEvents, 'Proto-Omega',              'Proto-Omega',              'Apollyon')
 addNMEVent(nmEvents, 'Proto-Ultima',              'Proto-Ultima',             'Temenos')
 
--- The synthesis callback receives the authoritative result item ID.  Numeric
--- IDs are used here because this era branch deliberately does not expose all
--- pre-SoA equipment in scripts/enum/item.lua.
+
 local craftEvents =
 {
     [12579] = { eventKey = 'craft.scorpion_harness',       display = 'Scorpion Harness' },
@@ -164,8 +150,6 @@ local specialItemEvents =
     },
 }
 
--- Every final level-75 relic and mythic.  The hooks intentionally remain in
--- place even on branches where a weapon path is not implemented yet.
 local legendaryWeapons =
 {
     [15070] = { name = 'Aegis',        kind = 'relic' },
@@ -206,9 +190,6 @@ local legendaryWeapons =
     [19008] = { name = 'Kenkonken',    kind = 'mythic' },
 }
 
--- C++ registers these once during server initialization.  charutils then
--- calls the Lua item hook only for an ID in this compact list, avoiding a Lua
--- dispatch for ordinary loot and preserving the all-acquisition guarantee.
 local trackedItemIds = {}
 for itemId in pairs(specialItemEvents) do
     table.insert(trackedItemIds, itemId)
@@ -294,7 +275,7 @@ addBattlefieldEvent('LEGION_XI_COMITATENSIS', 'Legion XI Comitatensis')
 addBattlefieldEvent('SHOTS_IN_THE_DARK', 'Shots in the Dark')
 addBattlefieldEvent('UP_IN_ARMS', 'Up in Arms')
 addBattlefieldEvent('WILD_WILD_WHISKERS', 'Wild Wild Whiskers')
--- Uncapped Kindred Seal and Themis Orb battlefields
+-- Uncapped Kindred Seal and misc
 addBattlefieldEvent('CACTUAR_SUAVE', 'Cactuar Suave')
 addBattlefieldEvent('COME_INTO_MY_PARLOR', 'Come Into My Parlor')
 addBattlefieldEvent('CONTAMINATED_COLOSSEUM', 'Contaminated Colosseum')
@@ -578,9 +559,7 @@ end
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
 
-    -- The core invokes this once per eligible alliance member.  Only the
-    -- killer's invocation performs the claim, then the roster is built from
-    -- every same-zone ally.  The killer is never used as the credit source.
+    -- Triggers once per eligible alliance member.
     if not isKiller then
         return
     end
@@ -762,9 +741,6 @@ m:addOverride('xi.dynamis.megaBossOnDeath', function(mob, player, optParams)
         creditName)
 end)
 
--- This fires after charutils has successfully persisted a new inventory item.
--- The lookups below are constant-time and cover direct addItem calls, reward
--- helpers, GM grants, and other normal item-acquisition paths alike.
 m:addOverride('xi.player.onPlayerItemAdded', function(player, itemId, quantity)
     super(player, itemId, quantity)
     receivedItem(player, itemId)
