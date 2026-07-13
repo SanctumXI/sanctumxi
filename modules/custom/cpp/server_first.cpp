@@ -1,15 +1,5 @@
 /*
  * Server First support
- *
- * The Lua policy module decides which events qualify and formats the message.
- * This module owns the two operations Lua cannot safely provide on its own:
- *
- *   1. atomically claiming a first across all map processes; and
- *   2. persisting the complete credited roster.
- *
- * A UNIQUE event_key in server_first_events is the arbiter.  The claim and
- * roster insert are one transaction, so a failed archive is never announced
- * as a server first.
  */
 
 #include "common/database.h"
@@ -65,8 +55,7 @@ auto toParticipant(CLuaBaseEntity* luaEntity, sol::state& lua) -> sol::table
     result["char_id"]   = player->id;
     result["char_name"] = std::string(player->getName());
 
-    // Attribution deliberately uses the equipped primary linkshell.  A player
-    // carrying a second pearl is not actively representing that shell.
+    // Uses the EQUIPPED linkshell.  A player carrying a second pearl isn't treated as actively representing that LS.
     if (auto* item = dynamic_cast<CItemLinkshell*>(player->getEquip(SLOT_LINK1)); item && item->isType(ITEM_LINKSHELL))
     {
         result["linkshell_name"] = item->getSignature();
@@ -142,9 +131,6 @@ auto claimFirst(const sol::table& input) -> bool
         return false;
     }
 
-    // preparedStmt uses a thread-local connection. Map logic and this callback
-    // execute on the same map thread, so the transaction covers the event and
-    // every participant record without blocking zone ticks.
     if (!db::preparedStmt("START TRANSACTION"))
     {
         ShowErrorFmt("ServerFirst could not start the transaction for '{}'", eventKey);
@@ -171,7 +157,7 @@ auto claimFirst(const sol::table& input) -> bool
     if (!eventInsert || eventInsert->rowsAffected() != 1)
     {
         rollback();
-        return false; // Already claimed, or the archive table is unavailable.
+        return false; // Already claimed by someone else, no server first awarded
     }
 
     for (const auto& participant : participants)
