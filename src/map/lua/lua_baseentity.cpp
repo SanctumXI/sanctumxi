@@ -7763,9 +7763,16 @@ void CLuaBaseEntity::setRank(uint8 rank)
 
     auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
 
+    const uint8 nation = PChar->profile.nation;
+    const uint8 oldRank = PChar->profile.rank[nation];
     PChar->profile.rank[PChar->profile.nation] = rank;
 
     charutils::SaveMissionsList(PChar);
+
+    if (rank != oldRank)
+    {
+        luautils::OnPlayerRankChange(PChar, nation, rank);
+    }
 }
 
 /************************************************************************
@@ -8210,6 +8217,7 @@ void CLuaBaseEntity::completeMission(MissionLog logId, const uint16 missionID) c
             charutils::SendPartialMissionLog(PChar, logId, false);
             charutils::SaveMissionsList(PChar);
             roeutils::event(ROE_MISSION_COMPLETE, PChar, RoeDatagramList{});
+            luautils::OnPlayerMissionComplete(PChar, logId, missionID);
         }
     }
     else

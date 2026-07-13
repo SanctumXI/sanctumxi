@@ -250,6 +250,23 @@ end
 xi.player.onPlayerLevelDown = function(player)
 end
 
+-- Completion callbacks are deliberately empty by default.  Content modules
+-- can opt in without adding polling or broad event interception.
+xi.player.onPlayerSynthesis = function(player, itemId, quantity, skillType)
+end
+
+xi.player.onPlayerCraftSkillUp = function(player, skillType, oldSkill, newSkill)
+end
+
+xi.player.onPlayerItemAdded = function(player, itemId, quantity)
+end
+
+xi.player.onPlayerMissionComplete = function(player, logId, missionId)
+end
+
+xi.player.onPlayerRankChange = function(player, nation, rank)
+end
+
 xi.player.onPlayerMount = function(player)
     -- For PM3-3 The Road Forks.  This value will be checked periodically, and break
     -- the Mimeo Jewel should a player be mounted, zone, or disconnect.

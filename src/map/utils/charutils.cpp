@@ -1826,6 +1826,10 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
 
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, static_cast<CONTAINER_ID>(LocationID), SlotID);
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+    if (luautils::IsPlayerItemAddedCallbackRegistered(PInserted->getID()))
+    {
+        luautils::OnPlayerItemAdded(PChar, PInserted->getID(), PInserted->getQuantity());
+    }
 
     return SlotID;
 }
