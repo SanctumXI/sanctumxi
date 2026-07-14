@@ -182,9 +182,9 @@ const std::set traverserStoneReductionKeyItems = {
     KeyItem::IVORY_ABYSSITE_OF_CELERITY
 };
 
-constexpr double RacialSkillUpModifierLower   = 0.85;
-constexpr double RacialSkillUpModifierNeutral = 0.95;
-constexpr double RacialSkillUpModifierHigher  = 1.05;
+constexpr double RacialSkillUpModifierLower   = 0.90;
+constexpr double RacialSkillUpModifierNeutral = 1.00; // In case you need to 'turn the dial' on skill rate later.
+constexpr double RacialSkillUpModifierHigher  = 1.10;
 
 auto getRacialSkillUpModifier(const CCharEntity* PChar, SKILLTYPE skillId) -> double
 {
