@@ -2306,7 +2306,7 @@ end
                 else
                     local lockText = destination.lockText or "Locked"
 
-                    entry.label  = string.format("%s (Locked)", label)
+                    entry.label  = string.format("%s", label)
                     entry.locked = true
                 end
 
@@ -2343,7 +2343,7 @@ end
                     npc          = npc,
                     onSelect     = function(playerArg, destination, npcArg)
                         if destination.locked or not isDestinationUnlocked(playerArg, destination) then
-                            local lockText = destination.lockText or "Locked"
+                            local lockText = destination.lockText or "You must complete the prerequisites."
 
                             playerArg:printToPlayer(
                                 string.format("%s is locked. %s.", destination.name, lockText),
