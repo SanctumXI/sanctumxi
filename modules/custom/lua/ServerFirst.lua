@@ -125,13 +125,114 @@ local craftEvents =
     [17558] = { eventKey = 'craft.apollos_staff',          display = "Apollo's Staff" },
     [17559] = { eventKey = 'craft.dark_staff',             display = 'Dark Staff' },
     [17560] = { eventKey = 'craft.plutos_staff',           display = "Pluto's Staff" },
-}
 
--- The C++ companion loads the rest of the in-era catalogue from the recipe
--- database at boot: every Cursed -1 item at its normal rank, and every +1
--- output requiring a 100+ craft skill. Keep the entries above for their
--- deliberately curated spelling, while the data-driven catalogue prevents
--- this module becoming stale or doing database work during synthesis.
+    -- Editable expanded craft catalogue. Cursed -1 items are included at
+    -- their normal recipe ranks; the +1 items below require a 100+ craft
+    -- skill in this server's pre-SoA recipe data.
+    -- Cursed -1 items
+    [1345] = { eventKey = 'craft.cursed_kabuto_minus1', display = 'Cursed Kabuto -1' },
+    [1347] = { eventKey = 'craft.cursed_togi_minus1', display = 'Cursed Togi -1' },
+    [1349] = { eventKey = 'craft.cursed_kote_minus1', display = 'Cursed Kote -1' },
+    [1351] = { eventKey = 'craft.cursed_haidate_minus1', display = 'Cursed Haidate -1' },
+    [1353] = { eventKey = 'craft.cursed_sune_ate_minus1', display = 'Cursed Sune-Ate -1' },
+    [1355] = { eventKey = 'craft.cursed_celata_minus1', display = 'Cursed Celata -1' },
+    [1357] = { eventKey = 'craft.cursed_hauberk_minus1', display = 'Cursed Hauberk -1' },
+    [1359] = { eventKey = 'craft.cursed_mufflers_minus1', display = 'Cursed Mufflers -1' },
+    [1361] = { eventKey = 'craft.cursed_breeches_minus1', display = 'Cursed Breeches -1' },
+    [1363] = { eventKey = 'craft.cursed_sollerets_minus1', display = 'Cursed Sollerets -1' },
+    [1365] = { eventKey = 'craft.cursed_crown_minus1', display = 'Cursed Crown -1' },
+    [1367] = { eventKey = 'craft.cursed_dalmatica_minus1', display = 'Cursed Dalmatica -1' },
+    [1369] = { eventKey = 'craft.cursed_mitts_minus1', display = 'Cursed Mitts -1' },
+    [1371] = { eventKey = 'craft.cursed_slacks_minus1', display = 'Cursed Slacks -1' },
+    [1373] = { eventKey = 'craft.cursed_pumps_minus1', display = 'Cursed Pumps -1' },
+    [1375] = { eventKey = 'craft.cursed_schaller_minus1', display = 'Cursed Schaller -1' },
+    [1377] = { eventKey = 'craft.cursed_cuirass_minus1', display = 'Cursed Cuirass -1' },
+    [1379] = { eventKey = 'craft.cursed_handschuhs_minus1', display = 'Cursed Handschuhs -1' },
+    [1381] = { eventKey = 'craft.cursed_diechlings_minus1', display = 'Cursed Diechlings -1' },
+    [1383] = { eventKey = 'craft.cursed_schuhs_minus1', display = 'Cursed Schuhs -1' },
+    [1385] = { eventKey = 'craft.cursed_mask_minus1', display = 'Cursed Mask -1' },
+    [1387] = { eventKey = 'craft.cursed_mail_minus1', display = 'Cursed Mail -1' },
+    [1389] = { eventKey = 'craft.cursed_finger_gauntlets_minus1', display = 'Cursed Finger Gauntlets -1' },
+    [1391] = { eventKey = 'craft.cursed_cuisses_minus1', display = 'Cursed Cuisses -1' },
+    [1393] = { eventKey = 'craft.cursed_greaves_minus1', display = 'Cursed Greaves -1' },
+    [1395] = { eventKey = 'craft.cursed_cap_minus1', display = 'Cursed Cap -1' },
+    [1397] = { eventKey = 'craft.cursed_harness_minus1', display = 'Cursed Harness -1' },
+    [1399] = { eventKey = 'craft.cursed_gloves_minus1', display = 'Cursed Gloves -1' },
+    [1401] = { eventKey = 'craft.cursed_subligar_minus1', display = 'Cursed Subligar -1' },
+    [1403] = { eventKey = 'craft.cursed_leggings_minus1', display = 'Cursed Leggings -1' },
+    [2440] = { eventKey = 'craft.cursed_helm_minus1', display = 'Cursed Helm -1' },
+    [2442] = { eventKey = 'craft.cursed_breastplate_minus1', display = 'Cursed Breastplate -1' },
+    [2444] = { eventKey = 'craft.cursed_gauntlets_minus1', display = 'Cursed Gauntlets -1' },
+    [2446] = { eventKey = 'craft.cursed_cuishes_minus1', display = 'Cursed Cuishes -1' },
+    [2448] = { eventKey = 'craft.cursed_sabatons_minus1', display = 'Cursed Sabatons -1' },
+    [2450] = { eventKey = 'craft.cursed_hat_minus1', display = 'Cursed Hat -1' },
+    [2452] = { eventKey = 'craft.cursed_coat_minus1', display = 'Cursed Coat -1' },
+    [2454] = { eventKey = 'craft.cursed_cuffs_minus1', display = 'Cursed Cuffs -1' },
+    [2456] = { eventKey = 'craft.cursed_trews_minus1', display = 'Cursed Trews -1' },
+    [2458] = { eventKey = 'craft.cursed_clogs_minus1', display = 'Cursed Clogs -1' },
+
+    -- +1 items whose recipe requires at least one 100+ craft skill
+    [4141] = { eventKey = 'craft.pro_ether_plus1', display = 'Pro-Ether +1' },
+    [6072] = { eventKey = 'craft.magma_steak_plus1', display = 'Magma Steak +1' },
+    [11380] = { eventKey = 'craft.hermes_sandals_plus1', display = 'Hermes Sandals +1' },
+    [13162] = { eventKey = 'craft.brisingamen_plus1', display = 'Brisingamen +1' },
+    [13747] = { eventKey = 'craft.gavial_mail_plus1', display = 'Gavial Mail +1' },
+    [13943] = { eventKey = 'craft.panther_mask_plus1', display = 'Panther Mask +1' },
+    [13944] = { eventKey = 'craft.gavial_mask_plus1', display = 'Gavial Mask +1' },
+    [14390] = { eventKey = 'craft.dragon_harness_plus1', display = 'Dragon Harness +1' },
+    [14391] = { eventKey = 'craft.dusk_jerkin_plus1', display = 'Dusk Jerkin +1' },
+    [14438] = { eventKey = 'craft.blessed_bliaut_plus1', display = 'Blessed Bliaut +1' },
+    [14449] = { eventKey = 'craft.unicorn_harness_plus1', display = 'Unicorn Harness +1' },
+    [14538] = { eventKey = 'craft.hydra_mail_plus1', display = 'Hydra Mail +1' },
+    [14540] = { eventKey = 'craft.kyudogi_plus1', display = 'Kyudogi +1' },
+    [14545] = { eventKey = 'craft.corselet_plus1', display = 'Corselet +1' },
+    [15704] = { eventKey = 'craft.hydra_greaves_plus1', display = 'Hydra Greaves +1' },
+    [16074] = { eventKey = 'craft.hydra_mask_plus1', display = 'Hydra Mask +1' },
+    [16598] = { eventKey = 'craft.gold_algol_plus1', display = 'Gold Algol +1' },
+    [16894] = { eventKey = 'craft.ox_tongue_plus1', display = 'Ox Tongue +1' },
+    [17214] = { eventKey = 'craft.staurobow_plus1', display = 'Staurobow +1' },
+    [17570] = { eventKey = 'craft.iron_splitter_plus1', display = 'Iron-Splitter +1' },
+    [18022] = { eventKey = 'craft.adaman_kris_plus1', display = 'Adaman Kris +1' },
+    [18111] = { eventKey = 'craft.mezraq_plus1', display = 'Mezraq +1' },
+    [18124] = { eventKey = 'craft.thalassocrat_plus1', display = 'Thalassocrat +1' },
+    [18130] = { eventKey = 'craft.dabo_plus1', display = 'Dabo +1' },
+    [18147] = { eventKey = 'craft.culverin_plus1', display = 'Culverin +1' },
+    [18432] = { eventKey = 'craft.butachi_plus1', display = 'Butachi +1' },
+    [18483] = { eventKey = 'craft.amood_plus1', display = 'Amood +1' },
+    [18749] = { eventKey = 'craft.hades_sainti_plus1', display = 'Hades Sainti +1' },
+    [19152] = { eventKey = 'craft.bahadur_plus1', display = 'Bahadur +1' },
+    [20622] = { eventKey = 'craft.nanti_knife_plus1', display = 'Nanti Knife +1' },
+    [20724] = { eventKey = 'craft.dija_sword_plus1', display = 'Dija Sword +1' },
+    [20780] = { eventKey = 'craft.senbaak_nagan_plus1', display = 'Senbaak Nagan +1' },
+    [21352] = { eventKey = 'craft.roppo_shuriken_plus1', display = 'Roppo Shuriken +1' },
+    [21379] = { eventKey = 'craft.yetshila_plus1', display = 'Yetshila +1' },
+    [26878] = { eventKey = 'craft.foppish_tunica_plus1', display = 'Foppish Tunica +1' },
+    [26880] = { eventKey = 'craft.wretched_coat_plus1', display = 'Wretched Coat +1' },
+    [27604] = { eventKey = 'craft.aptitude_mantle_plus1', display = 'Aptitude Mantle +1' },
+    [27747] = { eventKey = 'craft.aetosaur_helm_plus1', display = 'Aetosaur Helm +1' },
+    [27749] = { eventKey = 'craft.shabti_armet_plus1', display = 'Shabti Armet +1' },
+    [27751] = { eventKey = 'craft.haruspex_hat_plus1', display = 'Haruspex Hat +1' },
+    [27890] = { eventKey = 'craft.aetosaur_jerkin_plus1', display = 'Aetosaur Jerkin +1' },
+    [27892] = { eventKey = 'craft.shabti_cuirass_plus1', display = 'Shabti Cuirass +1' },
+    [27894] = { eventKey = 'craft.haruspex_coat_plus1', display = 'Haruspex Coat +1' },
+    [28037] = { eventKey = 'craft.aetosaur_gloves_plus1', display = 'Aetosaur Gloves +1' },
+    [28039] = { eventKey = 'craft.shabti_gauntlets_plus1', display = 'Shabti Gauntlets +1' },
+    [28041] = { eventKey = 'craft.haruspex_cuffs_plus1', display = 'Haruspex Cuffs +1' },
+    [28177] = { eventKey = 'craft.aetosaur_trousers_plus1', display = 'Aetosaur Trousers +1' },
+    [28179] = { eventKey = 'craft.shabti_cuisses_plus1', display = 'Shabti Cuisses +1' },
+    [28181] = { eventKey = 'craft.haruspex_slops_plus1', display = 'Haruspex Slops +1' },
+    [28315] = { eventKey = 'craft.aetosaur_ledelsens_plus1', display = 'Aetosaur Ledelsens +1' },
+    [28317] = { eventKey = 'craft.shabti_sabatons_plus1', display = 'Shabti Sabatons +1' },
+    [28319] = { eventKey = 'craft.haruspex_pigaches_plus1', display = 'Haruspex Pigaches +1' },
+    [28375] = { eventKey = 'craft.dakatsu_no_nodowa_plus1', display = 'Dakatsu-No-Nodowa +1' },
+    [28405] = { eventKey = 'craft.ej_necklace_plus1', display = 'Ej Necklace +1' },
+    [28447] = { eventKey = 'craft.sweordfaetels_plus1', display = 'Sweordfaetels +1' },
+    [28465] = { eventKey = 'craft.pyaekue_belt_plus1', display = 'Pyaekue Belt +1' },
+    [28467] = { eventKey = 'craft.dynamic_belt_plus1', display = 'Dynamic Belt +1' },
+    [28527] = { eventKey = 'craft.tati_earring_plus1', display = 'Tati Earring +1' },
+    [28607] = { eventKey = 'craft.aput_mantle_plus1', display = 'Aput Mantle +1' },
+    [28665] = { eventKey = 'craft.killedar_shield_plus1', display = 'Killedar Shield +1' },
+}
 
 local specialItemEvents =
 {
@@ -641,22 +742,8 @@ m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, 
     super(player, itemId, quantity, skillType)
 
     local definition = craftEvents[itemId]
-    if not definition and xi.serverFirst and xi.serverFirst.getHighSkillCraftName then
-        local display = xi.serverFirst.getHighSkillCraftName(itemId)
-        if display then
-            definition =
-            {
-                -- Item IDs make the archived first-event key unambiguous even
-                -- if two item names differ only by punctuation.
-                eventKey = string.format('craft.item_%u', itemId),
-                display = display,
-                category = 'craft',
-            }
-        end
-    end
-
     if definition then
-        definition.category = definition.category or 'craft'
+        definition.category = 'craft'
         announceSolo(
             definition,
             player,

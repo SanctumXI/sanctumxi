@@ -12,9 +12,7 @@
 #include "map/utils/moduleutils.h"
 
 #include <algorithm>
-#include <cctype>
 #include <string>
-#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -25,11 +23,6 @@ constexpr std::size_t MaxEventKeyLength = 96;
 constexpr std::size_t MaxTextLength     = 255;
 constexpr std::size_t MaxMessageLength  = 511;
 constexpr std::size_t MaxParticipants   = 36;
-
-// This is populated once at map-server startup.  Synthesis results only need
-// an in-memory lookup, never a database query, which keeps the crafting path
-// safe to run on every successful synthesis.
-std::unordered_map<uint16, std::string> highSkillCrafts;
 
 struct Participant
 {
@@ -225,87 +218,12 @@ auto recordLegend(const sol::table& input) -> bool
     return insert && insert->rowsAffected() == 1;
 }
 
-auto formatItemName(std::string itemName) -> std::string
-{
-    bool capitalize = true;
-
-    for (auto& character : itemName)
-    {
-        if (character == '_')
-        {
-            character = ' ';
-        }
-
-        if (capitalize && std::isalpha(static_cast<unsigned char>(character)))
-        {
-            character = static_cast<char>(std::toupper(static_cast<unsigned char>(character)));
-        }
-
-        capitalize = character == ' ' || character == '-';
-    }
-
-    return itemName;
-}
-
-void loadHighSkillCrafts()
-{
-    // The item list is intentionally data-driven.  It captures every pre-SoA
-    // Cursed -1 output and every +1 output whose recipe needs a 100+ craft
-    // skill, including items added by future database corrections. Cursed
-    // pieces are intentionally included at their normal recipe ranks. It runs
-    // only during startup; successful synthesis performs a hash-map lookup.
-    const auto rset = db::preparedStmt(
-        "SELECT DISTINCT item.itemid AS item_id, item.name AS item_name "
-        "FROM synth_recipes AS recipe "
-        "INNER JOIN ("
-        "SELECT ID, Result AS item_id FROM synth_recipes "
-        "UNION ALL SELECT ID, ResultHQ1 AS item_id FROM synth_recipes "
-        "UNION ALL SELECT ID, ResultHQ2 AS item_id FROM synth_recipes "
-        "UNION ALL SELECT ID, ResultHQ3 AS item_id FROM synth_recipes"
-        ") AS craft_output ON craft_output.ID = recipe.ID "
-        "INNER JOIN item_basic AS item ON item.itemid = craft_output.item_id "
-        "WHERE recipe.Desynth = 0 "
-        "AND (recipe.content_tag IS NULL OR recipe.content_tag IN ('ZILART', 'COP', 'TOAU', 'WOTG')) "
-        "AND ((item.name LIKE 'cursed%' AND RIGHT(item.name, 3) = '_-1') "
-        "OR (RIGHT(item.name, 3) = '_+1' "
-        "AND GREATEST(recipe.Wood, recipe.Smith, recipe.Gold, recipe.Cloth, "
-        "recipe.Leather, recipe.Bone, recipe.Alchemy, recipe.Cook) >= 100))");
-
-    if (!rset)
-    {
-        ShowError("ServerFirst could not load its high-skill craft catalogue.");
-        return;
-    }
-
-    highSkillCrafts.clear();
-    while (rset->next())
-    {
-        const auto itemId   = rset->get<uint16>("item_id");
-        const auto itemName = rset->get<std::string>("item_name");
-        highSkillCrafts.emplace(itemId, formatItemName(itemName));
-    }
-
-    ShowInfoFmt("ServerFirst loaded {} high-skill crafted-item announcements.", highSkillCrafts.size());
-}
-
-auto getHighSkillCraftName(const uint16 itemId) -> sol::optional<std::string>
-{
-    if (const auto entry = highSkillCrafts.find(itemId); entry != highSkillCrafts.end())
-    {
-        return entry->second;
-    }
-
-    return sol::nullopt;
-}
-
 } // namespace
 
 class ServerFirstModule final : public CPPModule
 {
     void OnInit() override
     {
-        loadHighSkillCrafts();
-
         const auto trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
         if (trackedItems.valid() && trackedItems.is<sol::table>())
         {
@@ -330,7 +248,6 @@ class ServerFirstModule final : public CPPModule
         });
         table.set_function("claim", claimFirst);
         table.set_function("recordLegend", recordLegend);
-        table.set_function("getHighSkillCraftName", getHighSkillCraftName);
     }
 };
 
