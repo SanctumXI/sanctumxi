@@ -127,6 +127,12 @@ local craftEvents =
     [17560] = { eventKey = 'craft.plutos_staff',           display = "Pluto's Staff" },
 }
 
+-- The C++ companion loads the rest of the in-era catalogue from the recipe
+-- database at boot: every Cursed -1 item at its normal rank, and every +1
+-- output requiring a 100+ craft skill. Keep the entries above for their
+-- deliberately curated spelling, while the data-driven catalogue prevents
+-- this module becoming stale or doing database work during synthesis.
+
 local specialItemEvents =
 {
     [xi.item.MAATS_CAP] =
@@ -635,8 +641,22 @@ m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, 
     super(player, itemId, quantity, skillType)
 
     local definition = craftEvents[itemId]
+    if not definition and xi.serverFirst and xi.serverFirst.getHighSkillCraftName then
+        local display = xi.serverFirst.getHighSkillCraftName(itemId)
+        if display then
+            definition =
+            {
+                -- Item IDs make the archived first-event key unambiguous even
+                -- if two item names differ only by punctuation.
+                eventKey = string.format('craft.item_%u', itemId),
+                display = display,
+                category = 'craft',
+            }
+        end
+    end
+
     if definition then
-        definition.category = 'craft'
+        definition.category = definition.category or 'craft'
         announceSolo(
             definition,
             player,
