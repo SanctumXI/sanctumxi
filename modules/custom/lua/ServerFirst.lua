@@ -125,12 +125,7 @@ local craftEvents =
     [17558] = { eventKey = 'craft.apollos_staff',          display = "Apollo's Staff" },
     [17559] = { eventKey = 'craft.dark_staff',             display = 'Dark Staff' },
     [17560] = { eventKey = 'craft.plutos_staff',           display = "Pluto's Staff" },
-
-    -- Editable expanded craft catalogue. Cursed -1 items are included at
-    -- their normal recipe ranks; the +1 items below require a 100+ craft
-    -- skill in this server's pre-SoA recipe data.
-    -- Cursed -1 items
-    [1345] = { eventKey = 'craft.cursed_kabuto_minus1', display = 'Cursed Kabuto -1' },
+    [1345] = { eventKey = 'craft.cursed_kabuto_minus1',    display = 'Cursed Kabuto -1' },
     [1347] = { eventKey = 'craft.cursed_togi_minus1', display = 'Cursed Togi -1' },
     [1349] = { eventKey = 'craft.cursed_kote_minus1', display = 'Cursed Kote -1' },
     [1351] = { eventKey = 'craft.cursed_haidate_minus1', display = 'Cursed Haidate -1' },
@@ -170,8 +165,6 @@ local craftEvents =
     [2454] = { eventKey = 'craft.cursed_cuffs_minus1', display = 'Cursed Cuffs -1' },
     [2456] = { eventKey = 'craft.cursed_trews_minus1', display = 'Cursed Trews -1' },
     [2458] = { eventKey = 'craft.cursed_clogs_minus1', display = 'Cursed Clogs -1' },
-
-    -- +1 items whose recipe requires at least one 100+ craft skill
     [4141] = { eventKey = 'craft.pro_ether_plus1', display = 'Pro-Ether +1' },
     [6072] = { eventKey = 'craft.magma_steak_plus1', display = 'Magma Steak +1' },
     [11380] = { eventKey = 'craft.hermes_sandals_plus1', display = 'Hermes Sandals +1' },
