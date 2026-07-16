@@ -24,6 +24,7 @@
 #include "lua_battlefield.h"
 #include "lua_instance.h"
 #include "lua_item.h"
+#include "lua_item.h"
 
 #include "items/exdata/worn_item.h"
 #include "lua_spell.h"

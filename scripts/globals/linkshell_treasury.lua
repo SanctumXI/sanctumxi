@@ -147,4 +147,53 @@ function xi.linkshellTreasury.withdrawItem(player, itemID, quantity)
     )
 end
 
+-----------------------------------
+-- Opens the Linkshell Treasury Shop
+-----------------------------------
+function xi.linkshellTreasury.openShop(player)
+    local stock = {}
+
+    if not xi.linkshellTreasury.hasLinkshell(player) then
+        player:printToPlayer(
+            'You must equip a linkshell in slot 1 to access the treasury.',
+            xi.msg.channel.SYSTEM_3
+        )
+
+        return false
+    end
+
+    for itemID, _ in pairs(xi.linkshellTreasury.items) do
+        local quantity = xi.linkshellTreasury.getItemCount(player, itemID)
+
+        if quantity > 0 then
+            table.insert(stock, { itemID, quantity })
+        end
+    end
+
+    if #stock == 0 then
+        player:printToPlayer(
+            'Your linkshell treasury does not contain any pop items.',
+            xi.msg.channel.SYSTEM_3
+        )
+
+        return false
+    end
+
+    -- Keep the shop list in consistent item-ID order.
+    table.sort(stock, function(a, b)
+        return a[1] < b[1]
+    end)
+
+-- Create the temporary shop first.
+player:createShop(#stock, 250)
+
+for _, stockItem in ipairs(stock) do
+    player:addShopItem(stockItem[1], stockItem[2])
+end
+
+player:sendMenu(xi.menuType.SHOP)
+
+    return true
+end
+
 return xi.linkshellTreasury

@@ -295,12 +295,12 @@ public:
     auto  getRetrievableItemsForSlip(uint16 slipId) const -> sol::table;
     void  retrieveItemFromSlip(uint16 slipId, uint16 itemId, uint16 extraId, uint8 extraData);
 
-// Sanctum Custom Linkshell HNM Treasury
-uint32 getLinkshellID(uint8 slot);
-uint8  getLinkshellType(uint8 slot);
-uint32 getLinkshellTreasuryItemCount(uint8 slot, uint16 itemID);
-bool   depositLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
-bool   withdrawLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
+    // Sanctum Custom Linkshell HNM Treasury System
+    uint32 getLinkshellID(uint8 slot);
+    uint8  getLinkshellType(uint8 slot);
+    uint32 getLinkshellTreasuryItemCount(uint8 slot, uint16 itemID);
+    bool   depositLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
+    bool   withdrawLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
 
     // Player Appearance
     uint8  getRace();
