@@ -21,6 +21,18 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
+zoneObject.onInstanceZoneIn = function(player, instance)
+    local pos = player:getPos()
+    if pos.x == 0 and pos.y == 0 and pos.z == 0 then
+        local entryPos = instance:getEntryPos()
+        player:setPos(entryPos.x, entryPos.y, entryPos.z, entryPos.rot)
+    end
+end
+
+zoneObject.onInstanceLoadFailed = function()
+    return xi.zone.REISENJIMA
+end
+
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
 end
 

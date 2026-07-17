@@ -36993,6 +36993,7 @@ INSERT INTO `npc_list` VALUES (17973577,'Moogle','Moogle',0,0.000,0.000,0.000,0,
 INSERT INTO `npc_list` VALUES (17973578,'Moogle','Moogle',0,0.000,0.000,0.000,0,50,50,0,0,0,2,3,0x0000320000000000000000000000000000000000,0,NULL,0);                                   -- Capture needed
 INSERT INTO `npc_list` VALUES (17973579,'Moogle','Moogle',0,0.000,0.000,0.000,0,50,50,0,0,0,2,3,0x0000320000000000000000000000000000000000,0,NULL,0);                                   -- Capture needed
 INSERT INTO `npc_list` VALUES (17973580,'','',0,0.000,0.000,0.000,0,50,50,0,0,0,2,3,0x0000320000000000000000000000000000000000,0,NULL,0);                                               -- Capture needed
+INSERT INTO `npc_list` VALUES (17973584,'Hard_Mode_HNM_QM','???',11,8.842,5.515,-4.225,1,50,50,0,0,0,0,3,0x0000340000000000000000000000000000000000,0,NULL,1);
 
 -- ------------------------------------------------------------
 -- Reisenjima Sanctorium (Zone 293)

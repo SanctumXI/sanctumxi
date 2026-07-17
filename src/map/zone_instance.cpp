@@ -585,3 +585,56 @@ CInstance* CZoneInstance::CreateInstance(uint32 instanceid)
     m_InstanceList.emplace_back(std::make_unique<CInstance>(scheduler_, config_, this, instanceid));
     return m_InstanceList.back().get();
 }
+
+CInstance* CZoneInstance::GetInstanceByRuntimeID(uint64_t runtimeId)
+{
+    TracyZoneScoped;
+
+    for (const auto& PInstance : m_InstanceList)
+    {
+        if (PInstance->GetRuntimeID() == runtimeId && !PInstance->Failed() && !PInstance->Completed())
+        {
+            return PInstance.get();
+        }
+    }
+
+    return nullptr;
+}
+
+auto CZoneInstance::GetInstancesByDefinition(uint32 instanceid) -> std::vector<CInstance*>
+{
+    TracyZoneScoped;
+
+    std::vector<CInstance*> instances;
+    for (const auto& PInstance : m_InstanceList)
+    {
+        if (PInstance->GetID() == instanceid && !PInstance->Failed() && !PInstance->Completed())
+        {
+            instances.emplace_back(PInstance.get());
+        }
+    }
+
+    return instances;
+}
+
+bool CZoneInstance::IsInstanceAlive(uint64_t runtimeId)
+{
+    TracyZoneScoped;
+    return GetInstanceByRuntimeID(runtimeId) != nullptr;
+}
+
+uint32 CZoneInstance::UnregisterCharFromAllInstances(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    uint32 removedRegistrations = 0;
+    for (const auto& PInstance : m_InstanceList)
+    {
+        if (PInstance->UnregisterChar(PChar))
+        {
+            ++removedRegistrations;
+        }
+    }
+
+    return removedRegistrations;
+}

@@ -32,6 +32,7 @@
 #include "utils/mobutils.h"
 #include "zone.h"
 #include "zone_entities.h"
+#include "zone_instance.h"
 
 #include <map/ximesh/ximesh.h>
 
@@ -164,6 +165,40 @@ sol::table CLuaZone::getMobs()
     });
     // clang-format on
     return table;
+}
+
+CInstance* CLuaZone::getInstanceByRuntimeID(uint64_t runtimeId)
+{
+    auto* PInstanceZone = dynamic_cast<CZoneInstance*>(m_pLuaZone);
+    return PInstanceZone ? PInstanceZone->GetInstanceByRuntimeID(runtimeId) : nullptr;
+}
+
+sol::table CLuaZone::getInstancesByDefinition(uint32 instanceID)
+{
+    auto  table         = lua.create_table();
+    auto* PInstanceZone = dynamic_cast<CZoneInstance*>(m_pLuaZone);
+    if (PInstanceZone)
+    {
+        for (auto* PInstance : PInstanceZone->GetInstancesByDefinition(instanceID))
+        {
+            table.add(PInstance);
+        }
+    }
+
+    return table;
+}
+
+bool CLuaZone::isInstanceAlive(uint64_t runtimeId)
+{
+    auto* PInstanceZone = dynamic_cast<CZoneInstance*>(m_pLuaZone);
+    return PInstanceZone && PInstanceZone->IsInstanceAlive(runtimeId);
+}
+
+uint32 CLuaZone::unregisterCharFromInstances(CLuaBaseEntity* PLuaEntity)
+{
+    auto* PInstanceZone = dynamic_cast<CZoneInstance*>(m_pLuaZone);
+    auto* PChar         = PLuaEntity ? dynamic_cast<CCharEntity*>(PLuaEntity->GetBaseEntity()) : nullptr;
+    return PInstanceZone && PChar ? PInstanceZone->UnregisterCharFromAllInstances(PChar) : 0;
 }
 
 ZONEID CLuaZone::getID()
@@ -383,6 +418,10 @@ void CLuaZone::Register()
     SOL_REGISTER("getPlayers", CLuaZone::getPlayers);
     SOL_REGISTER("getNPCs", CLuaZone::getNPCs);
     SOL_REGISTER("getMobs", CLuaZone::getMobs);
+    SOL_REGISTER("getInstanceByRuntimeID", CLuaZone::getInstanceByRuntimeID);
+    SOL_REGISTER("getInstancesByDefinition", CLuaZone::getInstancesByDefinition);
+    SOL_REGISTER("isInstanceAlive", CLuaZone::isInstanceAlive);
+    SOL_REGISTER("unregisterCharFromInstances", CLuaZone::unregisterCharFromInstances);
     SOL_REGISTER("getID", CLuaZone::getID);
     SOL_REGISTER("getName", CLuaZone::getName);
     SOL_REGISTER("getRegionID", CLuaZone::getRegionID);

@@ -353,8 +353,17 @@ commandObj.onTrigger = function(player, bytes)
         end
     end
 
+    -- Reisenjima Henge is configured as an instanced zone for the Sanctum HNM
+    -- test.  A raw setPos() cannot register a player with CZoneInstance, so
+    -- route this one GM test destination through its opt-in entry helper.
+    if zone == xi.zone.REISENJIMA_HENGE then
+        local hnmInstances = require('scripts/globals/sanctum/hnm_instances')
+        hnmInstances.enterTest(player)
+        return
+    end
+
     -- send player to destination
-    player:setPos(x, y, z, rot, zone)
+    player:setPos(0, 0, 0, rot, zone)
 end
 
 return commandObj

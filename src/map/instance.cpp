@@ -19,6 +19,8 @@
 ===========================================================================
 */
 
+#include <algorithm>
+#include <atomic>
 #include <filesystem>
 #include <thread>
 
@@ -31,9 +33,15 @@
 
 #include "common/timer.h"
 
+namespace
+{
+std::atomic<uint64_t> nextRuntimeInstanceId{ 1 };
+}
+
 CInstance::CInstance(Scheduler& scheduler, MapConfig config, CZone* zone, uint32 instanceid)
 : CZoneEntities(scheduler, config, zone)
 , m_instanceid(instanceid)
+, m_runtimeId(nextRuntimeInstanceId.fetch_add(1, std::memory_order_relaxed))
 , m_zone(zone)
 , m_startTime(timer::now())
 {
@@ -53,6 +61,11 @@ CInstance::~CInstance()
 uint16 CInstance::GetID() const
 {
     return m_instanceid;
+}
+
+uint64_t CInstance::GetRuntimeID() const
+{
+    return m_runtimeId;
 }
 
 uint32 CInstance::GetProgress() const
@@ -141,6 +154,16 @@ void CInstance::RegisterChar(CCharEntity* PChar)
         m_commander = PChar->id;
     }
     m_registeredChars.emplace_back(PChar->id);
+}
+
+bool CInstance::UnregisterChar(CCharEntity* PChar)
+{
+    const auto previousSize = m_registeredChars.size();
+    m_registeredChars.erase(
+        std::remove(m_registeredChars.begin(), m_registeredChars.end(), PChar->id),
+        m_registeredChars.end());
+
+    return previousSize != m_registeredChars.size();
 }
 
 uint8 CInstance::GetLevelCap() const

@@ -325,7 +325,7 @@ INSERT INTO `zone_settings` VALUES (280,1,'50.103.128.168',54230,'Mog_Garden',67
 INSERT INTO `zone_settings` VALUES (281,0,'50.103.128.168',54230,'Leafallia',0,0,0,0,0,0.00,0);
 INSERT INTO `zone_settings` VALUES (282,0,'50.103.128.168',54230,'Mount_Kamihr',0,0,0,0,0,0.00,0);
 INSERT INTO `zone_settings` VALUES (283,0,'50.103.128.168',54230,'Silver_Knife',0,0,0,0,0,0.00,0);
-INSERT INTO `zone_settings` VALUES (284,1,'50.103.128.168',54230,'Celennia_Memorial_Library',63,63,0,0,0,0.00,4096);
+INSERT INTO `zone_settings` VALUES (284,257,'50.103.128.168',54230,'Celennia_Memorial_Library',63,63,0,0,0,0.00,4096);
 INSERT INTO `zone_settings` VALUES (285,1,'50.103.128.168',54230,'Feretory',0,0,0,0,0,0.00,4096);
 INSERT INTO `zone_settings` VALUES (286,0,'50.103.128.168',0,'286',0,0,0,0,0,0.00,0); -- Crashes the client if enabled and you try to go there
 INSERT INTO `zone_settings` VALUES (287,256,'50.103.128.168',54230,'Maquette_Abdhaljs-Legion_B',0,0,143,143,0,0.00,6298);
@@ -333,7 +333,7 @@ INSERT INTO `zone_settings` VALUES (288,2,'50.103.128.168',54230,'Escha_ZiTah',8
 INSERT INTO `zone_settings` VALUES (289,2,'50.103.128.168',54230,'Escha_RuAun',80,80,80,80,0,0.00,2200);
 INSERT INTO `zone_settings` VALUES (290,0,'50.103.128.168',54230,'Desuetia_Empyreal_Paradox',0,0,0,0,0,0.00,2176);
 INSERT INTO `zone_settings` VALUES (291,0,'50.103.128.168',54230,'Reisenjima',79,79,79,79,0,0.00,2176);
-INSERT INTO `zone_settings` VALUES (292,0,'50.103.128.168',54230,'Reisenjima_Henge',0,0,0,0,0,0.00,2048);
+INSERT INTO `zone_settings` VALUES (292,256,'50.103.128.168',54230,'Reisenjima_Henge',0,0,0,0,0,0.00,2048);
 INSERT INTO `zone_settings` VALUES (293,0,'50.103.128.168',54230,'Reisenjima_Sanctorium',0,0,0,0,0,0.00,2176);
 INSERT INTO `zone_settings` VALUES (294,128,'50.103.128.168',54230,'Dynamis-San_dOria_[D]',88,88,88,88,0,0.00,6544);
 INSERT INTO `zone_settings` VALUES (295,128,'50.103.128.168',54230,'Dynamis-Bastok_[D]',88,88,88,88,0,0.00,6544);

@@ -44,6 +44,11 @@ uint16 CLuaInstance::getID()
     return m_PLuaInstance->GetID();
 }
 
+uint64_t CLuaInstance::getRuntimeID()
+{
+    return m_PLuaInstance->GetRuntimeID();
+}
+
 const std::string& CLuaInstance::getName()
 {
     return m_PLuaInstance->GetName();
@@ -260,6 +265,7 @@ void CLuaInstance::Register()
 {
     SOL_USERTYPE("CInstance", CLuaInstance);
     SOL_REGISTER("getID", CLuaInstance::getID);
+    SOL_REGISTER("getRuntimeID", CLuaInstance::getRuntimeID);
     SOL_REGISTER("getName", CLuaInstance::getName);
     SOL_REGISTER("getZone", CLuaInstance::getZone);
     SOL_REGISTER("getEntranceZoneID", CLuaInstance::getEntranceZoneID);
