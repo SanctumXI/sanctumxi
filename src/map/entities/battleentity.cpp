@@ -2713,6 +2713,7 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         {
             result.resolution = ActionResolution::Miss;
             result.param      = damage; // damage is the number of shadows consumed to display in chat log
+            result.knockback  = Knockback::None; // Shadows negate knockback for most skills
         }
         else if (PSkill->hasMissMsg())
         {
