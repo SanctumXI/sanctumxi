@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Vertical Cleave
 -- Damage varies with TP
--- Spell cost: 75 MP
+-- Spell cost: 86 MP
 -- Monster Type: Luminians
 -- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 3

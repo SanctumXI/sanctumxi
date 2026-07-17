@@ -7,10 +7,10 @@
 -- Blue Magic Points: 5
 -- Stat Bonus: STR+3 CHR+3
 -- Level: 96
--- Casting Time: 2 seconds
+-- Casting Time: 0.5 seconds
 -- Recast Time: 42.5 seconds
--- Skillchain Element(s): Liquefaction, Scission
--- Combos: Sillchain Bonus
+-- Skillchain Element(s): Liquefaction, Scission, Impaction
+-- Combos: Skillchain Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Feather Storm
 -- Additional effect: Poison. Chance of effect varies with TP
--- Spell cost: 8 MP
+-- Spell cost: 12 MP
 -- Monster Type: Beastmen
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 3
--- Stat Bonus: AGI+2, HP+5
+-- Stat Bonus: MP+5, AGI+2
 -- Level: 12
 -- Casting Time: 0.5 seconds
 -- Recast Time: 10 seconds

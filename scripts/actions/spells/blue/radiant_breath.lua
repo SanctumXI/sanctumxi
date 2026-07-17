@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Radiant Breath
 -- Deals light damage to enemies within a fan-shaped area of effect originating from the caster. Additional effect: Slow and Silence.
--- Spell cost: 110 MP
+-- Spell cost: 116 MP
 -- Monster Type: Dragons
 -- Spell Type: Magical (Light)
 -- Blue Magic Points: 4
 -- Stat Bonus: CHR+3
 -- Level: 54
--- Casting Time: 3 seconds
+-- Casting Time: 5.25 seconds
 -- Recast Time: 33.75 seconds
 -- Magic Bursts on: Transfixion, Fusion, Light
 -- Combos: None

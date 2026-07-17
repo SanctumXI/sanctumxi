@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Warm-Up
 -- Enhances accuracy and gain regen
--- Spell cost: 45 MP
+-- Spell cost: 59 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 4
 -- Stat Bonus: DEX+1
 -- Level: 68
--- Casting Time: 8 seconds
--- Recast Time: 120 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 56 seconds
 -- Duration: 180 seconds
 -----------------------------------
 -- Combos: Clear Mind

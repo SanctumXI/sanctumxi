@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Feather Barrier
 -- Enhances evasion
--- Spell cost: 25 MP
+-- Spell cost: 29 MP
 -- Monster Type: Birds
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 2
 -- Stat Bonus: None
 -- Level: 56
--- Casting Time: 4 seconds
--- Recast Time: 60 seconds
+-- Casting Time: 2 seconds
+-- Recast Time: 56 seconds
 -- Duration: 180 Seconds
 -----------------------------------
 -- Combos: Resist Gravity

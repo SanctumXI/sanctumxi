@@ -8,7 +8,7 @@
 -- Stat Bonus: HP-5, MP+15
 -- Level: 48
 -- Casting Time: 0.5 seconds
--- Recast Time: 20.5 seconds
+-- Recast Time: 20.25 seconds
 -- Skillchain Element: Compression
 -- Combos: Store TP
 -----------------------------------

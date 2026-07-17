@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Temporal Shift
 -- Enemies within range are temporarily prevented from acting
--- Spell cost: 36 MP
+-- Spell cost: 48 MP
 -- Monster Type: Luminians
 -- Spell Type: Magical (Lightning)
 -- Blue Magic Points: 5
--- Stat Bonus: HP+10, MP+15
+-- Stat Bonus: HP+20, MP+15
 -- Level: 73
 -- Casting Time: 0.5 seconds
--- Recast Time: 20 seconds
+-- Recast Time: 56 seconds
 -- Magic Bursts on: Impaction, Fragmentation, and Light
 -- Combos: Attack Bonus
 -----------------------------------

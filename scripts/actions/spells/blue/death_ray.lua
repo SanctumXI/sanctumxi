@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Death Ray
 -- Deals dark damage to an enemy
--- Spell cost: 45 MP
+-- Spell cost: 49 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 2
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: MP+10, INT+1
 -- Level: 34
 -- Casting Time: 4.5 seconds
 -- Recast Time: 29.25 seconds

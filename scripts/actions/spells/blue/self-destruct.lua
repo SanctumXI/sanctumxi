@@ -5,7 +5,7 @@
 -- Monster Type: Arcana
 -- Spell Type: Magical (Fire)
 -- Blue Magic Points: 3
--- Stat Bonus: STR+2
+-- Stat Bonus: STR+3
 -- Level: 50
 -- Casting Time: 3.25 seconds
 -- Recast Time: 21 seconds

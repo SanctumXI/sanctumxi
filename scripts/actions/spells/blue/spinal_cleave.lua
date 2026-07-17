@@ -5,7 +5,7 @@
 -- Monster Type: Undead
 -- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 4
--- Stat Bonus: VIT+2, INT+1, MND+1
+-- Stat Bonus: STR+2, VIT+2
 -- Level: 63
 -- Casting Time: 0.5 seconds
 -- Recast Time: 28.5 seconds

@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Cursed Sphere
 -- Deals water damage to enemies within area of effect
--- Spell cost: 30 MP
+-- Spell cost: 36 MP
 -- Monster Type: Vermin
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 2

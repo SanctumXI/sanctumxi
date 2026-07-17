@@ -5,7 +5,7 @@
 -- Monster Type: Birds
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 3
--- Stat Bonus: AGI+1
+-- Stat Bonus: AGI+3
 -- Level: 64
 -- Casting Time: 4 seconds
 -- Recast Time: 26 seconds

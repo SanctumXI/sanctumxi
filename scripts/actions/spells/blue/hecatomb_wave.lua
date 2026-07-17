@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Hecatomb Wave
 -- Deals wind damage to enemies within a fan-shaped area originating from the caster. Additional effect: Blindness
--- Spell cost: 110 MP
+-- Spell cost: 116 MP
 -- Monster Type: Demons
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 3
--- Stat Bonus: AGI+1
+-- Stat Bonus: INT+3
 -- Level: 54
--- Casting Time: 3 seconds
+-- Casting Time: 5.25 seconds
 -- Recast Time: 33.75 seconds
 -- Magic Bursts on: Detonation, Fragmentation, Light
 -- Combos: Max MP Boost

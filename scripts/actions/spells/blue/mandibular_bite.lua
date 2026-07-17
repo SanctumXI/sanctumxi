@@ -1,10 +1,10 @@
 -----------------------------------
 -- Spell: Mandibular Bite
 -- Damage varies with TP
--- Spell cost: 35 MP
+-- Spell cost: 38 MP
 -- Monster Type: Vermin
 -- Spell Type: Physical (Slashing)
--- Blue Magic Points: 3
+-- Blue Magic Points: 2
 -- Stat Bonus: STR+1
 -- Level: 44
 -- Casting Time: 0.5 seconds

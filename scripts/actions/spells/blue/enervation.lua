@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Enervation
 -- Lowers the defense and magical defense of enemies within range
--- Spell cost: 70 MP
+-- Spell cost: 48 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Dark)
--- Blue Magic Points: 5
+-- Blue Magic Points: 3
 -- Stat Bonus: HP-5, MP+5
 -- Level: 67
--- Casting Time: 4 seconds
+-- Casting Time: 3.5 seconds
 -- Recast Time: 60 seconds
 -- Magic Bursts on: Compression, Gravitation, and Darkness
 -- Combos: Counter

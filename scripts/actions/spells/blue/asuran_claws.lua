@@ -7,8 +7,8 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: DEX +3
 -- Level: 70
--- Casting Time: 1 second
--- Recast Time: 30 seconds
+-- Casting Time: 2 seconds
+-- Recast Time: 60 seconds
 -- Skillchain Element(s): Liquefaction/Impaction
 -- Combos: Counter
 -----------------------------------

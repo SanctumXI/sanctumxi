@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Corrosive Ooze
 -- Deals water damage to an enemy. Additional Effect: Defense Down
--- Spell cost: 80 MP
+-- Spell cost: 55 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 4
 -- Stat Bonus: HP-10 MP+10
 -- Level: 66
--- Casting Time: 4 seconds
--- Recast Time: 22 seconds
+-- Casting Time: 3.5 seconds
+-- Recast Time: 30 seconds
 -----------------------------------
 -- Combos: Clear Mind
 -----------------------------------

@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Frost Breath
 -- Deals ice damage to enemies within a fan-shaped area originating from the caster. Additional effect: Paralysis
--- Spell cost: 110 MP
+-- Spell cost: 136 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 3
 -- Stat Bonus: INT-2
 -- Level: 66
--- Casting Time: 3 seconds
--- Recast Time: 33.75 seconds
+-- Casting Time: 6.5 seconds
+-- Recast Time: 42.75 seconds
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Conserve MP
 -----------------------------------

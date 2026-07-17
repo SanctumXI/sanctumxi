@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: 1000 Needles
 -- Shoots multiple needles at enemies within range
--- Spell cost: 200 MP
+-- Spell cost: 250 MP
 -- Monster Type: Plantoid
 -- Spell Type: Magical (piercing)
 -- Blue Magic Points: 5
 -- Stat Bonus: VIT+3, AGI+3
 -- Level: 62
--- Casting Time: 6 seconds
--- Recast Time: 120 seconds
+-- Casting Time: 12 seconds
+-- Recast Time: 56 seconds
 -- Bursts on Light affects accuracy only
 -- Combos: Beast Killer
 -----------------------------------

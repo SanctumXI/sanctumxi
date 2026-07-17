@@ -4,6 +4,13 @@
 -- Monster Type: Aquan
 -- Spell Type: Physical (Piercing)
 -- Skillchain property: Transfixion / Scission
+-- Spell cost: 21 MP
+-- Blue Magic Points: 3
+-- Level: 26
+-- Casting Time: 0.5 seconds
+-- Recast Time: 14 seconds
+-- Stat Bonus: HP+10, VIT+1, AGI+2
+-- Combos: Evasion Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

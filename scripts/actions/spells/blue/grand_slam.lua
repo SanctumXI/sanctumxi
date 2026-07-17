@@ -4,8 +4,8 @@
 -- Spell cost: 24 MP
 -- Monster Type: Beastmen
 -- Spell Type: Physical (Blunt)
--- Blue Magic Points: 2
--- Stat Bonus: INT+1
+-- Blue Magic Points: 1
+-- Stat Bonus: VIT+1
 -- Level: 30
 -- Casting Time: 1 seconds
 -- Recast Time: 14.25 seconds

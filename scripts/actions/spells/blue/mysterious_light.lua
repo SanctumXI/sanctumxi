@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Mysterious Light
 -- Deals wind damage to enemies within range. Additional effect: Weight
--- Spell cost: 65 MP
+-- Spell cost: 73 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4
 -- Stat Bonus: AGI+3
 -- Level: 40
--- Casting Time: 4 seconds
+-- Casting Time: 3.75 seconds
 -- Recast Time: 24.5 seconds
 -- Magic Bursts on: Detonation, Fragmentation, Light
 -- Combos: Max MP Boost

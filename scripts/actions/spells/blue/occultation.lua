@@ -7,8 +7,8 @@
 -- Blue Magic Points: 3
 -- Stat Bonus: VIT+3 CHR-2
 -- Level: 88
--- Casting Time: 2 seconds
--- Recast Time: 1 minute, 30 seconds
+-- Casting Time: 1.5 seconds
+-- Recast Time: 26 seconds
 -----------------------------------
 -- Combos: Evasion Bonus
 -----------------------------------

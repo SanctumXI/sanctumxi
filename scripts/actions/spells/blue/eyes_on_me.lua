@@ -5,10 +5,10 @@
 -- Monster Type: Demons
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 4
--- Stat Bonus: CHA +3
+-- Stat Bonus: CHR+2
 -- Level: 61
--- Casting Time: 3 seconds
--- Recast Time: 35 seconds
+-- Casting Time: 4.5 seconds
+-- Recast Time: 29.25 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: Magic Attack Bonus
 -----------------------------------

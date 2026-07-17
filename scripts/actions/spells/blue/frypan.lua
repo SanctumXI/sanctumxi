@@ -8,8 +8,8 @@
 -- Stat Bonus: DEX+2
 -- Level: 63
 -- Casting Time: 1 seconds
--- Recast Time: 40 seconds
--- Skillchain Element(s): Impcation
+-- Recast Time: 26 seconds
+-- Skillchain Element(s): Impaction
 -- Combos: Max HP Boost
 -----------------------------------
 ---@type TSpell

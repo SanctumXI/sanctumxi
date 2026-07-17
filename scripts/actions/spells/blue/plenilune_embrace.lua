@@ -2,6 +2,13 @@
 -- Spell: Plenilune Embrace
 -- Restores target party member's HP and enhances attack and magic attack..
 -- Shamelessly stolen from http://members.shaw.ca/pizza_steve/cure/Cure_Calculator.html
+-- Spell cost: 106 MP
+-- Blue Magic Points: 4
+-- Level: 76
+-- Casting Time: 2.75 seconds
+-- Recast Time: 12 seconds
+-- Stat Bonus: MP+5, STR+2
+-- Combos: None
 -----------------------------------
 require('scripts/globals/magic')
 -----------------------------------

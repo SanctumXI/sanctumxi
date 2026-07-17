@@ -418,6 +418,20 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     params.diff     = caster:getStat(params.attribute) - target:getStat(params.attribute)
     local statBonus = params.diff * params.tMultiplier
 
+    -- Magical Blue Magic receives a modest universal INT WSC plus a larger,
+    -- capped bonus for investing in INT over the target.  These coefficients
+    -- keep an INT-focused BLU competitive while preserving BLM's damage lead.
+    -- At level 75 with +50 dINT, the neutral-target rotation model leaves BLM
+    -- about 15% ahead with both unlimited MP and 10 MP/tick regeneration.
+    -- The universal term is deliberately outside the AF3/Burst Affinity WSC
+    -- multiplier so those effects retain their existing per-spell scaling.
+    local casterINT       = caster:getStat(xi.mod.INT)
+    local positiveDInt    = utils.clamp(casterINT - target:getStat(xi.mod.INT), 0, 75)
+    local intInvestment   = positiveDInt / 50
+    local universalIntWSC = casterINT * 0.138 * calculateAlpha(caster:getMainLvl())
+    local flatIntBonus    = positiveDInt * 3.169
+    local intPotency      = 1 + 0.025 * intInvestment
+
     -- Azure Lore
     local azureBonus = 0
     if caster:getStatusEffect(xi.effect.AZURE_LORE) then
@@ -435,7 +449,9 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     local _, skillchainCount = xi.magicburst.formMagicBurst(target, spellElement) -- External function. Not present in magic.lua.
 
     -- Final D value
-    local finalDamage    = (initialD + wsc) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus
+    local finalDamage =
+        ((initialD + wsc + universalIntWSC) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus + flatIntBonus) *
+        intPotency
 
     finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0))
     finalDamage = math.floor(finalDamage * xi.spells.damage.calculateElementalStaffBonus(caster, spellElement))

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Spell: Amorphic Spikes
--- Delivers a fivefold attack. Danage varies with TP
+-- Delivers a fivefold attack. Damage varies with TP
 -- Spell cost: 79 MP
 -- Monster Type: AMORPH
 -- Spell Type: Physical (Piercing)
@@ -9,7 +9,7 @@
 -- Level: 98
 -- Casting Time: 0.5 seconds
 -- Recast Time: 58.25 seconds
--- Skillchain Element(s): Gravitation/Transfixion
+-- Skillchain Element(s): Gravitation
 -- Combos: Gilfinder / Treasure Hunter
 -----------------------------------
 ---@type TSpell

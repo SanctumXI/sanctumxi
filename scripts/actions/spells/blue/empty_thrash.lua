@@ -10,7 +10,7 @@
 -- Casting Time: 0.5 seconds
 -- Recast Time: 40.75 seconds
 -- Skillchain Element(s): Compression, Scission
--- Combos: Doule Attack, Triple Attack
+-- Combos: Double Attack / Triple Attack
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

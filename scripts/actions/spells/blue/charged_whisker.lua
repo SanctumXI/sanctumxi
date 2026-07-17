@@ -8,8 +8,8 @@
 -- Stat Bonus: HP-10 DEX+2 INT+2
 -- Level: 88
 -- Casting Time: 5 seconds
--- Recast Time: 85 seconds
--- Magic Bursts on: Reverberation, Distortion, and Darkness
+-- Recast Time: 23 seconds
+-- Magic Bursts on: Impaction, Fragmentation, and Light
 -- Combos: Gilfinder, Treasure Hunter
 -----------------------------------
 ---@type TSpell

@@ -5,7 +5,7 @@
 -- Monster Type: Luminians
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 5
--- Stat Bonus: INT+1, MND-1
+-- Stat Bonus: INT+2, MND-1
 -- Level: 72
 -- Casting Time: 0.5 seconds
 -- Recast Time: 32.75 seconds

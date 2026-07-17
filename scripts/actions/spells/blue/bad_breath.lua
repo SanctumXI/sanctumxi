@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Bad Breath
 -- Deals earth damage that inflicts multiple status ailments on enemies within a fan-shaped area originating from the caster
--- Spell cost: 170 MP
+-- Spell cost: 212 MP
 -- Monster Type: Plantoids
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 5
 -- Stat Bonus: INT+2, MND+2
 -- Level: 61
--- Casting Time: 3 seconds
--- Recast Time: 45 seconds
+-- Casting Time: 8.75 seconds
+-- Recast Time: 56 seconds
 -- Magic Bursts on: Scission, Gravitation, Darkness
 -- Combos: Fast Cast
 -----------------------------------

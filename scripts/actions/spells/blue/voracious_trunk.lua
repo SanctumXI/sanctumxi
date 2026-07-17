@@ -6,7 +6,7 @@
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4
 -- Stat Bonus: AGI +2
--- Level: 72
+-- Level: 64
 -- Casting Time: 10 seconds
 -- Recast Time: 56 seconds
 -- Combos: Auto Refresh

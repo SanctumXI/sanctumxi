@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Terror Touch
 -- Additional effect: Weakens attacks. Accuracy varies with TP
--- Spell cost: 55 MP
+-- Spell cost: 62 MP
 -- Monster Type: Undead
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 3
 -- Stat Bonus: HP-5 MP+10
 -- Level: 40
--- Casting Time: 0.5 seconds
--- Recast Time: 30 seconds
+-- Casting Time: 3.25 seconds
+-- Recast Time: 21 seconds
 -- Duration: 60~ seconds
 -- Skillchain Element(s): Compression/Reverberation
 -- Combos: Defense Bonus

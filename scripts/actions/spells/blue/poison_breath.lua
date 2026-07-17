@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Poison Breath
 -- Deals water damage to enemies within a fan-shaped area originating from the caster. Additional effect: Poison
--- Spell cost: 40 MP
+-- Spell cost: 22 MP
 -- Monster Type: Undead
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 1

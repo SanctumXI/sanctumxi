@@ -4,11 +4,11 @@
 -- Spell cost: 32 MP
 -- Monster Type: Arcana
 -- Spell Type: Physical (Blunt)
--- Blue Magic Points: 3
+-- Blue Magic Points: 2
 -- Stat Bonus: STR+2
 -- Level: 92
--- Casting Time: 1 seconds
--- Recast Time: 30 seconds
+-- Casting Time: 0.5 seconds
+-- Recast Time: 28 seconds
 -- Skillchain Element(s): Fragmentation, Transfixion
 -- Combos: Double Attack, Triple Attack
 -----------------------------------

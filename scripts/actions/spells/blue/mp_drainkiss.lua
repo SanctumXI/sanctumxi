@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: MP Drainkiss
 -- Steals an enemy's MP. Ineffective against undead
--- Spell cost: 1 MP
+-- Spell cost: 20 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 4
 -- Stat Bonus: MP+5
 -- Level: 42
 -- Casting Time: 4 seconds
--- Recast Time: 120 seconds
+-- Recast Time: 90 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------

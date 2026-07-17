@@ -8,7 +8,7 @@
 -- Stat Bonus: HP+10 CHR+3
 -- Level: 75
 -- Casting Time: 3 seconds
--- Recast Time: 40 seconds
+-- Recast Time: 60 seconds
 -----------------------------------
 -- Combos: Resist Sleep
 -----------------------------------

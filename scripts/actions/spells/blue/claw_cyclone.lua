@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Claw Cyclone
 -- Damages enemies within area of effect with a twofold attack. Damage varies with TP
--- Spell cost: 22 MP
+-- Spell cost: 24 MP
 -- Monster Type: Beasts
 -- Spell Type: Physical (Slashing)
 -- Blue Magic Points: 2
 -- Stat Bonus: VIT+1
 -- Level: 20
--- Casting Time: 1.5 seconds
--- Recast Time: 15 seconds
+-- Casting Time: 1 seconds
+-- Recast Time: 19.75 seconds
 -- Skillchain Element(s): Scission
 -- Combos: Lizard Killer
 -----------------------------------

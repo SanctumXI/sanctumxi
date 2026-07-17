@@ -7,7 +7,7 @@
 -- Blue Magic Points: 3
 -- Stat Bonus: STR+1 HP+5
 -- Level: 60
--- Casting Time: 4 seconds
+-- Casting Time: 2.5 seconds
 -- Recast Time: 45 seconds
 -- Skillchain property: Transfixion
 -- Combos: Plantoid Killer

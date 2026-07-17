@@ -7,8 +7,8 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: VIT+1
 -- Level: 61
--- Casting Time: 4 seconds
--- Recast Time: 35 seconds
+-- Casting Time: 2.5 seconds
+-- Recast Time: 36 seconds
 -- Skillchain Element(s): Induration/Detonation
 -- Combos: Beast Killer
 -----------------------------------

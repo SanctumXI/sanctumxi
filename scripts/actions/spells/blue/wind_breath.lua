@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: STR+2 AGI+2
 -- Level: 99
--- Casting Time: 1.5 seconds
+-- Casting Time: 1 seconds
 -- Recast Time: 29.5 seconds
 -- Magic Bursts on: None
 -- Combos: Fast Cast

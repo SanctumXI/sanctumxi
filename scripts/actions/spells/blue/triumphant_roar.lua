@@ -7,8 +7,8 @@
 -- Blue Magic Points: 3
 -- Stat Bonus: STR+3
 -- Level: 71
--- Casting Time: 3 seconds
--- Recast Time: 90 seconds
+-- Casting Time: 1.75 seconds
+-- Recast Time: 26 seconds
 -----------------------------------
 -- Combos: None
 -----------------------------------

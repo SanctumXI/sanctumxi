@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Cocoon
 -- Enhances defense
--- Spell cost: 25 MP
+-- Spell cost: 10 MP
 -- Monster Type: Vermin
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 1

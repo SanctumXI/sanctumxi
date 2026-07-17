@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Magnetite Cloud
 -- Deals earth damage to enemies within a fan-shaped area originating from the caster. Additional effect: Weight
--- Spell cost: 90 MP
+-- Spell cost: 86 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 3
 -- Stat Bonus: VIT+2
 -- Level: 46
--- Casting Time: 3 seconds
+-- Casting Time: 4.5 seconds
 -- Recast Time: 29.25 seconds
 -- Magic Bursts on: Scission, Gravitation, and Darkness
 -- Combos: Magic Defense Bonus
