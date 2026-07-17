@@ -1579,7 +1579,7 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
             Action->addEffectMessage = MsgBasic::AddEffectRecoversHP;
         }
     }
-    else if (PAttacker->objtype == TYPE_MOB && ((CMobEntity*)PAttacker)->getMobMod(MOBMOD_ADD_EFFECT) > 0)
+    else if ((PAttacker->objtype == TYPE_MOB || PAttacker->objtype == TYPE_PET) && static_cast<CMobEntity*>(PAttacker)->getMobMod(MOBMOD_ADD_EFFECT) > 0)
     {
         luautils::OnAdditionalEffect(PAttacker, PDefender, Action, finaldamage);
         if (Action->addEffectMessage == MsgBasic::AddEffectDamage && Action->addEffectParam < 0)
@@ -4866,11 +4866,6 @@ int32 MagicDmgTaken(CBattleEntity* PDefender, int32 damage, ELEMENT element)
     resist = std::max(resist, 0.125f); // Total cap with MDT-% II included is 87.5%
     damage = (int32)(damage * resist);
 
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 1)
-    {
-        damage = HandleSteamJacket(PDefender, damage, damageType);
-    }
-
     // Handle damage absorption.
     if (xirand::GetRandomNumber(100) < PDefender->getMod(Mod::ABSORB_DMG_CHANCE) ||         // All damage.
         xirand::GetRandomNumber(100) < PDefender->getMod(Mod::MAGIC_ABSORB) ||              // Magical damage
@@ -4907,14 +4902,10 @@ int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damag
     resist += PDefender->getMod(Mod::DMGPHYS_II) / 10000.0f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
     damage = (int32)(damage * resist);
 
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
+    if (damage > 0 && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
     {
-        damage = HandleSteamJacket(PDefender, damage, damageType);
-    }
-
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
-    {
-        damage -= (int32)(damage / float(PDefender->GetMaxHP()) * (PDefender->getMod(Mod::AUTO_EQUALIZER) / 100.0f));
+        const auto reductionRate = std::floor(damage / static_cast<float>(PDefender->GetMaxHP()) * PDefender->getMod(Mod::AUTO_EQUALIZER)) / 100.0f;
+        damage                   = static_cast<int32>(std::floor(damage * (1.0f - std::min(reductionRate, 0.90f))));
     }
 
     // Handle damage absorption.
@@ -4955,14 +4946,10 @@ int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageT
     resist = std::max(resist, 0.5f);
     damage = (int32)(damage * resist);
 
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_STEAM_JACKET) > 0)
+    if (damage > 0 && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
     {
-        damage = HandleSteamJacket(PDefender, damage, damageType);
-    }
-
-    if (damage > 0 && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
-    {
-        damage -= (int32)(damage / float(PDefender->GetMaxHP()) * (PDefender->getMod(Mod::AUTO_EQUALIZER) / 10000.0f));
+        const auto reductionRate = std::floor(damage / static_cast<float>(PDefender->GetMaxHP()) * PDefender->getMod(Mod::AUTO_EQUALIZER)) / 100.0f;
+        damage                   = static_cast<int32>(std::floor(damage * (1.0f - std::min(reductionRate, 0.90f))));
     }
 
     // Handle damage absorption.
@@ -4989,27 +4976,6 @@ int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageT
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
-    return damage;
-}
-
-int32 HandleSteamJacket(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageType)
-{
-    auto  steamJacketType = static_cast<DAMAGE_TYPE>(PDefender->GetLocalVar("steam_jacket_type"));
-    int16 steamJacketHits = (int16)PDefender->GetLocalVar("steam_jacket_hits");
-
-    if (steamJacketType != damageType)
-    {
-        PDefender->SetLocalVar("steam_jacket_type", static_cast<uint16>(damageType));
-        steamJacketHits = 0;
-    }
-
-    steamJacketHits += 1;
-    PDefender->SetLocalVar("steam_jacket_hits", steamJacketHits);
-
-    if (steamJacketHits >= PDefender->getMod(Mod::AUTO_STEAM_JACKET))
-    {
-        return damage - (int32)(damage * (PDefender->getMod(Mod::AUTO_STEAM_JACKET_REDUCTION) / 100.0f));
-    }
     return damage;
 }
 
@@ -6146,6 +6112,12 @@ uint16 CalculateSpellCost(CBattleEntity* PEntity, CSpell* PSpell)
         {
             cost = static_cast<int16>(std::ceil(cost * 1.15f));
         }
+    }
+
+    const auto mpCostReduction = PEntity->getMod(Mod::MP_COST_REDUCTION);
+    if (mpCostReduction > 0)
+    {
+        cost = cost * (1.f - static_cast<float>(mpCostReduction) / 100.f);
     }
 
     if (xirand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))

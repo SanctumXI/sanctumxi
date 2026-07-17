@@ -12,19 +12,8 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     ability:setRecast(ability:getRecast() - meritReduction)
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    local pet = player:getPet()
-
-    if pet == nil then
-    return
-end
-
-    local playerTP = player:getTP()
-    local petTP = pet:getTP()
-
-    player:setTP(petTP)
-    pet:setTP(playerTP)
-
+abilityObject.onUseAbility = function(player, target, ability, action)
+    return xi.job_utils.puppetmaster.onAbilityUseTacticalSwitch(player, target, ability, action)
 end
 
 return abilityObject

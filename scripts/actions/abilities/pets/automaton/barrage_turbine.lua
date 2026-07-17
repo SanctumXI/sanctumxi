@@ -1,49 +1,64 @@
 -----------------------------------
 -- Barrage Turbine
--- https://www.bg-wiki.com/ffxi/Barrage_Turbine
+-- Fires a number of projectiles based on the number of active Wind Maneuvers
+-- Applies 7/14/21 Wind Burden per Maneuver active when activated.
 -- https://wiki.ffo.jp/html/23698.html
+-- TODO : Find out if shots from this do not return full TP.
 -----------------------------------
 ---@type TAbilityAutomaton
 local abilityObject = {}
+
+-- Barrage projectiles per Wind Maneuver
+local shotCount =
+{
+    [1] = 4,
+    [2] = 6,
+    [3] = 9,
+}
+
+local burdenApplied =
+{
+    [1] = 7,
+    [2] = 14,
+    [3] = 21,
+}
 
 abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
     return 0
 end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
-    automaton:addRecast(xi.recast.ABILITY, skill:getID(), 60 * 3)
-
-    -- Apply overload.
-    -- TODO: This is a placeholder that adds zero overload for now.
-    --       For reference, the full maneuver handling is xi.automaton.onUseManeuver.
-    -- local overload = automaton:addBurden(xi.element.WIND - 1, 0)
+    automaton:addRecast(xi.recast.ABILITY, skill:getID(), 180)
 
     local windManeuvers = master:countEffect(xi.effect.WIND_MANEUVER)
-    windManeuvers = utils.clamp(windManeuvers, 0, 3)
+    local burdenAmount  = burdenApplied[windManeuvers]
 
-    -- Shots per wind maneuver.
-    local shotCount =
-    {
-        [1] = 4,
-        [2] = 6,
-        [3] = 9,
-    }
+    if burdenAmount then
+        master:addBurden(xi.element.WIND - 1, burdenAmount)
+    end
 
-    -- Barrage set up and execution.
-    local params =
-    {
-        numHits   = shotCount[windManeuvers],
-        isBarrage = true,
-        atkmulti  = 1.5,
-        ftpMod    = { 1.0, 1.0, 1.0 },
-        str_wsc   = 0.5,
-        dex_wsc   = 0.25,
-    }
+    local params = {}
 
-    -- TODO: Remove/adjust the 8 hit weaponskill cap; tweak damage and TP return.
-    local damage = xi.autows.doAutoRangedWeaponskill(automaton, target, 0, params, 1000, true, skill, action)
+    params.baseDamage      = xi.automaton.getRangedBaseDamage(automaton)
+    params.numHits         = shotCount[windManeuvers] or 1
+    params.fTP             = { 1.0, 1.0, 1.0 }
+    params.str_wSC         = 0.50
+    params.dex_wSC         = 0.25
+    params.attackType      = xi.attackType.RANGED
+    params.damageType      = xi.damageType.PIERCING
+    params.shadowBehavior  = params.numHits
+    params.skipParry       = true
+    params.skipGuard       = true
+    params.skipBlock       = true
+    params.terminateOnMiss = true
 
-    return damage
+    local info = xi.mobskills.mobRangedMove(automaton, target, skill, action, params)
+
+    if xi.mobskills.processDamage(automaton, target, skill, action, info) then
+        target:takeDamage(info.damage, automaton, info.attackType, info.damageType)
+    end
+
+    return info.damage
 end
 
 return abilityObject
