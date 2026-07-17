@@ -553,6 +553,7 @@ public:
     CBattleEntity*    PMaster; // Owner/owner of the entity (applies to all combat entities)
     EntityID_t        lastAttackerId_{};
     timer::time_point LastAttacked;
+    timer::time_point m_NextMobSeparationTime{ timer::time_point::min() };
     battlehistory_t   BattleHistory{}; // Stores info related to most recent combat actions taken towards this entity.
 
     std::unique_ptr<CStatusEffectContainer> StatusEffectContainer;

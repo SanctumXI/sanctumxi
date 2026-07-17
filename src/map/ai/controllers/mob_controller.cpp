@@ -48,8 +48,10 @@
 
 namespace
 {
-constexpr float SeparationDistance{ 2.0f };
-constexpr float FormationTolerance{ 0.5f };
+constexpr float SeparationDistance{ 1.0f };
+constexpr float FormationDistanceScale{ 0.5f };
+constexpr float FormationAngularSpan{ static_cast<float>(M_PI) };
+constexpr float FormationTolerance{ 0.25f };
 } // namespace
 
 CMobController::CMobController(CMobEntity* PEntity)
@@ -846,7 +848,7 @@ void CMobController::Move()
             }
         }
 
-        if (!move && currentDistance <= attack_range && TrySeparateFromAttackers(closeDistance))
+        if (!move && currentDistance <= attack_range && TrySeparateFromAttackers())
         {
             return;
         }
@@ -914,12 +916,11 @@ void CMobController::Move()
     }
 }
 
-auto CMobController::TrySeparateFromAttackers(const float closeDistance) -> bool
+auto CMobController::TrySeparateFromAttackers() -> bool
 {
     if (
         !PTarget ||
-        m_Tick < m_NextSeparationTime ||
-        PTarget->loc.p.moving ||
+        m_Tick < PTarget->m_NextMobSeparationTime ||
         PMob->GetSpeed() == 0 ||
         PMob->getMobMod(MOBMOD_NO_MOVE) != 0 ||
         PMob->getMobMod(MOBMOD_SHARE_POS) != 0 ||
@@ -930,7 +931,9 @@ auto CMobController::TrySeparateFromAttackers(const float closeDistance) -> bool
         return false;
     }
 
-    m_NextSeparationTime = m_Tick + 1s;
+    // The target owns this cooldown so a group attacking the same target performs one
+    // shared scan. This pass assigns paths to the whole formation at once.
+    PTarget->m_NextMobSeparationTime = m_Tick + 1s;
 
     std::vector<CMobEntity*> attackers;
     PMob->loc.zone->ForEachMobInstance(PMob, [&](CMobEntity* PAttacker)
@@ -941,8 +944,12 @@ auto CMobController::TrySeparateFromAttackers(const float closeDistance) -> bool
                                                PAttacker->PAI->IsEngaged() &&
                                                PAttacker->GetBattleTargetID() == PTarget->targid &&
                                                PAttacker->getBattleID() == PMob->getBattleID() &&
+                                               PAttacker->GetSpeed() != 0 &&
+                                               PAttacker->getMobMod(MOBMOD_NO_MOVE) == 0 &&
+                                               PAttacker->getMobMod(MOBMOD_SHARE_POS) == 0 &&
                                                PAttacker->getMobMod(MOBMOD_ATTACK_SKILL_LIST) == 0 &&
                                                !(PAttacker->m_Behavior & BEHAVIOR_STANDBACK) &&
+                                               !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_BIND) &&
                                                distance(PAttacker->loc.p, PTarget->loc.p) <= PAttacker->GetMeleeRange(PTarget))
                                            {
                                                attackers.emplace_back(PAttacker);
@@ -954,10 +961,18 @@ auto CMobController::TrySeparateFromAttackers(const float closeDistance) -> bool
         return false;
     }
 
-    const auto isCrowded = std::any_of(attackers.begin(), attackers.end(), [&](const CMobEntity* PAttacker)
-                                       {
-                                           return PAttacker != PMob && distance(PAttacker->loc.p, PMob->loc.p) < SeparationDistance;
-                                       });
+    bool isCrowded = false;
+    for (std::size_t first = 0; first < attackers.size() && !isCrowded; ++first)
+    {
+        for (std::size_t second = first + 1; second < attackers.size(); ++second)
+        {
+            if (distance(attackers[first]->loc.p, attackers[second]->loc.p) < SeparationDistance)
+            {
+                isCrowded = true;
+                break;
+            }
+        }
+    }
 
     if (!isCrowded)
     {
@@ -969,28 +984,58 @@ auto CMobController::TrySeparateFromAttackers(const float closeDistance) -> bool
                   return PLhs->id < PRhs->id;
               });
 
-    const auto slot = std::find(attackers.begin(), attackers.end(), PMob);
-    if (slot == attackers.end())
+    float averageDirectionX = 0.0f;
+    float averageDirectionZ = 0.0f;
+    for (const auto* PAttacker : attackers)
     {
-        return false;
+        const float directionX = PAttacker->loc.p.x - PTarget->loc.p.x;
+        const float directionZ = PAttacker->loc.p.z - PTarget->loc.p.z;
+        const float magnitude  = std::sqrt(directionX * directionX + directionZ * directionZ);
+        if (magnitude > 0.001f)
+        {
+            averageDirectionX += directionX / magnitude;
+            averageDirectionZ += directionZ / magnitude;
+        }
     }
 
-    const auto  slotIndex = static_cast<float>(std::distance(attackers.begin(), slot));
-    const auto  slotCount = static_cast<float>(attackers.size());
-    const float angle     = static_cast<float>(2.0 * M_PI) * slotIndex / slotCount;
-
-    position_t formationPosition = PTarget->loc.p;
-    formationPosition.x += std::cos(angle) * closeDistance;
-    formationPosition.z += std::sin(angle) * closeDistance;
-
-    if (
-        isWithinDistance(PMob->loc.p, formationPosition, FormationTolerance) ||
-        !PMob->PAI->PathFind->ValidPosition(formationPosition))
+    if (std::abs(averageDirectionX) < 0.001f && std::abs(averageDirectionZ) < 0.001f)
     {
-        return false;
+        averageDirectionX = PMob->loc.p.x - PTarget->loc.p.x;
+        averageDirectionZ = PMob->loc.p.z - PTarget->loc.p.z;
     }
 
-    return PMob->PAI->PathFind->PathTo(formationPosition, PATHFLAG_WALLHACK | PATHFLAG_RUN | PATHFLAG_SCRIPT);
+    const float centerAngle = std::atan2(averageDirectionZ, averageDirectionX);
+    const float slotCount   = static_cast<float>(attackers.size());
+    const float angleStep   = FormationAngularSpan / slotCount;
+    bool        movedCaller = false;
+
+    for (std::size_t slot = 0; slot < attackers.size(); ++slot)
+    {
+        auto*       PAttacker       = attackers[slot];
+        const float centeredSlot    = static_cast<float>(slot) - (slotCount - 1.0f) * 0.5f;
+        const float angle           = centerAngle + centeredSlot * angleStep;
+        const float attackRange     = PAttacker->GetMeleeRange(PTarget);
+        const int16 offsetMod       = PAttacker->getMobMod(MOBMOD_TARGET_DISTANCE_OFFSET);
+        const float offset          = static_cast<float>(offsetMod) / 10.0f;
+        const float closeDistance   = std::max(0.0f, attackRange - (offsetMod == 0 ? 0.4f : offset));
+        const float formationRadius = closeDistance * FormationDistanceScale;
+
+        position_t formationPosition = PTarget->loc.p;
+        formationPosition.x += std::cos(angle) * formationRadius;
+        formationPosition.z += std::sin(angle) * formationRadius;
+
+        if (
+            isWithinDistance(PAttacker->loc.p, formationPosition, FormationTolerance) ||
+            !PAttacker->PAI->PathFind->ValidPosition(formationPosition))
+        {
+            continue;
+        }
+
+        const bool pathStarted = PAttacker->PAI->PathFind->PathTo(formationPosition, PATHFLAG_WALLHACK | PATHFLAG_RUN | PATHFLAG_SCRIPT);
+        movedCaller            = movedCaller || (PAttacker == PMob && pathStarted);
+    }
+
+    return movedCaller;
 }
 
 void CMobController::HandleEnmity()

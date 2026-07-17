@@ -93,7 +93,7 @@ protected:
     CBaseEntity*           PFollowTarget{ nullptr };
 
 private:
-    auto TrySeparateFromAttackers(float closeDistance) -> bool;
+    auto TrySeparateFromAttackers() -> bool;
 
     CMobEntity* const PMob;
 
@@ -106,7 +106,6 @@ private:
     timer::time_point m_NeutralTime;
     timer::time_point m_WaitTime;
     timer::time_point m_mobHealTime;
-    timer::time_point m_NextSeparationTime{ timer::time_point::min() };
     FollowType        m_followType = FollowType::None;
 
     bool              m_firstSpell{ true };
