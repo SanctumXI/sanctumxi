@@ -35,7 +35,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.agi_wsc = 0.0
     params.int_wsc = 0.0
     params.mnd_wsc = 0.0
-    params.chr_wsc = 0.4
+    params.chr_wsc = 0.65
 
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
     if target:isAlive() then

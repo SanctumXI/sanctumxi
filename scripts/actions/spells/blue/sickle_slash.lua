@@ -37,7 +37,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.duppercap  = 49
 
     params.str_wsc = 0.0
-    params.dex_wsc = 0.5
+    params.dex_wsc = 0.75
     params.vit_wsc = 0.0
     params.agi_wsc = 0.0
     params.int_wsc = 0.0

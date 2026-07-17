@@ -39,7 +39,9 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Handle damage.
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
     if caster:isBehind(target) then
-        damage = math.floor(damage * 1.5)
+        -- Retain a positional reward without allowing this one spell to erase
+        -- the intended BLM damage lead over an optimized INT BLU rotation.
+        damage = math.floor(damage * 1.1)
     end
 
     if damage <= 0 then
