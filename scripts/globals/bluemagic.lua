@@ -418,12 +418,9 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     params.diff     = caster:getStat(params.attribute) - target:getStat(params.attribute)
     local statBonus = params.diff * params.tMultiplier
 
-    -- Magical Blue Magic receives a modest universal INT WSC plus a larger,
-    -- capped bonus for investing in INT over the target.  These coefficients
-    -- keep an INT-focused BLU competitive while preserving BLM's damage lead.
-    -- At level 75 with +50 dINT, the neutral-target rotation model leaves BLM
-    -- about 15% ahead with both unlimited MP and 10 MP/tick regeneration.
-    -- The universal term is deliberately outside the AF3/Burst Affinity WSC
+    -- SANCTUM Specific SteelChange.
+    -- Now, magical Blue Magic gets built-in coefficients.
+    -- The low multiplier is deliberately outside the AF3/Burst Affinity WSC
     -- multiplier so those effects retain their existing per-spell scaling.
     local casterINT       = caster:getStat(xi.mod.INT)
     local positiveDInt    = utils.clamp(casterINT - target:getStat(xi.mod.INT), 0, 75)
