@@ -26,8 +26,10 @@
 #include "common/utils.h"
 #include "common/vana_time.h"
 
+#include <algorithm>
 #include <array>
 #include <chrono>
+#include <initializer_list>
 
 #include "lua/luautils.h"
 
@@ -179,6 +181,79 @@ const std::set traverserStoneReductionKeyItems = {
     KeyItem::CRIMSON_ABYSSITE_OF_CELERITY,
     KeyItem::IVORY_ABYSSITE_OF_CELERITY
 };
+
+constexpr double RacialSkillUpModifierLower   = 0.85;
+constexpr double RacialSkillUpModifierNeutral = 0.95;
+constexpr double RacialSkillUpModifierHigher  = 1.05;
+
+auto getRacialSkillUpModifier(const CCharEntity* PChar, SKILLTYPE skillId) -> double
+{
+    const auto isSkill = [skillId](std::initializer_list<SKILLTYPE> skills)
+    {
+        return std::find(skills.begin(), skills.end(), skillId) != skills.end();
+    };
+
+    switch (static_cast<CharRace>(PChar->look.race))
+    {
+        case CharRace::HumeMale:
+        case CharRace::HumeFemale:
+            if (isSkill({ SKILL_SWORD, SKILL_GREAT_SWORD, SKILL_MARKSMANSHIP, SKILL_SHIELD, SKILL_ENHANCING_MAGIC, SKILL_ENFEEBLING_MAGIC, SKILL_BLUE_MAGIC }))
+            {
+                return RacialSkillUpModifierHigher;
+            }
+            if (isSkill({ SKILL_HAND_TO_HAND, SKILL_GREAT_KATANA, SKILL_ARCHERY, SKILL_GUARD, SKILL_SINGING, SKILL_NINJUTSU, SKILL_SUMMONING_MAGIC }))
+            {
+                return RacialSkillUpModifierLower;
+            }
+            break;
+        case CharRace::ElvaanMale:
+        case CharRace::ElvaanFemale:
+            if (isSkill({ SKILL_SWORD, SKILL_GREAT_SWORD, SKILL_POLEARM, SKILL_PARRY, SKILL_SHIELD, SKILL_DIVINE_MAGIC, SKILL_HEALING_MAGIC }))
+            {
+                return RacialSkillUpModifierHigher;
+            }
+            if (isSkill({ SKILL_DAGGER, SKILL_KATANA, SKILL_MARKSMANSHIP, SKILL_THROWING, SKILL_EVASION, SKILL_ELEMENTAL_MAGIC, SKILL_DARK_MAGIC }))
+            {
+                return RacialSkillUpModifierLower;
+            }
+            break;
+        case CharRace::TarutaruMale:
+        case CharRace::TarutaruFemale:
+            if (isSkill({ SKILL_STAFF, SKILL_ELEMENTAL_MAGIC, SKILL_DARK_MAGIC, SKILL_SINGING, SKILL_STRING_INSTRUMENT, SKILL_WIND_INSTRUMENT, SKILL_SUMMONING_MAGIC }))
+            {
+                return RacialSkillUpModifierHigher;
+            }
+            if (isSkill({ SKILL_GREAT_AXE, SKILL_SCYTHE, SKILL_POLEARM, SKILL_GREAT_KATANA, SKILL_ARCHERY, SKILL_GUARD, SKILL_SHIELD }))
+            {
+                return RacialSkillUpModifierLower;
+            }
+            break;
+        case CharRace::Mithra:
+            if (isSkill({ SKILL_DAGGER, SKILL_KATANA, SKILL_GREAT_KATANA, SKILL_ARCHERY, SKILL_THROWING, SKILL_EVASION, SKILL_NINJUTSU }))
+            {
+                return RacialSkillUpModifierHigher;
+            }
+            if (isSkill({ SKILL_GREAT_SWORD, SKILL_AXE, SKILL_SCYTHE, SKILL_CLUB, SKILL_DIVINE_MAGIC, SKILL_HEALING_MAGIC, SKILL_STRING_INSTRUMENT }))
+            {
+                return RacialSkillUpModifierLower;
+            }
+            break;
+        case CharRace::Galka:
+            if (isSkill({ SKILL_HAND_TO_HAND, SKILL_AXE, SKILL_GREAT_AXE, SKILL_SCYTHE, SKILL_CLUB, SKILL_GUARD, SKILL_SHIELD }))
+            {
+                return RacialSkillUpModifierHigher;
+            }
+            if (isSkill({ SKILL_SWORD, SKILL_STAFF, SKILL_PARRY, SKILL_ENHANCING_MAGIC, SKILL_ENFEEBLING_MAGIC, SKILL_WIND_INSTRUMENT, SKILL_BLUE_MAGIC }))
+            {
+                return RacialSkillUpModifierLower;
+            }
+            break;
+        default:
+            break;
+    }
+
+    return RacialSkillUpModifierNeutral;
+}
 
 } // namespace
 
@@ -1751,6 +1826,10 @@ auto AddItem(CCharEntity* PChar, uint8 LocationID, std::unique_ptr<CItem> PItem,
 
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, static_cast<CONTAINER_ID>(LocationID), SlotID);
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+    if (luautils::IsPlayerItemAddedCallbackRegistered(PInserted->getID()))
+    {
+        luautils::OnPlayerItemAdded(PChar, PInserted->getID(), PInserted->getQuantity());
+    }
 
     return SlotID;
 }
@@ -4090,6 +4169,9 @@ void TrySkillUP(CCharEntity* PChar, SKILLTYPE SkillID, uint8 lvl, bool forceSkil
             SkillUpChance *= ((100.0f + PChar->getMod(Mod::MAGIC_SKILLUP_RATE)) / 100.0f);
         }
 
+        // Sanctum custom: Apply each race's favored and weaker skill-up rates.
+        SkillUpChance *= getRacialSkillUpModifier(PChar, SkillID);
+
         // Custom Sanctum: Bonus skillup chance for low-level players
         if (PChar->GetMLevel() < 30)
         {
@@ -4470,13 +4552,16 @@ int32 delTitle(CCharEntity* PChar, uint16 Title)
     return delBit(Title, PChar->m_TitleList, sizeof(PChar->m_TitleList));
 }
 
-void setTitle(CCharEntity* PChar, uint16 Title)
+void setTitle(CCharEntity* PChar, uint16 Title, bool force)
 {
-    PChar->profile.title = Title;
-    PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
-
     addTitle(PChar, Title);
     SaveTitles(PChar);
+
+    if (force || PChar->getCharVar("[TITLE]Locked") == 0)
+    {
+        PChar->profile.title = Title;
+        PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
+    }
 }
 
 /************************************************************************

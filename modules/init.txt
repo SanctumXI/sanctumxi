@@ -37,6 +37,9 @@
 # Live example:
 chainbreakers
 custom/commands/
+custom/cpp/server_first.cpp
+custom/lua/ServerFirst.lua
+custom/sql/server_first.sql
 CustomHNM
 Gauntlet
 items
