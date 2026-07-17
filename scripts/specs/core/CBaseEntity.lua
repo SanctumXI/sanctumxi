@@ -1606,6 +1606,11 @@ end
 
 ---@param titleID integer
 ---@return nil
+function CBaseEntity:forceSetTitle(titleID)
+end
+
+---@param titleID integer
+---@return nil
 function CBaseEntity:delTitle(titleID)
 end
 

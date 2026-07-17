@@ -437,6 +437,13 @@ auto GetFurthestValidPosition(CLuaBaseEntity* fromTarget, float distance, float 
 void OnPlayerDeath(CCharEntity* PChar);
 void OnPlayerLevelUp(CCharEntity* PChar);
 void OnPlayerLevelDown(CCharEntity* PChar);
+void OnPlayerSynthesis(CCharEntity* PChar, uint16 itemId, uint8 quantity, uint8 skillType);
+void OnPlayerCraftSkillUp(CCharEntity* PChar, uint8 skillType, uint16 oldSkill, uint16 newSkill);
+void OnPlayerItemAdded(CCharEntity* PChar, uint16 itemId, uint32 quantity);
+void OnPlayerMissionComplete(CCharEntity* PChar, MissionLog logId, uint16 missionId);
+void OnPlayerRankChange(CCharEntity* PChar, uint8 nation, uint8 rank);
+void RegisterPlayerItemAddedCallback(uint16 itemId);
+bool IsPlayerItemAddedCallbackRegistered(uint16 itemId);
 void OnPlayerMount(CCharEntity* PChar);
 void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
 void OnPlayerVolunteer(CCharEntity* PChar, const std::string& text);

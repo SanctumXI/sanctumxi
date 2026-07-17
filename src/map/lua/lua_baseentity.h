@@ -399,6 +399,7 @@ public:
     bool   hasTitle(uint16 titleID);
     void   addTitle(uint16 titleID);
     void   setTitle(uint16 titleID);
+    void   forceSetTitle(uint16 titleID);
     void   delTitle(uint16 titleID);
 
     uint16 getFame(const sol::object& areaObj);

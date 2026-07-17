@@ -28,6 +28,7 @@
 #include "common/vana_time.h"
 
 #include "entities/battleentity.h"
+#include "lua/luautils.h"
 
 #include "packets/char_status.h"
 #include "packets/s2c/0x01d_item_same.h"
@@ -896,6 +897,7 @@ void handleSynthSuccess(CCharEntity* PChar)
     RoeDatagramList roeSynthResult({ roeItemId, roeSkillType });
 
     roeutils::event(ROE_EVENT::ROE_SYNTHSUCCESS, PChar, roeSynthResult);
+    luautils::OnPlayerSynthesis(PChar, itemID, quantity, static_cast<uint8>(skillType));
 }
 
 // Used in: sendSynthDone
@@ -1159,6 +1161,7 @@ void doSynthSkillUp(CCharEntity* PChar)
         }
 
         charutils::SaveCharSkills(PChar, skillID);
+        luautils::OnPlayerCraftSkillUp(PChar, skillID, charSkill, PChar->RealSkills.skill[skillID]);
 
         // Skill Up removal if using spezialization system
         if (skillCumulation > settings::get<uint16>("map.CRAFT_SPECIALIZATION_POINTS"))

@@ -102,6 +102,7 @@
 #include <numeric>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 void ReportErrorToPlayer(CBaseEntity* PEntity, const std::string& message = "") noexcept
 {
@@ -138,6 +139,7 @@ namespace luautils
 
 std::unique_ptr<Filewatcher>           filewatcher;
 std::unordered_map<uint32, sol::table> customMenuContext;
+std::unordered_set<uint16>             playerItemAddedCallbacks;
 
 namespace detail
 {
@@ -5130,6 +5132,51 @@ void OnPlayerLevelDown(CCharEntity* PChar)
     TracyZoneScoped;
 
     callGlobal<void>("xi.player.onPlayerLevelDown", PChar);
+}
+
+void OnPlayerSynthesis(CCharEntity* PChar, const uint16 itemId, const uint8 quantity, const uint8 skillType)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerSynthesis", PChar, itemId, quantity, skillType);
+}
+
+void OnPlayerCraftSkillUp(CCharEntity* PChar, const uint8 skillType, const uint16 oldSkill, const uint16 newSkill)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerCraftSkillUp", PChar, skillType, oldSkill, newSkill);
+}
+
+void OnPlayerItemAdded(CCharEntity* PChar, const uint16 itemId, const uint32 quantity)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerItemAdded", PChar, itemId, quantity);
+}
+
+void RegisterPlayerItemAddedCallback(const uint16 itemId)
+{
+    playerItemAddedCallbacks.insert(itemId);
+}
+
+bool IsPlayerItemAddedCallbackRegistered(const uint16 itemId)
+{
+    return playerItemAddedCallbacks.contains(itemId);
+}
+
+void OnPlayerMissionComplete(CCharEntity* PChar, const MissionLog logId, const uint16 missionId)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerMissionComplete", PChar, static_cast<uint8>(logId), missionId);
+}
+
+void OnPlayerRankChange(CCharEntity* PChar, const uint8 nation, const uint8 rank)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerRankChange", PChar, nation, rank);
 }
 
 void OnPlayerMount(CCharEntity* PChar)
