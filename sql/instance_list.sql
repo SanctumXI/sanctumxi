@@ -166,7 +166,13 @@ INSERT INTO `instance_list` VALUES (25900,'behind_the_sluices',259,258,0,-153.00
 
 -- OUTER_RAKAZNAR_U (zoneID: 275, starting id: 27500)
 
+-- CELENNIA_MEMORIAL_LIBRARY (zoneID: 284, starting id: 28400)
+INSERT INTO `instance_list` VALUES (28400,'library_test',284,257,0,-97.000,-2.000,-87.000,96,NULL,NULL,NULL,NULL);
+
 -- MAQUETTE_ABDHALJS_LEGION_B (zoneID: 287, starting id: 28700)
+
+-- REISENJIMA_HENGE (zoneID: 292, starting id: 29200)
+INSERT INTO `instance_list` VALUES (29200,'hard_mode_hnm',292,291,0,0.000,0.000,0.000,127,NULL,NULL,NULL,NULL);
 
 -- DYNAMIS_SAN_DORIA_D (zoneID: 294, starting id: 29400)
 

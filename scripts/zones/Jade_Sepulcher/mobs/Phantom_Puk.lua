@@ -18,8 +18,8 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200)
-    mob:setMod(xi.mod.ACC, 338)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 225)
+    mob:setMod(xi.mod.ACC, 348)
 end
 
 entity.onMobEngage = function(mob, target)

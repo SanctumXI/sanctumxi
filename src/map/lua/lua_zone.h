@@ -28,6 +28,8 @@
 #include "zone.h"
 
 class CZone;
+class CInstance;
+class CLuaBaseEntity;
 class CLuaZone
 {
     CZone* m_pLuaZone;
@@ -55,6 +57,10 @@ public:
     auto        getPlayers() -> sol::table;
     auto        getNPCs() -> sol::table;
     auto        getMobs() -> sol::table;
+    auto        getInstanceByRuntimeID(uint64_t runtimeId) -> CInstance*;
+    auto        getInstancesByDefinition(uint32 instanceID) -> sol::table;
+    bool        isInstanceAlive(uint64_t runtimeId);
+    uint32      unregisterCharFromInstances(CLuaBaseEntity* PLuaEntity);
     ZONEID      getID();
     auto        getName() -> const std::string&;
     REGION_TYPE getRegionID();

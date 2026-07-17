@@ -19,9 +19,22 @@ zones[xi.zone.REISENJIMA_HENGE] =
     },
     mob =
     {
+        HARD_MODE_ROC         = 17973581,
+        HARD_MODE_SIMURGH     = 17973582,
+        HARD_MODE_KING_ARTHRO = 17973583,
+        HARD_MODE_KNIGHT_CRABS =
+        {
+            17973585,
+            17973586,
+            17973587,
+            17973588,
+            17973589,
+            17973590,
+        },
     },
     npc =
     {
+        HARD_MODE_HNM_QM = 17973584,
     },
 }
 

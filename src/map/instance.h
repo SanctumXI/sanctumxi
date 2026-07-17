@@ -49,8 +49,10 @@ public:
     ~CInstance();
 
     void RegisterChar(CCharEntity*);
+    bool UnregisterChar(CCharEntity*);
 
     uint16             GetID() const;
+    uint64_t           GetRuntimeID() const;
     uint8              GetLevelCap() const;
     const std::string& GetName();
     position_t         GetEntryLoc();                          // Get entry location
@@ -90,6 +92,7 @@ private:
     void LoadInstance();
 
     uint32              m_instanceid{ 0 };
+    uint64_t            m_runtimeId{ 0 };
     uint16              m_entrance{ 0 };
     std::string         m_instanceName;
     CZone*              m_zone;

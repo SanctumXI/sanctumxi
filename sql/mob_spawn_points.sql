@@ -85236,6 +85236,15 @@ INSERT INTO `mob_spawn_points` VALUES (17973558,0,'Transcended_Porxie','Transcen
 INSERT INTO `mob_spawn_points` VALUES (17973559,0,'Transcended_Panopt','Transcended Panopt',71,129,129,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17973560,0,'Transcended_Unseelie','Transcended Unseelie',72,129,129,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17973561,0,'Ou','Ou',73,0,0,0.000,0.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (17973581,0,'HM_Roc','Roc',79,85,85,8.842,5.515,-4.225,11);
+INSERT INTO `mob_spawn_points` VALUES (17973582,0,'HM_Simurgh','Simurgh',80,85,85,8.842,5.515,-4.225,11);
+INSERT INTO `mob_spawn_points` VALUES (17973583,0,'HM_King_Arthro','King Arthro',81,90,90,8.842,5.515,-4.225,11);
+INSERT INTO `mob_spawn_points` VALUES (17973585,0,'HM_Knight_Crab','Knight Crab',82,85,85,12.842,5.515,-4.225,128);
+INSERT INTO `mob_spawn_points` VALUES (17973586,0,'HM_Knight_Crab','Knight Crab',82,85,85,4.842,5.515,-4.225,0);
+INSERT INTO `mob_spawn_points` VALUES (17973587,0,'HM_Knight_Crab','Knight Crab',82,85,85,8.842,5.515,-0.225,192);
+INSERT INTO `mob_spawn_points` VALUES (17973588,0,'HM_Knight_Crab','Knight Crab',82,85,85,8.842,5.515,-8.225,64);
+INSERT INTO `mob_spawn_points` VALUES (17973589,0,'HM_Knight_Crab','Knight Crab',82,85,85,11.842,5.515,-1.225,160);
+INSERT INTO `mob_spawn_points` VALUES (17973590,0,'HM_Knight_Crab','Knight Crab',82,85,85,5.842,5.515,-7.225,32);
 -- TVR: Nii's Last Stand
 INSERT INTO `mob_spawn_points` VALUES (20983809,0,'Nii_Aquu','Nii Aquu',75,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (20983810,0,'Katashiro','Katashiro',74,0,0,0.000,0.000,0.000,0);

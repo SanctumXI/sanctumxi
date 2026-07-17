@@ -19,6 +19,9 @@
 ===========================================================================
 */
 
+#include <algorithm>
+#include <atomic>
+#include <filesystem>
 #include <thread>
 
 #include "instance.h"
@@ -30,9 +33,15 @@
 
 #include "common/timer.h"
 
+namespace
+{
+std::atomic<uint64_t> nextRuntimeInstanceId{ 1 };
+}
+
 CInstance::CInstance(Scheduler& scheduler, MapConfig config, CZone* zone, uint32 instanceid)
 : CZoneEntities(scheduler, config, zone)
 , m_instanceid(instanceid)
+, m_runtimeId(nextRuntimeInstanceId.fetch_add(1, std::memory_order_relaxed))
 , m_zone(zone)
 , m_startTime(timer::now())
 {
@@ -52,6 +61,11 @@ CInstance::~CInstance()
 uint16 CInstance::GetID() const
 {
     return m_instanceid;
+}
+
+uint64_t CInstance::GetRuntimeID() const
+{
+    return m_runtimeId;
 }
 
 uint32 CInstance::GetProgress() const
@@ -108,10 +122,17 @@ void CInstance::LoadInstance()
 
         // Add to Lua cache
         // TODO: This will happen more often than needed, but not so often that it's a performance concern
-        const auto zone     = m_zone->getName();
-        const auto name     = m_instanceName;
-        const auto filename = fmt::format("./scripts/zones/{}/instances/{}.lua", zone, name);
-        luautils::CacheLuaObjectFromFile(filename);
+        const auto zone        = m_zone->getName();
+        const auto name        = m_instanceName;
+        const auto assaultPath = fmt::format("./scripts/assaults/{}/{}.lua", zone, name);
+        if (std::filesystem::exists(assaultPath))
+        {
+            luautils::CacheLuaObjectFromFile(assaultPath, true);
+        }
+        else
+        {
+            luautils::CacheLuaObjectFromFile(fmt::format("./scripts/zones/{}/instances/{}.lua", zone, name));
+        }
     }
     else
     {
@@ -133,6 +154,16 @@ void CInstance::RegisterChar(CCharEntity* PChar)
         m_commander = PChar->id;
     }
     m_registeredChars.emplace_back(PChar->id);
+}
+
+bool CInstance::UnregisterChar(CCharEntity* PChar)
+{
+    const auto previousSize = m_registeredChars.size();
+    m_registeredChars.erase(
+        std::remove(m_registeredChars.begin(), m_registeredChars.end(), PChar->id),
+        m_registeredChars.end());
+
+    return previousSize != m_registeredChars.size();
 }
 
 uint8 CInstance::GetLevelCap() const

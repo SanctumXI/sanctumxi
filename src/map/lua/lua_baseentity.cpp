@@ -24,6 +24,7 @@
 #include "lua_battlefield.h"
 #include "lua_instance.h"
 #include "lua_item.h"
+#include "lua_item.h"
 
 #include "items/exdata/worn_item.h"
 #include "lua_spell.h"
@@ -19760,6 +19761,251 @@ void CLuaBaseEntity::clearPacketMods()
     }
 }
 
+/************************************************************************
+ *  Sanctum Linkshell HNM Treasury
+ *
+ *  Linkshell slots:
+ *      1 = Linkshell 1
+ *      2 = Linkshell 2
+ ************************************************************************/
+
+uint32 CLuaBaseEntity::getLinkshellID(uint8 slot)
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+
+    if (PChar == nullptr)
+    {
+        return 0;
+    }
+
+    CLinkshell* PLinkshell = nullptr;
+
+    switch (slot)
+    {
+        case 1:
+            PLinkshell = PChar->PLinkshell1;
+            break;
+
+        case 2:
+            PLinkshell = PChar->PLinkshell2;
+            break;
+
+        default:
+            return 0;
+    }
+
+    if (PLinkshell == nullptr)
+    {
+        return 0;
+    }
+
+    return PLinkshell->getID();
+}
+
+/************************************************************************
+ *  Function: getLinkshellType()
+ *  Purpose : Returns the equipped linkshell item's rank/type.
+ *
+ *  Values:
+ *      0 = New Linkshell
+ *      1 = Linkshell holder
+ *      2 = Pearlsack holder
+ *      3 = Linkpearl holder
+ *      4 = Broken
+ ************************************************************************/
+
+uint8 CLuaBaseEntity::getLinkshellType(uint8 slot)
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+
+    if (PChar == nullptr)
+    {
+        return static_cast<uint8>(LSTYPE_BROKEN);
+    }
+
+    SLOTTYPE equipSlot;
+
+    switch (slot)
+    {
+        case 1:
+            equipSlot = SLOT_LINK1;
+            break;
+
+        case 2:
+            equipSlot = SLOT_LINK2;
+            break;
+
+        default:
+            return static_cast<uint8>(LSTYPE_BROKEN);
+    }
+
+    const auto itemLocation = PChar->equipLocation(equipSlot);
+
+    if (!itemLocation.has_value())
+    {
+        return static_cast<uint8>(LSTYPE_BROKEN);
+    }
+
+    CItemContainer* PContainer =
+        PChar->getStorage(itemLocation->Container);
+
+    if (PContainer == nullptr)
+    {
+        return static_cast<uint8>(LSTYPE_BROKEN);
+    }
+
+    CItem* PItem =
+        PContainer->GetItem(itemLocation->Slot);
+
+    auto* PLinkshellItem =
+        dynamic_cast<CItemLinkshell*>(PItem);
+
+    if (PLinkshellItem == nullptr)
+    {
+        return static_cast<uint8>(LSTYPE_BROKEN);
+    }
+
+    return static_cast<uint8>(
+        PLinkshellItem->GetLSType());
+}
+
+/************************************************************************
+ *  Function: getLinkshellTreasuryItemCount()
+ *  Purpose : Returns the quantity of an item stored for a linkshell.
+ *  Example : player:getLinkshellTreasuryItemCount(1, 3443)
+ ************************************************************************/
+
+uint32 CLuaBaseEntity::getLinkshellTreasuryItemCount(uint8 slot, uint16 itemID)
+{
+    const uint32 linkshellID = getLinkshellID(slot);
+
+    if (linkshellID == 0 || itemID == 0)
+    {
+        return 0;
+    }
+
+    const auto rset = db::preparedStmt(
+        "SELECT quantity "
+        "FROM linkshell_treasury "
+        "WHERE linkshell_id = ? "
+        "AND item_id = ? "
+        "LIMIT 1",
+        linkshellID,
+        itemID);
+
+    if (rset && rset->rowsCount() && rset->next())
+    {
+        return rset->get<uint32>("quantity");
+    }
+
+    return 0;
+}
+
+/************************************************************************
+ *  Function: depositLinkshellTreasuryItem()
+ *  Purpose : Adds an item quantity to a linkshell treasury.
+ *  Example : player:depositLinkshellTreasuryItem(1, 3443, 1)
+ ************************************************************************/
+
+bool CLuaBaseEntity::depositLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity)
+{
+    const uint32 linkshellID = getLinkshellID(slot);
+
+    if (linkshellID == 0 || itemID == 0 || quantity == 0)
+    {
+        return false;
+    }
+
+    const uint32 oldQuantity = getLinkshellTreasuryItemCount(slot, itemID);
+
+    db::preparedStmt(
+        "INSERT INTO linkshell_treasury "
+        "    (linkshell_id, item_id, quantity) "
+        "VALUES "
+        "    (?, ?, ?) "
+        "ON DUPLICATE KEY UPDATE "
+        "    quantity = quantity + ?",
+        linkshellID,
+        itemID,
+        quantity,
+        quantity);
+
+    const uint32 newQuantity = getLinkshellTreasuryItemCount(slot, itemID);
+
+    return newQuantity == oldQuantity + quantity;
+}
+
+/************************************************************************
+ *  Function: withdrawLinkshellTreasuryItem()
+ *  Purpose : Removes an item quantity from a linkshell treasury.
+ *  Example : player:withdrawLinkshellTreasuryItem(1, 3443, 1)
+ *
+ *  Notes   : The quantity condition in the UPDATE prevents the stored
+ *            amount from going below zero.
+ ************************************************************************/
+
+bool CLuaBaseEntity::withdrawLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity)
+{
+    const uint32 linkshellID = getLinkshellID(slot);
+
+    if (linkshellID == 0 || itemID == 0 || quantity == 0)
+    {
+        return false;
+    }
+    const auto linkshellType = static_cast<LSTYPE>(getLinkshellType(slot));
+
+    if (linkshellType != LSTYPE_LINKSHELL &&
+        linkshellType != LSTYPE_PEARLSACK)
+    {
+        ShowWarning(
+            "Linkshell Treasury: Unauthorized withdrawal attempt. "
+            "Player: %s, Linkshell Type: %u",
+            m_PBaseEntity->getName(),
+            static_cast<uint8>(linkshellType));
+
+        return false;
+    }
+
+    const uint32 oldQuantity = getLinkshellTreasuryItemCount(slot, itemID);
+
+    if (oldQuantity < quantity)
+    {
+        return false;
+    }
+
+    db::preparedStmt(
+        "UPDATE linkshell_treasury "
+        "SET quantity = quantity - ? "
+        "WHERE linkshell_id = ? "
+        "AND item_id = ? "
+        "AND quantity >= ? "
+        "LIMIT 1",
+        quantity,
+        linkshellID,
+        itemID,
+        quantity);
+
+    const uint32 newQuantity = getLinkshellTreasuryItemCount(slot, itemID);
+
+    if (newQuantity != oldQuantity - quantity)
+    {
+        return false;
+    }
+
+    if (newQuantity == 0)
+    {
+        db::preparedStmt(
+            "DELETE FROM linkshell_treasury "
+            "WHERE linkshell_id = ? "
+            "AND item_id = ? "
+            "AND quantity = 0 "
+            "LIMIT 1",
+            linkshellID,
+            itemID);
+    }
+
+    return true;
+}
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -20664,6 +20910,13 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("addPacketMod", CLuaBaseEntity::addPacketMod);
     SOL_REGISTER("clearPacketMods", CLuaBaseEntity::clearPacketMods);
+
+        // Sanctum Custom Linkshell HNM Treasury
+    SOL_REGISTER("getLinkshellID", CLuaBaseEntity::getLinkshellID);
+    SOL_REGISTER("getLinkshellType", CLuaBaseEntity::getLinkshellType);
+    SOL_REGISTER("getLinkshellTreasuryItemCount", CLuaBaseEntity::getLinkshellTreasuryItemCount);
+    SOL_REGISTER("depositLinkshellTreasuryItem", CLuaBaseEntity::depositLinkshellTreasuryItem);
+    SOL_REGISTER("withdrawLinkshellTreasuryItem", CLuaBaseEntity::withdrawLinkshellTreasuryItem);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)

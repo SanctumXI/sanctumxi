@@ -43,24 +43,25 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const CLuaInstance& instance);
 
-    uint16 getID();
-    auto   getName() -> const std::string&;
-    auto   getZone() -> CLuaZone;
-    uint32 getEntranceZoneID();
-    auto   getAllies() -> sol::table;
-    auto   getChars() -> sol::table;
-    auto   getMobs() -> sol::table;
-    auto   getNpcs() -> sol::table;
-    auto   getPets() -> sol::table;
-    uint32 getTimeLimit();
-    auto   getEntryPos() -> sol::table;
-    uint8  getLevelCap();
-    uint32 getLastTimeUpdate();
-    uint32 getProgress();
-    uint32 getWipeTime();
-    auto   getEntity(uint16 targid, const sol::object& filterObj) -> CBaseEntity*;
-    uint32 getStage();
-    auto   getLocalVar(const std::string& name) -> uint64_t;
+    uint16   getID();
+    uint64_t getRuntimeID();
+    auto     getName() -> const std::string&;
+    auto     getZone() -> CLuaZone;
+    uint32   getEntranceZoneID();
+    auto     getAllies() -> sol::table;
+    auto     getChars() -> sol::table;
+    auto     getMobs() -> sol::table;
+    auto     getNpcs() -> sol::table;
+    auto     getPets() -> sol::table;
+    uint32   getTimeLimit();
+    auto     getEntryPos() -> sol::table;
+    uint8    getLevelCap();
+    uint32   getLastTimeUpdate();
+    uint32   getProgress();
+    uint32   getWipeTime();
+    auto     getEntity(uint16 targid, const sol::object& filterObj) -> CBaseEntity*;
+    uint32   getStage();
+    auto     getLocalVar(const std::string& name) -> uint64_t;
 
     void setLevelCap(uint8 cap);
     void setLastTimeUpdate(uint32 ms);

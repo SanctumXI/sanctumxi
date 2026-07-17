@@ -79,6 +79,10 @@ public:
     void ForEachAllyInstance(CBaseEntity* PEntity, const std::function<void(CMobEntity*)>& func) override;
 
     CInstance* CreateInstance(uint32 instanceid);
+    CInstance* GetInstanceByRuntimeID(uint64_t runtimeId);
+    auto       GetInstancesByDefinition(uint32 instanceid) -> std::vector<CInstance*>;
+    bool       IsInstanceAlive(uint64_t runtimeId);
+    uint32     UnregisterCharFromAllInstances(CCharEntity* PChar);
 
     CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction);
     ~CZoneInstance() override;

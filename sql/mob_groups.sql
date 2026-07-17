@@ -16040,6 +16040,10 @@ INSERT INTO `mob_groups` VALUES (75,6032,292,'Nii_Aquu',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (76,6034,292,'Zhuu_Buxu_the_Silent',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (77,6035,292,'Gessho',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (78,6033,292,'Reikuu',0,128,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (79,7555,292,'HM_Roc',0,128,0,28500,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (80,7556,292,'HM_Simurgh',0,128,0,51000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (81,7557,292,'HM_King_Arthro',0,128,0,70000,7500,0,NULL);
+INSERT INTO `mob_groups` VALUES (82,7558,292,'HM_Knight_Crab',0,128,0,4500,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Reisenjima_Sanctorium (Zone 293)

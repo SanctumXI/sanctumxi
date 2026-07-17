@@ -5,6 +5,8 @@
 -- !pos -90.922 -2.650 -80.891 257
 -----------------------------------
 ---@type TNpcEntity
+local libraryInstance = require('scripts/globals/library_instance')
+
 local entity = {}
 
 entity.onTrigger = function(player, npc)
@@ -13,7 +15,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 591 and option == 1 then
-        player:setPos(-97, -2, -87, 96, 284)
+        libraryInstance.enter(player)
     end
 end
 

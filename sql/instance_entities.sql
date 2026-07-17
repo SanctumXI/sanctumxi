@@ -2573,6 +2573,30 @@ INSERT INTO `instance_entities` VALUES (25900,17838149); -- The Briars (elv)
 INSERT INTO `instance_entities` VALUES (25900,17838150); -- The Briars (gal)
 
 -- ------------------------------------------------------------
+-- Celennia Memorial Library (Zone 284)
+-- ------------------------------------------------------------
+
+-- Library Test (28400)
+-- Preserve the normal exit without loading the Library's full NPC set.
+INSERT INTO `instance_entities` VALUES (28400,17940508); -- Door: Back to Town
+
+-- ------------------------------------------------------------
+-- Reisenjima Henge (Zone 292)
+-- ------------------------------------------------------------
+
+-- Hard Mode HNM Test (29200)
+INSERT INTO `instance_entities` VALUES (29200,17973581); -- HM Roc
+INSERT INTO `instance_entities` VALUES (29200,17973582); -- HM Simurgh
+INSERT INTO `instance_entities` VALUES (29200,17973583); -- HM King Arthro
+INSERT INTO `instance_entities` VALUES (29200,17973584); -- Hard Mode HNM ???
+INSERT INTO `instance_entities` VALUES (29200,17973585); -- HM Knight Crab 1
+INSERT INTO `instance_entities` VALUES (29200,17973586); -- HM Knight Crab 2
+INSERT INTO `instance_entities` VALUES (29200,17973587); -- HM Knight Crab 3
+INSERT INTO `instance_entities` VALUES (29200,17973588); -- HM Knight Crab 4
+INSERT INTO `instance_entities` VALUES (29200,17973589); -- HM Knight Crab 5
+INSERT INTO `instance_entities` VALUES (29200,17973590); -- HM Knight Crab 6
+
+-- ------------------------------------------------------------
 -- Ambuscade
 -- ------------------------------------------------------------
 

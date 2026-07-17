@@ -21,6 +21,8 @@
 
 #include "instanceutils.h"
 
+#include <filesystem>
+
 #include "common/database.h"
 #include "common/logging.h"
 
@@ -87,13 +89,23 @@ void LoadInstanceList(IPP mapIPP)
         // Meta data
         data.instance_zone_name = zoneutils::GetZone(data.instance_zone)->getName();
         data.entrance_zone_name = rset->get<std::string>("zone_name");
-        data.filename           = fmt::format("./scripts/zones/{}/instances/{}.lua", data.instance_zone_name, data.instance_name);
+
+        // Determine if instance exists at new assault path
+        data.filename = fmt::format("./scripts/assaults/{}/{}.lua", data.instance_zone_name, data.instance_name);
+        if (std::filesystem::exists(data.filename))
+        {
+            luautils::CacheLuaObjectFromFile(data.filename, true);
+        }
+
+        // If not, fall back to regular instance path
+        else
+        {
+            data.filename = fmt::format("./scripts/zones/{}/instances/{}.lua", data.instance_zone_name, data.instance_name);
+            luautils::CacheLuaObjectFromFile(data.filename);
+        }
 
         // Add to data cache
         InstanceData[data.id] = data;
-
-        // Add to Lua cache
-        luautils::CacheLuaObjectFromFile(data.filename);
     }
 }
 

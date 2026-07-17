@@ -93,6 +93,8 @@ protected:
     CBaseEntity*           PFollowTarget{ nullptr };
 
 private:
+    auto TrySeparateFromAttackers() -> bool;
+
     CMobEntity* const PMob;
 
     timer::time_point m_LastActionTime;
