@@ -76,11 +76,21 @@ CRangeState::CRangeState(CBattleEntity* PEntity, uint16 targid)
     auto delay = m_PEntity->GetRangedWeaponDelay(false);
     delay      = battleutils::GetRangedDelayReduction(m_PEntity, delay);
 
+    CItemWeapon* rangedWeapon = dynamic_cast<CItemWeapon*>(m_PEntity->m_Weapons[SLOT_RANGED]);
+    CItemWeapon* ammoWeapon   = dynamic_cast<CItemWeapon*>(m_PEntity->m_Weapons[SLOT_AMMO]);
+    CItemWeapon* weapon       = rangedWeapon ? rangedWeapon : ammoWeapon;
+    bool         isThrowing   = weapon && weapon->isThrowing();
+
+    // All manually thrown weapons aim twice as quickly. Guns, bows, and
+    // crossbows continue to use the normal ranged aiming delay.
+    if (isThrowing)
+    {
+        delay /= 2;
+    }
+
     // Rapid Shot
     if (m_PEntity->objtype == TYPE_PC || m_PEntity->objtype == TYPE_TRUST)
     {
-        CItemWeapon* weapon     = dynamic_cast<CItemWeapon*>(m_PEntity->m_Weapons[SLOT_RANGED]);
-        bool         isThrowing = weapon && weapon->isThrowing();
         // Don't apply Rapid Shot to throwing weapons
         if (!isThrowing)
         {
