@@ -253,6 +253,12 @@ xi.spells.enfeebling.calculatePotency = function(caster, target, spellId, spellE
                 if skillLevel > 400 then
                     potency = skillLevel * 49 / 183 - 55 -- No cap can be reached yet
                 end
+            elseif
+                spellId == xi.magic.spell.DOKUMORI_ICHI or
+                spellId == xi.magic.spell.DOKUMORI_NI or
+                spellId == xi.magic.spell.DOKUMORI_SAN
+            then
+                potency = skillLevel / 5 + 1
             else
                 potency = skillLevel / 10 + 1
             end

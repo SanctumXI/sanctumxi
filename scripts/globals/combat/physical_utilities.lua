@@ -872,7 +872,7 @@ xi.combat.physical.criticalRateFromInnin = function(actor, target)
         actor:hasStatusEffect(xi.effect.INNIN) and
         actor:isBehind(target, 190)
     then
-        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower()
+        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower() / 100
     end
 
     return inninBonus
