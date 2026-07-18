@@ -34,7 +34,6 @@
 #include <windows.h>
 
 #include <timeapi.h>
-#pragma comment(lib, "winmm.lib")
 #else // UNIX
 #include <sys/resource.h>
 #include <sys/time.h>
