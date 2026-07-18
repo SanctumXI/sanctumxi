@@ -55,6 +55,11 @@ xi.job_utils.ninja.useMijinGakure = function(player, target, ability, action)
     dmg = utils.handleStoneskin(target, dmg)
 
     target:takeDamage(dmg, player, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
+    if dmg > 0 then
+        target:wakeUp()
+        target:updateEnmityFromDamage(player, dmg)
+    end
+
     player:setLocalVar('MijinGakure', 1)
     player:setHP(0)
 
