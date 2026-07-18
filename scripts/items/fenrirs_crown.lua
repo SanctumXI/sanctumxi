@@ -9,7 +9,7 @@ local listenerPrefix = 'PET_MOD_LATENT'
 local latentPetId = xi.petId.FENRIR
 local latentMods =
 {
-    { xi.mod.ACC, 5 },
+    { xi.mod.ACC, 15 },
 }
 
 itemObject.onItemCheck = function(target, item, param, caster)

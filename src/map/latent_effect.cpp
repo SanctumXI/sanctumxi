@@ -144,6 +144,15 @@ bool CLatentEffect::Activate()
                 m_PItem = item;
             }
         }
+        // These internal latent modifiers apply to all current and future pets.
+        else if (GetModValue() == Mod::PET_LATENT_ATTACK)
+        {
+            m_POwner->addPetModifier(Mod::ATT, PetModType::All, GetModPower());
+        }
+        else if (GetModValue() == Mod::PET_LATENT_ACCURACY)
+        {
+            m_POwner->addPetModifier(Mod::ACC, PetModType::All, GetModPower());
+        }
         // Other modifiers go on the player
         else
         {
@@ -170,6 +179,15 @@ bool CLatentEffect::Deactivate()
                 charutils::BuildingCharWeaponSkills(PChar);
                 PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
             }
+        }
+        // Remove internal latent modifiers from current and future pets.
+        else if (GetModValue() == Mod::PET_LATENT_ATTACK)
+        {
+            m_POwner->delPetModifier(Mod::ATT, PetModType::All, GetModPower());
+        }
+        else if (GetModValue() == Mod::PET_LATENT_ACCURACY)
+        {
+            m_POwner->delPetModifier(Mod::ACC, PetModType::All, GetModPower());
         }
         // Remove other modifiers from player
         else

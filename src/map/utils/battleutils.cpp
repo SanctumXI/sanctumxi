@@ -4386,8 +4386,17 @@ uint16 doSoulEaterEffect(CCharEntity* m_PChar, uint32 damage)
 {
     if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
     {
-        // Souleater's HP consumed is 10% (base) + x% from gear (ONLY HIGHEST) + x% from gear augments.
-        float souleaterBonus    = m_PChar->getMaxGearMod(Mod::SOULEATER_EFFECT) * 0.01;
+        // Souleater's HP consumed is 10% (base) + the highest normal gear bonus +
+        // stackable normal gear (capped at 12% total) + uncapped gear augments.
+        auto souleaterGearBonus = m_PChar->getMaxGearMod(Mod::SOULEATER_EFFECT);
+        auto stackableBonus     = m_PChar->getMod(Mod::SOULEATER_EFFECT_STACKABLE);
+        if (stackableBonus > 0)
+        {
+            auto normalGearCap = std::max<int16>(souleaterGearBonus, 2);
+            souleaterGearBonus = std::min<int16>(souleaterGearBonus + stackableBonus, normalGearCap);
+        }
+
+        float souleaterBonus    = souleaterGearBonus * 0.01;
         float souleaterBonusII  = m_PChar->getMod(Mod::SOULEATER_EFFECT_II) * 0.01;
         float stalwartSoulBonus = 1 - static_cast<float>(m_PChar->getMod(Mod::STALWART_SOUL)) / 100;
         float bonusDamage       = m_PChar->health.hp * (0.1f + souleaterBonus + souleaterBonusII);

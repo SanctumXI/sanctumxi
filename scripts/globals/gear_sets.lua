@@ -2387,8 +2387,8 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ACC,              5 },
-            { xi.mod.SOULEATER_EFFECT, 2 },
+            { xi.mod.ACC,                        10 },
+            { xi.mod.SOULEATER_EFFECT_STACKABLE, 2 },
         },
     },
 
@@ -2441,7 +2441,7 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ENH_DRAIN_ASPIR, 5 },
+            { xi.mod.ENH_DRAIN_ASPIR, 10 },
         },
     },
 }

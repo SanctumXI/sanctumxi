@@ -1113,6 +1113,10 @@ xi.mod =
 
     KNOCKBACK_REDUCTION = 1172, -- Reduces distance knocked back
     WYVERN_DAMAGE        = 1173, -- Sanctum Custom mod, adds % damage to wyverns auto attacks
+    JUMP_CRIT_RATE       = 1201, -- Additional critical hit rate for the Jump ability (percent)
+    SOULEATER_EFFECT_STACKABLE = 1202, -- Additive normal Souleater gear bonus, capped with SOULEATER_EFFECT at 12% total
+    PET_LATENT_ATTACK    = 1203, -- Internal latent mapping: attack for all pets
+    PET_LATENT_ACCURACY  = 1204, -- Internal latent mapping: accuracy for all pets
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 

@@ -15,9 +15,17 @@ xi.combat.damage.souleaterAddition = function(actor)
         return 0
     end
 
-    local souleaterEffect        = actor:getMaxGearMod(xi.mod.SOULEATER_EFFECT) / 100
+    local souleaterEffect        = actor:getMaxGearMod(xi.mod.SOULEATER_EFFECT)
+    local stackableSouleater     = actor:getMod(xi.mod.SOULEATER_EFFECT_STACKABLE)
     local souleaterEffectII      = actor:getMod(xi.mod.SOULEATER_EFFECT_II) / 100
     local stalwartSoulMultiplier = 1 - actor:getMod(xi.mod.STALWART_SOUL) / 100
+
+    if stackableSouleater > 0 then
+        local normalGearCap = math.max(souleaterEffect, 2)
+        souleaterEffect = math.min(souleaterEffect + stackableSouleater, normalGearCap)
+    end
+
+    souleaterEffect = souleaterEffect / 100
     local bonusDamage            = math.floor(actor:getHP() * (0.1 + souleaterEffect + souleaterEffectII))
 
     if bonusDamage > 0 then

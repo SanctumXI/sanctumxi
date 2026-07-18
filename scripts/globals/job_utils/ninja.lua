@@ -60,8 +60,12 @@ xi.job_utils.ninja.useMijinGakure = function(player, target, ability, action)
         target:updateEnmityFromDamage(player, dmg)
     end
 
-    player:setLocalVar('MijinGakure', 1)
-    player:setHP(0)
+    if player:hasEquipped(xi.item.REACTON_ARM) then
+        player:setHP(math.max(1, math.floor(player:getMaxHP() * 0.05)))
+    else
+        player:setLocalVar('MijinGakure', 1)
+        player:setHP(0)
+    end
 
     return dmg
 end

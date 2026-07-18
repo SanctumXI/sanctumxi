@@ -810,7 +810,7 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
             expression = m_POwner->health.tp < latentEffect.GetConditionsValue();
             break;
         case LATENT::TP_OVER:
-            expression = m_POwner->health.tp > latentEffect.GetConditionsValue();
+            expression = m_POwner->health.tp >= latentEffect.GetConditionsValue();
             break;
         case LATENT::SUBJOB:
             expression = m_POwner->GetSJob() == latentEffect.GetConditionsValue();

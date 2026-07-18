@@ -1153,11 +1153,15 @@ enum class Mod
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/enum/mod.lua ASWELL!
 
     WYVERN_DAMAGE = 1173, // Increases auto attack damage of your wyvern, Sanctum Custom modifier
+    JUMP_CRIT_RATE = 1201, // Additional critical hit rate for the Jump ability (percent)
+    SOULEATER_EFFECT_STACKABLE = 1202, // Additive normal Souleater gear bonus, capped with SOULEATER_EFFECT at 12% total
+    PET_LATENT_ATTACK = 1203, // Internal latent mapping: attack for all pets
+    PET_LATENT_ACCURACY = 1204, // Internal latent mapping: accuracy for all pets
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
     //
-    // SPARE IDs: 938, 1201 and onward
+    // SPARE IDs: 938, 1205 and onward
 };
 
 // temporary workaround for using enum class as unordered_map key until compilers support it
