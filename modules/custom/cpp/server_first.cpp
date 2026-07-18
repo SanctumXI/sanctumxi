@@ -116,7 +116,7 @@ auto claimFirst(const sol::table& input) -> bool
     const auto message   = shorten(input.get_or("message", std::string{}), MaxMessageLength);
     const auto zoneId    = input.get_or("zone_id", uint16{});
 
-    const auto participantObject = input["participants"];
+    const sol::object participantObject = input["participants"];
     if (!participantObject.valid() || !participantObject.is<sol::table>())
     {
         ShowWarningFmt("ServerFirst rejected a claim with no roster for event key '{}'", eventKey);
@@ -224,7 +224,7 @@ class ServerFirstModule final : public CPPModule
 {
     void OnInit() override
     {
-        const auto trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
+        const sol::object trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
         if (trackedItems.valid() && trackedItems.is<sol::table>())
         {
             for (const auto& entry : trackedItems.as<sol::table>())

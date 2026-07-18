@@ -41,6 +41,7 @@ custom/cpp/server_first.cpp
 custom/lua/ServerFirst.lua
 custom/sql/server_first.sql
 CustomHNM
+era
 Gauntlet
 items
 limbus
