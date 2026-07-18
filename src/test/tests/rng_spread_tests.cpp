@@ -141,10 +141,13 @@ static_assert(canonicalSpreadWithin<10, kFloatSamples>(0xDEADBEEF, 120), "float 
 // The raw canonical double is strictly below 1...
 static_assert(worstCaseUnit() < 1.0, "canonical53 must stay below 1");
 
-// ...but narrowing it to float rounds up to exactly 1.0f. This is the hazard
-// scaleCanonical exists to absorb; if this assert ever fails, the guard in it
-// is dead code and can be removed.
-static_assert(static_cast<float>(worstCaseUnit()) == 1.0f, "float narrowing hazard no longer reproduces");
+// ...but it is above the midpoint between the two adjacent float values, so
+// narrowing with round-to-nearest selects 1.0f. Check the midpoint directly:
+// under MSVC /fp:fast a cast in a constant expression may retain double
+// precision and make a direct static_cast<float>(...) assertion unreliable.
+inline constexpr double kFloatOneRoundingMidpoint =
+    (static_cast<double>(detail::nextDown(1.0f)) + 1.0) / 2.0;
+static_assert(worstCaseUnit() >= kFloatOneRoundingMidpoint, "float narrowing hazard no longer reproduces");
 
 // scaleCanonical must keep the excluded endpoint out at every representative shape:
 // unit range, scaled range, negative range, and the double path.

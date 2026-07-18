@@ -408,7 +408,7 @@ auto getSynthDifficulty(CCharEntity* PChar, uint8 skillID) -> int16
     }
 
     const uint8 charSkill  = static_cast<uint8>(PChar->RealSkills.skill[skillID] / 10); // Player skill level is truncated before synth difficulty is calculated
-    const int16 difficulty = static_cast<int16>(PChar->craftState().skillRequired(skillID - SKILL_WOODWORKING) - charSkill - PChar->getMod(ModID));
+    const int16 difficulty = static_cast<int16>(PChar->CraftContainer->getQuantity(skillID - 40) - charSkill - PChar->getMod(ModID));
     return difficulty;
 }
 
@@ -742,10 +742,9 @@ void handleMaterialLoss(CCharEntity* PChar)
     uint8 nextSlotID = 0;
     uint8 lostCount  = 0;
     uint8 totalCount = 0;
-    uint8 random     = 0;
 
     const int16 breakGlobalReduction    = PChar->getMod(Mod::SYNTH_MATERIAL_LOSS);
-    const int16 breakElementalReduction = PChar->getMod(static_cast<Mod>(static_cast<int32>(Mod::SYNTH_MATERIAL_LOSS_FIRE) + craftState.element()));
+    const int16 breakElementalReduction = PChar->getMod(static_cast<Mod>(static_cast<int32>(Mod::SYNTH_MATERIAL_LOSS_FIRE) + PChar->CraftContainer->getType()));
     const int16 breakTypeReduction      = PChar->getMod(static_cast<Mod>(static_cast<int32>(Mod::SYNTH_MATERIAL_LOSS_WOODWORKING) + currentCraft - SKILL_WOODWORKING));
     int16       synthDifficulty         = getSynthDifficulty(PChar, currentCraft);
 
@@ -975,7 +974,7 @@ void doSynthSkillUp(CCharEntity* PChar)
         // We don't Skill Up if the recipe isn't difficult enough.
         // Era -> Char lvl must be bellow recipe level. Retail -> Char level myst be bellow recipe level + 10.
         // Char level does NOT count the effects of image support/gear.
-        const int16 baseDiff = static_cast<int16>(PChar->craftState().skillRequired(skillID - SKILL_WOODWORKING) - charSkill / 10);
+        const int16 baseDiff = static_cast<int16>(PChar->CraftContainer->getQuantity(skillID - 40) - charSkill / 10);
         const int8  minDiff  = settings::get<bool>("map.CRAFT_MODERN_SYSTEM") ? -11 : 0;
         if (baseDiff <= minDiff)
         {

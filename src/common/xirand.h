@@ -38,6 +38,7 @@
 
 #include <common/rng/detail/bounded_int.h>
 #include <common/rng/detail/canonical_float.h>
+#include <common/rng/detail/normal.h>
 #include <common/rng/detail/shuffle.h>
 #include <common/rng/detail/weighted_index.h>
 
@@ -179,8 +180,11 @@ template <std::integral T>
         return min;
     }
 
-    using U              = std::make_unsigned_t<T>;
-    const uint64_t count = static_cast<uint64_t>(static_cast<U>(max) - static_cast<U>(min));
+    // Compute the outcome count in U's own modulus. The extra cast back to U matters
+    // for types narrower than int: `U(max) - U(min)` would otherwise promote to int and,
+    // for a negative min, widen to a bogus huge count. Keeping it in U wraps correctly.
+    using U       = std::make_unsigned_t<T>;
+    const U count = static_cast<U>(static_cast<U>(max) - static_cast<U>(min));
     return static_cast<T>(static_cast<U>(min) + detail::bounded32(rng(), count));
 }
 
@@ -192,8 +196,9 @@ template <std::floating_point T>
         return min;
     }
 
-    const double unit = detail::canonical53(rng());
-    return static_cast<T>(static_cast<double>(min) + unit * (static_cast<double>(max) - static_cast<double>(min)));
+    // scaleCanonical guards the rounding edge where the scaled draw lands exactly on
+    // max (most likely when narrowing to float), keeping the [min, max) contract honest.
+    return detail::scaleCanonical(detail::canonical53(rng()), min, max);
 }
 
 template <typename T>
