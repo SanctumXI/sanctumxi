@@ -1,7 +1,6 @@
 -----------------------------------
 -- Attachment: Barrier Module
 -- Grants Shield Mastery TP bonus based on the number of maneuvers active. This effect is handled here because it does not stack.
--- TODO: Audit Shield Bash Cooldown reduction and block chance.
 -- https://wiki.ffo.jp/html/24442.html
 -----------------------------------
 ---@type TAttachment
@@ -10,9 +9,9 @@ local attachmentObject = {}
 local shieldMasteryTable =
 {
     [0] =  0,
-    [1] = 10,
-    [2] = 20,
-    [3] = 30,
+    [1] = 15,
+    [2] = 25,
+    [3] = 35,
 }
 
 attachmentObject.onEquip = function(pet, attachment)

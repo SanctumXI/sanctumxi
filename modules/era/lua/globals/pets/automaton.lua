@@ -46,7 +46,7 @@ if xi.module.isContentEnabled('ABYSSEA') then
     return { name = moduleName }
 end
 
--- Adds Frame Specific DT Taken Modifiers. / Removes Valoredge Block : https://wiki.ffo.jp/html/19739.html / https://wiki.ffo.jp/html/31705.html
+-- Adds frame-specific DT modifiers and restores Valoredge shield blocking.
 xi.pets.automaton.frameMods[xi.automaton.frame.HARLEQUIN] =
 {
     mods =
@@ -57,6 +57,11 @@ xi.pets.automaton.frameMods[xi.automaton.frame.HARLEQUIN] =
 
 xi.pets.automaton.frameMods[xi.automaton.frame.VALOREDGE] =
 {
+    mobMods =
+    {
+        { xi.mobMod.CAN_SHIELD_BLOCK, 1 },
+    },
+
     mods =
     {
         { xi.mod.DMG, -1250 },

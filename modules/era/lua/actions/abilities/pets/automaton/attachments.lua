@@ -20,7 +20,7 @@ local m = Module:new(moduleName)
 -- Adds a Ranged Attack Penalty to Drum Magazine.                   : https://wiki.ffo.jp/html/8882.html
 -- Changes Turbo Charger Haste to Gear Haste instead of Magic       : https://wiki.ffo.jp/html/8627.html
 -- Adds Burden to Tactical Processor                                : https://wiki.ffo.jp/html/13527.html
--- Reduces scaling from Volt Gun                                    : https://wiki.ffo.jp/html/8752.html
+-- Restores the pre-LSB Volt Gun damage formula                     : https://wiki.ffo.jp/html/8752.html
 -- Reduces Burden Decay From Heatsink                               : https://wiki.ffo.jp/html/8629.html
 -- Reduces the potency of Steam Jackets Damage Reduction            : https://wiki.ffo.jp/html/15352.html
 xi.automaton.attachmentModifiers['strobe'            ] = { { modifier = xi.mod.ENMITY,                      values = {   5,   15,   25,   40 }, opticFiber = true  }, }
@@ -32,7 +32,7 @@ xi.automaton.attachmentModifiers['drum_magazine'     ] = { { modifier = xi.mod.A
 xi.automaton.attachmentModifiers['flame_holder'      ] = { { modifier = xi.mod.WEAPONSKILL_DAMAGE_BASE,     values = {   0,  125,  150,  175 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['ice_maker'         ] = { { modifier = xi.mod.AUTO_MAB_COEFFICIENT,        values = {   0,   20,   40,   60 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['turbo_charger'     ] = { { modifier = xi.mod.HASTE_GEAR,                  values = { 500, 1500, 2000, 2500 }, opticFiber = true  }, }
-xi.automaton.attachmentModifiers['tactical_processor'] = { { modifier = xi.mod.AUTO_DECISION_DELAY,         values = {  50,   70,   85,  115 }, opticFiber = false },
+xi.automaton.attachmentModifiers['tactical_processor'] = { { modifier = xi.mod.AUTO_DECISION_DELAY,         values = {  50,  150,  225,  300 }, opticFiber = false },
                                                             { modifier = xi.mod.OVERLOAD_THRESH,             values = {  -5,   -5,   -5,   -5 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['volt_gun'          ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {   0,    0,    0,    0 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['heatsink'          ] = { { modifier = xi.mod.BURDEN_DECAY,                values = {   1,    1,    1,    1 }, opticFiber = false }, }
@@ -42,6 +42,17 @@ xi.automaton.attachmentModifiers['steam_jacket'      ] = { { modifier = xi.mod.A
 xi.automaton.repairKit.data['auto-repair_kit_ii' ] = { id = 196, hpBoost = 2, regenBase   = { 0, 2, 3, 4 }, regenMultiplier   = { 0, 0.4, 0.6, 0.8 } }
 xi.automaton.manaTank.data ['mana_tank'          ] = { id = 225, mpBoost = 1, refreshBase = { 0, 1, 2, 3 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
 xi.automaton.manaTank.data ['mana_tank_ii'       ] = { id = 228, mpBoost = 2, refreshBase = { 0, 2, 3, 4 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
+
+-----------------------------------
+-- Volt Gun - Restores the pre-LSB skill and maneuver damage formula.
+-----------------------------------
+m:addOverride('xi.automaton.calculateVoltGunPotency', function(automaton, target)
+    local master           = automaton:getMaster()
+    local thunderManeuvers = master and xi.automaton.getManeuverCount(master, master:countEffect(xi.effect.THUNDER_MANEUVER)) or 0
+    local skillLevel       = math.max(automaton:getSkillLevel(xi.skill.AUTOMATON_MELEE), automaton:getSkillLevel(xi.skill.AUTOMATON_RANGED), automaton:getSkillLevel(xi.skill.AUTOMATON_MAGIC))
+
+    return math.floor(skillLevel / 10 + skillLevel * thunderManeuvers / 20)
+end)
 
 -----------------------------------
 -- Flame Holder - Reduces Flame Holder Scaling, and consumes all Fire Maneuvers on weaponskill execution. https://wiki.ffo.jp/html/11183.html
@@ -201,8 +212,15 @@ m:addOverride('xi.actions.abilities.pets.automaton.replicator.onAutomatonAbility
 end)
 
 -----------------------------------
--- Shock Absorber - Reduces the potency of the stoneskin effect and removes scaling. https://wiki.ffo.jp/html/12927.html
+-- Shock Absorber - Restores the pre-LSB stoneskin formula. https://wiki.ffo.jp/html/12927.html
 -----------------------------------
+local shockAbsorberMultipliers =
+{
+    [xi.item.SHOCK_ABSORBER_ATTACHMENT]     = { 0.20, 0.40, 0.75 },
+    [xi.item.SHOCK_ABSORBER_II_ATTACHMENT]  = { 0.40, 0.75, 1.00 },
+    [xi.item.SHOCK_ABSORBER_III_ATTACHMENT] = { 0.60, 1.00, 1.40 },
+}
+
 m:addOverride('xi.actions.abilities.pets.automaton.shock_absorber.onAutomatonAbilityCheck', function(target, automaton, skill)
     return 0
 end)
@@ -210,7 +228,19 @@ end)
 m:addOverride('xi.actions.abilities.pets.automaton.shock_absorber.onAutomatonAbility', function(target, automaton, skill, master, action)
     automaton:addRecast(xi.recast.ABILITY, skill:getID(), 180)
 
-    if target:addStatusEffect(xi.effect.STONESKIN, { power = 100, duration = 180, origin = automaton, tier = 4 }) then
+    local earthManeuvers = xi.automaton.getManeuverCount(master, master:countEffect(xi.effect.EARTH_MANEUVER))
+    local skillLevel     = math.max(automaton:getSkillLevel(xi.skill.AUTOMATON_MELEE), automaton:getSkillLevel(xi.skill.AUTOMATON_RANGED), automaton:getSkillLevel(xi.skill.AUTOMATON_MAGIC))
+    local attachment     = xi.item.SHOCK_ABSORBER_ATTACHMENT
+
+    if automaton:hasAttachmentSet(xi.item.SHOCK_ABSORBER_III_ATTACHMENT) then
+        attachment = xi.item.SHOCK_ABSORBER_III_ATTACHMENT
+    elseif automaton:hasAttachmentSet(xi.item.SHOCK_ABSORBER_II_ATTACHMENT) then
+        attachment = xi.item.SHOCK_ABSORBER_II_ATTACHMENT
+    end
+
+    local amount = 200 + math.floor(skillLevel * shockAbsorberMultipliers[attachment][earthManeuvers])
+
+    if target:addStatusEffect(xi.effect.STONESKIN, { power = amount, duration = 180, origin = automaton, tier = 4 }) then
         skill:setMsg(xi.msg.basic.SKILL_GAIN_EFFECT)
     else
         skill:setMsg(xi.msg.basic.SKILL_NO_EFFECT)
