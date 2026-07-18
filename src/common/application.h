@@ -66,6 +66,9 @@ public:
     void registerSignalHandlers();
     void usercheck() const;
     void tryIncreaseRLimits();
+    void tryRaiseTimerResolution();
+    void tryRestoreTimerResolution();
+    void tryPreventBackgroundThrottling() const;
     void tryDisableQuickEditMode() const;
     void tryRestoreQuickEditMode() const;
     void prepareLogging();
