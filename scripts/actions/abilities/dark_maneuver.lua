@@ -2,7 +2,7 @@
 -- Ability: Dark Maneuver
 -- Enhances the effect of dark attachments. Must have animator equipped.
 -- Obtained: Puppetmaster level 1
--- Recast Time: 10 seconds (shared with all maneuvers)
+-- Recast Time: 10 seconds (independent per maneuver)
 -- Duration: 1 minute
 -----------------------------------
 ---@type TAbility

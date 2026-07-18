@@ -1599,6 +1599,7 @@ xi.item =
     VCS_HONEYMOON_TICKET                = 2344,
     HI_CHOCOLIXIR                       = 2345,
     TORNADO_SALAD                       = 2346,
+    SCHURZEN                            = 2350,
     STAR_SAPPHIRE                       = 2359,
     AMERETAT_VINE                       = 2361,
     PIECE_OF_YELLOW_GINSENG             = 2364,

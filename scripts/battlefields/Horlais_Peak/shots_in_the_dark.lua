@@ -76,6 +76,11 @@ content.loot =
         quantity = 3,
         { itemId = xi.item.DEMON_QUIVER,        weight = 10000 },
     },
+
+    {
+        { itemId = xi.item.NONE,                weight =  9000 },
+        { itemId = xi.item.BARRAGE_TURBINE,     weight =  1000 },
+    },
 }
 
 return content:register()

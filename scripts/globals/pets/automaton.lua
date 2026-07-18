@@ -590,6 +590,11 @@ xi.pets.automaton.onMobSpawn = function(mob)
     mob:setSpawnAnimation(1)
     applyAutomatonFrameMods(mob)
 
+    mob:addMod(xi.mod.POISONRES, 100)
+    mob:addMod(xi.mod.SLEEPRES,  100)
+    mob:addMod(xi.mod.VIRUSRES,  100)
+    mob:addMod(xi.mod.CHARMRES,  100)
+
     mob:setLocalVar('MANEUVER_DURATION', 60)
 
     mob:addListener('EFFECTS_TICK', 'MANEUVER_DURATION', function(automaton)

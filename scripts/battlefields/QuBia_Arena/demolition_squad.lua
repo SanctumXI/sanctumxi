@@ -106,6 +106,11 @@ content.loot =
         { itemId = xi.item.SCROLL_OF_VALOR_MINUET_IV, weight =  3333 },
         { itemId = xi.item.SCROLL_OF_RERAISE_II,      weight =  3334 },
     },
+
+    {
+        { itemId = xi.item.NONE,                      weight =  9000 },
+        { itemId = xi.item.POWER_COOLER,              weight =  1000 },
+    },
 }
 
 return content:register()

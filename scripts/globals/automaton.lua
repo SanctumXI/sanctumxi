@@ -548,16 +548,26 @@ xi.automaton.onManeuverLose = function(pet, attachment, maneuvers)
     xi.automaton.updateAttachmentModifier(pet, attachment, maneuvers)
 end
 
+local maneuverRecastTime = 10
+
+local function getManeuverRecastVar(ability)
+    return '[maneuver]recast' .. ability:getID()
+end
+
 xi.automaton.onManeuverCheck = function(player, target, ability)
     if
-        not player:hasStatusEffect(xi.effect.OVERLOAD) and
-        player:getPet() and
-        hasAnimatorEquipped(player)
+        player:hasStatusEffect(xi.effect.OVERLOAD) or
+        not player:getPet() or
+        not hasAnimatorEquipped(player)
     then
-        return 0, 0
-    else
         return 71, 0
     end
+
+    if player:getLocalVar(getManeuverRecastVar(ability)) > GetSystemTime() then
+        return xi.msg.basic.WAIT_LONGER, 0
+    end
+
+    return 0, 0
 end
 
 xi.automaton.onUseManeuver = function(player, target, ability, action)
@@ -566,6 +576,11 @@ xi.automaton.onUseManeuver = function(player, target, ability, action)
     if not pet then
         return
     end
+
+    -- The client assigns every maneuver to shared recast group 210. Track the
+    -- individual timer here and clear the shared client timer in the action packet.
+    player:setLocalVar(getManeuverRecastVar(ability), GetSystemTime() + maneuverRecastTime)
+    action:setRecast(0)
 
     local maneuverInfo = maneuverList[ability:getID()]
     local element      = maneuverInfo.element - 1

@@ -79,6 +79,11 @@ content.loot =
         { itemId = xi.item.VILE_ELIXIR_P1,          weight =   500 },
         { itemId = xi.item.ZIRCON,                  weight =   500 },
     },
+
+    {
+        { itemId = xi.item.NONE,                    weight =  9000 },
+        { itemId = xi.item.RESISTER,                weight =  1000 },
+    },
 }
 
 return content:register()

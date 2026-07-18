@@ -345,7 +345,7 @@ INSERT INTO `abilities` VALUES (336,'fly_high',14,96,1,3600,254,0,0,284,2000,0,6
 INSERT INTO `abilities` VALUES (337,'astral_conduit',15,96,1,3600,254,0,0,285,2000,0,6,0.0,0,0,0,0,0,0,NULL); -- check animation
 INSERT INTO `abilities` VALUES (338,'unbridled_wisdom',16,96,1,3600,254,100,0,286,2000,0,6,0.0,0,0,0,0,0,0,NULL); -- check animation
 INSERT INTO `abilities` VALUES (339,'cutting_cards',17,96,2,3600,254,0,0,287,2000,0,6,10.0,0,0,0,0,0,0,NULL); -- check animation
-INSERT INTO `abilities` VALUES (340,'heady_artifice',18,96,1,3600,254,0,0,288,2000,0,6,0.0,0,0,0,0,0,0,NULL); -- check animation
+INSERT INTO `abilities` VALUES (340,'heady_artifice',18,60,1,3600,254,0,0,288,2000,0,6,0.0,0,0,0,0,0,0,NULL); -- check animation
 INSERT INTO `abilities` VALUES (341,'grand_pas',19,96,1,3600,254,100,0,289,2000,0,6,0.0,0,0,0,0,0,4,NULL);
 INSERT INTO `abilities` VALUES (342,'caper_emissarius',20,96,2,3600,254,0,0,290,2000,0,6,10.0,0,0,0,0,0,0,NULL); -- check animation
 INSERT INTO `abilities` VALUES (343,'bolster',21,1,1,1800,0,0,0,303,2000,0,6,0.0,0,0,1,300,0,4,'SOA'); -- check animation

@@ -99,4 +99,12 @@ content.groups =
     },
 }
 
+content.loot =
+{
+    {
+        { itemId = xi.item.NONE,     weight = 9000 },
+        { itemId = xi.item.SCHURZEN, weight = 1000 },
+    },
+}
+
 return content:register()

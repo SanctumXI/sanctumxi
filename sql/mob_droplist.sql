@@ -13534,6 +13534,7 @@ INSERT INTO `mob_droplist` VALUES (1650,0,0,1000,3250,@UNCOMMON); -- Helical Gea
 -- ZoneID:  54 - Medusa
 INSERT INTO `mob_droplist` VALUES (1651,0,0,1000,2357,@VCOMMON); -- Medusas Armlet (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1651,0,0,1000,14959,@COMMON); -- Mercenarys Dastanas (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1651,0,0,1000,3309,@UNCOMMON); -- Barrage Turbine (Uncommon, 10%)
 
 -- ZoneID: 151 - Mee Deggi The Punisher
 INSERT INTO `mob_droplist` VALUES (1652,1,1,1000,16703,900);   -- Impact Knuckles (Group 1, Always 100% - 90%)
@@ -15157,7 +15158,7 @@ INSERT INTO `mob_droplist` VALUES (1830,0,0,1000,4362,@UNCOMMON);  -- Lizard Egg
 -- ZoneID:  72 - Ob
 INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,2628,@ALWAYS);   -- Obs Arm (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,15999,@COMMON);  -- Guignol Earring (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,2413,@UNCOMMON); -- Coiler (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,2353,@UNCOMMON); -- Optic Fiber (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,2414,@UNCOMMON); -- Steam Jacket (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,3310,@RARE);     -- Barrier Module Ii (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1832,0,0,1000,3312,@RARE);     -- Percolator (Rare, 5%)
@@ -16289,6 +16290,7 @@ INSERT INTO `mob_droplist` VALUES (1965,4,0,1000,5568,0);         -- Apkallu Egg
 -- ZoneID: 150 - Overlord Bakgodek
 INSERT INTO `mob_droplist` VALUES (1966,0,0,1000,1432,@ALWAYS);   -- Paladins Testimony (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1966,0,0,1000,17928,@VCOMMON); -- Juggernaut (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1966,0,0,1000,3307,@UNCOMMON);  -- Heat Capacitor (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1966,1,1,1000,658,75);      -- Damascus Ingot (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (1966,1,1,1000,837,75);      -- Spool Of Malboro Fiber (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (1966,1,1,1000,844,300);     -- Phoenix Feather (Group 1, Always, 100%,- 30%)
@@ -16398,6 +16400,7 @@ INSERT INTO `mob_droplist` VALUES (1977,0,0,1000,11281,@VCOMMON); -- Hachiryu Ha
 INSERT INTO `mob_droplist` VALUES (1977,0,0,1000,18447,@VCOMMON); -- Nanatsusayanotachi (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1977,0,0,1000,18759,@VCOMMON); -- Shenlongs Baghnakhs (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1977,0,0,1000,18594,@VCOMMON); -- Dorje (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (1977,0,0,1000,9234,@UNCOMMON); -- Optic Fiber II (Uncommon, 10%)
 
 -- ZoneID: 132 - Pantagruel -- TODO: Abyssea NM
 INSERT INTO `mob_droplist` VALUES (1978,0,0,1000,11606,@COMMON); -- Arctiers Torque (Common, 15%)
@@ -20040,6 +20043,7 @@ INSERT INTO `mob_droplist` VALUES (2510,0,0,1000,1450,@VRARE);    -- Lungo-Nango
 INSERT INTO `mob_droplist` VALUES (2511,0,0,1000,751,@ALWAYS);   -- Platinum Beastcoin (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2511,0,0,1000,1440,@ALWAYS);  -- Summoners Testimony (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2511,0,0,1000,17528,@RARE);   -- Astral Signa (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (2511,0,0,1000,3308,@UNCOMMON); -- Power Cooler (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2511,1,1,1000,658,75);     -- Damascus Ingot (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (2511,1,1,1000,837,75);     -- Spool Of Malboro Fiber (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (2511,1,1,1000,844,300);    -- Phoenix Feather (Group 1, Always, 100%,- 30%)
@@ -23861,6 +23865,7 @@ INSERT INTO `mob_droplist` VALUES (2830,0,0,1000,751,@ALWAYS);  -- Platinum Beas
 INSERT INTO `mob_droplist` VALUES (2830,0,0,1000,1428,@ALWAYS); -- White Mages Testimony (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2830,0,0,1000,4748,@ALWAYS); -- Scroll Of Raise Iii (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2830,0,0,1000,17073,@RARE);  -- Mistilteinn (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (2830,0,0,1000,9280,@UNCOMMON); -- Damage Gauge II (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2830,1,1,1000,658,75);    -- Damascus Ingot (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (2830,1,1,1000,837,75);    -- Spool Of Malboro Fiber (Group 1, Always, 100%, - 7.5%)
 INSERT INTO `mob_droplist` VALUES (2830,1,1,1000,844,300);   -- Phoenix Feather (Group 1, Always, 100%,- 30%)
