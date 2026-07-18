@@ -725,7 +725,7 @@ local gearSets =
         },
     },
 
-    [43] = -- Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+6, Ranged Accuracy+6. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
+    [43] = -- Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+10, Ranged Accuracy+10. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
     {
         items =
         {
@@ -745,12 +745,12 @@ local gearSets =
         {
             { xi.mod.HP,  30 },
             { xi.mod.VIT,  6 },
-            { xi.mod.ACC,  6 },
-            { xi.mod.RACC, 6 },
+            { xi.mod.ACC,  10 },
+            { xi.mod.RACC, 10 },
         },
     },
 
-    [44] = -- Supremacy Earring Sets. Set Bonus: STR+6, Attack+4, Ranged Attack+4, "Magic Atk. Bonus"+2. Active with any 2 items(Earring+Weapon)
+    [44] = -- Supremacy Earring Sets. Set Bonus: STR+6, Attack+4, Ranged Attack+4, "Magic Atk. Bonus"+10. Active with any 2 items(Earring+Weapon)
     {
         items =
         {
@@ -770,11 +770,11 @@ local gearSets =
             { xi.mod.STR,  6 },
             { xi.mod.ATT,  4 },
             { xi.mod.RATT, 4 },
-            { xi.mod.MATT, 2 },
+            { xi.mod.MATT, 10 },
         },
     },
 
-    [45] = -- Brilliant Earring Set. Set Bonus: Evasion, HP Recovered while healing, Reduces Emnity. Active with any 2 items(Earring+Weapon)
+    [45] = -- Brilliant Earring Set. Set Bonus: Evasion+10, HP Recovered while healing+10, Enmity-10. Active with any 2 items(Earring+Weapon)
     {
         items =
         {
@@ -794,7 +794,7 @@ local gearSets =
         {
             { xi.mod.EVA,    10 },
             { xi.mod.HPHEAL, 10 },
-            { xi.mod.ENMITY, -5 },
+            { xi.mod.ENMITY, -10 },
         }
     },
 
