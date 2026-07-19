@@ -46,8 +46,14 @@
 #define SOL_BIND_DEC(LuaType, CppType) \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj);
 
+#define SOL_BIND_DEC_CONST(LuaType, CppType) \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj);
+
 #define SOL_BIND_DEC_SUB(LuaType, BaseCppType, CppType) \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj);
+
+#define SOL_BIND_DEC_CONST_SUB(LuaType, BaseCppType, CppType) \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj);
 
 #define SOL_BIND_DEF(LuaType, CppType)                                                      \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj)                      \
@@ -55,10 +61,22 @@
         return obj ? sol::stack::push<LuaType>(L, obj) : sol::stack::push(L, sol::lua_nil); \
     }
 
+#define SOL_BIND_DEF_CONST(LuaType, CppType)                                                      \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj)                 \
+    {                                                                                              \
+        return obj ? sol::stack::push<LuaType>(L, obj) : sol::stack::push(L, sol::lua_nil);        \
+    }
+
 #define SOL_BIND_DEF_SUB(LuaType, BaseCppType, CppType)                                                   \
     int sol_lua_push(sol::types<CppType*>, lua_State* L, CppType* obj)                                    \
     {                                                                                                     \
         return obj ? sol::stack::push<LuaType>(L, (BaseCppType*)obj) : sol::stack::push(L, sol::lua_nil); \
+    }
+
+#define SOL_BIND_DEF_CONST_SUB(LuaType, BaseCppType, CppType)                                                   \
+    int sol_lua_push(sol::types<const CppType*>, lua_State* L, const CppType* obj)                              \
+    {                                                                                                           \
+        return obj ? sol::stack::push<LuaType>(L, (const BaseCppType*)obj) : sol::stack::push(L, sol::lua_nil); \
     }
 // clang-format on
 
@@ -110,6 +128,7 @@ SOL_BIND_DEC(CLuaInstance, CInstance);
 class CLuaItem;
 class CItem;
 SOL_BIND_DEC(CLuaItem, CItem);
+SOL_BIND_DEC_CONST(CLuaItem, CItem);
 
 class CItemCurrency;
 class CItemEquipment;
@@ -133,6 +152,17 @@ SOL_BIND_DEC_SUB(CLuaItem, CItem, CItemPuppet);
 SOL_BIND_DEC_SUB(CLuaItem, CItem, CItemShop);
 SOL_BIND_DEC_SUB(CLuaItem, CItem, CItemUsable);
 SOL_BIND_DEC_SUB(CLuaItem, CItem, CItemWeapon);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemCurrency);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemEquipment);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemFish);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemFlowerpot);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemFurnishing);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemGeneral);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemLinkshell);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemPuppet);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemShop);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemUsable);
+SOL_BIND_DEC_CONST_SUB(CLuaItem, CItem, CItemWeapon);
 
 class CLuaLootContainer;
 struct LootContainer;

@@ -66,6 +66,7 @@ SOL_BIND_DEF(CLuaInstance, CInstance);
 #include "items/item.h"
 #include "lua_item.h"
 SOL_BIND_DEF(CLuaItem, CItem);
+SOL_BIND_DEF_CONST(CLuaItem, CItem);
 
 #include "items/item_currency.h"
 #include "items/item_equipment.h"
@@ -89,6 +90,17 @@ SOL_BIND_DEF_SUB(CLuaItem, CItem, CItemPuppet);
 SOL_BIND_DEF_SUB(CLuaItem, CItem, CItemShop);
 SOL_BIND_DEF_SUB(CLuaItem, CItem, CItemUsable);
 SOL_BIND_DEF_SUB(CLuaItem, CItem, CItemWeapon);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemCurrency);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemEquipment);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemFish);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemFlowerpot);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemFurnishing);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemGeneral);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemLinkshell);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemPuppet);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemShop);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemUsable);
+SOL_BIND_DEF_CONST_SUB(CLuaItem, CItem, CItemWeapon);
 
 #include "utils/itemutils.h"
 #include "lua_loot.h"

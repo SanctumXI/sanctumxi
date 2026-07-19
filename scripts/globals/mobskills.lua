@@ -1637,6 +1637,15 @@ xi.mobskills.calculateDuration = function(tp, minimum, maximum)
     return utils.clamp(duration, minimum, maximum)
 end
 
+---@param target CBaseEntity
+---@param attacker CBaseEntity
+---@param skill CMobSkill
+---@param action CAction
+---@return xi.action.knockback
+xi.mobskills.calculateKnockback = function(target, attacker, skill, action)
+    return utils.clamp(skill:getKnockback() - target:getMod(xi.mod.KNOCKBACK_REDUCTION), xi.action.knockback.NONE, xi.action.knockback.LEVEL7)
+end
+
 -- Used for mobskills that remove player equipment.
 -- Removes items from randomly chosen equipment slots.
 ---@param target CBaseEntity
