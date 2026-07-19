@@ -433,10 +433,10 @@ INSERT INTO `traits` VALUES (67,'subtle blow',13,45,3,289,15,NULL,0);
 INSERT INTO `traits` VALUES (67,'subtle blow',13,60,4,289,20,NULL,0);
 INSERT INTO `traits` VALUES (67,'subtle blow',13,75,5,289,25,NULL,0);
 INSERT INTO `traits` VALUES (67,'subtle blow',13,91,6,289,27,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (67,'subtle blow',19,25,1,289,5,'WOTG',0);
-INSERT INTO `traits` VALUES (67,'subtle blow',19,45,2,289,10,'WOTG',0);
-INSERT INTO `traits` VALUES (67,'subtle blow',19,65,3,289,15,'WOTG',0);
-INSERT INTO `traits` VALUES (67,'subtle blow',19,86,4,289,20,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (67,'subtle blow',19,15,1,289,5,'WOTG',0);
+INSERT INTO `traits` VALUES (67,'subtle blow',19,35,2,289,10,'WOTG',0);
+INSERT INTO `traits` VALUES (67,'subtle blow',19,55,3,289,15,'WOTG',0);
+INSERT INTO `traits` VALUES (67,'subtle blow',19,70,4,289,20,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (68,'assassin',6,45,1,0,0,'COP',0);
 INSERT INTO `traits` VALUES (69,'divine veil',3,50,1,0,0,'COP',0);
 INSERT INTO `traits` VALUES (70,'zanshin',12,20,1,306,15,'COP',0);
@@ -579,7 +579,7 @@ INSERT INTO `traits` VALUES (108,'conserve tp',14,58,2,944,18,'ABYSSEA',0); -- C
 INSERT INTO `traits` VALUES (108,'conserve tp',14,71,3,944,21,'ABYSSEA',0); -- Conserve TP III, DRG71, 21%
 INSERT INTO `traits` VALUES (108,'conserve tp',14,84,4,944,24,'ABYSSEA',0); -- Conserve TP IV, DRG84, 24%
 INSERT INTO `traits` VALUES (108,'conserve tp',14,97,5,944,26,'ABYSSEA',0); -- Conserve TP V, DRG97, 26%
-INSERT INTO `traits` VALUES (108,'conserve tp',19,77,1,944,15,'ABYSSEA',0); -- Conserve TP I, DNC77, 15%
+INSERT INTO `traits` VALUES (108,'conserve tp',19,50,1,944,15,'ABYSSEA',0); -- Conserve TP I, DNC50, 15%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,87,2,944,18,'ABYSSEA',0); -- Conserve TP II, DNC87, 18%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,97,3,944,21,'ABYSSEA',0); -- Conserve TP III, DNC97, 21%
 INSERT INTO `traits` VALUES (109,'occult acumen',4,75,1,902,25,'ABYSSEA',0);
