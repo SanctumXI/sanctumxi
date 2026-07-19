@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Wild Oats
 -- Additional effect: Vitality Down. Duration of effect varies on TP
--- Spell cost: 8 MP
+-- Spell cost: 9 MP
 -- Monster Type: Plantoids
 -- Spell Type: Physical (Piercing)
 -- Blue Magic Points: 3

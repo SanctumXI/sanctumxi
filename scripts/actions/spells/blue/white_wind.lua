@@ -6,9 +6,9 @@
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 5
 -- Stat Bonus: HP+5 AGI+1
--- Level: 94
--- Casting Time: 7 seconds
--- Recast Time: 20 seconds
+-- Level: 75
+-- Casting Time: 4.5 seconds
+-- Recast Time: 22.5 seconds
 -----------------------------------
 -- Combos: Auto Regen
 -----------------------------------

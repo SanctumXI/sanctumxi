@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Diamondhide
 -- Gives party members within area of effect the effect of "Stoneskin"
--- Spell cost: 100 MP
+-- Spell cost: 99 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Earth)
 -- Blue Magic Points: 3
 -- Stat Bonus: VIT+2
 -- Level: 67
--- Casting Time: 6 seconds
--- Recast Time: 1 minute
+-- Casting Time: 7 seconds
+-- Recast Time: 26 seconds
 -- 5 minutes
 -----------------------------------
 -- Combos: None

@@ -5,7 +5,7 @@
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Light)
 -- Blue Magic Points: 4
--- Stat Bonus: MP-5, MND+2
+-- Stat Bonus: MP+10, MND+2
 -- Level: 74
 -- Casting Time: 4 seconds
 -- Recast Time: 180 seconds

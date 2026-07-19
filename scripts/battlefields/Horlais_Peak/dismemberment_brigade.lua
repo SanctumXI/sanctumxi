@@ -191,6 +191,11 @@ content.loot =
         { itemId = xi.item.DEMON_HORN,                weight =   400 },
         { itemId = xi.item.CORAL_FRAGMENT,            weight =   400 },
     },
+
+    {
+        { itemId = xi.item.NONE,                      weight =  9000 },
+        { itemId = xi.item.SPEEDLOADER,               weight =  1000 },
+    },
 }
 
 return content:register()

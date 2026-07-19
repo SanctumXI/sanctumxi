@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Cold Wave
 -- Deals ice damage that lowers Agility and gradually reduces HP of enemies within range
--- Spell cost: 30 MP
+-- Spell cost: 37 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 2
 -- Stat Bonus: INT+1
 -- Level: 52
--- Casting Time: 2.5 seconds
+-- Casting Time: 4 seconds
 -- Recast Time: 60 seconds
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Auto Refresh

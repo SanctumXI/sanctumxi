@@ -7,7 +7,7 @@
 -- Blue Magic Points: 3
 -- Stat Bonus: CHR+1 HP+5
 -- Level: 58
--- Casting Time: 3.5 seconds
+-- Casting Time: 2.5 seconds
 -- Recast Time: 6 seconds
 -----------------------------------
 -- Combos: Resist Sleep

@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Pinecone Bomb
 -- Additional effect: Sleep. Duration of effect varies with TP
--- Spell cost: 41 MP
+-- Spell cost: 48 MP
 -- Monster Type: Plantoids
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 1
 -- Stat Bonus: STR+1
 -- Level: 36
--- Casting Time: 3.5 seconds
--- Recast Time: 40 seconds
+-- Casting Time: 2.5 seconds
+-- Recast Time: 26.5 seconds
 -- Skillchain Element(s): Liquefaction
 -- Combos: None
 -----------------------------------

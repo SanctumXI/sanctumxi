@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Dimensional Death
 -- Damage varies with TP
--- Spell cost: 75 MP
+-- Spell cost: 48 MP
 -- Monster Type: Undead
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 5
 -- Stat Bonus: MND+1, CHR+1, HP+5
 -- Level: 60
--- Casting Time: 3 seconds
--- Recast Time: 40 seconds
+-- Casting Time: 0.5 seconds
+-- Recast Time: 23.75 seconds
 -- Skillchain Properties: Transfixion/Impaction
 -- Combos: Accuracy Bonus
 -----------------------------------

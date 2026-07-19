@@ -141,6 +141,11 @@ content.loot =
     {
         { itemId = xi.item.DEMON_SKULL,             weight = 10000 },
     },
+
+    {
+        { itemId = xi.item.NONE,                    weight =  9000 },
+        { itemId = xi.item.DISRUPTOR,               weight =  1000 },
+    },
 }
 
 return content:register()

@@ -5,10 +5,10 @@
 -- Monster Type: Undead
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 2
--- Stat Bonus: HP-20
+-- Stat Bonus: HP-15, STR+1
 -- Level: 48
--- Casting Time: 3 seconds
--- Recast Time: 90 seconds
+-- Casting Time: 4 seconds
+-- Recast Time: 26 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------

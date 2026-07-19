@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Memento Mori
 -- Enhances magic attack
--- Spell cost: 50 MP
+-- Spell cost: 46 MP
 -- Monster Type: Undead
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 4
 -- Stat Bonus: INT+1
 -- Level: 62
--- Casting Time: 3 seconds
--- Recast Time: 1 minute
+-- Casting Time: 3.5 seconds
+-- Recast Time: 56 seconds
 -----------------------------------
 -- Combos: Magic Attack Bonus
 -----------------------------------

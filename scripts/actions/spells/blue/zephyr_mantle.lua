@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: AGI+2
 -- Level: 65
--- Casting Time: 7 seconds
+-- Casting Time: 4 seconds
 -- Recast Time: 60 seconds
 -- Duration: 5 minutes
 -----------------------------------

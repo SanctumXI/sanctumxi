@@ -5,7 +5,7 @@
 -- Monster Type: Aquans
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 3
--- Stat Bonus: MND+2
+-- Stat Bonus: MND+3
 -- Level: 42
 -- Casting Time: 3 seconds
 -- Recast Time: 45 seconds

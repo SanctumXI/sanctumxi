@@ -2138,6 +2138,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
                 damage = (int32)((this->GetRangedWeaponDmg() + battleutils::GetFSTR(this, PTarget, slot)) * pdif);
 
+                // Manually thrown weapons receive a 20% damage bonus. Daken
+                // uses the attack-round path and is intentionally unaffected.
+                if (ammoThrowing || rangedThrowing)
+                {
+                    damage = damage * 120 / 100;
+                }
+
                 if (slot == SLOT_RANGED)
                 {
                     if (PItem != nullptr)

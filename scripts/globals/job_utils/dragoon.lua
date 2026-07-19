@@ -233,6 +233,11 @@ end
 xi.job_utils.dragoon.useJump = function(player, target, ability, action)
     local atkMultiplier = (player:getMod(xi.mod.JUMP_ATT_BONUS) + 100) / 100
     local params = getJumpWSParams(player, atkMultiplier, 1, false)
+    local jumpCritRate = player:getMod(xi.mod.JUMP_CRIT_RATE) / 100
+
+    if player:getMod(xi.mod.FORCE_JUMP_CRIT) == 0 and jumpCritRate > 0 then
+        params.critVaries = { jumpCritRate, jumpCritRate, jumpCritRate }
+    end
 
     -- Only 'Jump' and not others get the fTP VIT bonus
     local ftp = 1 + (player:getStat(xi.mod.VIT) / 256)
@@ -406,7 +411,7 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability, action)
     local healPet = drainamount * 2
 
     if player:getEquipID(xi.slot.HEAD) == xi.item.DRACHEN_ARMET_P1 then
-        healPet = healPet + 15
+        healPet = healPet + 50
     end
 
     -- Spirit Link is self target but reports effect on Wyvern.

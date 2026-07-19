@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Mysterious Light
 -- Deals wind damage to enemies within range. Additional effect: Weight
--- Spell cost: 65 MP
+-- Spell cost: 73 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4
 -- Stat Bonus: AGI+3
 -- Level: 40
--- Casting Time: 4 seconds
+-- Casting Time: 3.75 seconds
 -- Recast Time: 24.5 seconds
 -- Magic Bursts on: Detonation, Fragmentation, Light
 -- Combos: Max MP Boost
@@ -34,7 +34,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.agi_wsc     = 0.0
     params.int_wsc     = 0.0
     params.mnd_wsc     = 0.0
-    params.chr_wsc     = 0.3
+    params.chr_wsc     = 0.65
 
     -- Handle damage.
     local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)

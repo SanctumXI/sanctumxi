@@ -1,7 +1,7 @@
 -----------------------------------
 -- Spell: Refueling
 -- Increases attack speed
--- Spell cost: 90 MP
+-- Spell cost: 29 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4

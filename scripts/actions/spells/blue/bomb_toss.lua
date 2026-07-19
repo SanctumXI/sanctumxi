@@ -1,13 +1,13 @@
 -----------------------------------
 -- Spell: Bomb Toss
 -- Throws a bomb at an enemy
--- Spell cost: 30 MP
+-- Spell cost: 42 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Fire)
 -- Blue Magic Points: 3
 -- Stat Bonus: STR+2
 -- Level: 28
--- Casting Time: 4.5 seconds
+-- Casting Time: 3.75 seconds
 -- Recast Time: 24.5 seconds
 -- Magic Bursts on: Liquefaction, Fusion, Light
 -- Combos: None

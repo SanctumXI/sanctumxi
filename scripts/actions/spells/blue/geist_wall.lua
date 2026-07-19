@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Geist Wall
 -- Removes one beneficial magic effect from enemies within range
--- Spell cost: 45 MP
+-- Spell cost: 35 MP
 -- Monster Type: Lizards
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 3
 -- Stat Bonus: INT +2
 -- Level: 46
--- Casting Time: 4 seconds
--- Recast Time: 40 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 30 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------

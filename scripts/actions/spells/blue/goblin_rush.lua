@@ -1,11 +1,11 @@
 -----------------------------------
 -- Spell: Goblin Rush
 -- Delivers a threefold attack. Accuracy varies with TP
--- Spell cost: 81 MP
+-- Spell cost: 76 MP
 -- Monster Type: BEASTMEN
 -- Spell Type: Physical (Blunt)
 -- Blue Magic Points: 3
--- Stat Bonus: HP+10 DEX+3 MND-3
+-- Stat Bonus: HP+10, DEX+2, MND-3
 -- Level: 81
 -- Casting Time: 0.5 seconds
 -- Recast Time: 25.5 seconds

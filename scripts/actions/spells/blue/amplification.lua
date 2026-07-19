@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Amplification
 -- Enhances magic attack and magic defense
--- Spell cost: 80 MP
+-- Spell cost: 48 MP
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 3
 -- Stat Bonus: MP+10
 -- Level: 70
--- Casting Time: 7 seconds
--- Recast Time: 120 seconds
+-- Casting Time: 4 seconds
+-- Recast Time: 56 seconds
 -- Duration: 180 seconds
 -----------------------------------
 -- Combos: None

@@ -472,7 +472,7 @@ INSERT INTO `item_latents` VALUES (13297,25,5,2,75);     -- Accuracy+5 while HP 
 INSERT INTO `item_latents` VALUES (13298,384,400,2,75);  -- Haste+4% while HP <=75% and TP <=100%
 
 -- Drake Ring
-INSERT INTO `item_latents` VALUES (13299,361,10,2,75);   -- Enhances "Jump" effects while HP <=75% and TP <=100%
+INSERT INTO `item_latents` VALUES (13299,1201,5,7,2000); -- Jump ability critical hit rate +5% while TP >=2000
 
 -- Conjurer's Ring
 INSERT INTO `item_latents` VALUES (13300,346,1,2,75);    -- Avatar perpetuation cost -1 while HP <=75% and TP <=100%
@@ -797,12 +797,12 @@ INSERT INTO `item_latents` VALUES (13949,1,40,49,5928);  -- def+40 Hinesama Rice
 INSERT INTO `item_latents` VALUES (13949,1,40,49,5929);  -- def+40 Ojo Rice Ball
 INSERT INTO `item_latents` VALUES (13949,1,50,49,4405);  -- def+50 Rice Ball
 INSERT INTO `item_latents` VALUES (13949,1,50,49,4604);  -- def+50 Rogue Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,40,49,4590); -- atk+40 Salmon Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,40,49,4605); -- atk+40 Naval Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,50,49,4277); -- atk+50 Tonosama Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,50,49,4278); -- atk+50 Shogun Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,60,49,5928); -- atk+60 Hinesama Rice Ball
-INSERT INTO `item_latents` VALUES (13949,23,60,49,5929); -- atk+60 Ojo Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,50,49,4590); -- atk+50 Salmon Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,50,49,4605); -- atk+50 Naval Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,60,49,4277); -- atk+60 Tonosama Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,60,49,4278); -- atk+60 Shogun Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,70,49,5928); -- atk+70 Hinesama Rice Ball
+INSERT INTO `item_latents` VALUES (13949,23,70,49,5929); -- atk+70 Ojo Rice Ball
 INSERT INTO `item_latents` VALUES (13949,230,5,49,4604); -- beast killer 5% (guesstimated) Rogue Rice Ball
 INSERT INTO `item_latents` VALUES (13949,232,5,49,4604); -- arcana killer 5% (guesstimated) Naval Rice Ball
 INSERT INTO `item_latents` VALUES (13949,288,1,49,4277); -- double attack 1% Tonosama Rice Ball
@@ -1282,12 +1282,12 @@ INSERT INTO `item_latents` VALUES (14901,1,40,49,5928);  -- def+40 Hinesama Rice
 INSERT INTO `item_latents` VALUES (14901,1,40,49,5929);  -- def+40 Ojo Rice Ball
 INSERT INTO `item_latents` VALUES (14901,1,50,49,4405);  -- def+50 Rice Ball
 INSERT INTO `item_latents` VALUES (14901,1,50,49,4604);  -- def+50 Rogue Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,40,49,4590); -- atk+40 Salmon Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,40,49,4605); -- atk+40 Naval Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,50,49,4277); -- atk+50 Tonosama Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,50,49,4278); -- atk+50 Shogun Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,60,49,5928); -- atk+60 Hinesama Rice Ball
-INSERT INTO `item_latents` VALUES (14901,23,60,49,5929); -- atk+60 Ojo Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,50,49,4590); -- atk+50 Salmon Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,50,49,4605); -- atk+50 Naval Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,60,49,4277); -- atk+60 Tonosama Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,60,49,4278); -- atk+60 Shogun Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,70,49,5928); -- atk+70 Hinesama Rice Ball
+INSERT INTO `item_latents` VALUES (14901,23,70,49,5929); -- atk+70 Ojo Rice Ball
 INSERT INTO `item_latents` VALUES (14901,230,5,49,4604); -- beast killer 5% (guesstimated) Rogue Rice Ball
 INSERT INTO `item_latents` VALUES (14901,232,5,49,4604); -- arcana killer 5% (guesstimated) Naval Rice Ball
 INSERT INTO `item_latents` VALUES (14901,288,1,49,4277); -- double attack 1% Tonosama Rice Ball
@@ -1644,7 +1644,7 @@ INSERT INTO `item_latents` VALUES (15589,14,8,11,0);
 INSERT INTO `item_latents` VALUES (15592,68,12,26,2);    -- Dusk - Dawn: EVA +12
 
 -- Warrior's Calligae +1
-INSERT INTO `item_latents` VALUES (15665,63,10,13,56);  -- Reduces defense penalty by 10% if Berserk Active
+INSERT INTO `item_latents` VALUES (15665,63,15,13,56);  -- Reduces defense penalty by 15% if Berserk Active
 
 -- Abyss Sollerets +1
 INSERT INTO `item_latents` VALUES (15672,63,10,13,64);   -- +1: Enhances "Last Resort" effect
@@ -1803,6 +1803,7 @@ INSERT INTO `item_latents` VALUES (16018,30,1,22,5);     -- Ataraxy Earring,MACC
 INSERT INTO `item_latents` VALUES (16019,9,1,22,6);      -- Forte Earring,DEX+1 if THF is in party
 INSERT INTO `item_latents` VALUES (16020,10,1,22,7);     -- Survivor Earring,VIT+1 if PLD is in party
 INSERT INTO `item_latents` VALUES (16021,8,1,22,8);      -- Brawn Earring,STR+1 if DRK is in party
+INSERT INTO `item_latents` VALUES (16022,1204,10,7,1000); -- Fidelity Earring,pet accuracy+10 at 1000 TP or higher
 INSERT INTO `item_latents` VALUES (16023,14,1,22,10);    -- Mystique Earring,CHR+1 if BRD is in party
 INSERT INTO `item_latents` VALUES (16024,24,1,22,11);    -- Impetus Earring,RATT+1 if RNG is in party
 INSERT INTO `item_latents` VALUES (16025,73,1,22,12);    -- Rathe Earring,Store TP+1 if SAM is in party
@@ -1812,6 +1813,7 @@ INSERT INTO `item_latents` VALUES (16028,5,15,22,15);    -- Psyche Earring,MP+15
 INSERT INTO `item_latents` VALUES (16029,2,10,22,16);    -- Booster Earring,HP+10 if BLU is in party
 INSERT INTO `item_latents` VALUES (16029,5,10,22,16);    -- Booster Earring,MP+10 if BLU is in party
 INSERT INTO `item_latents` VALUES (16030,26,1,22,17);    -- Soarer Earring,RACC+1 if COR is in party
+INSERT INTO `item_latents` VALUES (16031,1203,10,7,1000); -- Affinity Earring,pet attack+10 at 1000 TP or higher
 INSERT INTO `item_latents` VALUES (16032,289,3,22,19);   -- Muffle Earring,Subtle Blow +3 if DNC is in party
 INSERT INTO `item_latents` VALUES (16033,71,1,22,20);    -- Sylph Earring,Healing MP +1 if SCH is in party
 

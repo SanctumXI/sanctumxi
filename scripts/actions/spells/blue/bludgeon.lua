@@ -8,7 +8,7 @@
 -- Stat Bonus: STR+1
 -- Level: 18
 -- Casting Time: 0.5 seconds
--- Recast Time: 10 seconds
+-- Recast Time: 11.75 seconds
 -- Skillchain Element(s): Liquefaction
 -- Combos: Undead Killer
 -----------------------------------

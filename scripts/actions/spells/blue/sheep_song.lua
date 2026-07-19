@@ -7,8 +7,8 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: CHR+1, HP+5
 -- Level: 16
--- Casting Time: Casting Time: 3 seconds
--- Recast Time: Recast Time: 60 seconds
+-- Casting Time: 3 seconds
+-- Recast Time: 60 seconds
 -- Duration: 60 seconds
 -- Magic Bursts on: Transfixion, Fusion, and Light
 -- Combos: Auto Regen

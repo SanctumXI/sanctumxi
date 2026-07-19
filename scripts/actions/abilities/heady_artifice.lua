@@ -1,7 +1,7 @@
 -----------------------------------
 -- Ability: Heady Artifice
 -- Description: Allows automatons to perform a special ability that varies with the head used.
--- Obtained: PUP Level 96
+-- Obtained: PUP Level 60
 -- Recast Time: 01:00:00
 -----------------------------------
 ---@type TAbility
@@ -11,8 +11,8 @@ abilityObject.onAbilityCheck = function(player, target, ability)
     return xi.job_utils.puppetmaster.onAbilityCheckHeadyArtiface(player, target, ability)
 end
 
-abilityObject.onUseAbility = function(player, target, ability)
-    return xi.job_utils.puppetmaster.onAbilityUseHeadyArtiface(player, target, ability)
+abilityObject.onUseAbility = function(player, target, ability, action)
+    return xi.job_utils.puppetmaster.onAbilityUseHeadyArtifice(player, target, ability, action)
 end
 
 return abilityObject

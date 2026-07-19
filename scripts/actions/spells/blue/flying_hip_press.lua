@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Flying Hip Press
 -- Deals wind damage to enemies within range
--- Spell cost: 80 MP
+-- Spell cost: 125 MP
 -- Monster Type: Beastmen
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 3
 -- Stat Bonus: AGI+1
 -- Level: 58
--- Casting Time: 3 seconds
--- Recast Time: 45 seconds
+-- Casting Time: 5.75 seconds
+-- Recast Time: 34.5 seconds
 -- Magic Bursts On: Detonation, Fragmentation, and Light
 -- Combos: Max HP Boost
 -----------------------------------

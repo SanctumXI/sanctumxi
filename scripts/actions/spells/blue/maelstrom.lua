@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Maelstrom
 -- Deals water damage to enemies within range. Additional effect: STR Down
--- Spell cost: 142 MP
+-- Spell cost: 162 MP
 -- Monster Type: Aquans
 -- Spell Type: Magical (Water)
 -- Blue Magic Points: 5
--- Stat Bonus: Mind +2
+-- Stat Bonus: MND+2
 -- Level: 61
 -- Casting Time: 6 seconds
--- Recast Time: 20 seconds
+-- Recast Time: 39 seconds
 -- Magic Bursts on: Reverberation, Distortion, and Darkness
 -- Combos: Clear Mind
 -----------------------------------

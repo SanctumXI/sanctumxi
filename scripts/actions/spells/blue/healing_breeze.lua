@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Healing Breeze
 -- Restores HP for party members within area of effect
--- Spell cost: 60 MP
+-- Spell cost: 55 MP
 -- Monster Type: Beasts
 -- Spell Type: Magical (Wind)
 -- Blue Magic Points: 4
 -- Stat Bonus: CHR+2, HP+10
 -- Level: 16
 -- Casting Time: 4.5 seconds
--- Recast Time: 20 seconds
+-- Recast Time: 15 seconds
 -----------------------------------
 -- Combos: Auto Regen
 -----------------------------------

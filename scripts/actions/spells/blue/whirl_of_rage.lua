@@ -8,7 +8,7 @@
 -- Stat Bonus: STR+2 DEX+2
 -- Level: 83
 -- Casting Time: 1 second
--- Recast Time: 30 seconds
+-- Recast Time: 31 seconds
 -- Skillchain Element(s): Scission, Detonation
 -- Combos: Zanshin
 -----------------------------------

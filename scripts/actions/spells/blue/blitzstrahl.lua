@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Blitzstrahl
 -- Deals lightning damage to an enemy.
--- Spell cost: 52 MP
+-- Spell cost: 70 MP
 -- Monster Type: Arcana
 -- Spell Type: Magical (Lightning)
 -- Blue Magic Points: 4
 -- Stat Bonus: DEX+3
 -- Level: 44
--- Casting Time: 1.5 seconds
--- Recast Time: 6 seconds
+-- Casting Time: 4.5 seconds
+-- Recast Time: 29.25 seconds
 -- Magic Bursts on: Impaction, Fragmentation, Light
 -- Combos: None
 -----------------------------------

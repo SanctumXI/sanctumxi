@@ -284,7 +284,7 @@ INSERT INTO `item_mods_pet` VALUES (15267,72,3,3); -- Automaton - HPHEAL: 3
 
 -- Evokers Pigaches +1
 INSERT INTO `item_mods_pet` VALUES (15366,27,-4,1); -- Avatar - ENMITY: -4
-INSERT INTO `item_mods_pet` VALUES (15366,68,5,1);  -- Avatar - EVA: 5
+INSERT INTO `item_mods_pet` VALUES (15366,68,15,1); -- Avatar - EVA: 15
 
 -- Falconers Hose
 INSERT INTO `item_mods_pet` VALUES (15367,2,30,2); -- Wyvern - HP: 30
@@ -339,7 +339,7 @@ INSERT INTO `item_mods_pet` VALUES (16297,164,-200,0); -- All Pets - DMGRANGE: -
 
 -- Puppetry Churidars +1
 INSERT INTO `item_mods_pet` VALUES (16351,168,10,3); -- Automaton - SPELLINTERRUPT: 10
-INSERT INTO `item_mods_pet` VALUES (16351,374,5,3);  -- Automaton - CURE_POTENCY: 5
+INSERT INTO `item_mods_pet` VALUES (16351,374,10,3); -- Automaton - CURE_POTENCY: 10
 
 -- Pantin Churidars
 INSERT INTO `item_mods_pet` VALUES (16352,30,5,3); -- Automaton - MACC: 5

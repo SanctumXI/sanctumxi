@@ -1,14 +1,14 @@
 -----------------------------------
 -- Spell: Blood Drain
 -- Steals an enemy's HP. Ineffective against undead
--- Spell cost: 20 MP
+-- Spell cost: 10 MP
 -- Monster Type: Birds
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 2
 -- Stat Bonus: HP-10
 -- Level: 20
--- Casting Time: 2.5 seconds
--- Recast Time: 30 seconds
+-- Casting Time: 4 seconds
+-- Recast Time: 26 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------

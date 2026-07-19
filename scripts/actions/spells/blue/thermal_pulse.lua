@@ -8,9 +8,9 @@
 -- Stat Bonus: VIT+2
 -- Level: 86
 -- Casting Time: 5.5 seconds
--- Recast Time: 70 seconds
+-- Recast Time: 8 seconds
 -- Magic Bursts on: None
--- Combos: Attck Bonus
+-- Combos: Attack Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}

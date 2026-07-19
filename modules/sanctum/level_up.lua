@@ -511,6 +511,7 @@ local unlocks =
             [10] = { 'Retrieve' },
             [15] = { 'Repair' },
             [30] = { 'Maintenance' },
+            [60] = { 'Heady Artifice' },
         },
 
         traits =

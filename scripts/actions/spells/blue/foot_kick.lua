@@ -4,11 +4,11 @@
 -- Spell cost: 5 MP
 -- Monster Type: Beasts
 -- Spell Type: Physical (Slashing)
--- Blue Magic Points: 1
+-- Blue Magic Points: 2
 -- Stat Bonus: AGI+1
 -- Level: 1
 -- Casting Time: 0.5 seconds
--- Recast Time: 6 seconds
+-- Recast Time: 6.5 seconds
 -- Skillchain Property: Detonation
 -- Combos: Lizard Killer
 -----------------------------------

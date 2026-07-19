@@ -37,7 +37,7 @@ enum class LATENT : uint16
     MP_UNDER_PERCENT       = 4,  // mp less than or equal to % - PARAM: MP PERCENT
     MP_UNDER               = 5,  // mp less than # - PARAM: MP #
     TP_UNDER               = 6,  // tp under # and during WS - PARAM: TP VALUE
-    TP_OVER                = 7,  // tp over # - PARAM: TP VALUE
+    TP_OVER                = 7,  // tp greater than or equal to # - PARAM: TP VALUE
     SUBJOB                 = 8,  // subjob - PARAM: JOBTYPE
     PET_ID                 = 9,  // pettype - PARAM: PETID
     WEAPON_DRAWN           = 10, // weapon drawn

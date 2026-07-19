@@ -605,8 +605,7 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 
         if (PPetEntity->getPetType() == PET_TYPE::AUTOMATON)
         {
-            // Unsure of the accuracy of this, but it's what we have in petutils
-            return std::floor(GetSkill(SKILL_AUTOMATON_MELEE) / 9 * 2) + 3 + getMod(Mod::MAIN_DMG_RATING);
+            return std::floor((GetSkill(SKILL_AUTOMATON_MELEE) / 8.7f) * 2.0f + 3.0f) + getMod(Mod::MAIN_DMG_RATING);
         }
         else if (PPetEntity->getPetType() == PET_TYPE::WYVERN)
         {
@@ -699,8 +698,7 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 
         if (PPetEntity->getPetType() == PET_TYPE::AUTOMATON)
         {
-            // Unsure of the accuracy of this, but it's what we have in petutils
-            return std::floor(GetSkill(SKILL_AUTOMATON_RANGED) / 9 * 2) + 3 + getMod(Mod::RANGED_DMG_RATING);
+            return std::floor((GetSkill(SKILL_AUTOMATON_RANGED) / 8.7f) * 2.0f + 3.0f) + getMod(Mod::RANGED_DMG_RATING);
         }
         else if (PPetEntity->getPetType() == PET_TYPE::WYVERN)
         {
@@ -1493,15 +1491,17 @@ uint16 CBattleEntity::EVA()
 {
     int16 evasion = 1;
 
-    if (this->objtype == TYPE_MOB || this->objtype == TYPE_PET)
+    const bool isAutomaton = this->objtype == TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AUTOMATON;
+
+    if (this->objtype == TYPE_MOB || (this->objtype == TYPE_PET && !isAutomaton))
     {
         evasion = m_modStat[Mod::EVA]; // Mobs and pets base evasion is based off the EVA mod
     }
-    else // If it is a player then evasion = SKILL_EVASION
+    else // Players and automatons use SKILL_EVASION
     {
         evasion = GetSkill(SKILL_EVASION);
 
-        // Player only evasion calculation
+        // Skill based evasion calculation
         if (evasion > 200)
         {
             evasion = 200 + (evasion - 200) * 0.9;
@@ -1510,7 +1510,7 @@ uint16 CBattleEntity::EVA()
 
     evasion += AGI() / 2;
 
-    return std::max(1, evasion + (this->objtype == TYPE_MOB || this->objtype == TYPE_PET ? 0 : m_modStat[Mod::EVA])); // The mod for a pet or mob is already calclated in the above so return 0
+    return std::max(1, evasion + (this->objtype == TYPE_MOB || (this->objtype == TYPE_PET && !isAutomaton) ? 0 : m_modStat[Mod::EVA])); // The mod for a pet or mob is already calclated in the above so return 0
 }
 
 JOBTYPE CBattleEntity::GetMJob() const

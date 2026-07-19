@@ -3139,7 +3139,6 @@ end
 function CBaseEntity:isTandemActive()
 end
 
----@nodiscard
 ---@param element integer
 ---@param burden integer
 ---@return integer
@@ -3525,6 +3524,12 @@ end
 ---@param itemID integer
 ---@return boolean
 function CBaseEntity:hasAttachment(itemID)
+end
+
+---@nodiscard
+---@param itemID integer
+---@return boolean
+function CBaseEntity:hasAttachmentSet(itemID)
 end
 
 ---@nodiscard

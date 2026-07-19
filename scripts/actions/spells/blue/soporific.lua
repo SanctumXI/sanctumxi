@@ -8,7 +8,7 @@
 -- Stat Bonus: MND +2
 -- Level: 24
 -- Casting Time: 3 seconds
--- Recast Time: 90 seconds
+-- Recast Time: 26 seconds
 -- Duration: 90 seconds
 -- Magic Bursts on: Compression, Gravitation, and Darkness
 -- Combos: Clear Mind

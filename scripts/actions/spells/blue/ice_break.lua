@@ -5,10 +5,10 @@
 -- Monster Type: Arcana
 -- Spell Type: Magical (Ice)
 -- Blue Magic Points: 3
--- Stat Bonus: INT+1
+-- Stat Bonus: INT+2
 -- Level: 50
--- Casting Time: 5 seconds
--- Recast Time: 20 seconds
+-- Casting Time: 5.25 seconds
+-- Recast Time: 13.75 seconds
 -- Magic Bursts on: Induration, Distortion, and Darkness
 -- Combos: Magic Defense Bonus
 -----------------------------------

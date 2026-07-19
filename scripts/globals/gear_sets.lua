@@ -13,7 +13,7 @@ xi.gear_sets = xi.gear_sets or {}
 
 local gearSets =
 {
-    [1] = -- Usukane's set (5% Haste)
+    [1] = -- Usukane's set: Haste +2/+3/+5/+8% for 2-5 pieces
     {
         items =
         {
@@ -23,14 +23,14 @@ local gearSets =
             xi.item.USUKANE_HIZAYOROI,
             xi.item.USUKANE_SUNE_ATE,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.HASTE_GEAR, 500 },
+            { xi.mod.HASTE_GEAR, 200, 300, 500, 800 },
         },
     },
 
-    [2] = -- Skadi's set (5% critrate is guess)
+    [2] = -- Skadi's set: Critical hit rate +2/+3/+5/+8% for 2-5 pieces
     {
         items =
         {
@@ -40,10 +40,10 @@ local gearSets =
             xi.item.SKADIS_CHAUSSES,
             xi.item.SKADIS_JAMBEAUX,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.CRITHITRATE, 5 },
+            { xi.mod.CRITHITRATE, 2, 3, 5, 8 },
         },
     },
 
@@ -64,7 +64,7 @@ local gearSets =
         },
     },
 
-    [4] = -- Denali Jacket Set (Increases Accuracy +20)
+    [4] = -- Denali Jacket Set: Accuracy +5/+10/+15/+20 for 2-5 pieces
     {
         items =
         {
@@ -74,10 +74,10 @@ local gearSets =
             xi.item.DENALI_KECKS,
             xi.item.DENALI_GAMASHES,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.ACC, 20 },
+            { xi.mod.ACC, 5, 10, 15, 20 },
         },
     },
 
@@ -98,7 +98,7 @@ local gearSets =
         },
     },
 
-    [6] = -- Pahluwan Khazagand Set (Needs Verification)
+    [6] = -- Pahluwan Khazagand Set: Subtle Blow +3/+6/+10/+15 for 2-5 pieces
     {
         items =
         {
@@ -108,14 +108,14 @@ local gearSets =
             xi.item.PAHLUWAN_SERAWEELS,
             xi.item.PAHLUWAN_CRACKOWS,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.SUBTLE_BLOW, 8 },
+            { xi.mod.SUBTLE_BLOW, 3, 6, 10, 15 },
         },
     },
 
-    [7] = -- Morrigan's Robe Set (+5 Magic. Atk Bonus)
+    [7] = -- Morrigan's Robe Set: Magic Attack Bonus +2/+3/+5/+8 for 2-5 pieces
     {
         items =
         {
@@ -125,14 +125,14 @@ local gearSets =
             xi.item.MORRIGANS_SLOPS,
             xi.item.MORRIGANS_PIGACHES,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.MATT, 5 },
+            { xi.mod.MATT, 2, 3, 5, 8 },
         },
     },
 
-    [8] = -- Marduk's Jubbah Set (5% fastcast)
+    [8] = -- Marduk's Jubbah Set: Fast Cast +2/+3/+5/+8% for 2-5 pieces
     {
         items =
         {
@@ -142,10 +142,10 @@ local gearSets =
             xi.item.MARDUKS_SHALWAR,
             xi.item.MARDUKS_CRACKOWS,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.FASTCAST, 5 },
+            { xi.mod.FASTCAST, 2, 3, 5, 8 },
         },
     },
 
@@ -285,7 +285,7 @@ local gearSets =
         },
     },
 
-    [17] = -- Bowman's set: Ranged atk +15
+    [17] = -- Bowman's set: Ranged Attack +25 with both pieces
     {
         items =
         {
@@ -295,11 +295,11 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.RATT, 15 },
+            { xi.mod.RATT, 25 },
         },
     },
 
-    [18] = -- Fourth Division Brune Set
+    [18] = -- Fourth Division Brune Set: Attack +3/+7/+11/+15 for 2-5 pieces
     {
         items =
         {
@@ -312,11 +312,11 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ATT, 1, 5, 10, 15 },
+            { xi.mod.ATT, 3, 7, 11, 15 },
         },
     },
 
-    [19] = -- Cobra Unit Harness Set (Needs Verification)
+    [19] = -- Cobra Unit Harness Set: Counter +2/+3/+5/+7% for 2-5 pieces
     {
         items =
         {
@@ -329,11 +329,11 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.COUNTER, 1, 2, 3, 4 },
+            { xi.mod.COUNTER, 2, 3, 5, 7 },
         },
     },
 
-    [20] = -- Cobra Unit Robe Set (Needs Verification)
+    [20] = -- Cobra Unit Robe Set: Magic Accuracy +2/+3/+5/+7 for 2-5 pieces
     {
         items =
         {
@@ -346,11 +346,11 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.MACC, 1, 2, 3, 4 },
+            { xi.mod.MACC, 2, 3, 5, 7 },
         },
     },
 
-    [21] = -- Iron Ram Chainmail Set.
+    [21] = -- Iron Ram Chainmail Set: Accuracy and Attack +2/+4/+7/+10 for 2-5 pieces
     {
         items =
         {
@@ -363,8 +363,8 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ACC, 1, 2, 3, 4 },
-            { xi.mod.ATT, 1, 2, 3, 4 },
+            { xi.mod.ACC, 2, 4, 7, 10 },
+            { xi.mod.ATT, 2, 4, 7, 10 },
         },
     },
 
@@ -402,7 +402,7 @@ local gearSets =
         },
     },
 
-    [24] = -- Amir Korazin Set
+    [24] = -- Amir Korazin Set: Magic damage taken -2/-4/-6/-8% and breath damage taken -3/-6/-10/-15% for 2-5 pieces
     {
         items =
         {
@@ -412,15 +412,15 @@ local gearSets =
             xi.item.AMIR_DIRS,
             xi.item.AMIR_BOOTS,
         },
-        minEquipped = 5,
+        minEquipped = 2,
         mods =
         {
-            { xi.mod.UDMGBREATH, -800 },
-            { xi.mod.UDMGMAGIC,  -800 },
+            { xi.mod.UDMGBREATH, -300, -600, -1000, -1500 },
+            { xi.mod.UDMGMAGIC,  -200, -400,  -600,  -800 },
         },
     },
 
-    [25] = -- Hachiryu Haramaki Set - Store TP
+    [25] = -- Hachiryu Haramaki Set: Store TP +5/+12/+20 for 2-4 pieces
     {
         items =
         {
@@ -432,7 +432,7 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.STORETP, 5, 10, 20 },
+            { xi.mod.STORETP, 5, 12, 20 },
         },
     },
 
@@ -725,7 +725,7 @@ local gearSets =
         },
     },
 
-    [43] = -- Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+6, Ranged Accuracy+6. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
+    [43] = -- Paramount Earring Sets. Set Bonus: HP+30, VIT+6, Accuracy+10, Ranged Accuracy+10. Set Bonus is active with any 2 items(Earring+Weapon or Weapon+Weapon)
     {
         items =
         {
@@ -745,12 +745,12 @@ local gearSets =
         {
             { xi.mod.HP,  30 },
             { xi.mod.VIT,  6 },
-            { xi.mod.ACC,  6 },
-            { xi.mod.RACC, 6 },
+            { xi.mod.ACC,  10 },
+            { xi.mod.RACC, 10 },
         },
     },
 
-    [44] = -- Supremacy Earring Sets. Set Bonus: STR+6, Attack+4, Ranged Attack+4, "Magic Atk. Bonus"+2. Active with any 2 items(Earring+Weapon)
+    [44] = -- Supremacy Earring Sets. Set Bonus: STR+6, Attack+4, Ranged Attack+4, "Magic Atk. Bonus"+10. Active with any 2 items(Earring+Weapon)
     {
         items =
         {
@@ -770,11 +770,11 @@ local gearSets =
             { xi.mod.STR,  6 },
             { xi.mod.ATT,  4 },
             { xi.mod.RATT, 4 },
-            { xi.mod.MATT, 2 },
+            { xi.mod.MATT, 10 },
         },
     },
 
-    [45] = -- Brilliant Earring Set. Set Bonus: Evasion, HP Recovered while healing, Reduces Emnity. Active with any 2 items(Earring+Weapon)
+    [45] = -- Brilliant Earring Set. Set Bonus: Evasion+10, HP Recovered while healing+10, Enmity-10. Active with any 2 items(Earring+Weapon)
     {
         items =
         {
@@ -794,7 +794,7 @@ local gearSets =
         {
             { xi.mod.EVA,    10 },
             { xi.mod.HPHEAL, 10 },
-            { xi.mod.ENMITY, -5 },
+            { xi.mod.ENMITY, -10 },
         }
     },
 
@@ -2387,8 +2387,8 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ACC,              5 },
-            { xi.mod.SOULEATER_EFFECT, 2 },
+            { xi.mod.ACC,                        10 },
+            { xi.mod.SOULEATER_EFFECT_STACKABLE, 2 },
         },
     },
 
@@ -2441,7 +2441,7 @@ local gearSets =
         minEquipped = 2,
         mods =
         {
-            { xi.mod.ENH_DRAIN_ASPIR, 5 },
+            { xi.mod.ENH_DRAIN_ASPIR, 10 },
         },
     },
 }

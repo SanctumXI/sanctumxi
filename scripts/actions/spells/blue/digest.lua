@@ -5,10 +5,10 @@
 -- Monster Type: Amorphs
 -- Spell Type: Magical (Dark)
 -- Blue Magic Points: 2
--- Stat Bonus: HP-5, MP+5
+-- Stat Bonus: HP-10, MP+10
 -- Level: 36
 -- Casting Time: 4 seconds
--- Recast Time: 90 seconds
+-- Recast Time: 26 seconds
 -- Magic Bursts on: Compression, Gravitation, Darkness
 -- Combos: None
 -----------------------------------

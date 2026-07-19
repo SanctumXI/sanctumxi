@@ -34,7 +34,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.vit_wsc     = 0.0
     params.agi_wsc     = 0.0
     params.int_wsc     = 0.0
-    params.mnd_wsc     = 0.6
+    params.mnd_wsc     = 0.75
     params.chr_wsc     = 0.0
 
     -- Handle damage.

@@ -7,7 +7,7 @@
 -- Blue Magic Points: 2
 -- Stat Bonus: MND+2
 -- Level: 78
--- Casting Time: 2 Seconds
+-- Casting Time: 1.5 seconds
 -- Recast Time: 60 Seconds
 -- Spell Duration: 30 ticks, 90 Seconds
 -----------------------------------

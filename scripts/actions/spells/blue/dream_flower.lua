@@ -7,8 +7,8 @@
 -- Blue Magic Points: 3
 -- Stat Bonus: HP+5 MP+5 CHR+2
 -- Level: 87
--- Casting Time: Casting Time: 2.5 seconds
--- Recast Time: Recast Time: 45 seconds
+-- Casting Time: 2 seconds
+-- Recast Time: 45 seconds
 -- Duration: 90~120 seconds
 -- Magic Bursts on: None
 -- Combos: Magic Attack Bonus

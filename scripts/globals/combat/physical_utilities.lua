@@ -567,6 +567,18 @@ end
     -- TODO: do flourish and attack mods come before or after food?
     actorAttack = math.max(1, math.floor(actor:getStat(xi.mod.ATT, weaponSlot) * wsAttackMod * flourishBonus))
 
+    -- handle attuner
+    -- note: isAutomaton is checked inside xi.automaton.handleAttuner and could be removed
+    if actor:isAutomaton() then
+        local defIgnore = xi.automaton.handleAttuner(actor, target)
+
+        tpFactor = tpFactor + defIgnore
+
+        if tpFactor > 0 then
+            tpIgnoresDefense = true
+        end
+    end
+
     -- Target Defense Modifiers.
     if tpIgnoresDefense then
         local ignoreDefenseFactor = 1 - tpFactor
@@ -860,7 +872,7 @@ xi.combat.physical.criticalRateFromInnin = function(actor, target)
         actor:hasStatusEffect(xi.effect.INNIN) and
         actor:isBehind(target, 190)
     then
-        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower()
+        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower() / 100
     end
 
     return inninBonus
