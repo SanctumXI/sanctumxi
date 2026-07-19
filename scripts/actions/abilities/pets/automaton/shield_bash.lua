@@ -45,35 +45,47 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = params.numHits
 
-    local hammermillEquipped = automaton:hasAttachmentSet(xi.item.HAMMERMILL_ATTACHMENT)
+    -- local hammermillEquipped = automaton:hasAttachmentSet(xi.item.HAMMERMILL_ATTACHMENT) Not used? Delete?
 
-    if hammermillEquipped then
-        local shieldBashBonus = 1.0 + automaton:getMod(xi.mod.SHIELD_BASH) / 100
-
-        params.fTP =
-        {
-            params.fTP[1] * shieldBashBonus,
-            params.fTP[2] * shieldBashBonus,
-            params.fTP[3] * shieldBashBonus,
-        }
-
-        params.guaranteedFirstHit = true
+    if math.randomFloat(0, 1) * 100 < chance then
+        target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6, origin = automaton })
     end
 
-    local info = xi.mobskills.mobPhysicalMove(automaton, target, skill, action, params)
-
-    if xi.mobskills.processDamage(automaton, target, skill, action, info) then
-        target:takeDamage(info.damage, automaton, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(automaton, target, xi.effect.STUN, 1, 0, 6)
-
-        -- Check for Hammermill, if equipped, apply Slow based on Earth Maneuvers.
-        if hammermillEquipped then
-            applyHammermillSlow(automaton, target, skill, master)
+    local slowPower = automaton:getMod(xi.mod.AUTO_SHIELD_BASH_SLOW)
+    if slowPower > 0 then
+        local duration = 20
+        if slowPower == 12 then
+            duration = math.randomInt(20, 35)
+        elseif slowPower == 19 then
+            duration = math.randomInt(51, 57)
+        elseif slowPower == 25 then
+            duration = math.randomInt(70, 75)
         end
     end
 
-    return info.damage
+    -- randomize damage
+    -- TODO: Should this use our newer PDIF calcs located in physical_utilities.lua?
+    local ratio = automaton:getStat(xi.mod.ATT) / target:getStat(xi.mod.DEF)
+    if ratio > 1.3 then
+        ratio = 1.3
+    end
+
+    if ratio < 0.2 then
+        ratio = 0.2
+    end
+
+    local pdif = math.randomInt(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
+
+    damage = damage * (pdif / 1000)
+
+    -- TODO: Affected by Phalanx, Physical Damage % modifiers?
+
+    damage = utils.handleStoneskin(target, damage)
+    target:takeDamage(damage, automaton, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
+    target:updateEnmityFromDamage(automaton, damage)
+    target:addEnmity(automaton, 450, 900)
+
+    return damage
 end
 
 return abilityObject

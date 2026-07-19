@@ -59,7 +59,7 @@ abilityObject.onUseAbility = function(player, target, ability, action)
         end
 
         if #effects > 0 then
-            local effect    = effects[math.random(1, #effects)]
+            local effect    = effects[math.randomInt(1, #effects)]
             local duration  = effect:getDuration()
             local startTime = effect:getStartTime()
             local tick      = effect:getTick()

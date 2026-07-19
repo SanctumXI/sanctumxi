@@ -9,7 +9,7 @@ local ID = zones[xi.zone.MISAREAUX_COAST]
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    mob:setLocalVar('CureTime', GetSystemTime() + math.random(60, 180)) -- anywhere from every 1-3 minutes
+    mob:setLocalVar('CureTime', GetSystemTime() + math.randomInt(60, 180)) -- anywhere from every 1-3 minutes
 end
 
 entity.onMobFight = function(mob, target)
@@ -38,7 +38,7 @@ entity.onMobFight = function(mob, target)
         mob:getLocalVar('FinalPhase') ~= 1 and
         mob:getLocalVar('CureTime') <= GetSystemTime()
     then
-        mob:setLocalVar('CureTime', GetSystemTime() + math.random(60, 180))
+        mob:setLocalVar('CureTime', GetSystemTime() + math.randomInt(60, 180))
         target:messageSpecial(ID.text.DROP_OF_OIL)
         mob:timer(1000, function(m)
             m:castSpell(3, target) -- Cure III

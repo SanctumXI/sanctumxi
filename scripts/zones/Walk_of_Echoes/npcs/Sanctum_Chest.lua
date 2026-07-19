@@ -10,7 +10,7 @@ local rewards = {
 
 entity.onTrigger = function(player, npc)
 
-    local reward = rewards[math.random(#rewards)]
+    local reward = rewards[math.randomInt(1, #rewards)]
 
     player:addItem(reward)
 

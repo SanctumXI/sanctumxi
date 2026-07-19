@@ -55,7 +55,7 @@ m:addOverride('xi.zones.Tahrongi_Canyon.Zone.onInitialize', function(zone)
             
         }
 
-            return skills[math.random(1, #skills)]
+            return skills[math.randomInt(1, #skills)]
         end,
 
            onMobFight = function(mob, target)
@@ -83,7 +83,7 @@ m:addOverride('xi.zones.Tahrongi_Canyon.Zone.onInitialize', function(zone)
         end,
 
         onMobDespawn = function(mob)
-            local RESPAWN_DELAY = math.random(50000, 60000)
+            local RESPAWN_DELAY = math.randomInt(50000, 60000)
 
             mob:timer(RESPAWN_DELAY, function(mobArg)
                 mobArg:setSpawn(-470.732, -39.698, -160.194, 160)

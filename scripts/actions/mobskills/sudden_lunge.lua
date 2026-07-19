@@ -34,7 +34,7 @@ end
 
 mobskillObject.onMobSkillFinalize = function(mob, skill)
     local currentHP = mob:getHP()
-    local newHP = currentHP - (currentHP * (math.random(10, 20) / 100))
+    local newHP = currentHP - (currentHP * (math.randomInt(10, 20) / 100))
 
     mob:setHP(newHP)
 end

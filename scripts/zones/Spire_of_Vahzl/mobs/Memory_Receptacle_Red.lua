@@ -53,7 +53,7 @@ entity.onMobEngage = function(mob, target)
     local offset    = (area - 1) * 10
     local content   = xi.battlefield.contents[xi.battlefield.id.PULLING_THE_PLUG]
     local positions = content.positions
-    local position  = math.random(1, #positions[area][1])
+    local position  = math.randomInt(1, #positions[area][1])
 
     battlefield:setLocalVar('position', position)
     battlefield:setLocalVar('moveTimer', GetSystemTime() + 30)
@@ -74,7 +74,7 @@ entity.onMobFight = function(mob, target)
     if GetSystemTime() > drawInTimer then
         local players = mob:getBattlefield():getPlayers()
 
-        utils.drawIn(players[math.random(#players)], { position = mob:getPos() })
+        utils.drawIn(players[math.randomInt(1, #players)], { position = mob:getPos() })
 
         mob:setLocalVar('drawInTimer', GetSystemTime() + 20)
     end

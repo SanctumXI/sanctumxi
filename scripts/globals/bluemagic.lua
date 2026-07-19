@@ -244,7 +244,7 @@ xi.spells.blue.usePhysicalSpell = function(caster, target, spell, params)
     local bonusWSC   = 0
 
     -- BLU AF3 bonus (triples the base WSC when it procs)
-    if  math.random(1, 100) <= caster:getMod(xi.mod.AUGMENT_BLU_MAGIC) then
+    if  math.randomInt(1, 100) <= caster:getMod(xi.mod.AUGMENT_BLU_MAGIC) then
         bonusWSC = 2
     end
 
@@ -336,7 +336,7 @@ end
     end
 
     while hitsdone < params.numhits do
-        local chance = math.random()
+        local chance = math.randomFloat(0, 1)
 
         if
             sneakIsApplicable or
@@ -345,12 +345,12 @@ end
             -- TODO: Check for shadow absorbs. Right now the whole spell will be absorbed by one shadow before it even gets here.
 
             -- Generate a random pDIF between min and max
-            local pdif = math.random(cratio[1] * 1000, cratio[2] * 1000)
+            local pdif = math.randomInt(cratio[1] * 1000, cratio[2] * 1000)
             pdif       = pdif / 1000
 
             if
                 sneakIsApplicable or
-                math.random() < params.critchance
+                math.randomFloat(0, 1) < params.critchance
             then
                 pdif = pdif + 1
             end
@@ -404,7 +404,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     local wscMultiplier = 1
 
     -- BLU AF3 bonus (triples the base WSC when it procs)
-    if math.random(1, 100) <= caster:getMod(xi.mod.AUGMENT_BLU_MAGIC) then
+    if math.randomInt(1, 100) <= caster:getMod(xi.mod.AUGMENT_BLU_MAGIC) then
         wscMultiplier = wscMultiplier + 1
     end
 

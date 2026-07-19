@@ -8,7 +8,7 @@ end
 
 entity.onMobFight = function(mob, target)
 
-    if math.random(1, 100) < 15 then
+    if math.randomInt(1, 100) < 15 then
 
         mob:castSpell(218, target)
 

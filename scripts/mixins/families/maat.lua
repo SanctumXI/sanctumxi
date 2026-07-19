@@ -10,7 +10,7 @@ g_mixins.families.maat = function(maatMob)
         elseif mob:getMainJob() == xi.job.DRG then
             mob:setLocalVar('specialThreshold', 75)
         else
-            mob:setLocalVar('specialThreshold', math.random(50, 60))
+            mob:setLocalVar('specialThreshold', math.randomInt(50, 60))
         end
     end)
 

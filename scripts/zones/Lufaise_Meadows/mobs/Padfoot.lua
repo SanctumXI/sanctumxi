@@ -314,7 +314,7 @@ entity.onMobDespawn = function(mob)
     local mobId = mob:getID()
 
     if mobId == ID.mob.PADFOOT[GetServerVariable('realPadfoot')] then
-        local respawn = math.random(75600, 86400) -- 21-24 hours
+        local respawn = math.randomInt(75600, 86400) -- 21-24 hours
 
         for _, v in pairs(ID.mob.PADFOOT) do
             local padfootMob = GetMobByID(v)
@@ -328,7 +328,7 @@ entity.onMobDespawn = function(mob)
             end
         end
 
-        SetServerVariable('realPadfoot', math.random(1, 5))
+        SetServerVariable('realPadfoot', math.randomInt(1, 5))
     end
 end
 

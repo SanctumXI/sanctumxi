@@ -109,7 +109,7 @@ end
 entity.onMobEngage = function(mob)
     local currentTime = GetSystemTime()
     mob:setLocalVar('phaseChangeTime', currentTime + 120)
-    mob:setLocalVar('addSpawnTime', currentTime + math.random(20, 30))
+    mob:setLocalVar('addSpawnTime', currentTime + math.randomInt(20, 30))
 end
 
 entity.onMobFight = function(mob, target)
@@ -155,7 +155,7 @@ entity.onMobFight = function(mob, target)
     end
 
     if currentTime >= mob:getLocalVar('addSpawnTime') then
-        mob:setLocalVar('addSpawnTime', currentTime + math.random(60, 90))
+        mob:setLocalVar('addSpawnTime', currentTime + math.randomInt(60, 90))
         for i = 1, #addTable do
             local addId = addTable[i]
             local addToSpawn = GetMobByID(addId)
@@ -188,7 +188,7 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
         table.insert(skillList, xi.mobSkill.HORRID_ROAR_7)
     end
 
-    return skillList[math.random(1, #skillList)]
+    return skillList[math.randomInt(1, #skillList)]
 end
 
 entity.onMobSpellChoose = function(mob, target, spellId)

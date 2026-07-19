@@ -69,10 +69,10 @@ entity.onMobFight = function(mob, target)
     if GetSystemTime() > mob:getLocalVar('shellTimer') then
         if mob:getLocalVar('inShell') == 0 and mob:getAnimationSub() == 0 then
             enterShell(mob)
-            mob:setLocalVar('shellTimer', GetSystemTime() + math.random(30, 100))
+            mob:setLocalVar('shellTimer', GetSystemTime() + math.randomInt(30, 100))
         elseif mob:getLocalVar('inShell') == 1 and mob:getAnimationSub() == 1 then
             exitShell(mob)
-            mob:setLocalVar('shellTimer', GetSystemTime() + math.random(30, 100))
+            mob:setLocalVar('shellTimer', GetSystemTime() + math.randomInt(30, 100))
         end
     end
 
@@ -100,7 +100,7 @@ entity.onMobFight = function(mob, target)
     if petDeath == 1 then
         if mob:getLocalVar('inShell') == 1 and mob:getAnimationSub() == 1 then
             exitShell(mob)
-            mob:setLocalVar('shellTimer', GetSystemTime() + math.random(30, 100))
+            mob:setLocalVar('shellTimer', GetSystemTime() + math.randomInt(30, 100))
         end
 
         mob:setLocalVar('filtrateDeath', 0)
@@ -118,9 +118,9 @@ entity.onMobFight = function(mob, target)
                 shenFiltrate:checkDistance(mob) < 20
             then
                 local spells = { xi.magic.spell.WATER_IV, xi.magic.spell.WATER_III }
-                local spellID = spells[math.random(1, #spells)]
+                local spellID = spells[math.randomInt(1, #spells)]
                 shenFiltrate:castSpell(spellID, mob)
-                mob:setLocalVar('healTimer', GetSystemTime() + math.random(40, 100))
+                mob:setLocalVar('healTimer', GetSystemTime() + math.randomInt(40, 100))
                 break
             end
         end

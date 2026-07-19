@@ -54,7 +54,7 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     end
 
     if #effects > 0 then
-        local effect = effects[math.random(1, #effects)]
+        local effect = effects[math.randomInt(1, #effects)]
         -- TODO: duration here overwrites all previous values, this logic needs to be verified
         duration = effect:getDuration()
         local startTime = effect:getStartTime()

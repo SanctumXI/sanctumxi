@@ -357,7 +357,7 @@ xi.pets.avatar.getLightSpiritCure = function(pet)
     local spellFamily = xi.magic.spellFamily.CURE
     if
         petLvl >= 16 and
-        math.random(100) <= 2 * xi.summon.getSummoningSkillOverCap(pet)
+        math.randomInt(1, 100) <= 2 * xi.summon.getSummoningSkillOverCap(pet)
     then
         spellFamily = xi.magic.spellFamily.CURAGA
     end
@@ -408,7 +408,7 @@ xi.pets.avatar.getLightSpiritSpell = function(pet)
             for hpColor = 1, 3 do
                 if
                     tempHPP < 25 * hpColor and
-                    math.random(1, 100) <= 50
+                    math.randomInt(1, 100) <= 50
                 then
                     hpp = tempHPP
                     cureTarget = member

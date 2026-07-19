@@ -217,10 +217,10 @@ INSERT INTO `abilities` VALUES (197,'chocobo_jig',19,55,1,60,218,126,0,13,2000,0
 INSERT INTO `abilities` VALUES (198,'jigs',19,25,1,0,218,0,0,0,2000,0,14,0.0,0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (199,'steps',19,20,1,0,220,0,0,0,2000,0,14,0.0,0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (200,'flourishes_i',19,20,1,0,0,221,0,0,2000,0,14,0.0,0,0,0,0,0,0,'WOTG');
-INSERT INTO `abilities` VALUES (201,'quickstep',19,20,4,5,220,519,0,17,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');
+INSERT INTO `abilities` VALUES (201,'quickstep',19,1,4,5,220,519,0,17,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (202,'box_step',19,30,4,5,220,520,0,16,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (203,'stutter_step',19,40,4,5,220,521,0,16,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');
-INSERT INTO `abilities` VALUES (204,'animated_flourish',19,20,4,30,221,119,0,181,2000,0,6,16.0,0,0,1,1000,0,0,'WOTG');
+INSERT INTO `abilities` VALUES (204,'animated_flourish',19,10,4,30,221,119,0,181,2000,0,6,16.0,0,0,1,1000,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (205,'desperate_flourish',19,30,4,20,221,127,0,26,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (206,'reverse_flourish',19,40,1,30,222,452,0,182,2000,0,6,0.0,0,0,1,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (207,'violent_flourish',19,45,4,20,221,522,0,26,2000,0,14,3.0,0,0,1,0,0,0,'WOTG');

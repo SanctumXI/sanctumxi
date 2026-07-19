@@ -120,10 +120,10 @@ entity.onMobMobskillChoose = function(mob, target, skillId)
     }
 
     if mob:isEngaged() then
-        mob:showText(mob, weaponskillMessage[math.random(1, #weaponskillMessage)])
+        mob:showText(mob, weaponskillMessage[math.randomInt(1, #weaponskillMessage)])
     end
 
-    return tpTable[math.random(1, #tpTable)]
+    return tpTable[math.randomInt(1, #tpTable)]
 end
 
 entity.onMobWeaponSkill = function(mob, target, skill, action)

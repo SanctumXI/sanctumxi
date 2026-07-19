@@ -96,7 +96,7 @@ local function summonAnimations(npc, rotation, offset)
         local summonStartTime = npc:getLocalVar('summonStartTime')
         if summonStartTime ~= 0 and summonStartTime <= GetSystemTime() then
             npc:setLocalVar('summonStartTime', 0)
-            npc:setLocalVar('summonEndTime', GetSystemTime() + math.random(1, 2))
+            npc:setLocalVar('summonEndTime', GetSystemTime() + math.randomInt(1, 2))
 
             npc:entityAnimationPacket(xi.animationString.CAST_SUMMONER_START)
         end
@@ -105,7 +105,7 @@ local function summonAnimations(npc, rotation, offset)
         if summonEndTime ~= 0 and summonEndTime <= GetSystemTime() then
             npc:setLocalVar('summonEndTime', 0)
             -- npcs seem to wait anywhere from 5 to 10s to do another summoning animation
-            npc:setLocalVar('summonStartTime', GetSystemTime() + math.random(4 + offset, 10))
+            npc:setLocalVar('summonStartTime', GetSystemTime() + math.randomInt(4 + offset, 10))
 
             npc:entityAnimationPacket(xi.animationString.CAST_SUMMONER_STOP)
         end
@@ -153,7 +153,7 @@ xi.pirates.pirateNPCTimeTrigger = function(npc, triggerId, zoneKey)
             -- middle pirate has chance to wear a verm cloak, which then means the pirate encounter _might_ have the NM spawn
             local bodyModel = 8195
             local nmCanSpawn = 0
-            if math.random(1, 100) <= vermCloakPirateChance then
+            if math.randomInt(1, 100) <= vermCloakPirateChance then
                 bodyModel = 47
                 nmCanSpawn = 1
             end

@@ -25,7 +25,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.mobSkill.HUNDRED_FISTS_1, cooldown = 70, hpp = math.random(98, 99) },
+            { id = xi.mobSkill.HUNDRED_FISTS_1, cooldown = 70, hpp = math.randomInt(98, 99) },
         },
     })
 end
@@ -34,7 +34,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
+    mob:setRespawnTime(math.randomInt(75600, 86400)) -- 21 to 24 hours
 end
 
 return entity

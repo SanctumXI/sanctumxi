@@ -35,7 +35,7 @@ local attohwaChasmGlobal =
 
     handleMiasma = function(npc)
         local timer    = npc:getLocalVar('timer')
-        local newTimer = math.random(30, 40)
+        local newTimer = math.randomInt(30, 40)
 
         if GetSystemTime() >= timer then
             if npc:getAnimation() == xi.anim.CLOSE_DOOR then

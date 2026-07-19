@@ -221,12 +221,12 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
     -- Calculate stun proc chance
     chance = chance + (player:getMainLvl() - target:getMainLvl()) * 5
 
-    if math.random(1, 100) <= chance then
+    if math.randomInt(1, 100) <= chance then
         target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6, origin = player })
     end
 
     -- Randomize damage
-    local randomizer = 1 + (math.random(1, 5) / 100)
+    local randomizer = 1 + (math.randomInt(1, 5) / 100)
 
     damage = damage * randomizer
     damage = utils.handleStoneskin(target, damage)

@@ -63,7 +63,7 @@ entity.onMobInitialize = function(mob)
             target:isAlive() and
             counter < maxCount
         then
-            mob:useMobAbility(xi.mobSkill.PANZERFAUST, target, 0)
+            mob:useMobAbility(xi.mobSkill.PANZERFAUST, target, 1)
 
         -- Break sequence.
         else
@@ -123,7 +123,7 @@ entity.onMobMobskillChoose = function(mob, target)
     -- Initialize sequence.
     if maxCount == 0 then
         mob:setAutoAttackEnabled(false)
-        mob:setLocalVar('panzerfaustMax', math.random(2, 5))
+        mob:setLocalVar('panzerfaustMax', math.randomInt(2, 5))
     end
 
     return xi.mobSkill.PANZERFAUST

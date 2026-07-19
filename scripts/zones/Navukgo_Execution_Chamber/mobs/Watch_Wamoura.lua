@@ -10,7 +10,7 @@ local function curl(mob)
     mob:setMod(xi.mod.DMG, -9500)
     mob:addStatusEffect(xi.effect.BLAZE_SPIKES, { power = 100, origin = mob })
     mob:setAnimationSub(5)
-    mob:setLocalVar('stretchTime', GetSystemTime() + math.random(65, 80))
+    mob:setLocalVar('stretchTime', GetSystemTime() + math.randomInt(65, 80))
 end
 
 local function stretch(mob)
@@ -30,7 +30,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobEngage = function(mob, target)
-    mob:setLocalVar('stretchTime', GetSystemTime() + math.random(65, 80))
+    mob:setLocalVar('stretchTime', GetSystemTime() + math.randomInt(65, 80))
     mob:setLocalVar('curlThreshold', math.max(0, mob:getHPP() - 20))
 end
 

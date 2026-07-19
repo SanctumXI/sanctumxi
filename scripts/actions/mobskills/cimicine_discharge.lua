@@ -13,7 +13,7 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local slowPower  = 2000
     local hastePower = 2000
-    local duration   = math.random(60, 90)
+    local duration   = math.randomInt(60, 90)
 
     -- Give Haste to the mob using the skill.
     if not mob:hasStatusEffect(xi.effect.HASTE) then

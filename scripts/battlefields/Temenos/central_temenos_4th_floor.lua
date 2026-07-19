@@ -42,7 +42,7 @@ function content:onBattlefieldInitialize(battlefield)
     -- Crates are always spawned with in fixed groups
     -- Randomize crate type order by shuffling setup functions
     for index, group in ipairs(ID.CENTRAL_TEMENOS_4TH_FLOOR.npc.GROUPS) do
-        local itemIndex = math.random(1, group.count)
+        local itemIndex = math.randomInt(1, group.count)
 
         for j = 1, group.count do
             local crateID = group.offset + j - 1
@@ -63,7 +63,7 @@ function content:onBattlefieldInitialize(battlefield)
                         else
                             -- Spawn a random mob from the corresponding mob group
                             local mobGroup = ID.CENTRAL_TEMENOS_4TH_FLOOR.mob.GROUPS[index]
-                            local mobID    = mobGroup.offset + math.random(0, mobGroup.count - 1)
+                            local mobID    = mobGroup.offset + math.randomInt(0, mobGroup.count - 1)
                             local mob      = GetMobByID(mobID)
 
                             if mob then

@@ -36,12 +36,14 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     xi.automaton.applyFlameHolder(automaton, params.fTP)
 
-    local info = xi.mobskills.mobRangedMove(automaton, target, skill, action, params)
-
-    if xi.mobskills.processDamage(automaton, target, skill, action, info) then
-        target:takeDamage(info.damage, automaton, info.attackType, info.damageType)
-
-        xi.mobskills.mobStatusEffectMove(automaton, target, xi.effect.STUN, 1, 0, 4)
+    if damage > 0 then
+        local chance = 0.033 * skill:getTP()
+        if
+            not target:hasStatusEffect(xi.effect.STUN) and
+            chance >= math.randomFloat(0, 1) * 100
+        then
+            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 4, origin = automaton })
+        end
     end
 
     return info.damage

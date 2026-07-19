@@ -224,7 +224,7 @@ class ServerFirstModule final : public CPPModule
 {
     void OnInit() override
     {
-        const sol::object trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
+    const sol::object trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
         if (trackedItems.valid() && trackedItems.is<sol::table>())
         {
             for (const auto& entry : trackedItems.as<sol::table>())

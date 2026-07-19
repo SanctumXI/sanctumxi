@@ -11,7 +11,7 @@ local function smooth(mob)
     mob:setMod(xi.mod.DMGPHYS, -3300)
     mob:setMod(xi.mod.DMGMAGIC, 0)
     mob:setMod(xi.mod.REGAIN, 0)
-    mob:setLocalVar('spikesTime', GetSystemTime() + math.random(45, 60))
+    mob:setLocalVar('spikesTime', GetSystemTime() + math.randomInt(45, 60))
 end
 
 local function spikes(mob)

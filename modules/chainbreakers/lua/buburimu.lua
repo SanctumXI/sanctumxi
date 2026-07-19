@@ -16,8 +16,8 @@ local minLevel = 14
 local maxLevel = 24
 
 local function getRandomSpawn()
-    local angle = math.random() * math.pi * 2
-    local distance = math.random() * spawnRadius
+    local angle = math.randomFloat(0, 1) * math.pi * 2
+    local distance = math.randomFloat(0, 1) * spawnRadius
 
     local x = spawnCenter.x + math.cos(angle) * distance
     local z = spawnCenter.z + math.sin(angle) * distance
@@ -134,7 +134,7 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
         end,
              
         onMobDespawn = function(mob)
-            local RESPAWN_DELAY = math.random(1800000, 3600000) -- 30 to 60 minutes
+            local RESPAWN_DELAY = math.randomInt(1800000, 3600000) -- 30 to 60 minutes
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 local x, y, z, rot = getRandomSpawn()

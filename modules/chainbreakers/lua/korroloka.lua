@@ -6,8 +6,8 @@ m:setEnabled(true)
 local spawnRadius = 8
 
 local function getRandomSpawn(center)
-    local angle = math.random() * math.pi * 2
-    local distance = math.random() * spawnRadius
+    local angle = math.randomFloat(0, 1) * math.pi * 2
+    local distance = math.randomFloat(0, 1) * spawnRadius
 
     local x = center.x + math.cos(angle) * distance
     local z = center.z + math.sin(angle) * distance
@@ -136,7 +136,7 @@ onMobDeath = function(mob, player, optParams)
         end,
 
         onMobDespawn = function(mob)
-            local RESPAWN_DELAY = math.random(1800000, 3600000)
+            local RESPAWN_DELAY = math.randomInt(1800000, 3600000)
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 local x, y, z, rot = getRandomSpawn(spawn)
@@ -306,7 +306,7 @@ local function setupMonster2(zone)
         end,
 
         onMobDespawn = function(mob)
-            local RESPAWN_DELAY = math.random(1800000, 3600000)
+            local RESPAWN_DELAY = math.randomInt(1800000, 3600000)
 
             mob:timer(RESPAWN_DELAY, function(mob)
                 local x, y, z, rot = getRandomSpawn(spawn)

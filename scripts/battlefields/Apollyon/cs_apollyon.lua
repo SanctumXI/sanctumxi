@@ -120,7 +120,7 @@ function content.handleBossCombatTick(boss, supportOffsets, otherSupportOffsets)
     for _, offset in ipairs(offsets) do
         local support = GetMobByID(bossID + offset)
         if support then
-            support:setSpawn(bossX + math.random(-2, 2), bossY, bossZ + math.random(-2, 2))
+            support:setSpawn(bossX + math.randomInt(-2, 2), bossY, bossZ + math.randomInt(-2, 2))
             support:spawn()
         end
     end

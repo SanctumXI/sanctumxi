@@ -20,7 +20,7 @@ entity.onMobSpawn = function(mob)
                 for clone = hundredfacedHapoolJa + 1, hundredfacedHapoolJa + 3 do
                     local cloneMob = GetMobByID(clone)
                     if cloneMob and not cloneMob:isSpawned() then
-                        cloneMob:setSpawn(mob:getXPos() + math.random(1, 5), mob:getYPos(), mob:getZPos() + math.random(1, 5))
+                        cloneMob:setSpawn(mob:getXPos() + math.randomInt(1, 5), mob:getYPos(), mob:getZPos() + math.randomInt(1, 5))
                         SpawnMob(clone):updateEnmity(hateTarget)
                     end
                 end
@@ -33,7 +33,7 @@ entity.onMobSpawn = function(mob)
                 for clone = hundredfacedHapoolJa + 1, hundredfacedHapoolJa + 4 do
                     local cloneMob = GetMobByID(clone)
                     if cloneMob and not cloneMob:isSpawned() then
-                        cloneMob:setSpawn(mob:getXPos() + math.random(1, 5), mob:getYPos(), mob:getZPos() + math.random(1, 5))
+                        cloneMob:setSpawn(mob:getXPos() + math.randomInt(1, 5), mob:getYPos(), mob:getZPos() + math.randomInt(1, 5))
                         SpawnMob(clone):updateEnmity(hateTarget)
                     end
                 end
