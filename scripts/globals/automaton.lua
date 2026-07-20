@@ -551,12 +551,6 @@ xi.automaton.onManeuverLose = function(pet, attachment, maneuvers)
     xi.automaton.updateAttachmentModifier(pet, attachment, maneuvers)
 end
 
-local maneuverRecastTime = 10
-
-local function getManeuverRecastVar(ability)
-    return '[maneuver]recast' .. ability:getID()
-end
-
 xi.automaton.onManeuverCheck = function(player, target, ability)
     if
         player:hasStatusEffect(xi.effect.OVERLOAD) or
@@ -564,10 +558,6 @@ xi.automaton.onManeuverCheck = function(player, target, ability)
         not hasAnimatorEquipped(player)
     then
         return 71, 0
-    end
-
-    if player:getLocalVar(getManeuverRecastVar(ability)) > GetSystemTime() then
-        return xi.msg.basic.WAIT_LONGER, 0
     end
 
     return 0, 0
