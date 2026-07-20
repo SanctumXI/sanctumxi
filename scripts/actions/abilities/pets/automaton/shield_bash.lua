@@ -21,7 +21,14 @@ local function applyHammermillSlow(automaton, target, skill, master)
         return
     end
 
-    local slowTier = slowTable[master and master:countEffect(xi.effect.EARTH_MANEUVER) or 0]
+    -- Count Earth maneuvers and map safely into slowTable (no index 0)
+    local earthCount = master and master:countEffect(xi.effect.EARTH_MANEUVER) or 0
+    local slowTier   = slowTable[earthCount]
+
+    if not slowTier then
+        -- No slow if we have 0 Earth Maneuvers
+        return
+    end
 
     local params =
     {
@@ -36,44 +43,35 @@ abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
 end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
-    local params = {}
+    -- Simple stun chance (adjust if you want different odds)
+    local stunChance = 50 -- percent
 
-    params.baseDamage     = automaton:getWeaponDmg()
-    params.numHits        = utils.clamp(1 + xi.automaton.getExtraHits(automaton, 1), 1, 8)
-    params.fTP            = { 1.0, 1.0, 1.0 }
-    params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.BLUNT
-    params.shadowBehavior = params.numHits
-
-    -- local hammermillEquipped = automaton:hasAttachmentSet(xi.item.HAMMERMILL_ATTACHMENT) Not used? Delete?
-
-    if math.randomFloat(0, 1) * 100 < chance then
-        target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6, origin = automaton })
-    end
-
-    local slowPower = automaton:getMod(xi.mod.AUTO_SHIELD_BASH_SLOW)
-    if slowPower > 0 then
-        local duration = 20
-        if slowPower == 12 then
-            duration = math.randomInt(20, 35)
-        elseif slowPower == 19 then
-            duration = math.randomInt(51, 57)
-        elseif slowPower == 25 then
-            duration = math.randomInt(70, 75)
-        end
-    end
-
-    local att = automaton:getStat(xi.mod.ATT)
-    local def = target:getStat(xi.mod.DEF)
+    -- Base physical damage from the automaton’s weapon
+    local baseDamage = automaton:getWeaponDmg()
+    local att        = automaton:getStat(xi.mod.ATT)
+    local def        = target:getStat(xi.mod.DEF)
 
     if not att or not def or def <= 0 then
         return 0
     end
 
-    local ratio = utils.clamp(att / def, 0.2, 1.3)
-    local pdif = math.random(ratio * 0.8 * 1000, ratio * 1.2 * 1000)
+    -- Apply stun with the defined chance
+    if math.random() * 100 < stunChance then
+        target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6, origin = automaton })
+    end
 
-    damage = damage * (pdif / 1000)
+    -- Apply Hammermill slow if the attachment is equipped
+    if automaton:hasAttachmentSet(xi.item.HAMMERMILL_ATTACHMENT) then
+        applyHammermillSlow(automaton, target, skill, master)
+    end
+
+    -- Randomize PDIF based on ATT/DEF ratio, clamped
+    local ratio   = utils.clamp(att / def, 0.2, 1.3)
+    local pdifMin = ratio * 0.8
+    local pdifMax = ratio * 1.2
+    local pdif    = pdifMin + (pdifMax - pdifMin) * math.random()
+
+    local damage = baseDamage * pdif
 
     damage = utils.handleStoneskin(target, damage)
     target:takeDamage(damage, automaton, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
