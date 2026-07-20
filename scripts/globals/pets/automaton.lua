@@ -1,8 +1,6 @@
 -----------------------------------
 -- PET: Automaton
--- TODO: Add Support for +Automaton Level
--- TODO: Add Support for MLvl
--- Retail captures show that +Automaton levels do not raise STR/DEX/VIT/AGI/INT/MND/CHR, but do raise HP/MP. This is currently not supported.
+-- I do not believe lack of 'scaling' HP is an issue.
 -----------------------------------
 xi = xi or {}
 xi.pets = xi.pets or {}
@@ -509,8 +507,8 @@ xi.pets.automaton.frameMods =
 
         mods =
         {
-            { xi.mod.SHIELDBLOCKRATE,    45 },
-            { xi.mod.DMG,             -1250 },
+            { xi.mod.SHIELDBLOCKRATE,    50 },
+            { xi.mod.DMG,             -1500 },
         },
     },
 
