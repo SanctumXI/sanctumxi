@@ -349,6 +349,25 @@ local function getRefreshModValue(pet, attachment, numManeuvers)
     return manaTankData.refreshBase[numManeuvers + 1] + pet:getMaxMP() * manaTankData.refreshMultiplier[numManeuvers + 1] / 100
 end
 
+-- Mana Tank MP boost: frame-based percentage of max MP using mpBoost and frameDivisors.
+local function getMpBoostValue(pet, attachment)
+    local manaTankData = xi.automaton.manaTank.data[attachment:getName()]
+    if not manaTankData then
+        return 0
+    end
+
+    local frameDivisor = xi.automaton.manaTank.frameDivisors[pet:getAutomatonFrame()]
+    if not frameDivisor or frameDivisor <= 0 then
+        return 0
+    end
+
+    -- Example: Mana Tank IV on Harlequin is 4 / 20 = 0.2 (20% max MP boost)
+    local boostFraction = manaTankData.mpBoost / frameDivisor
+    local maxMP         = pet:getMaxMP()
+
+    return math.floor(maxMP * boostFraction)
+end
+
 -----------------------------------
 -- Optic Fiber
 -----------------------------------
@@ -467,6 +486,12 @@ xi.automaton.updateAttachmentModifier = function(pet, attachment, maneuvers)
             updatedValue = getRegenModValue(pet, attachment, maneuversActive)
         elseif modifier == xi.mod.REFRESH then
             updatedValue = getRefreshModValue(pet, attachment, maneuversActive)
+        elseif modifier == xi.mod.MP then
+            -- Mana Tank MP: flat bonus from values + frame-based boost from mpBoost
+            local flatBonus    = values[maneuversActive + 1] or 0
+            local percentBoost = getMpBoostValue(pet, attachment)
+
+            updatedValue = flatBonus + percentBoost
         else
             updatedValue = values[maneuversActive + 1]
         end
