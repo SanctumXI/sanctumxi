@@ -570,11 +570,6 @@ xi.automaton.onUseManeuver = function(player, target, ability, action)
         return
     end
 
-    -- The client assigns every maneuver to shared recast group 210. Track the
-    -- individual timer here and clear the shared client timer in the action packet.
-    player:setLocalVar(getManeuverRecastVar(ability), GetSystemTime() + maneuverRecastTime)
-    action:setRecast(0)
-
     local maneuverInfo = maneuverList[ability:getID()]
     local element      = maneuverInfo.element - 1
     local burdenValue  = getAddBurdenValue(player, maneuverInfo.element, maneuverInfo.stat)
