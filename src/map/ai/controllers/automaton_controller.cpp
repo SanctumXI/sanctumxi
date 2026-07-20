@@ -94,14 +94,14 @@ void CAutomatonController::setMagicCooldowns()
     {
         case AutomatonHead::Harlequin:
         {
-            m_magicCooldown    = 10s;
+            m_magicCooldown    = 5s;
             m_enfeebleCooldown = 10s;
             m_healCooldown     = 10s;
         }
         break;
         case AutomatonHead::Valoredge:
         {
-            m_magicCooldown = 15s;
+            m_magicCooldown = 5s;
             m_healCooldown  = 15s;
             m_elementalCooldown = 15s;
             m_enhanceCooldown   = 15s;
@@ -109,7 +109,7 @@ void CAutomatonController::setMagicCooldowns()
         break;
         case AutomatonHead::Sharpshot:
         {
-            m_magicCooldown    = 15s;
+            m_magicCooldown    = 5s;
             m_enfeebleCooldown = 15s;
             m_healCooldown     = 20s;
         }
