@@ -157,36 +157,36 @@ xi.pets.automaton.frameStats =
         [43] = { maxHP = 1383, maxMP =    0, STR =  42, DEX =  43, VIT =  52, AGI =  37, INT =  33, MND =  44, CHR =  45 },
         [44] = { maxHP = 1417, maxMP =    0, STR =  43, DEX =  44, VIT =  53, AGI =  39, INT =  34, MND =  45, CHR =  46 },
         [45] = { maxHP = 1450, maxMP =    0, STR =  44, DEX =  44, VIT =  54, AGI =  39, INT =  35, MND =  46, CHR =  47 },
-        [46] = { maxHP = 1484, maxMP =    0, STR =  45, DEX =  46, VIT =  55, AGI =  40, INT =  36, MND =  47, CHR =  48 },
-        [47] = { maxHP = 1518, maxMP =    0, STR =  46, DEX =  46, VIT =  56, AGI =  41, INT =  36, MND =  47, CHR =  49 },
-        [48] = { maxHP = 1551, maxMP =    0, STR =  47, DEX =  47, VIT =  57, AGI =  41, INT =  36, MND =  48, CHR =  50 },
-        [49] = { maxHP = 1585, maxMP =    0, STR =  48, DEX =  48, VIT =  58, AGI =  42, INT =  38, MND =  49, CHR =  51 },
-        [50] = { maxHP = 1618, maxMP =    0, STR =  49, DEX =  49, VIT =  59, AGI =  43, INT =  38, MND =  50, CHR =  52 },
-        [51] = { maxHP = 1657, maxMP =    0, STR =  50, DEX =  50, VIT =  60, AGI =  44, INT =  39, MND =  51, CHR =  53 },
-        [52] = { maxHP = 1694, maxMP =    0, STR =  51, DEX =  50, VIT =  61, AGI =  45, INT =  39, MND =  51, CHR =  53 },
-        [53] = { maxHP = 1732, maxMP =    0, STR =  52, DEX =  51, VIT =  62, AGI =  46, INT =  40, MND =  53, CHR =  54 },
-        [54] = { maxHP = 1770, maxMP =    0, STR =  53, DEX =  52, VIT =  63, AGI =  47, INT =  41, MND =  54, CHR =  55 },
-        [55] = { maxHP = 1808, maxMP =    0, STR =  54, DEX =  53, VIT =  64, AGI =  48, INT =  41, MND =  54, CHR =  56 },
-        [56] = { maxHP = 1845, maxMP =    0, STR =  55, DEX =  54, VIT =  65, AGI =  49, INT =  42, MND =  55, CHR =  57 },
-        [57] = { maxHP = 1884, maxMP =    0, STR =  56, DEX =  65, VIT =  66, AGI =  50, INT =  43, MND =  56, CHR =  58 },
-        [58] = { maxHP = 1921, maxMP =    0, STR =  57, DEX =  55, VIT =  67, AGI =  51, INT =  43, MND =  57, CHR =  59 },
-        [59] = { maxHP = 1959, maxMP =    0, STR =  58, DEX =  56, VIT =  68, AGI =  52, INT =  44, MND =  58, CHR =  60 },
-        [60] = { maxHP = 1996, maxMP =    0, STR =  59, DEX =  57, VIT =  69, AGI =  53, INT =  45, MND =  59, CHR =  61 },
-        [61] = { maxHP = 2013, maxMP =    0, STR =  60, DEX =  57, VIT =  69, AGI =  54, INT =  45, MND =  59, CHR =  61 },
-        [62] = { maxHP = 2030, maxMP =    0, STR =  61, DEX =  59, VIT =  70, AGI =  55, INT =  46, MND =  60, CHR =  62 },
-        [63] = { maxHP = 2047, maxMP =    0, STR =  62, DEX =  60, VIT =  71, AGI =  57, INT =  47, MND =  61, CHR =  63 },
-        [64] = { maxHP = 2064, maxMP =    0, STR =  63, DEX =  60, VIT =  71, AGI =  59, INT =  48, MND =  62, CHR =  63 },
-        [65] = { maxHP = 2080, maxMP =    0, STR =  64, DEX =  61, VIT =  72, AGI =  61, INT =  49, MND =  62, CHR =  64 },
-        [66] = { maxHP = 2097, maxMP =    0, STR =  65, DEX =  62, VIT =  73, AGI =  63, INT =  50, MND =  63, CHR =  65 },
-        [67] = { maxHP = 2114, maxMP =    0, STR =  66, DEX =  62, VIT =  73, AGI =  65, INT =  51, MND =  64, CHR =  65 },
-        [68] = { maxHP = 2131, maxMP =    0, STR =  67, DEX =  63, VIT =  74, AGI =  67, INT =  52, MND =  65, CHR =  67 },
-        [69] = { maxHP = 2148, maxMP =    0, STR =  68, DEX =  64, VIT =  74, AGI =  68, INT =  53, MND =  66, CHR =  67 },
-        [70] = { maxHP = 2164, maxMP =    0, STR =  69, DEX =  66, VIT =  76, AGI =  69, INT =  54, MND =  67, CHR =  69 },
-        [71] = { maxHP = 2181, maxMP =    0, STR =  70, DEX =  66, VIT =  76, AGI =  70, INT =  54, MND =  67, CHR =  69 },
-        [72] = { maxHP = 2198, maxMP =    0, STR =  71, DEX =  67, VIT =  76, AGI =  71, INT =  56, MND =  68, CHR =  70 },
-        [73] = { maxHP = 2215, maxMP =    0, STR =  72, DEX =  68, VIT =  77, AGI =  72, INT =  57, MND =  69, CHR =  71 },
-        [74] = { maxHP = 2232, maxMP =    0, STR =  73, DEX =  68, VIT =  77, AGI =  73, INT =  58, MND =  70, CHR =  71 },
-        [75] = { maxHP = 2248, maxMP =    0, STR =  74, DEX =  69, VIT =  78, AGI =  74, INT =  59, MND =  71, CHR =  72 },
+        [46] = { maxHP = 1484, maxMP =    0, STR =  46, DEX =  46, VIT =  55, AGI =  40, INT =  36, MND =  47, CHR =  48 },
+        [47] = { maxHP = 1518, maxMP =    0, STR =  47, DEX =  46, VIT =  56, AGI =  41, INT =  36, MND =  47, CHR =  49 },
+        [48] = { maxHP = 1551, maxMP =    0, STR =  48, DEX =  47, VIT =  57, AGI =  41, INT =  36, MND =  48, CHR =  50 },
+        [49] = { maxHP = 1585, maxMP =    0, STR =  49, DEX =  48, VIT =  58, AGI =  42, INT =  38, MND =  49, CHR =  51 },
+        [50] = { maxHP = 1618, maxMP =    0, STR =  50, DEX =  49, VIT =  59, AGI =  43, INT =  38, MND =  50, CHR =  52 },
+        [51] = { maxHP = 1657, maxMP =    0, STR =  52, DEX =  50, VIT =  60, AGI =  44, INT =  39, MND =  51, CHR =  53 },
+        [52] = { maxHP = 1694, maxMP =    0, STR =  53, DEX =  50, VIT =  61, AGI =  45, INT =  39, MND =  51, CHR =  53 },
+        [53] = { maxHP = 1732, maxMP =    0, STR =  54, DEX =  51, VIT =  62, AGI =  46, INT =  40, MND =  53, CHR =  54 },
+        [54] = { maxHP = 1770, maxMP =    0, STR =  55, DEX =  52, VIT =  63, AGI =  47, INT =  41, MND =  54, CHR =  55 },
+        [55] = { maxHP = 1808, maxMP =    0, STR =  57, DEX =  53, VIT =  64, AGI =  48, INT =  41, MND =  54, CHR =  56 },
+        [56] = { maxHP = 1845, maxMP =    0, STR =  58, DEX =  54, VIT =  65, AGI =  49, INT =  42, MND =  55, CHR =  57 },
+        [57] = { maxHP = 1884, maxMP =    0, STR =  59, DEX =  65, VIT =  66, AGI =  50, INT =  43, MND =  56, CHR =  58 },
+        [58] = { maxHP = 1921, maxMP =    0, STR =  60, DEX =  55, VIT =  67, AGI =  51, INT =  43, MND =  57, CHR =  59 },
+        [59] = { maxHP = 1959, maxMP =    0, STR =  62, DEX =  56, VIT =  68, AGI =  52, INT =  44, MND =  58, CHR =  60 },
+        [60] = { maxHP = 1996, maxMP =    0, STR =  63, DEX =  57, VIT =  69, AGI =  53, INT =  45, MND =  59, CHR =  61 },
+        [61] = { maxHP = 2013, maxMP =    0, STR =  64, DEX =  57, VIT =  69, AGI =  54, INT =  45, MND =  59, CHR =  61 },
+        [62] = { maxHP = 2030, maxMP =    0, STR =  65, DEX =  59, VIT =  70, AGI =  55, INT =  46, MND =  60, CHR =  62 },
+        [63] = { maxHP = 2047, maxMP =    0, STR =  67, DEX =  60, VIT =  71, AGI =  57, INT =  47, MND =  61, CHR =  63 },
+        [64] = { maxHP = 2064, maxMP =    0, STR =  68, DEX =  60, VIT =  71, AGI =  59, INT =  48, MND =  62, CHR =  63 },
+        [65] = { maxHP = 2080, maxMP =    0, STR =  69, DEX =  61, VIT =  72, AGI =  61, INT =  49, MND =  62, CHR =  64 },
+        [66] = { maxHP = 2097, maxMP =    0, STR =  70, DEX =  62, VIT =  73, AGI =  63, INT =  50, MND =  63, CHR =  65 },
+        [67] = { maxHP = 2114, maxMP =    0, STR =  71, DEX =  62, VIT =  73, AGI =  65, INT =  51, MND =  64, CHR =  65 },
+        [68] = { maxHP = 2131, maxMP =    0, STR =  72, DEX =  63, VIT =  74, AGI =  67, INT =  52, MND =  65, CHR =  67 },
+        [69] = { maxHP = 2148, maxMP =    0, STR =  73, DEX =  64, VIT =  74, AGI =  68, INT =  53, MND =  66, CHR =  67 },
+        [70] = { maxHP = 2164, maxMP =    0, STR =  74, DEX =  66, VIT =  76, AGI =  69, INT =  54, MND =  67, CHR =  69 },
+        [71] = { maxHP = 2181, maxMP =    0, STR =  75, DEX =  66, VIT =  76, AGI =  70, INT =  54, MND =  67, CHR =  69 },
+        [72] = { maxHP = 2198, maxMP =    0, STR =  76, DEX =  67, VIT =  76, AGI =  71, INT =  56, MND =  68, CHR =  70 },
+        [73] = { maxHP = 2215, maxMP =    0, STR =  77, DEX =  68, VIT =  77, AGI =  72, INT =  57, MND =  69, CHR =  71 },
+        [74] = { maxHP = 2232, maxMP =    0, STR =  78, DEX =  68, VIT =  77, AGI =  73, INT =  58, MND =  70, CHR =  71 },
+        [75] = { maxHP = 2248, maxMP =    0, STR =  79, DEX =  69, VIT =  78, AGI =  74, INT =  59, MND =  71, CHR =  72 },
         [76] = { maxHP = 2265, maxMP =    0, STR =  80, DEX =  69, VIT =  78, AGI =  63, INT =  59, MND =  71, CHR =  72 },
         [77] = { maxHP = 2283, maxMP =    0, STR =  81, DEX =  71, VIT =  80, AGI =  65, INT =  60, MND =  72, CHR =  74 },
         [78] = { maxHP = 2300, maxMP =    0, STR =  82, DEX =  72, VIT =  81, AGI =  66, INT =  61, MND =  73, CHR =  75 },
@@ -560,9 +560,7 @@ local function getHeadyArtificeSkill(mob)
     local currentTarget = mob:getTarget()
 
     if headEquipped == xi.automaton.head.VALOREDGE then
-        if currentTarget and currentTarget:getMainLvl() - mob:getMainLvl() >= 4 then
-            return xi.mobSkill.INVINCIBLE_AUTOMATON
-        end
+        return xi.mobSkill.INVINCIBLE_AUTOMATON
     elseif headEquipped == xi.automaton.head.SHARPSHOT then
         if mob:getAutomatonFrame() == xi.automaton.frame.SHARPSHOT then
             return xi.mobSkill.EES_AUTOMATON
@@ -624,8 +622,8 @@ xi.pets.automaton.onMobSpawn = function(mob)
     -- All Automaton Attachments have their cooldowns applied on spawn.
     mob:addRecast(xi.recast.ABILITY, xi.mobSkill.BARRAGE_TURBINE_AUTOMATON, 180)
     mob:addRecast(xi.recast.ABILITY, xi.mobSkill.DISRUPTOR_AUTOMATON,        60)
-    mob:addRecast(xi.recast.ABILITY, xi.mobSkill.ECONOMIZER_AUTOMATON,       60)
-    mob:addRecast(xi.recast.ABILITY, xi.mobSkill.ERASER_AUTOMATON,           30)
+    mob:addRecast(xi.recast.ABILITY, xi.mobSkill.ECONOMIZER_AUTOMATON,       45)
+    mob:addRecast(xi.recast.ABILITY, xi.mobSkill.ERASER_AUTOMATON,           20)
     mob:addRecast(xi.recast.ABILITY, xi.mobSkill.FLASHBULB_AUTOMATON,        45)
     mob:addRecast(xi.recast.ABILITY, xi.mobSkill.HEAT_CAPACITOR_AUTOMATON,   90)
     mob:addRecast(xi.recast.ABILITY, xi.mobSkill.MANA_CONVERTER_AUTOMATON,  180)
