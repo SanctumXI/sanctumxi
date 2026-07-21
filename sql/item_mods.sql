@@ -4012,6 +4012,7 @@ INSERT INTO `item_mods` VALUES (10917,27,-4); -- ENMITY: -4
 
 -- Tandem Necklace
 INSERT INTO `item_mods` VALUES (10918,1,5); -- DEF: 5
+INSERT INTO `item_mods` VALUES (10918,272,5); -- Tandem Blow Power +5
 
 -- Tandem Necklace +1
 INSERT INTO `item_mods` VALUES (10919,1,6); -- DEF: 6
