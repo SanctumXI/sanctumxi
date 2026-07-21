@@ -47,6 +47,7 @@ content.loot =
         { itemId = xi.item.HARLEQUINS_HORN,            weight =  1250 },
         { itemId = xi.item.STYLET,                     weight =  1250 },
         { itemId = xi.item.ZEN_POLE,                   weight =  1250 },
+        { itemId = xi.item.TANDEM_NECKLACE,            weight =  1250 },
     },
 
     {

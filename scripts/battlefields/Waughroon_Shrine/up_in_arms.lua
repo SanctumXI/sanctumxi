@@ -80,12 +80,9 @@ content.loot =
         { itemId = xi.item.VILE_ELIXIR_P1,      weight =   200 },
     },
 
-    -- This drop rate is not a mistake
-    -- https://www.ffxiah.com/forum/topic/54987/up-in-arms-bcnm/2/#3648004
-    -- Thorny noted only 3 drops out of 17,000 runs. Extremely rare.
-    -- BG Wiki States its also "signficantly rarer" than UR. (.1%)
     {
-        { itemId = xi.item.NONE,                weight =  9999 },
+        { itemId = xi.item.NONE,                weight =   493 },
+        { itemId = xi.item.OCTAVE_CLUB,         weight =     6 },
         { itemId = xi.item.KRAKEN_CLUB,         weight =     1 },
     },
 }

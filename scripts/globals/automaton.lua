@@ -125,8 +125,10 @@ xi.automaton.attachmentModifiers =
     ['mana_jammer_ii'     ] = { { modifier = xi.mod.MDEF,                        values = {    20,    30,    40,    50 }, opticFiber = true  }, },
     ['mana_jammer_iii'    ] = { { modifier = xi.mod.MDEF,                        values = {    30,    40,    50,    60 }, opticFiber = true  }, },
     ['mana_jammer_iv'     ] = { { modifier = xi.mod.MDEF,                        values = {    40,    50,    60,    70 }, opticFiber = true  }, },
-    ['mana_tank'          ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
-    ['mana_tank_ii'       ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
+    ['mana_tank'          ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, 
+                                { modifier = xi.mod.MP,                          values = {    25,    25,    25,    25 }, opticFiber = false }, },
+    ['mana_tank_ii'       ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, 
+                                { modifier = xi.mod.MP,                          values = {    25,    25,    25,    25 }, opticFiber = false }, },
     ['mana_tank_iii'      ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['mana_tank_iv'       ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['optic_fiber'        ] = { { modifier = xi.mod.AUTO_PERFORMANCE_BOOST,      values = {    10,    20,    25,    30 }, opticFiber = false }, },
@@ -347,6 +349,25 @@ local function getRefreshModValue(pet, attachment, numManeuvers)
     return manaTankData.refreshBase[numManeuvers + 1] + pet:getMaxMP() * manaTankData.refreshMultiplier[numManeuvers + 1] / 100
 end
 
+-- Mana Tank MP boost: frame-based percentage of max MP using mpBoost and frameDivisors.
+local function getMpBoostValue(pet, attachment)
+    local manaTankData = xi.automaton.manaTank.data[attachment:getName()]
+    if not manaTankData then
+        return 0
+    end
+
+    local frameDivisor = xi.automaton.manaTank.frameDivisors[pet:getAutomatonFrame()]
+    if not frameDivisor or frameDivisor <= 0 then
+        return 0
+    end
+
+    -- Example: Mana Tank IV on Harlequin is 4 / 20 = 0.2 (20% max MP boost)
+    local boostFraction = manaTankData.mpBoost / frameDivisor
+    local maxMP         = pet:getMaxMP()
+
+    return math.floor(maxMP * boostFraction)
+end
+
 -----------------------------------
 -- Optic Fiber
 -----------------------------------
@@ -465,6 +486,12 @@ xi.automaton.updateAttachmentModifier = function(pet, attachment, maneuvers)
             updatedValue = getRegenModValue(pet, attachment, maneuversActive)
         elseif modifier == xi.mod.REFRESH then
             updatedValue = getRefreshModValue(pet, attachment, maneuversActive)
+        elseif modifier == xi.mod.MP then
+            -- Mana Tank MP: flat bonus from values + frame-based boost from mpBoost
+            local flatBonus    = values[maneuversActive + 1] or 0
+            local percentBoost = getMpBoostValue(pet, attachment)
+
+            updatedValue = flatBonus + percentBoost
         else
             updatedValue = values[maneuversActive + 1]
         end
@@ -549,12 +576,6 @@ xi.automaton.onManeuverLose = function(pet, attachment, maneuvers)
     xi.automaton.updateAttachmentModifier(pet, attachment, maneuvers)
 end
 
-local maneuverRecastTime = 10
-
-local function getManeuverRecastVar(ability)
-    return '[maneuver]recast' .. ability:getID()
-end
-
 xi.automaton.onManeuverCheck = function(player, target, ability)
     if
         player:hasStatusEffect(xi.effect.OVERLOAD) or
@@ -562,10 +583,6 @@ xi.automaton.onManeuverCheck = function(player, target, ability)
         not hasAnimatorEquipped(player)
     then
         return 71, 0
-    end
-
-    if player:getLocalVar(getManeuverRecastVar(ability)) > GetSystemTime() then
-        return xi.msg.basic.WAIT_LONGER, 0
     end
 
     return 0, 0
@@ -577,11 +594,6 @@ xi.automaton.onUseManeuver = function(player, target, ability, action)
     if not pet then
         return
     end
-
-    -- The client assigns every maneuver to shared recast group 210. Track the
-    -- individual timer here and clear the shared client timer in the action packet.
-    player:setLocalVar(getManeuverRecastVar(ability), GetSystemTime() + maneuverRecastTime)
-    action:setRecast(0)
 
     local maneuverInfo = maneuverList[ability:getID()]
     local element      = maneuverInfo.element - 1
