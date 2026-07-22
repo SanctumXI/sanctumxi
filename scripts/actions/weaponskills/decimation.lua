@@ -29,7 +29,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if not xi.wsEffect.applyMod(player, xi.mod.DOUBLE_ATTACK, 5, 45, 'Decimation increased your double attack rate!') then
+    local duration = 45 + math.floor((tp - 1000) / 100) * 3
+    if not xi.wsEffect.applyMod(player, xi.mod.DOUBLE_ATTACK, 5, duration, 'Decimation increased your double attack rate!') then
         xi.wsEffect.message(player, 'An empowered effect is already active.')
     end
 
