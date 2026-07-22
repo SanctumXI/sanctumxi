@@ -38,6 +38,11 @@
 #include "utils/charutils.h"
 #include "weapon_skill.h"
 
+namespace
+{
+    constexpr auto spellQueueWindow = 750ms;
+}
+
 CPlayerController::CPlayerController(CCharEntity* _PChar)
 : CController(_PChar)
 {
@@ -52,28 +57,23 @@ bool CPlayerController::Cast(uint16 targid, SpellID spellid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
 
-    // Check for spell queuing during animation phase
-    if (PChar->PAI->IsCurrentState<CMagicState>()) 
+    // Accept one pending spell near the end of the cast and throughout its
+    // animation tail. A later request replaces the pending spell.
+    if (PChar->PAI->IsCurrentState<CMagicState>())
     {
-        if (PChar->PAI->GetCurrentState()->IsCompleted()) 
+        auto* magicState = static_cast<CMagicState*>(PChar->PAI->GetCurrentState());
+        if (magicState->IsWithinSpellQueueWindow(timer::now(), spellQueueWindow))
         {
-             // Queue the spell during animation phase
-            PChar->PAI->m_queuedSpellTargId = targid;
-            PChar->PAI->m_queuedSpell           = spellid;
-            PChar->PAI->m_queuedRangedAttack    = 0;
+            PChar->PAI->m_queuedSpellTargId  = targid;
+            PChar->PAI->m_queuedSpell        = spellid;
+            PChar->PAI->m_queuedRangedAttack = 0;
             return true;
-            
         }
-        else 
-        {
-             // Still casting, send wait message
-            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
-            return false;
-            
-        }
-        
+
+        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+        return false;
     }
-    
+
     if (canAct() && !PChar->PRecastContainer->HasRecast(RECAST_MAGIC, static_cast<Recast>(spellid), 0s))
     {
         if (auto target = PChar->GetEntity(targid); target && target->PAI->IsUntargetable())

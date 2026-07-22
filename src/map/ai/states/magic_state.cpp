@@ -315,6 +315,11 @@ bool CMagicState::CanChangeState()
     return false;
 }
 
+bool CMagicState::IsWithinSpellQueueWindow(timer::time_point tick, timer::duration window)
+{
+    return IsCompleted() || tick + window >= GetEntryTime() + m_castTime;
+}
+
 CSpell* CMagicState::GetSpell()
 {
     return m_PSpell.get();

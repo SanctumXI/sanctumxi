@@ -69,6 +69,8 @@ public:
         return m_instantCast;
     }
 
+    bool IsWithinSpellQueueWindow(timer::time_point tick, timer::duration window);
+
 protected:
     bool CanCastSpell(CBattleEntity* PTarget, bool isEndOfCast);
 
