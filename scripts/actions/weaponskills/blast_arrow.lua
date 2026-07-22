@@ -15,10 +15,10 @@ local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.numHits = 1
+    params.numHits = 2
     params.ftpMod = { 2.0, 2.0, 2.0 }
-    params.str_wsc = 0.16 params.agi_wsc = 0.25
-    params.accVaries = { 0, 30, 60 } -- TODO: verify exact number
+    params.str_wsc = 0.25 params.agi_wsc = 0.25
+    params.accVaries = { 15, 30, 60 } -- TODO: verify exact number
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.2 params.agi_wsc = 0.5
@@ -29,7 +29,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     if xi.wsEffect.set(player, xi.wsEffect.BLAST_ARROW_ACC, 1, 60) then
         xi.wsEffect.message(player, 'Your next ranged weaponskill cannot miss.')
     else
-        xi.wsEffect.message(player, 'An empowered effect is already active.')
+        xi.wsEffect.message(player, 'You are already empowered.')
     end
 
     return tpHits, extraHits, criticalHit, damage
