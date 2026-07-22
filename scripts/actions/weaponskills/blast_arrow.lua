@@ -26,7 +26,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    if xi.wsEffect.set(player, xi.wsEffect.RANGED_WS_HIT, 1, 60) then
+    if xi.wsEffect.set(player, xi.wsEffect.BLAST_ARROW_ACC, 1, 60) then
         xi.wsEffect.message(player, 'Your next ranged weaponskill cannot miss.')
     else
         xi.wsEffect.message(player, 'An empowered effect is already active.')

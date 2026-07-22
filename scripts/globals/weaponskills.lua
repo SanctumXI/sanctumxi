@@ -780,7 +780,7 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     -- Sanctum Combo: Blast Arrow empowers the next ranged weapon skill.
     if
         attacker:getObjType() == xi.objType.PC and
-        xi.wsEffect.has(attacker, xi.wsEffect.RANGED_WS_HIT)
+        xi.wsEffect.has(attacker, xi.wsEffect.BLAST_ARROW_ACC)
     then
         calcParams.guaranteedHit = true
         xi.wsEffect.consume(attacker)

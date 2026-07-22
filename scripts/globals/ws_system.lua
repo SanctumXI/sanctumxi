@@ -6,10 +6,10 @@ xi = xi or {}
 
 xi.wsEffect =
 {
-    NONE          = 0,
-    CHAKRA_BOOST  = 1,
-    RANGED_WS_HIT = 2,
-    CUSTOM_MOD    = 3,
+    NONE            = 0,
+    CHAKRA_BOOST    = 1,
+    BLAST_ARROW_ACC = 2,
+    CUSTOM_MOD      = 3,
 }
 
 -----------------------------------
