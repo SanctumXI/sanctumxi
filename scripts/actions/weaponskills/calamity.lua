@@ -26,6 +26,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if xi.wsEffect.set(player, xi.wsEffect.CALAMITY_AXE_CRIT, 1, 60) then
+        xi.wsEffect.message(player, 'The first hit of your next Axe weaponskill will be a critical hit.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

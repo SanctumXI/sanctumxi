@@ -25,6 +25,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        target:addEnmity(player, 300, 1000)
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

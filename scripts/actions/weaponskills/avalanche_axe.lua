@@ -14,6 +14,31 @@
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
+local effectPowerVar = 'Sanctum_AvalancheAxeCritPower'
+local effectTokenVar = 'Sanctum_AvalancheAxeCritToken'
+
+local function applyCritRateDown(target)
+    local power    = 5
+    local oldPower = target:getLocalVar(effectPowerVar)
+    local token    = target:getLocalVar(effectTokenVar) + 1
+
+    if oldPower ~= 0 then
+        target:delMod(xi.mod.CRITHITRATE, -oldPower)
+    end
+
+    target:addMod(xi.mod.CRITHITRATE, -power)
+    target:setLocalVar(effectPowerVar, power)
+    target:setLocalVar(effectTokenVar, token)
+
+    target:timer(45000, function(targetArg)
+        if targetArg and targetArg:getLocalVar(effectTokenVar) == token then
+            targetArg:delMod(xi.mod.CRITHITRATE, -power)
+            targetArg:setLocalVar(effectPowerVar, 0)
+            targetArg:setLocalVar(effectTokenVar, 0)
+        end
+    end)
+end
+
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
@@ -26,7 +51,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    target:addStatusEffect(xi.effect.EVASION_DOWN, { power = 20, duration = 30, origin = player })
+    if damage > 0 then
+        applyCritRateDown(target)
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

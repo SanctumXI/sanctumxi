@@ -703,6 +703,17 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.hitRate      = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.skillType    = attack.weaponType
 
+    -- Sanctum Custom: Calamity empowers the first hit of the next Axe weaponskill.
+    if
+        attacker:getObjType() == xi.objType.PC and
+        calcParams.skillType == xi.skill.AXE and
+        xi.wsEffect.has(attacker, xi.wsEffect.CALAMITY_AXE_CRIT)
+    then
+        calcParams.forcedFirstCrit = true
+        xi.wsEffect.consume(attacker)
+        xi.wsEffect.message(attacker, 'Calamity empowered the first hit of your Axe weaponskill!')
+    end
+
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams     = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = math.floor(calcParams.finalDmg)

@@ -26,14 +26,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    -- Handle status effect
-    local effectId      = xi.effect.CHOKE
-    local actionElement = xi.element.WIND
-    local power         = 5
-    local skillType     = xi.skill.AXE
-    local resist        = xi.combat.magicHitRate.calculateResistRate(player, target, 0, skillType, 0, actionElement, 0, effectId, 0)
-    local duration      = math.floor(60 * resist)
-    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
+    if damage > 0 then
+        local axeSkill     = player:getSkillLevel(xi.skill.AXE)
+        local vitDownPower = math.min(25, 5 + math.floor(axeSkill / 15))
+
+        target:addStatusEffect(xi.effect.VIT_DOWN, { power = vitDownPower, duration = 45, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end
