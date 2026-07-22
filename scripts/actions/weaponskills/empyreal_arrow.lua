@@ -32,7 +32,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
     local duration = 45 + math.floor((tp - 1000) / 100) * 3
-    xi.wsEffect.applyMod(player, xi.mod.CRITHITRATE, 10, duration, 'Empyreal Arrow increased your critical hit rate!')
+    if not xi.wsEffect.applyMod(player, xi.mod.CRITHITRATE, 10, duration, 'Empyreal Arrow increased your critical hit rate!') then
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

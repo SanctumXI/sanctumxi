@@ -62,9 +62,10 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
     local recoveryAmount    = math.min(player:getMaxHP() - player:getHP(), maxRecoveryAmount)
 
     -- Sanctum Combo: Chakra Boost
-    local effect, power = xi.wsEffect.consume(player)
+    local effect, power = xi.wsEffect.peek(player)
 
     if effect == xi.wsEffect.CHAKRA_BOOST then
+        xi.wsEffect.consume(player)
         recoveryAmount = math.floor(recoveryAmount * (1 + power / 100))
         consumedWsEffect = true
     end

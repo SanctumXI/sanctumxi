@@ -38,8 +38,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 
     -- Sanctum Combo: Exploding Palm empowers Chakra
-    xi.wsEffect.set(player, xi.wsEffect.CHAKRA_BOOST, 100, 30)
-    xi.wsEffect.message(player, 'Your next Chakra is empowered.')
+    if xi.wsEffect.set(player, xi.wsEffect.CHAKRA_BOOST, 100, 30) then
+        xi.wsEffect.message(player, 'Your next Chakra is empowered.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

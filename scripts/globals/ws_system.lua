@@ -9,6 +9,7 @@ xi.wsEffect =
     NONE          = 0,
     CHAKRA_BOOST  = 1,
     RANGED_WS_HIT = 2,
+    CUSTOM_MOD    = 3,
 }
 
 -----------------------------------
@@ -31,12 +32,18 @@ xi.wsEffect.clear = function(player)
 end
 
 xi.wsEffect.set = function(player, effect, power, duration)
+    if xi.wsEffect.peek(player) ~= xi.wsEffect.NONE then
+        return false
+    end
+
     player:setCharVar(xi.wsEffect.charVars.EFFECT, effect or xi.wsEffect.NONE)
     player:setCharVar(xi.wsEffect.charVars.POWER, power or 0)
     player:setCharVar(xi.wsEffect.charVars.EXPIRE, GetSystemTime() + (duration or 30))
 
     player:delStatusEffect(xi.effect.EMPOWERED)
     player:addStatusEffect(xi.effect.EMPOWERED, { power = 1, duration = duration or 30, origin = player })
+
+    return true
 end
 
 xi.wsEffect.isExpired = function(player)
@@ -89,6 +96,18 @@ xi.wsEffect.modTokenCharVar = function(mod)
     return string.format('Sanctum_WsEffectModToken_%s', mod)
 end
 
+xi.wsEffect.trackedMods = xi.wsEffect.trackedMods or {}
+
+xi.wsEffect.hasActiveMod = function(player)
+    for mod in pairs(xi.wsEffect.trackedMods) do
+        if player:getCharVar(xi.wsEffect.modCharVar(mod)) ~= 0 then
+            return true
+        end
+    end
+
+    return false
+end
+
 xi.wsEffect.clearMod = function(player, mod, power)
     local activeVar = xi.wsEffect.modCharVar(mod)
 
@@ -98,11 +117,13 @@ xi.wsEffect.clearMod = function(player, mod, power)
     end
 end
 
-xi.wsEffect.applyMod = function(player, mod, power, duration, message)
+xi.wsEffect.applyModInternal = function(player, mod, power, duration)
     local activeVar = xi.wsEffect.modCharVar(mod)
     local tokenVar  = xi.wsEffect.modTokenCharVar(mod)
     local oldPower  = player:getCharVar(activeVar)
     local token     = player:getCharVar(tokenVar) + 1
+
+    xi.wsEffect.trackedMods[mod] = true
 
     -- Prevent stacking the same tracked mod
     if oldPower ~= 0 then
@@ -114,10 +135,6 @@ xi.wsEffect.applyMod = function(player, mod, power, duration, message)
     player:setCharVar(activeVar, power)
     player:setCharVar(tokenVar, token)
 
-    if message then
-        xi.wsEffect.message(player, message)
-    end
-
     player:timer(duration * 1000, function(playerArg)
         if
             playerArg and
@@ -125,19 +142,46 @@ xi.wsEffect.applyMod = function(player, mod, power, duration, message)
         then
             xi.wsEffect.clearMod(playerArg, mod, power)
             playerArg:setCharVar(tokenVar, 0)
+
+            if
+                not xi.wsEffect.hasActiveMod(playerArg) and
+                xi.wsEffect.has(playerArg, xi.wsEffect.CUSTOM_MOD)
+            then
+                xi.wsEffect.clear(playerArg)
+            end
         end
     end)
 end
 
+xi.wsEffect.applyMod = function(player, mod, power, duration, message)
+    if not xi.wsEffect.set(player, xi.wsEffect.CUSTOM_MOD, 0, duration) then
+        return false
+    end
+
+    xi.wsEffect.applyModInternal(player, mod, power, duration)
+
+    if message then
+        xi.wsEffect.message(player, message)
+    end
+
+    return true
+end
+
 xi.wsEffect.applyMods = function(player, mods, duration, message)
+    if not xi.wsEffect.set(player, xi.wsEffect.CUSTOM_MOD, 0, duration) then
+        return false
+    end
+
     for _, modData in ipairs(mods) do
         local mod   = modData[1]
         local power = modData[2]
 
-        xi.wsEffect.applyMod(player, mod, power, duration)
+        xi.wsEffect.applyModInternal(player, mod, power, duration)
     end
 
     if message then
         xi.wsEffect.message(player, message)
     end
+
+    return true
 end
