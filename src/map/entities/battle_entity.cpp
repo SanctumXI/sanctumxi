@@ -40,7 +40,7 @@
 #include "items/item_weapon.h"
 #include "job_points.h"
 #include "lua/luautils.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "notoriety_container.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "recast_container.h"
@@ -393,9 +393,9 @@ uint8 CBattleEntity::UpdateSpeed(bool run)
                 if (auto* mobEntity = dynamic_cast<CMobEntity*>(this))
                 {
                     // mob has a custom multiplier
-                    if (mobEntity->getMobMod(MOBMOD_RUN_SPEED_MULT) > 0)
+                    if (mobEntity->getMobMod(xi::MobMod::RunSpeedMult) > 0)
                     {
-                        multiplier = mobEntity->getMobMod(MOBMOD_RUN_SPEED_MULT) / 100.0f;
+                        multiplier = mobEntity->getMobMod(xi::MobMod::RunSpeedMult) / 100.0f;
                     }
 
                     // if some weight penalty (like gravity) then cut the multiplier
@@ -495,7 +495,7 @@ uint32 CBattleEntity::GetWeaponDelay(bool tp)
             bool specialAttackList = false;
             if (auto* mobEntity = dynamic_cast<CMobEntity*>(this))
             {
-                if (mobEntity->getMobMod(MOBMODIFIER::MOBMOD_ATTACK_SKILL_LIST) != 0)
+                if (mobEntity->getMobMod(xi::MobMod::AttackSkillList) != 0)
                 {
                     specialAttackList = true;
                 }
@@ -596,8 +596,35 @@ uint16 CBattleEntity::GetMainWeaponDmg()
 
     if (objtype == TYPE_MOB)
     {
-        auto* PMob = static_cast<CMobEntity*>(this);
-        return mobutils::GetWeaponDamage(PMob, SLOT_MAIN);
+        auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]);
+
+        int32 weaponDamage       = weapon->getDamage();
+        int32 baseDamageModifier = 0;
+        int32 damageModifier     = getMod(Mod::MAIN_DMG_RATING);
+        float damageMultiplier   = 1.0f;
+        int32 weaponDamageOffset = 0;
+
+        if (auto* PMob = dynamic_cast<CMobEntity*>(this))
+        {
+            weaponDamageOffset = PMob->getMobMod(xi::MobMod::DamageOffset);
+            damageMultiplier   = PMob->m_dmgMult / 100.0f;
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageModifier) != 0)
+            {
+                baseDamageModifier = PMob->getMobMod(xi::MobMod::BaseDamageModifier);
+            }
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) != 0)
+            {
+                damageMultiplier = PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) / 100.0f;
+            }
+        }
+
+        int32 damage = static_cast<int32>(std::floor((weaponDamage + baseDamageModifier) * damageMultiplier));
+        damage += damageModifier + weaponDamageOffset;
+        damage = std::clamp(damage, 1, 65535);
+
+        return static_cast<uint16>(damage);
     }
     else if (objtype == TYPE_PET)
     {
@@ -660,8 +687,35 @@ uint16 CBattleEntity::GetSubWeaponDmg()
         (objtype == TYPE_PET &&
          static_cast<CPetEntity*>(this)->getPetType() != PET_TYPE::AUTOMATON))
     {
-        auto* PMob = static_cast<CMobEntity*>(this);
-        return mobutils::GetWeaponDamage(PMob, SLOT_MAIN); // So help me duke if mob offhand isn't identical to mainhand somewhere
+        auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]);
+
+        int32 weaponDamage       = weapon->getDamage();
+        int32 baseDamageModifier = 0;
+        int32 damageModifier     = getMod(Mod::SUB_DMG_RATING);
+        float damageMultiplier   = 1.0f;
+        int32 weaponDamageOffset = 0;
+
+        if (auto* PMob = dynamic_cast<CMobEntity*>(this))
+        {
+            weaponDamageOffset = PMob->getMobMod(xi::MobMod::DamageOffset);
+            damageMultiplier   = PMob->m_dmgMult / 100.0f;
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageModifier) != 0)
+            {
+                baseDamageModifier = PMob->getMobMod(xi::MobMod::BaseDamageModifier);
+            }
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) != 0)
+            {
+                damageMultiplier = PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) / 100.0f;
+            }
+        }
+
+        int32 damage = static_cast<int32>(std::floor((weaponDamage + baseDamageModifier) * damageMultiplier));
+        damage += damageModifier + weaponDamageOffset;
+        damage = std::clamp(damage, 1, 65535);
+
+        return static_cast<uint16>(damage);
     }
 
     if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]))
@@ -689,8 +743,35 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 
     if (objtype == TYPE_MOB)
     {
-        auto* PMob = static_cast<CMobEntity*>(this);
-        return mobutils::GetWeaponDamage(PMob, SLOT_RANGED);
+        auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]);
+
+        int32 weaponDamage       = weapon->getDamage();
+        int32 baseDamageModifier = 0;
+        int32 damageModifier     = getMod(Mod::RANGED_DMG_RATING);
+        float damageMultiplier   = 1.0f;
+        int32 weaponDamageOffset = 0;
+
+        if (auto* PMob = dynamic_cast<CMobEntity*>(this))
+        {
+            weaponDamageOffset = PMob->getMobMod(xi::MobMod::RangedDamageOffset);
+            damageMultiplier   = PMob->m_dmgMult / 100.0f;
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageModifier) != 0)
+            {
+                baseDamageModifier = PMob->getMobMod(xi::MobMod::BaseDamageModifier);
+            }
+
+            if (PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) != 0)
+            {
+                damageMultiplier = PMob->getMobMod(xi::MobMod::BaseDamageMultiplier) / 100.0f;
+            }
+        }
+
+        int32 damage = static_cast<int32>(std::floor((weaponDamage + baseDamageModifier) * damageMultiplier));
+        damage += damageModifier + weaponDamageOffset;
+        damage = std::clamp(damage, 1, 65535);
+
+        return static_cast<uint16>(damage);
     }
     else if (objtype == TYPE_PET)
     {
@@ -2157,7 +2238,7 @@ bool CBattleEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
                 // like fire-absorbing mobs casting Fire IV on themselves
                 else if (auto* PMobInitiator = dynamic_cast<CMobEntity*>(PInitiator))
                 {
-                    return PMobInitiator->getMobMod(MOBMODIFIER::MOBMOD_SKIP_ALLEGIANCE_CHECK) == 1;
+                    return PMobInitiator->getMobMod(xi::MobMod::SkipAllegianceCheck) == 1;
                 }
             }
 
@@ -2989,7 +3070,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         else if (PTarget->objtype == TYPE_MOB && targ_weapon && targ_weapon->getSkillType() == SKILLTYPE::SKILL_HAND_TO_HAND) // This is how Attack Round checks for h2h penalty
                         {
                             REGION_TYPE regionID = PTarget->loc.zone->GetRegionID();
-                            if (static_cast<CMobEntity*>(PTarget)->getMobMod(MOBMOD_NO_H2H_PENALTY) == 0)
+                            if (static_cast<CMobEntity*>(PTarget)->getMobMod(xi::MobMod::NoH2hPenalty) == 0)
                             {
                                 if (regionID <= REGION_TYPE::LIMBUS) // Pre TOAU zones
                                 {

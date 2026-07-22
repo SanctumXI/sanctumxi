@@ -32,7 +32,7 @@
 #include "items/item_weapon.h"
 #include "lua/luautils.h"
 #include "map_engine.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "mob_spell_container.h"
 #include "mob_spell_list.h"
 #include "packets/s2c/0x028_battle2.h"
@@ -51,11 +51,11 @@ ModsMap_t mobSpawnModsList;
 
 /************************************************************************
  *                                                                       *
- *  Calculate mob base weapon damage                                     *
+ *  Calculate mob's initial base weapon damage without modifiers         *
  *                                                                       *
  ************************************************************************/
 
-uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
+uint16 GetBaseWeaponDamage(CMobEntity* PMob, uint16 slot)
 {
     // https://docs.google.com/spreadsheets/d/1YBoveP-weMdidrirY-vPDzHyxbEI2ryECINlfCnFkLI/edit?pli=1&gid=1743955268#gid=1743955268
     // Basic base damage formulas for reference:
@@ -63,13 +63,14 @@ uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
     // Normal MNK mobs     : (Level * Multiplier(Default: 1.0000)) + Offset (Auto attacks get a penalty multiplier)
     // "Special" MNK mobs  : (Level + Offset) * Multiplier(1.6667) (Auto attacks get a penalty multiplier)
 
-    auto   mobZoneId      = PMob->getZone();
-    uint16 mobLvl         = PMob->GetMLevel();
-    int8   offset         = 0;
-    int8   rangedOffset   = 0;
-    float  multiplier     = PMob->m_dmgMult / 100.0f;
-    int32  damage         = mobLvl;
-    int16  damageModifers = 0;
+    // Multipliers and modifiers are applied dynamically in CBattleEntity's weapon-damage getters.
+    // Keeping the stored weapon damage unmodified prevents custom Lua damage changes from double-dipping.
+
+    auto   mobZoneId    = PMob->getZone();
+    uint16 mobLvl       = PMob->GetMLevel();
+    int8   offset       = 0;
+    int8   rangedOffset = 0;
+    uint16 damage       = mobLvl;
 
     // Zones from base game/expansions have different base offsets, multipliers, etc.
     REGION_TYPE regionID = PMob->loc.zone->GetRegionID();
@@ -153,19 +154,12 @@ uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
             break;
     }
 
-    offset += PMob->getMobMod(MOBMOD_DAMAGE_OFFSET);
-
-    if (slot == SLOT_RANGED)
-    {
-        offset = rangedOffset;
-        offset += PMob->getMobMod(MOBMOD_RANGED_DAMAGE_OFFSET);
-    }
-
     // Normal mobs in beginner zones have the offset lowered by 1.
     // Excluded NMs for now for things like Voidwatch Mobs.
     if (mobZoneId != 0 && PMob->m_Type != MOBTYPE_NOTORIOUS && (mobZoneId == ZONE_WEST_RONFAURE || mobZoneId == ZONE_EAST_RONFAURE || mobZoneId == ZONE_NORTH_GUSTABERG || mobZoneId == ZONE_SOUTH_GUSTABERG || mobZoneId == ZONE_WEST_SARUTABARUTA || mobZoneId == ZONE_EAST_SARUTABARUTA))
     {
         offset -= 1;
+        rangedOffset -= 1;
     }
 
     // Clamp to 0 for edge cases that might cause the offset go negative.
@@ -174,38 +168,14 @@ uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
         offset = 0;
     }
 
-    // Add this mod to increase a mobs damage by a base amount
-    if (PMob->getMobMod(MOBMOD_WEAPON_BONUS) != 0)
+    if (rangedOffset < 0)
     {
-        damageModifers = PMob->getMobMod(MOBMOD_WEAPON_BONUS);
+        rangedOffset = 0;
     }
 
-    // Add damage mods to the appropriate slot's base damage if the mob has them.
-    if (slot == SLOT_MAIN)
-    {
-        damageModifers += PMob->getMod(Mod::MAIN_DMG_RATING);
-    }
-    else if (slot == SLOT_SUB)
-    {
-        damageModifers += PMob->getMod(Mod::SUB_DMG_RATING);
-    }
-    else if (slot == SLOT_RANGED)
-    {
-        damageModifers += PMob->getMod(Mod::RANGED_DMG_RATING);
-    }
-
-    damage += damageModifers;
-
-    if (PMob->getMobMod(MOBMOD_BASE_DAMAGE_MULTIPLIER) != 0)
-    {
-        multiplier = PMob->getMobMod(MOBMOD_BASE_DAMAGE_MULTIPLIER) / 100.0f;
-    }
-
-    damage = (damage + offset) * multiplier;
-
-    damage = std::clamp<int32>(damage, 1, 65535);
-
-    return static_cast<uint16>(damage);
+    PMob->setMobMod(xi::MobMod::DamageOffset, offset);
+    PMob->setMobMod(xi::MobMod::RangedDamageOffset, rangedOffset);
+    return damage;
 }
 
 // Get base skill rankings for ACC/ATT/EVA/MEVA
@@ -756,7 +726,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
                 break;
         }
 
-        if (PMob->getMobMod(MOBMOD_MP_BASE))
+        if (PMob->getMobMod(xi::MobMod::MpBase))
         {
             hasMp = true;
         }
@@ -765,9 +735,9 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         {
             float scale = PMob->MPscale;
 
-            if (PMob->getMobMod(MOBMOD_MP_BASE))
+            if (PMob->getMobMod(xi::MobMod::MpBase))
             {
-                scale = (float)PMob->getMobMod(MOBMOD_MP_BASE) / 100.0f;
+                scale = (float)PMob->getMobMod(xi::MobMod::MpBase) / 100.0f;
             }
 
             if (PMob->MPmodifier == 0)
@@ -794,8 +764,8 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         }
     }
 
-    ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
-    ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetWeaponDamage(PMob, SLOT_RANGED));
+    ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetBaseWeaponDamage(PMob, SLOT_MAIN));
+    ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetBaseWeaponDamage(PMob, SLOT_RANGED));
 
     // reduce weapon delay of MNK
     if (PMob->GetMJob() == JOB_MNK)
@@ -803,13 +773,13 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
     }
 
-    // Deprecate MOBMOD_DUAL_WIELD later, replace if check with value from DB
-    if (PMob->getMobMod(MOBMOD_DUAL_WIELD))
+    // Deprecate xi::MobMod::DualWield later, replace if check with value from DB
+    if (PMob->getMobMod(xi::MobMod::DualWield))
     {
         PMob->m_dualWield = true;
         // if mob is going to dualWield then need to have sub slot
         // assume it is the same damage as the main slot
-        static_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_SUB])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
+        static_cast<CItemWeapon*>(PMob->m_Weapons[SLOT_SUB])->setDamage(GetBaseWeaponDamage(PMob, SLOT_MAIN));
     }
 
     uint16 fSTR = GetBaseToRank(PMob->strRank, mLvl);
@@ -881,18 +851,18 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     PMob->stats.CHR     = (uint16)(PMob->stats.CHR * statMultiplier);
 
     // special case, give spell list to my pet
-    if (PMob->getMobMod(MOBMOD_PET_SPELL_LIST) && PMob->PPet != nullptr)
+    if (PMob->getMobMod(xi::MobMod::PetSpellList) && PMob->PPet != nullptr)
     {
         // Stubborn_Dredvodd
         CMobEntity* PPet = (CMobEntity*)PMob->PPet;
 
         // give pet spell list
-        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PMob->getMobMod(MOBMOD_PET_SPELL_LIST));
+        PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(PMob->getMobMod(xi::MobMod::PetSpellList));
     }
 
-    if (PMob->getMobMod(MOBMOD_SPELL_LIST))
+    if (PMob->getMobMod(xi::MobMod::SpellList))
     {
-        PMob->m_SpellListContainer = mobSpellList::GetMobSpellList(PMob->getMobMod(MOBMOD_SPELL_LIST));
+        PMob->m_SpellListContainer = mobSpellList::GetMobSpellList(PMob->getMobMod(xi::MobMod::SpellList));
     }
 
     // cap all stats for mLvl / job
@@ -931,17 +901,17 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     PMob->addModifier(Mod::RACC, GetBaseSkill(PMob, PMob->accRank));                         // Base Ranged Accuracy for all mobs is Rank A+ but pull from DB for specific cases
 
     // Known Base Parry for all mobs is Rank C
-    // MOBMOD_CAN_PARRY uses the mod value as the rank, unknown if mobs in current retail or somewhere else have a different parry rank
+    // xi::MobMod::CanParry uses the mod value as the rank, unknown if mobs in current retail or somewhere else have a different parry rank
     // Known mobs to have parry rating:
     // Dynamis beastmen mobs
     // Fantoccini (not yet coded)
-    if (PMob->getMobMod(MOBMOD_CAN_PARRY) > 0)
+    if (PMob->getMobMod(xi::MobMod::CanParry) > 0)
     {
-        PMob->WorkingSkills.skill[SKILL_PARRY] = GetBaseSkill(PMob, PMob->getMobMod(MOBMOD_CAN_PARRY));
+        PMob->WorkingSkills.skill[SKILL_PARRY] = GetBaseSkill(PMob, PMob->getMobMod(xi::MobMod::CanParry));
     }
 
     // Assume base guard for MNK and PUP mobs is the same as parry (Rank C)
-    if ((PMob->GetMJob() == JOB_MNK || PMob->GetMJob() == JOB_PUP) && PMob->getMobMod(MOBMOD_CANNOT_GUARD) == 0)
+    if ((PMob->GetMJob() == JOB_MNK || PMob->GetMJob() == JOB_PUP) && PMob->getMobMod(xi::MobMod::CannotGuard) == 0)
     {
         PMob->WorkingSkills.skill[SKILL_GUARD] = GetBaseSkill(PMob, 3);
     }
@@ -969,7 +939,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     // All beastmen drop gil
     if (PMob->m_EcoSystem == ECOSYSTEM::BEASTMAN)
     {
-        PMob->defaultMobMod(MOBMOD_GIL_BONUS, 100);
+        PMob->defaultMobMod(xi::MobMod::GilBonus, 100);
     }
 
     if (PMob->PMaster != nullptr)
@@ -977,7 +947,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         SetupPetSkills(PMob);
     }
 
-    PMob->m_Behavior |= PMob->getMobMod(MOBMOD_BEHAVIOR);
+    PMob->m_Behavior |= PMob->getMobMod(xi::MobMod::Behavior);
 
     if (zoneType & ZONE_TYPE::DUNGEON)
     {
@@ -1013,17 +983,17 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     }
 
     // Check for possible miss-setups
-    if (PMob->getMobMod(MOBMOD_SPECIAL_SKILL) != 0 && PMob->getMobMod(MOBMOD_SPECIAL_COOL) == 0)
+    if (PMob->getMobMod(xi::MobMod::SpecialSkill) != 0 && PMob->getMobMod(xi::MobMod::SpecialCool) == 0)
     {
         ShowError("mobutils::CalculateMobStats Mob (%s, %d) with special skill but no cool down set!", PMob->getName(), PMob->id);
     }
 
-    if (PMob->SpellContainer->HasSpells() && PMob->getMobMod(MOBMOD_MAGIC_COOL) == 0)
+    if (PMob->SpellContainer->HasSpells() && PMob->getMobMod(xi::MobMod::MagicCool) == 0)
     {
         ShowError("mobutils::CalculateMobStats Mob (%s, %d) with magic but no cool down set!", PMob->getName(), PMob->id);
     }
 
-    if (PMob->getMobMod(MOBMOD_DETECTION) == 0)
+    if (PMob->getMobMod(xi::MobMod::Detection) == 0)
     {
         ShowError("mobutils::CalculateMobStats Mob (%s, %d, %d) has no detection methods!", PMob->getName(), PMob->id, PMob->m_Family);
     }
@@ -1048,56 +1018,56 @@ void SetupJob(CMobEntity* PMob)
     switch (job)
     {
         case JOB_BLM:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_GA_CHANCE, 40);
-            PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 15);
-            PMob->defaultMobMod(MOBMOD_SEVERE_SPELL_CHANCE, 20);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::GaChance, 40);
+            PMob->defaultMobMod(xi::MobMod::BuffChance, 15);
+            PMob->defaultMobMod(xi::MobMod::SevereSpellChance, 20);
             break;
         case JOB_PLD:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 7);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
         case JOB_DRK:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 7);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
         case JOB_WHM:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 10);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
         case JOB_BRD:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_GA_CHANCE, 25);
-            PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 60);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 10);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::GaChance, 25);
+            PMob->defaultMobMod(xi::MobMod::BuffChance, 60);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
         case JOB_RDM:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_GA_CHANCE, 15);
-            PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 40);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 10);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::GaChance, 15);
+            PMob->defaultMobMod(xi::MobMod::BuffChance, 40);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 10);
             break;
         case JOB_SMN:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 70);
-            PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 100); // SMN only has "buffs"
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 70);
+            PMob->defaultMobMod(xi::MobMod::BuffChance, 100); // SMN only has "buffs"
             break;
         case JOB_NIN:
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 9);
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-            PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 20);
-            PMob->defaultMobMod(MOBMOD_MAGIC_DELAY, 7);
+            PMob->defaultMobMod(xi::MobMod::SpecialCool, 9);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+            PMob->defaultMobMod(xi::MobMod::BuffChance, 20);
+            PMob->defaultMobMod(xi::MobMod::MagicDelay, 7);
             break;
         case JOB_BLU:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
         case JOB_SCH:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
         case JOB_GEO:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
         case JOB_RUN:
-            PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
+            PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
             break;
         default:
             break;
@@ -1111,63 +1081,63 @@ void SetupJob(CMobEntity* PMob)
             if (PMob->m_EcoSystem == ECOSYSTEM::BEASTMAN)
             {
                 // 50% bonus
-                PMob->defaultMobMod(MOBMOD_GIL_BONUS, 150);
+                PMob->defaultMobMod(xi::MobMod::GilBonus, 150);
             }
             break;
         case JOB_RNG:
             if (PMob->m_Family == 126) // Gigas
             {
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 658); // Catapult only used while at range
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 658); // Catapult only used while at range
             }
             else if (PMob->m_Family == 246) // Trolls
             {
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1747); // Zarraqa only used while at range
-                PMob->defaultMobMod(MOBMOD_STANDBACK_COOL, 0);
-                PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 14);
-                PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1747); // Zarraqa only used while at range
+                PMob->defaultMobMod(xi::MobMod::StandbackCool, 0);
+                PMob->defaultMobMod(xi::MobMod::SpecialCool, 14);
+                PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
                 break;
             }
             else if (PMob->m_Family == 3) // Aern
             {
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1388);
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1388);
             }
             else
             {
                 // All other rangers
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 272);
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 272);
             }
 
-            PMob->defaultMobMod(MOBMOD_STANDBACK_COOL, 6);
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
-            PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
+            PMob->defaultMobMod(xi::MobMod::StandbackCool, 6);
+            PMob->defaultMobMod(xi::MobMod::SpecialCool, 12);
+            PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
             break;
         case JOB_NIN:
             if (PMob->m_Family == 3)
             {
                 // aern
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1388);
-                PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1388);
+                PMob->defaultMobMod(xi::MobMod::SpecialCool, 12);
             }
             else if (PMob->m_Family != 335) // exclude NIN Maat
             {
-                PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 272);
-                PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 12);
+                PMob->defaultMobMod(xi::MobMod::SpecialSkill, 272);
+                PMob->defaultMobMod(xi::MobMod::SpecialCool, 12);
             }
 
-            PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
+            PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
             break;
         case JOB_BST:
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 70);
-            PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1017);
+            PMob->defaultMobMod(xi::MobMod::SpecialCool, 70);
+            PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1017);
             break;
         case JOB_PUP:
-            PMob->defaultMobMod(MOBMOD_SPECIAL_SKILL, 1901);
-            PMob->defaultMobMod(MOBMOD_SPECIAL_COOL, 720);
+            PMob->defaultMobMod(xi::MobMod::SpecialSkill, 1901);
+            PMob->defaultMobMod(xi::MobMod::SpecialCool, 720);
             break;
         case JOB_BLM:
             // We don't want to do the mages stand-back part from subjob, so we have it here
-            PMob->defaultMobMod(MOBMOD_STANDBACK_COOL, 12);
-            PMob->defaultMobMod(MOBMOD_HP_STANDBACK, 70);
+            PMob->defaultMobMod(xi::MobMod::StandbackCool, 12);
+            PMob->defaultMobMod(xi::MobMod::HpStandback, 70);
         default:
             break;
     }
@@ -1188,23 +1158,23 @@ void SetupRoaming(CMobEntity* PMob)
     }
 
     // default mob roaming mods
-    PMob->defaultMobMod(MOBMOD_ROAM_DISTANCE, distance);
-    PMob->defaultMobMod(MOBMOD_ROAM_TURNS, turns);
-    PMob->defaultMobMod(MOBMOD_ROAM_COOL, cool);
-    PMob->defaultMobMod(MOBMOD_ROAM_RATE, rate);
+    PMob->defaultMobMod(xi::MobMod::RoamDistance, distance);
+    PMob->defaultMobMod(xi::MobMod::RoamTurns, turns);
+    PMob->defaultMobMod(xi::MobMod::RoamCool, cool);
+    PMob->defaultMobMod(xi::MobMod::RoamRate, rate);
 
     if (PMob->m_roamFlags & ROAMFLAG_AMBUSH)
     {
         PMob->m_specialFlags |= SPECIALFLAG_HIDDEN;
         // always stay close to spawn
         PMob->m_maxRoamDistance = 2.0f;
-        PMob->setMobMod(MOBMOD_ROAM_DISTANCE, 5);
-        PMob->setMobMod(MOBMOD_ROAM_TURNS, 1);
+        PMob->setMobMod(xi::MobMod::RoamDistance, 5);
+        PMob->setMobMod(xi::MobMod::RoamTurns, 1);
     }
 
     if (PMob->m_roamFlags & ROAMFLAG_SCRIPTED)
     {
-        PMob->setMobMod(MOBMOD_ROAM_RESET_FACING, 1);
+        PMob->setMobMod(xi::MobMod::RoamResetFacing, 1);
     }
 }
 
@@ -1240,7 +1210,7 @@ void SetupPetSkills(CMobEntity* PMob)
 
     if (skillListId != 0)
     {
-        PMob->setMobMod(MOBMOD_SKILL_LIST, skillListId);
+        PMob->setMobMod(xi::MobMod::SkillList, skillListId);
     }
 }
 
@@ -1278,14 +1248,11 @@ uint8 JobSkillRankToBaseEvaRank(JOBTYPE mjob, JOBTYPE sjob)
 void SetupDynamisMob(CMobEntity* PMob)
 {
     // no gil drop and no mugging!
-    PMob->setMobMod(MOBMOD_GIL_MAX, -1);
-    PMob->setMobMod(MOBMOD_MUG_GIL, -1);
+    PMob->setMobMod(xi::MobMod::GilMax, -1);
+    PMob->setMobMod(xi::MobMod::MugGil, -1);
 
     // boost dynamis mobs weapon damage
-    PMob->setMobMod(MOBMOD_WEAPON_BONUS, 30); // Add approximately 30 flat damage until proven otherwise (In-line with the 35% added previously)
-    ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
-    ((CItemWeapon*)PMob->m_Weapons[SLOT_RANGED])->setDamage(GetWeaponDamage(PMob, SLOT_RANGED));
-
+    PMob->setMobMod(xi::MobMod::BaseDamageModifier, 30); // Add approximately 30 flat damage until proven otherwise (In-line with the 35% added previously)
     // job resist traits are much more powerful in dynamis
     // according to wiki
     for (auto&& PTrait : PMob->TraitList)
@@ -1302,12 +1269,12 @@ void SetupDynamisMob(CMobEntity* PMob)
 
 void SetupBattlefieldMob(CMobEntity* PMob)
 {
-    PMob->setMobMod(MOBMOD_NO_DESPAWN, 1);
+    PMob->setMobMod(xi::MobMod::NoDespawn, 1);
 
     // Battlefield mobs don't drop gil
-    PMob->setMobMod(MOBMOD_GIL_MAX, -1);
-    PMob->setMobMod(MOBMOD_MUG_GIL, -1);
-    PMob->setMobMod(MOBMOD_EXP_BONUS, -100);
+    PMob->setMobMod(xi::MobMod::GilMax, -1);
+    PMob->setMobMod(xi::MobMod::MugGil, -1);
+    PMob->setMobMod(xi::MobMod::ExpBonus, -100);
 
     // never despawn
     PMob->SetDespawnTime(0s);
@@ -1320,15 +1287,15 @@ void SetupBattlefieldMob(CMobEntity* PMob)
 
     // do not roam around
     PMob->m_roamFlags |= ROAMFLAG_SCRIPTED;
-    PMob->setMobMod(MOBMOD_ROAM_RESET_FACING, 1);
-    PMob->setMobMod(MOBMOD_ROAM_DISTANCE, 0);
+    PMob->setMobMod(xi::MobMod::RoamResetFacing, 1);
+    PMob->setMobMod(xi::MobMod::RoamDistance, 0);
     PMob->m_maxRoamDistance = 0.0f;
     if ((PMob->m_bcnmID != 864) && (PMob->m_bcnmID != 704) && (PMob->m_bcnmID != 706))
     {
         // bcnmID 864 (desires of emptiness), 704 (darkness named), and 706 (waking dreams) don't superlink
         // force all mobs in same instance to superlink
         // plus one in case id is zero
-        PMob->setMobMod(MOBMOD_SUPERLINK, PMob->m_battlefieldID);
+        PMob->setMobMod(xi::MobMod::Superlink, PMob->m_battlefieldID);
     }
 }
 
@@ -1340,10 +1307,10 @@ void SetupEventMob(CMobEntity* PMob)
 {
     // event mob types will always have scripted roaming (any mob can have it scripted, but these ALWAYS do)
     PMob->m_roamFlags |= ROAMFLAG_SCRIPTED;
-    PMob->setMobMod(MOBMOD_ROAM_RESET_FACING, 1);
+    PMob->setMobMod(xi::MobMod::RoamResetFacing, 1);
     PMob->m_maxRoamDistance = 0.5f; // always go back to spawn
 
-    PMob->setMobMod(MOBMOD_NO_DESPAWN, 1);
+    PMob->setMobMod(xi::MobMod::NoDespawn, 1);
 }
 
 void SetupNMMob(CMobEntity* PMob)
@@ -1351,16 +1318,16 @@ void SetupNMMob(CMobEntity* PMob)
     JOBTYPE mJob = PMob->GetMJob();
     uint8   mLvl = PMob->GetMLevel();
 
-    PMob->setMobMod(MOBMOD_NO_DESPAWN, 1);
+    PMob->setMobMod(xi::MobMod::NoDespawn, 1);
 
     // NMs cure earlier
-    PMob->defaultMobMod(MOBMOD_HP_HEAL_CHANCE, 50);
-    PMob->defaultMobMod(MOBMOD_HEAL_CHANCE, 40);
+    PMob->defaultMobMod(xi::MobMod::HpHealChance, 50);
+    PMob->defaultMobMod(xi::MobMod::HealChance, 40);
 
     // give a gil bonus if accurate value was not set
-    if (PMob->getMobMod(MOBMOD_GIL_MAX) == 0)
+    if (PMob->getMobMod(xi::MobMod::GilMax) == 0)
     {
-        PMob->defaultMobMod(MOBMOD_GIL_BONUS, 100);
+        PMob->defaultMobMod(xi::MobMod::GilBonus, 100);
     }
 
     if (mLvl >= 25)
@@ -1375,20 +1342,20 @@ void SetupNMMob(CMobEntity* PMob)
 
 void SetupDungeonInstanceMob(CMobEntity* PMob)
 {
-    PMob->setMobMod(MOBMOD_GIL_MAX, 0);
-    PMob->setMobMod(MOBMOD_MUG_GIL, 0);
+    PMob->setMobMod(xi::MobMod::GilMax, 0);
+    PMob->setMobMod(xi::MobMod::MugGil, 0);
     PMob->loc.p = PMob->m_SpawnPoint;
     // never despawn
     PMob->SetDespawnTime(0s);
-    PMob->setMobMod(MOBMOD_NO_DESPAWN, 1);
+    PMob->setMobMod(xi::MobMod::NoDespawn, 1);
     // Salvage and Nyzul
     if (PMob->getZone() >= ZONE_ZHAYOLM_REMNANTS && PMob->getZone() <= ZONE_NYZUL_ISLE)
     {
         // Salvage and Nyzul mobs can not be charmed
-        PMob->setMobMod(MOBMOD_CHARMABLE, 0);
+        PMob->setMobMod(xi::MobMod::Charmable, 0);
         if (PMob->getZone() != ZONE_NYZUL_ISLE)
         {
-            PMob->setMobMod(MOBMOD_CHECK_AS_NM, 1);
+            PMob->setMobMod(xi::MobMod::CheckAsNm, 1);
         }
     }
 }
@@ -1419,13 +1386,13 @@ void GetAvailableSpells(CMobEntity* PMob)
     }
 
     // catch all non-defaulted spell chances
-    PMob->defaultMobMod(MOBMOD_MAGIC_COOL, 35);
-    PMob->defaultMobMod(MOBMOD_GA_CHANCE, 35);
-    PMob->defaultMobMod(MOBMOD_NA_CHANCE, 40);
-    PMob->defaultMobMod(MOBMOD_SEVERE_SPELL_CHANCE, 20);
-    PMob->defaultMobMod(MOBMOD_BUFF_CHANCE, 35);
-    PMob->defaultMobMod(MOBMOD_HEAL_CHANCE, 40);
-    PMob->defaultMobMod(MOBMOD_HP_HEAL_CHANCE, 40);
+    PMob->defaultMobMod(xi::MobMod::MagicCool, 35);
+    PMob->defaultMobMod(xi::MobMod::GaChance, 35);
+    PMob->defaultMobMod(xi::MobMod::NaChance, 40);
+    PMob->defaultMobMod(xi::MobMod::SevereSpellChance, 20);
+    PMob->defaultMobMod(xi::MobMod::BuffChance, 35);
+    PMob->defaultMobMod(xi::MobMod::HealChance, 40);
+    PMob->defaultMobMod(xi::MobMod::HpHealChance, 40);
 
     RecalculateSpellContainer(PMob);
 
@@ -1445,11 +1412,11 @@ void SetSpellList(CMobEntity* PMob, uint16 spellList)
 void InitializeMob(CMobEntity* PMob)
 {
     // add special mob mods
-    PMob->defaultMobMod(MOBMOD_SKILL_LIST, PMob->m_MobSkillList);
-    PMob->defaultMobMod(MOBMOD_LINK_RADIUS, 10);
-    PMob->defaultMobMod(MOBMOD_SIGHT_RANGE, (int16)CMobEntity::sight_range);
-    PMob->defaultMobMod(MOBMOD_SOUND_RANGE, (int16)CMobEntity::sound_range);
-    PMob->defaultMobMod(MOBMOD_MAGIC_RANGE, (int16)CMobEntity::magic_range);
+    PMob->defaultMobMod(xi::MobMod::SkillList, PMob->m_MobSkillList);
+    PMob->defaultMobMod(xi::MobMod::LinkRadius, 10);
+    PMob->defaultMobMod(xi::MobMod::SightRange, (int16)CMobEntity::sight_range);
+    PMob->defaultMobMod(xi::MobMod::SoundRange, (int16)CMobEntity::sound_range);
+    PMob->defaultMobMod(xi::MobMod::MagicRange, (int16)CMobEntity::magic_range);
 
     battleutils::addEcosystemKillerEffects(PMob);
 
@@ -1654,7 +1621,7 @@ void AddSqlModifiers(CMobEntity* PMob)
         // TODO: don't store mobmods in a CModifier
         for (auto& mobMod : PFamilyMods->mobMods)
         {
-            PMob->setMobMod(static_cast<uint16>(mobMod->getModID()), mobMod->getModAmount());
+            PMob->setMobMod(static_cast<xi::MobMod>(mobMod->getModID()), mobMod->getModAmount());
         }
     }
 
@@ -1671,7 +1638,7 @@ void AddSqlModifiers(CMobEntity* PMob)
 
         for (auto& mobMod : PPoolMods->mobMods)
         {
-            PMob->setMobMod(static_cast<uint16>(mobMod->getModID()), mobMod->getModAmount());
+            PMob->setMobMod(static_cast<xi::MobMod>(mobMod->getModID()), mobMod->getModAmount());
         }
     }
 
@@ -1688,7 +1655,7 @@ void AddSqlModifiers(CMobEntity* PMob)
 
         for (auto& mobMod : PSpawnMods->mobMods)
         {
-            PMob->setMobMod(static_cast<uint16>(mobMod->getModID()), mobMod->getModAmount());
+            PMob->setMobMod(static_cast<xi::MobMod>(mobMod->getModID()), mobMod->getModAmount());
         }
     }
 }
@@ -1835,7 +1802,7 @@ auto InstantiateAlly(uint32 groupid, uint16 zoneID, CInstance* instance) -> CMob
         PMob->m_Aggro         = rset->get<bool>("aggro");
         PMob->m_MobSkillList  = rset->get<uint16>("skill_list_id");
         PMob->m_TrueDetection = rset->get<bool>("true_detection");
-        PMob->setMobMod(MOBMOD_DETECTION, rset->get<int16>("detects"));
+        PMob->setMobMod(xi::MobMod::Detection, rset->get<int16>("detects"));
 
         if (CZone* PZone = zoneutils::GetZone(zoneID))
         {
@@ -1993,7 +1960,7 @@ auto InstantiateDynamicMob(uint32 groupid, uint16 groupZoneId, uint16 targetZone
         PMob->m_Aggro         = rset->get<bool>("aggro");
         PMob->m_MobSkillList  = rset->get<uint16>("skill_list_id");
         PMob->m_TrueDetection = rset->get<bool>("true_detection");
-        PMob->setMobMod(MOBMOD_DETECTION, rset->get<int16>("detects"));
+        PMob->setMobMod(xi::MobMod::Detection, rset->get<int16>("detects"));
 
         mobutils::InitializeMob(PMob);
         mobutils::AddSqlModifiers(PMob);

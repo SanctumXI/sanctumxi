@@ -30,7 +30,7 @@
 #include "entities/char_entity.h"
 #include "entities/trust_entity.h"
 #include "items/item_weapon.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "mob_spell_container.h"
 #include "player_controller.h"
 #include "recast_container.h"
@@ -174,7 +174,7 @@ auto CTrustController::DoCombatTick(timer::time_point tick) -> Task<void>
 
             PTrust->PAI->PathFind->LookAt(PTarget->loc.p);
 
-            int16 movementDistance = PTrust->getMobMod(MOBMOD_TRUST_DISTANCE);
+            int16 movementDistance = PTrust->getMobMod(xi::MobMod::TrustDistance);
 
             switch (movementDistance)
             {

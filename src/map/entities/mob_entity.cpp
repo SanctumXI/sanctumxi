@@ -39,7 +39,7 @@
 #include "items.h"
 #include "lua/lua_loot.h"
 #include "lua/luautils.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "mob_spell_container.h"
 #include "mob_spell_list.h"
 #include "mobskill.h"
@@ -261,8 +261,8 @@ bool CMobEntity::TrySpawn()
 
 uint32 CMobEntity::GetRandomGil()
 {
-    int16 min = getMobMod(MOBMOD_GIL_MIN);
-    int16 max = getMobMod(MOBMOD_GIL_MAX);
+    int16 min = getMobMod(xi::MobMod::GilMin);
+    int16 max = getMobMod(xi::MobMod::GilMax);
 
     if (min && max)
     {
@@ -308,9 +308,9 @@ uint32 CMobEntity::GetRandomGil()
         gil = min;
     }
 
-    if (getMobMod(MOBMOD_GIL_BONUS) != 0)
+    if (getMobMod(xi::MobMod::GilBonus) != 0)
     {
-        gil *= (getMobMod(MOBMOD_GIL_BONUS) / 100.0f);
+        gil *= (getMobMod(xi::MobMod::GilBonus) / 100.0f);
     }
 
     return (uint32)gil;
@@ -319,17 +319,17 @@ uint32 CMobEntity::GetRandomGil()
 bool CMobEntity::CanDropGil()
 {
     // smaller than 0 means drop no gil
-    if (getMobMod(MOBMOD_GIL_MAX) < 0)
+    if (getMobMod(xi::MobMod::GilMax) < 0)
     {
         return false;
     }
 
-    if (getMobMod(MOBMOD_GIL_MIN) > 0 || getMobMod(MOBMOD_GIL_MAX))
+    if (getMobMod(xi::MobMod::GilMin) > 0 || getMobMod(xi::MobMod::GilMax))
     {
         return true;
     }
 
-    return getMobMod(MOBMOD_GIL_BONUS) > 0;
+    return getMobMod(xi::MobMod::GilBonus) > 0;
 }
 
 bool CMobEntity::CanStealGil()
@@ -345,17 +345,17 @@ void CMobEntity::ResetGilPurse()
     {
         purse = GetRandomGil();
     }
-    setMobMod(MOBMOD_MUG_GIL, purse);
+    setMobMod(xi::MobMod::MugGil, purse);
 }
 
 bool CMobEntity::CanRoamHome()
 {
-    if ((speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) || getMobMod(MOBMOD_NO_MOVE) > 0)
+    if ((speed == 0 && !(m_roamFlags & ROAMFLAG_WORM)) || getMobMod(xi::MobMod::NoMove) > 0)
     {
         return false;
     }
 
-    if (getMobMod(MOBMOD_NO_DESPAWN) != 0 || settings::get<bool>("map.MOB_NO_DESPAWN"))
+    if (getMobMod(xi::MobMod::NoDespawn) != 0 || settings::get<bool>("map.MOB_NO_DESPAWN"))
     {
         return true;
     }
@@ -365,7 +365,7 @@ bool CMobEntity::CanRoamHome()
 
 bool CMobEntity::CanRoam()
 {
-    return !(m_roamFlags & ROAMFLAG_SCRIPTED) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM)) && getMobMod(MOBMOD_NO_MOVE) == 0;
+    return !(m_roamFlags & ROAMFLAG_SCRIPTED) && PMaster == nullptr && (speed > 0 || (m_roamFlags & ROAMFLAG_WORM)) && getMobMod(xi::MobMod::NoMove) == 0;
 }
 
 void CMobEntity::TapDeaggroTime()
@@ -382,7 +382,7 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
 {
     TracyZoneScoped;
     // handle super linking
-    if (superLink && getMobMod(MOBMOD_SUPERLINK) == superLink)
+    if (superLink && getMobMod(xi::MobMod::Superlink) == superLink)
     {
         return true;
     }
@@ -406,17 +406,17 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
     }
 
     // Link if can see mob
-    if (getMobMod(MOBMOD_DETECTION) & DETECT_SIGHT && !facing(loc.p, *pos, 64))
+    if (getMobMod(xi::MobMod::Detection) & DETECT_SIGHT && !facing(loc.p, *pos, 64))
     {
         return false;
     }
 
-    if (distance(loc.p, *pos) > getMobMod(MOBMOD_LINK_RADIUS))
+    if (distance(loc.p, *pos) > getMobMod(xi::MobMod::LinkRadius))
     {
         return false;
     }
 
-    if (getMobMod(MOBMOD_NO_LINK) > 0)
+    if (getMobMod(xi::MobMod::NoLink) > 0)
     {
         return false;
     }
@@ -443,7 +443,7 @@ bool CMobEntity::ShouldForceLink()
         return true;
     }
 
-    if (getMobMod(MOBMOD_SUPERLINK))
+    if (getMobMod(xi::MobMod::Superlink))
     {
         return true;
     }
@@ -468,7 +468,7 @@ bool CMobEntity::CanBeNeutral() const
 
 bool CMobEntity::shouldUseTPMove(uint16 tpThreshold)
 {
-    const auto& MobSkillList = battleutils::GetMobSkillList(getMobMod(MOBMOD_SKILL_LIST));
+    const auto& MobSkillList = battleutils::GetMobSkillList(getMobMod(xi::MobMod::SkillList));
 
     if (health.tp < 1000 || MobSkillList.empty() || !static_cast<CMobController*>(PAI->GetController())->IsWeaponSkillEnabled())
     {
@@ -489,22 +489,22 @@ bool CMobEntity::shouldUseTPMove(uint16 tpThreshold)
     return health.tp >= tpThreshold;
 }
 
-void CMobEntity::setMobMod(uint16 type, int16 value)
+void CMobEntity::setMobMod(xi::MobMod type, int16 value)
 {
     m_mobModStat[type] = value;
 }
 
-int16 CMobEntity::getMobMod(uint16 type)
+int16 CMobEntity::getMobMod(xi::MobMod type)
 {
     return m_mobModStat[type];
 }
 
-void CMobEntity::addMobMod(uint16 type, int16 value)
+void CMobEntity::addMobMod(xi::MobMod type, int16 value)
 {
     m_mobModStat[type] += value;
 }
 
-void CMobEntity::defaultMobMod(uint16 type, int16 value)
+void CMobEntity::defaultMobMod(xi::MobMod type, int16 value)
 {
     if (m_mobModStat[type] == 0)
     {
@@ -512,7 +512,7 @@ void CMobEntity::defaultMobMod(uint16 type, int16 value)
     }
 }
 
-void CMobEntity::resetMobMod(uint16 type)
+void CMobEntity::resetMobMod(xi::MobMod type)
 {
     m_mobModStat[type] = m_mobModStatSave[type];
 }
@@ -619,12 +619,12 @@ void CMobEntity::PostTick()
 
 float CMobEntity::GetRoamDistance()
 {
-    return (float)getMobMod(MOBMOD_ROAM_DISTANCE);
+    return (float)getMobMod(xi::MobMod::RoamDistance);
 }
 
 float CMobEntity::GetRoamRate()
 {
-    return (float)getMobMod(MOBMOD_ROAM_RATE) / 10.0f;
+    return (float)getMobMod(xi::MobMod::RoamRate) / 10.0f;
 }
 
 bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
@@ -675,7 +675,7 @@ void CMobEntity::Spawn()
     m_ItemDespoiled  = false;
     m_DropItemTime   = 1000ms;
     m_scmbExpBonusDmg = 0; // Sanctum custom: clear accumulated SC/MB damage each life
-    animationsub     = (uint8)getMobMod(MOBMOD_SPAWN_ANIMATIONSUB);
+    animationsub     = (uint8)getMobMod(xi::MobMod::SpawnAnimationsub);
     SetCallForHelpFlag(false);
 
     PEnmityContainer->Clear();
@@ -702,15 +702,15 @@ void CMobEntity::Spawn()
     }
 
     // add people to my posse
-    if (getMobMod(MOBMOD_ASSIST))
+    if (getMobMod(xi::MobMod::Assist))
     {
-        for (int32 i = 1; i < getMobMod(MOBMOD_ASSIST) + 1; i++)
+        for (int32 i = 1; i < getMobMod(xi::MobMod::Assist) + 1; i++)
         {
             CMobEntity* PMob = (CMobEntity*)GetEntity(targid + i, TYPE_MOB);
 
             if (PMob != nullptr)
             {
-                PMob->setMobMod(MOBMOD_SUPERLINK, targid);
+                PMob->setMobMod(xi::MobMod::Superlink, targid);
             }
         }
     }
@@ -720,9 +720,9 @@ void CMobEntity::Spawn()
 
     // Set the despawn time if the mob has a non-zero idle despawn time modifier.
     // This is used to despawn mobs that are not engaged in combat after a certain time.
-    if (getMobMod(MOBMOD_IDLE_DESPAWN) > 0)
+    if (getMobMod(xi::MobMod::IdleDespawn) > 0)
     {
-        SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
+        SetDespawnTime(std::chrono::seconds(getMobMod(xi::MobMod::IdleDespawn)));
     }
 }
 
@@ -784,7 +784,7 @@ void CMobEntity::DistributeRewards()
             // check for gil (beastmen drop gil, some NMs drop gil)
             if ((settings::get<float>("map.MOB_GIL_MULTIPLIER") > 0.0f && CanDropGil()) ||
                 (settings::get<float>("map.ALL_MOBS_GIL_BONUS") > 0 &&
-                 getMobMod(MOBMOD_GIL_MAX) >= 0)) // Negative value of MOBMOD_GIL_MAX is used to prevent gil drops in Dynamis/Limbus.
+                 getMobMod(xi::MobMod::GilMax) >= 0)) // Negative value of xi::MobMod::GilMax is used to prevent gil drops in Dynamis/Limbus.
             {
                 charutils::DistributeGil(PChar, this); // TODO: REALISATION MUST BE IN TREASUREPOOL
             }
@@ -964,7 +964,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
     DropList_t* dropList = itemutils::GetDropList(m_DropID);
 
-    if (!getMobMod(MOBMOD_NO_DROPS) && dropList != nullptr && (!dropList->Items.empty() || !dropList->Groups.empty() || PAI->EventHandler.hasListener("ITEM_DROPS")))
+    if (!getMobMod(xi::MobMod::NoDrops) && dropList != nullptr && (!dropList->Items.empty() || !dropList->Groups.empty() || PAI->EventHandler.hasListener("ITEM_DROPS")))
     {
         // THLvl determines the drop rate.
         auto thDropRateFunction = lua["xi"]["combat"]["treasureHunter"]["getDropRate"];
@@ -1031,7 +1031,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     bool      validZone = !(this->m_Type & MOBTYPE_BATTLEFIELD) && !(zoneType & ZONE_TYPE::DYNAMIS);
 
     // Check if mob can drop seals -- mobmod to disable drops, zone type isnt battlefield/dynamis, mob is stronger than Too Weak, or mobmod for EXP bonus is -100 or lower (-100% exp)
-    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, this) > EMobDifficulty::TooWeak && getMobMod(MOBMOD_EXP_BONUS) > -100)
+    if (!getMobMod(xi::MobMod::NoDrops) && validZone && charutils::CheckMob(m_HiPCLvl, this) > EMobDifficulty::TooWeak && getMobMod(xi::MobMod::ExpBonus) > -100)
     {
         // Check for seal drops
         // Only one type of seal can drop per mob
@@ -1147,7 +1147,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
     TracyZoneScoped;
-    auto skill_list_id{ getMobMod(MOBMOD_ATTACK_SKILL_LIST) };
+    auto skill_list_id{ getMobMod(xi::MobMod::AttackSkillList) };
     if (skill_list_id)
     {
         auto attack_range{ GetMeleeRange(PTarget) };
@@ -1179,7 +1179,7 @@ void CMobEntity::OnEngage(CAttackState& state)
     TracyZoneScoped;
     CBattleEntity::OnEngage(state);
     luautils::OnMobEngage(this, state.GetTarget());
-    unsigned int range = this->getMobMod(MOBMOD_ALLI_HATE);
+    unsigned int range = this->getMobMod(xi::MobMod::AlliHate);
     if (range != 0)
     {
         CBaseEntity* PTarget = state.GetTarget();
@@ -1290,9 +1290,9 @@ void CMobEntity::OnDisengage(CAttackState& state)
     PAI->PathFind->Clear();
     PEnmityContainer->Clear();
 
-    if (getMobMod(MOBMOD_IDLE_DESPAWN))
+    if (getMobMod(xi::MobMod::IdleDespawn))
     {
-        SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
+        SetDespawnTime(std::chrono::seconds(getMobMod(xi::MobMod::IdleDespawn)));
     }
     // this will let me decide to walk home or despawn
     m_neutral = true;
@@ -1335,9 +1335,9 @@ bool CMobEntity::OnAttack(CAttackState& state, action_t& action)
     TracyZoneScoped;
     TapDeaggroTime();
 
-    if (getMobMod(MOBMOD_ATTACK_SKILL_LIST))
+    if (getMobMod(xi::MobMod::AttackSkillList))
     {
-        return static_cast<CMobController*>(PAI->GetController())->MobSkill(getMobMod(MOBMOD_ATTACK_SKILL_LIST));
+        return static_cast<CMobController*>(PAI->GetController())->MobSkill(getMobMod(xi::MobMod::AttackSkillList));
     }
     else
     {
@@ -1347,5 +1347,5 @@ bool CMobEntity::OnAttack(CAttackState& state, action_t& action)
 
 bool CMobEntity::isWideScannable()
 {
-    return CBaseEntity::isWideScannable() && !getMobMod(MOBMOD_NO_WIDESCAN);
+    return CBaseEntity::isWideScannable() && !getMobMod(xi::MobMod::NoWidescan);
 }

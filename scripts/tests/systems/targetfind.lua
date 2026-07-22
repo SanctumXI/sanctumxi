@@ -122,7 +122,7 @@ describe('TargetFind', function()
         assert(wyv3:getHPP() ~= 100, 'P3 Wyvern was not hit by Spike Flail')
     end)
 
-    it('King Behemoth Meteor hits everyone (MOBMOD_AOE_HIT_ALL)', function()
+    it('King Behemoth Meteor hits everyone (xi.mobMod.AOE_HIT_ALL)', function()
         ---@type CClientEntityPair
         local charA, charB
 

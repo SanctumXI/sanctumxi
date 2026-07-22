@@ -31,7 +31,7 @@
 #include "lua/luautils.h"
 
 #include "map/navmesh/navmesh.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "status_effect_container.h"
 #include "zone.h"
 

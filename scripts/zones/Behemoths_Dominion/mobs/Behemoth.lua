@@ -66,7 +66,7 @@ entity.spawnPoints =
 entity.onMobSpawn = function(mob)
     mob:setLocalVar('[rage]timer', 1200) -- 20 minutes
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 42) -- 114 total weapon damage
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MODIFIER, 42) -- 114 total weapon damage
     mob:setMod(xi.mod.EVA, 301)
     mob:setMod(xi.mod.ATT, 270)
 

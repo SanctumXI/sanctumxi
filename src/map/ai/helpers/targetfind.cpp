@@ -30,7 +30,7 @@
 #include "entities/char_entity.h"
 #include "entities/mob_entity.h"
 #include "entities/trust_entity.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "status_effect_container.h"
 #include "utils/zoneutils.h"
 
@@ -221,7 +221,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOE_RADIUS radiusType, 
         }
 
         if (m_findType == FIND_TYPE::MONSTER_PLAYER &&
-            ((m_PBattleEntity->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_PBattleEntity)->getMobMod(MOBMOD_AOE_HIT_ALL)) ||
+            ((m_PBattleEntity->objtype == TYPE_MOB && static_cast<CMobEntity*>(m_PBattleEntity)->getMobMod(xi::MobMod::AoeHitAll)) ||
              static_cast<CMobEntity*>(m_PBattleEntity)->GetCallForHelpFlag()))
         {
             addAllInZone(m_PMasterTarget, withPet);
@@ -463,7 +463,7 @@ bool CTargetFind::isMobOwner(CBattleEntity* PTarget)
 
     if (auto* PMob = dynamic_cast<CMobEntity*>(PTarget))
     {
-        if (PMob->getMobMod(MOBMOD_CLAIM_TYPE) == static_cast<int16>(ClaimType::NonExclusive))
+        if (PMob->getMobMod(xi::MobMod::ClaimType) == static_cast<int16>(ClaimType::NonExclusive))
         {
             return true;
         }

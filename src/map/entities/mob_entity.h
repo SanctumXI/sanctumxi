@@ -22,8 +22,10 @@
 #ifndef _MOBENTITY_H
 #define _MOBENTITY_H
 
-#include "battle_entity.h"
 #include <unordered_map>
+
+#include "battle_entity.h"
+#include "data/enums/mob_mod.h"
 
 enum class MsgBasic : uint16_t;
 // forward declaration
@@ -148,13 +150,13 @@ public:
     auto GetEligibleSeals() -> std::vector<uint16>;
     auto GetEligibleGeodes() const -> std::vector<uint16>;
 
-    void  setMobMod(uint16 type, int16 value);
-    int16 getMobMod(uint16 type);
-    void  addMobMod(uint16 type, int16 value);
-    void  defaultMobMod(uint16 type, int16 value); // set value if value has not been already set
-    void  resetMobMod(uint16 type);                // resets mob mod to original value
-    void  saveMobModifiers();                      // save current state of modifiers
-    void  restoreMobModifiers();                   // restore to saved state
+    void  setMobMod(xi::MobMod type, int16 value);
+    int16 getMobMod(xi::MobMod type);
+    void  addMobMod(xi::MobMod type, int16 value);
+    void  defaultMobMod(xi::MobMod type, int16 value); // set value if value has not been already set
+    void  resetMobMod(xi::MobMod type);                // resets mob mod to original value
+    void  saveMobModifiers();                          // save current state of modifiers
+    void  restoreMobModifiers();                       // restore to saved state
 
     // Sanctum custom: accumulated Skillchain / Magic Burst damage used to compute the EXP bonus on kill.
     void   addSCMBExpBonusDmg(uint32 dmg); // accumulate SC/MB damage dealt to this mob
@@ -288,12 +290,12 @@ protected:
     void DropItems(CCharEntity* PChar);
 
 private:
-    timer::time_point              m_DespawnTimer{ timer::time_point::min() }; // Despawn Timer to despawn mob after set duration
-    std::unordered_map<int, int16> m_mobModStat;
-    std::unordered_map<int, int16> m_mobModStatSave;
-    uint32                         m_scmbExpBonusDmg{ 0 }; // Sanctum custom: accumulated SC/MB damage for EXP bonus
-    static constexpr float         roam_home_distance{ 60.f };
-    SpawnSlot*                     spawnSlot = nullptr;
+    timer::time_point                     m_DespawnTimer{ timer::time_point::min() }; // Despawn Timer to despawn mob after set duration
+    std::unordered_map<xi::MobMod, int16> m_mobModStat;
+    std::unordered_map<xi::MobMod, int16> m_mobModStatSave;
+    uint32                                m_scmbExpBonusDmg{ 0 }; // Sanctum custom: accumulated SC/MB damage for EXP bonus
+    static constexpr float                roam_home_distance{ 60.f };
+    SpawnSlot*                            spawnSlot = nullptr;
 };
 
 #endif

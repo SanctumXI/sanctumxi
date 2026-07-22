@@ -52,7 +52,7 @@
 #include "job_points.h"
 #include "latent_effect_container.h"
 #include "linkshell.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "mob_spell_container.h"
 #include "mob_spell_list.h"
 #include "mobskill.h"
@@ -18183,7 +18183,7 @@ void CLuaBaseEntity::setMobSkillAttack(int16 listId)
         return;
     }
 
-    static_cast<CMobEntity*>(m_PBaseEntity)->setMobMod(MOBMOD_ATTACK_SKILL_LIST, listId);
+    static_cast<CMobEntity*>(m_PBaseEntity)->setMobMod(xi::MobMod::AttackSkillList, listId);
 }
 
 /************************************************************************
@@ -18193,12 +18193,12 @@ void CLuaBaseEntity::setMobSkillAttack(int16 listId)
  *  Notes   :
  ************************************************************************/
 
-int16 CLuaBaseEntity::getMobMod(uint16 mobModID)
+int16 CLuaBaseEntity::getMobMod(xi::MobMod mobModID)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
         ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
-        return MOBMOD_NONE;
+        return 0;
     }
 
     return static_cast<CMobEntity*>(m_PBaseEntity)->getMobMod(mobModID);
@@ -18211,7 +18211,7 @@ int16 CLuaBaseEntity::getMobMod(uint16 mobModID)
  *  Notes   : Currently not being used in any script
  ************************************************************************/
 
-void CLuaBaseEntity::addMobMod(uint16 mobModID, int16 value)
+void CLuaBaseEntity::addMobMod(xi::MobMod mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
@@ -18246,7 +18246,7 @@ void CLuaBaseEntity::addSCMBExpBonusDmg(uint32 dmg)
  *  Notes   : Interesting note - this is being used for superlinking too
  ************************************************************************/
 
-void CLuaBaseEntity::setMobMod(uint16 mobModID, int16 value)
+void CLuaBaseEntity::setMobMod(xi::MobMod mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {
@@ -18264,7 +18264,7 @@ void CLuaBaseEntity::setMobMod(uint16 mobModID, int16 value)
  *  Notes   : Currently not being used in any script
  ************************************************************************/
 
-void CLuaBaseEntity::delMobMod(uint16 mobModID, int16 value)
+void CLuaBaseEntity::delMobMod(xi::MobMod mobModID, int16 value)
 {
     if (m_PBaseEntity->objtype & TYPE_NPC || m_PBaseEntity->objtype & TYPE_PC)
     {

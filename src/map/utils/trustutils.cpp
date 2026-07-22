@@ -378,12 +378,25 @@ auto LoadTrust(CCharEntity* PMaster, uint32 TrustID) -> CTrustEntity*
 
     LoadTrustStatsAndSkills(PTrust);
 
-    // Use Mob formulas to work out base "weapon" damage, but scale down to reasonable values.
-    const float  mobStyleDamage   = static_cast<float>(mobutils::GetWeaponDamage(PTrust, SLOT_MAIN));
-    const float  baseDamage       = mobStyleDamage * 0.5f;
-    const float  damageMultiplier = static_cast<float>(trustData->cmbDmgMult) / 100.0f;
-    const float  adjustedDamage   = baseDamage * damageMultiplier;
-    const uint16 finalDamage      = static_cast<uint16>(std::max(adjustedDamage, 1.0f));
+    // Use the new Mob formula to work out base "weapon" damage, but scale it down to reasonable values.
+    // Trust pool/family MobMods are loaded above, so include them here just as the old GetWeaponDamage call did.
+    const int32 weaponDamage        = static_cast<int32>(mobutils::GetBaseWeaponDamage(PTrust, SLOT_MAIN));
+    const int32 baseDamageModifier  = PTrust->getMobMod(xi::MobMod::BaseDamageModifier);
+    float       mobDamageMultiplier = PTrust->m_dmgMult / 100.0f;
+
+    if (PTrust->getMobMod(xi::MobMod::BaseDamageMultiplier) != 0)
+    {
+        mobDamageMultiplier = PTrust->getMobMod(xi::MobMod::BaseDamageMultiplier) / 100.0f;
+    }
+
+    int32 mobStyleDamage = static_cast<int32>(std::floor((weaponDamage + baseDamageModifier) * mobDamageMultiplier));
+    mobStyleDamage += PTrust->getMod(Mod::MAIN_DMG_RATING) + PTrust->getMobMod(xi::MobMod::DamageOffset);
+    mobStyleDamage = std::clamp(mobStyleDamage, 1, 65535);
+
+    const float  baseDamage            = static_cast<float>(mobStyleDamage) * 0.5f;
+    const float  trustDamageMultiplier = static_cast<float>(trustData->cmbDmgMult) / 100.0f;
+    const float  adjustedDamage        = baseDamage * trustDamageMultiplier;
+    const uint16 finalDamage           = static_cast<uint16>(std::max(adjustedDamage, 1.0f));
 
     // Trust do not really have weapons, but they are modelled internally as
     // if they do.

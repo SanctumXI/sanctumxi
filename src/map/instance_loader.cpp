@@ -31,7 +31,7 @@
 #include "items/item_weapon.h"
 #include "lua/luautils.h"
 #include "map_engine.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "mob_spell_list.h"
 #include "zone_entities.h"
 
@@ -210,19 +210,19 @@ CInstance* CInstanceLoader::LoadInstance() const
             // If a special instanced mob aggros, it should always aggro regardless of level.
             if (PMob->m_Type & MOBTYPE_EVENT)
             {
-                PMob->setMobMod(MOBMOD_ALWAYS_AGGRO, aggro);
+                PMob->setMobMod(xi::MobMod::AlwaysAggro, aggro);
             }
 
             PMob->m_MobSkillList  = rset->get<uint16>("skill_list_id");
             PMob->m_TrueDetection = rset->get<bool>("true_detection");
-            PMob->setMobMod(MOBMOD_DETECTION, rset->get<int16>("detects"));
-            PMob->setMobMod(MOBMOD_CHARMABLE, rset->get<int16>("charmable"));
+            PMob->setMobMod(xi::MobMod::Detection, rset->get<int16>("detects"));
+            PMob->setMobMod(xi::MobMod::Charmable, rset->get<int16>("charmable"));
 
             // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable
             // can be set in in their onInitialize
             if (PMob->m_Type & MOBTYPE_EVENT || PMob->m_Type & MOBTYPE_FISHED || PMob->m_Type & MOBTYPE_BATTLEFIELD || PMob->m_Type & MOBTYPE_NOTORIOUS)
             {
-                PMob->setMobMod(MOBMOD_CHARMABLE, 0);
+                PMob->setMobMod(xi::MobMod::Charmable, 0);
             }
 
             // must be here first to define mobmods

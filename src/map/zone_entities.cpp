@@ -24,7 +24,7 @@
 #include "enmity_container.h"
 #include "instance.h"
 #include "latent_effect_container.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "party.h"
 #include "recast_container.h"
 #include "spawn_handler.h"
@@ -444,7 +444,7 @@ void CZoneEntities::FindPartyForMob(CBaseEntity* PEntity)
 
     bool forceLink = PMob->ShouldForceLink();
     // check for sublinks even if a family doesn't link with itself
-    int16 sublink = PMob->getMobMod(MOBMOD_SUBLINK);
+    int16 sublink = PMob->getMobMod(xi::MobMod::Sublink);
     if ((forceLink || PMob->m_Link || sublink) && PMob->PParty == nullptr)
     {
         FOR_EACH_PAIR_CAST_SECOND(CMobEntity*, PCurrentMob, m_mobList)
@@ -463,21 +463,21 @@ void CZoneEntities::FindPartyForMob(CBaseEntity* PEntity)
             // SUPERLINK value (used by BCNMs/Dynamis to link all mobs in an instance).
             // Otherwise, mobs link by family or sublink as normal.
             bool  match     = false;
-            int16 superlink = PMob->getMobMod(MOBMOD_SUPERLINK);
+            int16 superlink = PMob->getMobMod(xi::MobMod::Superlink);
             if (superlink)
             {
-                match = PCurrentMob->getMobMod(MOBMOD_SUPERLINK) == superlink;
+                match = PCurrentMob->getMobMod(xi::MobMod::Superlink) == superlink;
             }
             else if (forceLink)
             {
                 match = PCurrentMob->ShouldForceLink() &&
                         ((PCurrentMob->m_Link && PCurrentMob->m_Family == PMob->m_Family) ||
-                         (sublink && sublink == PCurrentMob->getMobMod(MOBMOD_SUBLINK)));
+                         (sublink && sublink == PCurrentMob->getMobMod(xi::MobMod::Sublink)));
             }
             else
             {
                 match = (PCurrentMob->m_Link && PCurrentMob->m_Family == PMob->m_Family) ||
-                        (sublink && sublink == PCurrentMob->getMobMod(MOBMOD_SUBLINK));
+                        (sublink && sublink == PCurrentMob->getMobMod(xi::MobMod::Sublink));
             }
 
             if (match && (PCurrentMob->PMaster == nullptr || PCurrentMob->PMaster->objtype == TYPE_MOB))
@@ -530,7 +530,7 @@ void CZoneEntities::WeatherChange(Weather weather)
     {
         PCurrentMob->PAI->EventHandler.triggerListener("WEATHER_CHANGE", CLuaBaseEntity(PCurrentMob), static_cast<int>(weather), element);
 
-        if (PCurrentMob->getMobMod(MOBMOD_DETECTION) & DETECT_SCENT)
+        if (PCurrentMob->getMobMod(xi::MobMod::Detection) & DETECT_SCENT)
         {
             PCurrentMob->m_disableScent = (weather == Weather::Rain || weather == Weather::Squall || weather == Weather::Blizzards);
         }
@@ -915,7 +915,7 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
                 return;
             }
 
-            bool validAggro = mobCheck > EMobDifficulty::TooWeak || PChar->isSitting() || PCurrentMob->getMobMod(MOBMOD_ALWAYS_AGGRO);
+            bool validAggro = mobCheck > EMobDifficulty::TooWeak || PChar->isSitting() || PCurrentMob->getMobMod(xi::MobMod::AlwaysAggro);
             if (validAggro && PController->CanAggroTarget(PChar))
             {
                 PCurrentMob->PAI->Engage(PChar->targid);

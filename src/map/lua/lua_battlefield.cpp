@@ -30,7 +30,7 @@
 #include "entities/trust_entity.h"
 #include "lua_base_entity.h"
 #include "lua_battlefield.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "status_effect_container.h"
 #include "utils/mobutils.h"
 #include "utils/zoneutils.h"
@@ -528,7 +528,7 @@ void CLuaBattlefield::addGroups(const sol::table& groups, bool hasMultipleArenas
                     return;
                 }
 
-                PMob->setMobMod(MOBMOD_SUPERLINK, superlinkId);
+                PMob->setMobMod(xi::MobMod::Superlink, superlinkId);
                 PMob->saveMobModifiers();
             }
         }
@@ -545,7 +545,7 @@ void CLuaBattlefield::addGroups(const sol::table& groups, bool hasMultipleArenas
                     return;
                 }
 
-                PMob->setMobMod(MOBMOD_ROAM_RESET_FACING, 1);
+                PMob->setMobMod(xi::MobMod::RoamResetFacing, 1);
                 PMob->m_maxRoamDistance = 0.5f;
                 PMob->m_roamFlags |= ROAMFLAG_SCRIPTED;
                 PMob->saveMobModifiers();
@@ -586,7 +586,7 @@ void CLuaBattlefield::addGroups(const sol::table& groups, bool hasMultipleArenas
 
                 for (const auto& modifier : mobMods.get<sol::table>())
                 {
-                    PMob->setMobMod(modifier.first.as<uint16>(), modifier.second.as<uint16>());
+                    PMob->setMobMod(static_cast<xi::MobMod>(modifier.first.as<uint16>()), modifier.second.as<uint16>());
                 }
                 PMob->saveMobModifiers();
             }

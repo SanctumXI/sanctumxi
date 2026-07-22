@@ -110,7 +110,7 @@ auto CPetController::DoRoamTick(timer::time_point tick) -> Task<void>
         }
         else if (PetEntity->m_PetID == PETID_LIGHTSPIRIT) // Only Light Spirit will cast on roam tick
         {
-            // this will respect the pet's mob casting cooldown properties via MOBMOD_MAGIC_COOL
+            // this will respect the pet's mob casting cooldown properties via xi::MobMod::MagicCool
             if (CMobController::IsSpellReady(0) && CMobController::TryCastSpell())
             {
                 co_return;

@@ -82,7 +82,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.EVA, 300)
     mob:setMod(xi.mod.DMGMAGIC, -3500)
 
-    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 38) -- 110 total weapon damage
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MODIFIER, 38) -- 110 total weapon damage
 
     mob:setLocalVar('[rage]timer', 1200) -- 20 minutes
 end

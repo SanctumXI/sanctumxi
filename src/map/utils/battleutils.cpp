@@ -47,7 +47,7 @@
 #include "enmity_container.h"
 #include "entities/battle_entity.h"
 #include "entities/mob_entity.h"
-#include "mob_modifier.h"
+#include "data/enums/mob_mod.h"
 #include "entities/pet_entity.h"
 #include "entities/trust_entity.h"
 #include "enums/action/hit_distortion.h"
@@ -61,7 +61,6 @@
 #include "job_points.h"
 #include "map/navmesh/navmesh.h"
 #include "map_engine.h"
-#include "mob_modifier.h"
 #include "mobskill.h"
 #include "modifier.h"
 #include "notoriety_container.h"
@@ -1014,7 +1013,7 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
     else if (Action->spikesEffect != ActionReactKind::None)
     {
         // check if spikes are handled in mobs script
-        if (PDefender->objtype == TYPE_MOB && static_cast<CMobEntity*>(PDefender)->getMobMod(MOBMOD_AUTO_SPIKES) > 0)
+        if (PDefender->objtype == TYPE_MOB && static_cast<CMobEntity*>(PDefender)->getMobMod(xi::MobMod::AutoSpikes) > 0)
         {
             luautils::OnSpikesDamage(PDefender, PAttacker, Action, Action->spikesParam);
         }
@@ -1037,7 +1036,7 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
             Action->spikesParam = static_cast<uint16>(spikesDamage);
         }
 
-        if (PDefender->objtype != TYPE_MOB || static_cast<CMobEntity*>(PDefender)->getMobMod(MOBMOD_AUTO_SPIKES) == 0)
+        if (PDefender->objtype != TYPE_MOB || static_cast<CMobEntity*>(PDefender)->getMobMod(xi::MobMod::AutoSpikes) == 0)
         {
             switch (static_cast<SPIKES>(Action->spikesEffect))
             {
@@ -1639,7 +1638,7 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
             Action->addEffectMessage = MsgBasic::AddEffectRecoversHP;
         }
     }
-    else if ((PAttacker->objtype == TYPE_MOB || PAttacker->objtype == TYPE_PET) && static_cast<CMobEntity*>(PAttacker)->getMobMod(MOBMOD_ADD_EFFECT) > 0)
+    else if ((PAttacker->objtype == TYPE_MOB || PAttacker->objtype == TYPE_PET) && static_cast<CMobEntity*>(PAttacker)->getMobMod(xi::MobMod::AddEffect) > 0)
     {
         luautils::OnAdditionalEffect(PAttacker, PDefender, Action, finaldamage);
         if (Action->addEffectMessage == MsgBasic::AddEffectDamage && Action->addEffectParam < 0)
@@ -4768,7 +4767,7 @@ void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
             mob->PEnmityContainer->UpdateEnmity(original, 0, 0, true, true);
         }
 
-        if (mob->getMobMod(MOBMOD_CLAIM_TYPE) == static_cast<int16>(ClaimType::Unclaimable))
+        if (mob->getMobMod(xi::MobMod::ClaimType) == static_cast<int16>(ClaimType::Unclaimable))
         {
             return;
         }
@@ -6250,7 +6249,7 @@ bool CanAffordSpell(CBattleEntity* PEntity, CSpell* PSpell, uint8 flags)
     // Special handling for mobs with NO_SPELL_COST modifier
     if (auto PMob = dynamic_cast<CMobEntity*>(PEntity))
     {
-        if (PMob->getMobMod(MOBMOD_NO_SPELL_COST) > 0)
+        if (PMob->getMobMod(xi::MobMod::NoSpellCost) > 0)
         {
             return true;
         }

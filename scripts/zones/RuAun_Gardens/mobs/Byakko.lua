@@ -17,7 +17,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 300)
     mob:setMobMod(xi.mobMod.GIL_MIN, 18000)
     mob:setMobMod(xi.mobMod.GIL_MAX, 18000)
-    mob:setMobMod(xi.mobMod.WEAPON_BONUS, 32)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MODIFIER, 32)
     mob:setMod(xi.mod.TRIPLE_ATTACK, 45)
     mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
     mob:setMod(xi.mod.VIT, 43)
@@ -27,7 +27,6 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.ATT, 391) -- 440 total attack.
     mob:setMod(xi.mod.DEF, 345) -- 415 total defense.
     mob:setMod(xi.mod.SILENCE_RES_RANK, 10)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MODIFIER, 25)
 
     mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 11) -- Spawn message
     GetNPCByID(ID.npc.PORTAL_OFFSET + 8):setAnimation(xi.anim.CLOSE_DOOR)
