@@ -509,13 +509,17 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
         }
         else if (m_queuedSpellTargId)
         {
-            const auto queuedSpellTargId = m_queuedSpellTargId;
-            const auto queuedSpell       = m_queuedSpell;
+            auto* playerController = dynamic_cast<CPlayerController*>(Controller.get());
+            if (playerController && playerController->canAct())
+            {
+                const auto queuedSpellTargId = m_queuedSpellTargId;
+                const auto queuedSpell       = m_queuedSpell;
 
-            m_queuedSpell       = (SpellID)0;
-            m_queuedSpellTargId = 0;
+                m_queuedSpell       = (SpellID)0;
+                m_queuedSpellTargId = 0;
 
-            Cast(queuedSpellTargId, queuedSpell);
+                Cast(queuedSpellTargId, queuedSpell);
+            }
         }
     }
 
