@@ -40,7 +40,7 @@
 
 namespace
 {
-    constexpr auto spellQueueWindow = 750ms;
+    constexpr auto spellQueueWindow = 1750ms;
 }
 
 CPlayerController::CPlayerController(CCharEntity* _PChar)
