@@ -25,6 +25,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        local archerySkill = player:getSkillLevel(xi.skill.ARCHERY)
+        local intDownPower = math.min(25, 5 + math.floor(archerySkill / 15))
+
+        target:addStatusEffect(xi.effect.INT_DOWN, { power = intDownPower, duration = 45, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

@@ -1,13 +1,14 @@
------------------------------
+-----------------------------------
 -- Weaponskill Custom Effect System
------------------------------
+-----------------------------------
 
 xi = xi or {}
 
 xi.wsEffect =
 {
-    NONE         = 0,
-    CHAKRA_BOOST = 1,
+    NONE          = 0,
+    CHAKRA_BOOST  = 1,
+    RANGED_WS_HIT = 2,
 }
 
 -----------------------------------
@@ -32,7 +33,7 @@ end
 xi.wsEffect.set = function(player, effect, power, duration)
     player:setCharVar(xi.wsEffect.charVars.EFFECT, effect or xi.wsEffect.NONE)
     player:setCharVar(xi.wsEffect.charVars.POWER, power or 0)
-    player:setCharVar(xi.wsEffect.charVars.EXPIRE, os.time() + (duration or 30))
+    player:setCharVar(xi.wsEffect.charVars.EXPIRE, GetSystemTime() + (duration or 30))
 
     player:delStatusEffect(xi.effect.EMPOWERED)
     player:addStatusEffect(xi.effect.EMPOWERED, { power = 1, duration = duration or 30, origin = player })
@@ -41,7 +42,7 @@ end
 xi.wsEffect.isExpired = function(player)
     local expire = player:getCharVar(xi.wsEffect.charVars.EXPIRE)
 
-    return expire > 0 and os.time() > expire
+    return expire > 0 and GetSystemTime() > expire
 end
 
 xi.wsEffect.peek = function(player)
@@ -73,7 +74,7 @@ xi.wsEffect.consume = function(player)
 end
 
 xi.wsEffect.message = function(player, message, delay)
-     player:printToPlayer(message, xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(message, xi.msg.channel.SYSTEM_3)
 end
 
 -----------------------------------
@@ -82,6 +83,10 @@ end
 
 xi.wsEffect.modCharVar = function(mod)
     return string.format('Sanctum_WsEffectMod_%s', mod)
+end
+
+xi.wsEffect.modTokenCharVar = function(mod)
+    return string.format('Sanctum_WsEffectModToken_%s', mod)
 end
 
 xi.wsEffect.clearMod = function(player, mod, power)
@@ -95,7 +100,9 @@ end
 
 xi.wsEffect.applyMod = function(player, mod, power, duration, message)
     local activeVar = xi.wsEffect.modCharVar(mod)
+    local tokenVar  = xi.wsEffect.modTokenCharVar(mod)
     local oldPower  = player:getCharVar(activeVar)
+    local token     = player:getCharVar(tokenVar) + 1
 
     -- Prevent stacking the same tracked mod
     if oldPower ~= 0 then
@@ -105,14 +112,19 @@ xi.wsEffect.applyMod = function(player, mod, power, duration, message)
 
     player:addMod(mod, power)
     player:setCharVar(activeVar, power)
+    player:setCharVar(tokenVar, token)
 
     if message then
         xi.wsEffect.message(player, message)
     end
 
     player:timer(duration * 1000, function(playerArg)
-        if playerArg then
+        if
+            playerArg and
+            playerArg:getCharVar(tokenVar) == token
+        then
             xi.wsEffect.clearMod(playerArg, mod, power)
+            playerArg:setCharVar(tokenVar, 0)
         end
     end)
 end

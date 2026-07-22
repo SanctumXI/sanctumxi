@@ -25,6 +25,10 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    xi.wsEffect.set(player, xi.wsEffect.RANGED_WS_HIT, 1, 60)
+    xi.wsEffect.message(player, 'Your next ranged weapon skill cannot miss.')
+
     return tpHits, extraHits, criticalHit, damage
 end
 

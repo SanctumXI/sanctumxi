@@ -30,7 +30,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    target:addStatusEffect(xi.effect.BURN, { power = 3, duration = 60, origin = player })
+    if damage > 0 then
+        local archerySkill = player:getSkillLevel(xi.skill.ARCHERY)
+        local burnPower    = math.min(15, 3 + math.floor(archerySkill / 20))
+
+        target:addStatusEffect(xi.effect.BURN, { power = burnPower, duration = 30, origin = player })
+
+        player:addStatusEffect(xi.effect.REGEN, { power = 2, duration = 30, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end
