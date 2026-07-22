@@ -40,7 +40,8 @@
 
 namespace
 {
-    constexpr auto spellQueueWindow = 1750ms;
+    constexpr auto spellQueueWindow        = 1750ms;
+    constexpr auto rangedAttackQueueWindow = 1750ms;
 }
 
 CPlayerController::CPlayerController(CCharEntity* _PChar)
@@ -174,26 +175,21 @@ bool CPlayerController::RangedAttack(uint16 targid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
 
-    // Check for ranged attack queuing during animation phase
-    if (PChar->PAI->IsCurrentState<CRangeState>()) 
+    // Accept one pending ranged attack near the end of aiming and throughout
+    // its animation tail. A later request replaces the pending target.
+    if (PChar->PAI->IsCurrentState<CRangeState>())
     {
-        if (PChar->PAI->GetCurrentState()->IsCompleted()) 
+        auto* rangeState = static_cast<CRangeState*>(PChar->PAI->GetCurrentState());
+        if (rangeState->IsWithinRangedAttackQueueWindow(timer::now(), rangedAttackQueueWindow))
         {
-             // Queue the ranged attack during animation phase
-                PChar->PAI->m_queuedRangedAttack = targid;
+            PChar->PAI->m_queuedRangedAttack = targid;
             PChar->PAI->m_queuedSpell            = (SpellID)0;
             PChar->PAI->m_queuedSpellTargId      = 0;
             return true;
-            
         }
-        else 
-        {
-             // Still shooting, send wait message
-                PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
-            return false;
-            
-        }
-        
+
+        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::WaitLonger);
+        return false;
     }
     else if (canAct() && PChar->PAI->CanChangeState())
     {

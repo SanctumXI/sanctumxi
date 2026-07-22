@@ -149,6 +149,11 @@ bool CRangeState::CanChangeState()
     return false;
 }
 
+bool CRangeState::IsWithinRangedAttackQueueWindow(timer::time_point tick, timer::duration window)
+{
+    return IsCompleted() || tick + window >= GetEntryTime() + m_aimTime;
+}
+
 bool CRangeState::Update(timer::time_point tick)
 {
     if (m_PEntity && m_PEntity->isAlive() && (tick > GetEntryTime() + m_aimTime && !IsCompleted()))

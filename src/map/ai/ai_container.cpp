@@ -498,18 +498,23 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
         PChar->PAI->CanChangeState()
     ) 
     {
+        auto* playerController = dynamic_cast<CPlayerController*>(Controller.get());
+
         if (
             m_queuedRangedAttack &&
-            m_Tick - PChar->m_LastRangedAttackTime > std::chrono::milliseconds(1100)
+            m_Tick - PChar->m_LastRangedAttackTime > std::chrono::milliseconds(1100) &&
+            playerController &&
+            playerController->canAct()
         ) 
         {
-            RangedAttack(m_queuedRangedAttack);
+            const auto queuedRangedAttack = m_queuedRangedAttack;
+
             m_queuedRangedAttack = 0;
-            
+
+            RangedAttack(queuedRangedAttack);
         }
         else if (m_queuedSpellTargId)
         {
-            auto* playerController = dynamic_cast<CPlayerController*>(Controller.get());
             if (playerController && playerController->canAct())
             {
                 const auto queuedSpellTargId = m_queuedSpellTargId;

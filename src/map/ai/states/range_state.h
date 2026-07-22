@@ -40,6 +40,8 @@ public:
         return m_isOutOfRange;
     }
 
+    bool IsWithinRangedAttackQueueWindow(timer::time_point tick, timer::duration window);
+
 protected:
     virtual bool CanChangeState() override;
     virtual bool CanFollowPath() override
