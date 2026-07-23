@@ -35,8 +35,16 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if player:getMainJob() == xi.job.PLD and damage > 0 then
-        player:addStatusEffect(xi.effect.GEO_REFRESH, { power = 2, duration = 45, origin = player })
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.MAGIC_EVASION_DOWN, { power = 10, duration = 45, origin = player })
+    end
+
+    if player:getMainJob() == xi.job.PLD then
+        if xi.wsEffect.set(player, xi.wsEffect.BLACK_HALO_BASH, 25, 60) then
+            xi.wsEffect.message(player, 'Your next Shield Bash is empowered.')
+        else
+            xi.wsEffect.message(player, 'An empowered effect is already active.')
+        end
     end
 
     return tpHits, extraHits, criticalHit, damage

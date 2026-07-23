@@ -28,7 +28,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    player:addStatusEffect(xi.effect.ACCURACY_BOOST, { power = 5, duration = 30, origin = player })
+    if damage > 0 then
+        player:addStatusEffect(xi.effect.REGEN, { power = 3, duration = 30, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

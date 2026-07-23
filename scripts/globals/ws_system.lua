@@ -11,6 +11,8 @@ xi.wsEffect =
     BLAST_ARROW_ACC   = 2,
     CUSTOM_MOD        = 3,
     CALAMITY_AXE_CRIT = 4,
+    JUDGMENT_HOLY_DMG = 5,
+    BLACK_HALO_BASH   = 6,
 }
 
 -----------------------------------

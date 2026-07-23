@@ -218,6 +218,15 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
 
     damage = damage + player:getMod(xi.mod.SHIELD_BASH) + (jpValue * 10)
 
+    if xi.wsEffect.has(player, xi.wsEffect.BLACK_HALO_BASH) then
+        local _, power = xi.wsEffect.consume(player)
+        local mpRestored = player:addMP(math.floor(player:getMaxMP() * 0.10))
+
+        damage = math.floor(damage * (1 + power / 100))
+
+        xi.wsEffect.message(player, string.format('Black Halo empowered Shield Bash and restored %i MP!', mpRestored))
+    end
+
     -- Calculate stun proc chance
     chance = chance + (player:getMainLvl() - target:getMainLvl()) * 5
 

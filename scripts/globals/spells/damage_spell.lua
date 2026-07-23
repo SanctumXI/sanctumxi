@@ -1076,12 +1076,25 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local finalDamage = 0 -- The variable we want to calculate
 
     -- Get Tabled Variables.
-    local spellId      = spell:getID()
-    local skillType    = spell:getSkillType()
-    local spellGroup   = spell:getSpellGroup()
-    local spellElement = spell:getElement()
-    local statUsed     = pTable[spellId][column.STAT_USED]
-    local bonusMacc    = pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
+    local spellId       = spell:getID()
+    local skillType     = spell:getSkillType()
+    local spellGroup    = spell:getSpellGroup()
+    local spellElement  = spell:getElement()
+    local statUsed      = pTable[spellId][column.STAT_USED]
+    local bonusMacc     = pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
+    local judgmentBonus = 1
+
+    if
+        caster:getObjType() == xi.objType.PC and
+        (spell:getSpellFamily() == xi.magic.spellFamily.HOLY or
+        spell:getSpellFamily() == xi.magic.spellFamily.BANISH) and
+        xi.wsEffect.has(caster, xi.wsEffect.JUDGMENT_HOLY_DMG)
+    then
+        local _, power = xi.wsEffect.consume(caster)
+
+        judgmentBonus = 1 + power / 100
+        xi.wsEffect.message(caster, 'Judgment empowered your spell!')
+    end
 
     -- Skip everything if we nullify the spell.
     if xi.spells.damage.calculateNullification(target, spellElement, true, false) == 0 then
@@ -1187,6 +1200,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * absorb)
     finalDamage = math.floor(finalDamage * magicBurst)
     finalDamage = math.floor(finalDamage * magicBurstBonus)
+    finalDamage = math.floor(finalDamage * judgmentBonus)
 
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
     local nukeWallFactor = calculateNukeWallFactor(target, spellElement, finalDamage)
