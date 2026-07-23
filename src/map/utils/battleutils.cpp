@@ -944,7 +944,23 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
                 if (PChar->GetMJob() == JOB_WAR && PChar->GetMLevel() >= 50)
                 {
                     const int32 healAmount = std::max<int32>(1, PChar->GetMaxHP() / 30);
-                    PChar->addHP(healAmount);
+                    const int32 hpRestored = PChar->addHP(healAmount);
+
+                    if (hpRestored > 0)
+                    {
+                        PChar->PAI->QueueAction(queueAction_t(500ms, false, [hpRestored](CBaseEntity* PEntity)
+                        {
+                            if (auto* PHealingChar = dynamic_cast<CCharEntity*>(PEntity))
+                            {
+                                PHealingChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(
+                                    PHealingChar,
+                                    PHealingChar,
+                                    0,
+                                    hpRestored,
+                                    MsgBasic::TargetRecoversHPSimple);
+                            }
+                        }));
+                    }
                 }
             }
         }
