@@ -36,6 +36,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local duration      = math.floor(45 * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 
+    local gekkoDamage = player:getCharVar('Sanctum_LastGekkoDamage')
+    if xi.wsEffect.set(player, xi.wsEffect.TACHI_GEKKO_DAMAGE, gekkoDamage, 60) then
+        xi.wsEffect.message(player, 'Your next lower-skilled Tachi weaponskill is empowered.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

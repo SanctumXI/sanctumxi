@@ -39,6 +39,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local duration      = math.floor(60 * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 
+    if xi.wsEffect.set(player, xi.wsEffect.TACHI_KASHA_TP, 10, 60) then
+        xi.wsEffect.message(player, 'Your next weaponskill has a 10% chance to consume no TP.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

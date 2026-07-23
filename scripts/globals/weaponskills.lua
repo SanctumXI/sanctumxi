@@ -646,6 +646,8 @@ end
 -- Sets up the necessary calcParams for a melee WS before passing it to calculateRawWSDmg. When the raw
 -- damage is returned, handles reductions based on target resistances and passes off to xi.weaponskills.takeWeaponskillDamage.
 xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg, taChar)
+    xi.wsEffect.consumeKasha(attacker)
+
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local gearFTP = xi.combat.physical.calculateFTPBonus(attacker)
     local gearAcc = math.ceil(gearFTP * 100) -- TODO: Separate gear fTP and acc bonuses
@@ -771,6 +773,28 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
+
+    local lowerTachiWeaponskills =
+    {
+        [xi.weaponskill.TACHI_ENPI]     = true,
+        [xi.weaponskill.TACHI_HOBAKU]   = true,
+        [xi.weaponskill.TACHI_GOTEN]    = true,
+        [xi.weaponskill.TACHI_KAGERO]   = true,
+        [xi.weaponskill.TACHI_JINPU]    = true,
+        [xi.weaponskill.TACHI_KOKI]     = true,
+        [xi.weaponskill.TACHI_YUKIKAZE] = true,
+    }
+
+    if lowerTachiWeaponskills[wsID] and xi.wsEffect.has(attacker, xi.wsEffect.TACHI_GEKKO_DAMAGE) then
+        local _, gekkoDamage = xi.wsEffect.consume(attacker)
+        local empoweredDamage = math.floor(gekkoDamage * 0.8)
+
+        finaldmg = empoweredDamage
+        xi.wsEffect.message(attacker, string.format('Tachi: Gekko empowered this weaponskill to %i base damage!', finaldmg))
+    elseif wsID == xi.weaponskill.TACHI_GEKKO then
+        attacker:setCharVar('Sanctum_LastGekkoDamage', math.floor(finaldmg))
+    end
+
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
@@ -780,6 +804,8 @@ end
 -- Sets up the necessary calcParams for a ranged WS before passing it to calculateRawWSDmg. When the raw
 -- damage is returned, handles reductions based on target resistances and passes off to xi.weaponskills.takeWeaponskillDamage.
 xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+    xi.wsEffect.consumeKasha(attacker)
+
     -- Set up conditions and params used for calculating weaponskill damage
     local gearFTP = xi.combat.physical.calculateFTPBonus(attacker)
     local gearAcc = math.ceil(gearFTP * 100) -- TODO: Separate gear fTP and acc bonuses
@@ -877,6 +903,8 @@ end
 --         ele (xi.element.FIRE), skill (xi.skill.STAFF)
 
 xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
+    xi.wsEffect.consumeKasha(attacker)
+
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local attack =
     {

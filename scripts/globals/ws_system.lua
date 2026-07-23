@@ -19,6 +19,8 @@ xi.wsEffect =
     EVISCERATION_CRIT = 10,
     FULL_BREAK_DAMAGE = 11,
     STEEL_CYCLONE_DEF = 12,
+    TACHI_GEKKO_DAMAGE = 13,
+    TACHI_KASHA_TP     = 14,
 }
 
 -----------------------------------
@@ -35,6 +37,8 @@ xi.wsEffect.charVars =
 xi.wsEffect.clear = function(player)
     if player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.DANCING_EDGE_SA then
         player:delMod(xi.mod.AUGMENTS_SA, player:getCharVar(xi.wsEffect.charVars.POWER))
+    elseif player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.TACHI_KASHA_TP then
+        player:delMod(xi.mod.WS_NO_DEPLETE, player:getCharVar(xi.wsEffect.charVars.POWER))
     end
 
     player:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
@@ -105,6 +109,13 @@ xi.wsEffect.applyDamageBonus = function(player, damage)
     end
 
     return damage
+end
+
+xi.wsEffect.consumeKasha = function(player)
+    if xi.wsEffect.has(player, xi.wsEffect.TACHI_KASHA_TP) then
+        xi.wsEffect.consume(player)
+        xi.wsEffect.message(player, 'Tachi: Kasha empowered this weaponskill.')
+    end
 end
 
 -----------------------------------

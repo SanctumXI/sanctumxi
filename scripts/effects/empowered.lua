@@ -27,6 +27,8 @@ effectObject.onEffectGain = function(target, effect)
                 end)
             end
         end)
+    elseif xi.wsEffect.has(target, xi.wsEffect.TACHI_KASHA_TP) then
+        target:addMod(xi.mod.WS_NO_DEPLETE, target:getCharVar(xi.wsEffect.charVars.POWER))
     end
 end
 
@@ -39,6 +41,11 @@ effectObject.onEffectLose = function(target, effect)
 
     if target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.DANCING_EDGE_SA then
         target:delMod(xi.mod.AUGMENTS_SA, target:getCharVar(xi.wsEffect.charVars.POWER))
+        target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
+        target:setCharVar(xi.wsEffect.charVars.POWER, 0)
+        target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
+    elseif target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.TACHI_KASHA_TP then
+        target:delMod(xi.mod.WS_NO_DEPLETE, target:getCharVar(xi.wsEffect.charVars.POWER))
         target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
         target:setCharVar(xi.wsEffect.charVars.POWER, 0)
         target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
