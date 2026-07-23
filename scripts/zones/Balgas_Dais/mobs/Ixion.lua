@@ -6,8 +6,8 @@
 require('scripts/globals/dark_ixion')
 -----------------------------------
 
--- Base level, HP, pool stats, and skill list mirror Dark Ixion in the SQL data.
--- These bonuses provide a single, intentionally simple tuning point for this fight.
+-- Right now level, HP, pool stats, and skill list mirror Dark Ixion
+-- Following are ways we can easily tune/adjust the fight.
 local tuning =
 {
     level                 = 85,
