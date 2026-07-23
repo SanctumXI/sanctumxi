@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Balga's Dais
+-- Area: Qu'Bia Arena
 --  Mob: Ixion
 -- KSNM: Ride the Lightning
 -----------------------------------

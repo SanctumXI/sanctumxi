@@ -604,6 +604,8 @@ xi.darkixion.onMobSpawn = function(mob)
 end
 
 xi.darkixion.onBattlefieldMobSpawn = function(mob)
+    mob:clearPath()
+    xi.darkixion.hitLists[mob:getID()] = nil
     mob:setLocalVar('BattlefieldIxion', 1)
     mob:setBaseSpeed(40)
     mob:setMod(xi.mod.UDMGPHYS, 0)
@@ -614,6 +616,9 @@ xi.darkixion.onBattlefieldMobSpawn = function(mob)
     mob:setMobSkillAttack(39)
     mob:setLocalVar('trampleCount', 0)
     mob:setLocalVar('nextTrampleTime', 0)
+    mob:setLocalVar('trampleTargID', 0)
+    mob:setLocalVar('tramplePathTime', 0)
+    mob:setLocalVar('isBusy', 0)
     mob:setBehavior(0)
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
@@ -692,11 +697,16 @@ xi.darkixion.onMobDisengage = function(mob)
 end
 
 xi.darkixion.onBattlefieldMobDisengage = function(mob)
+    local hornState = mob:getLocalVar('IxionHornState') == 2 and 2 or 1
+
     mob:clearPath()
     xi.darkixion.hitLists[mob:getID()] = nil
     mob:setLocalVar('trampleCount', 0)
+    mob:setLocalVar('nextTrampleTime', 0)
+    mob:setLocalVar('trampleTargID', 0)
+    mob:setLocalVar('tramplePathTime', 0)
     mob:setLocalVar('isBusy', 0)
-    mob:setAnimationSub(mob:getLocalVar('IxionHornState') == 2 and animationSubs.HORN_BROKEN or animationSubs.NORMAL)
+    changeHornState(mob, hornState)
     mob:setBaseSpeed(40)
     mob:setBehavior(0)
     mob:setAutoAttackEnabled(true)
@@ -803,9 +813,11 @@ xi.darkixion.beginTramplePath = function(mob)
 
         -- complete the square
         local rss = math.sqrt(xD * xD + zD * zD)
-        local xU  = xD / rss
-        local zU  = zD / rss
-        tramplePos = { x  = xT + (xU * overshootDistance), y = yT, z = zT + (zU * overshootDistance) }
+        if rss > 0 then
+            local xU  = xD / rss
+            local zU  = zD / rss
+            tramplePos = { x  = xT + (xU * overshootDistance), y = yT, z = zT + (zU * overshootDistance) }
+        end
     end
 
     mob:clearPath()

@@ -50397,7 +50397,7 @@ INSERT INTO `mob_spawn_points` VALUES (17347028,0,'Invulnerable_Mazzgozz','Invul
 INSERT INTO `mob_spawn_points` VALUES (17347029,0,'Undefeatable_Sappdapp','Undefeatable Sappdapp',50,0,0,83.021,-145.815,296.418,39);
 INSERT INTO `mob_spawn_points` VALUES (17347030,0,'Minds-eyed_Klugwug','Mind\'s-eyed Klugwug',51,0,0,87.897,-145.617,296.385,96);
 
--- A Feast Most Dire
+-- Reserved: King of The North
 INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
@@ -52223,7 +52223,7 @@ INSERT INTO `mob_spawn_points` VALUES (17367691,0,'BiFho_Jestergrin','Bi\'Fho Je
 INSERT INTO `mob_spawn_points` VALUES (17367692,0,'KuTya_Hotblood','Ku\'Tya Hotblood',59,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17367693,0,'EaTho_Cruelheart','Ea\'Tho Cruelheart',60,0,0,0.000,0.000,0.000,0);
 
--- A Feast Most Dire
+-- Reserved: Heavy Is the Shell
 INSERT INTO `mob_spawn_points` VALUES (17367695,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17367696,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17367697,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
@@ -53231,10 +53231,10 @@ INSERT INTO `mob_spawn_points` VALUES (17375730,0,'Gii_Jaha_the_Raucous','Gii Ja
 INSERT INTO `mob_spawn_points` VALUES (17375731,0,'Aa_Nawu_the_Thunderblade','Aa Nawu the Thunderblade',62,0,0,170.368,-64.693,184.327,24);
 INSERT INTO `mob_spawn_points` VALUES (17375732,0,'Yoo_Mihi_the_Haze','Yoo Mihi the Haze',63,0,0,177.341,-63.890,179.327,27);
 
--- Ride the Lightning
-INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Ixion','Ixion',64,85,85,-139.000,56.000,-225.000,194);
-INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Ixion','Ixion',64,85,85,21.231,-4.000,-25.076,194);
-INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Ixion','Ixion',64,85,85,181.059,-64.000,174.999,194);
+-- Reserved: Wing and a Prayer
+INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
+INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17375737,0,'Chest_OPlenty','Chest O\'Plenty',65,0,0,-131.800,55.577,-220.500,192);
@@ -58148,6 +58148,8 @@ INSERT INTO `mob_spawn_points` VALUES (17445131,0,'Hyohh_the_Conchblower','Hyohh
 INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv the Riverleaper',30,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
+-- Reserved for Three's a Crowd: group 32, entity IDs 17445245-17445247
+
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)
 -- ------------------------------------------------------------
@@ -59368,6 +59370,8 @@ INSERT INTO `mob_spawn_points` VALUES (17465511,0,'Secutor_XI-XXXII','Secutor XI
 INSERT INTO `mob_spawn_points` VALUES (17465512,0,'Retiarius_XI-XIX','Retiarius XI-XIX',28,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoplomachus XI-XXVI',29,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
+
+-- Reserved for The Ravening Worm: group 31, entity IDs 17465605-17465607
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)
@@ -70534,6 +70538,11 @@ INSERT INTO `mob_spawn_points` VALUES (17621566,0,'Mumor','Mumor',74,0,0,0.000,0
 INSERT INTO `mob_spawn_points` VALUES (17621568,0,'Ullegore','Ullegore',73,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17621569,0,'Ullegore','Ullegore',73,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17621570,0,'Mumor','Mumor',74,0,0,0.000,0.000,0.000,0);
+
+-- Ride the Lightning
+INSERT INTO `mob_spawn_points` VALUES (17621571,0,'Ixion','Ixion',78,85,85,-400.000,-202.125,400.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621572,0,'Ixion','Ixion',78,85,85,0.000,-2.125,0.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621573,0,'Ixion','Ixion',78,85,85,400.000,197.875,-400.000,192);
 
 -- ------------------------------------------------------------
 -- Cloister of Flames(Zone 207)
