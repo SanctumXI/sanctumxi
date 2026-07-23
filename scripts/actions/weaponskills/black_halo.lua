@@ -39,9 +39,39 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         target:addStatusEffect(xi.effect.MAGIC_EVASION_DOWN, { power = 10, duration = 45, origin = player })
     end
 
-    if player:getMainJob() == xi.job.PLD then
-        if xi.wsEffect.set(player, xi.wsEffect.BLACK_HALO_BASH, 25, 60) then
-            xi.wsEffect.message(player, 'Your next Shield Bash is empowered.')
+    local mainJob = player:getMainJob()
+    local effect
+    local power
+    local duration
+    local message
+
+    if mainJob == xi.job.PLD then
+        effect   = xi.wsEffect.BLACK_HALO_BASH
+        power    = 25
+        duration = 60
+        message  = 'Your next Shield Bash is empowered.'
+    elseif mainJob == xi.job.MNK or mainJob == xi.job.WAR then
+        effect   = xi.wsEffect.BLACK_HALO_CRIT
+        power    = 15
+        duration = 45 + math.floor((tp - 1000) / 100) * 3
+        message  = 'Black Halo increased your normal critical hit damage!'
+    elseif
+        mainJob == xi.job.WHM or
+        mainJob == xi.job.GEO or
+        mainJob == xi.job.BLU or
+        mainJob == xi.job.BLM or
+        mainJob == xi.job.SCH or
+        mainJob == xi.job.SMN
+    then
+        effect   = xi.wsEffect.BLACK_HALO_MP
+        power    = 3
+        duration = 45 + math.floor((tp - 1000) / 100) * 3
+        message  = 'Black Halo empowered your melee hits to restore MP!'
+    end
+
+    if effect then
+        if xi.wsEffect.set(player, effect, power, duration) then
+            xi.wsEffect.message(player, message)
         else
             xi.wsEffect.message(player, 'An empowered effect is already active.')
         end

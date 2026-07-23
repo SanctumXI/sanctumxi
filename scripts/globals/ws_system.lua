@@ -13,6 +13,8 @@ xi.wsEffect =
     CALAMITY_AXE_CRIT = 4,
     JUDGMENT_HOLY_DMG = 5,
     BLACK_HALO_BASH   = 6,
+    BLACK_HALO_CRIT   = 7,
+    BLACK_HALO_MP     = 8,
 }
 
 -----------------------------------

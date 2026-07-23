@@ -23,6 +23,7 @@
 #include "ai/ai_container.h"
 #include "attackround.h"
 #include "entities/battleentity.h"
+#include "entities/charentity.h"
 #include "items/item_weapon.h"
 #include "job_points.h"
 #include "mob_modifier.h"
@@ -717,6 +718,16 @@ void CAttack::ProcessDamage()
     if (auto* PChar = dynamic_cast<CCharEntity*>(m_attacker))
     {
         m_damage = attackutils::CheckForDamageMultiplier(PChar, dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[slot]), m_damage, m_attackType, slot, m_isFirstSwing);
+
+        constexpr int32 blackHaloCritEffect = 7;
+        constexpr EFFECT empoweredStatus    = static_cast<EFFECT>(635);
+        if (m_isCritical &&
+            PChar->StatusEffectContainer->HasStatusEffect(empoweredStatus) &&
+            PChar->getCharVar("Sanctum_wsEffect") == blackHaloCritEffect)
+        {
+            const auto critDamageBonus = PChar->getCharVar("Sanctum_wsPower");
+            m_damage += static_cast<int32>(m_damage * critDamageBonus / 100.0f);
+        }
     }
 
     // Apply Sneak Attack Augment Mod
