@@ -27,23 +27,21 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local skill = player:getSkillLevel(xi.skill.DAGGER)
     local wsc   = player:getStat(xi.mod.MND) * 1.0
 
-    local mpRestored = math.floor((math.floor(skill * 0.11) + wsc) * multiplier)
+    local hpStolen = math.floor((math.floor(skill * 0.11) + wsc) * multiplier)
 
     if target:isUndead() then
-        mpRestored = 0
+        hpStolen = 0
     else
-        -- Absorb MP from target
-        mpRestored = target:delMP(mpRestored)
+        hpStolen = math.min(hpStolen, target:getHP())
 
-        -- Add stolen MP to player
-        mpRestored = player:addMP(mpRestored)
+        target:takeDamage(hpStolen, player, xi.attackType.PHYSICAL, xi.damageType.PIERCING)
+        player:addHP(hpStolen)
     end
 
-    -- Display MP actually given to player
-    action:messageID(target:getID(), xi.msg.basic.SKILL_DRAIN_MP)
-    action:param(target:getID(), mpRestored)
+    action:messageID(target:getID(), xi.msg.basic.SKILL_DRAIN_HP)
+    action:param(target:getID(), hpStolen)
 
-    return 1, 0, false, mpRestored
+    return 1, 0, false, hpStolen
 end
 
 return weaponskillObject

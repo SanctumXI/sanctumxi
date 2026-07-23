@@ -28,6 +28,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if xi.wsEffect.set(player, xi.wsEffect.DANCING_EDGE_SA, 10, 60) then
+        xi.wsEffect.message(player, 'Your next Sneak Attack is empowered.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

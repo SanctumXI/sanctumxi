@@ -714,9 +714,37 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         xi.wsEffect.message(attacker, 'Calamity empowered the first hit of your Axe weaponskill!')
     end
 
+    local dancingEdgeEmpowered =
+        calcParams.sneakApplicable and
+        xi.wsEffect.has(attacker, xi.wsEffect.DANCING_EDGE_SA)
+
+    if
+        attacker:getObjType() == xi.objType.PC and
+        calcParams.skillType == xi.skill.DAGGER and
+        xi.wsEffect.has(attacker, xi.wsEffect.EVISCERATION_CRIT)
+    then
+        local _, critBonus = xi.wsEffect.consume(attacker)
+        local critRateBonus = critBonus / 100
+        local currentCrit   = wsParams.critVaries or { 0, 0, 0 }
+
+        wsParams.critVaries =
+        {
+            currentCrit[1] + critRateBonus,
+            currentCrit[2] + critRateBonus,
+            currentCrit[3] + critRateBonus,
+        }
+
+        xi.wsEffect.message(attacker, string.format('Evisceration granted +%i%% critical hit rate!', critBonus))
+    end
+
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams     = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = math.floor(calcParams.finalDmg)
+
+    if dancingEdgeEmpowered then
+        xi.wsEffect.consume(attacker)
+        xi.wsEffect.message(attacker, 'Dancing Edge empowered Sneak Attack!')
+    end
 
     -- Add in magic damage for hybrid weaponskills
     -- Only procs if the mob still has HP remaining

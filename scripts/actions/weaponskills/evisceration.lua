@@ -30,6 +30,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    local critBonus = utils.clamp(10 + math.floor((tp - 1000) * 15 / 2000), 10, 25)
+    if xi.wsEffect.set(player, xi.wsEffect.EVISCERATION_CRIT, critBonus, 60) then
+        xi.wsEffect.message(player, string.format('Your next Dagger weaponskill gains +%i%% critical hit rate.', critBonus))
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

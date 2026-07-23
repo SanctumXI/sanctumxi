@@ -32,7 +32,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- Handle status effect
     local effectId      = xi.effect.POISON
     local actionElement = xi.element.WATER
-    local power         = 3
+    local daggerSkill   = player:getSkillLevel(xi.skill.DAGGER)
+    local power         = math.min(15, 3 + math.floor(daggerSkill / 20))
     local duration      = math.floor((30 + 6 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 

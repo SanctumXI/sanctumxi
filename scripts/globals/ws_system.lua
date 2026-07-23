@@ -15,6 +15,8 @@ xi.wsEffect =
     BLACK_HALO_BASH   = 6,
     BLACK_HALO_CRIT   = 7,
     BLACK_HALO_MP     = 8,
+    DANCING_EDGE_SA   = 9,
+    EVISCERATION_CRIT = 10,
 }
 
 -----------------------------------
@@ -29,6 +31,10 @@ xi.wsEffect.charVars =
 }
 
 xi.wsEffect.clear = function(player)
+    if player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.DANCING_EDGE_SA then
+        player:delMod(xi.mod.AUGMENTS_SA, player:getCharVar(xi.wsEffect.charVars.POWER))
+    end
+
     player:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
     player:setCharVar(xi.wsEffect.charVars.POWER, 0)
     player:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
