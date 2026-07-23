@@ -743,7 +743,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         xi.wsEffect.has(attacker, xi.wsEffect.STEEL_CYCLONE_DEF)
     then
         local _, defenseDivisor = xi.wsEffect.consume(attacker)
-        local defenseBonus      = math.floor(attacker:getStat(xi.mod.DEF) / defenseDivisor)
+        local defenseBonus      = math.min(20, math.floor(attacker:getStat(xi.mod.DEF) / defenseDivisor))
 
         calcParams.bonusWSmods = calcParams.bonusWSmods + defenseBonus
         xi.wsEffect.message(attacker, string.format('Steel Cyclone added %i defense-based damage!', defenseBonus))
