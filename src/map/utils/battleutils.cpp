@@ -6145,6 +6145,17 @@ uint16 CalculateSpellCost(CBattleEntity* PEntity, CSpell* PSpell)
         cost = cost * (1.f - static_cast<float>(mpCostReduction) / 100.f);
     }
 
+    constexpr int32 groundStrikeHolyEffect = 18;
+    constexpr EFFECT empoweredStatus       = static_cast<EFFECT>(635);
+    if (auto* PChar = dynamic_cast<CCharEntity*>(PEntity);
+        PChar &&
+        PChar->StatusEffectContainer->HasStatusEffect(empoweredStatus) &&
+        PChar->getCharVar("Sanctum_wsEffect") == groundStrikeHolyEffect &&
+        (PSpell->getID() == SpellID::Holy || PSpell->getID() == SpellID::Holy_II))
+    {
+        cost /= 2;
+    }
+
     if (xirand::GetRandomNumber(100) < (PEntity->getMod(Mod::NO_SPELL_MP_DEPLETION)))
     {
         cost = 0;

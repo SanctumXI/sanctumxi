@@ -18,8 +18,8 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 1.5, 1.75, 2.0 }
-    params.str_wsc = 1.0
+    params.ftpMod = { 1.5, 1.7, 1.9 }
+    params.str_wsc = .75
     params.dex_wsc = .5
     params.ignoredDefense = { 0.25, 0.35, 0.45 }
 
@@ -30,18 +30,8 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    -- Handle status effect
-    local effectId      = xi.effect.DEFENSE_DOWN
-    local actionElement = xi.element.FIRE
-    local power         = 25
-    local duration      = math.floor((120 + 6 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
-    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
-
-    -- Sanctum Combo: Exploding Palm empowers Chakra
-    if xi.wsEffect.set(player, xi.wsEffect.CHAKRA_BOOST, 100, 30) then
-        xi.wsEffect.message(player, 'Your next Chakra is empowered.')
-    else
-        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.MAGIC_DEF_DOWN, { power = 5, duration = 45, origin = player })
     end
 
     return tpHits, extraHits, criticalHit, damage

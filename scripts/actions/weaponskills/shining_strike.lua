@@ -29,7 +29,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
     if damage > 0 then
-        player:addStatusEffect(xi.effect.REGEN, { power = 3, duration = 30, origin = player })
+        player:addStatusEffect(xi.effect.REGEN, { power = 2, duration = 30, origin = player })
     end
 
     return tpHits, extraHits, criticalHit, damage

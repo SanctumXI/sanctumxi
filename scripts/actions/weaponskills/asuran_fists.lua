@@ -30,27 +30,32 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local empoweredConsumed = player:getCharVar('Sanctum_AsuranFistsConsumed') == 1
 
-    -- Sanctum Custom
-if player:getMainJob() == xi.job.MNK then
-    -- 5% ability haste for 30s
-    player:addStatusEffect(xi.effect.GEO_HASTE, { power = 5, duration = 30, origin = player })
+    player:setCharVar('Sanctum_AsuranFistsConsumed', 0)
 
-    -- 10 TP/tick regain for 30s
-    player:addStatusEffect(xi.effect.REGAIN,  { power = 1, duration = 30, origin = player })
+    if player:getMainJob() == xi.job.MNK then
+        if empoweredConsumed then
+            xi.wsEffect.message(player, 'Your empowered Asuran Fists landed all eight hits!')
+        elseif xi.wsEffect.set(player, xi.wsEffect.ASURAN_FISTS_HITS, 1, 60) then
+            xi.wsEffect.message(player, 'Your next Asuran Fists will land all eight hits!')
+        else
+            xi.wsEffect.message(player, 'An empowered effect is already active.')
+        end
+    elseif player:getMainJob() == xi.job.PUP then
+        local duration = 45 + math.floor((tp - 1000) / 100) * 3
+        local pet      = player:getPet()
 
-elseif player:getMainJob() == xi.job.PUP then
-    local pet = player:getPet()
+        player:addStatusEffect(xi.effect.GEO_HASTE, { power = 500, duration = duration, origin = player })
+        player:addStatusEffect(xi.effect.REGAIN, { power = 5, duration = duration, origin = player })
 
-    -- Master gets 5% ability haste
-    player:addStatusEffect(xi.effect.GEO_HASTE,  { power = 5, duration = 30, origin = player })
+        if pet then
+            pet:addStatusEffect(xi.effect.GEO_HASTE, { power = 500, duration = duration, origin = player })
+            pet:addStatusEffect(xi.effect.REGAIN, { power = 5, duration = duration, origin = player })
+        end
 
-    if pet ~= nil then
-        -- Automaton gets 10 TP/tick regain
-        pet:addStatusEffect(xi.effect.REGAIN,  { power = 1, duration = 30, origin = player })
-
+        xi.wsEffect.message(player, 'Asuran Fists granted Haste and Regain to master and automaton!')
     end
-end
 
     return tpHits, extraHits, criticalHit, damage
 end

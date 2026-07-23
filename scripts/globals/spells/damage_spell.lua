@@ -1085,6 +1085,14 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local judgmentBonus = 1
 
     if
+        spell:getSpellFamily() == xi.magic.spellFamily.HOLY and
+        xi.wsEffect.has(caster, xi.wsEffect.GROUND_STRIKE_HOLY)
+    then
+        xi.wsEffect.consume(caster)
+        xi.wsEffect.message(caster, 'Ground Strike reduced Holy MP cost by half!')
+    end
+
+    if
         caster:getObjType() == xi.objType.PC and
         (spell:getSpellFamily() == xi.magic.spellFamily.HOLY or
         spell:getSpellFamily() == xi.magic.spellFamily.BANISH) and

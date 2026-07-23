@@ -29,6 +29,29 @@ effectObject.onEffectGain = function(target, effect)
         end)
     elseif xi.wsEffect.has(target, xi.wsEffect.TACHI_KASHA_TP) then
         target:addMod(xi.mod.WS_NO_DEPLETE, target:getCharVar(xi.wsEffect.charVars.POWER))
+    elseif xi.wsEffect.has(target, xi.wsEffect.SICKLE_MOON_DRAIN) then
+        target:addListener('MELEE_SWING_HIT', 'SICKLE_MOON_DRAIN', function(player)
+            local hpRestored = player:addHP(math.max(1, math.floor(player:getMaxHP() / 100)))
+
+            if hpRestored > 0 then
+                player:timer(500, function(playerArg)
+                    playerArg:messageBasic(xi.msg.basic.RECOVERS_HP, 0, hpRestored)
+                end)
+            end
+        end)
+    elseif xi.wsEffect.has(target, xi.wsEffect.GROUND_STRIKE_DA) then
+        local function consumeGroundStrikeDoubleAttack(player)
+            player:timer(0, function(playerArg)
+                if xi.wsEffect.has(playerArg, xi.wsEffect.GROUND_STRIKE_DA) then
+                    xi.wsEffect.consume(playerArg)
+                    xi.wsEffect.message(playerArg, 'Ground Strike empowered your attack to strike twice!')
+                end
+            end)
+        end
+
+        target:addMod(xi.mod.DOUBLE_ATTACK, target:getCharVar(xi.wsEffect.charVars.POWER))
+        target:addListener('MELEE_SWING_HIT', 'GROUND_STRIKE_DA_HIT', consumeGroundStrikeDoubleAttack)
+        target:addListener('MELEE_SWING_MISS', 'GROUND_STRIKE_DA_MISS', consumeGroundStrikeDoubleAttack)
     end
 end
 
@@ -38,6 +61,9 @@ end
 effectObject.onEffectLose = function(target, effect)
     target:removeListener('BLACK_HALO_MP')
     target:removeListener('DANCING_EDGE_SA')
+    target:removeListener('SICKLE_MOON_DRAIN')
+    target:removeListener('GROUND_STRIKE_DA_HIT')
+    target:removeListener('GROUND_STRIKE_DA_MISS')
 
     if target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.DANCING_EDGE_SA then
         target:delMod(xi.mod.AUGMENTS_SA, target:getCharVar(xi.wsEffect.charVars.POWER))
@@ -46,6 +72,11 @@ effectObject.onEffectLose = function(target, effect)
         target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
     elseif target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.TACHI_KASHA_TP then
         target:delMod(xi.mod.WS_NO_DEPLETE, target:getCharVar(xi.wsEffect.charVars.POWER))
+        target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
+        target:setCharVar(xi.wsEffect.charVars.POWER, 0)
+        target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
+    elseif target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.GROUND_STRIKE_DA then
+        target:delMod(xi.mod.DOUBLE_ATTACK, target:getCharVar(xi.wsEffect.charVars.POWER))
         target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
         target:setCharVar(xi.wsEffect.charVars.POWER, 0)
         target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)

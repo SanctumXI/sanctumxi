@@ -174,6 +174,13 @@ xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, actio
         damage = math.floor(damage * (1 + (0.25 * merits)))
     end
 
+    if xi.wsEffect.has(player, xi.wsEffect.GROUND_STRIKE_BASH) then
+        local _, power = xi.wsEffect.consume(player)
+
+        damage = math.floor(damage * (100 + power) / 100)
+        xi.wsEffect.message(player, 'Ground Strike empowered Weapon Bash!')
+    end
+
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
 

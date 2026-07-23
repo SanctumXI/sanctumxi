@@ -18,10 +18,10 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params     = {}
     params.numHits   = 2
-    params.ftpMod    = { 2.5, 2.75, 3.0 }
+    params.ftpMod    = { 2.0, 2.5, 3.0 }
     params.atkVaries = { 1.5, 1.5, 1.5 } -- https://w.atwiki.jp/studiogobli/pages/93.html
     params.str_wsc   = 0.3
-    params.vit_wsc   = 0.6
+    params.vit_wsc   = 0.5
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP = true -- http://wiki.ffo.jp/html/2422.html
@@ -29,12 +29,15 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    
+
     player:addStatusEffect(xi.effect.GUARDING_RATE_BOOST, { power = 100, duration = 10, origin = player })
-        
+
+    if xi.wsEffect.set(player, xi.wsEffect.CHAKRA_BOOST, 25, 60) then
+        xi.wsEffect.message(player, 'Your next Chakra will restore 25% more HP!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 
-    
 end
 
 return weaponskillObject

@@ -30,13 +30,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     if player:getMainJob() == xi.job.WAR then
         params.vit_wsc = 0.7
-        params.str_wsc = 0.7
+        params.str_wsc = 0.6
         params.atkVaries = { 1.25, 1.5, 1.75 }
     end
 
     if player:getMainJob() == xi.job.DRK then
         params.vit_wsc = 0.3
-        params.int_wsc = 0.8
+        params.int_wsc = 0.7
         params.str_wsc = 0.0
         params.bonusWSmods = math.floor(player:getStat(xi.mod.ATT) / 20)
     end

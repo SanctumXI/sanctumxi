@@ -36,6 +36,31 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
+    local effect
+    local power
+    local message
+
+    if player:getMainJob() == xi.job.DRK then
+        effect  = xi.wsEffect.GROUND_STRIKE_BASH
+        power   = 25
+        message = 'Your next Weapon Bash is empowered.'
+    elseif player:getMainJob() == xi.job.WAR then
+        effect  = xi.wsEffect.GROUND_STRIKE_DA
+        power   = 100
+        message = 'Your next attack will strike twice.'
+    elseif player:getMainJob() == xi.job.PLD then
+        effect  = xi.wsEffect.GROUND_STRIKE_HOLY
+        power   = 50
+        message = 'Your next Holy spell will cost half MP.'
+    end
+
+    if effect then
+        if xi.wsEffect.set(player, effect, power, 60) then
+            xi.wsEffect.message(player, message)
+        else
+            xi.wsEffect.message(player, 'An empowered effect is already active.')
+        end
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

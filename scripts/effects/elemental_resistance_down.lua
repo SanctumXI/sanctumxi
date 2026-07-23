@@ -5,6 +5,11 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
+    if effect:getSubPower() == xi.element.ICE then
+        target:addMod(xi.mod.ICE_MEVA, -effect:getPower())
+        return
+    end
+
     target:addMod(xi.mod.FIRE_MEVA, -effect:getPower())
     target:addMod(xi.mod.ICE_MEVA, -effect:getPower())
     target:addMod(xi.mod.WIND_MEVA, -effect:getPower())
@@ -19,6 +24,11 @@ effectObject.onEffectTick = function(target, effect)
 end
 
 effectObject.onEffectLose = function(target, effect)
+    if effect:getSubPower() == xi.element.ICE then
+        target:delMod(xi.mod.ICE_MEVA, -effect:getPower())
+        return
+    end
+
     target:delMod(xi.mod.FIRE_MEVA, -effect:getPower())
     target:delMod(xi.mod.ICE_MEVA, -effect:getPower())
     target:delMod(xi.mod.WIND_MEVA, -effect:getPower())

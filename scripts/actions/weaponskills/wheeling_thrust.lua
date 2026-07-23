@@ -17,7 +17,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 1.5, 1.75, 2.0 }
+    params.ftpMod = { 1.75, 2.0, 2.25 }
     params.str_wsc = 0.5
     -- Defense ignored is 50%, 75%, 100% (50% at 100 TP is accurate, other values are guesses)
     params.ignoredDefense = { 0.5, 0.75, 1.0 }

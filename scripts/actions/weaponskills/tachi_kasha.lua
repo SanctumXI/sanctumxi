@@ -20,9 +20,10 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params     = {}
     params.numHits   = 1
-    params.ftpMod    = { 1.56, 1.88, 2.5 }
+    params.ftpMod    = { 1.5, 2.0, 2.5 }
     params.str_wsc   = 0.75
     params.atkVaries = { 1.5, 1.5, 1.5 }
+    params.critVaries = { .15, .25, .35 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod    = { 1.5625, 2.6875, 4.125 }
@@ -40,7 +41,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
 
     if xi.wsEffect.set(player, xi.wsEffect.TACHI_KASHA_TP, 10, 60) then
-        xi.wsEffect.message(player, 'Your next weaponskill has a 10% chance to consume no TP.')
+        xi.wsEffect.message(player, 'Your next weaponskill has a chance to consume 0 TP!')
     else
         xi.wsEffect.message(player, 'An empowered effect is already active.')
     end

@@ -60,6 +60,7 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
     local chakraMultiplier  = 1 + player:getMod(xi.mod.CHAKRA_MULT) / 100
     local maxRecoveryAmount = (player:getStat(xi.mod.VIT) * 2 + hpModifier) * chakraMultiplier + jpModifier
     local recoveryAmount    = math.min(player:getMaxHP() - player:getHP(), maxRecoveryAmount)
+    local consumedWsEffect  = false
 
     -- Sanctum Combo: Chakra Boost
     local effect, power = xi.wsEffect.peek(player)
@@ -73,9 +74,8 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
     player:setHP(player:getHP() + recoveryAmount)
 
     if consumedWsEffect then
-        xi.wsEffect.message(player, 'Exploding Palm empowered your Chakra!')
+        xi.wsEffect.message(player, 'Howling Fist empowered your Chakra!')
     end
-
 
     local merits = player:getMerit(xi.merit.INVIGORATE)
     if merits > 0 then

@@ -22,6 +22,13 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if xi.wsEffect.set(player, xi.wsEffect.SICKLE_MOON_DRAIN, 1, 45) then
+        xi.wsEffect.message(player, 'Your melee hits will restore 1% of your maximum HP!')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

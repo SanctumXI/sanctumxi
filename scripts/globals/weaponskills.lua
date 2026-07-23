@@ -705,6 +705,20 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.hitRate      = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.skillType    = attack.weaponType
 
+    local asuranFistsEmpowered = false
+
+    if
+        wsID == xi.weaponskill.ASURAN_FISTS and
+        xi.wsEffect.has(attacker, xi.wsEffect.ASURAN_FISTS_HITS)
+    then
+        calcParams.firstHitRate = 1
+        calcParams.hitRate      = 1
+
+        xi.wsEffect.consume(attacker)
+        asuranFistsEmpowered = true
+        attacker:setCharVar('Sanctum_AsuranFistsConsumed', 1)
+    end
+
     -- Sanctum Custom: Calamity empowers the first hit of the next Axe weaponskill.
     if
         attacker:getObjType() == xi.objType.PC and
@@ -751,6 +765,40 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         xi.wsEffect.message(attacker, string.format('Steel Cyclone added %i defense-based damage!', defenseBonus))
     end
 
+    if
+        calcParams.skillType == xi.skill.GREAT_KATANA and
+        wsID ~= xi.weaponskill.TACHI_GEKKO and
+        xi.wsEffect.has(attacker, xi.wsEffect.TACHI_GEKKO_DAMAGE)
+    then
+        local nativeHits = wsParams.numHits or 1
+        local gekkoFTP   = { 1.5, 2.0, 2.5 }
+
+        if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
+            gekkoFTP = { 1.5625, 2.6875, 4.125 }
+        end
+
+        wsParams.ftpMod =
+        {
+            gekkoFTP[1] / nativeHits,
+            gekkoFTP[2] / nativeHits,
+            gekkoFTP[3] / nativeHits,
+        }
+
+        wsParams.multiHitfTP = nativeHits > 1
+        wsParams.str_wsc   = 0.75
+        wsParams.dex_wsc   = nil
+        wsParams.vit_wsc   = nil
+        wsParams.agi_wsc   = nil
+        wsParams.int_wsc   = nil
+        wsParams.mnd_wsc   = nil
+        wsParams.chr_wsc   = nil
+        wsParams.atkVaries = { 2, 2, 2 }
+        wsParams.critVaries = nil
+
+        xi.wsEffect.consume(attacker)
+        xi.wsEffect.message(attacker, 'Tachi: Gekko has empowered this weaponskill to do increased damage!')
+    end
+
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams     = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = math.floor(calcParams.finalDmg)
@@ -774,25 +822,8 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
 
-    local lowerTachiWeaponskills =
-    {
-        [xi.weaponskill.TACHI_ENPI]     = true,
-        [xi.weaponskill.TACHI_HOBAKU]   = true,
-        [xi.weaponskill.TACHI_GOTEN]    = true,
-        [xi.weaponskill.TACHI_KAGERO]   = true,
-        [xi.weaponskill.TACHI_JINPU]    = true,
-        [xi.weaponskill.TACHI_KOKI]     = true,
-        [xi.weaponskill.TACHI_YUKIKAZE] = true,
-    }
-
-    if lowerTachiWeaponskills[wsID] and xi.wsEffect.has(attacker, xi.wsEffect.TACHI_GEKKO_DAMAGE) then
-        local _, gekkoDamage = xi.wsEffect.consume(attacker)
-        local empoweredDamage = math.floor(gekkoDamage * 0.8)
-
-        finaldmg = empoweredDamage
-        xi.wsEffect.message(attacker, 'Tachi: Gekko has empowered this weaponskill to do increased damage!')
-    elseif wsID == xi.weaponskill.TACHI_GEKKO then
-        attacker:setCharVar('Sanctum_LastGekkoDamage', math.floor(finaldmg))
+    if asuranFistsEmpowered then
+        finaldmg = math.floor(finaldmg * 1.15)
     end
 
     calcParams.finalDmg = finaldmg

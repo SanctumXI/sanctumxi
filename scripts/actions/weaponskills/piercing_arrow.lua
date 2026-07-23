@@ -18,7 +18,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params               = {}
     params.numHits             = 1
-    params.ftpMod              = { 1.0, 1.0, 1.0 }
+    params.ftpMod              = { 1.1, 1.1, 1.1 }
     params.str_wsc             = 0.25 params.agi_wsc = 0.25
     params.rangedAccuracyBonus = 30 -- https://www.ffxiah.com/forum/topic/52018/luck-of-the-draw-a-corsairs-guide-new/127/#3726841 (split shot is a clone of piercing arrow)
 

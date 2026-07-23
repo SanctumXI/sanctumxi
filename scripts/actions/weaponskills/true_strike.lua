@@ -18,10 +18,10 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 1.0, 1.0, 1.0 }
+    params.ftpMod = { 1.25, 1.25, 1.25 }
     params.str_wsc = 0.5
     params.critVaries = { 1.0, 1.0, 1.0 }
-    params.accVaries = { -50, -50, -50 } -- TODO: verify exact number.
+    -- params.accVaries = { -50, -50, -50 } -- TODO: verify exact number. Not used on Sanctum
     params.atkVaries  = { 2.0, 2.0, 2.0 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then

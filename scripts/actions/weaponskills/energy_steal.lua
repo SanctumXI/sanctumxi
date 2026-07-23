@@ -6,7 +6,7 @@ local weaponskillObject = {}
 
 -- https://www.bg-wiki.com/ffxi/Energy_Steal
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
-    local fTPAnchors = { 1.0, 2.1, 3.4 }
+    local fTPAnchors = { 1.5, 2.5, 3.5 }
 
     local startingAnchor = math.floor(tp / 1000)
 

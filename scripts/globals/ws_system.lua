@@ -21,6 +21,11 @@ xi.wsEffect =
     STEEL_CYCLONE_DEF = 12,
     TACHI_GEKKO_DAMAGE = 13,
     TACHI_KASHA_TP     = 14,
+    SICKLE_MOON_DRAIN  = 15,
+    GROUND_STRIKE_BASH = 16,
+    GROUND_STRIKE_DA   = 17,
+    GROUND_STRIKE_HOLY = 18,
+    ASURAN_FISTS_HITS  = 19,
 }
 
 -----------------------------------
@@ -39,6 +44,8 @@ xi.wsEffect.clear = function(player)
         player:delMod(xi.mod.AUGMENTS_SA, player:getCharVar(xi.wsEffect.charVars.POWER))
     elseif player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.TACHI_KASHA_TP then
         player:delMod(xi.mod.WS_NO_DEPLETE, player:getCharVar(xi.wsEffect.charVars.POWER))
+    elseif player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.GROUND_STRIKE_DA then
+        player:delMod(xi.mod.DOUBLE_ATTACK, player:getCharVar(xi.wsEffect.charVars.POWER))
     end
 
     player:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
