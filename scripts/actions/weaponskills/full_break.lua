@@ -44,10 +44,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
     end
 
-        local boost = player:getMainLvl()
-
-    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 25, duration = 60, origin = player })
-    player:addStatusEffect(xi.effect.VIT_BOOST, { power = boost / 4, duration = 60, origin = player })
+    local empoweredDuration = 45 + math.floor((tp - 1000) / 100) * 3
+    if xi.wsEffect.set(player, xi.wsEffect.FULL_BREAK_DAMAGE, 5, empoweredDuration) then
+        xi.wsEffect.message(player, 'Full Break increased your damage dealt by 5%!')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

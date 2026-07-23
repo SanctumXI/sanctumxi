@@ -728,6 +728,14 @@ void CAttack::ProcessDamage()
             const auto critDamageBonus = PChar->getCharVar("Sanctum_wsPower");
             m_damage += static_cast<int32>(m_damage * critDamageBonus / 100.0f);
         }
+
+        constexpr int32 fullBreakDamageEffect = 11;
+        if (PChar->StatusEffectContainer->HasStatusEffect(empoweredStatus) &&
+            PChar->getCharVar("Sanctum_wsEffect") == fullBreakDamageEffect)
+        {
+            const auto damageBonus = PChar->getCharVar("Sanctum_wsPower");
+            m_damage += static_cast<int32>(m_damage * damageBonus / 100.0f);
+        }
     }
 
     // Apply Sneak Attack Augment Mod

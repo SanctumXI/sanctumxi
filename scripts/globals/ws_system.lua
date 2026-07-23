@@ -17,6 +17,8 @@ xi.wsEffect =
     BLACK_HALO_MP     = 8,
     DANCING_EDGE_SA   = 9,
     EVISCERATION_CRIT = 10,
+    FULL_BREAK_DAMAGE = 11,
+    STEEL_CYCLONE_DEF = 12,
 }
 
 -----------------------------------
@@ -93,6 +95,16 @@ end
 
 xi.wsEffect.message = function(player, message, delay)
     player:printToPlayer(message, xi.msg.channel.SYSTEM_3)
+end
+
+xi.wsEffect.applyDamageBonus = function(player, damage)
+    if xi.wsEffect.has(player, xi.wsEffect.FULL_BREAK_DAMAGE) then
+        local _, power = xi.wsEffect.peek(player)
+
+        return math.floor(damage * (100 + power) / 100)
+    end
+
+    return damage
 end
 
 -----------------------------------

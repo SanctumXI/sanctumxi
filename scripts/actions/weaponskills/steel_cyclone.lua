@@ -32,7 +32,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.vit_wsc = 0.7
         params.str_wsc = 0.7
         params.atkVaries = { 1.25, 1.5, 1.75 }
-        params.bonusWSmods = math.floor(player:getStat(xi.mod.DEF) / 20)
     end
 
     if player:getMainJob() == xi.job.DRK then
@@ -44,16 +43,15 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    if player:getMainJob() == xi.job.WAR then
-    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 30, duration = 45, origin = player })
-    end
-    
-    if player:getMainJob() == xi.job.DRK then
-    player:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 20, duration = 45, origin = player })
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 20, duration = 60, origin = player })
+
+    if xi.wsEffect.set(player, xi.wsEffect.STEEL_CYCLONE_DEF, 25, 60) then
+        xi.wsEffect.message(player, 'Your next Great Axe weaponskill is empowered by your defense.')
+    else
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
     end
 
     return tpHits, extraHits, criticalHit, damage
-
 end
 
 return weaponskillObject

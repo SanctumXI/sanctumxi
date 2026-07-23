@@ -2247,6 +2247,15 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             auto attackType = (state.IsRapidShot()) ? PHYSICAL_ATTACK_TYPE::RAPID_SHOT : PHYSICAL_ATTACK_TYPE::RANGED;
             totalDamage     = attackutils::CheckForDamageMultiplier(this, PItem, totalDamage, attackType, slot, true);
         }
+
+        constexpr int32 fullBreakDamageEffect = 11;
+        constexpr EFFECT empoweredStatus      = static_cast<EFFECT>(635);
+        if (StatusEffectContainer->HasStatusEffect(empoweredStatus) &&
+            getCharVar("Sanctum_wsEffect") == fullBreakDamageEffect)
+        {
+            totalDamage += totalDamage * getCharVar("Sanctum_wsPower") / 100;
+        }
+
         actionResult.recordDamage(attack_outcome_t{
             .atkType    = ATTACK_TYPE::PHYSICAL,
             .damage     = battleutils::TakePhysicalDamage(this, PTarget, PHYSICAL_ATTACK_TYPE::RANGED, totalDamage, false, slot, realHits, nullptr, true, true),

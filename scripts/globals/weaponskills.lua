@@ -737,6 +737,18 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         xi.wsEffect.message(attacker, string.format('Evisceration granted +%i%% critical hit rate!', critBonus))
     end
 
+    if
+        attacker:getObjType() == xi.objType.PC and
+        calcParams.skillType == xi.skill.GREAT_AXE and
+        xi.wsEffect.has(attacker, xi.wsEffect.STEEL_CYCLONE_DEF)
+    then
+        local _, defenseDivisor = xi.wsEffect.consume(attacker)
+        local defenseBonus      = math.floor(attacker:getStat(xi.mod.DEF) / defenseDivisor)
+
+        calcParams.bonusWSmods = calcParams.bonusWSmods + defenseBonus
+        xi.wsEffect.message(attacker, string.format('Steel Cyclone added %i defense-based damage!', defenseBonus))
+    end
+
     -- Send our wsParams off to calculate our raw WS damage, hits landed, and shadows absorbed
     calcParams     = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = math.floor(calcParams.finalDmg)
@@ -758,6 +770,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     attacker:delStatusEffectSilent(xi.effect.BUILDING_FLOURISH)
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
@@ -847,6 +860,7 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     end
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+    finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
     calcParams.finalDmg = finaldmg
 
     finaldmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
@@ -954,6 +968,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
         dmg = utils.handleStoneskin(target, dmg)
 
         dmg = dmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
+        dmg = xi.wsEffect.applyDamageBonus(attacker, dmg)
     else
         calcParams.shadowsAbsorbed = 1
     end
