@@ -44,8 +44,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
     end
 
-    local empoweredDuration = 45 + math.floor((tp - 1000) / 100) * 3
-    if xi.wsEffect.set(player, xi.wsEffect.FULL_BREAK_DAMAGE, 5, empoweredDuration) then
+    if xi.wsEffect.set(player, xi.wsEffect.FULL_BREAK_DAMAGE, 5, 45) then
         xi.wsEffect.message(player, 'Full Break increased your damage dealt by 5%!')
     else
         xi.wsEffect.message(player, 'An empowered effect is already active.')

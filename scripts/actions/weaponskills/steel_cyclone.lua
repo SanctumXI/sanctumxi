@@ -42,10 +42,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local empoweredDuration = 45 + math.floor((tp - 1000) / 100) * 3
 
-    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 20, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 20, duration = empoweredDuration, origin = player })
 
-    if xi.wsEffect.set(player, xi.wsEffect.STEEL_CYCLONE_DEF, 35, 60) then
+    if xi.wsEffect.set(player, xi.wsEffect.STEEL_CYCLONE_DEF, 35, empoweredDuration) then
         xi.wsEffect.message(player, 'Your next Great Axe weaponskill is empowered by your defense.')
     else
         xi.wsEffect.message(player, 'An empowered effect is already active.')
