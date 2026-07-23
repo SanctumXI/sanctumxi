@@ -3090,35 +3090,6 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         .target     = PTarget,
                         .isCritical = attack.IsCritical(),
                     });
-
-                    constexpr int32 blackHaloMpEffect = 8;
-                    constexpr EFFECT empoweredStatus  = static_cast<EFFECT>(635);
-                    if (damage > 0 &&
-                        attack.GetAttackType() != PHYSICAL_ATTACK_TYPE::DAKEN &&
-                        objtype == TYPE_PC)
-                    {
-                        auto* PChar = static_cast<CCharEntity*>(this);
-                        if (PChar->StatusEffectContainer->HasStatusEffect(empoweredStatus) &&
-                            PChar->getCharVar("Sanctum_wsEffect") == blackHaloMpEffect)
-                        {
-                            const int32 mpRestored = PChar->addMP(PChar->getCharVar("Sanctum_wsPower"));
-                            if (mpRestored > 0)
-                            {
-                                PChar->PAI->QueueAction(queueAction_t(500ms, false, [mpRestored](CBaseEntity* PEntity)
-                                {
-                                    if (auto* PMpChar = dynamic_cast<CCharEntity*>(PEntity))
-                                    {
-                                        PMpChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(
-                                            PMpChar,
-                                            PMpChar,
-                                            0,
-                                            mpRestored,
-                                            MsgBasic::TargetRecoversMP);
-                                    }
-                                }));
-                            }
-                        }
-                    }
                 }
             }
 
