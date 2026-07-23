@@ -54,6 +54,7 @@ local animationSubs =
 
 xi.darkixion.hpValue = GetServerVariable('DarkIxion_HP')
 xi.darkixion.hornState = GetServerVariable('DarkIxion_HornState')
+xi.darkixion.hitLists = xi.darkixion.hitLists or {}
 xi.darkixion.hornStates =
 {
     [1] =
@@ -70,22 +71,41 @@ xi.darkixion.hornStates =
 }
 
 local changeHornState = function(mob, state)
-    xi.darkixion.hornState = state
-    local hornStateData = xi.darkixion.hornStates[xi.darkixion.hornState]
+    local isBattlefieldIxion = mob:getLocalVar('BattlefieldIxion') == 1
+    local hornState          = state
+
+    if not isBattlefieldIxion then
+        xi.darkixion.hornState = state
+        hornState              = xi.darkixion.hornState
+    end
+
+    local hornStateData = xi.darkixion.hornStates[hornState]
     if not hornStateData then
-        xi.darkixion.hornState = GetServerVariable('DarkIxion_HornState')
-        if not xi.darkixion.hornStates[xi.darkixion.hornState] then
-            xi.darkixion.hornState = 1
+        if isBattlefieldIxion then
+            hornState = 1
+        else
+            xi.darkixion.hornState = GetServerVariable('DarkIxion_HornState')
+            if not xi.darkixion.hornStates[xi.darkixion.hornState] then
+                xi.darkixion.hornState = 1
+            end
+
+            hornState = xi.darkixion.hornState
         end
 
-        hornStateData = xi.darkixion.hornStates[xi.darkixion.hornState]
+        hornStateData = xi.darkixion.hornStates[hornState]
     end
 
-    SetServerVariable('DarkIxion_HornState', xi.darkixion.hornState)
+    if isBattlefieldIxion then
+        mob:setLocalVar('IxionHornState', hornState)
+    else
+        SetServerVariable('DarkIxion_HornState', hornState)
+    end
+
     if hornStateData.animationSub ~= mob:getAnimationSub() then
         mob:setAnimationSub(hornStateData.animationSub)
-        mob:hideHP(hornStateData.hideHP)
     end
+
+    mob:hideHP(hornStateData.hideHP)
 
     -- reset phasechange timer
     mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
@@ -562,6 +582,16 @@ local acheronKickPositioning = function(mob)
     turnForSkill(mob, skillTarget)
 end
 
+local setupCombatListeners = function(mob)
+    mob:addListener('WEAPONSKILL_STATE_ENTER', 'IXION_WS_STATE_ENTER', function(mobArg, skillId)
+        if skillId == xi.mobSkill.ACHERON_KICK then
+            acheronKickPositioning(mobArg)
+        elseif skillId == xi.mobSkill.LIGHTNING_SPEAR then
+            turnForSkill(mobArg, nil)
+        end
+    end)
+end
+
 xi.darkixion.onMobSpawn = function(mob)
     xi.darkixion.roamingMods(mob)
     SetServerVariable('DarkIxion_PopTime', GetSystemTime())
@@ -570,13 +600,26 @@ xi.darkixion.onMobSpawn = function(mob)
     mob:setRoamFlags(bit.bor(mob:getRoamFlags(), xi.roamFlag.SCRIPTED)) -- do not roam around, only path during roam via patrol path
 
     -- pre-mobskill listeners to turn mob as appropriate
-    mob:addListener('WEAPONSKILL_STATE_ENTER', 'IXION_WS_STATE_ENTER', function(mobArg, skillId)
-        if skillId == xi.mobSkill.ACHERON_KICK then
-            acheronKickPositioning(mobArg)
-        elseif skillId == xi.mobSkill.LIGHTNING_SPEAR then
-            turnForSkill(mobArg, nil)
-        end
-    end)
+    setupCombatListeners(mob)
+end
+
+xi.darkixion.onBattlefieldMobSpawn = function(mob)
+    mob:setLocalVar('BattlefieldIxion', 1)
+    mob:setBaseSpeed(40)
+    mob:setMod(xi.mod.UDMGPHYS, 0)
+    mob:setMod(xi.mod.UDMGRANGE, 0)
+    mob:setMod(xi.mod.UDMGBREATH, 0)
+    mob:setMod(xi.mod.UDMGMAGIC, 0)
+    mob:setMod(xi.mod.REGAIN, 20)
+    mob:setMobSkillAttack(39)
+    mob:setLocalVar('trampleCount', 0)
+    mob:setLocalVar('nextTrampleTime', 0)
+    mob:setBehavior(0)
+    mob:setAutoAttackEnabled(true)
+    mob:setMobAbilityEnabled(true)
+    mob:setAggressive(true)
+    changeHornState(mob, 1)
+    setupCombatListeners(mob)
 end
 
 xi.darkixion.onMobRoam = function(mob)
@@ -623,6 +666,10 @@ xi.darkixion.onMobEngage = function(mob, target)
     mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
 end
 
+xi.darkixion.onBattlefieldMobEngage = function(mob, target)
+    mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
+end
+
 xi.darkixion.onMobDisengage = function(mob)
     xi.darkixion.hpValue = mob:getHP()
     SetServerVariable('DarkIxion_HP', xi.darkixion.hpValue)
@@ -642,6 +689,18 @@ xi.darkixion.onMobDisengage = function(mob)
     -- no chance of him staying in this zone unless an ash is landed before he runs away and despawns
     mob:setAggressive(false)
     mob:setLocalVar('aeFromItemId', 0)
+end
+
+xi.darkixion.onBattlefieldMobDisengage = function(mob)
+    mob:clearPath()
+    xi.darkixion.hitLists[mob:getID()] = nil
+    mob:setLocalVar('trampleCount', 0)
+    mob:setLocalVar('isBusy', 0)
+    mob:setAnimationSub(mob:getLocalVar('IxionHornState') == 2 and animationSubs.HORN_BROKEN or animationSubs.NORMAL)
+    mob:setBaseSpeed(40)
+    mob:setBehavior(0)
+    mob:setAutoAttackEnabled(true)
+    mob:setMobAbilityEnabled(true)
 end
 
 xi.darkixion.onMobFight = function(mob, target)
@@ -696,8 +755,8 @@ local getEnemiesInRange = function(mob, distance)
 end
 
 xi.darkixion.beginTramplePath = function(mob)
-    -- global table to track current trample path
-    xi.darkixion.hitList = {}
+    -- Track each active Ixion separately so multiple battlefield areas cannot share trample state.
+    xi.darkixion.hitLists[mob:getID()] = {}
 
     mob:setAnimationSub(animationSubs.TRAMPLE)
     mob:setLocalVar('isBusy', 1)
@@ -760,7 +819,7 @@ end
 
 xi.darkixion.endTramplePath = function(mob)
     -- variable is unused until the next trample sequence
-    xi.darkixion.hitList = {}
+    xi.darkixion.hitLists[mob:getID()] = nil
 
     local trampleCount = mob:getLocalVar('trampleCount') - 1
     if trampleCount > 0 then
@@ -785,6 +844,12 @@ end
 
 xi.darkixion.trampleEntitiesInFront = function(mob)
     local trampleTargID = mob:getLocalVar('trampleTargID')
+    local hitList       = xi.darkixion.hitLists[mob:getID()]
+
+    if not hitList then
+        hitList = {}
+        xi.darkixion.hitLists[mob:getID()] = hitList
+    end
 
     -- find entities in range
     --  check if they're in a conal in front of Ixion
@@ -801,8 +866,8 @@ xi.darkixion.trampleEntitiesInFront = function(mob)
             potentialTarget ~= mob
         then
             -- ignore if already considered during this trample path
-            if not xi.darkixion.hitList[potentialTarget:getTargID()] then
-                xi.darkixion.hitList[potentialTarget:getTargID()] = true
+            if not hitList[potentialTarget:getTargID()] then
+                hitList[potentialTarget:getTargID()] = true
 
                 -- trample the found entity if it's in front
                 -- or if it's the original trample target (to avoid weird pathing issues causing the final target to be seen as not in front)

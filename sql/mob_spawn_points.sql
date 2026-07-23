@@ -53231,10 +53231,10 @@ INSERT INTO `mob_spawn_points` VALUES (17375730,0,'Gii_Jaha_the_Raucous','Gii Ja
 INSERT INTO `mob_spawn_points` VALUES (17375731,0,'Aa_Nawu_the_Thunderblade','Aa Nawu the Thunderblade',62,0,0,170.368,-64.693,184.327,24);
 INSERT INTO `mob_spawn_points` VALUES (17375732,0,'Yoo_Mihi_the_Haze','Yoo Mihi the Haze',63,0,0,177.341,-63.890,179.327,27);
 
--- A Feast Most Dire
-INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
+-- Ride the Lightning
+INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Ixion','Ixion',64,85,85,-139.000,56.000,-225.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Ixion','Ixion',64,85,85,21.231,-4.000,-25.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Ixion','Ixion',64,85,85,181.059,-64.000,174.999,194);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17375737,0,'Chest_OPlenty','Chest O\'Plenty',65,0,0,-131.800,55.577,-220.500,192);

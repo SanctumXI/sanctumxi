@@ -59,6 +59,7 @@ zones[xi.zone.BALGAS_DAIS] =
         KING_OF_SWORDS          = GetFirstID('King_of_Swords'),
         MAAT                    = GetFirstID('Maat'),
         VOO_TOLU_THE_GHOSTFIST  = GetFirstID('Voo_Tolu_the_Ghostfist'),
+        WYRM                    = GetFirstID('Wyrm'),
     },
     npc =
     {

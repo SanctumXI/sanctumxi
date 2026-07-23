@@ -177,6 +177,7 @@ xi.battlefield.id =
     V_FORMATION                                = 114,
     AVIAN_APOSTATES                            = 115,
     BEYOND_INFINITY_BALGAS_DAIS                = 116, -- Converted
+    RIDE_THE_LIGHTNING                         = 118,
     TEMPLE_OF_UGGALEPIH                        = 128, -- Converted
     JUNGLE_BOOGYMEN                            = 129, -- Converted
     AMPHIBIAN_ASSAULT                          = 130, -- Converted
@@ -404,6 +405,8 @@ end
 --  - canLoseExp: Determines if a character loses experience points upon death while inside the battlefield. Defaults to true. (optional)
 --  - showTimer: Show the time remaining in the battlefield in the UI for the player. Defaults to true. (optional)
 --  - delayToExit: Amount of time to wait before exiting the battlefield. Defaults to 5 seconds. (optional)
+--  - menuName: Custom name used when multiple battlefields share an entry item and need a server-driven selection menu. (optional)
+--  - entryName: Custom name printed upon entry instead of the client-localized battlefield name. (optional)
 --  - requiredItems: Items required to be traded to enter the battlefield.
 --                   Needs to be in the format of { itemid, quantity, useMessage = ID.text.*, wearMessage = ID.text.*, wornMessage = ID.text.* }. (optional)
 --  - requiredKeyItems: Key items required to be able to enter the battlefield - these are removed upon entry unless 'keep = true' (optional)
@@ -445,6 +448,8 @@ function Battlefield:new(data)
     obj.canLoseExp       = (data.canLoseExp == nil or data.canLoseExp) or false
     obj.showTimer        = (data.showTimer == nil or data.showTimer) or false
     obj.delayToExit      = data.delayToExit or 5
+    obj.menuName         = data.menuName
+    obj.entryName        = data.entryName
     obj.requiredItems    = data.requiredItems or {}
     obj.requiredKeyItems = data.requiredKeyItems or {}
     obj.lossEventParams  = data.lossEventParams or {}
@@ -655,7 +660,12 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     local zoneId = player:getZoneID()
 
     -- Determine which battlefields are available given the traded items
-    local options = xi.battlefield.getBattlefieldOptions(player, npc, trade)
+    local availableBattlefields = xi.battlefield.getAvailableBattlefields(player, npc, trade)
+    local options               = 0
+
+    for _, content in ipairs(availableBattlefields) do
+        options = utils.mask.setBit(options, content.index, true)
+    end
 
     if options == 0 then
         local noEntryMessage = zones[zoneId].text.NO_BATTLEFIELD_ENTRY
@@ -695,6 +705,40 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     end
 
     if not onUpdate then
+        local customMenuOptions = {}
+
+        for _, content in ipairs(availableBattlefields) do
+            if content.menuName then
+                local selectedContent = content
+
+                table.insert(customMenuOptions,
+                {
+                    selectedContent.menuName,
+                    function(playerArg)
+                        if playerArg:battlefieldAtCapacity(selectedContent.battlefieldId) then
+                            playerArg:messageBasic(xi.msg.basic.WAIT_LONGER, 0, 0)
+                            return
+                        end
+
+                        local selectedOption = utils.mask.setBit(0, selectedContent.index, true)
+                        playerArg:startEvent(32000, 0, 0, 0, selectedOption, 0, 0, 0, 0)
+                    end,
+                })
+            end
+        end
+
+        if
+            #customMenuOptions > 1 and
+            #customMenuOptions == #availableBattlefields
+        then
+            player:customMenu({
+                title   = 'Select a battlefield',
+                options = customMenuOptions,
+            })
+
+            return
+        end
+
         -- Open menu of valid battlefields
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
@@ -1142,7 +1186,11 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
     end
 
     local ID = zones[self.zoneId]
-    player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
+    if self.entryName then
+        player:printToPlayer(string.format('Entering the battlefield for %s!', self.entryName), xi.msg.channel.SYSTEM_3)
+    else
+        player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
+    end
 
     if self.maxPlayers > 6 then
         -- NOTE: Update tooling does not allow for duplicate messages to be stored in IDs.lua, even if the ID is different.
@@ -1298,12 +1346,12 @@ function Battlefield:handleLootRolls(battlefield, lootTable, npc, gilBonusMod)
     end
 end
 
-function xi.battlefield.getBattlefieldOptions(player, npc, trade)
-    local result   = 0
+function xi.battlefield.getAvailableBattlefields(player, npc, trade)
+    local available = {}
     local contents = xi.battlefield.contentsByZone[player:getZoneID()]
 
     if contents == nil then
-        return result
+        return available
     end
 
     -- TODO: if the battlefield is at capacity, the 32000 event should not start, but instead
@@ -1315,8 +1363,18 @@ function xi.battlefield.getBattlefieldOptions(player, npc, trade)
             not player:battlefieldAtCapacity(content.battlefieldId) and
             (xi.settings.map.BCNM_ENABLE_EXPERIMENTAL or not content.experimental)
         then
-            result = utils.mask.setBit(result, content.index, true)
+            table.insert(available, content)
         end
+    end
+
+    return available
+end
+
+function xi.battlefield.getBattlefieldOptions(player, npc, trade)
+    local result = 0
+
+    for _, content in ipairs(xi.battlefield.getAvailableBattlefields(player, npc, trade)) do
+        result = utils.mask.setBit(result, content.index, true)
     end
 
     return result
