@@ -10,9 +10,7 @@ abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
 end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
-    xi.mobskills.mobBuffMove(target, xi.effect.MIGHTY_STRIKES, 1, 0, 45)
-
-    skill:setMsg(xi.msg.basic.USES)
+    skill:setMsg(xi.mobskills.mobBuffMove(automaton, xi.effect.MIGHTY_STRIKES, 1, 0, 45))
 
     return xi.effect.MIGHTY_STRIKES
 end

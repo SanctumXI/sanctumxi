@@ -236,8 +236,10 @@ auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 
 void CAutomatonController::Move()
 {
+    const bool hasManafont = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+
     if ((shouldStandBack() && !isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f)) ||
-        (PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
+        (!hasManafont && PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
     {
         PAutomaton->m_Behavior &= ~BEHAVIOR_STANDBACK;
     }
@@ -247,7 +249,9 @@ void CAutomatonController::Move()
 
 auto CAutomatonController::TryAction() -> bool
 {
-    if (m_Tick > m_LastActionTime + (m_actionCooldown - std::chrono::milliseconds(PAutomaton->getMod(Mod::AUTO_DECISION_DELAY) * 10)))
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
+    if (hasMagicSpecial || m_Tick > m_LastActionTime + (m_actionCooldown - std::chrono::milliseconds(PAutomaton->getMod(Mod::AUTO_DECISION_DELAY) * 10)))
     {
         m_LastActionTime = m_Tick;
         PAutomaton->PAI->EventHandler.triggerListener("AUTOMATON_AI_TICK", PAutomaton, PTarget);
@@ -273,9 +277,12 @@ auto CAutomatonController::TryShieldBash() -> bool
 
 auto CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers) -> bool
 {
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
     // Apparently the automaton has nothing in its spell list, so CanCastSpells must ignore spell lists and recasts?
     if (!PAutomaton->PMaster || m_magicCooldown == 0s ||
-        m_Tick <= m_LastMagicTime + (m_magicCooldown + std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_COOLDOWN))) || !CanCastSpells(IgnoreRecastsAndCosts::Yes))
+        (!hasMagicSpecial && m_Tick <= m_LastMagicTime + (m_magicCooldown + std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_MAGIC_COOLDOWN)))) ||
+        !CanCastSpells(IgnoreRecastsAndCosts::Yes))
     {
         return false;
     }
@@ -434,8 +441,10 @@ auto CAutomatonController::TrySpellcast(const CurrentManeuvers& maneuvers) -> bo
 
 auto CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers) -> bool
 {
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
     if (!PAutomaton->PMaster || m_healCooldown == 0s ||
-        m_Tick <= m_LastHealTime + (m_healCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_HEALING_DELAY))))
+        (!hasMagicSpecial && m_Tick <= m_LastHealTime + (m_healCooldown - std::chrono::seconds(PAutomaton->getMod(Mod::AUTO_HEALING_DELAY)))))
     {
         return false;
     }
@@ -586,7 +595,10 @@ inline auto resistanceComparator(const std::pair<SpellID, int16>& firstElem, con
 
 auto CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers) -> bool
 {
-    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || m_Tick <= m_LastElementalTime + m_elementalCooldown)
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+    const bool hasManafont     = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+
+    if (!PAutomaton->PMaster || m_elementalCooldown == 0s || (!hasMagicSpecial && m_Tick <= m_LastElementalTime + m_elementalCooldown))
     {
         return false;
     }
@@ -597,23 +609,23 @@ auto CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers) -> bo
     int8        tier   = 4;
     const int32 hp     = PTarget->health.hp;
     const int32 selfmp = PAutomaton->health.mp; // Shortcut for wasting less time
-    if (selfmp < 4)
+    if (!hasManafont && selfmp < 4)
     {
         return false;
     }
-    else if (hp <= 50 || selfmp < 16)
+    else if (hp <= 50 || (!hasManafont && selfmp < 16))
     {
         tier = 0;
     }
-    else if (hp <= 150 || selfmp < 40)
+    else if (hp <= 150 || (!hasManafont && selfmp < 40))
     {
         tier = 1;
     }
-    else if (hp <= 200 || selfmp < 88)
+    else if (hp <= 200 || (!hasManafont && selfmp < 88))
     {
         tier = 2;
     }
-    else if (hp <= 600 || selfmp < 156)
+    else if (hp <= 600 || (!hasManafont && selfmp < 156))
     {
         tier = 3;
     }
@@ -719,7 +731,9 @@ auto CAutomatonController::TryElemental(const CurrentManeuvers& maneuvers) -> bo
 
 auto CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers) -> bool
 {
-    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown)
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
+    if (!PAutomaton->PMaster || m_enfeebleCooldown == 0s || (!hasMagicSpecial && m_Tick <= m_LastEnfeebleTime + m_enfeebleCooldown))
     {
         return false;
     }
@@ -1088,7 +1102,9 @@ auto CAutomatonController::TryEnfeeble(const CurrentManeuvers& maneuvers) -> boo
 
 auto CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers) -> bool
 {
-    if (!PAutomaton->PMaster || m_statusCooldown == 0s || m_Tick <= m_LastStatusTime + m_statusCooldown)
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
+    if (!PAutomaton->PMaster || m_statusCooldown == 0s || (!hasMagicSpecial && m_Tick <= m_LastStatusTime + m_statusCooldown))
     {
         return false;
     }
@@ -1176,7 +1192,9 @@ auto CAutomatonController::TryStatusRemoval(const CurrentManeuvers& maneuvers) -
 
 auto CAutomatonController::TryEnhance() -> bool
 {
-    if (!PAutomaton->PMaster || m_enhanceCooldown == 0s || m_Tick <= m_LastEnhanceTime + m_enhanceCooldown)
+    const bool hasMagicSpecial = PAutomaton->StatusEffectContainer->HasStatusEffect({ EFFECT_CHAINSPELL, EFFECT_MANAFONT });
+
+    if (!PAutomaton->PMaster || m_enhanceCooldown == 0s || (!hasMagicSpecial && m_Tick <= m_LastEnhanceTime + m_enhanceCooldown))
     {
         return false;
     }
@@ -1756,6 +1774,24 @@ void LoadAutomatonAbilities()
             const auto filename = fmt::format("./scripts/actions/abilities/pets/automaton/{}.lua", abilityName);
             luautils::CacheLuaObjectFromFile(filename);
         }
+    }
+
+    // Heady Artifice abilities are invoked directly and must not be added to
+    // autoAbilityList, but their Lua callbacks still need to be cached.
+    static constexpr const char* headyArtificeAbilities[] =
+    {
+        "mighty_strikes_automaton",
+        "invincible_automaton",
+        "eagle_eye_shot_automaton",
+        "chainspell_automaton",
+        "benediction_automaton",
+        "manafont_automaton",
+    };
+
+    for (const auto* abilityName : headyArtificeAbilities)
+    {
+        const auto filename = fmt::format("./scripts/actions/abilities/pets/automaton/{}.lua", abilityName);
+        luautils::CacheLuaObjectFromFile(filename);
     }
 }
 

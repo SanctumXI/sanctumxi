@@ -84,7 +84,7 @@ xi.automaton.attachmentModifiers =
     ['auto-repair_kit_iii'] = { { modifier = xi.mod.REGEN,                       values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['auto-repair_kit_iv' ] = { { modifier = xi.mod.REGEN,                       values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['barrier_module'     ] = { { modifier = xi.mod.SHIELDBLOCKRATE,             values = {    10,    15,    25,    30 }, opticFiber = true  },
-                                { modifier = xi.mod.AUTO_SHIELD_BASH_DELAY,      values = {     0,    30,    60,    90 }, opticFiber = false }, },
+                                { modifier = xi.mod.AUTO_SHIELD_BASH_DELAY,      values = {     0,    20,    40,    60 }, opticFiber = false }, },
     ['barrier_module_ii'  ] = { { modifier = xi.mod.SHIELDBLOCKRATE,             values = {    10,    15,    20,    25 }, opticFiber = true  },
                                 { modifier = xi.mod.AUTO_SHIELD_BASH_DELAY,      values = {     0,    10,    20,    30 }, opticFiber = false }, },
     ['coiler'             ] = { { modifier = xi.mod.DOUBLE_ATTACK,               values = {     3,    10,    20,    30 }, opticFiber = true  }, },

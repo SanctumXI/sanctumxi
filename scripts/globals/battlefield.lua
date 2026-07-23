@@ -126,6 +126,7 @@ xi.battlefield.id =
     KINDERGARTEN_CAP                           = 18,
     LAST_ORC_SHUNNED_HERO                      = 19,
     BEYOND_INFINITY_HORLAIS_PEAK               = 20,  -- Converted
+    KING_OF_THE_NORTH                          = 21,  -- Reserved: Horlais Peak, index 21
     AMAN_TROVE_MARS_HORLAIS_PEAK               = 24,  -- Incomplete
     AMAN_TROVE_VENUS_HORLAIS_PEAK              = 25,  -- Incomplete
     SAVE_THE_CHILDREN                          = 32,  -- Converted
@@ -156,6 +157,7 @@ xi.battlefield.id =
     PALBOROUGH_PROJECT                         = 83,
     SHELL_SHOCKED                              = 84,
     BEYOND_INFINITY_WAUGHROON_SHRINE           = 85,  -- Converted
+    HEAVY_IS_THE_SHELL                         = 86,  -- Reserved: Waughroon Shrine, index 22
     RANK_2_MISSION                             = 96,  -- Converted
     STEAMED_SPROUTS                            = 97,  -- Converted
     DIVINE_PUNISHERS                           = 98,  -- Converted
@@ -177,11 +179,13 @@ xi.battlefield.id =
     V_FORMATION                                = 114,
     AVIAN_APOSTATES                            = 115,
     BEYOND_INFINITY_BALGAS_DAIS                = 116, -- Converted
+    WING_AND_A_PRAYER                          = 118, -- Reserved: Balga's Dais, index 22
     TEMPLE_OF_UGGALEPIH                        = 128, -- Converted
     JUNGLE_BOOGYMEN                            = 129, -- Converted
     AMPHIBIAN_ASSAULT                          = 130, -- Converted
     PROJECT_SHANTOTTOFICATION                  = 131,
     WHOM_WILT_THOU_CALL                        = 132,
+    THREES_A_CROWD                             = 133, -- Reserved: Sacrificial Chamber, index 5
     SHADOW_LORD_BATTLE                         = 160,
     WHERE_TWO_PATHS_CONVERGE                   = 161,
     KINDRED_SPIRITS                            = 162, -- Experimental
@@ -197,6 +201,7 @@ xi.battlefield.id =
     SCARLET_KING                               = 199,
     CAT_BURGLAR_BARES_FANGS                    = 200, -- Experimental
     DRAGON_SCALES                              = 201,
+    THE_RAVENING_WORM                          = 202, -- Reserved: Chamber of Oracles, index 10
     MOONLIT_PATH                               = 224, -- Converted
     MOON_READING                               = 225, -- Converted
     WAKING_THE_BEAST_FULLMOON                  = 226,
@@ -256,6 +261,7 @@ xi.battlefield.id =
     CLASH_OF_THE_COMRADES                      = 531,
     THOSE_WHO_LURK_IN_SHADOWS                  = 532, -- Experimental
     BEYOND_INFINITY                            = 533, -- Converted
+    RIDE_THE_LIGHTNING                         = 534, -- Qu'Bia Arena, index 22
     TRIAL_BY_FIRE                              = 544, -- Converted
     TRIAL_SIZE_TRIAL_BY_FIRE                   = 545, -- Converted
     WAKING_THE_BEAST_CLOISTER_OF_FLAMES        = 546,
@@ -404,6 +410,8 @@ end
 --  - canLoseExp: Determines if a character loses experience points upon death while inside the battlefield. Defaults to true. (optional)
 --  - showTimer: Show the time remaining in the battlefield in the UI for the player. Defaults to true. (optional)
 --  - delayToExit: Amount of time to wait before exiting the battlefield. Defaults to 5 seconds. (optional)
+--  - menuName: Custom name used when a battlefield needs a server-driven selection menu. (optional)
+--  - entryName: Custom name printed upon entry instead of the client-localized battlefield name. (optional)
 --  - requiredItems: Items required to be traded to enter the battlefield.
 --                   Needs to be in the format of { itemid, quantity, useMessage = ID.text.*, wearMessage = ID.text.*, wornMessage = ID.text.* }. (optional)
 --  - requiredKeyItems: Key items required to be able to enter the battlefield - these are removed upon entry unless 'keep = true' (optional)
@@ -445,6 +453,8 @@ function Battlefield:new(data)
     obj.canLoseExp       = (data.canLoseExp == nil or data.canLoseExp) or false
     obj.showTimer        = (data.showTimer == nil or data.showTimer) or false
     obj.delayToExit      = data.delayToExit or 5
+    obj.menuName         = data.menuName
+    obj.entryName        = data.entryName
     obj.requiredItems    = data.requiredItems or {}
     obj.requiredKeyItems = data.requiredKeyItems or {}
     obj.lossEventParams  = data.lossEventParams or {}
@@ -655,7 +665,12 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     local zoneId = player:getZoneID()
 
     -- Determine which battlefields are available given the traded items
-    local options = xi.battlefield.getBattlefieldOptions(player, npc, trade)
+    local availableBattlefields = xi.battlefield.getAvailableBattlefields(player, npc, trade)
+    local options               = 0
+
+    for _, content in ipairs(availableBattlefields) do
+        options = utils.mask.setBit(options, content.index, true)
+    end
 
     if options == 0 then
         local noEntryMessage = zones[zoneId].text.NO_BATTLEFIELD_ENTRY
@@ -695,6 +710,40 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     end
 
     if not onUpdate then
+        local customMenuOptions = {}
+
+        for _, content in ipairs(availableBattlefields) do
+            if content.menuName then
+                local selectedContent = content
+
+                table.insert(customMenuOptions,
+                {
+                    selectedContent.menuName,
+                    function(playerArg)
+                        if playerArg:battlefieldAtCapacity(selectedContent.battlefieldId) then
+                            playerArg:messageBasic(xi.msg.basic.WAIT_LONGER, 0, 0)
+                            return
+                        end
+
+                        local selectedOption = utils.mask.setBit(0, selectedContent.index, true)
+                        playerArg:startEvent(32000, 0, 0, 0, selectedOption, 0, 0, 0, 0)
+                    end,
+                })
+            end
+        end
+
+        if
+            #customMenuOptions > 0 and
+            #customMenuOptions == #availableBattlefields
+        then
+            player:customMenu({
+                title   = 'Select a battlefield',
+                options = customMenuOptions,
+            })
+
+            return
+        end
+
         -- Open menu of valid battlefields
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
@@ -1142,7 +1191,11 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
     end
 
     local ID = zones[self.zoneId]
-    player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
+    if self.entryName then
+        player:printToPlayer(string.format('Entering the battlefield for %s!', self.entryName), xi.msg.channel.SYSTEM_3)
+    else
+        player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
+    end
 
     if self.maxPlayers > 6 then
         -- NOTE: Update tooling does not allow for duplicate messages to be stored in IDs.lua, even if the ID is different.
@@ -1298,12 +1351,12 @@ function Battlefield:handleLootRolls(battlefield, lootTable, npc, gilBonusMod)
     end
 end
 
-function xi.battlefield.getBattlefieldOptions(player, npc, trade)
-    local result   = 0
+function xi.battlefield.getAvailableBattlefields(player, npc, trade)
+    local available = {}
     local contents = xi.battlefield.contentsByZone[player:getZoneID()]
 
     if contents == nil then
-        return result
+        return available
     end
 
     -- TODO: if the battlefield is at capacity, the 32000 event should not start, but instead
@@ -1315,8 +1368,18 @@ function xi.battlefield.getBattlefieldOptions(player, npc, trade)
             not player:battlefieldAtCapacity(content.battlefieldId) and
             (xi.settings.map.BCNM_ENABLE_EXPERIMENTAL or not content.experimental)
         then
-            result = utils.mask.setBit(result, content.index, true)
+            table.insert(available, content)
         end
+    end
+
+    return available
+end
+
+function xi.battlefield.getBattlefieldOptions(player, npc, trade)
+    local result = 0
+
+    for _, content in ipairs(xi.battlefield.getAvailableBattlefields(player, npc, trade)) do
+        result = utils.mask.setBit(result, content.index, true)
     end
 
     return result

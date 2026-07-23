@@ -183,6 +183,7 @@ INSERT INTO `bcnm_records` VALUES (530,206,'furious_finale','nobody',0,600);
 INSERT INTO `bcnm_records` VALUES (531,206,'clash_of_the_comrades','nobody',0,600);
 INSERT INTO `bcnm_records` VALUES (532,206,'those_who_lurk_in_shadows','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (533,206,'beyond_infinity','nobody',0,600);
+INSERT INTO `bcnm_records` VALUES (534,206,'ride_the_lightning','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (544,207,'trial_by_fire','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (545,207,'trial-size_trial_by_fire','nobody',0,900);
 INSERT INTO `bcnm_records` VALUES (546,207,'waking_the_beast','nobody',0,1800);
