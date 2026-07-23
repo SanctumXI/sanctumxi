@@ -10,18 +10,18 @@ require('scripts/globals/dark_ixion')
 -- Following are ways we can easily tune/adjust the fight.
 local tuning =
 {
-    level                 = 85,
-    hpBonus               = 0,
-    attackBonus           = 0,
-    defenseBonus          = 0,
-    accuracyBonus         = 0,
-    evasionBonus          = 0,
-    magicAttackBonus      = 0,
-    regain                = 20,
-    physicalDamageTaken   = 0,
-    rangedDamageTaken     = 0,
-    breathDamageTaken     = 0,
-    magicDamageTaken      = 0,
+    level                 =     85,
+    hpBonus               =  -9000,
+    attackBonus           =      0,
+    defenseBonus          =      0,
+    accuracyBonus         =    -10,
+    evasionBonus          =    -10,
+    magicAttackBonus      =      0,
+    regain                =     20,
+    physicalDamageTaken   =      0, -- -2500 is -25%, etc
+    rangedDamageTaken     =      0,
+    breathDamageTaken     =      0,
+    magicDamageTaken      =      0,
 }
 
 ---@type TMobEntity
