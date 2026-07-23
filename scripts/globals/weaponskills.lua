@@ -790,7 +790,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         local empoweredDamage = math.floor(gekkoDamage * 0.8)
 
         finaldmg = empoweredDamage
-        xi.wsEffect.message(attacker, string.format('Tachi: Gekko empowered this weaponskill to %i base damage!', finaldmg))
+        xi.wsEffect.message(attacker, 'Tachi: Gekko has empowered this weaponskill to do increased damage!')
     elseif wsID == xi.weaponskill.TACHI_GEKKO then
         attacker:setCharVar('Sanctum_LastGekkoDamage', math.floor(finaldmg))
     end
