@@ -555,9 +555,8 @@ local function applyAutomatonFrameMods(mob)
 end
 
 local function getHeadyArtificeSkill(mob)
-    local headEquipped  = mob:getAutomatonHead()
-    local maxMP         = mob:getMaxMP()
-    local currentTarget = mob:getTarget()
+    local headEquipped = mob:getAutomatonHead()
+    local maxMP        = mob:getMaxMP()
 
     if headEquipped == xi.automaton.head.VALOREDGE then
         return xi.mobSkill.INVINCIBLE_AUTOMATON
@@ -580,6 +579,39 @@ local function getHeadyArtificeSkill(mob)
     return xi.mobSkill.MIGHTY_STRIKES_AUTOMATON
 end
 
+local headyArtificeSkills =
+{
+    [xi.mobSkill.MIGHTY_STRIKES_AUTOMATON] = true,
+    [xi.mobSkill.INVINCIBLE_AUTOMATON    ] = true,
+    [xi.mobSkill.EES_AUTOMATON           ] = true,
+    [xi.mobSkill.CHAINSPELL_AUTOMATON    ] = true,
+    [xi.mobSkill.BENEDICTION_AUTOMATON   ] = true,
+    [xi.mobSkill.MANAFONT_AUTOMATON      ] = true,
+}
+
+local function tryHeadyArtifice(mob, currentTarget)
+    if
+        mob:getLocalVar('headyArtificeUsed') ~= 1 or
+        xi.combat.behavior.isEntityBusy(mob)
+    then
+        return
+    end
+
+    local skillId     = getHeadyArtificeSkill(mob)
+    local skillTarget = mob
+
+    -- Eagle Eye Shot is the only offensive Heady Artifice ability. Keep the
+    -- request queued until the automaton has a valid enemy target.
+    if skillId == xi.mobSkill.EES_AUTOMATON then
+        skillTarget = currentTarget or mob:getTarget()
+        if not skillTarget then
+            return
+        end
+    end
+
+    mob:useMobAbility(skillId, skillTarget)
+end
+
 xi.pets.automaton.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.CAN_PARRY, 1)
     mob:setSpawnAnimation(1)
@@ -599,13 +631,14 @@ xi.pets.automaton.onMobSpawn = function(mob)
         end
     end)
 
-    mob:addListener('AUTOMATON_AI_TICK', 'HEADY_ARTIFICE_USED', function(mobArg)
-        if mobArg:getLocalVar('headyArtificeUsed') == 1 then
-            if xi.combat.behavior.isEntityBusy(mobArg) then
-                return
-            end
+    mob:addListener('AUTOMATON_AI_TICK', 'HEADY_ARTIFICE_COMBAT', function(mobArg)
+        tryHeadyArtifice(mobArg, mobArg:getTarget())
+    end)
 
-            mobArg:useMobAbility(getHeadyArtificeSkill(mobArg))
+    -- Clear the request only after the engine accepts and begins the ability.
+    -- Until then, deployment range and temporary action restrictions can retry.
+    mob:addListener('WEAPONSKILL_STATE_ENTER', 'HEADY_ARTIFICE_STATE_ENTER', function(mobArg, skillId)
+        if headyArtificeSkills[skillId] then
             mobArg:setLocalVar('headyArtificeUsed', 0)
         end
     end)

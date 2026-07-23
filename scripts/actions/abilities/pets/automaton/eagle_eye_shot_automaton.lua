@@ -15,12 +15,13 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     params.baseDamage     = math.floor(xi.automaton.getRangedBaseDamage(automaton))
     params.numHits        = 1
     params.fTP            = { 9.0, 9.0, 9.0 }
-    params.attackType     = xi.attackType.PHYSICAL
+    params.attackType     = xi.attackType.RANGED
     params.damageType     = xi.damageType.PIERCING
-    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
     params.skipParry      = true
     params.skipGuard      = true
     params.skipBlock      = true
+    params.canCrit        = true
 
     local info = xi.mobskills.mobRangedMove(automaton, target, skill, action, params)
 

@@ -10,9 +10,7 @@ abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
 end
 
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
-    xi.mobskills.mobBuffMove(target, xi.effect.CHAINSPELL, 1, 0, 60)
-
-    skill:setMsg(xi.msg.basic.USES)
+    skill:setMsg(xi.mobskills.mobBuffMove(automaton, xi.effect.CHAINSPELL, 1, 0, 60))
 
     return xi.effect.CHAINSPELL
 end
