@@ -2,8 +2,7 @@
 -- Shell Crusher
 -- Staff weapon skill
 -- Skill Level: 175
--- Lowers target's defense. Duration of effect varies with TP.
--- If unresisted, lowers target defense by 25%.
+-- Lowers target's defense.
 -- Will stack with Sneak Attack.
 -- Aligned with the Breeze Gorget.
 -- Aligned with the Breeze Belt.
@@ -11,6 +10,8 @@
 -- Modifiers: STR:100%
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.00      1.00
+-- Sanctum custom: Ignores 30%/40%/50% defense and lowers defense by 15%
+-- for 45 seconds.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -20,6 +21,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.numHits = 1
     params.ftpMod  = { 1, 1, 1 }
     params.str_wsc = 0.35
+    params.ignoredDefense = { 0.3, 0.4, 0.5 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 1
@@ -27,12 +29,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    -- Handle status effect
-    local effectId      = xi.effect.DEFENSE_DOWN
-    local actionElement = xi.element.WIND
-    local power         = 25
-    local duration      = math.floor((120 + 6 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
-    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 15, duration = 45, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

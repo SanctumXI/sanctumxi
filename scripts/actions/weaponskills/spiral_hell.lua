@@ -22,6 +22,23 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        local mainJob = player:getMainJob()
+
+        if mainJob == xi.job.DRK or mainJob == xi.job.BLM then
+            if xi.wsEffect.set(player, xi.wsEffect.SPIRAL_HELL_ABSORB, 15, 60) then
+                xi.wsEffect.message(player, 'Your next Drain, Aspir, or Absorb spell gains potency and accuracy!')
+            end
+        else
+            local duration = 45 + math.floor((tp - 1000) / 100) * 3
+
+            if xi.wsEffect.set(player, xi.wsEffect.SPIRAL_HELL_CRIT, 5, duration) then
+                xi.wsEffect.message(player, 'Critical hit damage increased. Every fifth attack will automatically critical!')
+            end
+        end
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

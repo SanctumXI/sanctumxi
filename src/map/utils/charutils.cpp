@@ -2239,6 +2239,11 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
         //      thought to be source of nin bug
         PChar->clearEquip(equipSlotID);
 
+        if (equipSlotID == SLOT_MAIN)
+        {
+            PChar->PAI->EventHandler.triggerListener("EQUIP_CHANGE", PChar, equipSlotID);
+        }
+
         if (((CItemEquipment*)PItem)->getScriptType() & SCRIPT_EQUIP)
         {
             PChar->m_EquipFlag = 0;

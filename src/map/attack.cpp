@@ -759,6 +759,11 @@ void CAttack::ProcessDamage()
         m_damage = 0;
     }
 
+    if (m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
+    {
+        m_damage = m_damage * (100 + m_attacker->getMod(Mod::THROWING_DAMAGEP)) / 100;
+    }
+
     // Try skill up.
     if (m_damage > 0)
     {

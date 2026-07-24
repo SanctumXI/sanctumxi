@@ -1117,6 +1117,11 @@ xi.mod =
     SOULEATER_EFFECT_STACKABLE = 1202, -- Additive normal Souleater gear bonus, capped with SOULEATER_EFFECT at 12% total
     PET_LATENT_ATTACK    = 1203, -- Internal latent mapping: attack for all pets
     PET_LATENT_ACCURACY  = 1204, -- Internal latent mapping: accuracy for all pets
+    THROWING_DAMAGEP     = 1205, -- Sanctum: Throwing and Daken damage dealt (percent)
+    BLADE_TEN_NINJUTSU   = 1206, -- Sanctum: Next elemental ninjutsu casts instantly
+    SPIRAL_HELL_FORCE_CRIT = 1207, -- Sanctum: Forces the next normal melee swing to critical
+    SAVAGE_BLADE_ENMITY = 1208, -- Sanctum: Doubles enmity generated during Savage Blade empowerment
+    SAVAGE_BLADE_DAMAGE = 1209, -- Sanctum: Damage dealt bonus for normal melee and ranged attacks
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 

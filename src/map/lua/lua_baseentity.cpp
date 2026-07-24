@@ -4779,7 +4779,7 @@ bool CLuaBaseEntity::breakLinkshell(const std::string& lsname)
 
 /************************************************************************
  *  Function: addLinkpearl()
- *  Purpose : Adds a linkpearl (pearlsack for GMs) to inventory, optionally equips to slot 2
+ *  Purpose : Adds a linkpearl (pearlsack for GMs) to inventory, optionally equips to slot 1
  *  Example : player:addLinkpearl("NewPlayers", true)
  ************************************************************************/
 
@@ -4821,9 +4821,9 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
     if (equip)
     {
         auto* PInserted = static_cast<CItemLinkshell*>(PChar->getStorage(LOC_INVENTORY)->GetItem(slotID));
-        linkshell::AddOnlineMember(PChar, PInserted, 2);
+        linkshell::AddOnlineMember(PChar, PInserted, 1);
         PInserted->setSubType(ITEM_LOCKED);
-        if (!PChar->bindEquip(SLOT_LINK2, PInserted))
+        if (!PChar->bindEquip(SLOT_LINK1, PInserted))
         {
             linkshell::DelOnlineMember(PChar, PInserted);
             PInserted->setSubType(ITEM_UNLOCKED);
@@ -4832,10 +4832,9 @@ bool CLuaBaseEntity::addLinkpearl(const std::string& lsname, bool equip)
 
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_LIST>(PInserted, ItemLockFlg::Linkshell);
         charutils::SaveCharEquip(PChar);
-        PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, PInserted->GetLSID());
+        PChar->pushPacket<GP_SERV_COMMAND_GROUP_COMLINK>(PChar, 1);
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PInserted, LOC_INVENTORY, PInserted->getSlotID());
         PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
-        charutils::LoadInventory(PChar);
     }
     return true;
 }

@@ -46,7 +46,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     player:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 20, duration = empoweredDuration, origin = player })
 
-    if xi.wsEffect.set(player, xi.wsEffect.STEEL_CYCLONE_DEF, 35, empoweredDuration) then
+    if xi.wsEffect.set(player, xi.wsEffect.STEEL_CYCLONE_DEF, 70, empoweredDuration) then
         xi.wsEffect.message(player, 'Your next Great Axe weaponskill is empowered by your defense.')
     else
         xi.wsEffect.message(player, 'An empowered effect is already active.')

@@ -26,6 +26,18 @@ xi.wsEffect =
     GROUND_STRIKE_DA   = 17,
     GROUND_STRIKE_HOLY = 18,
     ASURAN_FISTS_HITS  = 19,
+    BLADE_TEN_NINJUTSU = 20,
+    WHEELING_THRUST_JUMP = 21,
+    IMPULSE_DRIVE_DAMAGE = 22,
+    BLAST_SHOT_ACC       = 23,
+    DETONATOR_QUICK_DRAW = 24,
+    DETONATOR_BARRAGE    = 25,
+    CROSS_REAPER_MB      = 26,
+    SPIRAL_HELL_ABSORB   = 27,
+    SPIRAL_HELL_CRIT     = 28,
+    SWIFT_BLADE_CRIT     = 29,
+    SAVAGE_BLADE_DAMAGE  = 30,
+    FULL_SWING_DAMAGE    = 31,
 }
 
 -----------------------------------
@@ -39,13 +51,35 @@ xi.wsEffect.charVars =
     EXPIRE = 'Sanctum_wsExpire',
 }
 
+xi.wsEffect.weaponChangeListener = 'WS_EMPOWERED_WEAPON_CHANGE'
+
 xi.wsEffect.clear = function(player)
-    if player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.DANCING_EDGE_SA then
-        player:delMod(xi.mod.AUGMENTS_SA, player:getCharVar(xi.wsEffect.charVars.POWER))
-    elseif player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.TACHI_KASHA_TP then
-        player:delMod(xi.mod.WS_NO_DEPLETE, player:getCharVar(xi.wsEffect.charVars.POWER))
-    elseif player:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.GROUND_STRIKE_DA then
-        player:delMod(xi.mod.DOUBLE_ATTACK, player:getCharVar(xi.wsEffect.charVars.POWER))
+    local effect = player:getCharVar(xi.wsEffect.charVars.EFFECT)
+    local power  = player:getCharVar(xi.wsEffect.charVars.POWER)
+
+    player:removeListener(xi.wsEffect.weaponChangeListener)
+
+    if effect == xi.wsEffect.CUSTOM_MOD then
+        xi.wsEffect.clearTrackedMods(player)
+    elseif effect == xi.wsEffect.DANCING_EDGE_SA then
+        player:delMod(xi.mod.AUGMENTS_SA, power)
+    elseif effect == xi.wsEffect.BLACK_HALO_CRIT then
+        player:delMod(xi.mod.CRIT_DMG_INCREASE, power)
+    elseif effect == xi.wsEffect.TACHI_KASHA_TP then
+        player:delMod(xi.mod.WS_NO_DEPLETE, power)
+    elseif effect == xi.wsEffect.GROUND_STRIKE_DA then
+        player:delMod(xi.mod.DOUBLE_ATTACK, power)
+    elseif effect == xi.wsEffect.BLADE_TEN_NINJUTSU then
+        player:delMod(xi.mod.BLADE_TEN_NINJUTSU, 1)
+    elseif effect == xi.wsEffect.DETONATOR_BARRAGE then
+        player:delMod(xi.mod.BARRAGE_COUNT, power)
+    elseif effect == xi.wsEffect.SPIRAL_HELL_CRIT then
+        player:delMod(xi.mod.CRIT_DMG_INCREASE, power)
+        player:delMod(xi.mod.SPIRAL_HELL_FORCE_CRIT, 1)
+        player:setLocalVar('SpiralHellAttackCount', 0)
+    elseif effect == xi.wsEffect.SAVAGE_BLADE_DAMAGE then
+        player:delMod(xi.mod.SAVAGE_BLADE_ENMITY, 1)
+        player:delMod(xi.mod.SAVAGE_BLADE_DAMAGE, power)
     end
 
     player:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
@@ -113,6 +147,27 @@ xi.wsEffect.applyDamageBonus = function(player, damage)
         local _, power = xi.wsEffect.peek(player)
 
         return math.floor(damage * (100 + power) / 100)
+    elseif xi.wsEffect.has(player, xi.wsEffect.SAVAGE_BLADE_DAMAGE) then
+        local _, power = xi.wsEffect.peek(player)
+
+        return math.floor(damage * (100 + power) / 100)
+    end
+
+    return damage
+end
+
+xi.wsEffect.applyMagicBurstBonus = function(player, damage, isMagicBurst)
+    if isMagicBurst and xi.wsEffect.has(player, xi.wsEffect.CROSS_REAPER_MB) then
+        local _, power = xi.wsEffect.peek(player)
+
+        player:timer(0, function(playerArg)
+            if xi.wsEffect.has(playerArg, xi.wsEffect.CROSS_REAPER_MB) then
+                xi.wsEffect.consume(playerArg)
+                xi.wsEffect.message(playerArg, 'Cross Reaper empowered your magic burst!')
+            end
+        end)
+
+        return math.floor(damage * (100 + power) / 100)
     end
 
     return damage
@@ -155,6 +210,21 @@ xi.wsEffect.clearMod = function(player, mod, power)
     if player:getCharVar(activeVar) == power then
         player:delMod(mod, power)
         player:setCharVar(activeVar, 0)
+    end
+end
+
+xi.wsEffect.clearTrackedMods = function(player)
+    for mod in pairs(xi.wsEffect.trackedMods) do
+        local activeVar = xi.wsEffect.modCharVar(mod)
+        local power     = player:getCharVar(activeVar)
+
+        if power ~= 0 then
+            local tokenVar = xi.wsEffect.modTokenCharVar(mod)
+
+            player:delMod(mod, power)
+            player:setCharVar(activeVar, 0)
+            player:setCharVar(tokenVar, player:getCharVar(tokenVar) + 1)
+        end
     end
 end
 

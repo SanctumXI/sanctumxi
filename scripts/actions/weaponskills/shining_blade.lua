@@ -29,8 +29,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    -- Add flash effect after WS for 5 seconds
-    target:addStatusEffect(xi.effect.FLASH, { power = 100, duration = 5, origin = player })
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.FLASH, { power = 100, duration = 5, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

@@ -37,6 +37,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local damage, criticalHit, tpHits, extraHits =
         xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
+    if damage > 0 then
+        local duration = 45 + math.floor((tp - 1000) / 100) * 3
+
+        if xi.wsEffect.set(player, xi.wsEffect.SAVAGE_BLADE_DAMAGE, 15, duration) then
+            xi.wsEffect.message(player, 'Damage increased by 15%, but enmity generation is doubled!')
+        end
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

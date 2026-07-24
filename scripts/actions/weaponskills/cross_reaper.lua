@@ -23,6 +23,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 and xi.wsEffect.set(player, xi.wsEffect.CROSS_REAPER_MB, 30, 60) then
+        xi.wsEffect.message(player, 'Your next magic burst will deal 30% more damage!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

@@ -2143,6 +2143,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 if (ammoThrowing || rangedThrowing)
                 {
                     damage = damage * 120 / 100;
+                    damage = damage * (100 + getMod(Mod::THROWING_DAMAGEP)) / 100;
                 }
 
                 if (slot == SLOT_RANGED)

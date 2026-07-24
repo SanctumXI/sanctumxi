@@ -1951,6 +1951,13 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
     int32       baseDamage = damage;
     ATTACK_TYPE attackType = ATTACK_TYPE::PHYSICAL;
     DAMAGE_TYPE damageType = DAMAGE_TYPE::NONE;
+
+    if (PAttacker->getMod(Mod::SAVAGE_BLADE_DAMAGE) > 0)
+    {
+        damage = damage * (100 + PAttacker->getMod(Mod::SAVAGE_BLADE_DAMAGE)) / 100;
+        baseDamage = damage;
+    }
+
     if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FORMLESS_STRIKES) && !isCounter)
     {
         attackType        = ATTACK_TYPE::SPECIAL;
@@ -5874,6 +5881,14 @@ timer::duration CalculateSpellCastTime(CBattleEntity* PEntity, CMagicState* PMag
 {
     CSpell* PSpell = PMagicState->GetSpell();
     if (PSpell == nullptr)
+    {
+        return 0s;
+    }
+
+    if (PSpell->getSpellGroup() == SPELLGROUP_NINJUTSU &&
+        PSpell->getElement() >= ELEMENT_FIRE &&
+        PSpell->getElement() <= ELEMENT_WATER &&
+        PEntity->getMod(Mod::BLADE_TEN_NINJUTSU) > 0)
     {
         return 0s;
     }

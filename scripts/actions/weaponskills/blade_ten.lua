@@ -25,6 +25,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if xi.wsEffect.set(player, xi.wsEffect.BLADE_TEN_NINJUTSU, 10, 60) then
+        player:addMod(xi.mod.BLADE_TEN_NINJUTSU, 1)
+        xi.wsEffect.message(player, 'Your next elemental ninjutsu will deal 10% more damage and cast instantly!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

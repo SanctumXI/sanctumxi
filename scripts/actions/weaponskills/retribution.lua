@@ -13,6 +13,8 @@
 -- Modifiers: STR:30%  MND:50%
 -- 100%TP    200%TP    300%TP
 -- 2.00      2.50      3.00
+-- Sanctum custom: Gains up to 20 base damage from current enmity and prevents
+-- enmity loss from taking damage for 45/75/105 seconds based on TP.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -25,7 +27,27 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.str_wsc   = 0.3
     params.mnd_wsc   = 0.5
 
+    if target:getObjType() == xi.objType.MOB then
+        local totalEnmity = target:getCE(player) + target:getVE(player)
+
+        params.bonusWSmods = math.min(20, math.floor(totalEnmity / 1000))
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local duration = 45 + math.floor((tp - 1000) / 100) * 3
+
+    local empowered = xi.wsEffect.applyMod(
+        player,
+        xi.mod.ENMITY_LOSS_REDUCTION,
+        1000,
+        duration,
+        'Retribution prevents enmity loss from taking damage!'
+    )
+
+    if not empowered then
+        xi.wsEffect.message(player, 'An empowered effect is already active.')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

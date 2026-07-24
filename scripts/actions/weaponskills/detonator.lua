@@ -29,6 +29,16 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if player:getMainJob() == xi.job.COR then
+        if xi.wsEffect.set(player, xi.wsEffect.DETONATOR_QUICK_DRAW, 50, 60) then
+            xi.wsEffect.message(player, 'Your next Quick Draw will deal 50% more damage!')
+        end
+    elseif xi.wsEffect.set(player, xi.wsEffect.DETONATOR_BARRAGE, 1, 60) then
+        player:addMod(xi.mod.BARRAGE_COUNT, 1)
+        xi.wsEffect.message(player, 'Your next Barrage will fire one additional shot!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

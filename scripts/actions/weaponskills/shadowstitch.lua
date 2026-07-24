@@ -27,11 +27,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     -- Handle status effect
-    if math.randomInt(1, 100) <= tp / 30 * applyResistanceAddEffect(player, target, xi.element.ICE, 0) then
+    local procChance = 25 + tp / 40
+
+    if math.randomInt(1, 100) <= procChance then
         local effectId      = xi.effect.BIND
         local actionElement = xi.element.ICE
         local power         = 1
-        local duration      = math.floor((5 + tp / 200) * applyResistanceAddEffect(player, target, actionElement, 0))
+        local resistance    = applyResistanceAddEffect(player, target, actionElement, 0)
+        local duration      = math.floor((15 + 15 * tp / 1000) * resistance)
         xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
     end
 

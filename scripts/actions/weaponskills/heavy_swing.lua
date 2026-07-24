@@ -10,6 +10,7 @@
 -- Modifiers: STR:30%
 -- 100%TP    200%TP    300%TP
 -- 1.00      1.25      2.25
+-- Sanctum custom: Grants 2 HP/tick Regen for 30 seconds.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -25,6 +26,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    player:addStatusEffect(xi.effect.REGEN, { power = 2, duration = 30, origin = player })
+
     return tpHits, extraHits, criticalHit, damage
 end
 

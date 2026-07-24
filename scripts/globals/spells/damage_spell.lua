@@ -1208,8 +1208,21 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * absorb)
     finalDamage = math.floor(finalDamage * magicBurst)
     finalDamage = math.floor(finalDamage * magicBurstBonus)
+    finalDamage = xi.wsEffect.applyMagicBurstBonus(caster, finalDamage, magicBurst > 1)
     finalDamage = math.floor(finalDamage * judgmentBonus)
     finalDamage = xi.wsEffect.applyDamageBonus(caster, finalDamage)
+
+    if
+        skillType == xi.skill.NINJUTSU and
+        spellElement >= xi.element.FIRE and
+        spellElement <= xi.element.WATER and
+        xi.wsEffect.has(caster, xi.wsEffect.BLADE_TEN_NINJUTSU)
+    then
+        local _, bladeTenPower = xi.wsEffect.consume(caster)
+
+        finalDamage = math.floor(finalDamage * (100 + bladeTenPower) / 100)
+        xi.wsEffect.message(caster, 'Blade: Ten empowered your elemental ninjutsu!')
+    end
 
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
     local nukeWallFactor = calculateNukeWallFactor(target, spellElement, finalDamage)

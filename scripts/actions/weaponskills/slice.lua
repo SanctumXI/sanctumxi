@@ -22,6 +22,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        player:addStatusEffect(xi.effect.REGEN, { power = 2, duration = 30, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

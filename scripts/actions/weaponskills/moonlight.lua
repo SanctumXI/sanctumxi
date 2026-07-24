@@ -7,7 +7,6 @@ local weaponskillObject = {}
 local function applyMoonlightEffects(player, member)
     if not member:isDead() and member:checkDistance(player) <= 6 then
         member:addStatusEffect(xi.effect.REFRESH, { power = 1, duration = 45, origin = player })
-        member:addStatusEffect(xi.effect.REGEN, { power = 3, duration = 45, origin = player })
     end
 end
 

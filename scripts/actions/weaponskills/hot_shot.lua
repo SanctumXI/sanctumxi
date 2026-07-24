@@ -29,6 +29,15 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        local marksmanshipSkill = player:getSkillLevel(xi.skill.MARKSMANSHIP)
+        local burnPower         = math.min(15, 3 + math.floor(marksmanshipSkill / 20))
+
+        target:addStatusEffect(xi.effect.BURN, { power = burnPower, duration = 30, origin = player })
+        player:addStatusEffect(xi.effect.REGEN, { power = 2, duration = 30, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 
