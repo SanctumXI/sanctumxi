@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Horlais Peak
---  Mob: Bloodcrown Brradhod
+--  Mob: Frostscar Hrozdag
 -- KSNM: King of The North
 -----------------------------------
 mixins =
@@ -68,7 +68,7 @@ local function updateMinionBonus(mob)
     for _, ally in pairs(battlefield:getMobs(true, true)) do
         local name = ally:getName()
         if
-            (name == 'Brradhods_Fletcher' or name == 'Brradhods_Donzel') and
+            (name == 'Siege_Sniper' or name == 'Blackguard') and
             ally:isDead()
         then
             defeated = defeated + 1

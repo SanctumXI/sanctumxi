@@ -7500,7 +7500,7 @@ INSERT INTO `mob_pools` VALUES (7557,'HM_King_Arthro','King_Arthro',77,0x0000650
 INSERT INTO `mob_pools` VALUES (7558,'HM_Knight_Crab','Knight_Crab',77,0x0000640100000000000000000000000000000000,7,7,4,240,100,0,1,0,1,0,0,0,2125,131,8,0,0,0,0,77,77,1,13);
 
 -- Custom KSNM99 beast kings.
-INSERT INTO `mob_pools` VALUES (7559,'ZaDha_Adamantking_KSNM','ZaDha_Adamantking',202,0x00000E0300000000000000000000000000000000,1,1,7,265,125,0,1,1,1,2,0,32,5074,671,0,0,0,0,0,2098,202,2,17);
+INSERT INTO `mob_pools` VALUES (7559,'RoHyu_Blackanvil_KSNM','RoHyu_Blackanvil',202,0x00000E0300000000000000000000000000000000,1,1,7,265,125,0,1,1,1,2,0,32,5074,671,0,0,0,0,0,2098,202,2,17);
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section

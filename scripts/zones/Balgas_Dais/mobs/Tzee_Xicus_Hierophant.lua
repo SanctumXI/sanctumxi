@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Balga's Dais
---  Mob: Tzee Xicu the Manifest
+--  Mob: Tzee Xicu's Hierophant
 -- KSNM: Wing and a Prayer
 -----------------------------------
 mixins =

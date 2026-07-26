@@ -55,17 +55,20 @@ zones[xi.zone.WAUGHROON_SHRINE] =
 
     mob =
     {
-        ATORI_TUTORI      = GetFirstID('Atori-Tutori_qm'),
-        FLAYER_FRANZ      = GetFirstID('Flayer_Franz'),
-        GAKI              = GetFirstID('Gaki'),
-        KUJHU_GRANITESKIN = GetFirstID('KuJhu_Graniteskin'),
-        MAAT              = GetFirstID('Maat'),
-        METSANNEITSYT     = GetFirstID('Metsanneitsyt'),
-        OSSCHAART         = GetFirstID('Osschaart'),
-        PLATOON_SCORPION  = GetFirstID('Platoon_Scorpion'),
-        QUEEN_JELLY       = GetFirstID('Queen_Jelly'),
-        TIME_BOMB         = GetFirstID('Time_Bomb'),
-        YOBHU_HIDEOUSMASK = GetFirstID('YoBhu_Hideousmask'),
+        ATORI_TUTORI       = GetFirstID('Atori-Tutori_qm'),
+        FLAYER_FRANZ       = GetFirstID('Flayer_Franz'),
+        GAKI               = GetFirstID('Gaki'),
+        KUJHU_GRANITESKIN  = GetFirstID('KuJhu_Graniteskin'),
+        MAAT               = GetFirstID('Maat'),
+        METSANNEITSYT      = GetFirstID('Metsanneitsyt'),
+        OSSCHAART          = GetFirstID('Osschaart'),
+        PLATOON_SCORPION   = GetFirstID('Platoon_Scorpion'),
+        QUADAV_EARTHSHAPER = GetFirstID('Quadav_Earthshaper'),
+        QUADAV_LITURGIST   = GetFirstID('Quadav_Liturgist'),
+        QUEEN_JELLY        = GetFirstID('Queen_Jelly'),
+        ROHYU_BLACKANVIL   = GetFirstID('RoHyu_Blackanvil'),
+        TIME_BOMB          = GetFirstID('Time_Bomb'),
+        YOBHU_HIDEOUSMASK  = GetFirstID('YoBhu_Hideousmask'),
     },
 
     npc =

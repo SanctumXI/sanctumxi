@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Waughroon Shrine
---  Mob: Za'Dha's Minister
+--  Mob: Quadav Earthshaper
 -- KSNM: Heavy Is the Shell
 -----------------------------------
 mixins =

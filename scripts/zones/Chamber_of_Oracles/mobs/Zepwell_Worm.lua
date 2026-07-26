@@ -1,12 +1,9 @@
 -----------------------------------
--- Area: Waughroon Shrine
---  Mob: Za'Dha Adamantking
--- KSNM: Heavy Is the Shell
+-- Area: Chamber of Oracles
+--  Mob: Zepwell Worm
+-- KSNM: The Ravening Worm
 -----------------------------------
-mixins =
-{
-    require('scripts/mixins/job_special'),
-}
+require('scripts/globals/sandworm')
 -----------------------------------
 
 local tuning =
@@ -28,18 +25,8 @@ local tuning =
 ---@type TMobEntity
 local entity = {}
 
-local function applySlowAura(mob)
-    if not mob:hasStatusEffect(xi.effect.COLURE_ACTIVE) then
-        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.SLOW, subPower = 5000, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
-    end
-end
-
 entity.onMobInitialize = function(mob)
-    mob:addImmunity(xi.immunity.BIND)
-    mob:addImmunity(xi.immunity.GRAVITY)
-    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
-    mob:addImmunity(xi.immunity.DARK_SLEEP)
-    mob:setMod(xi.mod.AURA_SIZE, -125)
+    xi.sandworm.onMobInitialize(mob)
 end
 
 entity.onMobSpawn = function(mob)
@@ -58,33 +45,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
-    mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())
-
-    xi.mix.jobSpecial.config(mob, {
-        between = 5,
-        specials =
-        {
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 80 },
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 40 },
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 5 },
-        },
-    })
-
-    applySlowAura(mob)
-end
-
-entity.onMobFight = function(mob, target)
-    applySlowAura(mob)
-
-    if mob:getHPP() <= 40 then
-        mob:setMobMod(xi.mobMod.SKILL_LIST, 2099)
-    end
 end
 
 entity.onMobDeath = function(mob, player, optParams)
     if player then
-        player:addTitle(xi.title.DISPERSER_OF_DARKNESS)
+        player:addTitle(xi.title.SANDWORM_WRANGLER)
     end
 end
 

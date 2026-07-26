@@ -18,9 +18,49 @@ local content = Battlefield:new({
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
     requiredItems    = { xi.item.THEMIS_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    armouryCrates    =
+    {
+        balgasID.mob.VOO_TOLU_THE_GHOSTFIST + 6,
+        balgasID.mob.VOO_TOLU_THE_GHOSTFIST + 13,
+        balgasID.mob.VOO_TOLU_THE_GHOSTFIST + 20,
+    },
 })
 
-content:addEssentialMobs({ 'Tzee_Xicu_the_Manifest', 'Tzee_Xicus_Elemental' })
+content.groups =
+{
+    {
+        mobIds =
+        {
+            {
+                balgasID.mob.TZEE_XICUS_HIEROPHANT,
+                balgasID.mob.DIVINE_REPROACH,
+                balgasID.mob.DIVINE_REPROACH + 1,
+                balgasID.mob.DIVINE_REPROACH + 2,
+                balgasID.mob.DIVINE_REPROACH + 3,
+            },
+
+            {
+                balgasID.mob.TZEE_XICUS_HIEROPHANT + 1,
+                balgasID.mob.DIVINE_REPROACH + 4,
+                balgasID.mob.DIVINE_REPROACH + 5,
+                balgasID.mob.DIVINE_REPROACH + 6,
+                balgasID.mob.DIVINE_REPROACH + 7,
+            },
+
+            {
+                balgasID.mob.TZEE_XICUS_HIEROPHANT + 2,
+                balgasID.mob.DIVINE_REPROACH + 8,
+                balgasID.mob.DIVINE_REPROACH + 9,
+                balgasID.mob.DIVINE_REPROACH + 10,
+                balgasID.mob.DIVINE_REPROACH + 11,
+            },
+        },
+
+        superlink = true,
+        isParty   = true,
+        allDeath  = utils.bind(content.handleAllMonstersDefeated, content),
+    },
+}
 
 content.loot = xi.battlefield.addKSNM99LootGroups({
     {

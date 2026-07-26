@@ -25,7 +25,7 @@ local content = Battlefield:new({
     },
 })
 
-content:addEssentialMobs({ 'Hydra' })
+content:addEssentialMobs({ 'Typhon' })
 
 content.loot = xi.battlefield.addKSNM99LootGroups({
     {

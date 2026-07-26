@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Horlais Peak
---  Mob: Brradhod's Fletcher
+--  Mob: Siege Sniper
 -- KSNM: King of The North
 -----------------------------------
 mixins =

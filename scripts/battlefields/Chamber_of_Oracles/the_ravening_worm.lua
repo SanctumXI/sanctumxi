@@ -17,9 +17,15 @@ local content = Battlefield:new({
     entryNpc         = 'SC_Entrance',
     exitNpc          = 'Shimmering_Circle',
     requiredItems    = { xi.item.THEMIS_ORB, wearMessage = chamberOfOraclesID.text.A_CRACK_HAS_FORMED, wornMessage = chamberOfOraclesID.text.ORB_IS_CRACKED },
+    armouryCrates    =
+    {
+        chamberOfOraclesID.mob.PURSON + 1,
+        chamberOfOraclesID.mob.PURSON + 3,
+        chamberOfOraclesID.mob.PURSON + 5,
+    },
 })
 
-content:addEssentialMobs({ 'Sandworm' })
+content:addEssentialMobs({ 'Zepwell_Worm' })
 
 content.loot = xi.battlefield.addKSNM99LootGroups({
     {

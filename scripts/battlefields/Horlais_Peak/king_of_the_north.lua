@@ -18,9 +18,49 @@ local content = Battlefield:new({
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
     requiredItems    = { xi.item.THEMIS_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    armouryCrates    =
+    {
+        horlaisID.mob.ARMSMASTER_DEKBUK + 6,
+        horlaisID.mob.ARMSMASTER_DEKBUK + 13,
+        horlaisID.mob.ARMSMASTER_DEKBUK + 20,
+    },
 })
 
-content:addEssentialMobs({ 'Bloodcrown_Brradhod', 'Brradhods_Fletcher', 'Brradhods_Donzel' })
+content.groups =
+{
+    {
+        mobIds =
+        {
+            {
+                horlaisID.mob.FROSTSCAR_HROZDAG,
+                horlaisID.mob.SIEGE_SNIPER,
+                horlaisID.mob.SIEGE_SNIPER + 1,
+                horlaisID.mob.BLACKGUARD,
+                horlaisID.mob.BLACKGUARD + 1,
+            },
+
+            {
+                horlaisID.mob.FROSTSCAR_HROZDAG + 1,
+                horlaisID.mob.SIEGE_SNIPER + 2,
+                horlaisID.mob.SIEGE_SNIPER + 3,
+                horlaisID.mob.BLACKGUARD + 2,
+                horlaisID.mob.BLACKGUARD + 3,
+            },
+
+            {
+                horlaisID.mob.FROSTSCAR_HROZDAG + 2,
+                horlaisID.mob.SIEGE_SNIPER + 4,
+                horlaisID.mob.SIEGE_SNIPER + 5,
+                horlaisID.mob.BLACKGUARD + 4,
+                horlaisID.mob.BLACKGUARD + 5,
+            },
+        },
+
+        superlink = true,
+        isParty   = true,
+        allDeath  = utils.bind(content.handleAllMonstersDefeated, content),
+    },
+}
 
 content.loot = xi.battlefield.addKSNM99LootGroups({
     {

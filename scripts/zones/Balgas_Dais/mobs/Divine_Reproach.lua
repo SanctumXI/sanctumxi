@@ -1,7 +1,7 @@
 -----------------------------------
--- Area: Horlais Peak
---  Mob: Brradhod's Donzel
--- KSNM: King of The North
+-- Area: Balga's Dais
+--  Mob: Divine Reproach
+-- KSNM: Wing and a Prayer
 -----------------------------------
 mixins =
 {
@@ -13,7 +13,6 @@ mixins =
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
 end

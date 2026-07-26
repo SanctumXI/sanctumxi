@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Waughroon Shrine
---  Mob: Za'Dha's Biographer
+--  Mob: Quadav Liturgist
 -- KSNM: Heavy Is the Shell
 -----------------------------------
 mixins =
