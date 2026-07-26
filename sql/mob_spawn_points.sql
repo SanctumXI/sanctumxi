@@ -50397,10 +50397,22 @@ INSERT INTO `mob_spawn_points` VALUES (17347028,0,'Invulnerable_Mazzgozz','Invul
 INSERT INTO `mob_spawn_points` VALUES (17347029,0,'Undefeatable_Sappdapp','Undefeatable Sappdapp',50,0,0,83.021,-145.815,296.418,39);
 INSERT INTO `mob_spawn_points` VALUES (17347030,0,'Minds-eyed_Klugwug','Mind\'s-eyed Klugwug',51,0,0,87.897,-145.617,296.385,96);
 
--- Reserved: King of The North
-INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Bahamute','Bahamute',52,0,0,0.000,0.000,0.000,0);
+-- King of The North
+INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Bloodcrown_Brradhod','Bloodcrown Brradhod',52,85,85,-396.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Bloodcrown_Brradhod','Bloodcrown Brradhod',52,85,85,-156.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Bloodcrown_Brradhod','Bloodcrown Brradhod',52,85,85,83.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,-402.153,94.703,-68.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,-390.153,94.703,-68.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,-162.218,-25.306,111.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347178,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,-150.218,-25.306,111.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347179,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,77.775,-145.323,291.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347180,0,'Brradhods_Fletcher','Brradhod\'s Fletcher',59,75,75,89.775,-145.323,291.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347181,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,-402.153,94.703,-60.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347182,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,-390.153,94.703,-60.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347183,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,-162.218,-25.306,119.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347184,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,-150.218,-25.306,119.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347185,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,77.775,-145.323,299.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347186,0,'Brradhods_Donzel','Brradhod\'s Donzel',60,75,75,89.775,-145.323,299.455,46);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17347035,0,'Chest_OPlenty','Chest O\'Plenty',53,99,99,-400.500,93.744,-71.000,46);
@@ -52223,10 +52235,22 @@ INSERT INTO `mob_spawn_points` VALUES (17367691,0,'BiFho_Jestergrin','Bi\'Fho Je
 INSERT INTO `mob_spawn_points` VALUES (17367692,0,'KuTya_Hotblood','Ku\'Tya Hotblood',59,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17367693,0,'EaTho_Cruelheart','Ea\'Tho Cruelheart',60,0,0,0.000,0.000,0.000,0);
 
--- Reserved: Heavy Is the Shell
-INSERT INTO `mob_spawn_points` VALUES (17367695,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17367696,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17367697,0,'Bahamute','Bahamute',61,0,0,0.000,0.000,0.000,0);
+-- Heavy Is the Shell
+INSERT INTO `mob_spawn_points` VALUES (17367695,0,'ZaDha_Adamantking','Za\'Dha Adamantking',61,85,85,-177.358,60.188,-141.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367696,0,'ZaDha_Adamantking','Za\'Dha Adamantking',61,85,85,22.916,0.188,17.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367697,0,'ZaDha_Adamantking','Za\'Dha Adamantking',61,85,85,222.866,-59.812,137.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367819,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,-183.358,60.188,-145.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367820,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,-171.358,60.188,-145.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367821,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,16.916,0.188,13.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367822,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,28.916,0.188,13.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367823,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,216.866,-59.812,133.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367824,0,'ZaDhas_Biographer','Za\'Dha\'s Biographer',70,75,75,228.866,-59.812,133.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367825,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,-183.358,60.188,-137.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367826,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,-171.358,60.188,-137.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367827,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,16.916,0.188,21.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367828,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,28.916,0.188,21.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367829,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,216.866,-59.812,141.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367830,0,'ZaDhas_Minister','Za\'Dha\'s Minister',71,75,75,228.866,-59.812,141.969,124);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17367698,0,'Chest_OPlenty','Chest O\'Plenty',62,0,0,-181.424,59.230,-134.764,128);
@@ -53231,10 +53255,22 @@ INSERT INTO `mob_spawn_points` VALUES (17375730,0,'Gii_Jaha_the_Raucous','Gii Ja
 INSERT INTO `mob_spawn_points` VALUES (17375731,0,'Aa_Nawu_the_Thunderblade','Aa Nawu the Thunderblade',62,0,0,170.368,-64.693,184.327,24);
 INSERT INTO `mob_spawn_points` VALUES (17375732,0,'Yoo_Mihi_the_Haze','Yoo Mihi the Haze',63,0,0,177.341,-63.890,179.327,27);
 
--- Reserved: Wing and a Prayer
-INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
-INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Bahamute','Bahamute',64,0,0,0.000,0.000,0.000,0);
+-- Wing and a Prayer
+INSERT INTO `mob_spawn_points` VALUES (17375734,0,'Tzee_Xicu_the_Manifest','Tzee Xicu the Manifest',64,85,85,-139.000,56.000,-225.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375735,0,'Tzee_Xicu_the_Manifest','Tzee Xicu the Manifest',64,85,85,21.231,-4.000,-25.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375736,0,'Tzee_Xicu_the_Manifest','Tzee Xicu the Manifest',64,85,85,181.059,-64.000,174.999,194);
+INSERT INTO `mob_spawn_points` VALUES (17375852,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,-145.000,56.000,-229.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375853,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,-133.000,56.000,-229.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375854,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,-145.000,56.000,-221.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375855,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,-133.000,56.000,-221.000,194);
+INSERT INTO `mob_spawn_points` VALUES (17375856,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,15.231,-4.000,-29.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375857,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,27.231,-4.000,-29.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375858,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,15.231,-4.000,-21.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375859,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,27.231,-4.000,-21.076,194);
+INSERT INTO `mob_spawn_points` VALUES (17375860,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,175.059,-64.000,170.999,194);
+INSERT INTO `mob_spawn_points` VALUES (17375861,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,187.059,-64.000,170.999,194);
+INSERT INTO `mob_spawn_points` VALUES (17375862,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,175.059,-64.000,178.999,194);
+INSERT INTO `mob_spawn_points` VALUES (17375863,0,'Tzee_Xicus_Elemental','Tzee Xicu\'s Elemental',71,75,75,187.059,-64.000,178.999,194);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17375737,0,'Chest_OPlenty','Chest O\'Plenty',65,0,0,-131.800,55.577,-220.500,192);
@@ -58148,7 +58184,10 @@ INSERT INTO `mob_spawn_points` VALUES (17445131,0,'Hyohh_the_Conchblower','Hyohh
 INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv the Riverleaper',30,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
--- Reserved for Three's a Crowd: group 32, entity IDs 17445245-17445247
+-- Three's a Crowd
+INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Hydra','Hydra',32,80,80,-280.878,-32.500,326.971,32);
+INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Hydra','Hydra',32,80,80,-1.093,-0.500,47.607,32);
+INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Hydra','Hydra',32,80,80,281.130,31.500,-273.224,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)
@@ -59371,7 +59410,10 @@ INSERT INTO `mob_spawn_points` VALUES (17465512,0,'Retiarius_XI-XIX','Retiarius 
 INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoplomachus XI-XXVI',29,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
 
--- Reserved for The Ravening Worm: group 31, entity IDs 17465605-17465607
+-- The Ravening Worm
+INSERT INTO `mob_spawn_points` VALUES (17465605,0,'Sandworm','Sandworm',31,85,85,-1.945,100.325,-240.000,64);
+INSERT INTO `mob_spawn_points` VALUES (17465606,0,'Sandworm','Sandworm',31,85,85,-1.975,0.000,2.081,64);
+INSERT INTO `mob_spawn_points` VALUES (17465607,0,'Sandworm','Sandworm',31,85,85,-1.945,-100.000,242.335,64);
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)

@@ -10505,13 +10505,15 @@ INSERT INTO `mob_groups` VALUES (48,2202,139,'Keeneyed_Aufwuf',0,128,0,0,0,0,NUL
 INSERT INTO `mob_groups` VALUES (49,2086,139,'Invulnerable_Mazzgozz',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (50,4097,139,'Undefeatable_Sappdapp',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (51,2670,139,'Minds-eyed_Klugwug',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (52,0,139,'Bahamute',0,128,0,0,0,0,NULL); -- Reserved: King of The North
+INSERT INTO `mob_groups` VALUES (52,456,139,'Bloodcrown_Brradhod',0,128,0,100000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (53,6868,139,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (54,6869,139,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (55,0,139,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (56,0,139,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (57,0,139,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (58,0,139,'Naji',0,128,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (59,543,139,'Brradhods_Fletcher',0,128,0,25000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (60,542,139,'Brradhods_Donzel',0,128,0,25000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Ghelsba_Outpost (Zone 140)
@@ -10699,7 +10701,7 @@ INSERT INTO `mob_groups` VALUES (57,2200,144,'KaNha_Jabbertongue',0,128,0,0,0,0,
 INSERT INTO `mob_groups` VALUES (58,426,144,'BiFho_Jestergrin',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (59,2305,144,'KuTya_Hotblood',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (60,1167,144,'EaTho_Cruelheart',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (61,0,144,'Bahamute',0,128,0,0,0,0,NULL); -- Reserved: Heavy Is the Shell
+INSERT INTO `mob_groups` VALUES (61,7559,144,'ZaDha_Adamantking',0,128,0,100000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (62,6868,144,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (63,6869,144,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (64,0,144,'Naji',0,128,0,0,0,0,NULL);
@@ -10708,6 +10710,8 @@ INSERT INTO `mob_groups` VALUES (66,0,144,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (67,0,144,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (68,304,144,'Ayakashi',0,128,0,2400,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (69,7295,144,'Flesh_Eater',0,128,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (70,4495,144,'ZaDhas_Biographer',0,128,0,25000,10000,0,NULL);
+INSERT INTO `mob_groups` VALUES (71,4496,144,'ZaDhas_Minister',0,128,0,25000,10000,0,NULL);
 
 -- ------------------------------------------------------------
 -- Giddeus (Zone 145)
@@ -10813,13 +10817,14 @@ INSERT INTO `mob_groups` VALUES (60,4526,146,'Zuu_Xowu_the_Darksmoke',0,128,0,0,
 INSERT INTO `mob_groups` VALUES (61,1601,146,'Gii_Jaha_the_Raucous',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (62,15,146,'Aa_Nawu_the_Thunderblade',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (63,4474,146,'Yoo_Mihi_the_Haze',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (64,0,146,'Bahamute',0,128,0,0,0,0,NULL); -- Reserved: Wing and a Prayer
+INSERT INTO `mob_groups` VALUES (64,4072,146,'Tzee_Xicu_the_Manifest',0,128,0,100000,20000,0,NULL);
 INSERT INTO `mob_groups` VALUES (65,6868,146,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (66,6869,146,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (67,0,146,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (68,0,146,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (69,0,146,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (70,0,146,'Naji',0,128,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (71,4071,146,'Tzee_Xicus_Elemental',0,128,0,20000,10000,0,NULL);
 
 -- ------------------------------------------------------------
 -- Beadeaux (Zone 147)
@@ -11619,7 +11624,7 @@ INSERT INTO `mob_groups` VALUES (28,3328,163,'Rauu_the_Whaleswooner',0,128,0,0,0
 INSERT INTO `mob_groups` VALUES (29,2038,163,'Hyohh_the_Conchblower',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (30,3123,163,'Pevv_the_Riverleaper',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (31,3442,163,'Sahagins_Wyvern',0,128,0,0,0,0,NULL);
--- Group 32 is reserved for Three's a Crowd.
+INSERT INTO `mob_groups` VALUES (32,2018,163,'Hydra',0,128,0,73000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Garlaige_Citadel_[S] (Zone 164)
@@ -11895,7 +11900,7 @@ INSERT INTO `mob_groups` VALUES (27,3527,168,'Secutor_XI-XXXII',0,128,0,0,0,0,NU
 INSERT INTO `mob_groups` VALUES (28,3357,168,'Retiarius_XI-XIX',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (29,1989,168,'Hoplomachus_XI-XXVI',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (30,675,168,'Centurio_XI-I',0,128,0,0,0,0,NULL);
--- Group 31 is reserved for The Ravening Worm.
+INSERT INTO `mob_groups` VALUES (31,3448,168,'Sandworm',0,128,0,70000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Toraimarai_Canal (Zone 169)

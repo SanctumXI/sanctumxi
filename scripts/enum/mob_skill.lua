@@ -928,6 +928,8 @@ xi.mobSkill =
 
     GRIM_GLOWER                   = 2156,
 
+    ORE_LOB                       = 2204,
+    DARK_INVOCATION               = 2206,
     PEDAL_PIROUETTE               = 2210,
 
     HELL_SCISSORS                 = 2221,
@@ -959,6 +961,10 @@ xi.mobSkill =
     -- OVERDRIVE                     = 2259,
     TRANCE                        = 2260,
     TABULA_RASA                   = 2261,
+    TORNADO_EDGE                  = 2263,
+    SHELL_CHARGE                  = 2266,
+    SKULL_SMASH                   = 2267,
+    KAMAITACHI                    = 2269,
 
     BONE_CRUSHER_AUTOMATON        = 2299,
     ARMOR_PIERCER_AUTOMATON       = 2300,
@@ -977,6 +983,9 @@ xi.mobSkill =
 
     -- TABULA_RASA                   = 2358,
 
+    VEIL_OF_CHAOS                 = 2373,
+    TORMENT_OF_GUDHA              = 2374,
+    VORTICOSE_SANDS               = 2375,
     -- INVINCIBLE                    = 2379,
 
     -- MIJIN_GAKURE                  = 2382,

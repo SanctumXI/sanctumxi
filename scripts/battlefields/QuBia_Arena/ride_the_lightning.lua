@@ -27,8 +27,7 @@ local content = Battlefield:new({
 
 content:addEssentialMobs({ 'Ixion' })
 
-content.loot =
-{
+content.loot = xi.battlefield.addKSNM99LootGroups({
     {
         { itemId = xi.item.GIL, weight = 10000, amount = 32000 },
     },
@@ -55,57 +54,6 @@ content.loot =
         { itemId = xi.item.IXION_CLOAK, weight = 2400 },
         { itemId = xi.item.NONE,        weight = 7600 },
     },
-
-    -- Generic KSNM99 synthesis materials.
-    {
-        { itemId = xi.item.CHUNK_OF_DARKSTEEL_ORE,     weight =  500 },
-        { itemId = xi.item.CHUNK_OF_GOLD_ORE,          weight =  500 },
-        { itemId = xi.item.CHUNK_OF_MYTHRIL_ORE,       weight =  500 },
-        { itemId = xi.item.CHUNK_OF_PLATINUM_ORE,      weight =  500 },
-        { itemId = xi.item.EBONY_LOG,                  weight =  500 },
-        { itemId = xi.item.MAHOGANY_LOG,               weight =  500 },
-        { itemId = xi.item.PETRIFIED_LOG,              weight =  500 },
-        { itemId = xi.item.PHILOSOPHERS_STONE,         weight =  500 },
-        { itemId = xi.item.SPOOL_OF_GOLD_THREAD,       weight =  500 },
-        { itemId = xi.item.SQUARE_OF_RAINBOW_CLOTH,    weight =  500 },
-        { itemId = xi.item.SQUARE_OF_RAXA,             weight =  500 },
-        { itemId = xi.item.CORAL_FRAGMENT,             weight =  500 },
-        { itemId = xi.item.DEMON_HORN,                 weight =  500 },
-        { itemId = xi.item.HANDFUL_OF_WYVERN_SCALES,   weight =  500 },
-        { itemId = xi.item.RAM_HORN,                    weight =  500 },
-        { itemId = xi.item.SLAB_OF_GRANITE,             weight =  500 },
-        { itemId = xi.item.RERAISER,                    weight =  500 },
-        { itemId = xi.item.HI_RERAISER,                 weight =  500 },
-        { itemId = xi.item.VILE_ELIXIR,                 weight =  500 },
-        { itemId = xi.item.VILE_ELIXIR_P1,              weight =  500 },
-    },
-
-    -- Generic KSNM99 consumables.
-    {
-        { itemId = xi.item.HI_ETHER_P3,    weight = 2500 },
-        { itemId = xi.item.HI_POTION_P3,   weight = 2500 },
-        { itemId = xi.item.HI_RERAISER,    weight = 2500 },
-        { itemId = xi.item.VILE_ELIXIR_P1, weight = 2500 },
-    },
-
-    -- Generic KSNM99 high-quality materials.
-    {
-        { itemId = xi.item.VIAL_OF_BLACK_BEETLE_BLOOD, weight =  625 },
-        { itemId = xi.item.SQUARE_OF_DAMASCENE_CLOTH,  weight =  625 },
-        { itemId = xi.item.DAMASCUS_INGOT,              weight =  625 },
-        { itemId = xi.item.SPOOL_OF_MALBORO_FIBER,     weight =  625 },
-        { itemId = xi.item.PHILOSOPHERS_STONE,         weight = 2000 },
-        { itemId = xi.item.PHOENIX_FEATHER,            weight = 3500 },
-        { itemId = xi.item.SQUARE_OF_RAXA,             weight = 2000 },
-    },
-
-    -- Generic KSNM99 logs and cloth.
-    {
-        { itemId = xi.item.DIVINE_LOG,              weight = 1000 },
-        { itemId = xi.item.LACQUER_TREE_LOG,        weight = 2500 },
-        { itemId = xi.item.PETRIFIED_LOG,           weight = 6000 },
-        { itemId = xi.item.SQUARE_OF_SHINING_CLOTH, weight =  500 },
-    },
-}
+})
 
 return content:register()

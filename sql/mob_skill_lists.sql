@@ -4310,7 +4310,32 @@ INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,710); -- Rhino Guard
 INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,711); -- Spoil 
 INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,791); -- Rhinowrecker
 
--- Next ID : 2098
+-- Custom KSNM99 beast kings.
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,762);  -- Ore Toss
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2204); -- Ore Lob
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell Charge
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell_Low_HP',2099,2374); -- Torment of Gu'Dha
+
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,617);  -- Feather Storm
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,618);  -- Double Kick
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,619);  -- Parry
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,620);  -- Sweep
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,764);  -- Doom
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2206); -- Dark Invocation
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2375); -- Vorticose Sands
+
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Battle Dance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,606);  -- Shoulder Attack
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,607);  -- Arm Block
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Howl
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,609);  -- Slam Dunk
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Counterstance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2263); -- Tornado Edge
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2373); -- Veil of Chaos
+
+-- Next ID : 2102
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
 -- NOTE: The mobs are changed every update in the DATs, so using out-of-date
