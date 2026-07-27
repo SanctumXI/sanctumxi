@@ -28,8 +28,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
 
-           -- Add effect Burn on target for 30 seconds
-    target:addStatusEffect(xi.effect.BURN, { power = power, duration = 30, origin = player })
+    if damage > 0 then
+        local swordSkill = player:getSkillLevel(xi.skill.SWORD)
+        local burnPower  = math.min(15, 3 + math.floor(swordSkill / 20))
+
+        target:addStatusEffect(xi.effect.BURN, { power = burnPower, duration = 45, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

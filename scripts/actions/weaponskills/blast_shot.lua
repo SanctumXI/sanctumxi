@@ -25,6 +25,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if xi.wsEffect.set(player, xi.wsEffect.BLAST_SHOT_ACC, 1, 60) then
+        xi.wsEffect.message(player, 'Your next Marksmanship weaponskill cannot miss!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

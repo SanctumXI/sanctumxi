@@ -5,8 +5,10 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
-    if effect:getSubPower() == xi.element.ICE then
-        target:addMod(xi.mod.ICE_MEVA, -effect:getPower())
+    local elementalMeva = xi.data.element.getElementalMEVAModifier(effect:getSubPower())
+
+    if elementalMeva ~= 0 then
+        target:addMod(elementalMeva, -effect:getPower())
         return
     end
 
@@ -24,8 +26,10 @@ effectObject.onEffectTick = function(target, effect)
 end
 
 effectObject.onEffectLose = function(target, effect)
-    if effect:getSubPower() == xi.element.ICE then
-        target:delMod(xi.mod.ICE_MEVA, -effect:getPower())
+    local elementalMeva = xi.data.element.getElementalMEVAModifier(effect:getSubPower())
+
+    if elementalMeva ~= 0 then
+        target:delMod(elementalMeva, -effect:getPower())
         return
     end
 

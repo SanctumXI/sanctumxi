@@ -30,8 +30,6 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    player:addStatusEffect(xi.effect.GUARDING_RATE_BOOST, { power = 100, duration = 10, origin = player })
-
     if xi.wsEffect.set(player, xi.wsEffect.CHAKRA_BOOST, 25, 60) then
         xi.wsEffect.message(player, 'Your next Chakra will restore 25% more HP!')
     end

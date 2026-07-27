@@ -27,6 +27,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if xi.wsEffect.set(player, xi.wsEffect.WHEELING_THRUST_JUMP, 100, 60) then
+        xi.wsEffect.message(player, 'Your next Jump or High Jump will grant an additional 100 TP!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

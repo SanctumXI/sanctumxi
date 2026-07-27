@@ -54,7 +54,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         effect   = xi.wsEffect.BLACK_HALO_CRIT
         power    = 15
         duration = 45 + math.floor((tp - 1000) / 100) * 3
-        message  = 'Black Halo increased your normal critical hit damage!'
+        message  = 'Black Halo increased your melee critical hit damage!'
     elseif
         mainJob == xi.job.WHM or
         mainJob == xi.job.GEO or

@@ -16,8 +16,8 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2
-    params.ftpMod = { 0.5, 0.75, 1.0 }
-    params.str_wsc = 0.2 params.int_wsc = 0.2
+    params.ftpMod = { 0.75, 1.0, 1.25 }
+    params.str_wsc = 0.30 params.int_wsc = 0.30
     params.hybridWS = true
     params.ele = xi.element.EARTH
     params.skill = xi.skill.KATANA
@@ -30,6 +30,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.ELEMENTALRES_DOWN, { power = 15, duration = 45, origin = player, subPower = xi.element.EARTH })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

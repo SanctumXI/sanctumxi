@@ -706,6 +706,8 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.skillType    = attack.weaponType
 
     local asuranFistsEmpowered = false
+    local impulseDriveEmpowered = false
+    local fullSwingDamageBonus = 0
 
     if
         wsID == xi.weaponskill.ASURAN_FISTS and
@@ -717,6 +719,25 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         xi.wsEffect.consume(attacker)
         asuranFistsEmpowered = true
         attacker:setCharVar('Sanctum_AsuranFistsConsumed', 1)
+    end
+
+    if
+        wsID ~= 0 and
+        calcParams.skillType == xi.skill.POLEARM and
+        xi.wsEffect.has(attacker, xi.wsEffect.IMPULSE_DRIVE_DAMAGE)
+    then
+        xi.wsEffect.consume(attacker)
+        impulseDriveEmpowered = tp >= 1500
+    end
+
+    if
+        wsID ~= 0 and
+        calcParams.skillType == xi.skill.STAFF and
+        xi.wsEffect.has(attacker, xi.wsEffect.FULL_SWING_DAMAGE)
+    then
+        local _, power = xi.wsEffect.consume(attacker)
+
+        fullSwingDamageBonus = power
     end
 
     -- Sanctum Custom: Calamity empowers the first hit of the next Axe weaponskill.
@@ -755,11 +776,30 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     if
         attacker:getObjType() == xi.objType.PC and
+        calcParams.skillType == xi.skill.SWORD and
+        xi.wsEffect.has(attacker, xi.wsEffect.SWIFT_BLADE_CRIT)
+    then
+        local _, critBonus = xi.wsEffect.consume(attacker)
+        local critRateBonus = critBonus / 100
+        local currentCrit   = wsParams.critVaries or { 0, 0, 0 }
+
+        wsParams.critVaries =
+        {
+            currentCrit[1] + critRateBonus,
+            currentCrit[2] + critRateBonus,
+            currentCrit[3] + critRateBonus,
+        }
+
+        xi.wsEffect.message(attacker, 'Swift Blade granted +15% critical hit rate!')
+    end
+
+    if
+        attacker:getObjType() == xi.objType.PC and
         calcParams.skillType == xi.skill.GREAT_AXE and
         xi.wsEffect.has(attacker, xi.wsEffect.STEEL_CYCLONE_DEF)
     then
         local _, defenseDivisor = xi.wsEffect.consume(attacker)
-        local defenseBonus      = math.min(20, math.floor(attacker:getStat(xi.mod.DEF) / defenseDivisor))
+        local defenseBonus      = math.min(15, math.floor(attacker:getStat(xi.mod.DEF) / defenseDivisor))
 
         calcParams.bonusWSmods = calcParams.bonusWSmods + defenseBonus
         xi.wsEffect.message(attacker, string.format('Steel Cyclone added %i defense-based damage!', defenseBonus))
@@ -826,6 +866,16 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         finaldmg = math.floor(finaldmg * 1.15)
     end
 
+    if impulseDriveEmpowered then
+        finaldmg = math.floor(finaldmg * 1.25)
+        xi.wsEffect.message(attacker, 'Impulse Drive empowered this weaponskill!')
+    end
+
+    if fullSwingDamageBonus > 0 then
+        finaldmg = math.floor(finaldmg * (100 + fullSwingDamageBonus) / 100)
+        xi.wsEffect.message(attacker, 'Full Swing empowered this Staff weaponskill!')
+    end
+
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
@@ -886,14 +936,21 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
 
     calcParams.hitRate = xi.weaponskills.getRangedHitRate(attacker, target, calcParams.bonusAcc)
 
-    -- Sanctum Custom: Blast Arrow empowers the next ranged weapon skill.
-    if
-        attacker:getObjType() == xi.objType.PC and
-        xi.wsEffect.has(attacker, xi.wsEffect.BLAST_ARROW_ACC)
-    then
+    -- Sanctum Custom: Blast Arrow and Blast Shot empower their respective ranged weapon skills.
+    local blastArrowEmpowered = xi.wsEffect.has(attacker, xi.wsEffect.BLAST_ARROW_ACC)
+    local blastShotEmpowered  =
+        calcParams.skillType == xi.skill.MARKSMANSHIP and
+        xi.wsEffect.has(attacker, xi.wsEffect.BLAST_SHOT_ACC)
+
+    if attacker:getObjType() == xi.objType.PC and (blastArrowEmpowered or blastShotEmpowered) then
         calcParams.guaranteedHit = true
         xi.wsEffect.consume(attacker)
-        xi.wsEffect.message(attacker, 'Blast Arrow empowered your ranged weaponskill!')
+
+        if blastShotEmpowered then
+            xi.wsEffect.message(attacker, 'Blast Shot empowered your Marksmanship weaponskill!')
+        else
+            xi.wsEffect.message(attacker, 'Blast Arrow empowered your ranged weaponskill!')
+        end
     end
 
     -- Send our params off to calculate our raw WS damage, hits landed, and shadows absorbed
@@ -935,6 +992,28 @@ end
 
 xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
     xi.wsEffect.consumeKasha(attacker)
+
+    local impulseDriveActive =
+        wsParams.skill == xi.skill.POLEARM and
+        xi.wsEffect.has(attacker, xi.wsEffect.IMPULSE_DRIVE_DAMAGE)
+
+    local impulseDriveEmpowered = impulseDriveActive and tp >= 1500
+
+    if impulseDriveActive then
+        xi.wsEffect.consume(attacker)
+    end
+
+    local fullSwingDamageBonus = 0
+
+    if
+        wsID ~= 0 and
+        wsParams.skill == xi.skill.STAFF and
+        xi.wsEffect.has(attacker, xi.wsEffect.FULL_SWING_DAMAGE)
+    then
+        local _, power = xi.wsEffect.consume(attacker)
+
+        fullSwingDamageBonus = power
+    end
 
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local attack =
@@ -1028,6 +1107,16 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
 
         dmg = dmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
         dmg = xi.wsEffect.applyDamageBonus(attacker, dmg)
+
+        if impulseDriveEmpowered then
+            dmg = math.floor(dmg * 1.25)
+            xi.wsEffect.message(attacker, 'Impulse Drive empowered this weaponskill!')
+        end
+
+        if fullSwingDamageBonus > 0 then
+            dmg = math.floor(dmg * (100 + fullSwingDamageBonus) / 100)
+            xi.wsEffect.message(attacker, 'Full Swing empowered this Staff weaponskill!')
+        end
     else
         calcParams.shadowsAbsorbed = 1
     end

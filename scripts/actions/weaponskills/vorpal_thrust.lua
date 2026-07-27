@@ -26,6 +26,14 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        local polearmSkill = player:getSkillLevel(xi.skill.POLEARM)
+        local strDownPower = math.min(25, 5 + math.floor(polearmSkill / 15))
+
+        target:addStatusEffect(xi.effect.STR_DOWN, { power = strDownPower, duration = 45, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

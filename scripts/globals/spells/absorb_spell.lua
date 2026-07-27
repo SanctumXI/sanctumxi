@@ -22,6 +22,14 @@ local absorbStatData =
     [xi.magic.spell.ABSORB_ACC] = { boostEffect = xi.effect.ACCURACY_BOOST, downEffect = xi.effect.ACCURACY_DOWN, msg = xi.msg.basic.MAGIC_ABSORB_ACC },
 }
 
+local function getSpiralHellBonuses(caster)
+    if xi.wsEffect.has(caster, xi.wsEffect.SPIRAL_HELL_ABSORB) then
+        return 1.15, 10
+    end
+
+    return 1, 0
+end
+
 -- https://www.bg-wiki.com/ffxi/Category:Absorb_Spell
 xi.spells.absorb.doAbsorbStatSpell = function(caster, target, spell)
     local spellId          = spell:getID()
@@ -29,7 +37,8 @@ xi.spells.absorb.doAbsorbStatSpell = function(caster, target, spell)
     local enfeeblingEffect = absorbStatData[spellId].downEffect
 
     -- Calculate resistance (2 state effects: Either No resist, half resist or full resist)
-    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, enfeeblingEffect, 0)
+    local spiralPotency, spiralAccuracy = getSpiralHellBonuses(caster)
+    local resist = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, enfeeblingEffect, spiralAccuracy)
     if resist < 0.5 then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         return 0
@@ -46,6 +55,7 @@ xi.spells.absorb.doAbsorbStatSpell = function(caster, target, spell)
 
     local finalPotency = math.floor(basePotency * gearMultiplier * liberatorMultiplier)
     finalPotency       = math.floor(finalPotency * netherVoidMultiplier)
+    finalPotency       = math.floor(finalPotency * spiralPotency)
 
     -- Calculate duration.
     -- NOTE: Wiki information is contradicting.
@@ -125,7 +135,8 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     local baseDamage         = math.randomInt(minDamagePotential, maxDamagePotential)
 
     -- Multipliers.
-    local resistTier             = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, 0)
+    local spiralPotency, spiralAccuracy = getSpiralHellBonuses(caster)
+    local resistTier             = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, spiralAccuracy)
     local additionalResistTier   = xi.spells.damage.calculateAdditionalResistTier(caster, target, xi.element.DARK)
     local sdt                    = xi.combat.damage.magicalElementSDT(target, xi.element.DARK)
     local elementalStaffBonus    = xi.spells.damage.calculateElementalStaffBonus(caster, xi.element.DARK)
@@ -148,6 +159,7 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * absorbMultiplier)
     finalDamage = math.floor(finalDamage * liberatorMultiplier)
     finalDamage = math.floor(finalDamage * netherVoidMultiplier)
+    finalDamage = math.floor(finalDamage * spiralPotency)
 
     -- Final operations.
     if modAbsorbed == xi.mod.HP then
@@ -237,7 +249,8 @@ xi.spells.absorb.doAbsorbTPSpell = function(caster, target, spell)
     local baseDamage = targetTP * 30 / 100
 
     -- Multipliers.
-    local resistTier           = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, 0)
+    local spiralPotency, spiralAccuracy = getSpiralHellBonuses(caster)
+    local resistTier           = xi.combat.magicHitRate.calculateResistRate(caster, target, xi.magic.spellGroup.BLACK, xi.skill.DARK_MAGIC, 0, xi.element.DARK, xi.mod.INT, 0, spiralAccuracy)
     local additionalResistTier = xi.spells.damage.calculateAdditionalResistTier(caster, target, xi.element.DARK)
     local sdt                  = xi.combat.damage.magicalElementSDT(target, xi.element.DARK)
     local elementalStaffBonus  = xi.spells.damage.calculateElementalStaffBonus(caster, xi.element.DARK)
@@ -255,6 +268,7 @@ xi.spells.absorb.doAbsorbTPSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * absorbMultiplier)
     finalDamage = math.floor(finalDamage * absorbTpMultiplier)
     finalDamage = math.floor(finalDamage * liberatorMultiplier)
+    finalDamage = math.floor(finalDamage * spiralPotency)
 
     -- Clamp
     finalDamage = utils.clamp(finalDamage, 0, 3000)

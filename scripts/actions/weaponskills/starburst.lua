@@ -9,15 +9,17 @@
 -- Modifiers: :    STR:40% MND:40%
 -- 100%TP    200%TP    300%TP
 -- 1.00      2.00      2.50
+-- Sanctum custom: Inflicts Flash for 5 seconds.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.ftpMod = { 1.0, 2.0, 2.5 }
+    params.ftpMod = { 1.25, 2.0, 2.5 }
     params.skill = xi.skill.STAFF
     params.includemab = true
+    params.str_wsc = 0.2 params.mnd_wsc = 0.2
     params.dStat = xi.mod.INT
     -- 50/50 shot of being light or dark
     params.ele = xi.element.LIGHT
@@ -30,6 +32,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.FLASH, { power = 100, duration = 6, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

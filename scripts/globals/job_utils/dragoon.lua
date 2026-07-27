@@ -85,6 +85,16 @@ local function performWSJump(player, target, action, params, abilityID)
 
     player:addTP(math.floor(extraTP * storeTPModifier))
 
+    if
+        (abilityID == xi.jobAbility.JUMP or abilityID == xi.jobAbility.HIGH_JUMP) and
+        xi.wsEffect.has(player, xi.wsEffect.WHEELING_THRUST_JUMP)
+    then
+        local _, wheelingThrustTP = xi.wsEffect.consume(player)
+
+        player:addTP(wheelingThrustTP)
+        xi.wsEffect.message(player, string.format('Wheeling Thrust granted an additional %i TP!', wheelingThrustTP))
+    end
+
     -- https://www.bg-wiki.com/ffxi/Fly_High_(Ability)
     if player:hasStatusEffect(xi.effect.FLY_HIGH) then
         local flyHighJumpRecast = 10

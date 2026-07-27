@@ -38,6 +38,10 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
+    if damage > 0 and xi.wsEffect.set(player, xi.wsEffect.SWIFT_BLADE_CRIT, 15, 60) then
+        xi.wsEffect.message(player, 'Your next Sword weaponskill gains +15% critical hit rate!')
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

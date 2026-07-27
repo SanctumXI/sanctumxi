@@ -15,8 +15,8 @@ local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.ftpMod = { 1.0, 1.5, 2.0 }
-    params.str_wsc = 0.3 params.int_wsc = 0.3
+    params.ftpMod = { 1.5, 2.0, 2.5 }
+    params.str_wsc = 0.35 params.int_wsc = 0.35
     params.ele = xi.element.DARK
     params.skill = xi.skill.KATANA
     params.includemab = true
@@ -28,6 +28,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.ELEMENTALRES_DOWN, { power = 15, duration = 45, origin = player, subPower = xi.element.DARK })
+    end
+
     return tpHits, extraHits, false, damage
 end
 

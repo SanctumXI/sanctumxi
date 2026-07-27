@@ -3,7 +3,7 @@
 -- Great Axe weapon skill
 -- Skill level: 100
 -- Lowers enemy's defense. Duration of effect varies with TP.
--- Lowers defense by as much as 25% if unresisted.
+-- Lowers defense by as much as 15% if unresisted.
 -- Strong against: Antica, Bats, Cockatrice, Dhalmel, Lizards, Mandragora, Worms.
 -- Immune: Ahriman.
 -- Will stack with Sneak Attack.
@@ -34,11 +34,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     -- Handle status effect
     local effectId      = xi.effect.DEFENSE_DOWN
     local actionElement = xi.element.WIND
-    local power         = 25
+    local power         = 15
     local duration      = math.floor((120 + 6 * tp / 100) * applyResistanceAddEffect(player, target, actionElement, 0))
     xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
-
-    player:addStatusEffect(xi.effect.HASTE_SAMBA_HASTE, { power = 5, duration = 60, origin = player })
 
     return tpHits, extraHits, criticalHit, damage
 end

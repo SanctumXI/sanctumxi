@@ -29,6 +29,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.ignoredDefense = { 0.0, 0.35, 0.5 }
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.DEFENSE_DOWN, { power = 5, duration = 45, origin = player })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

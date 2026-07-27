@@ -3020,6 +3020,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Set this attack's critical flag.
                 attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing(), weaponSlot));
 
+                if (attack.GetAttackType() != PHYSICAL_ATTACK_TYPE::DAKEN && getMod(Mod::SPIRAL_HELL_FORCE_CRIT) > 0)
+                {
+                    attack.SetCritical(true);
+                }
+
                 this->PAI->EventHandler.triggerListener("MELEE_SWING_HIT", this, PTarget, &attack);
 
                 actionResult.resolution = ActionResolution::Hit;

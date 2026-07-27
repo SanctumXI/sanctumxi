@@ -25,12 +25,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    -- Handle status effect
-    local effectId      = xi.effect.INT_DOWN
-    local actionElement = xi.element.FIRE
-    local power         = 10
-    local duration      = math.floor(140 * applyResistanceAddEffect(player, target, actionElement, 0))
-    xi.weaponskills.handleWeaponskillEffect(player, target, effectId, actionElement, damage, power, duration)
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.EVASION_DOWN, { power = 10, duration = 45, origin = player })
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

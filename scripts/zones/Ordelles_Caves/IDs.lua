@@ -55,6 +55,7 @@ zones[xi.zone.ORDELLES_CAVES] =
     },
     npc =
     {
+        QM_RSE         = GetFirstID('qm1'),
         TREASURE_CHEST = GetFirstID('Treasure_Chest'),
     },
 }

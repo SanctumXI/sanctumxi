@@ -16,7 +16,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 0.5, 0.75, 1.0 }
+    params.ftpMod = { 0.75, 1.0, 1.25 }
     params.str_wsc = 0.3 params.int_wsc = 0.3
     params.hybridWS = true
     params.ele = xi.element.ICE
@@ -30,6 +30,11 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+
+    if damage > 0 then
+        target:addStatusEffect(xi.effect.ELEMENTALRES_DOWN, { power = 15, duration = 45, origin = player, subPower = xi.element.ICE })
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

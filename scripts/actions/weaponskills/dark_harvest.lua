@@ -26,6 +26,17 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+
+    if damage > 0 then
+        local mpRestored = player:addMP(math.floor(damage / 4))
+
+        if mpRestored > 0 then
+            player:timer(500, function(playerArg)
+                playerArg:messageBasic(xi.msg.basic.RECOVERS_MP, 0, mpRestored)
+            end)
+        end
+    end
+
     return tpHits, extraHits, criticalHit, damage
 end
 

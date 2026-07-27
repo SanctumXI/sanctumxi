@@ -36,6 +36,15 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local duration = 45 + math.floor((tp - 1000) / 100) * 3
+
+    xi.wsEffect.applyMod(
+        player,
+        xi.mod.THROWING_DAMAGEP,
+        10,
+        duration,
+        'Your throwing attacks will deal 10% more damage!'
+    )
 
     return tpHits, extraHits, criticalHit, damage
 end

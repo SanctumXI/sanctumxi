@@ -40,6 +40,10 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     dmg            = math.floor(dmg * xi.spells.damage.calculateAbsorption(target, xi.element.EARTH, false))
     dmg            = math.floor(dmg * xi.spells.damage.calculateNullification(target, xi.element.EARTH, false, false))
 
+    if xi.wsEffect.has(player, xi.wsEffect.DETONATOR_QUICK_DRAW) then
+        dmg = math.floor(dmg * 1.5)
+    end
+
     params.targetTPMult = 0 -- Quick Draw does not feed TP
     dmg = xi.ability.takeDamage(target, player, params, true, dmg, xi.attackType.MAGICAL, xi.damageType.EARTH, xi.slot.RANGED, 1, 0, 0, 0, action, nil)
 
