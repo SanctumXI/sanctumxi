@@ -11,22 +11,17 @@ local moduleName = 'attachments'
 local m = Module:new(moduleName)
 
 -- SANCTUM-SPECIFIC CHANEGS ARE AS FOLLOWS:
--- Increases Enmity boost from Strobe                              
--- Reduces Store TP from Inhibitor                                
+-- Reduces Store TP from Inhibitor
 -- Changes Armor Plate and Armor Plate II to Defense instead of PDT
--- Adds a Ranged Attack Penalty to Drum Magazine.     
+-- Adds a Ranged Attack Penalty to Drum Magazine.
 -- Changes Turbo Charger Haste to Gear Haste instead of Magic
--- Adds Burden to Tactical Processor 
+-- Adds Burden to Tactical Processor
 -- Improved Volt Gun damage formula
--- Reduces Burden Decay From Heatsink    
--- Reduces the potency of Steam Jackets Damage Reduction
--- Reduces potency of Auto Repair Kit II
-xi.automaton.attachmentModifiers['strobe'            ] = { { modifier = xi.mod.ENMITY,                      values = {   5,   15,   25,   40 }, opticFiber = true  }, }
+-- Reduces Burden Decay From Heatsink
 xi.automaton.attachmentModifiers['inhibitor'         ] = { { modifier = xi.mod.STORETP,                     values = {   5,   10,   15,   20 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['armor_plate'       ] = { { modifier = xi.mod.DEFP,                        values = {  10,   15,   20,   25 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['armor_plate_ii'    ] = { { modifier = xi.mod.DEFP,                        values = {  20,   25,   30,   35 }, opticFiber = true  }, }
-xi.automaton.attachmentModifiers['drum_magazine'     ] = { { modifier = xi.mod.AUTO_RANGED_DELAY,           values = {   2,    4,    6,    8 }, opticFiber = false },
-                                                            { modifier = xi.mod.RACC,                        values = { -15,  -30,  -50,  -75 }, opticFiber = false }, }
+xi.automaton.attachmentModifiers['drum_magazine'     ] = { { modifier = xi.mod.RACC,                        values = { -15,  -30,  -50,  -75 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['flame_holder'      ] = { { modifier = xi.mod.WEAPONSKILL_DAMAGE_BASE,     values = {   0,  125,  150,  175 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['ice_maker'         ] = { { modifier = xi.mod.AUTO_MAB_COEFFICIENT,        values = {   0,   20,   40,   60 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['turbo_charger'     ] = { { modifier = xi.mod.HASTE_GEAR,                  values = { 500, 1500, 2000, 2500 }, opticFiber = true  }, }
@@ -34,11 +29,6 @@ xi.automaton.attachmentModifiers['tactical_processor'] = { { modifier = xi.mod.A
                                                             { modifier = xi.mod.OVERLOAD_THRESH,             values = {  -5,   -5,   -5,   -5 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['volt_gun'          ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {   0,    0,    0,    0 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['heatsink'          ] = { { modifier = xi.mod.BURDEN_DECAY,                values = {   1,    1,    1,    1 }, opticFiber = false }, }
-xi.automaton.attachmentModifiers['steam_jacket'      ] = { { modifier = xi.mod.AUTO_STEAM_JACKET_REDUCTION, values = {  25,   35,   40,   60 }, opticFiber = true  }, }
-
-xi.automaton.repairKit.data['auto-repair_kit_ii' ] = { id = 196, hpBoost = 2, regenBase   = { 0, 2, 3, 4 }, regenMultiplier   = { 0, 0.4, 0.6, 0.8 } }
-xi.automaton.manaTank.data ['mana_tank'          ] = { id = 225, mpBoost = 1, refreshBase = { 0, 1, 2, 3 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
-xi.automaton.manaTank.data ['mana_tank_ii'       ] = { id = 228, mpBoost = 2, refreshBase = { 0, 2, 3, 4 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
 
 -----------------------------------
 -- Volt Gun - Restores the pre-LSB skill and maneuver damage formula.
