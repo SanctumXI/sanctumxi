@@ -722,7 +722,7 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action) 
         -- pet:addMod(xi.mod.REGEN, 0.01 * pet:getMaxHP()) - Old regen formulat
 
         -- After 5 minutes+ merit duration, the pet just despawns
-        -- pet:setJugRemainingTime(duration)
+        pet:setJugRemainingTime(duration)
     end
 
     -- seems to display nothing in console, but this it the msg id from capture
