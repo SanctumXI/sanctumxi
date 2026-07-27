@@ -123,8 +123,8 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.CHUNK_OF_GOBLIN_CHOCOLATE, 30 } }) or
-                        npcUtil.tradeHasExactly(trade, { { 'gil', 5000 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.CHUNK_OF_GOBLIN_CHOCOLATE, 30 } }) or
+                        npcUtil.tradeMatches(trade, { { 'gil', 5000 } })
                     then
                         return quest:progressEvent(23)
                     end
@@ -134,7 +134,7 @@ quest.sections =
             onEventFinish =
             {
                 [23] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.MINE_SHAFT_KEY)
                     quest:setVar(player, 'Prog', 3)
                 end,
@@ -268,8 +268,8 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.CHUNK_OF_GOBLIN_CHOCOLATE, 10 } }) or
-                        npcUtil.tradeHasExactly(trade, { { 'gil', 1000 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.CHUNK_OF_GOBLIN_CHOCOLATE, 10 } }) or
+                        npcUtil.tradeMatches(trade, { { 'gil', 1000 } })
                     then
                         return quest:progressEvent(23)
                     end
@@ -279,7 +279,7 @@ quest.sections =
             onEventFinish =
             {
                 [23] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.MINE_SHAFT_KEY)
                 end,
             },

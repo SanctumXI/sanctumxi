@@ -937,6 +937,12 @@ end
 
 ---@nodiscard
 ---@param slot integer
+---@return string
+function CBaseEntity:getLinkshellName(slot)
+end
+
+---@nodiscard
+---@param slot integer
 ---@return CItem?
 function CBaseEntity:getEquippedItem(slot)
 end

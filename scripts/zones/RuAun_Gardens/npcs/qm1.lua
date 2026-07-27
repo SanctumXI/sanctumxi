@@ -11,10 +11,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, { xi.item.GEM_OF_THE_NORTH, xi.item.WINTERSTONE }) and
+        npcUtil.tradeMatches(trade, { xi.item.GEM_OF_THE_NORTH, xi.item.WINTERSTONE }) and
         npcUtil.popFromQM(player, npc, ID.mob.GENBU)
     then -- Gem of the North and Winterstone
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

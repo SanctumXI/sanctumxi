@@ -12,15 +12,15 @@ entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.questLog.WINDURST, xi.quest.id.windurst.CHOCOBILIOUS) == xi.questStatus.QUEST_ACCEPTED and
         player:getCharVar('ChocobiliousQuest') == 1 and
-        npcUtil.tradeHas(trade, xi.item.PAPAKA_GRASS)
+        npcUtil.tradeMatches(trade, xi.item.PAPAKA_GRASS)
     then
         player:startEvent(229, 0, xi.item.PAPAKA_GRASS)
 
     -- PAYING LIP SERVICE
     elseif player:getQuestStatus(xi.questLog.WINDURST, xi.quest.id.windurst.PAYING_LIP_SERVICE) >= xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { { xi.item.BEEHIVE_CHIP, 3 } }) then -- beehive_chip
+        if npcUtil.tradeMatches(trade, { { xi.item.BEEHIVE_CHIP, 3 } }) then -- beehive_chip
             player:startEvent(479, 0, xi.item.BEEHIVE_CHIP, xi.item.REMI_SHELL, 0, 0)
-        elseif npcUtil.tradeHas(trade, { { xi.item.REMI_SHELL, 2 } }) then -- remi_shell
+        elseif npcUtil.tradeMatches(trade, { { xi.item.REMI_SHELL, 2 } }) then -- remi_shell
             player:startEvent(479, 0, xi.item.BEEHIVE_CHIP, xi.item.REMI_SHELL, 0, 1)
         end
     end
@@ -74,7 +74,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             npcUtil.giveCurrency(player, 'gil', 150)
         end
 
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

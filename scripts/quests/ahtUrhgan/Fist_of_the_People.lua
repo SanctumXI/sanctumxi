@@ -64,7 +64,7 @@ quest.sections =
             ['Leypoint'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.RUSTY_MEDAL) then
+                    if npcUtil.tradeMatches(trade, xi.item.RUSTY_MEDAL) then
                         return quest:progressEvent(511)
                     end
                 end,
@@ -74,7 +74,7 @@ quest.sections =
             {
                 [511] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:messageSpecial(ID.text.INCREASED_STANDING)
                         player:addCurrency('imperial_standing', 500)
                     end

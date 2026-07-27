@@ -48,7 +48,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CLEAN_SNAP_ROD) then
+                    if npcUtil.tradeMatches(trade, xi.item.CLEAN_SNAP_ROD) then
                         return quest:progressEvent(317)
                     else
                         return quest:event(316)
@@ -60,7 +60,7 @@ quest.sections =
             {
                 [317] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

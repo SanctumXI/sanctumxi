@@ -582,12 +582,12 @@ INSERT INTO `traits` VALUES (108,'conserve tp',14,97,5,944,26,'ABYSSEA',0); -- C
 INSERT INTO `traits` VALUES (108,'conserve tp',19,50,1,944,15,'ABYSSEA',0); -- Conserve TP I, DNC50, 15%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,87,2,944,18,'ABYSSEA',0); -- Conserve TP II, DNC87, 18%
 INSERT INTO `traits` VALUES (108,'conserve tp',19,97,3,944,21,'ABYSSEA',0); -- Conserve TP III, DNC97, 21%
-INSERT INTO `traits` VALUES (109,'occult acumen',4,75,1,902,25,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (109,'occult acumen',4,95,2,902,50,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (109,'occult acumen',4,50,1,902,25,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (109,'occult acumen',4,75,2,902,50,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,45,1,902,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,58,2,902,50,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,71,3,902,75,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (109,'occult acumen',8,84,4,902,100,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (109,'occult acumen',8,75,4,902,100,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',8,97,5,902,125,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',20,78,1,902,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',20,88,2,902,50,'ABYSSEA',0);

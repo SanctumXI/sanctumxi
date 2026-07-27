@@ -77,8 +77,7 @@ disallowed_numeric_parameters = {
     "messageText": [0],
     "npcUtil.giveKeyItem": [1, 2],
     "npcUtil.giveItem": [1],
-    "npcUtil.tradeHas": [1],
-    "npcUtil.tradeHasExactly": [1],
+    "npcUtil.tradeMatches": [1],
     "setUniqueEvent": [0],
     "showText": [0],
 }

@@ -17,7 +17,7 @@ entity.onTrade = function(player, npc, trade)
     end
 
     if
-        npcUtil.tradeHasExactly(trade, { { 'gil', lampCost } }) and
+        npcUtil.tradeMatches(trade, { { 'gil', lampCost } }) and
         player:getCharVar('EinherjarIntro') ~= 1
     then
         if
@@ -76,7 +76,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     elseif csid == 25 then
         -- Give players their purchased lamp
         if npcUtil.giveItem(player, xi.item.SMOLDERING_LAMP) then
-            player:confirmTrade()
+            player:tradeComplete()
         end
     elseif csid == 24 and option ~= utils.EVENT_CANCELLED_OPTION and option ~= 0 then
         local kilushaItems =

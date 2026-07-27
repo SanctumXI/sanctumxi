@@ -46,7 +46,7 @@ quest.sections =
             ['Vamorcote'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.ENGRAVED_KEY) then
+                    if npcUtil.tradeMatches(trade, xi.item.ENGRAVED_KEY) then
                         return quest:progressEvent(658)
                     end
                 end,
@@ -57,7 +57,7 @@ quest.sections =
             {
                 [658] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:needToZone(true)
                     end
                 end,

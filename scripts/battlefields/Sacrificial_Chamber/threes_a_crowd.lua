@@ -16,7 +16,7 @@ local content = Battlefield:new({
     entryName        = 'Three\'s a Crowd',
     entryNpc         = '_4j0',
     exitNpcs         = { '_4j2', '_4j3', '_4j4' },
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = sacrificialChamberID.text.A_CRACK_HAS_FORMED, wornMessage = sacrificialChamberID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
     armouryCrates    =
     {
         sacrificialChamberID.mob.QULL_THE_FALLSTOPPER + 4,

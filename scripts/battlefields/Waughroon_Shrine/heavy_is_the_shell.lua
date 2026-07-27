@@ -17,7 +17,7 @@ local content = Battlefield:new({
     entryName        = 'Heavy Is the Shell',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
     armouryCrates    =
     {
         waughroonID.mob.YOBHU_HIDEOUSMASK + 6,

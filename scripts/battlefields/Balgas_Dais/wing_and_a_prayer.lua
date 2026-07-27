@@ -17,7 +17,7 @@ local content = Battlefield:new({
     entryName        = 'Wing and a Prayer',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
     armouryCrates    =
     {
         balgasID.mob.VOO_TOLU_THE_GHOSTFIST + 6,

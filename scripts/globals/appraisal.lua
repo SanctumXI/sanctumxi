@@ -1532,7 +1532,7 @@ xi.appraisal.appraisalItems =
 xi.appraisal.appraiseItem = function(player, npc, trade, gil, appraisalCsid)
     if player:getGil() >= gil then
         for _, tradedItem in pairs(xi.appraisal.unappraisedItems) do
-            if npcUtil.tradeHasExactly(trade, tradedItem) then
+            if npcUtil.tradeMatches(trade, tradedItem) then
                 local tradeID        = trade:getItemId()
                 local info           = xi.appraisal.appraisalItems[tradeID]
                 local appraisalID    = trade:getItem():getAppraisalID()
@@ -1541,7 +1541,7 @@ xi.appraisal.appraiseItem = function(player, npc, trade, gil, appraisalCsid)
                 if appraisedItem ~= 0 then
                     player:startEvent(appraisalCsid, 1, appraisedItem)
                     player:setLocalVar('Appraisal', appraisedItem) -- anticheat
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end
 
                 break

@@ -103,7 +103,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.TAHRONGI_CACTUS) then
+                    if npcUtil.tradeMatches(trade, xi.item.TAHRONGI_CACTUS) then
                         if player:getCharVar('SIWFSword') == 1 then
                             return quest:progressEvent(520) -- Player has not received the sword already
                         else
@@ -139,7 +139,7 @@ quest.sections =
                 [520] = function(player, csid, option, npc) -- Cactus trade with Iron Sword reward
                     if npcUtil.giveItem(player, xi.item.IRON_SWORD) then
                         quest:complete(player)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addFame(xi.fameArea.WINDURST, 30)
                         quest:setMustZone(player)
                         quest:setVar(player, 'Stage', 1)
@@ -149,7 +149,7 @@ quest.sections =
 
                 [522] = function(player, csid, option, npc) -- Flower trade
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addFame(xi.fameArea.WINDURST, 10)
                         player:addGil(100) -- Obtained gil text baked into the cs
                         quest:setMustZone(player)
@@ -158,7 +158,7 @@ quest.sections =
 
                 [525] = function(player, csid, option, npc) -- Cactus trade repeat
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addFame(xi.fameArea.WINDURST, 30)
                         player:addGil(400) -- Obtained gil text baked into the cs
                         quest:setMustZone(player)

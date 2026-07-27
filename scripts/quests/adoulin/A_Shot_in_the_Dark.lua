@@ -93,7 +93,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.UMBRIL_OOZE) then
+                    if npcUtil.tradeMatches(trade, xi.item.UMBRIL_OOZE) then
                         return quest:progressEvent(3012)
                     end
                 end,
@@ -103,7 +103,7 @@ quest.sections =
             {
                 [3012] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setCharVar('ADOULIN_FAME_QUEST_TRACKER', 0)
                     end
                 end,

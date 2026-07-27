@@ -10,8 +10,8 @@ local riverneB01Global =
         trade to unstable displacement NPC
         ..............................................................................................]]
     unstableDisplacementTrade = function(player, npc, trade)
-        if npcUtil.tradeHas(trade, xi.item.GIANT_SCALE) then
-            player:confirmTrade()
+        if npcUtil.tradeMatches(trade, xi.item.GIANT_SCALE) then
+            player:tradeComplete()
             npc:openDoor(xi.settings.main.RIVERNE_PORTERS)
             player:messageSpecial(ID.text.SD_HAS_GROWN)
         end

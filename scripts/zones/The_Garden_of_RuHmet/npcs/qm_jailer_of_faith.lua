@@ -15,10 +15,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.HIGH_QUALITY_EUVHI_ORGAN) and
+        npcUtil.tradeMatches(trade, xi.item.HIGH_QUALITY_EUVHI_ORGAN) and
         npcUtil.popFromQM(player, npc, ID.mob.JAILER_OF_FAITH, { radius = 1 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

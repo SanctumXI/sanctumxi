@@ -43,7 +43,7 @@ quest.sections =
             ['Naiko-Paneiko'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.BRONZE_BOX) then
+                    if npcUtil.tradeMatches(trade, xi.item.BRONZE_BOX) then
                         return quest:progressEvent(680)
                     end
                 end,
@@ -56,7 +56,7 @@ quest.sections =
             onEventFinish =
             {
                 [680] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:complete(player)
                 end,
             },

@@ -164,7 +164,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') >= 2 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.SLAB_OF_PLUMBAGO, 3 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.SLAB_OF_PLUMBAGO, 3 } }) and
                         not player:hasKeyItem(xi.ki.LIGHTNING_CELL)
                     then
                         return quest:progressEvent(158)
@@ -180,7 +180,7 @@ quest.sections =
 
                 [158] = function(player, csid, option, npc)
                     if npcUtil.giveKeyItem(player, xi.ki.LIGHTNING_CELL) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

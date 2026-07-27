@@ -3,7 +3,6 @@
 -- Waughroon Shrine KSNM30, Lachesis Orb
 -- !additem 1178
 -----------------------------------
-local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 17,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.LACHESIS_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.LACHESIS_ORB },
 })
 
 content:addEssentialMobs({ 'Platoon_Scorpion' })

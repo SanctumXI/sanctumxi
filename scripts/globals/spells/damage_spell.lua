@@ -427,6 +427,16 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
     -- Bonus to spell base damage from gear.
     baseSpellDamageBonus = baseSpellDamageBonus + caster:getMod(xi.mod.MAGIC_DAMAGE)
 
+    -- Cascade adds Magic Damage equal to 2% of the TP consumed on activation.
+    -- Death does not use Magic Damage and is therefore not eligible.
+    if
+        skillType == xi.skill.ELEMENTAL_MAGIC and
+        spellId ~= xi.magic.spell.DEATH and
+        caster:hasStatusEffect(xi.effect.CASCADE)
+    then
+        baseSpellDamageBonus = baseSpellDamageBonus + caster:getStatusEffect(xi.effect.CASCADE):getPower()
+    end
+
     -----------------------------------
     -- STEP 4: Spell Damage
     -----------------------------------
@@ -703,8 +713,6 @@ xi.spells.damage.calculateDivineSealMultiplier = function(caster, target, skillT
         return 1
     end
 
-    caster:delStatusEffect(xi.effect.DIVINE_SEAL)
-
     return 2
 end
 
@@ -739,6 +747,20 @@ xi.spells.damage.calculateEnhancedElementalSealMultiplier = function(caster, ski
     end
 
     return 1 + caster:getMod(xi.mod.ENHANCES_ELEMENTAL_SEAL) / 100
+end
+
+-- Weapon Bash empowers the next Elemental Magic spell cast by a Dark Knight.
+xi.spells.damage.calculateWeaponBashElementalMultiplier = function(caster, skillType)
+    if
+        skillType ~= xi.skill.ELEMENTAL_MAGIC or
+        not xi.wsEffect.has(caster, xi.wsEffect.WEAPON_BASH_ELEMENTAL)
+    then
+        return 1
+    end
+
+    local _, power = xi.wsEffect.consume(caster)
+
+    return 1 + power / 100
 end
 
 -- Ebullience applies an entirely separate multiplier to Black Magic.
@@ -862,7 +884,7 @@ xi.spells.damage.calculateHolyMeritMultiplier = function(caster, spellId)
     local holyMeritMultiplier = 1
 
     if spellId == xi.magic.spell.HOLY then
-        holyMeritMultiplier = 1 + 2 * caster:getMerit(xi.merit.BANISH_EFFECT) /100
+        holyMeritMultiplier = 1 + 2 * caster:getMerit(xi.merit.BANISH_EFFECT) / 100
     end
 
     return holyMeritMultiplier
@@ -1083,6 +1105,10 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local statUsed      = pTable[spellId][column.STAT_USED]
     local bonusMacc     = pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType)
     local judgmentBonus = 1
+    local consumesCascade =
+        skillType == xi.skill.ELEMENTAL_MAGIC and
+        spellId ~= xi.magic.spell.DEATH and
+        caster:hasStatusEffect(xi.effect.CASCADE)
 
     if
         spell:getSpellFamily() == xi.magic.spellFamily.HOLY and
@@ -1155,6 +1181,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
     -- Calculate base damage and the rest of damage multipliers.
     local spellDamage               = xi.spells.damage.calculateBaseDamage(caster, target, spellId, spellGroup, skillType, statUsed)
+
+    -- Cascade is used by the next eligible Elemental Magic spell, regardless of its damage result.
+    if consumesCascade then
+        caster:delStatusEffect(xi.effect.CASCADE)
+    end
+
     local multipleTargetReduction   = xi.spells.damage.calculateMTDR(caster, spell)
     local elementalStaffBonus       = xi.spells.damage.calculateElementalStaffBonus(caster, spellElement)
     local elementalAffinityBonus    = xi.spells.damage.calculateElementalAffinityBonus(caster, spellElement)
@@ -1166,6 +1198,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local divineSealMultiplier      = xi.spells.damage.calculateDivineSealMultiplier(caster, target, skillType)
     local divineEmblemMultiplier    = xi.spells.damage.calculateDivineEmblemMultiplier(caster, skillType)
     local eleSealMultiplier         = xi.spells.damage.calculateEnhancedElementalSealMultiplier(caster, skillType, spellElement)
+    local weaponBashMultiplier      = xi.spells.damage.calculateWeaponBashElementalMultiplier(caster, skillType)
     local ebullienceMultiplier      = xi.spells.damage.calculateEbullienceMultiplier(caster, spellGroup)
     local skillTypeMultiplier       = xi.spells.damage.calculateSkillTypeMultiplier(skillType)
     local ninSkillBonus             = xi.spells.damage.calculateNinSkillBonus(caster, spellId, skillType)
@@ -1193,6 +1226,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * divineSealMultiplier)
     finalDamage = math.floor(finalDamage * divineEmblemMultiplier)
     finalDamage = math.floor(finalDamage * eleSealMultiplier)
+    finalDamage = math.floor(finalDamage * weaponBashMultiplier)
     finalDamage = math.floor(finalDamage * ebullienceMultiplier)
     finalDamage = math.floor(finalDamage * skillTypeMultiplier)
     finalDamage = math.floor(finalDamage * ninSkillBonus)
@@ -1250,12 +1284,16 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
     local equanimity = caster:getStatusEffect(xi.effect.EQUANIMITY)
 
-            if equanimity ~= nil and skillType == xi.skill.ELEMENTAL_MAGIC and finalDamage > 0 then
-            local mpReturn = math.floor(finalDamage * equanimity:getPower() / 10)
+    if
+        equanimity ~= nil and
+        skillType == xi.skill.ELEMENTAL_MAGIC and
+        finalDamage > 0
+    then
+        local mpReturn = math.floor(finalDamage * equanimity:getPower() / 10)
 
-            caster:addMP(mpReturn)
-            caster:delStatusEffect(xi.effect.EQUANIMITY)
-end
+        caster:addMP(mpReturn)
+        caster:delStatusEffect(xi.effect.EQUANIMITY)
+    end
 
     -- Handle Afflatus Misery.
     target:handleAfflatusMiseryDamage(finalDamage)

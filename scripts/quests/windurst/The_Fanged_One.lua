@@ -59,7 +59,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.BLACK_TIGER_FANG) then
+                    if npcUtil.tradeMatches(trade, xi.item.BLACK_TIGER_FANG) then
                         return quest:event(356)
                     end
                 end,

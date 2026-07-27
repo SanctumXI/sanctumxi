@@ -53,7 +53,7 @@ quest.sections =
             ['Giddeus_Spring'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.RHINOSTERY_CANTEEN) then
+                    if npcUtil.tradeMatches(trade, xi.item.RHINOSTERY_CANTEEN) then
                         return quest:progressEvent(55)
                     end
                 end,
@@ -63,7 +63,7 @@ quest.sections =
             {
                 [55] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.CANTEEN_OF_GIDDEUS_WATER) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -74,7 +74,7 @@ quest.sections =
             ['Ohbiru-Dohbiru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CANTEEN_OF_GIDDEUS_WATER) then
+                    if npcUtil.tradeMatches(trade, xi.item.CANTEEN_OF_GIDDEUS_WATER) then
                         return quest:progressEvent(355, 900)
                     end
                 end,

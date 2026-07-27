@@ -9,7 +9,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, { xi.item.FLASK_OF_SLEEPING_POTION, xi.item.CUP_OF_CHAI }) and
+        npcUtil.tradeMatches(trade, { xi.item.FLASK_OF_SLEEPING_POTION, xi.item.CUP_OF_CHAI }) and
         player:getCharVar('OperationTeaTimeProgress') == 1
     then
         -- Chai, Sleeping Potion
@@ -96,7 +96,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addQuest(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.OPERATION_TEATIME)
     elseif csid == 780 then
         player:setCharVar('OperationTeaTimeProgress', 2)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

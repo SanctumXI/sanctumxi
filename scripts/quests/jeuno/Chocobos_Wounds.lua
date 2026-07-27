@@ -120,7 +120,7 @@ quest.sections =
                         return quest:progressEvent(eventTable[questProgress])
                     end
 
-                    if npcUtil.tradeHasExactly(trade, xi.item.CLUMP_OF_GAUSEBIT_WILDGRASS) then
+                    if npcUtil.tradeMatches(trade, xi.item.CLUMP_OF_GAUSEBIT_WILDGRASS) then
                         return quest:progressEvent(eventTable[questProgress])
                     end
                 end,
@@ -166,25 +166,25 @@ quest.sections =
                 [59] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 5)
                     quest:setVar(player, 'Timer', GetSystemTime() + 1)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
 
                 [60] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 6)
                     quest:setVar(player, 'Timer', GetSystemTime() + 1)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
 
                 [64] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
                 [99] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 4)
                     quest:setVar(player, 'Timer', GetSystemTime() + 1)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

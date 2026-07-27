@@ -15,16 +15,16 @@ entity.onTrade = function(player, npc, trade)
     if nm and not nm:isSpawned() then
         local chance = 0 -- percent chance that an item will drop.
 
-        if npcUtil.tradeHas(trade, { { xi.item.HIGH_QUALITY_AERN_ORGAN, 3 } }) then
+        if npcUtil.tradeMatches(trade, { { xi.item.HIGH_QUALITY_AERN_ORGAN, 3 } }) then
             chance = 100
-        elseif npcUtil.tradeHas(trade, { { xi.item.HIGH_QUALITY_AERN_ORGAN, 2 } }) then
+        elseif npcUtil.tradeMatches(trade, { { xi.item.HIGH_QUALITY_AERN_ORGAN, 2 } }) then
             chance = 66
-        elseif npcUtil.tradeHas(trade, xi.item.HIGH_QUALITY_AERN_ORGAN) then
+        elseif npcUtil.tradeMatches(trade, xi.item.HIGH_QUALITY_AERN_ORGAN) then
             chance = 33
         end
 
         if chance > 0 then
-            player:confirmTrade()
+            player:tradeComplete()
             npc:setStatus(xi.status.DISAPPEAR)
 
             -- spawn Ix'Aern (MNK) and minions

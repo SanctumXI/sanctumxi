@@ -101,7 +101,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.PHILOSOPHERS_STONE) and
+                        npcUtil.tradeMatches(trade, xi.item.PHILOSOPHERS_STONE) and
                         quest:getVar(player, 'Prog') == 2
                     then
                         return quest:progressEvent(30, 89, 23, 2964, 56, 0, 6029313, 0, 0)
@@ -129,7 +129,7 @@ quest.sections =
             onEventFinish =
             {
                 [30] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
 
                     quest:setVar(player, 'Prog', 3)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)

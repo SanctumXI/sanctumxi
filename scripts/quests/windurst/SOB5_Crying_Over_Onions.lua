@@ -164,7 +164,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         (quest:getVar(player, 'Prog') == 1 or quest:getVar(player, 'Prog') == 2) and
-                        npcUtil.tradeHasExactly(trade, xi.item.STAR_SPINEL)
+                        npcUtil.tradeMatches(trade, xi.item.STAR_SPINEL)
                     then
                         return quest:progressEvent(775, 0, xi.item.STAR_SPINEL)
                     end
@@ -179,7 +179,7 @@ quest.sections =
 
                 [775] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.STAR_NECKLACE) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Prog', 3)
                     end
                 end,

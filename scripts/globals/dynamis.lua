@@ -709,7 +709,7 @@ xi.dynamis.qmOnTrade = function(player, npc, trade)
 
         if info then
             for _, v in pairs(info.trade) do
-                if npcUtil.tradeHasExactly(trade, v.item) then
+                if npcUtil.tradeMatches(trade, v.item) then
                     local mobId
 
                     if type(v.mob) == 'table' then
@@ -722,7 +722,7 @@ xi.dynamis.qmOnTrade = function(player, npc, trade)
                         mobId and
                         npcUtil.popFromQM(player, npc, mobId, { hide = 0, radius = 2 })
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
 
                     break

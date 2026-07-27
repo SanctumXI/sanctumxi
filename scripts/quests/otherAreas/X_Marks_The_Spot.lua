@@ -80,7 +80,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.TAVNAZIAN_LIVER)
+                        npcUtil.tradeMatches(trade, xi.item.TAVNAZIAN_LIVER)
                     then
                         return quest:progressEvent(142)
                     end
@@ -94,7 +94,7 @@ quest.sections =
                 end,
 
                 [142] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                 end,
 

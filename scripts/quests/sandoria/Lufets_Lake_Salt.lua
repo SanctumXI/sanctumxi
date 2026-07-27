@@ -45,7 +45,7 @@ quest.sections =
             ['Nogelle'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.CHUNK_OF_LUFET_SALT, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.CHUNK_OF_LUFET_SALT, 3 } }) then
                         return quest:progressEvent(11)
                     end
                 end,
@@ -57,7 +57,7 @@ quest.sections =
             {
                 [11] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

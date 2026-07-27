@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Weapon Bash
--- Description: Delivers an attack that can stun the target. Requires Two-handed weapon.
+-- Description: Delivers an attack that can stun the target and empowers the next Elemental Magic spell by 25%. Requires Two-handed weapon.
 -- Obtained: Dark Knight Level 20
 -- Cast Time: Instant
 -- Recast Time: 00:03:00

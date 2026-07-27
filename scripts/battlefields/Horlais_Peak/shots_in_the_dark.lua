@@ -3,7 +3,6 @@
 -- Horlais Peak BCNM60, Moon Orb
 -- !additem 1130
 -----------------------------------
-local horlaisID = zones[xi.zone.HORLAIS_PEAK]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 14,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.MOON_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.MOON_ORB },
 
     experimental = true,
 })

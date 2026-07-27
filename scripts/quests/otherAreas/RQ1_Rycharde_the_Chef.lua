@@ -94,9 +94,9 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.SLICE_OF_DHALMEL_MEAT, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.SLICE_OF_DHALMEL_MEAT, 2 } }) then
                         return quest:progressEvent(74) -- Quest completed dialog.
-                    elseif npcUtil.tradeHasExactly(trade, { { xi.item.SLICE_OF_DHALMEL_MEAT, 1 } }) then
+                    elseif npcUtil.tradeMatches(trade, { { xi.item.SLICE_OF_DHALMEL_MEAT, 1 } }) then
                         return quest:event(73) -- "That's not enough!" dialog.
                     end
                 end,
@@ -108,7 +108,7 @@ quest.sections =
             {
                 [74] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'DayCompleted', VanadielUniqueDay()) -- Used for next quest wait time.
                     end
                 end,

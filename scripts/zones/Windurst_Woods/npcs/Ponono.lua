@@ -17,7 +17,7 @@ entity.onTrade = function(player, npc, trade)
     if
         moralManifest == xi.questStatus.QUEST_ACCEPTED and
         player:getCharVar('moral') == 2 and
-        npcUtil.tradeHas(trade, { 828, 830, { 'gil', 10000 } }) -- Trade Velvet Cloth, Rainbow Cloth and 10k
+        npcUtil.tradeMatches(trade, { 828, 830, { 'gil', 10000 } }) -- Trade Velvet Cloth, Rainbow Cloth and 10k
     then
         player:setCharVar('moral', 3)
         player:setLocalVar('moralZone', 1)

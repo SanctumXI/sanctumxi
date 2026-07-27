@@ -1444,7 +1444,7 @@ LQS.trade = function(obj)
 
         if obj.list ~= nil then
             for _, tradeInfo in pairs(obj.list) do
-                if npcUtil.tradeHasExactly(trade, tradeInfo.required) then
+                if npcUtil.tradeMatches(trade, tradeInfo.required) then
                     player:setLocalVar("[LQS]REWARD", 1)
                     local delay = LQS.eventDelay(tradeInfo.accepted)
 
@@ -1609,7 +1609,7 @@ LQS.trade = function(obj)
             local count = trade:getItemCount()
             local total = count
 
-            if npcUtil.tradeHasExactly(trade, obj.required) then
+            if npcUtil.tradeMatches(trade, obj.required) then
                 player:setLocalVar("[LQS]REWARD", 1)
 
                 if obj.tally ~= nil then

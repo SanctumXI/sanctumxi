@@ -3,7 +3,6 @@
 -- Waughroon Shrine KSNM30, Atropos Orb
 -- !additem 1180
 -----------------------------------
-local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 18,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.ATROPOS_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.ATROPOS_ORB },
 })
 
 content:addEssentialMobs({ 'Titanis_Max', 'Titanis_Jax', 'Titanis_Xax', 'Titanis_Dax' })

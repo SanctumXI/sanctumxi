@@ -22,7 +22,7 @@ local limbusArmor =
 
 entity.onTrade = function(player, npc, trade)
     for k, v in pairs(limbusArmor) do
-        if npcUtil.tradeHasExactly(trade, k) then
+        if npcUtil.tradeMatches(trade, k) then
             player:setLocalVar('wilhelmTrade', k)
             player:startEvent(v.csid, v.reward)
             break
@@ -50,7 +50,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             info.reward == option and
             npcUtil.giveItem(player, option)
         then
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

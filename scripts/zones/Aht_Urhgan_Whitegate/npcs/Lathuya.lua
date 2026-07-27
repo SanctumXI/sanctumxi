@@ -45,12 +45,12 @@ entity.onTrade = function(player, npc, trade)
         if item then
             if
                 craftingStage == 0 and
-                npcUtil.tradeHasExactly(trade, item.materials)
+                npcUtil.tradeMatches(trade, item.materials)
             then
                 player:startEvent(732 + artifactOffset, item.result, item.currency, item.currencyAmt)
             elseif
                 craftingStage == 1 and
-                npcUtil.tradeHasExactly(trade, { { item.currency, item.currencyAmt } })
+                npcUtil.tradeMatches(trade, { { item.currency, item.currencyAmt } })
             then
                 player:startEvent(734 + artifactOffset, 0, item.currency, item.currencyAmt)
             end
@@ -135,9 +135,9 @@ entity.onEventFinish = function(player, csid, option, npc)
     -- BLU AF CRAFTING
     if csid == 732 + artifactOffset then
         player:setCharVar('[BLUAF]CraftingStage', 1)
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 734 + artifactOffset then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('[BLUAF]CraftingStage', 2)
         player:setCharVar('[BLUAF]PaymentDay', VanadielUniqueDay())
         npcUtil.giveKeyItem(player, xi.ki.MAGUS_ORDER_SLIP)

@@ -3,7 +3,6 @@
 -- Waughroon Shrine BCNM60, Moon Orb
 -- !additem 1130
 -----------------------------------
-local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 15,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.MOON_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.MOON_ORB },
 })
 
 content:addEssentialMobs({ 'Fee' })

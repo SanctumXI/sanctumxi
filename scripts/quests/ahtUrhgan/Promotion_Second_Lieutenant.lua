@@ -54,7 +54,7 @@ quest.sections =
             ['Abquhbah'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMPERIAL_GOLD_PIECE, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMPERIAL_GOLD_PIECE, 3 } }) then
                         return quest:progressEvent(5073)
                     end
                 end,
@@ -67,7 +67,7 @@ quest.sections =
             onEventFinish =
             {
                 [5073] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                     npcUtil.giveKeyItem(player, xi.ki.OFFICER_ACADEMY_MANUAL)
                 end,
@@ -86,7 +86,7 @@ quest.sections =
             ['Abquhbah'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
                         return quest:progressEvent(5075)
                     end
                 end,
@@ -105,7 +105,7 @@ quest.sections =
                 end,
 
                 [5075] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setLocalVar(player, 'Prog', 0)
                     if option == 1 then
                         quest:setVar(player, 'Prog', 2)
@@ -126,7 +126,7 @@ quest.sections =
             ['Abquhbah'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
                         return quest:progressEvent(5076)
                     end
                 end,
@@ -145,7 +145,7 @@ quest.sections =
                 end,
 
                 [5076] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                 end,
             },
@@ -172,7 +172,7 @@ quest.sections =
                     }
 
                     for _, requiredTrade in pairs(beastmenItems) do
-                        if npcUtil.tradeHasExactly(trade, { requiredTrade }) then
+                        if npcUtil.tradeMatches(trade, { requiredTrade }) then
                             return quest:progressEvent(5077)
                         end
                     end
@@ -186,7 +186,7 @@ quest.sections =
             onEventFinish =
             {
                 [5077] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setLocalVar(player, 'Prog', 0)
                     quest:setVar(player, 'Prog', 4)
                 end,
@@ -205,7 +205,7 @@ quest.sections =
             ['Abquhbah'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMPERIAL_MYTHRIL_PIECE, 2 } }) then
                         return quest:progressEvent(5078)
                     end
                 end,
@@ -225,7 +225,7 @@ quest.sections =
 
                 [5078] = function(player, csid, option, npc)
                     quest:setLocalVar(player, 'Prog', 0)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     if option == 1 then
                         if quest:complete(player) then
                             player:setCharVar('AssaultPromotion', 0)

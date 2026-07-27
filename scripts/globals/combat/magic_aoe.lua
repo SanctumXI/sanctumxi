@@ -90,6 +90,14 @@ xi.combat.magicAoE.calculateTypeAndRadius = function(caster, spell)
         end
     end
 
+    -- Divine Seal also converts Regen and Esuna to 10y AoE for its full duration.
+    if
+        caster:hasStatusEffect(xi.effect.DIVINE_SEAL) and
+        (spellFamily == xi.magic.spellFamily.REGEN or spell:getID() == xi.magic.spell.ESUNA)
+    then
+        return { xi.magic.aoe.RADIAL, 10 }
+    end
+
         -- Composure changes Protect spells to 10y AoE
     if caster:hasStatusEffect(xi.effect.COMPOSURE) then
         if

@@ -12,7 +12,7 @@ entity.onTrade = function(player, npc, trade)
     local yPos = player:getYPos()
 
     if yPos <= 16.5 then
-        if npcUtil.tradeHas(trade, { { 'gil', 800 } }) then
+        if npcUtil.tradeMatches(trade, { { 'gil', 800 } }) then
             player:startEvent(28)
         end
     elseif yPos >= 19.5 then
@@ -33,10 +33,10 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 28 then
         if option == 1 then
-            player:confirmTrade()
+            player:tradeComplete()
             player:setPos(447.99, -4.092, 729.791, 96, 106) -- To North Gustaberg (R)
         elseif option == 2 then
-            player:confirmTrade()
+            player:tradeComplete()
             player:setPos(-93.657, -119.999, -583.561, 232, 13) -- To Mine Shaft Entrance (R)
         end
     end

@@ -76,7 +76,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { xi.item.PEPPERONI, xi.item.WALNUT, xi.item.DRAGON_FRUIT, xi.item.BASTORE_SWEEPER })
+                        npcUtil.tradeMatches(trade, { xi.item.PEPPERONI, xi.item.WALNUT, xi.item.DRAGON_FRUIT, xi.item.BASTORE_SWEEPER })
                     then
                         return quest:progressEvent(983)
                     end
@@ -90,7 +90,7 @@ quest.sections =
             onEventFinish =
             {
                 [983] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
                 end,

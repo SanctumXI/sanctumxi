@@ -50,7 +50,7 @@ entity.onTrade = function(player, npc, trade)
 
     if
         player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and
-        npcUtil.tradeHasExactly(trade, { { 'gil', mineShaftWarpCost } })
+        npcUtil.tradeMatches(trade, { { 'gil', mineShaftWarpCost } })
     then
         -- teleport for mineShaftWarpCost relies on having SHAFT_GATE_OPERATING_DIAL
         -- but consumes SHAFT_2716_OPERATING_LEVER (after confirming with you)
@@ -64,7 +64,7 @@ entity.onTrade = function(player, npc, trade)
         not player:hasKeyItem(xi.ki.SHAFT_GATE_OPERATING_DIAL) and
         tradeGil > 0 and tradeGil <= 10000 and
         gateDialCD < VanadielTime() and
-        npcUtil.tradeHasExactly(trade, { { 'gil', tradeGil } })
+        npcUtil.tradeMatches(trade, { { 'gil', tradeGil } })
     then
         local maxToWin = math.floor(tradeGil / 200)
         local maxRoll = 100
@@ -86,7 +86,7 @@ entity.onTrade = function(player, npc, trade)
 
     elseif
         operatingLeverCD < VanadielTime() and
-        npcUtil.tradeHasExactly(trade, { xi.item.SYLVAN_STONE })
+        npcUtil.tradeMatches(trade, { xi.item.SYLVAN_STONE })
     then
         player:startEvent(51, xi.item.SYLVAN_STONE)
     elseif

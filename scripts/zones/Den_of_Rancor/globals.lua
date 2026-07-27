@@ -16,8 +16,8 @@ local denOfRancorGlobal =
         then
             player:messageSpecial(ID.text.LANTERN_OFFSET + 7) -- already lit
         else
-            if npcUtil.tradeHas(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
-                player:confirmTrade()
+            if npcUtil.tradeMatches(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
+                player:tradeComplete()
                 player:addItem(xi.item.UNLIT_LANTERN) -- return unlit lantern
 
                 npc:openDoor(xi.settings.main.LANTERNS_STAY_LIT) -- light lantern
@@ -55,8 +55,8 @@ local denOfRancorGlobal =
         then
             player:messageSpecial(ID.text.LANTERN_OFFSET + 7) -- already lit
         else
-            if npcUtil.tradeHas(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
-                player:confirmTrade()
+            if npcUtil.tradeMatches(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
+                player:tradeComplete()
                 player:addItem(xi.item.UNLIT_LANTERN) -- return unlit lantern
 
                 npc:openDoor(xi.settings.main.LANTERNS_STAY_LIT) -- light lantern
@@ -95,8 +95,8 @@ local denOfRancorGlobal =
         then
             player:messageSpecial(ID.text.LANTERN_OFFSET + 7) -- already lit
         else
-            if npcUtil.tradeHas(trade, itemId) then -- Flame of Crimson or Blue Rancor
-                player:confirmTrade()
+            if npcUtil.tradeMatches(trade, itemId) then -- Flame of Crimson or Blue Rancor
+                player:tradeComplete()
                 player:addItem(xi.item.UNLIT_LANTERN) -- return unlit lantern
 
                 npc:openDoor(xi.settings.main.LANTERNS_STAY_LIT) -- light lantern

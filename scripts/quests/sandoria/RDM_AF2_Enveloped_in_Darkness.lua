@@ -151,7 +151,7 @@ quest.sections =
             ['Pagisalis'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SQUARE_OF_VELVET_CLOTH) then
+                    if npcUtil.tradeMatches(trade, xi.item.SQUARE_OF_VELVET_CLOTH) then
                         return quest:progressEvent(37)
                     end
                 end,

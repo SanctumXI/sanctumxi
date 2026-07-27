@@ -8,7 +8,7 @@
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.DELKFUTT_KEY) then
+    if npcUtil.tradeMatches(trade, xi.item.DELKFUTT_KEY) then
         player:startOptionalCutscene(16)
     end
 end
@@ -25,7 +25,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     if csid == 16 and option == 1 then
         if not player:hasKeyItem(xi.ki.DELKFUTT_KEY) then
             npcUtil.giveKeyItem(player, xi.ki.DELKFUTT_KEY)
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

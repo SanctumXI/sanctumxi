@@ -7,8 +7,8 @@
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.ICE_CLUSTER) then
-        player:confirmTrade()
+    if npcUtil.tradeMatches(trade, xi.item.ICE_CLUSTER) then
+        player:tradeComplete()
         GetNPCByID(npc:getID() + 5):openDoor(90)
     end
 end

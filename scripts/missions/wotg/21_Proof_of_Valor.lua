@@ -205,7 +205,7 @@ mission.sections =
                     -- discovered with Sabiliont.  A single crossbow bolt may be an
                     -- acceptable trade.
                     if
-                        npcUtil.tradeHasOnly(trade, xi.item.CROSSBOW_BOLT) and
+                        npcUtil.tradeMatches(trade, { { xi.item.CROSSBOW_BOLT, trade:getItemCount() } }) and
                         trade:getItemCount() >= 99 and
                         mission:isVarBitsSet(player, 'Remind', 2)
                     then
@@ -313,7 +313,7 @@ mission.sections =
                 onTrade = function(player, npc, trade)
                     if
                         mission:isVarBitsSet(player, 'Remind', 3) and
-                        npcUtil.tradeHasOnly(trade, xi.item.BUNCH_OF_GYSAHL_GREENS)
+                        npcUtil.tradeMatches(trade, { { xi.item.BUNCH_OF_GYSAHL_GREENS, trade:getItemCount() } })
                     then
                         -- TODO: This formula is estimated; however, a trade of a single gysahl green
                         -- awards 5 signatures.  While not aligning with Wiki, adding a bonus to that

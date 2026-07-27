@@ -91,7 +91,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, { xi.item.CHUNK_OF_TIN_ORE, xi.item.COBALT_JELLYFISH })
+                        npcUtil.tradeMatches(trade, { xi.item.CHUNK_OF_TIN_ORE, xi.item.COBALT_JELLYFISH })
                     then
                         return quest:progressEvent(18)
                     end
@@ -101,7 +101,7 @@ quest.sections =
             onEventFinish =
             {
                 [18] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.POT_OF_TSETSEROONS_STEW)
                     quest:setVar(player, 'Prog', 3)
                 end,

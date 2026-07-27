@@ -62,7 +62,7 @@ quest.sections =
             ['Narcheral'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.TAVNAZIA_PASS) then
+                    if npcUtil.tradeMatches(trade, xi.item.TAVNAZIA_PASS) then
                         return quest:progressEvent(690)
                     end
                 end,
@@ -72,7 +72,7 @@ quest.sections =
             {
                 [690] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

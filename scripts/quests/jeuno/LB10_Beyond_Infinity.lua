@@ -175,7 +175,7 @@ quest.sections =
             ['Nomad_Moogle'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.HIGH_KINDREDS_CREST, 5 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.HIGH_KINDREDS_CREST, 5 } }) then
                         return quest:progressEvent(10195, 1)
                     end
                 end,
@@ -223,7 +223,7 @@ quest.sections =
                 end,
 
                 [10195] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.SOUL_GEM_CLASP)
 
                     if option == 16 then

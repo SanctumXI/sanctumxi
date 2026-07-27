@@ -52,7 +52,7 @@ local flowerItems =
 
 local function isTradeInTable(trade, itemTable)
     for _, itemID in ipairs(itemTable) do
-        if npcUtil.tradeHasExactly(trade, itemID) then
+        if npcUtil.tradeMatches(trade, itemID) then
             return true
         end
     end
@@ -75,7 +75,7 @@ quest.sections =
             ['Zona_Shodhun'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.YELLOW_ROCK) then
+                    if npcUtil.tradeMatches(trade, xi.item.YELLOW_ROCK) then
                         return quest:progressEvent(10023, 1, 246, 2, 1, 0, 1, 5, 1)
                     elseif isTradeInTable(trade, invalidRocks) then
                         return quest:progressEvent(10023, 0, 246, 1, 1, 0, 1, 7, 1)
@@ -95,12 +95,12 @@ quest.sections =
                     -- 1    : Valid Item was traded
                     -- 4002 : Yellow Rock was traded
                     if option > 0 then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
 
                     if option == 4002 then
                         if quest:complete(player) then
-                            player:confirmTrade()
+                            player:tradeComplete()
                             local mhflag = player:getMoghouseFlag()
                             player:setMoghouseFlag(mhflag + 0x0008)
                             player:messageSpecial(portJeunoID.text.MOGHOUSE_EXIT)
@@ -124,7 +124,7 @@ quest.sections =
             {
                 -- NOTE: No items are consumed after quest complete.
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.YELLOW_ROCK) then
+                    if npcUtil.tradeMatches(trade, xi.item.YELLOW_ROCK) then
                         return quest:progressEvent(10023, 0, 246, 4, 1, 0, 1, 7, 0)
                     elseif isTradeInTable(trade, invalidRocks) then
                         return quest:progressEvent(10023, 0, 246, 5, 1, 0, 1, 7, 0)

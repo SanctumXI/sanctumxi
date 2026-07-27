@@ -10,8 +10,8 @@ local ID = zones[xi.zone.TEMPLE_OF_UGGALEPIH]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.UGGALEPIH_KEY) then
-        player:confirmTrade()
+    if npcUtil.tradeMatches(trade, xi.item.UGGALEPIH_KEY) then
+        player:tradeComplete()
         player:messageSpecial(ID.text.YOUR_KEY_BREAKS, 0, xi.item.UGGALEPIH_KEY)
         npc:openDoor()
     end

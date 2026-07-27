@@ -17,10 +17,10 @@ end
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.CHUNK_OF_IRON_ORE) and
+        npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_IRON_ORE) and
         npcUtil.popFromQM(player, npc, ID.mob.MORION_WORM, { radius = 1 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

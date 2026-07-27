@@ -12,7 +12,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.PEACE_FOR_THE_SPIRIT) == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHas(trade, xi.item.NAIL_PULLER)
+        npcUtil.tradeMatches(trade, xi.item.NAIL_PULLER)
     then
         player:startEvent(14)
     end
@@ -39,7 +39,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 14 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('peaceForTheSpiritCS', 5)
     end
 end

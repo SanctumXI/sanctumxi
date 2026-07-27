@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
     local flyerForRegine = player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.FLYERS_FOR_REGINE)
 
     if flyerForRegine == 1 then
-        if npcUtil.tradeHasExactly(trade, xi.item.MAGICMART_FLYER) then
+        if npcUtil.tradeMatches(trade, xi.item.MAGICMART_FLYER) then
             player:messageSpecial(ID.text.FLYER_REFUSED)
         end
     end

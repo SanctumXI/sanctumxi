@@ -30,7 +30,7 @@ entity.onTrade = function(player, npc, trade)
         return
     end
 
-    if npcUtil.tradeHasExactly(trade, { xi.item.SMOLDERING_LAMP }) then
+    if npcUtil.tradeMatches(trade, { xi.item.SMOLDERING_LAMP }) then
         if not xi.einherjar.meetsRequirementsForReservation(player) then
             releaseLamp(player)
             return
@@ -49,7 +49,7 @@ entity.onTrade = function(player, npc, trade)
         -- Continued in onEventUpdate 2
     end
 
-    if npcUtil.tradeHasExactly(trade, { xi.item.GLOWING_LAMP }) then
+    if npcUtil.tradeMatches(trade, { xi.item.GLOWING_LAMP }) then
         local lampObj = trade:getItem()
         local lampData = xi.einherjar.decypherLamp(lampObj)
 
@@ -154,7 +154,7 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.GLOWING_LAMP_OBTAINED, xi.item.GLOWING_LAMP)
             player:messageSpecial(ID.text.CLAIM_RELINQUISH, xi.item.GLOWING_LAMP, xi.einherjar.settings.EINHERJAR_RESERVATION_TIMEOUT)
             player:messageSpecial(ID.text.ITEM_OBTAINED, xi.item.GLOWING_LAMP)
-            player:confirmTrade()
+            player:tradeComplete()
         else -- event cancelled
             releaseLamp(player)
         end

@@ -17,7 +17,7 @@ quest.reward =
 }
 
 local kenapaTradeEventFinish = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
     player:addGil(120)
 
     if
@@ -33,7 +33,7 @@ local kenapaTradeEventFinish = function(player, csid, option, npc)
 end
 
 local ohbiruTradeEventFinish = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
     player:addGil(440)
 
     if
@@ -139,7 +139,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     local kenapaProg = quest:getVar(player, 'kenapaProg')
 
-                    if npcUtil.tradeHasExactly(trade, xi.item.HARD_BOILED_EGG) then
+                    if npcUtil.tradeMatches(trade, xi.item.HARD_BOILED_EGG) then
                         -- Traded item without receiving order
                         if kenapaProg < 3 then
                             if math.randomInt(1, 100) <= 50 then
@@ -184,7 +184,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.SLICE_OF_GRILLED_HARE) and
+                        npcUtil.tradeMatches(trade, xi.item.SLICE_OF_GRILLED_HARE) and
                         quest:getVar(player, 'kerutotoProg') == 1
                     then
                         return quest:progressEvent(332, 440)
@@ -212,7 +212,7 @@ quest.sections =
             ['Ohbiru-Dohbiru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.CUP_OF_WINDURSTIAN_TEA, xi.item.TORTILLA, xi.item.CLUMP_OF_PAMTAM_KELP }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.CUP_OF_WINDURSTIAN_TEA, xi.item.TORTILLA, xi.item.CLUMP_OF_PAMTAM_KELP }) then
                         local ohbiruProgress = quest:getVar(player, 'ohbiruProg')
 
                         -- Traded all 3 items & Didn't ask for order
@@ -270,7 +270,7 @@ quest.sections =
                 [331] = kenapaTradeEventFinish,
 
                 [332] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:addGil(440)
 
                     if

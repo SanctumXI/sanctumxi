@@ -56,7 +56,7 @@ quest.sections =
             ['Ohbiru-Dohbiru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.STARMITE_SHELL, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.STARMITE_SHELL, 3 } }) then
                         return quest:progressEvent(791)
                     end
                 end,
@@ -72,7 +72,7 @@ quest.sections =
             {
                 [791] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -99,7 +99,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.STARMITE_SHELL, 3 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.STARMITE_SHELL, 3 } })
                     then
                         return quest:progressEvent(791)
                     end
@@ -119,7 +119,7 @@ quest.sections =
                 [791] = function(player, csid, option, npc)
                     if quest:getVar(player, 'Prog') == 1 then
                         quest:setVar(player, 'Prog', 0)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addFame(xi.fameArea.WINDURST, 50)
                         npcUtil.giveCurrency(player, 'gil', 4500)
                     end

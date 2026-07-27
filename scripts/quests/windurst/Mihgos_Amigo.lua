@@ -63,7 +63,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.YAGUDO_BEAD_NECKLACE, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.YAGUDO_BEAD_NECKLACE, 4 } }) then
                         return quest:progressEvent(88, 200)
                     end
                 end,
@@ -77,7 +77,7 @@ quest.sections =
             {
                 [88] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addGil(200) -- "Obtained X gil." Text is baked into the CS, so gil needs to be given outside of the quest rewards.
                     end
                 end,
@@ -101,7 +101,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.YAGUDO_BEAD_NECKLACE, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.YAGUDO_BEAD_NECKLACE, 4 } }) then
                         return quest:progressEvent(494, 200)
                     end
                 end,
@@ -120,7 +120,7 @@ quest.sections =
             {
                 [494] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                         player:addGil(200) -- "Obtained X gil." Text is baked into the CS, so gil needs to be given outside of the quest rewards.
                     end

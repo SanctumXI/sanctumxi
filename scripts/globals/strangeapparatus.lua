@@ -276,8 +276,8 @@ xi.strangeApparatus =
         local foundChip = false
 
         for chipTraded = xi.item.RED_CHIP, xi.item.BLACK_CHIP do
-            if npcUtil.tradeHasExactly(trade, { xi.item.INFINITY_CORE, chipTraded }) then
-                player:confirmTrade()
+            if npcUtil.tradeMatches(trade, { xi.item.INFINITY_CORE, chipTraded }) then
+                player:tradeComplete()
                 foundChip = true
 
                 -- player traded a chip that matches this zone

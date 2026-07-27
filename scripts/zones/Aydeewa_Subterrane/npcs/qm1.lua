@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.VIAL_OF_PURE_BLOOD) and
+        npcUtil.tradeMatches(trade, xi.item.VIAL_OF_PURE_BLOOD) and
         npcUtil.popFromQM(player, npc, ID.mob.NOSFERATU)
     then
         -- Trade Pure Blood
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

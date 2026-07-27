@@ -111,7 +111,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.BALL_OF_SARUTA_COTTON, 4 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.BALL_OF_SARUTA_COTTON, 4 } }) and
                         not player:hasKeyItem(xi.ki.FAKE_MOUSTACHE)
                     then
                         return quest:progressEvent(552)
@@ -128,7 +128,7 @@ quest.sections =
                 end,
 
                 [552] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.FAKE_MOUSTACHE)
                 end,
             },

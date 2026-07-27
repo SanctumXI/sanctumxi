@@ -38,6 +38,9 @@ xi.wsEffect =
     SWIFT_BLADE_CRIT     = 29,
     SAVAGE_BLADE_DAMAGE  = 30,
     FULL_SWING_DAMAGE    = 31,
+    WEAPON_BASH_ELEMENTAL = 32,
+    SPIRIT_TAKER_ECHO     = 33,
+    SPIRIT_TAKER_SMN_PET_DAMAGE = 34,
 }
 
 -----------------------------------
@@ -102,7 +105,11 @@ xi.wsEffect.set = function(player, effect, power, duration)
     player:setCharVar(xi.wsEffect.charVars.EXPIRE, GetSystemTime() + (duration or 30))
 
     player:delStatusEffect(xi.effect.EMPOWERED)
-    player:addStatusEffect(xi.effect.EMPOWERED, { power = 1, duration = duration or 30, origin = player })
+
+    -- Weapon Bash's spell bonus is intentionally hidden; other custom effects use the Empowered icon.
+    if effect ~= xi.wsEffect.WEAPON_BASH_ELEMENTAL then
+        player:addStatusEffect(xi.effect.EMPOWERED, { power = 1, duration = duration or 30, origin = player })
+    end
 
     return true
 end
@@ -143,6 +150,25 @@ end
 
 xi.wsEffect.message = function(player, message, delay)
     player:printToPlayer(message, xi.msg.channel.SYSTEM_3)
+end
+
+-- Returns Spirit Taker's temporary Blood Pact damage bonus for an avatar.
+xi.wsEffect.getSpiritTakerSummonerPetDamageBonus = function(pet)
+    if not pet:isAvatar() then
+        return 0
+    end
+
+    local master = pet:getMaster()
+
+    if
+        master and
+        xi.wsEffect.has(master, xi.wsEffect.SPIRIT_TAKER_SMN_PET_DAMAGE)
+    then
+        local _, power = xi.wsEffect.peek(master)
+        return power
+    end
+
+    return 0
 end
 
 xi.wsEffect.applyDamageBonus = function(player, damage)

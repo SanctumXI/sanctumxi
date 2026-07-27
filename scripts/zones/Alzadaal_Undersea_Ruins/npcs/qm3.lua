@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.BAR_OF_FERRITE) and
+        npcUtil.tradeMatches(trade, xi.item.BAR_OF_FERRITE) and
         npcUtil.popFromQM(player, npc, ID.mob.ARMED_GEARS)
     then
         -- Trade Ferrite
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

@@ -126,7 +126,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.CLUMP_OF_EXORAY_MOLD, xi.item.CHUNK_OF_BOMB_COAL, xi.item.PIECE_OF_ANCIENT_PAPYRUS }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.CLUMP_OF_EXORAY_MOLD, xi.item.CHUNK_OF_BOMB_COAL, xi.item.PIECE_OF_ANCIENT_PAPYRUS }) then
                         return quest:progressEvent(81)
                     end
                 end,
@@ -141,7 +141,7 @@ quest.sections =
                         cleanKeyItemSet(player, xi.zone.GARLAIGE_CITADEL)
                         cleanKeyItemSet(player, xi.zone.THE_ELDIEME_NECROPOLIS)
                         -- Finish
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setLevelCap(55)
                     end
                 end,

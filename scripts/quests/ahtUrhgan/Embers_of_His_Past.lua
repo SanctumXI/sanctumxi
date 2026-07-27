@@ -153,7 +153,7 @@ quest.sections =
             ['Fari-Wari'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.HYDRANGEA) then
+                    if npcUtil.tradeMatches(trade, xi.item.HYDRANGEA) then
                         return quest:progressEvent(918, { text_table = 0 })
                     end
                 end,
@@ -233,7 +233,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if VanadielHour() >= 18 or VanadielHour() <= 6 then
-                        if npcUtil.tradeHasExactly(trade, xi.item.HYDRANGEA) then
+                        if npcUtil.tradeMatches(trade, xi.item.HYDRANGEA) then
                             return quest:progressCutscene(17)
                         end
                     end
@@ -243,7 +243,7 @@ quest.sections =
             onEventFinish =
             {
                 [17] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:startCutscene(18)
                 end,
 

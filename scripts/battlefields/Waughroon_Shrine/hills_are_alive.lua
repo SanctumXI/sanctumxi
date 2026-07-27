@@ -3,7 +3,6 @@
 -- Waughroon Shrine KSNM99, Themis Orb
 -- !additem 1553
 -----------------------------------
-local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -16,7 +15,7 @@ local content = Battlefield:new({
     entryName        = 'The Hills are Alive',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED }
+    requiredItems    = { xi.item.THEMIS_ORB }
 })
 
 content:addEssentialMobs({ 'Tartaruga_Gigante' })

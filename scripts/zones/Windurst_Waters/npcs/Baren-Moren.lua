@@ -13,7 +13,7 @@ entity.onTrade = function(player, npc, trade)
     if
         (aFeatherInOnesCap == xi.questStatus.QUEST_ACCEPTED or
         player:getCharVar('QuestFeatherInOnesCap_var') == 1) and
-        npcUtil.tradeHas(trade, { { 842, 3 } })
+        npcUtil.tradeMatches(trade, { { 842, 3 } })
     then
         player:startEvent(79, 1500) -- Quest Turn In
     end
@@ -129,7 +129,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         end
 
         player:addGil(xi.settings.main.GIL_RATE * 1500)
-        player:confirmTrade()
+        player:tradeComplete()
         player:needToZone(true)
     end
 end

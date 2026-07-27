@@ -10,12 +10,12 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if npc:getAnimation() == xi.anim.CLOSE_DOOR then
-        if npcUtil.tradeHas(trade, xi.item.LAMIAN_FANG_KEY) then
+        if npcUtil.tradeMatches(trade, xi.item.LAMIAN_FANG_KEY) then
             npc:openDoor()
             player:messageSpecial(ID.text.KEY_BREAKS, xi.item.LAMIAN_FANG_KEY)
             player:tradeComplete()
         elseif
-            npcUtil.tradeHas(trade, xi.item.SET_OF_THIEFS_TOOLS) and
+            npcUtil.tradeMatches(trade, xi.item.SET_OF_THIEFS_TOOLS) and
             player:getMainJob() == xi.job.THF
         then
             if math.randomInt(1, 2) == 1 then -- TODO: figure out actual percentage chance to pick locks; 50% for now
@@ -25,9 +25,9 @@ entity.onTrade = function(player, npc, trade)
                 player:messageSpecial(ID.text.LOCK_FAIL, xi.item.SET_OF_THIEFS_TOOLS)
             end
 
-            player:confirmTrade()
+            player:tradeComplete()
         elseif
-            npcUtil.tradeHas(trade, xi.item.LIVING_KEY) and
+            npcUtil.tradeMatches(trade, xi.item.LIVING_KEY) and
             player:getMainJob() == xi.job.THF
         then
             if math.randomInt(1, 2) == 1 then -- TODO: figure out actual percentage chance to pick locks; 50% for now
@@ -37,9 +37,9 @@ entity.onTrade = function(player, npc, trade)
                 player:messageSpecial(ID.text.LOCK_FAIL, xi.item.LIVING_KEY)
             end
 
-            player:confirmTrade()
+            player:tradeComplete()
         elseif
-            npcUtil.tradeHas(trade, xi.item.SKELETON_KEY) and
+            npcUtil.tradeMatches(trade, xi.item.SKELETON_KEY) and
             player:getMainJob() == xi.job.THF
         then
             if math.randomInt(1, 2) == 1 then -- TODO: figure out actual percentage chance to pick locks; 50% for now
@@ -49,7 +49,7 @@ entity.onTrade = function(player, npc, trade)
                 player:messageSpecial(ID.text.LOCK_FAIL, xi.item.SKELETON_KEY)
             end
 
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

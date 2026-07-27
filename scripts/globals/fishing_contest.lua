@@ -270,7 +270,7 @@ xi.fishingContest.onTrade = function(player, npc, trade)
     -- Check to see if the traded fish is the right one
     if
         contest['status'] == xi.fishingContest.status.ACCEPTING and
-        npcUtil.tradeHasExactly(trade, contest['fishid'])
+        npcUtil.tradeMatches(trade, contest['fishid'])
     then
         local fishItem = trade:getItem(findFishSlot(trade, contest['fishid']))
         local fishData = fishItem:getExData()
@@ -400,7 +400,7 @@ xi.fishingContest.onEventFinish = function(player, csid, option, npc)
                                                 quantity = 1,
                                                 exdata = { size = length, weight = weight, isRanked = true } })
             if obtained then
-                player:confirmTrade()
+                player:tradeComplete()
                 player:delGil(500) -- Pay the registration fee of 500 gil.
                 player:submitContestFish(scoreFish(length, weight, contest['criteria']))
                 player:setLocalVar('[FishContest]Length', 0)

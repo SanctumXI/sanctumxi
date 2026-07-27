@@ -42,7 +42,7 @@ quest.sections =
         ['Westerly_Breeze'] =
         {
             onTrade = function(player, npc, trade)
-                if npcUtil.tradeHasExactly(trade, xi.item.BOWL_OF_WISDOM_SOUP) then
+                if npcUtil.tradeMatches(trade, xi.item.BOWL_OF_WISDOM_SOUP) then
                     return quest:progressEvent(2532)
                 elseif
                     trade:getItemCount() == 1 and
@@ -67,14 +67,14 @@ quest.sections =
         {
             [2532] = function(player, csid, option, npc)
                 if quest:complete(player) then
-                    player:confirmTrade()
+                    player:tradeComplete()
 
                     xi.quest.setVar(player, xi.questLog.ADOULIN, xi.quest.id.adoulin.THE_STARVING, 'Timer', VanadielUniqueDay() + 1)
                 end
             end,
 
             [2533] = function(player, csid, option, npc)
-                player:confirmTrade()
+                player:tradeComplete()
             end,
         },
     },

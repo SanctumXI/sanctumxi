@@ -121,7 +121,7 @@ quest.sections =
                     local itemToTrade = itemWantedTable[itemWanted][1]
 
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.KINDREDS_CREST, 1 }, { itemToTrade, 1 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.KINDREDS_CREST, 1 }, { itemToTrade, 1 } }) and
                         player:getMeritCount() > 9
                     then
                         return quest:progressEvent(10191)
@@ -164,7 +164,7 @@ quest.sections =
             onEventFinish =
             {
                 [10191] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:setMerits(player:getMeritCount() - 10)
                     quest:setVar(player, 'Prog', 1)
                 end,

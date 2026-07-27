@@ -11,14 +11,14 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, { { 4366, 12 } }) and
+        npcUtil.tradeMatches(trade, { { 4366, 12 } }) and
         not GetMobByID(ID.mob.HABETROT):isSpawned() and
         not GetMobByID(ID.mob.HABETROT + 1):isSpawned()
     then
         -- 12 La Theine Cabbages
         local mobToSpawn = (math.randomInt(1, 100) <= 20) and ID.mob.HABETROT or ID.mob.HABETROT + 1 -- 20% Chance to spawn Habetrot, else it's a Rumble Crawler
         npcUtil.popFromQM(player, npc, mobToSpawn)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

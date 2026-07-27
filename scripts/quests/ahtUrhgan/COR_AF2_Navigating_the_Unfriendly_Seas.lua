@@ -57,7 +57,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.tradeHasExactly(trade, xi.item.HYDROGAUGE)
+                        npcUtil.tradeMatches(trade, xi.item.HYDROGAUGE)
                     then
                         return quest:progressEvent(283)
                     end
@@ -77,7 +77,7 @@ quest.sections =
             {
                 [283] = function(player, csid, option, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Prog', 1)
                     end
                 end,
@@ -91,9 +91,9 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.HYDROGAUGE)
+                        npcUtil.tradeMatches(trade, xi.item.HYDROGAUGE)
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Prog', 2)
                         quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time
                         return quest:messageSpecial(wajaomID.text.PLACE_HYDROGAUGE, xi.item.HYDROGAUGE)

@@ -10,7 +10,7 @@
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.PICKAXE) then -- pickaxe
+    if npcUtil.tradeMatches(trade, xi.item.PICKAXE) then -- pickaxe
         if player:getFreeSlotsCount() > 0 then
             if math.randomInt(1, 100) <= 47 then
                 if
@@ -38,12 +38,12 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 51 and npcUtil.giveItem(player, xi.item.SHARP_STONE) then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('Quest[2][26]Prog', 3)
     elseif csid == 43 and npcUtil.giveItem(player, xi.item.CHUNK_OF_MINE_GRAVEL) then
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 47 then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

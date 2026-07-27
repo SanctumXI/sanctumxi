@@ -206,7 +206,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Chamama') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.SHOALWEED) and
+                        npcUtil.tradeMatches(trade, xi.item.SHOALWEED) and
                         not player:hasKeyItem(xi.ki.INVISIBLE_MAN_STICKER)
                     then
                         return quest:progressEvent(799, 0, 0, xi.ki.INVISIBLE_MAN_STICKER)
@@ -221,7 +221,7 @@ quest.sections =
                 end,
 
                 [799] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.INVISIBLE_MAN_STICKER)
                 end,
             },

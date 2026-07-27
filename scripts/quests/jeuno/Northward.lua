@@ -50,7 +50,7 @@ quest.sections =
             ['Radeivepart'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.FLAME_DEGEN) then
+                    if npcUtil.tradeMatches(trade, xi.item.FLAME_DEGEN) then
                         return quest:progressEvent(61)
                     end
                 end,
@@ -62,7 +62,7 @@ quest.sections =
             {
                 [61] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

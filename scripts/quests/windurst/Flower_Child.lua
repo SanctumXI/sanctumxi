@@ -42,7 +42,7 @@ local flowerItems =
 
 local function isTradeInTable(trade, itemTable)
     for _, itemId in ipairs(itemTable) do
-        if npcUtil.tradeHasExactly(trade, itemId) then
+        if npcUtil.tradeMatches(trade, itemId) then
             return true
         end
     end
@@ -62,7 +62,7 @@ quest.sections =
             ['Ojha_Rhawash'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LILAC) then
+                    if npcUtil.tradeMatches(trade, xi.item.LILAC) then
                         return quest:progressEvent(10000, 0, 239, 2)
                     elseif isTradeInTable(trade, flowerItems) then
                         return quest:progressEvent(10000, 0, 239, 1)
@@ -86,7 +86,7 @@ quest.sections =
                     -- Correct trade option (Lilac).
                     if option == 3002 then
                         if quest:complete(player) then
-                            player:confirmTrade()
+                            player:tradeComplete()
                             local mhflag = player:getMoghouseFlag()
                             player:setMoghouseFlag(mhflag + 0x0004)
                             player:messageSpecial(windurstWallsID.text.MOGHOUSE_EXIT)
@@ -95,7 +95,7 @@ quest.sections =
                     else
                         -- Confirm trade if there was a trade.
                         if option == 1 then
-                            player:confirmTrade()
+                            player:tradeComplete()
                         end
 
                         -- Start quest if it wasn't.
@@ -120,7 +120,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     -- NOTE: After completing this quest, trade is not consumed.
 
-                    if npcUtil.tradeHasExactly(trade, xi.item.LILAC) then
+                    if npcUtil.tradeMatches(trade, xi.item.LILAC) then
                         return quest:progressEvent(10000, 0, 239, 4)
                     elseif isTradeInTable(trade, flowerItems) then
                         return quest:progressEvent(10000, 0, 239, 5)

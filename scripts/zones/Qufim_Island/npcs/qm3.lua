@@ -11,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
     -- Trade Seedspall's Lux, Luna, Astrum
     if
         player:getCurrentMission(xi.mission.log_id.ACP) == xi.mission.id.acp.THE_ECHO_AWAKENS and
-        npcUtil.tradeHas(trade, { 2740, 2741, 2742 })
+        npcUtil.tradeMatches(trade, { 2740, 2741, 2742 })
     then
         player:startEvent(31)
     end
@@ -75,7 +75,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     if csid == 31 then
         player:completeMission(xi.mission.log_id.ACP, xi.mission.id.acp.THE_ECHO_AWAKENS)
         player:addMission(xi.mission.log_id.ACP, xi.mission.id.acp.GATHERER_OF_LIGHT_I)
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 32 then
         player:completeMission(xi.mission.log_id.ACP, xi.mission.id.acp.GATHERER_OF_LIGHT_I)
         player:addMission(xi.mission.log_id.ACP, xi.mission.id.acp.GATHERER_OF_LIGHT_II)

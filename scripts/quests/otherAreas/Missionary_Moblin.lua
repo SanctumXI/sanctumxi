@@ -44,7 +44,7 @@ quest.sections =
 
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.SOILED_LETTER) then
+                    if npcUtil.tradeMatches(trade, xi.item.SOILED_LETTER) then
                         return quest:progressCutscene(9)
                     end
                 end,
@@ -58,7 +58,7 @@ quest.sections =
             {
                 [9] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                     end
                 end,

@@ -219,10 +219,10 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.LILAC) and
+                        npcUtil.tradeMatches(trade, xi.item.LILAC) and
                         quest:getVar(player, 'Prog3') == 2
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         return quest:progressEvent(6, 119, 300, 200, 100, 0, 0, 558716, 0)
                     end

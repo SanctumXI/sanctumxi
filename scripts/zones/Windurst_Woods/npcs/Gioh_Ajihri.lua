@@ -10,7 +10,7 @@ entity.onTrade = function(player, npc, trade)
     if
         player:getCharVar('GiohAijhriSpokenTo') == 1 and
         not player:needToZone() and
-        npcUtil.tradeHas(trade, xi.item.TWINSTONE_EARRING)
+        npcUtil.tradeMatches(trade, xi.item.TWINSTONE_EARRING)
     then
         player:startEvent(490)
     end
@@ -42,7 +42,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addQuest(xi.questLog.WINDURST, xi.quest.id.windurst.TWINSTONE_BONDING)
         player:setCharVar('GiohAijhriSpokenTo', 1)
     elseif csid == 490 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:needToZone(true)
         player:setCharVar('GiohAijhriSpokenTo', 0)
 

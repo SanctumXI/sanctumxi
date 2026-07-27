@@ -54,7 +54,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, requiredTradeItems)
+                        npcUtil.tradeMatches(trade, requiredTradeItems)
                     then
                         return quest:progressEvent(2576)
                     end
@@ -122,7 +122,7 @@ quest.sections =
                 end,
 
                 [2576] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
 
                     npcUtil.giveKeyItem(player, xi.ki.WATERCRAFT)
                 end,

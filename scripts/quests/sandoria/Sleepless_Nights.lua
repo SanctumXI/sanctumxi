@@ -46,7 +46,7 @@ quest.sections =
             ['Paouala'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.JUG_OF_MARYS_MILK) then
+                    if npcUtil.tradeMatches(trade, xi.item.JUG_OF_MARYS_MILK) then
                         return quest:progressEvent(84)
                     end
                 end,
@@ -58,7 +58,7 @@ quest.sections =
             {
                 [84] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

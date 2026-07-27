@@ -95,7 +95,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.BLOCK_OF_YAGUDO_GLUE)
+                        npcUtil.tradeMatches(trade, xi.item.BLOCK_OF_YAGUDO_GLUE)
                     then
                         return quest:progressEvent(107)
                     end
@@ -125,7 +125,7 @@ quest.sections =
                 end,
 
                 [107] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                 end,
             },

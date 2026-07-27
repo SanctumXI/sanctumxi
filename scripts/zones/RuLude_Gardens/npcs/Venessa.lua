@@ -47,7 +47,7 @@ entity.onTrade = function(player, npc, trade)
 
     local tradedItem = trade:getItemId(0)
     local reward     = rewardMap[tradedItem]
-    if reward and npcUtil.tradeHasExactly(trade, tradedItem) then
+    if reward and npcUtil.tradeMatches(trade, tradedItem) then
         -- Store for validation in onEventFinish
         player:setLocalVar('veneReward', reward)
         player:startEvent(10066, reward)

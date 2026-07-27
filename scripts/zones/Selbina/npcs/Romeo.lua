@@ -11,11 +11,11 @@ entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.DONATE_TO_RECYCLING) == xi.questStatus.QUEST_ACCEPTED and
         (
-            npcUtil.tradeHas(trade, { { 16482, 5 } }) or
-            npcUtil.tradeHas(trade, { { 16483, 5 } }) or
-            npcUtil.tradeHas(trade, { { 16534, 5 } }) or
-            npcUtil.tradeHas(trade, { { 17068, 5 } }) or
-            npcUtil.tradeHas(trade, { { 17104, 5 } })
+            npcUtil.tradeMatches(trade, { { 16482, 5 } }) or
+            npcUtil.tradeMatches(trade, { { 16483, 5 } }) or
+            npcUtil.tradeMatches(trade, { { 16534, 5 } }) or
+            npcUtil.tradeMatches(trade, { { 17068, 5 } }) or
+            npcUtil.tradeMatches(trade, { { 17104, 5 } })
         )
     then
         player:startEvent(21) -- Finish quest "Donate to Recycling"
@@ -41,7 +41,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         csid == 21 and
         npcUtil.completeQuest(player, xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.DONATE_TO_RECYCLING, { item = xi.item.WASTEBASKET, fame_area = xi.fameArea.SELBINA_RABAO, title = xi.title.ECOLOGIST })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

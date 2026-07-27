@@ -16,7 +16,7 @@ local content = Battlefield:new({
     index            = 2,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.MOON_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.MOON_ORB },
     armouryCrates    =
     {
         waughroonID.mob.YOBHU_HIDEOUSMASK + 6,

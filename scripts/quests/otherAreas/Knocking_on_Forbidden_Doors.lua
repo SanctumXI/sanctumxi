@@ -202,7 +202,7 @@ quest.sections =
                     local tradedMannequin = 0
 
                     for itemId = xi.item.HUME_M_MANNEQUIN, xi.item.GALKA_MANNEQUIN do
-                        if npcUtil.tradeHasExactly(trade, itemId) then
+                        if npcUtil.tradeMatches(trade, itemId) then
                             tradedMannequin = itemId
                             break
                         end
@@ -257,7 +257,7 @@ quest.sections =
                         option <= 8 and
                         player:delGil(xi.mannequin.cost.TRADE)
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         npcUtil.giveItem(player, xi.item.HUME_M_MANNEQUIN + option - 1)
                         local race = ((option - 1) % 8) + 1
                         xi.mannequin.setMannequinPose(player, race, 0)

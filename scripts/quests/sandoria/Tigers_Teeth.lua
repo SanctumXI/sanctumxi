@@ -46,7 +46,7 @@ quest.sections =
             ['Taumila'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.BLACK_TIGER_FANG, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BLACK_TIGER_FANG, 3 } }) then
                         return quest:progressEvent(572)
                     else
                         return quest:event(573)
@@ -60,7 +60,7 @@ quest.sections =
             {
                 [572] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -76,7 +76,7 @@ quest.sections =
             ['Taumila'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.BLACK_TIGER_FANG, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BLACK_TIGER_FANG, 3 } }) then
                         quest:setLocalVar(player, 'Option', 1)
                         return quest:progressEvent(572)
                     else
@@ -95,7 +95,7 @@ quest.sections =
                         npcUtil.giveCurrency(player, 'gil', 2100)
                     then
                         quest:setLocalVar(player, 'Option', 0)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addFame(xi.fameArea.SANDORIA, 5)
                     end
                 end,

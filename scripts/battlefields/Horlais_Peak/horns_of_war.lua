@@ -3,7 +3,6 @@
 -- Horlais Peak KSNM, Themis Orb
 -- !additem 1553
 -----------------------------------
-local horlaisID = zones[xi.zone.HORLAIS_PEAK]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -16,7 +15,7 @@ local content = Battlefield:new({
     entryName        = 'Horns of War',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
 })
 
 content:addEssentialMobs({ 'Chlevnik' })

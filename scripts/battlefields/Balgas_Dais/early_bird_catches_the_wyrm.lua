@@ -3,7 +3,6 @@
 -- Balga's Dais KSNM99, Themis Orb
 -- !additem 1553
 -----------------------------------
-local balgasID = zones[xi.zone.BALGAS_DAIS]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -16,7 +15,7 @@ local content = Battlefield:new({
     entryName        = 'Early Bird Catches the Wyrm',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
 })
 
 content:addEssentialMobs({ 'Wyrm' })

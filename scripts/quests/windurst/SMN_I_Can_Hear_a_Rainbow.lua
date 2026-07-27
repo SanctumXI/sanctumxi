@@ -535,7 +535,7 @@ quest.sections =
             ['qm3'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CARBUNCLES_RUBY) then
+                    if npcUtil.tradeMatches(trade, xi.item.CARBUNCLES_RUBY) then
                         return quest:progressEvent(124)
                     end
                 end,
@@ -545,7 +545,7 @@ quest.sections =
             {
                 [124] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         -- Unlock SMN job.
                         player:unlockJob(xi.job.SMN)

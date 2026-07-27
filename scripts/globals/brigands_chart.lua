@@ -102,7 +102,7 @@ xi.brigandsChart.onTrade = function(player, npc, trade)
     if
         npc:getStatus() == xi.status.NORMAL and
         npc:getLocalVar('bChartSpawnerID') == 0 and
-        npcUtil.tradeHasExactly(trade, xi.item.BRIGANDS_CHART)
+        npcUtil.tradeMatches(trade, xi.item.BRIGANDS_CHART)
     then
         player:messageSpecial(ID.text.RETURN_TO_SEA, xi.item.BRIGANDS_CHART)
         player:startEvent(902)
@@ -111,7 +111,7 @@ end
 
 xi.brigandsChart.onEventUpdate = function(player, csid, option, npc)
     if csid == 902 and option == 0 then
-        player:confirmTrade()
+        player:tradeComplete()
 
         clearChests()
         npc:setLocalVar('bChartSpawnerID', player:getID())

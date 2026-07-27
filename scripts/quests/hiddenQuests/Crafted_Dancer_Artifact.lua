@@ -72,7 +72,7 @@ quest.sections =
 
                     if
                         quest:getVar(player, 'Prog') == 4 and
-                        npcUtil.tradeHasExactly(trade, dncArtifactOptions[selectedArtifact][2])
+                        npcUtil.tradeMatches(trade, dncArtifactOptions[selectedArtifact][2])
                     then
                         return quest:progressEvent(495, selectedArtifact - 1)
                     end
@@ -129,7 +129,7 @@ quest.sections =
                 end,
 
                 [495] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
                     quest:setVar(player, 'Prog', 5)
                 end,

@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.OPALUS_GEM) and
+        npcUtil.tradeMatches(trade, xi.item.OPALUS_GEM) and
         npcUtil.popFromQM(player, npc, ID.mob.WULGARU)
     then
         -- Trade Opalus Gem
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

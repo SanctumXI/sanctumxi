@@ -405,7 +405,7 @@ end
 
 xi.festiveMoogle.onTrade = function(player, npc, trade)
     for pellItemId, pellType in pairs(tradeItems) do
-        if npcUtil.tradeHasExactly(trade, pellItemId) then
+        if npcUtil.tradeMatches(trade, pellItemId) then
             local craftingGuild = player:getCharVar('[GUILD]currentGuild') - 1
             local equipmentMask = 0
 
@@ -488,10 +488,10 @@ xi.festiveMoogle.onEventFinish = function(player, csid, option, npc)
                 messageParams[rewardEntry[4]] = rewardEntry[2]
 
                 player:messageSpecial(unpack(messageParams))
-                player:confirmTrade()
+                player:tradeComplete()
             else
                 if npcUtil.giveItem(player, { rewardEntry }) then
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end
             end
         else

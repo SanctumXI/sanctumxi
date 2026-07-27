@@ -9,14 +9,14 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade,
+        npcUtil.tradeMatches(trade,
         {
             xi.item.HALVUNG_SHAKUDO_KEY,
             xi.item.HALVUNG_BRONZE_KEY,
             xi.item.HALVUNG_BRASS_KEY
         })
     then
-        player:confirmTrade()
+        player:tradeComplete()
         npc:openDoor()
         player:messageSpecial(ID.text.KEY_BREAKS,
             xi.item.HALVUNG_SHAKUDO_KEY,

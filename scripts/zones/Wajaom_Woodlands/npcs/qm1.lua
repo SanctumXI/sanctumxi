@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.HELLCAGE_BUTTERFLY) and
+        npcUtil.tradeMatches(trade, xi.item.HELLCAGE_BUTTERFLY) and
         npcUtil.popFromQM(player, npc, ID.mob.VULPANGUE)
     then
         -- Trade Hellcage Butterfly
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

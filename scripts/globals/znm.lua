@@ -331,7 +331,7 @@ xi.znm.ryo = xi.znm.ryo or {}
 -----------------------------------
 
 xi.znm.ryo.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.SOUL_PLATE) then
+    if npcUtil.tradeMatches(trade, xi.item.SOUL_PLATE) then
         -- Cache the soulplate value on the player
         local item = trade:getItem(0)
         local zeni = xi.znm.calculatePlateZeni(player, item:getExData())

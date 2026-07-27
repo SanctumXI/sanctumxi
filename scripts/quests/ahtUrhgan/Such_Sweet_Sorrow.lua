@@ -75,7 +75,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.MERROW_SCALE }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.MERROW_SCALE }) then
                         return quest:progressEvent(583, { text_table = 0 })
                     end
                 end,
@@ -85,7 +85,7 @@ quest.sections =
             {
                 [583] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

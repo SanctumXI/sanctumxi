@@ -82,7 +82,7 @@ quest.sections =
             ['Hanaa_Punaa'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.LIZARD_SKIN, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.LIZARD_SKIN, 3 } }) then
                         return quest:progressEvent(561)
                     end
                 end,
@@ -92,7 +92,7 @@ quest.sections =
             {
                 [561] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.LIZARD_GLOVES, { fromTrade = true }) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addTitle(xi.title.LIZARD_SKINNER)
                         if not player:hasCompletedQuest(quest.areaId, quest.questId) then
                             quest:complete(player)

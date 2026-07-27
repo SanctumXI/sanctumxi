@@ -9,7 +9,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getCurrentMission(xi.mission.log_id.COP) >= xi.mission.id.cop.THREE_PATHS and
-        npcUtil.tradeHas(trade, xi.item.SNOW_LILY)
+        npcUtil.tradeMatches(trade, xi.item.SNOW_LILY)
     then
         player:startEvent(32)
     end
@@ -25,7 +25,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 32 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setPos(-116, -119, -620, 253, 13)
     end
 end

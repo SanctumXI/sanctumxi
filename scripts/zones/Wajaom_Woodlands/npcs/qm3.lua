@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.BAGGED_SHEEP_BOTFLY) and
+        npcUtil.tradeMatches(trade, xi.item.BAGGED_SHEEP_BOTFLY) and
         npcUtil.popFromQM(player, npc, ID.mob.GOTOH_ZHA_THE_REDOLENT)
     then
         -- Trade Sheep Botfly
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.BEAKER_OF_PECTIN) and
+        npcUtil.tradeMatches(trade, xi.item.BEAKER_OF_PECTIN) and
         npcUtil.popFromQM(player, npc, ID.mob.CLARET)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

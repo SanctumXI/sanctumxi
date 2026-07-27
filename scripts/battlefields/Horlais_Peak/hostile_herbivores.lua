@@ -3,7 +3,6 @@
 -- Horlais Peak BCNM50, Comet Orb
 -- !additem 1177
 -----------------------------------
-local horlaisID = zones[xi.zone.HORLAIS_PEAK]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 4,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.COMET_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.COMET_ORB },
 })
 
 content:addEssentialMobs({ 'Fighting_Sheep' })

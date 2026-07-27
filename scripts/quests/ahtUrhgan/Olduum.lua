@@ -94,7 +94,7 @@ quest.sections =
                     if
                         not player:hasItem(xi.item.OLDUUM_RING) and
                         not hasQuestKeyItem(player) and
-                        npcUtil.tradeHasExactly(trade, xi.item.PICKAXE)
+                        npcUtil.tradeMatches(trade, xi.item.PICKAXE)
                     then
                         if math.randomInt(1, 10) > 5 then
                             quest:setVar(player, 'Prog', math.randomInt(1, 3))
@@ -113,10 +113,10 @@ quest.sections =
                 [0] = function(player, npc, trade)
                     if player:getLocalVar('mineFail') == 1 then
                         player:setLocalVar('mineFail', 0)
-                        player:confirmTrade()
+                        player:tradeComplete()
                     else
                         player:addKeyItem(keyItems[quest:getVar(player, 'Prog')])
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -174,7 +174,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LIGHTNING_BAND) then
+                    if npcUtil.tradeMatches(trade, xi.item.LIGHTNING_BAND) then
                         if player:getFreeSlotsCount() == 0 then
                             return quest:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED)
                         else
@@ -188,7 +188,7 @@ quest.sections =
             {
                 [2] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.OLDUUM_RING) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -202,7 +202,7 @@ quest.sections =
                     if
                         not player:hasItem(xi.item.OLDUUM_RING) and
                         not hasQuestKeyItem(player) and
-                        npcUtil.tradeHasExactly(trade, xi.item.PICKAXE)
+                        npcUtil.tradeMatches(trade, xi.item.PICKAXE)
                     then
                         if math.randomInt(1, 10) > 5 then
                             quest:setVar(player, 'Prog', math.randomInt(1, 3))
@@ -221,10 +221,10 @@ quest.sections =
                 [0] = function(player, npc, trade)
                     if player:getLocalVar('mineFail') == 1 then
                         player:setLocalVar('mineFail', 0)
-                        player:confirmTrade()
+                        player:tradeComplete()
                     else
                         player:addKeyItem(keyItems[quest:getVar(player, 'Prog')])
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

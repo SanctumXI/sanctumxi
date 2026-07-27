@@ -36,7 +36,7 @@ local plumeTradeNpc =
         local tradeEventId = npcTradeEvents[npc:getName()]
 
         if
-            npcUtil.tradeHasExactly(trade, xi.item.PLUME_DOR) and
+            npcUtil.tradeMatches(trade, xi.item.PLUME_DOR) and
             not quest:isVarBitsSet(player, 'Option', tradeEventId - 25)
         then
             return quest:progressEvent(tradeEventId)
@@ -45,7 +45,7 @@ local plumeTradeNpc =
 }
 
 local plumeOnEventFinish = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
     quest:setVarBit(player, 'Option', csid - 25)
 end
 

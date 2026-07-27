@@ -54,7 +54,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMP_WING, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMP_WING, 2 } }) then
                         return quest:progressEvent(16)
                     end
                 end,
@@ -64,7 +64,7 @@ quest.sections =
             {
                 [16] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -86,7 +86,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.IMP_WING, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMP_WING, 2 } }) then
                         return quest:progressEvent(18)
                     end
                 end,
@@ -95,7 +95,7 @@ quest.sections =
             onEventFinish =
             {
                 [18] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveCurrency(player, 'gil', 200)
                 end,
             },

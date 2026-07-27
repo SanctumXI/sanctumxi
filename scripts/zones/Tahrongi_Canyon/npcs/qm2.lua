@@ -12,7 +12,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     -- Trade Distilled water to Spawn Yara Ma Yha Who
     if
-        npcUtil.tradeHas(trade, xi.item.FLASK_OF_DISTILLED_WATER) and
+        npcUtil.tradeMatches(trade, xi.item.FLASK_OF_DISTILLED_WATER) and
         not GetMobByID(ID.mob.YARA_MA_YHA_WHO):isSpawned()
     then
         if GetSystemTime() > npc:getLocalVar('tradeCooldown') then
@@ -27,7 +27,7 @@ entity.onTrade = function(player, npc, trade)
                 npc:setLocalVar('trades', trades + 1)
             end
 
-            player:confirmTrade()
+            player:tradeComplete()
             npc:setLocalVar('tradeCooldown', GetSystemTime() + 3000) -- 50 minute until next trade
         else
             player:messageSpecial(ID.text.SPROUT_DOES_NOT_NEED_WATER)

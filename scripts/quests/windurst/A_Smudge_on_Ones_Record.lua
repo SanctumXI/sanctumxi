@@ -51,7 +51,7 @@ quest.sections =
             ['Hariga-Origa'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.VIAL_OF_SLIME_OIL, xi.item.FROST_TURNIP }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.VIAL_OF_SLIME_OIL, xi.item.FROST_TURNIP }) then
                         return quest:progressEvent(417, quest.reward.gil)
                     end
                 end,
@@ -67,7 +67,7 @@ quest.sections =
             {
                 [417] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                     end
                 end,

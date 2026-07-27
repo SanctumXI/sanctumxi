@@ -69,7 +69,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.PILE_OF_ANSWER_SHEETS) and
+                        npcUtil.tradeMatches(trade, xi.item.PILE_OF_ANSWER_SHEETS) and
                         quest:getVar(player, 'Prog') == 0
                     then
                         return quest:progressEvent(455)
@@ -124,7 +124,7 @@ quest.sections =
             ['Koru-Moru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.PILE_OF_ANSWER_SHEETS) then
+                    if npcUtil.tradeMatches(trade, xi.item.PILE_OF_ANSWER_SHEETS) then
                         if quest:getVar(player, 'Prog') == 1 then
                             return quest:progressEvent(285)
                         else
@@ -150,7 +150,7 @@ quest.sections =
             onEventFinish =
             {
                 [285] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
 
                     npcUtil.giveKeyItem(player, xi.ki.TATTERED_TEST_SHEET)
                     quest:setVar(player, 'Prog', 2)

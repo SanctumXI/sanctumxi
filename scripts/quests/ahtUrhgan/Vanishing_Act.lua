@@ -145,7 +145,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.SICKLE) and
+                        npcUtil.tradeMatches(trade, xi.item.SICKLE) and
                         quest:getVar(player, 'Prog') == 2 and
                         not player:hasKeyItem(xi.ki.RAINBOW_BERRY)
                     then

@@ -106,7 +106,7 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, {
+                        npcUtil.tradeMatches(trade, {
                             xi.item.MANNEQUIN_HEAD,
                             xi.item.MANNEQUIN_BODY,
                             xi.item.MANNEQUIN_HANDS,
@@ -122,7 +122,7 @@ quest.sections =
             onEventFinish =
             {
                 [309] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
 
                     quest:setVar(player, 'Prog', 3)
                     quest:setVar(player, 'Wait', GetSystemTime())

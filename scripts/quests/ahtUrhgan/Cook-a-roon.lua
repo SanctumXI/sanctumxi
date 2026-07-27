@@ -48,7 +48,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI }) then
                         quest:setVar(player, 'Prog', math.randomInt(2, 3))
                         return quest:progressEvent(243, { [7] = quest:getVar(player, 'Prog') })
                     end
@@ -63,7 +63,7 @@ quest.sections =
                     end
 
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -81,7 +81,7 @@ quest.sections =
             ['Ququroon'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI }) then
                         quest:setVar(player, 'Prog', math.randomInt(2, 3))
                         return quest:progressEvent(243, { [7] = quest:getVar(player, 'Prog') })
                     end
@@ -95,7 +95,7 @@ quest.sections =
             onEventUpdate =
             {
                 [243] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     if quest:getVar(player, 'Prog') == 2 then
                         npcUtil.giveItem(player, xi.item.BOWL_OF_NASHMAU_STEW)
                     end

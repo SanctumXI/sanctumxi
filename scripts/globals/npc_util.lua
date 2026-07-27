@@ -8,8 +8,7 @@
     npcUtil.giveKeyItem(player, keyitems)
     npcUtil.completeMission(player, logId, missionId, params)
     npcUtil.completeQuest(player, area, quest, params)
-    npcUtil.tradeHas(trade, items)
-    npcUtil.tradeHasExactly(trade, items)
+    npcUtil.tradeMatches(trade, items)
     npcUtil.queueMove(npc, point, delay)
     npcUtil.UpdateNPCSpawnPoint(id, minTime, maxTime, posTable, serverVar)
     npcUtil.castingAnimation(npc, magicType, phaseDuration, func)
@@ -818,121 +817,9 @@ function npcUtil.completeMission(player, logId, missionId, params)
     return true
 end
 
---[[
-    check whether trade has all required items
-        if yes, confirm all the items and return true
-        if no, return false
-
-    valid examples of items:
-        640                     -- copper ore x1
-        { 640, 641 }            -- copper ore x1, tin ore x1
-        { 640, 640 }            -- copper ore x2
-        { { 640, 2 } }          -- copper ore x2
-        { { 640, 2 }, 641 }     -- copper ore x2, tin ore x1
-        { 640, { 'gil', 200 } } -- copper ore x1, gil x200
---]]
-function npcUtil.tradeHas(trade, items, exact)
-    if type(exact) ~= 'boolean' then
-        exact = false
-    end
-
-    -- create table of traded items, with key/val of itemId/itemQty
-    local tradedItems = {}
-    local itemId
-    local itemQty
-    for i = 0, trade:getSlotCount()-1 do
-        itemId = trade:getItemId(i)
-        itemQty = trade:getItemQty(itemId)
-        tradedItems[itemId] = itemQty
-    end
-
-    -- create table of needed items, with key/val of itemId/itemQty
-    local neededItems = {}
-    if type(items) == 'number' then
-        neededItems[items] = 1
-    elseif type(items) == 'table' then
-        local itemIdNeeded
-        local itemQtyNeeded
-        for _, v in pairs(items) do
-            if type(v) == 'number' then
-                itemIdNeeded = v
-                itemQtyNeeded = 1
-            elseif
-                type(v) == 'table' and
-                #v == 2 and
-                type(v[1]) == 'number' and
-                type(v[2]) == 'number'
-            then
-                itemIdNeeded = v[1]
-                itemQtyNeeded = v[2]
-            elseif
-                type(v) == 'table' and
-                #v == 2 and
-                type(v[1]) == 'string' and
-                type(v[2]) == 'number' and
-                string.lower(v[1]) == 'gil'
-            then
-                itemIdNeeded = 65535
-                itemQtyNeeded = v[2]
-            else
-                print('ERROR: invalid value contained within items parameter given to npcUtil.tradeHas.')
-                itemIdNeeded = nil
-            end
-
-            if itemIdNeeded ~= nil then
-                neededItems[itemIdNeeded] = (neededItems[itemIdNeeded] == nil) and itemQtyNeeded or neededItems[itemIdNeeded] + itemQtyNeeded
-            end
-        end
-    else
-        print('ERROR: invalid items parameter given to npcUtil.tradeHas.')
-        return false
-    end
-
-    -- determine whether all needed items have been traded. return false if not.
-    for k, v in pairs(neededItems) do
-        local tradedQty = (tradedItems[k] == nil) and 0 or tradedItems[k]
-        if v > tradedQty then
-            return false
-        else
-            tradedItems[k] = tradedQty - v
-        end
-    end
-
-    -- if an exact trade was requested, check if any excess items were traded. if so, return false.
-    if exact then
-        for k, v in pairs(tradedItems) do
-            if v > 0 then
-                return false
-            end
-        end
-    end
-
-    -- confirm items
-    for k, v in pairs(neededItems) do
-        trade:confirmItem(k, v)
-    end
-
-    return true
-end
-
---[[
-    check whether trade has exactly required items
-        if yes, confirm all the items and return true
-        if no, return false
-
-    valid examples of items:
-        640                     -- copper ore x1
-        { 640, 641 }            -- copper ore x1, tin ore x1
-        { 640, 640 }            -- copper ore x2
-        { { 640, 2 } }          -- copper ore x2
-        { { 640, 2 }, 641 }     -- copper ore x2, tin ore x1
-        { 640, { 'gil', 200 } } -- copper ore x1, gil x200
---]]
-function npcUtil.tradeHasExactly(trade, items)
-    return npcUtil.tradeHas(trade, items, true)
-end
-
--- Function to check if a trade contains exactly what's defined. Does not lock items. Use player:tradeComplete()
+-- Checks whether a trade contains exactly what's defined.
+-- Does not lock items. Use player:tradeComplete() when the trade should be consumed.
+-- Supports both the canonical { { itemId, quantity } } format and legacy item lists.
 function npcUtil.tradeMatches(trade, itemTable)
     -- Create table of traded items.
     --[[ Structure:
@@ -954,16 +841,49 @@ function npcUtil.tradeMatches(trade, itemTable)
 
     -- Create table of needed items, matching structure above.
     local neededItemsTable = {}
-    local neededItemId
-    local neededQuantity
-    for _, entry in pairs(itemTable) do
-        neededItemId   = entry[1]
-        neededQuantity = entry[2]
-
-        -- Insert new entry or update previous entry quantity.
-        if neededItemId then
-            neededItemsTable[neededItemId] = neededItemsTable[neededItemId] == nil and neededQuantity or neededItemsTable[neededItemId] + neededQuantity
+    local function addNeededItem(itemId, quantity)
+        if type(itemId) == 'string' and string.lower(itemId) == 'gil' then
+            itemId = xi.item.GIL
         end
+
+        if type(itemId) ~= 'number' or type(quantity) ~= 'number' then
+            return false
+        end
+
+        neededItemsTable[itemId] = (neededItemsTable[itemId] or 0) + quantity
+        return true
+    end
+
+    local function addEntry(entry)
+        if type(entry) == 'number' then
+            return addNeededItem(entry, 1)
+        elseif type(entry) == 'table' then
+            if entry.gil then
+                return addNeededItem(xi.item.GIL, entry.gil)
+            end
+
+            return addNeededItem(entry[1], entry[2] or 1)
+        end
+
+        return false
+    end
+
+    if type(itemTable) == 'number' then
+        addNeededItem(itemTable, 1)
+    elseif type(itemTable) == 'table' then
+        if itemTable.gil then
+            addNeededItem(xi.item.GIL, itemTable.gil)
+        else
+            for _, entry in pairs(itemTable) do
+                if not addEntry(entry) then
+                    print('ERROR: invalid value contained within itemTable parameter given to npcUtil.tradeMatches.')
+                    return false
+                end
+            end
+        end
+    else
+        print('ERROR: invalid itemTable parameter given to npcUtil.tradeMatches.')
+        return false
     end
 
     -- Check if all needed items have been traded. Remove from list if so.
@@ -986,15 +906,10 @@ function npcUtil.tradeMatches(trade, itemTable)
     return true
 end
 
--- Checks to see if a trade only contains one item, but the total count can be variable
-function npcUtil.tradeHasOnly(trade, itemID)
-    return npcUtil.tradeHasExactly(trade, { { itemID, trade:getItemCount() } })
-end
-
 -- Checks to see if a single item in a list is contained in the trade
 function npcUtil.tradeSetInList(trade, itemList)
     for k, v in ipairs(itemList) do
-        if npcUtil.tradeHasExactly(trade, itemList[k]) then
+        if npcUtil.tradeMatches(trade, itemList[k]) then
             return true
         end
     end

@@ -321,7 +321,7 @@ entity.onTrade = function(player, npc, trade)
 
         -- check for af upgrade trades
         for k, v in pairs(afArmorPlusOne) do
-            if npcUtil.tradeHasExactly(trade, v.trade) then
+            if npcUtil.tradeMatches(trade, v.trade) then
                 if v.abc <= storedABCs then
                     player:delCurrency('ancient_beastcoin', v.abc)
                     tradedCombo = k
@@ -336,7 +336,7 @@ entity.onTrade = function(player, npc, trade)
         -- check for relic upgrade trades
         if tradedCombo == 0 then
             for k, v in pairs(relicArmorPlusOne) do
-                if npcUtil.tradeHasExactly(trade, v.trade) then
+                if npcUtil.tradeMatches(trade, v.trade) then
                     tradedCombo = k
                     break
                 end
@@ -345,7 +345,7 @@ entity.onTrade = function(player, npc, trade)
 
         -- found a match
         if tradedCombo > 0 then
-            player:confirmTrade()
+            player:tradeComplete()
             player:setCharVar('AFupgrade', tradedCombo)
             player:setCharVar('AFupgradeDay', getVanaMidnight()) -- Current time + Remaining minutes in the hour in seconds (Day Change)
             player:startEvent(312)
@@ -510,12 +510,12 @@ local handleTradeChipEvent = function(player, option)
         npcUtil.tradeSetInList(trade, tier1Chips) and
         npcUtil.giveItem(player, { { xi.item.ANCIENT_BEASTCOIN, tier1ChipValue } })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     elseif
         npcUtil.tradeSetInList(trade, tier2Chips) and
         npcUtil.giveItem(player, { { xi.item.ANCIENT_BEASTCOIN, tier2ChipValue } })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

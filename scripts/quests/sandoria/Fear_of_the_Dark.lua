@@ -44,7 +44,7 @@ quest.sections =
             ['Secodiand'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.BAT_WING, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BAT_WING, 2 } }) then
                         return quest:progressEvent(18)
                     end
                 end,
@@ -60,7 +60,7 @@ quest.sections =
                         player:addFame(xi.fameArea.SANDORIA, 5)
                     end
 
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

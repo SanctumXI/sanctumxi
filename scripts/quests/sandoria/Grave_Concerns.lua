@@ -70,7 +70,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.TOMB_GUARDS_WATERSKIN) and
+                        npcUtil.tradeMatches(trade, xi.item.TOMB_GUARDS_WATERSKIN) and
                         quest:getVar(player, 'OfferingWaterOK') == 1
                     then
                         local droppedWaterskin = quest:getVar(player, 'DroppedWaterskin')
@@ -109,7 +109,7 @@ quest.sections =
                         return quest:message(sandoriaID.text.DONT_NEED_MORE_WATER) -- You don't need more water
                     elseif
                         not player:hasItem(xi.item.SKIN_OF_WELL_WATER) and
-                        npcUtil.tradeHasExactly(trade, xi.item.TOMB_GUARDS_WATERSKIN)
+                        npcUtil.tradeMatches(trade, xi.item.TOMB_GUARDS_WATERSKIN)
                     then
                         if npcUtil.giveItem(player, xi.item.SKIN_OF_WELL_WATER) then
                             player:tradeComplete()

@@ -105,7 +105,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.FLINT_STONE) and
+                        npcUtil.tradeMatches(trade, xi.item.FLINT_STONE) and
                         quest:getVar(player, 'Prog') == 4
                     then
                         return quest:progressEvent(4)

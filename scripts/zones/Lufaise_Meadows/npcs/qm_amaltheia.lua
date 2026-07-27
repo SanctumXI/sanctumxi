@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.RELIC_SHIELD) and
+        npcUtil.tradeMatches(trade, xi.item.RELIC_SHIELD) and
         npcUtil.popFromQM(player, npc, ID.mob.AMALTHEIA)
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

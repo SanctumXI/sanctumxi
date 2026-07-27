@@ -12,7 +12,7 @@ entity.onTrade = function(player, npc, trade)
     -- A BOY'S DREAM
     if
         player:getCharVar('aBoysDreamCS') == 5 and
-        npcUtil.tradeHasExactly(trade, xi.item.ODONTOTYRANNUS)
+        npcUtil.tradeMatches(trade, xi.item.ODONTOTYRANNUS)
     then
         player:startEvent(85)
     end
@@ -23,7 +23,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     if csid == 85 then
         npcUtil.giveKeyItem(player, xi.ki.KNIGHTS_BOOTS)
         player:setCharVar('aBoysDreamCS', 6)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

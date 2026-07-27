@@ -9,11 +9,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if player:getCharVar('SahaginKeyItems') == 1 then -- If player was told to use 3 Mythril Beastcoins
-        if npcUtil.tradeHas(trade, { { xi.item.MYTHRIL_BEASTCOIN, 3 }, { xi.item.NORG_SHELL, 1 } }) then
+        if npcUtil.tradeMatches(trade, { { xi.item.MYTHRIL_BEASTCOIN, 3 }, { xi.item.NORG_SHELL, 1 } }) then
             player:startEvent(107)
         end
     elseif player:getCharVar('SahaginKeyItems') == 2 then -- If player was told to use a Gold Beastcoin
-        if npcUtil.tradeHas(trade, { xi.item.GOLD_BEASTCOIN, xi.item.NORG_SHELL }) then
+        if npcUtil.tradeMatches(trade, { xi.item.GOLD_BEASTCOIN, xi.item.NORG_SHELL }) then
             player:startEvent(107)
         end
     end
@@ -65,7 +65,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:getCharVar('SahaginKeyProgress') == 2 and
         npcUtil.giveItem(player, xi.item.SAHAGIN_KEY)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('SahaginKeyProgress', 3) -- Mark the quest progress
         player:setCharVar('SahaginKeyItems', 0)
     elseif
@@ -73,7 +73,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:getCharVar('SahaginKeyProgress') == 3 and
         npcUtil.giveItem(player, xi.item.SAHAGIN_KEY)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('SahaginKeyItems', 0)
     end
 end

@@ -58,7 +58,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.CATHEDRAL_TAPESTRY) then
+                    if npcUtil.tradeMatches(trade, xi.item.CATHEDRAL_TAPESTRY) then
                         return quest:progressEvent(734, 0, xi.item.CATHEDRAL_TAPESTRY)
                     end
                 end,
@@ -68,7 +68,7 @@ quest.sections =
             {
                 [734] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 1)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

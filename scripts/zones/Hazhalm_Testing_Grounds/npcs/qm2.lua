@@ -15,21 +15,21 @@ entity.onTrade = function(player, npc, trade)
 
     local feathersByTier = xi.einherjar.getFeathers(player)
 
-    if npcUtil.tradeHasExactly(trade, { xi.item.VALKYRIES_TEAR }) then
+    if npcUtil.tradeMatches(trade, { xi.item.VALKYRIES_TEAR }) then
         if #feathersByTier[xi.einherjar.wing.WING_1] < 3 then
             player:startEvent(18,
                 xi.einherjar.getMissingFeathersMenu(player, xi.einherjar.wing.WING_1),
                 xi.item.VALKYRIES_TEAR
             )
         end
-    elseif npcUtil.tradeHasExactly(trade, { xi.item.VALKYRIES_WING }) then
+    elseif npcUtil.tradeMatches(trade, { xi.item.VALKYRIES_WING }) then
         if #feathersByTier[xi.einherjar.wing.WING_2] < 3 then
             player:startEvent(18,
                 xi.einherjar.getMissingFeathersMenu(player, xi.einherjar.wing.WING_2),
                 xi.item.VALKYRIES_WING
             )
         end
-    elseif npcUtil.tradeHasExactly(trade, { xi.item.VALKYRIES_SOUL }) then
+    elseif npcUtil.tradeMatches(trade, { xi.item.VALKYRIES_SOUL }) then
         if #feathersByTier[xi.einherjar.wing.WING_3] < 3 then
             player:startEvent(18,
                 xi.einherjar.getMissingFeathersMenu(player, xi.einherjar.wing.WING_3),
@@ -82,7 +82,7 @@ end
 entity.onEventFinish = function(player, csid, option)
     if csid == 18 and option >= 1 and option <= 9 then
         xi.einherjar.giveChamberFeather(player, option)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

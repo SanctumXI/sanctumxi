@@ -12,11 +12,11 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     local shenId = player:getZone():queryEntitiesByName('Shen')[1]:getID()
     if
-        npcUtil.tradeHasExactly(trade, xi.item.SHRIMP_LANTERN) and
+        npcUtil.tradeMatches(trade, xi.item.SHRIMP_LANTERN) and
         npcUtil.popFromQM(player, npc, shenId)
     then
         player:messageSpecial(ID.text.SHEN_SPAWN, xi.item.SHRIMP_LANTERN)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

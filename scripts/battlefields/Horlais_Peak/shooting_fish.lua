@@ -3,7 +3,6 @@
 -- Horlais Peak BCNM20, Cloudy Orb
 -- !additem 1551
 -----------------------------------
-local horlaisID = zones[xi.zone.HORLAIS_PEAK]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 9,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.CLOUDY_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.CLOUDY_ORB },
 })
 
 content:addEssentialMobs({ 'Sniper_Pugil', 'Archer_Pugil' })

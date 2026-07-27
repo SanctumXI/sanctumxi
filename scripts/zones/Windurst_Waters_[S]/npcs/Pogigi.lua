@@ -24,7 +24,7 @@ entity.onTrade = function(player, npc, trade)
     }
     -- Make sure we're only trading 1 Basket at a time.
     if
-        npcUtil.tradeHasExactly(trade, itemID) and
+        npcUtil.tradeMatches(trade, itemID) and
         itemKeyItemMapping[itemID]
     then
         player:tradeComplete()

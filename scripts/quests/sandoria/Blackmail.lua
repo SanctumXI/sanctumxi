@@ -109,7 +109,7 @@ quest.sections =
             ['Dauperiat'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
+                    if npcUtil.tradeMatches(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
                         return quest:progressEvent(648, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS })
                     end
                 end,
@@ -121,7 +121,7 @@ quest.sections =
             {
                 [648] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -158,7 +158,7 @@ quest.sections =
             ['Dauperiat'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
+                    if npcUtil.tradeMatches(trade, xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS) then
                         return quest:progressEvent(648, { [1] = xi.item.COPY_OF_THE_CASTLE_FLOOR_PLANS })
                     end
                 end,
@@ -170,7 +170,7 @@ quest.sections =
             {
                 [648] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 0)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveCurrency(player, 'gil', 900)
                     player:addFame(xi.quest.fameArea.SANDORIA, 5)
                 end,

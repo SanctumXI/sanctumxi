@@ -63,6 +63,12 @@ function xi.linkshellTreasury.getLinkshellID(player)
     )
 end
 
+function xi.linkshellTreasury.getLinkshellName(player)
+    return player:getLinkshellName(
+        xi.linkshellTreasury.linkshellSlot
+    )
+end
+
 function xi.linkshellTreasury.getLinkshellType(player)
     return player:getLinkshellType(
         xi.linkshellTreasury.linkshellSlot

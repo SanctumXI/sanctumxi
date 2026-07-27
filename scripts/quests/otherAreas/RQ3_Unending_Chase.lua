@@ -82,7 +82,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.PUFFBALL }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.PUFFBALL }) then
                         return quest:progressEvent(83) -- Quest completed.
                     end
                 end,

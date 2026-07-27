@@ -90,7 +90,7 @@ quest.sections =
             ['Daa_Bola_the_Seer'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.ARNICA_ROOT) then
+                    if npcUtil.tradeMatches(trade, xi.item.ARNICA_ROOT) then
                         return quest:progressCutscene(87)
                     end
                 end,
@@ -107,7 +107,7 @@ quest.sections =
             onEventFinish =
             {
                 [87] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                     quest:setMustZone(player)
                 end,

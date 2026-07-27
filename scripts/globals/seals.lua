@@ -22,12 +22,13 @@ xi.seals.sealItems =
 local function getSealTradeOption(trade)
     local sealsInTrade = {}
     for itemID, sealData in pairs(xi.seals.sealItems) do
-        if npcUtil.tradeHas(trade, itemID) then
-            table.insert(sealsInTrade, { itemID, trade:getItemQty(itemID) })
+        local quantity = trade:getItemQty(itemID)
+        if quantity > 0 then
+            table.insert(sealsInTrade, { itemID, quantity })
         end
     end
 
-    return sealsInTrade
+    return npcUtil.tradeMatches(trade, sealsInTrade) and sealsInTrade or {}
 end
 
 -- Trading Seals/Crests
@@ -35,25 +36,22 @@ function xi.seals.onTrade(player, npc, trade, eventParams)
     local sealOptions = getSealTradeOption(trade)
 
     if next(sealOptions) then
-        local confirmedSeals = {}
         for _, sealOption in ipairs(sealOptions) do
             local itemId = sealOption[1]
             local storedSeals = player:getSeals(xi.seals.sealItems[itemId][1])
             local itemCount   = sealOption[2]
             eventParams[xi.seals.sealItems[itemId][1] + 2] = bit.lshift(storedSeals + itemCount, 16)
-            table.insert(confirmedSeals, { itemId, itemCount })
         end
 
         player:startEvent(unpack(eventParams))
-        for _, sealData in ipairs(confirmedSeals) do
+        for _, sealData in ipairs(sealOptions) do
             local itemId = sealData[1]
             local sealId = xi.seals.sealItems[itemId][1]
             local sealCount = sealData[2]
-            trade:confirmItem(itemId, sealCount)
             player:addSeals(sealCount, sealId)
         end
 
-        player:confirmTrade()
+        player:tradeComplete()
 
         return true
     end

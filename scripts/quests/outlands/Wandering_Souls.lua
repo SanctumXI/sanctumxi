@@ -27,7 +27,7 @@ quest.sections =
             ['Cermet_Headstone'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.RAIN_LILY) then
+                    if npcUtil.tradeMatches(trade, xi.item.RAIN_LILY) then
                         return quest:progressEvent(202, xi.item.RAIN_LILY)
                     end
                 end,
@@ -41,7 +41,7 @@ quest.sections =
             {
                 [202] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

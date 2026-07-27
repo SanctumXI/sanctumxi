@@ -9,7 +9,7 @@ local ID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.RUSTY_KEY) then
+    if npcUtil.tradeMatches(trade, xi.item.RUSTY_KEY) then
         player:messageSpecial(ID.text.CRUBLES_TO_DUST, 0, xi.item.RUSTY_KEY)
         player:startCutscene(41, xi.item.RUSTY_KEY)
     end
@@ -27,7 +27,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 41 then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

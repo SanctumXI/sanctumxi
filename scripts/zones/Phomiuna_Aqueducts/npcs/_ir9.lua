@@ -11,18 +11,18 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     -- TODO: There may be a message displayed onTrade if the door is open.
     if player:getXPos() >= -70 and npc:getAnimation() == 9 then
-        if npcUtil.tradeHasExactly(trade, xi.item.BRONZE_KEY) then
-            player:confirmTrade()
+        if npcUtil.tradeMatches(trade, xi.item.BRONZE_KEY) then
+            player:tradeComplete()
             player:messageSpecial(ID.text.ITEM_BREAKS, xi.item.BRONZE_KEY)
             npc:openDoor(15)
         elseif
             player:getMainJob() == xi.job.THF and
-            (npcUtil.tradeHasExactly(trade, xi.item.SKELETON_KEY) or
-            npcUtil.tradeHasExactly(trade, xi.item.SET_OF_THIEFS_TOOLS) or
-            npcUtil.tradeHasExactly(trade, xi.item.LIVING_KEY))
+            (npcUtil.tradeMatches(trade, xi.item.SKELETON_KEY) or
+            npcUtil.tradeMatches(trade, xi.item.SET_OF_THIEFS_TOOLS) or
+            npcUtil.tradeMatches(trade, xi.item.LIVING_KEY))
         then
             -- TODO: Needs verification for messages displayed, and if picking is 100% successful.
-            player:confirmTrade()
+            player:tradeComplete()
             npc:openDoor(15)
         end
     end

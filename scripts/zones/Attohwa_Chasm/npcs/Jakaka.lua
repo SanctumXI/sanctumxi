@@ -12,7 +12,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     -- Trade 2000 gil to teleport to Boneyard Gully
-    if npcUtil.tradeHasExactly(trade, { gil = 2000 }) then
+    if npcUtil.tradeMatches(trade, { gil = 2000 }) then
         player:tradeComplete()
 
         -- Boneyard Gully

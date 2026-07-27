@@ -3,7 +3,6 @@
 -- Chamber of Oracles BCNM60, Moon Orb
 -- !additem 1130
 -----------------------------------
-local chamberOfOraclesID = zones[xi.zone.CHAMBER_OF_ORACLES]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 1,
     entryNpc         = 'SC_Entrance',
     exitNpc          = 'Shimmering_Circle',
-    requiredItems    = { xi.item.MOON_ORB, wearMessage = chamberOfOraclesID.text.A_CRACK_HAS_FORMED, wornMessage = chamberOfOraclesID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.MOON_ORB },
 })
 
 content:addEssentialMobs({ 'Secutor_XI-XXXII', 'Retiarius_XI-XIX', 'Hoplomachus_XI-XXVI', 'Centurio_XI-I' })

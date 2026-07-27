@@ -55,7 +55,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.DANCESHROOM) then
+                    if npcUtil.tradeMatches(trade, xi.item.DANCESHROOM) then
                         return quest:progressEvent(72, 0, xi.item.DANCESHROOM) -- You found it! Please take this reward
                     end
                 end,
@@ -65,7 +65,7 @@ quest.sections =
             {
                 [72] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

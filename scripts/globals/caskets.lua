@@ -722,7 +722,7 @@ xi.caskets.onTrade = function(player, npc, trade)
     if locked == 1 then
         if
             player:getMainJob() == xi.job.THF and
-            npcUtil.tradeHasExactly(trade, xi.item.SET_OF_THIEFS_TOOLS)
+            npcUtil.tradeMatches(trade, xi.item.SET_OF_THIEFS_TOOLS)
         then
             local splitNumbers = {}
             local tradeAttempt = math.randomFloat(0, 1)
@@ -764,7 +764,7 @@ xi.caskets.onTrade = function(player, npc, trade)
                 player:messageSpecial(baseMessage + casketInfo.messageOffset.UNABLE_TO_GET_HINT, 0, 0, 0, 0)
             end
 
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end
@@ -923,7 +923,6 @@ xi.caskets.onEventFinish = function(player, csid, option, npc)
             giveItem(player, chestObj, itemPos, subOption)
         elseif dropType == casketInfo.dropTypes.RARE_ITEM then
             giveItem(player, chestObj, itemPos, subOption)
-        
         end
     end
 end

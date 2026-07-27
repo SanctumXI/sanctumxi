@@ -109,7 +109,7 @@ quest.sections =
             ['Shantotto'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.BOMB_ARM, 2 }, xi.item.REVIVAL_TREE_ROOT, xi.item.LOCK_OF_HIWONS_HAIR }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BOMB_ARM, 2 }, xi.item.REVIVAL_TREE_ROOT, xi.item.LOCK_OF_HIWONS_HAIR }) then
                         return quest:progressEvent(183, 0, 0, 0, 0, 0, 0, xi.item.BOMB_ARM, xi.item.REVIVAL_TREE_ROOT)
                     end
                 end,
@@ -130,7 +130,7 @@ quest.sections =
 
                 [183] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         xi.quest.setMustZone(player, xi.questLog.WINDURST, xi.quest.id.windurst.CURSES_FOILED_A_GOLEM)
                     end

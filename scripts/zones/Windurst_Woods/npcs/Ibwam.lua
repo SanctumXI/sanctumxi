@@ -42,7 +42,7 @@ Port Windurst (West to East)
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, { { 'gil', 300 } }) and
+        npcUtil.tradeMatches(trade, { { 'gil', 300 } }) and
         player:getQuestStatus(xi.questLog.WINDURST, xi.quest.id.windurst.LURE_OF_THE_WILDCAT) == xi.questStatus.QUEST_COMPLETED and
         player:getCurrentMission(xi.mission.log_id.TOAU) > xi.mission.id.toau.IMMORTAL_SENTRIES
     then
@@ -93,7 +93,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:delKeyItem(xi.ki.GREEN_SENTINEL_BADGE)
         player:messageSpecial(ID.text.KEYITEM_LOST, xi.ki.GREEN_SENTINEL_BADGE)
     elseif csid == 794 then
-        player:confirmTrade()
+        player:tradeComplete()
         xi.teleport.to(player, xi.teleport.id.WHITEGATE)
     end
 end

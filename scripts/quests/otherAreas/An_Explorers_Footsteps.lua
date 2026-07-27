@@ -51,7 +51,7 @@ end
 
 local function abelardCorrectTrade(player, csid, option)
     -- Handle gil reward.
-    player:confirmTrade()
+    player:tradeComplete()
     npcUtil.giveCurrency(player, 'gil', monumentTable[quest:getVar(player, '[EF]TabletZoneId')][2])
 
     -- Complete quest.
@@ -76,8 +76,8 @@ local handleStoneMonument =
     ['Stone_Monument'] =
     {
         onTrade = function(player, npc, trade)
-            if npcUtil.tradeHasExactly(trade, xi.item.LUMP_OF_SELBINA_CLAY) then
-                player:confirmTrade()
+            if npcUtil.tradeMatches(trade, xi.item.LUMP_OF_SELBINA_CLAY) then
+                player:tradeComplete()
                 npcUtil.giveItem(player, xi.item.CLAY_TABLET)
                 quest:setVar(player, '[EF]TabletZoneId', player:getZoneID())
             end
@@ -150,7 +150,7 @@ quest.sections =
             ['Abelard'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CLAY_TABLET) then
+                    if npcUtil.tradeMatches(trade, xi.item.CLAY_TABLET) then
                         local currentMonument   = monumentTable[quest:getVar(player, '[EF]TabletZoneId')][1]
                         local requestedMonument = quest:getVar(player, '[EF]TargetMonument')
 
@@ -212,7 +212,7 @@ quest.sections =
                 -- Had already traded this monument tablet.
                 [45] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.LUMP_OF_SELBINA_CLAY) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setLocalVar('[EF]ClayRecieved', 1)
                     end
                 end,

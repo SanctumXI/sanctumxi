@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, xi.item.CELADON_YGGRETE_SHARD_V) and
+        npcUtil.tradeMatches(trade, xi.item.CELADON_YGGRETE_SHARD_V) and
         npcUtil.popFromQM(player, npc, ID.mob.TAXET, { radius = 1 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

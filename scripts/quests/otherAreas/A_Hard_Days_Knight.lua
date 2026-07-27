@@ -104,11 +104,11 @@ quest.sections =
                     -- TODO: Needs verification for single-trade events
                     if not player:hasKeyItem(xi.ki.TEMPLE_KNIGHT_KEY) then
                         if
-                            npcUtil.tradeHasExactly(trade, xi.item.SEALION_CREST_KEY) or
-                            npcUtil.tradeHasExactly(trade, xi.item.CORAL_CREST_KEY)
+                            npcUtil.tradeMatches(trade, xi.item.SEALION_CREST_KEY) or
+                            npcUtil.tradeMatches(trade, xi.item.CORAL_CREST_KEY)
                         then
                             return quest:progressEvent(631, trade:getItemId())
-                        elseif npcUtil.tradeHasExactly(trade, { xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY }) then
+                        elseif npcUtil.tradeMatches(trade, { xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY }) then
                             quest:setVar(player, 'Prog', 2)
                             return quest:progressEvent(631, xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY)
                         end
@@ -141,7 +141,7 @@ quest.sections =
                 end,
 
                 [632] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 0)
                     npcUtil.giveKeyItem(player, xi.ki.TEMPLE_KNIGHT_KEY)
                 end

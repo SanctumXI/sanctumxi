@@ -98,7 +98,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         player:hasKeyItem(xi.ki.AMAURAS_FORMULA) and
-                        npcUtil.tradeHasExactly(trade, { xi.item.MALBORO_VINE, xi.item.CHUNK_OF_ZINC_ORE, xi.item.INSECT_WING })
+                        npcUtil.tradeMatches(trade, { xi.item.MALBORO_VINE, xi.item.CHUNK_OF_ZINC_ORE, xi.item.INSECT_WING })
                     then
                         return quest:progressEvent(637)
                     end
@@ -130,7 +130,7 @@ quest.sections =
                 end,
 
                 [637] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.AMAURAS_FORMULA)
                     npcUtil.giveKeyItem(player, xi.ki.COLD_MEDICINE)
                 end,

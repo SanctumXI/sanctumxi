@@ -3,7 +3,6 @@
 -- Qu'Bia Arena BCNM60, Moon Orb
 -- !additem 1130
 -----------------------------------
-local qubiaID = zones[xi.zone.QUBIA_ARENA]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 16,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.MOON_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.MOON_ORB },
 })
 
 content:addEssentialMobs({ 'Annihilated_Anthony', 'Shredded_Samson', 'Mauled_Murdock', 'Punctured_Percy' })

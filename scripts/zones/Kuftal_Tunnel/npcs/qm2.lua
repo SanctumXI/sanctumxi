@@ -11,13 +11,13 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.QUUS_1) and
+        npcUtil.tradeMatches(trade, xi.item.QUUS_1) and
         not GetMobByID(ID.mob.CANCER):isSpawned() and
         not GetMobByID(ID.mob.CANCER + 1):isSpawned()
     then
         local mobId = (math.randomInt(1, 100) <= 7) and ID.mob.CANCER or ID.mob.CANCER + 1 -- Cancer has 7% chance to spawn, else Robber Crab.
         npcUtil.popFromQM(player, npc, mobId)
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

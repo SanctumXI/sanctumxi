@@ -22,13 +22,17 @@ end
 -- Ability Use Functions
 -----------------------------------
 xi.job_utils.black_mage.useCascade = function(player, target, ability)
-    player:addStatusEffect(xi.effect.CASCADE, { power = 1, duration = 60, origin = player })
+    local tp          = player:getTP()
+    local magicDamage = math.floor(tp / 50)
+
+    player:setTP(0)
+    player:addStatusEffect(xi.effect.CASCADE, { power = magicDamage, duration = 60, origin = player })
 
     return xi.effect.CASCADE
 end
 
 xi.job_utils.black_mage.useElementalSeal = function(player, target, ability)
-    player:addStatusEffect(xi.effect.ELEMENTAL_SEAL, { power = 1, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.ELEMENTAL_SEAL, { power = 1, duration = 30, origin = player })
 
     return xi.effect.ELEMENTAL_SEAL
 end

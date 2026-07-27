@@ -469,7 +469,7 @@ function Battlefield:new(data)
     obj.paths    = {}
     obj.loot     = {}
 
-    -- Determine which items need to be traded as the requiredItems format is incompatable with npcUtil.tradeHasExactly
+    -- Determine which items need to be traded as the requiredItems format is incompatible with npcUtil.tradeMatches
     obj.tradeItems = {}
 
     for index, value in ipairs(obj.requiredItems) do
@@ -619,7 +619,7 @@ function Battlefield:checkRequirements(player, npc, isRegistrant, trade)
     end
 
     if trade and #self.tradeItems > 0 then
-        if not npcUtil.tradeHasExactly(trade, self.tradeItems) then
+        if not npcUtil.tradeMatches(trade, self.tradeItems) then
             return false
         end
     end
@@ -646,23 +646,28 @@ local function startCustomEntryEvent(content, player, npc)
     player:setLocalVar(customEntryVar, content.battlefieldId)
     player:startEvent(32000, 0, 0, 0, options, 0, 0, 0, 0)
 
-    -- The native client normally retries event updates until it finds an
-    -- available arena.  A custom menu has already made its selection, so
-    -- perform those retries here.
-    for _ = 1, 3 do
-        local previousArea = player:getLocalVar('[battlefield]area')
-        local result       = content:onEntryEventUpdate(player, 32000, bit.lshift(content.index, 4), npc)
+    -- Give the client time to enter event 32000 before advancing it. Sending
+    -- the update in the same tick as startEvent can be discarded by the
+    -- client, leaving its native battlefield list open.
+    player:timer(250, function(playerArg)
+        -- The native client normally retries event updates until it finds an
+        -- available arena. A custom menu has already made its selection, so
+        -- perform those retries here.
+        for _ = 1, 3 do
+            local previousArea = playerArg:getLocalVar('[battlefield]area')
+            local result       = content:onEntryEventUpdate(playerArg, 32000, bit.lshift(content.index, 4), npc)
 
-        if result == 1 then
-            player:setLocalVar('noPosUpdate', 0)
-            return
-        elseif player:getLocalVar('[battlefield]area') == previousArea then
-            break
+            if result == 1 then
+                playerArg:setLocalVar('noPosUpdate', 0)
+                return
+            elseif playerArg:getLocalVar('[battlefield]area') == previousArea then
+                break
+            end
         end
-    end
 
-    player:setLocalVar('[battlefield]area', 0)
-    player:setLocalVar(customEntryVar, 0)
+        playerArg:setLocalVar('[battlefield]area', 0)
+        playerArg:setLocalVar(customEntryVar, 0)
+    end)
 end
 
 function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
@@ -721,7 +726,7 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
         if
             #content.requiredItems > 0 and
             content.requiredItems.wornMessage and
-            npcUtil.tradeHas(trade, content.tradeItems)
+            npcUtil.tradeMatches(trade, content.tradeItems)
         then
             local itemId = content.requiredItems[1]
             -- Gets the total number of item uses for the given item. Default to one since that is the majority of them.

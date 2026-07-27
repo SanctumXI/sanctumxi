@@ -53,7 +53,7 @@ quest.sections =
             ['Imasuke'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.KAISER_SWORD) then
+                    if npcUtil.tradeMatches(trade, xi.item.KAISER_SWORD) then
                         return quest:progressEvent(15)
                     end
                 end,
@@ -65,7 +65,7 @@ quest.sections =
             {
                 [15] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

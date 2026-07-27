@@ -11,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
         player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.A_POTTERS_PREFERENCE) == xi.questStatus.QUEST_ACCEPTED or
         player:getCharVar('QuestAPotterPrefeRepeat_var') == 1
     then
-        if npcUtil.tradeHas(trade, xi.item.DISH_OF_GUSGEN_CLAY) then
+        if npcUtil.tradeMatches(trade, xi.item.DISH_OF_GUSGEN_CLAY) then
             player:startEvent(113) -- quest done!
         end
     end
@@ -43,7 +43,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     if csid == 111 and option == 1 then  --accept quest
         player:addQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.A_POTTERS_PREFERENCE)
     elseif csid == 113 then --quest completed
-        player:confirmTrade()
+        player:tradeComplete()
         player:addFame(xi.fameArea.WINDURST, 120)
         npcUtil.giveCurrency(player, 'gil', 2160)
         player:setCharVar('QuestAPotterPrefeRepeat_var', 0)

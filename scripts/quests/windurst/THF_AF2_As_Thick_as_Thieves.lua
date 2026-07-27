@@ -38,7 +38,7 @@ local function isNaked(player)
 end
 
 local towerIncorrectTrade = function(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.GRAPNEL) then
+    if npcUtil.tradeMatches(trade, xi.item.GRAPNEL) then
         return quest:messageSpecial(sauromugueID.text.THF_AF_WALL_OFFSET + 3, 0, xi.item.GRAPNEL)
     end
 end
@@ -75,7 +75,7 @@ local function handleDangrufMinigame(player, winEventId, loseEventId, itemPlaced
 end
 
 local lostMinigameEvent = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
 
     -- Only Saltvix has an alternate CS progression on repeating attempts
     if csid == 139 or csid == 145 then
@@ -90,7 +90,7 @@ local lostMinigameEvent = function(player, csid, option, npc)
 end
 
 local wonMinigameEvent = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
 
     if option == 0 then
         if csid == 136 or csid == 142 then
@@ -144,7 +144,7 @@ quest.sections =
             ['qm3'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CHUNK_OF_ROCK_SALT) then
+                    if npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_ROCK_SALT) then
                         local questProgress = quest:getVar(player, 'Prog')
                         local eventOffset   = quest:getVar(player, 'failedGame') == 0 and 136 or 142
 
@@ -160,7 +160,7 @@ quest.sections =
             ['qm4'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CLUMP_OF_GAUSEBIT_WILDGRASS) then
+                    if npcUtil.tradeMatches(trade, xi.item.CLUMP_OF_GAUSEBIT_WILDGRASS) then
                         local questProgress = quest:getVar(player, 'Prog')
 
                         if questProgress == 2 then
@@ -177,7 +177,7 @@ quest.sections =
             ['qm5'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LIZARD_EGG) then
+                    if npcUtil.tradeMatches(trade, xi.item.LIZARD_EGG) then
                         local questProgress = quest:getVar(player, 'Prog')
 
                         if questProgress == 3 then
@@ -210,7 +210,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.REGAL_DIE) and
+                        npcUtil.tradeMatches(trade, xi.item.REGAL_DIE) and
                         quest:getVar(player, 'Prog') == 6
                     then
                         return quest:progressEvent(10026, 0, xi.item.REGAL_DIE, math.randomInt(1, 700))
@@ -246,7 +246,7 @@ quest.sections =
                 end,
 
                 [10026] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.SECOND_FORGED_ENVELOPE)
                     npcUtil.giveKeyItem(player, xi.ki.SECOND_SIGNED_FORGED_ENVELOPE)
                     quest:setVar(player, 'Prog', 7)
@@ -296,7 +296,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         not player:hasKeyItem(xi.ki.FIRST_SIGNED_FORGED_ENVELOPE) and
-                        npcUtil.tradeHasExactly(trade, xi.item.GRAPNEL)
+                        npcUtil.tradeMatches(trade, xi.item.GRAPNEL)
                     then
                         if isNaked(player) then
                             return quest:progressEvent(2, 0, xi.item.GRAPNEL)
@@ -342,7 +342,7 @@ quest.sections =
             onEventFinish =
             {
                 [2] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.FIRST_FORGED_ENVELOPE)
                     npcUtil.giveKeyItem(player, xi.ki.FIRST_SIGNED_FORGED_ENVELOPE)
                 end,

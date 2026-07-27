@@ -16,7 +16,7 @@ local content = Battlefield:new({
     entryName        = 'Ride the Lightning',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
     armouryCrates    =
     {
         qubiaID.mob.GHUL_I_BEABAN + 2,
@@ -25,9 +25,23 @@ local content = Battlefield:new({
     },
 })
 
-content:addEssentialMobs({ 'Ixion' })
+content.groups =
+{
+    {
+        mobIds    =
+        {
+            { qubiaID.mob.IXION     },
+            { qubiaID.mob.IXION + 1 },
+            { qubiaID.mob.IXION + 2 },
+        },
+        superlink = true,
+        isParty   = true,
+        allDeath  = utils.bind(content.handleAllMonstersDefeated, content),
+    },
+}
 
-content.loot = xi.battlefield.addKSNM99LootGroups({
+content.loot =
+{
     {
         { itemId = xi.item.GIL, weight = 10000, amount = 32000 },
     },
@@ -54,6 +68,6 @@ content.loot = xi.battlefield.addKSNM99LootGroups({
         { itemId = xi.item.IXION_CLOAK, weight = 2400 },
         { itemId = xi.item.NONE,        weight = 7600 },
     },
-})
+}
 
 return content:register()

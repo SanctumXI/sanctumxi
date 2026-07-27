@@ -3,7 +3,6 @@
 -- Horlais Peak KSNM, Clotho Orb
 -- !additem 1175
 -----------------------------------
-local horlaisID = zones[xi.zone.HORLAIS_PEAK]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 15,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.CLOTHO_ORB, wearMessage = horlaisID.text.A_CRACK_HAS_FORMED, wornMessage = horlaisID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.CLOTHO_ORB },
 })
 
 content:addEssentialMobs({ 'Dragonian_Berzerker', 'Dragonian_Minstrel' })

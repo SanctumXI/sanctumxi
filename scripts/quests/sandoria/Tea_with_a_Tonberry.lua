@@ -102,7 +102,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHas(trade, xi.item.PIECE_OF_ATTOHWA_GINSENG)
+                        npcUtil.tradeMatches(trade, xi.item.PIECE_OF_ATTOHWA_GINSENG)
                     then
                         return quest:progressEvent(29)
                     end
@@ -118,7 +118,7 @@ quest.sections =
                 [29] = function(player, csid, option, npc)
                     npcUtil.giveKeyItem(player, xi.keyItem.TONBERRY_BLACKBOARD)
                     quest:setVar(player, 'Prog', 2)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },
@@ -164,10 +164,10 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 3 and
-                        npcUtil.tradeHas(trade, xi.item.INGOT_OF_ROYAL_TREASURY_GOLD) and
+                        npcUtil.tradeMatches(trade, xi.item.INGOT_OF_ROYAL_TREASURY_GOLD) and
                         npcUtil.popFromQM(player, npc, davoiID.mob.HEMATIC_CYST, { radius = 1, hide = 0 })
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         return quest:messageSpecial(davoiID.text.UNDER_ATTACK)
                     end
                 end,

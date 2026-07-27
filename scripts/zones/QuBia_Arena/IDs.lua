@@ -73,6 +73,7 @@ zones[xi.zone.QUBIA_ARENA] =
         VAICOLIAUX_B_DAURPHE     = GetFirstID('Vaicoliaux_B_DAurphe'),
         WARLORD_ROJGNOJ          = GetFirstID('Warlord_Rojgnoj'),
         LAILA                    = GetFirstID('Laila'),
+        IXION                    = GetFirstID('Ixion'),
     },
 
     npc =

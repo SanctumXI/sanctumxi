@@ -11,10 +11,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, { xi.item.THIRD_VIRTUE, xi.item.DEED_OF_SENSIBILITY, xi.item.HIGH_QUALITY_HPEMDE_ORGAN }) and
+        npcUtil.tradeMatches(trade, { xi.item.THIRD_VIRTUE, xi.item.DEED_OF_SENSIBILITY, xi.item.HIGH_QUALITY_HPEMDE_ORGAN }) and
         npcUtil.popFromQM(player, npc, { ID.mob.JAILER_OF_PRUDENCE, ID.mob.JAILER_OF_PRUDENCE + 1 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

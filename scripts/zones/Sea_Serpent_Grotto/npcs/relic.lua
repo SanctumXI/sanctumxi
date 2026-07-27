@@ -11,7 +11,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getCharVar('RELIC_IN_PROGRESS') == xi.item.YOSHIMITSU and
-        npcUtil.tradeHas(trade, { xi.item.TEN_THOUSAND_BYNE_BILL, xi.item.DEMONIAC_FRAGMENT, xi.item.SHARD_OF_NECROPSYCHE, xi.item.YOSHIMITSU })
+        npcUtil.tradeMatches(trade, { xi.item.TEN_THOUSAND_BYNE_BILL, xi.item.DEMONIAC_FRAGMENT, xi.item.SHARD_OF_NECROPSYCHE, xi.item.YOSHIMITSU })
     then
         -- currency, shard, necropsyche, stage 4
         player:startEvent(11, xi.item.KIKOKU_75)
@@ -27,7 +27,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         csid == 11 and
         npcUtil.giveItem(player, { xi.item.KIKOKU_75, { xi.item.ONE_HUNDRED_BYNE_BILL, 30 } })
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('RELIC_IN_PROGRESS', 0)
     end
 end

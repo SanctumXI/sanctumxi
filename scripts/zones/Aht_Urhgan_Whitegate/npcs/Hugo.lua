@@ -99,10 +99,18 @@ entity.onTrigger = function(player, npc)
     end
 
     player:printToPlayer(
-        'Trade me the items used to summon the fiercest monsters in Vana\'diel. I\'ll safeguard them for your linkshell.',
-    xi.msg.channel.SYSTEM_3
+        string.format(
+            'Current Registered LS: %s',
+            xi.linkshellTreasury.getLinkshellName(player)
+        ),
+        xi.msg.channel.SYSTEM_3
     )
-    
+
+    player:printToPlayer(
+        'Trade me the items used to summon the fiercest monsters in Vana\'diel. I\'ll safeguard them for your linkshell.',
+        xi.msg.channel.SYSTEM_3
+    )
+
     xi.linkshellTreasury.openShop(player)
 end
 

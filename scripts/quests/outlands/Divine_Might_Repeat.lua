@@ -120,10 +120,10 @@ quest.sections =
                         (getVanadielMoonCycle() == xi.moonCycle.FULL_MOON) and
                         (vanaHour >= 18 or vanaHour < 6)
                     then
-                        if npcUtil.tradeHasExactly(trade, { xi.item.BOTTLE_OF_ILLUMININK, xi.item.SHEET_OF_PARCHMENT }) then
+                        if npcUtil.tradeMatches(trade, { xi.item.BOTTLE_OF_ILLUMININK, xi.item.SHEET_OF_PARCHMENT }) then
                             return quest:progressEvent(7, xi.item.SHEET_OF_PARCHMENT, xi.item.BOTTLE_OF_ILLUMININK)
                         elseif
-                            npcUtil.tradeHasExactly(trade, xi.item.CHUNK_OF_LIGHT_ORE) and
+                            npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_LIGHT_ORE) and
                             not player:hasKeyItem(xi.ki.MOONLIGHT_ORE)
                         then
                             return quest:progressEvent(8)
@@ -136,13 +136,13 @@ quest.sections =
             {
                 [7] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.ARK_PENTASPHERE) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
                 [8] = function(player, csid, option, npc)
                     npcUtil.giveKeyItem(player, xi.ki.MOONLIGHT_ORE)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

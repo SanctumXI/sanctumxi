@@ -36,7 +36,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.tradeHasExactly(trade, { xi.item.SANDFISH })
+                        npcUtil.tradeMatches(trade, { xi.item.SANDFISH })
                     then
                         return quest:progressEvent(127, 0, xi.item.SANDFISH)
                     end
@@ -65,7 +65,7 @@ quest.sections =
                 [127] = function(player, csid, option, npc)
                     if option == 511 then
                         quest:setVar(player, 'Prog', 1)
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
@@ -114,7 +114,7 @@ quest.sections =
             ['Chef_Nonberry'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.TONBERRY_BOARD }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.TONBERRY_BOARD }) then
                         return quest:progressEvent(27)
                     else
                         return quest:progressEvent(28)
@@ -125,7 +125,7 @@ quest.sections =
             onEventFinish =
             {
                 [27] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.NONBERRYS_KNIFE)
                 end,
 

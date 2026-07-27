@@ -73,7 +73,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.KINDREDS_CREST, 5 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.KINDREDS_CREST, 5 } }) and
                         player:getMeritCount() > 3
                     then
                         return quest:progressEvent(10136)
@@ -94,7 +94,7 @@ quest.sections =
             {
                 [10136] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setMerits(player:getMeritCount() - 4)
                         player:setLevelCap(85)
                         player:messageSpecial(ruludeID.text.YOUR_LEVEL_LIMIT_IS_NOW_85)

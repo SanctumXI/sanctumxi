@@ -391,7 +391,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', zoneName), function
                 return
             end
 
-            if npcUtil.tradeHasExactly(trade, xi.item.WATER_CRYSTAL) then
+            if npcUtil.tradeMatches(trade, xi.item.WATER_CRYSTAL) then
                 player:tradeComplete()
 
                 activeTrial = true

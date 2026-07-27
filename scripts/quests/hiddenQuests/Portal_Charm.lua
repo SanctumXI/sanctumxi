@@ -25,7 +25,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.ROLANBERRY) and
+                        npcUtil.tradeMatches(trade, xi.item.ROLANBERRY) and
                         not player:hasKeyItem(xi.ki.PORTAL_CHARM)
                     then
                         if player:hasCompletedMission(xi.mission.log_id.WINDURST, xi.mission.id.windurst.WRITTEN_IN_THE_STARS) then
@@ -50,12 +50,12 @@ quest.sections =
             {
                 [291] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
                 [292] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                 end,
 

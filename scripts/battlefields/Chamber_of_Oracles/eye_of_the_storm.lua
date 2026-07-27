@@ -3,7 +3,6 @@
 -- Chamber of Oracles KSNM30, Lachesis Orb
 -- !additem 1178
 -----------------------------------
-local chamberOfOraclesID = zones[xi.zone.CHAMBER_OF_ORACLES]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 6,
     entryNpc         = 'SC_Entrance',
     exitNpc          = 'Shimmering_Circle',
-    requiredItems    = { xi.item.LACHESIS_ORB, wearMessage = chamberOfOraclesID.text.A_CRACK_HAS_FORMED, wornMessage = chamberOfOraclesID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.LACHESIS_ORB },
 })
 
 content:addEssentialMobs({ 'Radiant_Wyvern', 'Blizzard_Wyvern', 'Lightning_Wyvern', 'Chaos_Wyvern' })

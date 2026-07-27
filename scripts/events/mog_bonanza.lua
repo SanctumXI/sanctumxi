@@ -274,7 +274,7 @@ xi.events.mogBonanza.onBonanzaMoogleTrade = function(player, npc, trade)
     if
         xi.events.mogBonanza.enabledCheck() and
         isInCollectionPeriod() and
-        npcUtil.tradeHasExactly(trade, xi.item.BONANZA_PEARL)
+        npcUtil.tradeMatches(trade, xi.item.BONANZA_PEARL)
     then
         local bonanzaPearl = trade:getItem(0)
         local exData       = bonanzaPearl:getExData()
@@ -388,16 +388,16 @@ xi.events.mogBonanza.onBonanzaMoogleEventFinish = function(player, csid, option,
                     rewardList[prizeRank].rewardItems[selectedItem] and
                     npcUtil.giveItem(player, rewardList[prizeRank].rewardItems[selectedItem])
                 then
-                    player:confirmTrade()
+                    player:tradeComplete()
                 elseif selectedItem == -1 then
                     npcUtil.giveCurrency(player, 'gil', rewardList[prizeRank].gilReward)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end
             elseif
                 optionType == 6 and
                 npcUtil.giveItem(player, xi.item.BONANZA_BISCUIT)
             then
-                player:confirmTrade()
+                player:tradeComplete()
             end
         end
     end

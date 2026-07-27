@@ -94,7 +94,7 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.DAVOI_STORAGE_KEY) and
+                        npcUtil.tradeMatches(trade, xi.item.DAVOI_STORAGE_KEY) and
                         not player:hasKeyItem(xi.ki.ORCISH_DRIED_FOOD)
                     then
                         player:tradeComplete()

@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.AIR_TANK) and
+        npcUtil.tradeMatches(trade, xi.item.AIR_TANK) and
         npcUtil.popFromQM(player, npc, ID.mob.BUGBEAR_MATMAN)
     then
         player:showText(npc, ID.text.SHOWMAN_ACCEPT)
-        player:confirmTrade()
+        player:tradeComplete()
     else
         player:showText(npc, ID.text.SHOWMAN_DECLINE)
     end

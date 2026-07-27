@@ -11,7 +11,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.UGGALEPIH_KEY) and
+        npcUtil.tradeMatches(trade, xi.item.UGGALEPIH_KEY) and
         player:getZPos() < 11
     then
         player:startEvent(46)
@@ -28,7 +28,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 46 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.YOUR_KEY_BREAKS, 0, xi.item.UGGALEPIH_KEY)
     end
 end

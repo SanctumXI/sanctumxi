@@ -277,7 +277,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         player:hasKeyItem(xi.ki.MEGOMAKS_SHOPPING_LIST) and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.SLAB_OF_PLUMBAGO, 3 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.SLAB_OF_PLUMBAGO, 3 } }) and
                         not player:hasKeyItem(xi.ki.LIGHTNING_CELL)
                     then
                         return quest:progressEvent(155)
@@ -296,7 +296,7 @@ quest.sections =
 
                 [155] = function(player, csid, option, npc)
                     if npcUtil.giveKeyItem(player, xi.ki.LIGHTNING_CELL) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

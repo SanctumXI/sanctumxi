@@ -53,7 +53,7 @@ quest.sections =
             ['Maloquedil'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.BULB_OF_SHAMAN_GARLIC, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BULB_OF_SHAMAN_GARLIC, 2 } }) then
                         return quest:progressEvent(23)
                     end
                 end,
@@ -77,7 +77,7 @@ quest.sections =
                     end
 
                     npcUtil.giveCurrency(player, 'gil', 900)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

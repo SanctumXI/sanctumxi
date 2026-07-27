@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
     -- ALL THE WAY TO THE BANK
     if
         player:hasKeyItem(xi.ki.TARUTARU_SAUCE_INVOICE) and
-        npcUtil.tradeHas(trade, { { 'gil', 5600 } })
+        npcUtil.tradeMatches(trade, { { 'gil', 5600 } })
     then
         local paidFlapano = utils.mask.getBit(player:getCharVar('ATWTTB_Payments'), 2)
         if not paidFlapano then
@@ -23,11 +23,11 @@ entity.onTrade = function(player, npc, trade)
 
     -- EXOTIC DELICACIES
     elseif exoticDelicacies == xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { 3916, 5949, { 5954, 2 } }) then
+        if npcUtil.tradeMatches(trade, { 3916, 5949, { 5954, 2 } }) then
             player:startEvent(2861)
         elseif
-            npcUtil.tradeHas(trade, xi.item.PLATE_OF_BARNACLE_PAELLA) or
-            npcUtil.tradeHas(trade, xi.item.PLATE_OF_FLAPANOS_PAELLA)
+            npcUtil.tradeMatches(trade, xi.item.PLATE_OF_BARNACLE_PAELLA) or
+            npcUtil.tradeMatches(trade, xi.item.PLATE_OF_FLAPANOS_PAELLA)
         then
             player:startEvent(2862)
         end
@@ -83,7 +83,7 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     -- ALL THE WAY TO THE BANK
     if csid == 5071 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('ATWTTB_Payments', utils.mask.setBit(player:getCharVar('ATWTTB_Payments'), 2, true))
         if utils.mask.isFull(player:getCharVar('ATWTTB_Payments'), 5) then
             npcUtil.giveKeyItem(player, xi.ki.TARUTARU_SAUCE_RECEIPT)
@@ -94,7 +94,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addQuest(xi.questLog.ADOULIN, xi.quest.id.adoulin.EXOTIC_DELICACIES)
     elseif csid == 2861 then
         if npcUtil.completeQuest(player, xi.questLog.ADOULIN, xi.quest.id.adoulin.EXOTIC_DELICACIES, { bayld = 500, item = xi.item.PLATE_OF_FLAPANOS_PAELLA, exp = 1000 }) then
-            player:confirmTrade()
+            player:tradeComplete()
             player:setCharVar('Flapano_Odd_Even', 0)
         end
     end

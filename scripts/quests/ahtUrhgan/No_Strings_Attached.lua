@@ -183,9 +183,9 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         not player:findItem(xi.item.ANIMATOR) and
-                        npcUtil.tradeHas(trade, { { 'gil', 10000 } })
+                        npcUtil.tradeMatches(trade, { { 'gil', 10000 } })
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         npcUtil.giveItem(player, xi.item.ANIMATOR)
                         return quest:messageName(ahtUrhganID.text.YOU_BETTER_NOT_LOSE_IT_AGAIN, 0, 0, 0, 0, true, false)
                     end

@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasOnly(trade, xi.item.JAR_OF_GNOLE_PELLETS) and
+        npcUtil.tradeMatches(trade, { { xi.item.JAR_OF_GNOLE_PELLETS, trade:getItemCount() } }) and
         npcUtil.popFromQM(player, npc, ID.mob.VULKODLAC, { hide = 0 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

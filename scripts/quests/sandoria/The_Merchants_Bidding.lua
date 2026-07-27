@@ -39,7 +39,7 @@ quest.sections =
             ['Parvipon'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.RABBIT_HIDE, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.RABBIT_HIDE, 3 } }) then
                         return quest:progressEvent(89)
                     end
                 end,
@@ -63,7 +63,7 @@ quest.sections =
                     end
 
                     npcUtil.giveCurrency(player, 'gil', 120)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

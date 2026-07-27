@@ -80,7 +80,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.BOWL_OF_QUADAV_STEW) and
+                        npcUtil.tradeMatches(trade, xi.item.BOWL_OF_QUADAV_STEW) and
                         quest:getVar(player, 'Prog') == 2
                     then
                         return quest:progressEvent(10004, 0, xi.ki.TENSHODO_ENVELOPE, xi.item.BOWL_OF_QUADAV_STEW)
@@ -105,7 +105,7 @@ quest.sections =
                 end,
 
                 [10004] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.TENSHODO_ENVELOPE)
                     npcUtil.giveKeyItem(player, xi.ki.SIGNED_ENVELOPE)
                     quest:setVar(player, 'Prog', 3)

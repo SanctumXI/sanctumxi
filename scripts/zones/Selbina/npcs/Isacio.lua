@@ -17,17 +17,17 @@ entity.onTrade = function(player, npc, trade)
 
         if
             IsacioElderMemVar == 1 and
-            npcUtil.tradeHas(trade, xi.item.MAGICKED_SKULL)
+            npcUtil.tradeMatches(trade, xi.item.MAGICKED_SKULL)
         then
             player:startEvent(115, xi.item.DAMSELFLY_WORM)
         elseif
             IsacioElderMemVar == 2 and
-            npcUtil.tradeHas(trade, xi.item.DAMSELFLY_WORM)
+            npcUtil.tradeMatches(trade, xi.item.DAMSELFLY_WORM)
         then
             player:startEvent(116, xi.item.CRAB_APRON)
         elseif
             IsacioElderMemVar == 3 and
-            npcUtil.tradeHas(trade, xi.item.CRAB_APRON)
+            npcUtil.tradeMatches(trade, xi.item.CRAB_APRON)
         then
             player:startEvent(117)
         end
@@ -67,13 +67,13 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addQuest(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.ELDER_MEMORIES)
         player:setCharVar('IsacioElderMemVar', 1)
     elseif csid == 115 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('IsacioElderMemVar', 2)
     elseif csid == 116 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('IsacioElderMemVar', 3)
     elseif csid == 117 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:unlockJob(0)
         player:setCharVar('IsacioElderMemVar', 0)
         player:messageSpecial(ID.text.SUBJOB_UNLOCKED)

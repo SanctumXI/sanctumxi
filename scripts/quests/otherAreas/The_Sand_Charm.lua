@@ -95,7 +95,7 @@ quest.sections =
             ['Celestina'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.SAND_CHARM) then
+                    if npcUtil.tradeMatches(trade, xi.item.SAND_CHARM) then
                         return quest:progressEvent(127, 0, xi.item.SAND_CHARM) -- hes dead, but he'll be back soon I'm sure
                     end
                 end,

@@ -66,7 +66,7 @@ local questAccepted =
     ['Moogle'] =
     {
         onTrade = function(player, npc, trade)
-            if npcUtil.tradeHasExactly(trade, { xi.item.RAPTOR_MANTLE, xi.item.WOOL_HAT }) then
+            if npcUtil.tradeMatches(trade, { xi.item.RAPTOR_MANTLE, xi.item.WOOL_HAT }) then
                 return quest:progressEvent(30015)
             end
         end,
@@ -97,7 +97,7 @@ local questAccepted =
         end,
 
         [30015] = function(player, csid, option, npc)
-            player:confirmTrade()
+            player:tradeComplete()
             quest:setVar(player, 'Prog', 1)
             quest:setVar(player, 'Timer', GetSystemTime() + 60)
         end,

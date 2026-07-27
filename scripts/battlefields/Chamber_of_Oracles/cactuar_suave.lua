@@ -3,7 +3,6 @@
 -- Chamber of Oracles KSNM30, Clotho Orb
 -- !additem 1175
 -----------------------------------
-local chamberOfOraclesID = zones[xi.zone.CHAMBER_OF_ORACLES]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 5,
     entryNpc         = 'SC_Entrance',
     exitNpc          = 'Shimmering_Circle',
-    requiredItems    = { xi.item.CLOTHO_ORB, wearMessage = chamberOfOraclesID.text.A_CRACK_HAS_FORMED, wornMessage = chamberOfOraclesID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.CLOTHO_ORB },
 })
 
 content:addEssentialMobs({ 'Sabotender_Campeon', 'Sabotender_Amante' })

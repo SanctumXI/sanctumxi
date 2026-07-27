@@ -511,7 +511,7 @@ local function tradeFish(player, fishId)
     -- NOTE: We confirm the trade now, and not at the end of the cutscene as normal
     --     : because the cutscene gives away whether or not the trade was successful
     --     : or not, and it's possible for players to cheese this trade by force-dc-ing.
-    player:confirmTrade()
+    player:tradeComplete()
 
     for idx = 1, #rewards do
         sum = sum + (rewards[idx].chance * 10)
@@ -558,7 +558,7 @@ local function zaldonOnTrade(player, npc, trade)
 
         if
             fishRewards[itemId] ~= nil and
-            npcUtil.tradeHasExactly(trade, itemId)
+            npcUtil.tradeMatches(trade, itemId)
         then
             return tradeFish(player, itemId)
         end

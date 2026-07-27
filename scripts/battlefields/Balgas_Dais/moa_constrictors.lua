@@ -3,7 +3,6 @@
 -- Balga's Dais KSNM, Atropos Orb
 -- !additem 1180
 -----------------------------------
-local balgasID = zones[xi.zone.BALGAS_DAIS]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 17,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.ATROPOS_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.ATROPOS_ORB },
 })
 
 content:addEssentialMobs({ 'Giant_Moa' })

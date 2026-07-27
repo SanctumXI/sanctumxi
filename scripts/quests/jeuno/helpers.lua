@@ -74,8 +74,8 @@ function xi.jeuno.helpers.GobbiebagQuest:new(params)
                 {
                     onTrade = function(player, npc, trade)
                         if
-                            npcUtil.tradeHasExactly(trade, params.tradeItems) or
-                            npcUtil.tradeHasExactly(trade, params.tradeStew)
+                            npcUtil.tradeMatches(trade, params.tradeItems) or
+                            npcUtil.tradeMatches(trade, params.tradeStew)
                         then
                             return quest:progressEvent(73, getCompleteDiaglogueId(player))
                         else
@@ -99,7 +99,7 @@ function xi.jeuno.helpers.GobbiebagQuest:new(params)
                             end
 
                             player:messageSpecial(params.message)
-                            player:confirmTrade()
+                            player:tradeComplete()
                         end
                     end
                 },
@@ -311,7 +311,7 @@ function xi.jeuno.helpers.UnlockingAMyth:new(jobId)
                 {
                     onTrade = function(player, npc, trade)
                         -- TODO is there a message for trading anything else?
-                        if npcUtil.tradeHasExactly(trade, weaponData.itemId) then
+                        if npcUtil.tradeMatches(trade, weaponData.itemId) then
                             local requiredWsPoints = xi.equipment.vigilWeaponRequiredWsPoints(player)
                             local wsPoints = trade:getItem(0):getWeaponskillPoints()
 

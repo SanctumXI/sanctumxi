@@ -1,6 +1,8 @@
 -----------------------------------
 -- Global file for magic based skills magic hit rate.
 -----------------------------------
+require('scripts/globals/ws_system')
+
 xi = xi or {}
 xi.combat = xi.combat or {}
 xi.combat.magicHitRate = xi.combat.magicHitRate or {}
@@ -164,6 +166,15 @@ local function magicAccuracyFromStatusEffects(actor, params)
         params.magicalElement > 0
     then
         magicAcc = magicAcc + 256
+    end
+
+    -- Weapon Bash improves the accuracy of the next Elemental Magic spell.
+    if
+        params.skillType == xi.skill.ELEMENTAL_MAGIC and
+        xi.wsEffect.has(actor, xi.wsEffect.WEAPON_BASH_ELEMENTAL)
+    then
+        local _, power = xi.wsEffect.peek(actor)
+        magicAcc = magicAcc + power
     end
 
     -- Dark Seal

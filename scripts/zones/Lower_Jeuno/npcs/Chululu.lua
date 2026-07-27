@@ -12,11 +12,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if player:getQuestStatus(xi.questLog.JEUNO, xi.quest.id.jeuno.COLLECT_TARUT_CARDS) == xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { xi.item.TARUT_CARD_THE_FOOL, xi.item.TARUT_CARD_DEATH, xi.item.TARUT_CARD_THE_KING, xi.item.TARUT_CARD_THE_HERMIT }, true) then
+        if npcUtil.tradeMatches(trade, { xi.item.TARUT_CARD_THE_FOOL, xi.item.TARUT_CARD_DEATH, xi.item.TARUT_CARD_THE_KING, xi.item.TARUT_CARD_THE_HERMIT }, true) then
             player:startEvent(200) -- Finish quest "Collect Tarut Cards"
         end
     elseif player:getQuestStatus(xi.questLog.JEUNO, xi.quest.id.jeuno.ALL_IN_THE_CARDS) >= xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { xi.item.TARUT_CARD_THE_FOOL, xi.item.TARUT_CARD_DEATH, xi.item.TARUT_CARD_THE_KING, xi.item.TARUT_CARD_THE_HERMIT }, true) then
+        if npcUtil.tradeMatches(trade, { xi.item.TARUT_CARD_THE_FOOL, xi.item.TARUT_CARD_DEATH, xi.item.TARUT_CARD_THE_KING, xi.item.TARUT_CARD_THE_HERMIT }, true) then
             player:startEvent(10114) -- Finish quest "All in the Cards"
         end
     end
@@ -170,7 +170,7 @@ entity.onEventFinish = function(player, csid, option, npc)
                 var = { 'AllInTheCards_date' }
             })
         then
-            player:confirmTrade()
+            player:tradeComplete()
         end
 
     elseif csid == 197 then

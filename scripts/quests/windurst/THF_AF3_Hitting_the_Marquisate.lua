@@ -171,7 +171,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.PICKAXE) and
+                        npcUtil.tradeMatches(trade, xi.item.PICKAXE) and
                         quest:getVar(player, 'nanaaProg') == 1
                     then
                         return quest:progressEvent(119, 0, xi.item.ROGUES_POULAINES, 0, xi.item.PICKAXE)
@@ -183,7 +183,7 @@ quest.sections =
             {
                 [119] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:delKeyItem(xi.ki.CAT_BURGLARS_NOTE)
                     end
                 end,
@@ -196,7 +196,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.QUAKE_GRENADE, 4 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.QUAKE_GRENADE, 4 } })
                     then
                         return quest:progressEvent(10031)
                     end
@@ -222,7 +222,7 @@ quest.sections =
                 end,
 
                 [10031] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'yatnielProg', 2)
                 end,
             },
@@ -233,7 +233,7 @@ quest.sections =
             ['Hagain'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LUMP_OF_CHANDELIER_COAL) then
+                    if npcUtil.tradeMatches(trade, xi.item.LUMP_OF_CHANDELIER_COAL) then
                         return quest:progressEvent(10005)
                     end
                 end,
@@ -259,7 +259,7 @@ quest.sections =
                 end,
 
                 [10005] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.BOMB_INCENSE)
                     quest:setVar(player, 'hagainProg', 8)
                 end,

@@ -215,7 +215,7 @@ xi.beastmenTreasure.handleNpcOnTrade = function(player, trade, digsiteids)
 
     if
         player:getCharVar(zd.statusvar) == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHasExactly(trade, zd.fetchitems)
+        npcUtil.tradeMatches(trade, zd.fetchitems)
     then
         -- Assign a random dig site to the player
         player:setCharVar(zd.dsvar, math.randomInt(1, 8))
@@ -229,7 +229,7 @@ xi.beastmenTreasure.handleNpcOnEventFinish = function(player, csid)
     if csid == 100 then
         player:incrementCharVar(zd.statusvar, xi.questStatus.QUEST_ACCEPTED)
     elseif csid == 101 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar(zd.statusvar, xi.questStatus.QUEST_COMPLETED)
     end
 end
@@ -280,7 +280,7 @@ xi.beastmenTreasure.handleQmOnTrade = function(player, npc, trade, digsiteids)
     local digsite = getAssignedDigSite(player)
 
     if
-        npcUtil.tradeHasExactly(trade, xi.item.PICKAXE) and
+        npcUtil.tradeMatches(trade, xi.item.PICKAXE) and
         player:getCharVar(zoneData[zoneid].statusvar) == xi.questStatus.QUEST_COMPLETED and
         npc:getID() == xi.beastmenTreasure.getTableOfIDs(digsiteids)[digsite]
     then
@@ -310,7 +310,7 @@ xi.beastmenTreasure.handleQmOnEventFinish = function(player, csid)
         -- Final reward is a seal or the region's exclusive item
         local item4 = weightedRandomSelect(wSealsUnique[zoneid])
         -- Distribute rewards
-        player:confirmTrade()
+        player:tradeComplete()
         player:addGil(4000)
         player:addTreasure(item1)
         player:addTreasure(item2)

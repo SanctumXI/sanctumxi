@@ -14,7 +14,7 @@ local content = Battlefield:new({
     index            = 15,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.CLOTHO_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.CLOTHO_ORB },
     armouryCrates    =
     {
         balgasID.mob.GILAGOGE_TLUGVI + 4,

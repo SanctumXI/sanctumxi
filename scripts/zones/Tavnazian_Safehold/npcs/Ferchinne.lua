@@ -11,13 +11,13 @@ entity.onTrade = function(player, npc, trade)
 
     if
         flyHigh == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHas(trade, { { xi.item.HIPPOGRYPH_TAILFEATHER, 2 } })
+        npcUtil.tradeMatches(trade, { { xi.item.HIPPOGRYPH_TAILFEATHER, 2 } })
     then
         -- 2x Hippogryph Tailfeather
         player:startEvent(243)
     elseif
         flyHigh == xi.questStatus.QUEST_COMPLETED and
-        npcUtil.tradeHas(trade, { { xi.item.HIPPOGRYPH_TAILFEATHER, 2 } })
+        npcUtil.tradeMatches(trade, { { xi.item.HIPPOGRYPH_TAILFEATHER, 2 } })
     then
         -- 2x Hippogryph Tailfeather
         player:startEvent(245)
@@ -49,9 +49,9 @@ entity.onEventFinish = function(player, csid, option, npc)
         npcUtil.completeQuest(player, xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.FLY_HIGH, { item = xi.item.MISTMELT })
     then
         -- Mistmelt
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 245 and npcUtil.giveItem(player, xi.item.MISTMELT) then -- Mistmelt
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

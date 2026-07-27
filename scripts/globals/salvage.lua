@@ -254,10 +254,10 @@ xi.salvage.onTriggerCrate = function(player, npc)
 end
 
 xi.salvage.handleSlot = function(player, npc, trade, card, mobID)
-    if npcUtil.tradeHasExactly(trade, card) then
+    if npcUtil.tradeMatches(trade, card) then
         local instance = npc:getInstance()
         SpawnMob(mobID, instance):updateClaim(player)
-        player:confirmTrade()
+        player:tradeComplete()
         npc:setStatus(xi.status.DISAPPEAR)
     end
 end

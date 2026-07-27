@@ -46,7 +46,7 @@ quest.sections =
             ['Giwahb_Watchtower'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.FRAYED_ARROW) then
+                    if npcUtil.tradeMatches(trade, xi.item.FRAYED_ARROW) then
                         return quest:progressEvent(512)
                     end
                 end,
@@ -56,7 +56,7 @@ quest.sections =
             {
                 [512] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:messageSpecial(ID.text.INCREASED_STANDING)
                         player:addCurrency('imperial_standing', 500)
                     end

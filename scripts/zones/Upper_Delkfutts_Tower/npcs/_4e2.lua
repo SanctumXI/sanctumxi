@@ -9,7 +9,7 @@ local ID = zones[xi.zone.UPPER_DELKFUTTS_TOWER]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.DELKFUTT_KEY) then -- Delkfutt Key
+    if npcUtil.tradeMatches(trade, xi.item.DELKFUTT_KEY) then -- Delkfutt Key
         player:startEvent(6)
     end
 end
@@ -25,7 +25,7 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 6 then
         if not player:hasKeyItem(xi.ki.DELKFUTT_KEY) then
-            player:confirmTrade()
+            player:tradeComplete()
             npcUtil.giveKeyItem(player, xi.ki.DELKFUTT_KEY)
             -- Different message here: You receive <keyitem>!
             -- Trading does not consume Key

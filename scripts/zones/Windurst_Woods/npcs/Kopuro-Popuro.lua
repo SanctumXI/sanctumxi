@@ -15,7 +15,7 @@ entity.onTrade = function(player, npc, trade)
 
     -- THE ALL NEW C-2000
     if allNewC2000 == xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { 846, 856, 4368 }) then
+        if npcUtil.tradeMatches(trade, { 846, 856, 4368 }) then
             player:startEvent(292, xi.settings.main.GIL_RATE * 200) -- Correct items given, complete quest.
         else
             player:startEvent(288, 0, 856, 846, 4368) -- Incorrect or not enough items.
@@ -23,7 +23,7 @@ entity.onTrade = function(player, npc, trade)
 
     -- LEGENDARY PLAN B
     elseif legendaryPlanB == xi.questStatus.QUEST_ACCEPTED then
-        if npcUtil.tradeHas(trade, { 529, 858, 940 }) then
+        if npcUtil.tradeMatches(trade, { 529, 858, 940 }) then
             player:startEvent(314, 0, 529, 940, 858) -- Correct items given, complete quest in onEventUpdate
         else
             player:startEvent(309, 0, 529, 940, 858) -- Incorrect or not enough items
@@ -34,7 +34,7 @@ entity.onTrade = function(player, npc, trade)
         allNewC3000 == xi.questStatus.QUEST_ACCEPTED or
         allNewC3000 == xi.questStatus.QUEST_COMPLETED
     then
-        if npcUtil.tradeHas(trade, { 889, 939 }) then
+        if npcUtil.tradeMatches(trade, { 889, 939 }) then
             player:startEvent(657, 0, 889, 939) -- Correct items given, complete quest in onEventUpdate
         else
             player:startEvent(656, 0, 889, 939) -- Incorrect or not enough items
@@ -109,7 +109,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:addFame(xi.fameArea.WINDURST, 80)
         player:addTitle(xi.title.CARDIAN_TUTOR)
         player:addGil(xi.settings.main.GIL_RATE * 200)
-        player:confirmTrade()
+        player:tradeComplete()
 
     -- LEGENDARY PLAN B
     elseif csid == 308 then
@@ -118,7 +118,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         csid == 314 and
         npcUtil.completeQuest(player, xi.questLog.WINDURST, xi.quest.id.windurst.LEGENDARY_PLAN_B, { item = xi.item.SCENTLESS_ARMLETS, gil = 700 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:needToZone(true)
 
     -- THE ALL NEW C-3000
@@ -128,7 +128,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         csid == 657 and
         npcUtil.completeQuest(player, xi.questLog.WINDURST, xi.quest.id.windurst.THE_ALL_NEW_C_3000, { fame = 10, gil = 600 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

@@ -54,7 +54,7 @@ quest.sections =
             ['Abquhbah'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.IMPERIAL_GOLD_PIECE, 5 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.IMPERIAL_GOLD_PIECE, 5 } }) then
                         return quest:progressEvent(5081, { text_table = 0 })
                     end
                 end,
@@ -65,7 +65,7 @@ quest.sections =
             onEventFinish =
             {
                 [5081] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Wait', VanadielUniqueDay())
                 end,
             },

@@ -16,7 +16,7 @@ entity.onTrade = function(player, npc, trade)
     if
         dngitl == xi.questStatus.QUEST_ACCEPTED and
         player:getCharVar('DNGITL_Status') == 3 and
-        npcUtil.tradeHas(trade, { 3927, 658, 4096 })
+        npcUtil.tradeMatches(trade, { 3927, 658, 4096 })
     then
         player:startEvent(5076)
 
@@ -24,7 +24,7 @@ entity.onTrade = function(player, npc, trade)
     elseif
         vvc == xi.questStatus.QUEST_ACCEPTED and
         player:getCharVar('VVC_Status') == 1 and
-        npcUtil.tradeHas(trade, { 3927, 3919, 8708 })
+        npcUtil.tradeMatches(trade, { 3927, 3919, 8708 })
     then
         player:startEvent(5089)
     end
@@ -50,13 +50,13 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     -- DO NOT GO INTO THE LIGHT
     if csid == 5076 then
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.INVENTORS_COALITION_PICKAXE)
         player:setCharVar('DNGITL_Status', 0)
 
     -- VEGETABLE VEGETABLE CRISIS
     elseif csid == 5089 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('VVC_Status', 2)
         player:setCharVar('VVC_Gameday_Wait', VanadielUniqueDay())
     end

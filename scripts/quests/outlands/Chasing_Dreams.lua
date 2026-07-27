@@ -266,7 +266,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { 1664, 5 } }) and
+                        npcUtil.tradeMatches(trade, { { 1664, 5 } }) and
                         quest:getVar(player, 'Prog') == 6
                     then
                         return quest:progressEvent(323)
@@ -291,7 +291,7 @@ quest.sections =
                 end,
 
                 [323] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 7)
                 end,
             },

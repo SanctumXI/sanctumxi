@@ -52,7 +52,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.RARAB_TAIL) then
+                    if npcUtil.tradeMatches(trade, xi.item.RARAB_TAIL) then
                         return quest:progressEvent(378, 0, xi.item.RARAB_TAIL, xi.item.JUSTICE_BADGE)
                     end
                 end,
@@ -70,7 +70,7 @@ quest.sections =
             {
                 [378] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setLocalVar('[2][40]mustZone', 1)
                     end
                 end,

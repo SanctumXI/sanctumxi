@@ -76,7 +76,7 @@ quest.sections =
             ['Aaveleon'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.DOSE_OF_OINTMENT) then
+                    if npcUtil.tradeMatches(trade, xi.item.DOSE_OF_OINTMENT) then
                         if player:getFreeSlotsCount() == 0 then
                             return quest:event(118) -- "Ah...but it seems you're already carrying too much."
                         else
@@ -92,7 +92,7 @@ quest.sections =
             {
                 [100] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.OINTMENT_CASE) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'TradedAaveleon', 1)
                     end
                 end,
@@ -138,7 +138,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.OINTMENT_CASE) then
+                    if npcUtil.tradeMatches(trade, xi.item.OINTMENT_CASE) then
                         return quest:progressEvent(513)
                     else
                         return quest:event(514) -- "I cannot accept this. Take it back."
@@ -150,7 +150,7 @@ quest.sections =
             {
                 [513] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

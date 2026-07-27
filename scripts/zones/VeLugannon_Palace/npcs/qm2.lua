@@ -11,10 +11,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.CURTANA) and
+        npcUtil.tradeMatches(trade, xi.item.CURTANA) and
         npcUtil.popFromQM(player, npc, ID.mob.BRIGANDISH_BLADE)
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

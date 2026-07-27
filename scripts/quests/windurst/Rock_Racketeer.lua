@@ -104,7 +104,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.SHARP_STONE } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.SHARP_STONE } }) then
                         return quest:progressEvent(102, 2100)
                     end
                 end,
@@ -122,7 +122,7 @@ quest.sections =
 
                 [102] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addGil(2100) -- "Obtained X gil." Text is baked into the CS, so gil needs to be given outside of the quest rewards.
                         quest:setMustZone(player)
                     end

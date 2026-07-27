@@ -61,7 +61,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Stage') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.BOWL_OF_SUTLAC)
+                        npcUtil.tradeMatches(trade, xi.item.BOWL_OF_SUTLAC)
                     then
                         return quest:progressEvent(573)
                     end
@@ -170,7 +170,7 @@ quest.sections =
 
                 [573] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

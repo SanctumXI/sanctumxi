@@ -60,7 +60,7 @@ quest.sections =
             ['Moreno-Toeno'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.BIRD_FEATHER, xi.item.TWO_LEAF_MANDRAGORA_BUD }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.BIRD_FEATHER, xi.item.TWO_LEAF_MANDRAGORA_BUD }) then
                         return quest:progressEvent(440, 250, xi.item.BIRD_FEATHER, xi.item.TWO_LEAF_MANDRAGORA_BUD)
                     end
                 end,
@@ -71,7 +71,7 @@ quest.sections =
             onEventFinish =
             {
                 [440] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:addGil(250) -- "Obtained X gil." Text is baked into the CS, so gil needs to be given outside of the quest rewards.
 
                     -- From previous implementation, award 75 fame (67 + 8) on first completion,

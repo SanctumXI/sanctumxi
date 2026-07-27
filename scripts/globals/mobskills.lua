@@ -6,6 +6,7 @@
 -----------------------------------
 require('scripts/globals/magic')
 require('scripts/globals/spells/damage_spell')
+require('scripts/globals/ws_system')
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -343,7 +344,8 @@ local function handleSinglePhysicalHit(mob, target, baseHitDamage, params)
     hitDamage = math.floor(hitDamage * xi.combat.damage.calculateDamageAdjustment(target, true, false, false, false))
 
     if mob:isAvatar() then
-        hitDamage = math.floor(hitDamage + hitDamage * mob:getMod(xi.mod.BP_DAMAGE) / 100)
+        local bloodPactDamageBonus = mob:getMod(xi.mod.BP_DAMAGE) + xi.wsEffect.getSpiritTakerSummonerPetDamageBonus(mob)
+        hitDamage = math.floor(hitDamage + hitDamage * bloodPactDamageBonus / 100)
     end
 
     hitDamage = xi.automaton.handleEqualizer(target, hitDamage)
@@ -1159,7 +1161,7 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
         resistTier = xi.combat.magicHitRate.calculateResistRate(mob, target, 0, 0, 0, actionElement, dStatAttackerMod, 0, mAccuracyBonus)
 
         if mob:isAvatar() then
-            bloodPactMultiplier = 1 + mob:getMod(xi.mod.BP_DAMAGE) / 100
+            bloodPactMultiplier = 1 + (mob:getMod(xi.mod.BP_DAMAGE) + xi.wsEffect.getSpiritTakerSummonerPetDamageBonus(mob)) / 100
         end
 
         if

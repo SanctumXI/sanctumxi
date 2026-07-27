@@ -197,10 +197,10 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if quest:getVar(player, 'Prog') == 1 then
-                        if npcUtil.tradeHas(trade, xi.item.BLAZING_PEPPERS) then
+                        if npcUtil.tradeMatches(trade, xi.item.BLAZING_PEPPERS) then
                             quest:setVar(player, 'Option', 1) -- Traded Peppers
                             return quest:progressEvent(494, 0, 1)
-                        elseif npcUtil.tradeHas(trade, xi.item.REMEDY) then
+                        elseif npcUtil.tradeMatches(trade, xi.item.REMEDY) then
                             quest:setVar(player, 'Option', 2) -- Traded a Remedy
                             return quest:progressEvent(494)
                         end
@@ -249,7 +249,7 @@ quest.sections =
             {
                 [494] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
 
                 [495] = function(player, csid, option, npc)

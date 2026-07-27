@@ -78,7 +78,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.SLICE_OF_DHALMEL_MEAT, xi.item.BEEHIVE_CHIP }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.SLICE_OF_DHALMEL_MEAT, xi.item.BEEHIVE_CHIP }) then
                         local currentTime = VanadielTime()
                         local endTime     = quest:getVar(player, 'EndTime')
 
@@ -88,8 +88,8 @@ quest.sections =
                             return quest:progressEvent(81) -- Quest completed late.
                         end
                     elseif
-                        npcUtil.tradeHasExactly(trade, { xi.item.SLICE_OF_DHALMEL_MEAT }) or
-                        npcUtil.tradeHasExactly(trade, { xi.item.BEEHIVE_CHIP })
+                        npcUtil.tradeMatches(trade, { xi.item.SLICE_OF_DHALMEL_MEAT }) or
+                        npcUtil.tradeMatches(trade, { xi.item.BEEHIVE_CHIP })
                     then
                         return quest:event(73) -- Incomplete trade.
                     end

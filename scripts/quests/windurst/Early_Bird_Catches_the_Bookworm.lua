@@ -135,7 +135,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.SILVER_BEASTCOIN)
+                        npcUtil.tradeMatches(trade, xi.item.SILVER_BEASTCOIN)
                     then
                         return quest:progressEvent(58)
                     end
@@ -155,7 +155,7 @@ quest.sections =
             onEventFinish =
             {
                 [58] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.ART_FOR_EVERYONE)
                     quest:setVar(player, 'Prog', 2)
                 end,

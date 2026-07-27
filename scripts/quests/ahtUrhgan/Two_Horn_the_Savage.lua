@@ -59,7 +59,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.tradeHasExactly(trade, { { 'gil', 1000 } })
+                        npcUtil.tradeMatches(trade, { { 'gil', 1000 } })
                     then
                         return quest:progressEvent(595)
                     end

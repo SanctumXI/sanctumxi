@@ -94,7 +94,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.TWITHERYM_WING, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.TWITHERYM_WING, 2 } }) then
                         return quest:progressEvent(331)
                     end
                 end,
@@ -104,7 +104,7 @@ quest.sections =
             {
                 [331] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setCharVar('ADOULIN_FAME_QUEST_TRACKER', 1)
                     end
                 end,

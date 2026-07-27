@@ -9,10 +9,10 @@ local ID = zones[xi.zone.SEA_SERPENT_GROTTO]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.SAHAGIN_KEY) then
+    if npcUtil.tradeMatches(trade, xi.item.SAHAGIN_KEY) then
         npc:openDoor(8) -- Open the door if a Sahagin key has been traded
         player:messageSpecial(ID.text.SAHAGIN_DOOR_TRADED, 0, xi.item.SAHAGIN_KEY) -- Give a message telling the PC the item is lost
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

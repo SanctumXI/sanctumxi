@@ -113,7 +113,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.WOOZYSHROOM, 3 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.WOOZYSHROOM, 3 } }) then
                         return quest:progressEvent(556)
                     end
                 end,
@@ -126,7 +126,7 @@ quest.sections =
                 end,
 
                 [556] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.RANPI_MONPIS_SPECIAL_STEW)
                     quest:setVar(player, 'Prog', 2)
                 end,

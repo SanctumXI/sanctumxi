@@ -12,19 +12,19 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, xi.item.PICAROONS_SHIELD) and
+        npcUtil.tradeMatches(trade, xi.item.PICAROONS_SHIELD) and
         npcUtil.popFromQM(player, npc, ID.mob.GRATION)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.SNATCHED_AWAY, xi.item.PICAROONS_SHIELD)
         GetMobByID(ID.mob.GRATION):setLocalVar('shieldType', xi.item.PICAROONS_SHIELD)
     end
 
     if
-        npcUtil.tradeHasExactly(trade, xi.item.HICKORY_SHIELD) and
+        npcUtil.tradeMatches(trade, xi.item.HICKORY_SHIELD) and
         npcUtil.popFromQM(player, npc, ID.mob.GRATION)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.SNATCHED_AWAY, xi.item.HICKORY_SHIELD)
         GetMobByID(ID.mob.GRATION):setLocalVar('shieldType', xi.item.HICKORY_SHIELD)
     end

@@ -84,7 +84,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { xi.item.BAKED_POPOTO }) and
+                        npcUtil.tradeMatches(trade, { xi.item.BAKED_POPOTO }) and
                         quest:getVar(player, 'Prog') == 1
                     then
                         return quest:progressEvent(96) -- Quest completed.

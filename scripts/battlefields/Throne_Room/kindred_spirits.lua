@@ -15,7 +15,7 @@ local content = Battlefield:new({
     index         = 2,
     entryNpc      = '_4l1',
     exitNpcs      = { '_4l2', '_4l3', '_4l4' },
-    requiredItems = { xi.item.MOON_ORB, wearMessage = throneRoomID.text.A_CRACK_HAS_FORMED, wornMessage = throneRoomID.text.ORB_IS_CRACKED },
+    requiredItems = { xi.item.MOON_ORB },
     armouryCrates    =
     {
         throneRoomID.mob.GRAND_MARQUIS_CHOMIEL + 4,

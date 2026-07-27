@@ -10,33 +10,33 @@ local ruludeID = zones[xi.zone.RULUDE_GARDENS]
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.RIDING_ON_THE_CLOUDS)
 
 local function handleSandoriaTrade(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.KINDREDS_SEAL) then
+    if npcUtil.tradeMatches(trade, xi.item.KINDREDS_SEAL) then
         quest:setVar(player, 'npcSandoria', 8)
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.SCOWLING_STONE)
     end
 end
 
 local function handleBastokTrade(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.KINDREDS_SEAL) then
+    if npcUtil.tradeMatches(trade, xi.item.KINDREDS_SEAL) then
         quest:setVar(player, 'npcBastok', 8)
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.SMILING_STONE)
     end
 end
 
 local function handleWindurstTrade(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.KINDREDS_SEAL) then
+    if npcUtil.tradeMatches(trade, xi.item.KINDREDS_SEAL) then
         quest:setVar(player, 'npcWindurst', 8)
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.SPIRITED_STONE)
     end
 end
 
 local function handleOtherlandsTrade(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, xi.item.KINDREDS_SEAL) then
+    if npcUtil.tradeMatches(trade, xi.item.KINDREDS_SEAL) then
         quest:setVar(player, 'npcOtherlands', 8)
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.SOMBER_STONE)
     end
 end

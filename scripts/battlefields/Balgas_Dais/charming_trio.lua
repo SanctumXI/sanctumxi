@@ -2,7 +2,6 @@
 -- Charming Trio
 -- Balga's Dais BCNM20, Cloudy Orb
 -----------------------------------
-local balgasID = zones[xi.zone.BALGAS_DAIS]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index            = 9,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.CLOUDY_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.CLOUDY_ORB },
 })
 
 content:addEssentialMobs({ 'Prune', 'Pepper', 'Phoedme' })

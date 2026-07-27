@@ -79,7 +79,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 3 and
-                        npcUtil.tradeHasExactly(trade, xi.item.FAT_GREEDIE)
+                        npcUtil.tradeMatches(trade, xi.item.FAT_GREEDIE)
                     then
                         if math.randomInt(1, 100) <= 20 then
                             return quest:progressEvent(35) -- Ring found !
@@ -105,13 +105,13 @@ quest.sections =
                 end,
 
                 [35] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.ETCHED_RING)
                     quest:setVar(player, 'Prog', 4)
                 end,
 
                 [36] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
 
                 [37] = function(player, csid, option, npc)

@@ -11,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
     if
         player:hasKeyItem(xi.ki.TORN_PATCHES_OF_LEATHER) and
         player:getCharVar('sayItWithAHandbagCS') == 2 and
-        npcUtil.tradeHasExactly(trade, { 2012, 850, 816 })
+        npcUtil.tradeMatches(trade, { 2012, 850, 816 })
     then
         player:startEvent(910)
     end
@@ -63,7 +63,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:delKeyItem(xi.ki.TORN_PATCHES_OF_LEATHER)
         player:setCharVar('sayItWithAHandbagCS', 3)
         player:needToZone(true)
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 908 and option == 1 then
         player:setCharVar('sayItWithAHandbagCS', 2)
     else

@@ -120,7 +120,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 3 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.GNOLE_CLAW, 1 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.GNOLE_CLAW, 1 } })
                     then
                         return quest:progressEvent(103)
                     end
@@ -134,7 +134,7 @@ quest.sections =
                 end,
 
                 [103] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.XHIFHUT)
                     quest:setVar(player, 'Prog', 4)
                 end,

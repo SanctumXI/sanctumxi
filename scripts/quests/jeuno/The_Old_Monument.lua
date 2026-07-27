@@ -57,7 +57,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.SHEET_OF_PARCHMENT)
+                        npcUtil.tradeMatches(trade, xi.item.SHEET_OF_PARCHMENT)
                     then
                         return quest:progressCutscene(2)
                     end
@@ -83,7 +83,7 @@ quest.sections =
                     player:messageSpecial(buburimuID.text.SONG_RUNES_WRITING, xi.item.SHEET_OF_PARCHMENT)
 
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

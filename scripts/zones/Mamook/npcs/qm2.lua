@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.STRAND_OF_SAMARIRI_CORPSEHAIR) and
+        npcUtil.tradeMatches(trade, xi.item.STRAND_OF_SAMARIRI_CORPSEHAIR) and
         npcUtil.popFromQM(player, npc, ID.mob.IRIRI_SAMARIRI)
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

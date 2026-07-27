@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.SMOKE_FILLED_FLASK) and
+        npcUtil.tradeMatches(trade, xi.item.SMOKE_FILLED_FLASK) and
         npcUtil.popFromQM(player, npc, ID.mob.BIG_BOMB)
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

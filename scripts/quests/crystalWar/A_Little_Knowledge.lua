@@ -126,7 +126,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.SHEET_OF_VELLUM, 12 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.SHEET_OF_VELLUM, 12 } })
                     then
                         local isMageJob = validMageJobs[player:getMainJob()] and 1 or 0
 
@@ -157,7 +157,7 @@ quest.sections =
             onEventFinish =
             {
                 [12] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                 end,
 

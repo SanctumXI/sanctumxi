@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.CHUNK_OF_DIORITE) and
+        npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_DIORITE) and
         npcUtil.popFromQM(player, npc, ID.mob.ULLIKUMMI)
     then
         -- Diorite
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

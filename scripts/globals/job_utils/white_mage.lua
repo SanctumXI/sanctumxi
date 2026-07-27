@@ -135,7 +135,7 @@ xi.job_utils.white_mage.useDivineCaress = function(player, target, ability)
 end
 
 xi.job_utils.white_mage.useDivineSeal = function(player, target, ability)
-    player:addStatusEffect(xi.effect.DIVINE_SEAL, { power = 1, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.DIVINE_SEAL, { power = 1, duration = 30, origin = player })
 
     return xi.effect.DIVINE_SEAL
 end

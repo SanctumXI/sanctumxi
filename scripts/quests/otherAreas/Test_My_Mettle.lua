@@ -110,7 +110,7 @@ quest.sections =
             ['Devean'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.POWER_SANDALS) then
+                    if npcUtil.tradeMatches(trade, xi.item.POWER_SANDALS) then
                         local timeRemaining = quest:getVar(player, 'Timer') - GetSystemTime()
 
                         if timeRemaining > 0 then
@@ -147,14 +147,14 @@ quest.sections =
                     local rewardedGil = quest:getVar(player, 'Reward')
 
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         npcUtil.giveCurrency(player, 'gil', rewardedGil)
                         quest:setVar(player, 'Repeat', JstMidnight())
                     end
                 end,
 
                 [123] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delCurrentQuest(quest.areaId, quest.questId)
                     quest:setVar(player, 'Repeat', JstMidnight())
                 end,

@@ -15,7 +15,7 @@ quest.reward =
 }
 
 local raimbroyOnTrade = function(player, npc, trade)
-    if npcUtil.tradeHasExactly(trade, { { xi.item.POT_OF_HONEY, 5 } }) then
+    if npcUtil.tradeMatches(trade, { { xi.item.POT_OF_HONEY, 5 } }) then
         return quest:progressEvent(535, 400 * xi.settings.main.GIL_RATE)
     else
         return quest:event(522)
@@ -87,7 +87,7 @@ quest.sections =
             {
                 [535] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         -- Note: Gil is mentioned in the event, so add silently here.  Also,
                         -- we need to implement a latch, since both event finishes will trigger
                         -- after the complete.
@@ -117,7 +117,7 @@ quest.sections =
             {
                 [535] = function(player, csid, option, npc)
                     if quest:getLocalVar(player, 'firstComplete') == 0 then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         player:addTitle(xi.title.APIARIST)
                         player:addGil(400 * xi.settings.main.GIL_RATE)

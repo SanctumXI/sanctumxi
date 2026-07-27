@@ -46,7 +46,7 @@ quest.sections =
             ['Karl'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.WHITE_ROCK) then
+                    if npcUtil.tradeMatches(trade, xi.item.WHITE_ROCK) then
                         return quest:progressEvent(1)
                     end
                 end,
@@ -58,7 +58,7 @@ quest.sections =
             {
                 [1] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

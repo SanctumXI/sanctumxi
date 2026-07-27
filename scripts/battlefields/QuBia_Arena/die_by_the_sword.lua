@@ -3,7 +3,6 @@
 -- Qu'Bia Arena BCNM30, Sky Orb
 -- !additem 1552
 -----------------------------------
-local qubiaID = zones[xi.zone.QUBIA_ARENA]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 9,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.SKY_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.SKY_ORB },
 })
 
 content:addEssentialMobs({ 'Gladiatorial_Weapon' })

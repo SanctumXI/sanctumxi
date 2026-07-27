@@ -86,7 +86,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.WILD_ONION, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.WILD_ONION, 4 } }) then
                         return quest:progressEvent(398, 0, xi.item.WILD_ONION) -- Trade in time. Quest goes on.
                     end
                 end,
@@ -101,7 +101,7 @@ quest.sections =
             onEventFinish =
             {
                 [398] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 2)
                 end,
             },
@@ -189,7 +189,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.WILD_ONION, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.WILD_ONION, 4 } }) then
                         return quest:progressEvent(390) -- Quest Complete.
                     end
                 end,
@@ -212,7 +212,7 @@ quest.sections =
 
                 [390] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setLocalVar('[2][41]mustZone', 1)
                     end
                 end,

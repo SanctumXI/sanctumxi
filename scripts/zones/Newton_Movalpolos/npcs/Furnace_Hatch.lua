@@ -8,9 +8,9 @@ local ID = zones[xi.zone.NEWTON_MOVALPOLOS]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.JAR_OF_FIRESAND) then
+    if npcUtil.tradeMatches(trade, xi.item.JAR_OF_FIRESAND) then
         local offset = npc:getID() - ID.npc.FURNACE_HATCH_OFFSET
-        player:confirmTrade()
+        player:tradeComplete()
         player:startEvent(21 + offset) -- THUD!
 
         -- trading to any hatch toggles all doors zone-wide

@@ -56,7 +56,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.DIVINATION_SPHERE)
+                        npcUtil.tradeMatches(trade, xi.item.DIVINATION_SPHERE)
                     then
                         return quest:progressEvent(196)
                     end
@@ -67,7 +67,7 @@ quest.sections =
             {
                 [196] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -88,10 +88,10 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.AHRIMAN_LENS) then
+                    if npcUtil.tradeMatches(trade, xi.item.AHRIMAN_LENS) then
                         local progress = quest:getVar(player, 'Prog')
                         if progress == 0 then
-                            player:confirmTrade()
+                            player:tradeComplete()
                             quest:setVar(player, 'Prog', 1)
                             quest:setVar(player, 'Wait', GetSystemTime() + 60)
                             return quest:messageSpecial(mazeID.text.SUBMERGED_ITEM, xi.item.AHRIMAN_LENS)

@@ -29,7 +29,7 @@ local parcelItemIds =
 }
 
 local tradeOnEventFinish = function(player, csid, option, npc)
-    player:confirmTrade()
+    player:tradeComplete()
     quest:incrementVar(player, 'Prog', 1)
 end
 
@@ -79,7 +79,7 @@ quest.sections =
                     if
                         questProgress < 3 and
                         questProgress == quest:getVar(player, 'Option') and
-                        npcUtil.tradeHasExactly(trade, { { 'gil', 100 } })
+                        npcUtil.tradeMatches(trade, { { 'gil', 100 } })
                     then
                         return quest:progressEvent(608 + questProgress)
                     end
@@ -102,7 +102,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 0 and
-                        npcUtil.tradeHasExactly(trade, xi.item.PARCEL_FOR_THE_MAGIC_SHOP)
+                        npcUtil.tradeMatches(trade, xi.item.PARCEL_FOR_THE_MAGIC_SHOP)
                     then
                         return quest:progressEvent(535)
                     end
@@ -114,7 +114,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.PARCEL_FOR_THE_AUCTION_HOUSE)
+                        npcUtil.tradeMatches(trade, xi.item.PARCEL_FOR_THE_AUCTION_HOUSE)
                     then
                         return quest:progressEvent(540)
                     end
@@ -126,7 +126,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHasExactly(trade, xi.item.PARCEL_FOR_THE_PUB)
+                        npcUtil.tradeMatches(trade, xi.item.PARCEL_FOR_THE_PUB)
                     then
                         return quest:progressEvent(539)
                     end

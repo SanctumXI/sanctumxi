@@ -3,7 +3,6 @@
 -- Qu'Bia Arena KSNM(30), Lachesis Orb
 -- !additem 1178
 -----------------------------------
-local qubiaID = zones[xi.zone.QUBIA_ARENA]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -14,7 +13,7 @@ local content = Battlefield:new({
     index         = 2,
     entryNpc      = 'BC_Entrance',
     exitNpc       = 'Burning_Circle',
-    requiredItems = { xi.item.LACHESIS_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems = { xi.item.LACHESIS_ORB },
 })
 
 content:addEssentialMobs({ 'Fire_Pot', 'Ice_Pot', 'Air_Pot', 'Earth_Pot', 'Thunder_Pot', 'Water_Pot' })

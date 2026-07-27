@@ -15,7 +15,7 @@ local currencyExchangeData =
 entity.onTrade = function(player, npc, trade)
     for currencyType, exchangeMultiplier in pairs(currencyExchangeData) do
         if
-            npcUtil.tradeHasOnly(trade, currencyType) and
+            npcUtil.tradeMatches(trade, { { currencyType, trade:getItemCount() } }) and
             npcUtil.giveItem(player, { { currencyType - 1, trade:getItemCount() * exchangeMultiplier } })
         then
             player:tradeComplete()

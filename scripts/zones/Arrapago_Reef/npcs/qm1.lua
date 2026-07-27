@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, xi.item.GREENLING) and
+        npcUtil.tradeMatches(trade, xi.item.GREENLING) and
         npcUtil.popFromQM(player, npc, ID.mob.LIL_APKALLU, { message = ID.text.DRAWS_NEAR })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

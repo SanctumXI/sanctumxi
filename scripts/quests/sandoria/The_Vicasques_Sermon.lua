@@ -50,7 +50,7 @@ quest.sections =
             ['Abioleget'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { 'gil', 70 } }) then
+                    if npcUtil.tradeMatches(trade, { { 'gil', 70 } }) then
                         return quest:progressEvent(591)
                     end
                 end,
@@ -68,7 +68,7 @@ quest.sections =
             {
                 [591] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.POD_OF_BLUE_PEAS) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
@@ -83,7 +83,7 @@ quest.sections =
             ['Andelain'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.POD_OF_BLUE_PEAS) then
+                    if npcUtil.tradeMatches(trade, xi.item.POD_OF_BLUE_PEAS) then
                         if quest:getVar(player, 'Prog') == 1 then
                             return quest:messageName(eastRonfaureID.text.APPRECIATE_OFFER_DECLINE, xi.item.POD_OF_BLUE_PEAS)
                         else
@@ -108,7 +108,7 @@ quest.sections =
             {
                 [19] = function(player, csid, option, npc)
                     if quest:getVar(player, 'Prog') == 0 then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Prog', 1)
                     end
 

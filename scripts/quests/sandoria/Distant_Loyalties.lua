@@ -87,7 +87,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.MYTHRIL_INGOT, 1 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.MYTHRIL_INGOT, 1 } }) and
                         quest:getVar(player, 'Prog') == 1
                     then
                         return quest:progressEvent(317)
@@ -126,7 +126,7 @@ quest.sections =
                 end,
 
                 [317] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 2)
                     quest:setMustZone(player)
                 end,

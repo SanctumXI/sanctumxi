@@ -2,6 +2,7 @@
 -- Avatar Global Functions
 -----------------------------------
 require('scripts/globals/combat/physical_utilities')
+require('scripts/globals/ws_system')
 -----------------------------------
 xi = xi or {}
 xi.summon = xi.summon or {}
@@ -365,7 +366,8 @@ xi.summon.avatarFinalAdjustments = function(info, mob, skill, target, skilltype,
     end
 
     -- Calculate Blood Pact Damage before stoneskin
-    dmg = math.floor(dmg + dmg * mob:getMod(xi.mod.BP_DAMAGE) / 100)
+    local bloodPactDamageBonus = mob:getMod(xi.mod.BP_DAMAGE) + xi.wsEffect.getSpiritTakerSummonerPetDamageBonus(mob)
+    dmg = math.floor(dmg + dmg * bloodPactDamageBonus / 100)
 
     if dmg < 0 then
         return dmg

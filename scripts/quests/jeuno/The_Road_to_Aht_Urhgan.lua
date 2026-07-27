@@ -141,9 +141,9 @@ quest.sections =
                     if
                         quest:getVar(player, 'Prog') == 1 and
                         (
-                            npcUtil.tradeHasExactly(trade, beginnerList) or
-                            npcUtil.tradeHasExactly(trade, intermediateList) or
-                            npcUtil.tradeHasExactly(trade, chipList) or
+                            npcUtil.tradeMatches(trade, beginnerList) or
+                            npcUtil.tradeMatches(trade, intermediateList) or
+                            npcUtil.tradeMatches(trade, chipList) or
                             npcUtil.tradeSetInList(trade, advancedSingleList)
                         )
                     then
@@ -206,7 +206,7 @@ quest.sections =
                 end,
 
                 [10069] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setMustZone(player)
                     quest:setVar(player, 'Prog', 3)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)

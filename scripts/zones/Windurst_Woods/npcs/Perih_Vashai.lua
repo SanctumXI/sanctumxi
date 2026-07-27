@@ -11,7 +11,7 @@ entity.onTrade = function(player, npc, trade)
     -- FIRE AND BRIMSTONE
     if
         player:getCharVar('fireAndBrimstone') == 5 and
-        npcUtil.tradeHas(trade, xi.item.OLD_EARRING)
+        npcUtil.tradeMatches(trade, xi.item.OLD_EARRING)
     then
         -- old earring
         player:startEvent(537, 0, 13360)
@@ -97,7 +97,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         npcUtil.completeQuest(player, xi.questLog.WINDURST, xi.quest.id.windurst.FIRE_AND_BRIMSTONE, { item = 12518, var = 'fireAndBrimstone' })
     then
         -- complete quest RNG AF2
-        player:confirmTrade()
+        player:tradeComplete()
 
     -- UNBRIDLED PASSION
     elseif csid == 541 then -- start RNG AF3

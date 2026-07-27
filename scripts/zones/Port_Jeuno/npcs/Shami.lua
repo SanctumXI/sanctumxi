@@ -52,7 +52,7 @@ end
 ---@return integer?
 local function getOrbEvent(player, trade)
     for itemID, orbData in pairs(shamiOrbItems) do
-        if npcUtil.tradeHasExactly(trade, itemID) then
+        if npcUtil.tradeMatches(trade, itemID) then
             if player:getWornUses(itemID) > 0 then
                 return 22
             else
@@ -110,7 +110,7 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     -- Cracked orb was traded
     if csid == 22 then
-        player:confirmTrade()
+        player:tradeComplete()
 
     -- Retrieving Seals
     elseif

@@ -47,7 +47,7 @@ quest.sections =
             ['Lerene'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.SQUARE_OF_ANCESTRAL_CLOTH, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.SQUARE_OF_ANCESTRAL_CLOTH, 2 } }) then
                         return quest:progressEvent(24)
                     end
                 end,
@@ -62,7 +62,7 @@ quest.sections =
                     player:messageSpecial(outerRaKaznarID.text.YOU_HAVE_LEARNED, xi.ki.PULVERIZING)
 
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addKeyItem(xi.ki.PULVERIZING)
                     end
                 end,

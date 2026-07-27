@@ -3,7 +3,6 @@
 -- Balga's Dais BCNM40, Star Orb
 -- !additem 1131
 -----------------------------------
-local balgasID = zones[xi.zone.BALGAS_DAIS]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index            = 12,
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
-    requiredItems    = { xi.item.STAR_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.STAR_ORB },
 })
 
 content:addEssentialMobs({ 'Opo-opo_Monarch', 'Opo-opo_Heir', 'Myrmidon_Spo-spo', 'Myrmidon_Apu-apu', 'Myrmidon_Epa-epa' })

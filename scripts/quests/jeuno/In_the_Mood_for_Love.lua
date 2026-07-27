@@ -51,7 +51,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CHAMELEON_DIAMOND) then
+                    if npcUtil.tradeMatches(trade, xi.item.CHAMELEON_DIAMOND) then
                         return quest:progressEvent(10036, 0, xi.item.CHAMELEON_DIAMOND)
                     end
                 end,
@@ -60,7 +60,7 @@ quest.sections =
             {
                 [10036] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Option', 1)
                     end
                 end,

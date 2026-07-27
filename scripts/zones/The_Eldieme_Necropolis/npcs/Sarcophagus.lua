@@ -16,11 +16,11 @@ entity.onTrade = function(player, npc, trade)
     if
         player:getCharVar('TheRequiemCS') == 3 and
         player:getCharVar('TheRequiemYumKilled') == 0 and
-        npcUtil.tradeHas(trade, xi.item.FLASK_OF_HOLY_WATER) and
+        npcUtil.tradeMatches(trade, xi.item.FLASK_OF_HOLY_WATER) and
         offset == player:getCharVar('TheRequiemRandom') - 1 and
         npcUtil.popFromQM(player, npc, { ID.mob.YUM_KIMIL, ID.mob.YUM_KIMIL + 1, ID.mob.YUM_KIMIL + 2 }, { hide = 0 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.SENSE_OF_FOREBODING)
         player:setCharVar('TheRequiemAlreadyPoped', 1)
     else

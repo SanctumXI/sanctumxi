@@ -74,7 +74,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHas(trade, xi.item.IMPERIAL_BRONZE_PIECE)
+                        npcUtil.tradeMatches(trade, xi.item.IMPERIAL_BRONZE_PIECE)
                     then
                         return quest:progressEvent(850)
                     end
@@ -98,7 +98,7 @@ quest.sections =
                 end,
 
                 [850] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                 end,
             },
@@ -122,7 +122,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 5 and
-                        npcUtil.tradeHasExactly(trade, xi.item.BOWL_OF_NASHMAU_STEW)
+                        npcUtil.tradeMatches(trade, xi.item.BOWL_OF_NASHMAU_STEW)
                     then
                         return quest:progressEvent(311)
                     end
@@ -142,7 +142,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 4 and
-                        npcUtil.tradeHasExactly(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI })
+                        npcUtil.tradeMatches(trade, { xi.item.AHTAPOT, xi.item.ISTAKOZ, xi.item.ISTAVRIT_1, xi.item.ISTIRIDYE, xi.item.MERCANBALIGI })
                     then
                         return quest:progressEvent(310)
                     end
@@ -169,13 +169,13 @@ quest.sections =
 
                 [310] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.BOWL_OF_NASHMAU_STEW) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setVar(player, 'Prog', 5)
                     end
                 end,
 
                 [311] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 6)
                 end,
 

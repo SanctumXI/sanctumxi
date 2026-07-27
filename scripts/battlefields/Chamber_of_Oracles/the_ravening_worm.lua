@@ -16,7 +16,7 @@ local content = Battlefield:new({
     entryName        = 'The Ravening Worm',
     entryNpc         = 'SC_Entrance',
     exitNpc          = 'Shimmering_Circle',
-    requiredItems    = { xi.item.THEMIS_ORB, wearMessage = chamberOfOraclesID.text.A_CRACK_HAS_FORMED, wornMessage = chamberOfOraclesID.text.ORB_IS_CRACKED },
+    requiredItems    = { xi.item.THEMIS_ORB },
     armouryCrates    =
     {
         chamberOfOraclesID.mob.PURSON + 1,

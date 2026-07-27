@@ -77,7 +77,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         not player:hasKeyItem(xi.ki.TRADERS_SACK) and
-                        npcUtil.tradeHasExactly(trade, xi.item.QUADAV_CHARM)
+                        npcUtil.tradeMatches(trade, xi.item.QUADAV_CHARM)
                     then
                         return quest:progressEvent(1000)
                     end
@@ -93,7 +93,7 @@ quest.sections =
             onEventFinish =
             {
                 [1000] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.TRADERS_SACK)
                 end,
             },

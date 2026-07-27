@@ -28,7 +28,7 @@ quest.sections =
             ['Ghebi_Damomohe'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.TENSHODO_INVITE }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.TENSHODO_INVITE }) then
                         return quest:progressEvent(108)
                     end
                 end,

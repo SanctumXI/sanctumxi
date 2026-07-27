@@ -17,11 +17,11 @@ xi.chocoboRaising.onTrade = function(player, npc, trade)
     local chocoState    = xi.chocoboRaising.initChocoState(player)
 
     if
-        npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_EGG_FAINTLY_WARM) or
-        npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_EGG_SLIGHTLY_WARM) or
-        npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_EGG_A_BIT_WARM) or
-        npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_EGG_A_LITTLE_WARM) or
-        npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_EGG_SOMEWHAT_WARM)
+        npcUtil.tradeMatches(trade, xi.item.CHOCOBO_EGG_FAINTLY_WARM) or
+        npcUtil.tradeMatches(trade, xi.item.CHOCOBO_EGG_SLIGHTLY_WARM) or
+        npcUtil.tradeMatches(trade, xi.item.CHOCOBO_EGG_A_BIT_WARM) or
+        npcUtil.tradeMatches(trade, xi.item.CHOCOBO_EGG_A_LITTLE_WARM) or
+        npcUtil.tradeMatches(trade, xi.item.CHOCOBO_EGG_SOMEWHAT_WARM)
     then
         if chocoState == nil then
             -- Handed over egg, handled in onEventFinish and xi.chocoboRaising.newChocobo

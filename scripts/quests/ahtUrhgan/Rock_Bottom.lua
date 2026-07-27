@@ -45,13 +45,13 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, xi.item.PICKAXE)
+                        npcUtil.tradeMatches(trade, xi.item.PICKAXE)
                     then
                         return quest:progressEvent(8)
                     elseif
                         not player:needToZone() and
                         quest:getVar(player, 'Prog') == 2 and
-                        npcUtil.tradeHas(trade, { xi.item.MYTHRIL_PICK, xi.item.MYTHRIL_PICK_HQ }, true)
+                        npcUtil.tradeMatches(trade, { xi.item.MYTHRIL_PICK, xi.item.MYTHRIL_PICK_HQ }, true)
                     then
                         return quest:progressEvent(9, { [0] = trade:getItemId() })
                     end

@@ -121,7 +121,7 @@ xi.chocobo.renterOnTrade = function(player, npc, trade, eventSucceed, eventFail)
     })
 
     if
-        npcUtil.tradeHasExactly(trade, xi.item.FREE_CHOCOPASS) and
+        npcUtil.tradeMatches(trade, xi.item.FREE_CHOCOPASS) and
         validChocopassZones[zoneId] -- Chocopass does nothing for Non-Starter Cities
     then
         local currency = player:getGil()
@@ -129,7 +129,7 @@ xi.chocobo.renterOnTrade = function(player, npc, trade, eventSucceed, eventFail)
         player:setLocalVar('Chocopass', 1)
         player:setLocalVar('ChocopassDuration', 180)
         player:startEvent(eventSucceed, price, currency)
-    elseif npcUtil.tradeHasExactly(trade, xi.item.CHOCOBO_TICKET) then
+    elseif npcUtil.tradeMatches(trade, xi.item.CHOCOBO_TICKET) then
         if not info.past then -- Does nothing in past zones
             if
                 player:getMainLvl() >= 20 and

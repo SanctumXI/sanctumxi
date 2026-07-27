@@ -278,7 +278,7 @@ xi.piratesChart.onTrade = function(player, npc, trade)
         player:messageSpecial(valkID.text.ALLIANCE_NOT_ALLOWED)
     elseif
         npc:getStatus() == xi.status.NORMAL and
-        npcUtil.tradeHasExactly(trade, xi.item.PIRATES_CHART)
+        npcUtil.tradeMatches(trade, xi.item.PIRATES_CHART)
     then
         player:messageSpecial(valkID.text.RETURN_TO_SEA, xi.item.PIRATES_CHART)
         player:startEvent(14, 0, 0, 0, 3)
@@ -304,7 +304,7 @@ xi.piratesChart.onEventUpdate = function(player, csid, option, npc)
         return
     end
 
-    player:confirmTrade()
+    player:tradeComplete()
     player:setLocalVar('pChartActive', 1)
     npc:setLocalVar('pChartSpawnerID', player:getID())
     barnacledBox:setLocalVar('pChartSpawnerID', player:getID())

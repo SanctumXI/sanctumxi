@@ -17,7 +17,7 @@ end
 
 function quest.unlockingMyth.onTrade(player, npc, trade)
     for jobID, wepId in pairs(xi.nyzul.baseWeapons) do
-        if npcUtil.tradeHasExactly(trade, wepId) then
+        if npcUtil.tradeMatches(trade, wepId) then
             local unlockingAMyth = player:getQuestStatus(xi.questLog.JEUNO, quest.unlockingMyth.getQuestId(jobID))
             if unlockingAMyth == xi.questStatus.QUEST_ACCEPTED then
                 local wsPoints = trade:getItem(0):getWeaponskillPoints()

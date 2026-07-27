@@ -15,7 +15,7 @@ local content = Battlefield:new({
     index         = 12,
     entryNpc      = 'BC_Entrance',
     exitNpc       = 'Burning_Circle',
-    requiredItems = { xi.item.STAR_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems = { xi.item.STAR_ORB },
     armouryCrates =
     {
         qubiaID.mob.GHUL_I_BEABAN + 2,

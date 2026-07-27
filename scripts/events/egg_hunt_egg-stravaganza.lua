@@ -401,7 +401,7 @@ local getTradeInReward = function(player, trade)
     for _, tradeType in pairs(tradeInReward) do
         if tradeType.itemsAccepted ~= nil then
             for _, items in pairs(tradeType.itemsAccepted) do
-                if npcUtil.tradeHasExactly(trade, items) then
+                if npcUtil.tradeMatches(trade, items) then
                     return rollRewardAmount(tradeType.rewardAmount)
                 end
             end
@@ -410,7 +410,7 @@ local getTradeInReward = function(player, trade)
         if tradeType.conditional ~= nil then
             for _, items in pairs(tradeType.conditional) do
                 if
-                    npcUtil.tradeHasExactly(trade, items[2]) and
+                    npcUtil.tradeMatches(trade, items[2]) and
                     items[1] -- Check trade condition, eg. settings
                 then
                     return rollRewardAmount(tradeType.rewardAmount)
@@ -438,7 +438,7 @@ local tradeIn = function(player, npc, trade, zoneID)
         end
 
         if npcUtil.giveItem(player, reward) then
-            player:confirmTrade()
+            player:tradeComplete()
             player:setVar(settings.VAR.DAILY_BONUS, VanadielUniqueDay())
         end
 
@@ -452,7 +452,7 @@ local firstThree = function(player, npc, trade)
     local charName = player:getName()
 
     if
-        npcUtil.tradeHasExactly(trade, {
+        npcUtil.tradeMatches(trade, {
             xi.events.eggHunt.charToEgg(string.sub(charName, 1, 1)),
             xi.events.eggHunt.charToEgg(string.sub(charName, 2, 2)),
             xi.events.eggHunt.charToEgg(string.sub(charName, 3, 3)),
@@ -476,7 +476,7 @@ local sevenKind = function(player, npc, trade)
     end
 
     for letterOffset = 0, 26 do
-        if npcUtil.tradeHasExactly(trade, { { xi.item.A_EGG + letterOffset, 7 } }) then
+        if npcUtil.tradeMatches(trade, { { xi.item.A_EGG + letterOffset, 7 } }) then
             if not player:hasItem(xi.item.FORTUNE_EGG) then
                 return xi.item.FORTUNE_EGG
             end
@@ -509,7 +509,7 @@ local straightEight = function(player, npc, trade)
         end
     end
 
-    if npcUtil.tradeHasExactly(trade, eggs) then
+    if npcUtil.tradeMatches(trade, eggs) then
         if not player:hasItem(xi.item.HAPPY_EGG) then
             return xi.item.HAPPY_EGG
         end
@@ -564,14 +564,14 @@ local regionControl = function(player, npc, trade)
     end
 
     for regionID, regionName in pairs(regionNames) do
-        if npcUtil.tradeHasExactly(trade, regionName) then
+        if npcUtil.tradeMatches(trade, regionName) then
             local owner = GetRegionOwner(regionID - 1)
 
             -- Beastmen controlled
             if owner == 3 then
                 local costume = beastCostumes[math.randomInt(1, #beastCostumes)]
                 player:addStatusEffect(xi.effect.COSTUME, { power = costume, duration = utils.minutes(60), origin = player })
-                player:confirmTrade()
+                player:tradeComplete()
 
                 return
             else
@@ -653,7 +653,7 @@ local weekDay = function(player, npc, trade)
 
     local elementDay = elementNames[VanadielDayElement()]
 
-    if npcUtil.tradeHasExactly(trade, elementDay[1]) then
+    if npcUtil.tradeMatches(trade, elementDay[1]) then
         if player:hasItem(xi.item.ORPHIC_EGG) then
             return elementDay[2] -- Colored Drop
         else
@@ -673,7 +673,7 @@ local eraCombo =
 }
 
 local testEraCombo = function(player, npc, trade, combo, rewardQty)
-    if npcUtil.tradeHasExactly(trade, combo[1]) then
+    if npcUtil.tradeMatches(trade, combo[1]) then
         if rewardQty then
             local qty = math.randomInt(rewardQty[1], rewardQty[2])
             return { { combo[2], qty } }
@@ -771,7 +771,7 @@ for bonusWord, rewardItem in pairs(settings.BONUS_WORDS) do
     table.insert(xi.events.eggHunt.combos,
     {
         check = function(player, npc, trade)
-            if npcUtil.tradeHasExactly(trade, customEggs) then
+            if npcUtil.tradeMatches(trade, customEggs) then
                 return rewardItem
             end
         end,
@@ -890,7 +890,7 @@ xi.events.eggHunt.onTrade = function(player, npc, trade)
 
             -- Attempt to give item
             if npcUtil.giveItem(player, reward) then
-                player:confirmTrade()
+                player:tradeComplete()
 
                 -- One reward per day
                 player:setVar(settings.VAR.DAILY_REWARD, VanadielUniqueDay())

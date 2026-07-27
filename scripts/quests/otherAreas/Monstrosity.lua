@@ -39,7 +39,7 @@ local suspiciousCityNpc =
 
         for _, entry in ipairs(tradeItems) do
             local itemId = entry[1]
-            if npcUtil.tradeHasExactly(trade, itemId) then
+            if npcUtil.tradeMatches(trade, itemId) then
                 player:setLocalVar('MONSTROSITY_UNLOCK', entry[2])
                 return quest:progressEvent(baseNpcEvents[player:getZoneID()] + 1, itemId)
             end

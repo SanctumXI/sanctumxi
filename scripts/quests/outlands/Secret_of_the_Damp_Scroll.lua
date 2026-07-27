@@ -54,7 +54,7 @@ quest.sections =
             ['Hot_Springs'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.DAMP_SCROLL) then
+                    if npcUtil.tradeMatches(trade, xi.item.DAMP_SCROLL) then
                         return quest:progressEvent(2, xi.item.DAMP_SCROLL)
                     end
                 end,
@@ -64,7 +64,7 @@ quest.sections =
             {
                 [2] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

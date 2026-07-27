@@ -68,7 +68,7 @@ quest.sections =
             ['Abeaule'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.CLUMP_OF_BATAGREENS) then
+                    if npcUtil.tradeMatches(trade, xi.item.CLUMP_OF_BATAGREENS) then
                         return quest:progressEvent(525)
                     end
                 end,
@@ -82,7 +82,7 @@ quest.sections =
             {
                 [525] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
@@ -108,13 +108,13 @@ quest.sections =
                 -- completed, should the player have purchased a batagreen, or picked up
                 -- an additional order prior to completion.
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SUPPLIES_ORDER) then
+                    if npcUtil.tradeMatches(trade, xi.item.SUPPLIES_ORDER) then
                         return quest:progressEvent(124)
                     elseif
-                        npcUtil.tradeHas(trade, { { 'gil', 50 } }) and
+                        npcUtil.tradeMatches(trade, { { 'gil', 50 } }) and
                         npcUtil.giveItem(player, xi.item.CLUMP_OF_BATAGREENS)
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                     -- Rejection for invalid trades only occurs after supplies order has been
                     -- traded, or the quest has been completed.
@@ -140,7 +140,7 @@ quest.sections =
             {
                 [124] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.CLUMP_OF_BATAGREENS) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         if player:getQuestStatus(quest.areaId, quest.questId) == xi.questStatus.QUEST_ACCEPTED then
                             quest:setVar(player, 'Prog', 2)

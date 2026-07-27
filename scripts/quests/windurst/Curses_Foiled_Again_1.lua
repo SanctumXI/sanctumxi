@@ -46,7 +46,7 @@ quest.sections =
             ['Shantotto'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.PINCH_OF_BOMB_ASH, { xi.item.BONE_CHIP, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.PINCH_OF_BOMB_ASH, { xi.item.BONE_CHIP, 2 } }) then
                         return quest:progressEvent(173, 0, 0, 0, 0, 0, 0, xi.item.PINCH_OF_BOMB_ASH, xi.item.BONE_CHIP)
                     end
                 end,
@@ -58,7 +58,7 @@ quest.sections =
             {
                 [173] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         xi.quest.setVar(player, xi.questLog.WINDURST, xi.quest.id.windurst.CURSES_FOILED_AGAIN_2, 'Timer', VanadielUniqueDay() + 1)
 

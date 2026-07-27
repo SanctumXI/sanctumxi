@@ -114,7 +114,7 @@ quest.sections =
             ['Totoroon'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.BOWL_OF_SUTLAC) then
+                    if npcUtil.tradeMatches(trade, xi.item.BOWL_OF_SUTLAC) then
                         return quest:progressEvent(304)
                     end
                 end,
@@ -127,7 +127,7 @@ quest.sections =
             onEventFinish =
             {
                 [304] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 3)
                 end,
             },

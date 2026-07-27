@@ -54,7 +54,7 @@ quest.sections =
                 onTrigger = quest:event(11),
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.VIAL_OF_BEASTMAN_BLOOD) then
+                    if npcUtil.tradeMatches(trade, xi.item.VIAL_OF_BEASTMAN_BLOOD) then
                         return quest:progressEvent(12)
                     end
                 end,
@@ -64,7 +64,7 @@ quest.sections =
             {
                 [12] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

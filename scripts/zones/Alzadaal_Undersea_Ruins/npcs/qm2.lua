@@ -10,11 +10,11 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.WEDGE_OF_RODENT_CHEESE) and
+        npcUtil.tradeMatches(trade, xi.item.WEDGE_OF_RODENT_CHEESE) and
         npcUtil.popFromQM(player, npc, ID.mob.CHEESE_HOARDER_GIGIROON)
     then
         -- Trade Rodent Cheese
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.DRAWS_NEAR)
     end
 end

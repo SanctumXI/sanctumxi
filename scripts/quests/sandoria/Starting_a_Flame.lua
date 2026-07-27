@@ -39,7 +39,7 @@ quest.sections =
             ['Legata'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.FLINT_STONE, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.FLINT_STONE, 4 } }) then
                         return quest:progressEvent(36)
                     end
                 end,
@@ -63,7 +63,7 @@ quest.sections =
                     end
 
                     npcUtil.giveCurrency(player, 'gil', 100)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

@@ -45,7 +45,7 @@ quest.sections =
             ['Chalvatot'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.CHUNK_OF_DERFLAND_HUMUS) then
+                    if npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_DERFLAND_HUMUS) then
                         return quest:progressEvent(83)
                     end
                 end,
@@ -57,7 +57,7 @@ quest.sections =
             {
                 [83] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

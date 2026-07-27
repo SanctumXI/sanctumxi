@@ -93,7 +93,7 @@ xi.job_utils.dark_knight.useDarkSeal = function(player, target, ability, action)
     -- local power    = player:getMerit(xi.merit.DARK_SEAL) - 10
     local subPower = player:getMerit(xi.merit.DARK_SEAL) * (player:getMod(xi.mod.ENHANCES_DARK_SEAL) / 10)
   
-    player:addStatusEffect(xi.effect.DARK_SEAL, { power = 1, duration = 60, origin = player, subPower = subPower })
+    player:addStatusEffect(xi.effect.DARK_SEAL, { power = 1, duration = 30, origin = player, subPower = subPower })
 
     return xi.effect.DARK_SEAL
 end
@@ -183,6 +183,12 @@ xi.job_utils.dark_knight.useWeaponBash = function(player, target, ability, actio
 
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
+
+    -- Weapon Bash empowers the next Elemental Magic spell cast within 60 seconds.
+    if player:getMainJob() == xi.job.DRK then
+        xi.wsEffect.set(player, xi.wsEffect.WEAPON_BASH_ELEMENTAL, 25, 60)
+        xi.wsEffect.message(player, 'Your next elemental spell is empowered.')
+    end
 
     -- Stun.
     if

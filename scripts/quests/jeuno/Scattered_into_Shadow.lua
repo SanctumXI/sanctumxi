@@ -142,7 +142,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         npc:getStatus() == xi.status.NORMAL and
-                        npcUtil.tradeHasExactly(trade, xi.item.BEAST_COLLAR)
+                        npcUtil.tradeMatches(trade, xi.item.BEAST_COLLAR)
                     then
                         player:tradeComplete()
                         quest:setVar(player, 'Prog', 5)

@@ -9,12 +9,12 @@ local ID = zones[xi.zone.ARRAPAGO_REMNANTS]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.BHAFLAU_CARD) then
+    if npcUtil.tradeMatches(trade, xi.item.BHAFLAU_CARD) then
         local instance = npc:getInstance()
 
         if instance then
             SpawnMob(ID.mob[2][2].princess, instance):updateClaim(player)
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

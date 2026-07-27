@@ -53,9 +53,9 @@ quest.sections =
             ['Koru-Moru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.TORN_EPISTLE) then
+                    if npcUtil.tradeMatches(trade, xi.item.TORN_EPISTLE) then
                         return quest:progressEvent(199)
-                    elseif npcUtil.tradeHasExactly(trade, xi.item.METEORITE) then
+                    elseif npcUtil.tradeMatches(trade, xi.item.METEORITE) then
                         return quest:progressEvent(211)
                     end
                 end,
@@ -68,13 +68,13 @@ quest.sections =
             onEventFinish =
             {
                 [199] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveCurrency(player, 'gil', 50)
                 end,
 
                 [211] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         xi.quest.setMustZone(player, xi.questLog.WINDURST, xi.quest.id.windurst.BLAST_FROM_THE_PAST)
                     end

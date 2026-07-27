@@ -55,7 +55,7 @@ quest.sections =
             ['qm2'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LUMP_OF_ORIENTAL_STEEL) then
+                    if npcUtil.tradeMatches(trade, xi.item.LUMP_OF_ORIENTAL_STEEL) then
                         if player:checkDistance(npc) > 1.6 then
                             return quest:messageSpecial(konschtatID.text.BLACKENED_MUST_BE_CLOSER)
                         elseif
@@ -70,7 +70,7 @@ quest.sections =
                             end
 
                             forgerMob:updateClaim(player)
-                            player:confirmTrade()
+                            player:tradeComplete()
 
                             -- QM is visible, but cannot be used to spawn Forger again until two minutes have elapsed
                             -- since the NM despawns.
@@ -104,7 +104,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.CHUNK_OF_DARKSTEEL_ORE) and
+                        npcUtil.tradeMatches(trade, xi.item.CHUNK_OF_DARKSTEEL_ORE) and
                         quest:isVarBitsSet(player, 'Option', 0)
                     then
                         return quest:progressEvent(47, 0, xi.item.LUMP_OF_ORIENTAL_STEEL, xi.item.CHUNK_OF_DARKSTEEL_ORE)
@@ -133,7 +133,7 @@ quest.sections =
             ['Jaucribaix'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.LUMP_OF_BOMB_STEEL, xi.item.SACRED_BRANCH }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.LUMP_OF_BOMB_STEEL, xi.item.SACRED_BRANCH }) then
                         return quest:progressEvent(27)
                     end
                 end,
@@ -157,7 +157,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.CHUNK_OF_GOLD_ORE, 2 }, xi.item.CHUNK_OF_PLATINUM_ORE }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.CHUNK_OF_GOLD_ORE, 2 }, xi.item.CHUNK_OF_PLATINUM_ORE }) and
                         quest:isVarBitsSet(player, 'Option', 1)
                     then
                         return quest:progressEvent(43, 0, 0, xi.item.CHUNK_OF_PLATINUM_ORE, xi.item.CHUNK_OF_GOLD_ORE)
@@ -185,7 +185,7 @@ quest.sections =
             {
                 [27] = function(player, csid, option, npc)
                     -- TODO: Add constant for Vana'diel day in seconds, this is a three game day wait.
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'waitTime', GetSystemTime() + 60)
                 end,
 
@@ -204,7 +204,7 @@ quest.sections =
 
                 [43] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.SACRED_SPRIG) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
@@ -216,7 +216,7 @@ quest.sections =
 
                 [47] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.LUMP_OF_ORIENTAL_STEEL) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -235,7 +235,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.HATCHET) and
+                        npcUtil.tradeMatches(trade, xi.item.HATCHET) and
                         player:hasItem(xi.item.SACRED_SPRIG)
                     then
                         if
@@ -250,7 +250,7 @@ quest.sections =
                             end
 
                             treantMob:updateClaim(player)
-                            player:confirmTrade()
+                            player:tradeComplete()
 
                             -- QM is visible, but cannot be used to spawn Forger again until ten minutes have elapsed
                             -- since the NM despawns.
@@ -265,12 +265,12 @@ quest.sections =
                             return quest:messageSpecial(zitahID.text.SENSE_STRONG_EVIL_PRESENCE)
                         end
                     elseif
-                        npcUtil.tradeHasExactly(trade, xi.item.SACRED_SPRIG) and
+                        npcUtil.tradeMatches(trade, xi.item.SACRED_SPRIG) and
                         quest:getVar(player, 'Prog') == 1 and
                         npcUtil.giveItem(player, xi.item.SACRED_BRANCH)
                     then
                         quest:setVar(player, 'Prog', 2)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         return quest:messageSpecial(zitahID.text.STRANGE_FORCE_VANISHED, xi.item.SACRED_BRANCH)
                     end
                 end,

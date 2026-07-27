@@ -58,7 +58,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.HEAVY_QUADAV_CHESTPLATE, xi.item.HEAVY_QUADAV_BACKPLATE }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.HEAVY_QUADAV_CHESTPLATE, xi.item.HEAVY_QUADAV_BACKPLATE }) then
                         return quest:progressEvent(41)
                     end
                 end,
@@ -67,7 +67,7 @@ quest.sections =
             onEventFinish =
             {
                 [41] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                     player:setLocalVar('Quest[7][14]NeedToZone', 1)
                 end,

@@ -78,10 +78,10 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'tradeCompleted') == 0 and
-                        npcUtil.tradeHasExactly(trade, xi.item.SEASONING_STONE)
+                        npcUtil.tradeMatches(trade, xi.item.SEASONING_STONE)
                     then
                         quest:setVar(player, 'tradeCompleted', 1)
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         return quest:progressEvent(10045, 0, 1, 5, 0)
                     end

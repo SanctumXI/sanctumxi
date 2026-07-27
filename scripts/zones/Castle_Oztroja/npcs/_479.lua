@@ -13,12 +13,12 @@ entity.onTrade = function(player, npc, trade)
     local zPos = player:getZPos()
 
     if
-        npcUtil.tradeHas(trade, xi.item.JUDGMENT_KEY) and
+        npcUtil.tradeMatches(trade, xi.item.JUDGMENT_KEY) and
         player:hasKeyItem(xi.ki.BALGA_CHAMPION_CERTIFICATE) and
         zPos >= 80 and zPos < 86
     then
         npc:openDoor(2.5)
-        player:confirmTrade()
+        player:tradeComplete()
     else
         player:messageSpecial(ID.text.ITS_LOCKED)
     end

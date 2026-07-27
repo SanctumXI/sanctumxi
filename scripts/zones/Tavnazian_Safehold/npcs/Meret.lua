@@ -34,7 +34,7 @@ local trades =
 entity.onTrade = function(player, npc, trade)
     if player:getQuestStatus(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.IN_THE_NAME_OF_SCIENCE) == xi.questStatus.QUEST_COMPLETED then
         for k, v in pairs(trades) do
-            if npcUtil.tradeHasExactly(trade, k) then
+            if npcUtil.tradeMatches(trade, k) then
                 player:setLocalVar('meretReward', v)
                 player:startEvent(586, k, v)
                 break
@@ -62,7 +62,7 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:setLocalVar('meretReward', 0)
 
         if npcUtil.giveItem(player, option) then
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

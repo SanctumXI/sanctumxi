@@ -32,7 +32,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHas(trade, xi.item.SLICE_OF_HARE_MEAT)
+                        npcUtil.tradeMatches(trade, xi.item.SLICE_OF_HARE_MEAT)
                     then
                         return quest:progressEvent(531)
                     else
@@ -54,7 +54,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         quest:getVar(player, 'Prog') == 1 and
-                        npcUtil.tradeHasExactly(trade, { { xi.item.SLICE_OF_HARE_MEAT, 5 } })
+                        npcUtil.tradeMatches(trade, { { xi.item.SLICE_OF_HARE_MEAT, 5 } })
                     then
                         return quest:progressEvent(528)
                     else
@@ -78,7 +78,7 @@ quest.sections =
                 [528] = function(player, csid, option, npc)
                     quest:begin(player)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         -- This variable is set after quest has been cleared, and is cleaned
                         -- up after receiving Grilled Hare item from Antreneau.

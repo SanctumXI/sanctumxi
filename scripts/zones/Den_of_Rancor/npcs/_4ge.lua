@@ -13,7 +13,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     -- Early return: No correct item in trade.
-    if not npcUtil.tradeHas(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
+    if not npcUtil.tradeMatches(trade, xi.item.RANCOR_FLAME) then -- Rancor Flame
         return
     end
 
@@ -29,7 +29,7 @@ entity.onTrade = function(player, npc, trade)
         return
     end
 
-    player:confirmTrade()
+    player:tradeComplete()
     player:addItem(xi.item.UNLIT_LANTERN) -- return unlit lantern
 
     local offset = denOfRancorID.npc.LANTERN_OFFSET + 15

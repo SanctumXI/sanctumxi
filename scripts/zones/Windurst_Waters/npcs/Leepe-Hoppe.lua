@@ -66,7 +66,7 @@ end
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, { 1696, 1697, 1698 }) and -- Magicked Steel Ingot, Spruce Lumber, Extra-fine File
+        npcUtil.tradeMatches(trade, { 1696, 1697, 1698 }) and -- Magicked Steel Ingot, Spruce Lumber, Extra-fine File
         player:getQuestStatus(xi.questLog.WINDURST, xi.quest.id.windurst.TUNING_IN) == xi.questStatus.QUEST_ACCEPTED
     then
         player:startEvent(886)

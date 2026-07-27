@@ -33,7 +33,7 @@ quest.sections =
             ['Kerutoto'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.PURPLE_RIBBON) then
+                    if npcUtil.tradeMatches(trade, xi.item.PURPLE_RIBBON) then
                         return quest:progressEvent(358, 3600)
                     end
                 end,
@@ -52,7 +52,7 @@ quest.sections =
                 end,
 
                 [358] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:addGil(3600)
                     quest:begin(player)
                     quest:setVar(player, 'Prog', 0)
@@ -110,11 +110,11 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.PURPLE_RIBBON) and
+                        npcUtil.tradeMatches(trade, xi.item.PURPLE_RIBBON) and
                         quest:getVar(player, 'Prog') == 1 and
                         npcUtil.popFromQM(player, npc, eldiemeID.mob.LICH_C_MAGNUS, { hide = 0 })
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         return quest:messageSpecial(eldiemeID.text.RETURN_RIBBON_TO_HER)
                     end
                 end,
@@ -152,7 +152,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.PURPLE_RIBBON) and
+                        npcUtil.tradeMatches(trade, xi.item.PURPLE_RIBBON) and
                         quest:getVar(player, 'Prog') == 1
                     then
                         return quest:progressEvent(365)
@@ -189,7 +189,7 @@ quest.sections =
                 end,
 
                 [365] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 0)
                     quest:setVar(player, 'Timer', GetSystemTime() + 60)
                 end,

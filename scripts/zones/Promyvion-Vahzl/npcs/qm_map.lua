@@ -12,7 +12,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHas(trade, xi.item.WHITE_MEMOSPHERE) and
+        npcUtil.tradeMatches(trade, xi.item.WHITE_MEMOSPHERE) and
         not player:hasKeyItem(xi.ki.MAP_OF_PROMYVION_VAHZL)
     then
         player:startEvent(48)
@@ -31,7 +31,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 48 then
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.MAP_OF_PROMYVION_VAHZL)
     end
 end

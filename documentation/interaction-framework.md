@@ -212,7 +212,7 @@ Below is a more-exhaustive mock example of how a section can be set up, and it t
             end,
 
             onTrade = function(player, npc, trade)
-                if npcUtil.tradeHasExactly(trade, xi.items.SOME_ITEM) then
+                if npcUtil.tradeMatches(trade, { { xi.item.SOME_ITEM, 1 } }) then
                     return quest:progressEvent(111)
                 end
             end,
@@ -225,6 +225,7 @@ Below is a more-exhaustive mock example of how a section can be set up, and it t
             end,
 
             [111] = function(player, csid, option, npc)
+                player:tradeComplete()
                 quest:setVar(player, 'Prog', 2)
             end,
         },

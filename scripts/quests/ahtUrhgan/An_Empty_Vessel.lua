@@ -111,7 +111,7 @@ quest.sections =
                     local requiredItem = quest:getVar(player, 'Option')
 
                     if
-                        npcUtil.tradeHasExactly(trade, requiredItemList[requiredItem]) and
+                        npcUtil.tradeMatches(trade, requiredItemList[requiredItem]) and
                         quest:getVar(player, 'Prog') == 1
                     then
                         return quest:progressEvent(67, requiredItemList[requiredItem])

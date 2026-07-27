@@ -119,7 +119,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         not player:hasTitle(xi.title.FAMILY_COUNSELOR) and
-                        npcUtil.tradeHasExactly(trade, xi.item.WILLOW_FISHING_ROD)
+                        npcUtil.tradeMatches(trade, xi.item.WILLOW_FISHING_ROD)
                     then
                         return quest:progressEvent(61)
                     end
@@ -138,7 +138,7 @@ quest.sections =
             onEventFinish =
             {
                 [61] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:addTitle(xi.title.FAMILY_COUNSELOR)
                 end,
             },

@@ -53,7 +53,7 @@ quest.sections =
             ['Traiffeaux'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, requiredTradeItems) then
+                    if npcUtil.tradeMatches(trade, requiredTradeItems) then
                         -- NOTE: This event may cause Windower to hang part-way through.
 
                         return quest:progressEvent(26)
@@ -70,7 +70,7 @@ quest.sections =
                     player:messageSpecial(kamihrID.text.YOU_HAVE_LEARNED, xi.ki.FRAGMENTING)
 
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addKeyItem(xi.ki.FRAGMENTING)
                     end
                 end,

@@ -11,7 +11,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getCharVar('UnderOathCS') == 5 and
-        npcUtil.tradeHas(trade, xi.item.WELL_WEIGHT)
+        npcUtil.tradeMatches(trade, xi.item.WELL_WEIGHT)
     then
         player:startEvent(113)
     else
@@ -41,7 +41,7 @@ end
 
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 113 then
-        player:confirmTrade()
+        player:tradeComplete()
         npcUtil.giveKeyItem(player, xi.ki.KNIGHTS_CONFESSION)
         player:setCharVar('UnderOathCS', 6)
         player:delKeyItem(xi.ki.STRANGE_SHEET_OF_PAPER)

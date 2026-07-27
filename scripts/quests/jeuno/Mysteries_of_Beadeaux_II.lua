@@ -27,7 +27,7 @@ quest.sections =
             ['Sattal-Mansal'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.QUADAV_AUGURY_SHELL) then
+                    if npcUtil.tradeMatches(trade, xi.item.QUADAV_AUGURY_SHELL) then
                         return quest:progressEvent(92)
                     end
                 end,
@@ -37,7 +37,7 @@ quest.sections =
             {
                 [92] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

@@ -98,7 +98,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.CRAWLER_EGG, 4 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.CRAWLER_EGG, 4 } }) then
                         return quest:progressEvent(92) -- Quest completed.
                     else
                         local count      = trade:getItemCount()

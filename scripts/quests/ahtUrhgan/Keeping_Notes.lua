@@ -46,7 +46,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.SHEET_OF_PARCHMENT, xi.item.JAR_OF_BLACK_INK }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.SHEET_OF_PARCHMENT, xi.item.JAR_OF_BLACK_INK }) then
                         return quest:progressEvent(11)
                     else
                         return quest:event(14)
@@ -58,7 +58,7 @@ quest.sections =
             {
                 [11] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         local mhflag = player:getMoghouseFlag()
                         player:setMoghouseFlag(mhflag + 0x0010)
                     end
@@ -82,7 +82,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SHEET_OF_PARCHMENT) then
+                    if npcUtil.tradeMatches(trade, xi.item.SHEET_OF_PARCHMENT) then
                         return quest:event(13)
                     else
                         return quest:event(14)

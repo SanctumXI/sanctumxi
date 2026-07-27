@@ -107,7 +107,7 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if
                         player:hasKeyItem(xi.ki.CHARRED_HELM) and
-                        npcUtil.tradeHasExactly(trade, xi.item.SPOOL_OF_GOLD_THREAD)
+                        npcUtil.tradeMatches(trade, xi.item.SPOOL_OF_GOLD_THREAD)
                     then
                         return quest:progressEvent(162)
                     end
@@ -139,7 +139,7 @@ quest.sections =
                 end,
 
                 [162] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.CHARRED_HELM)
                     quest:setVar(player, 'Prog', 9)
                     quest:setMustZone(player)

@@ -47,10 +47,10 @@ entity.onTrade = function(player, npc, trade)
         if rabbit then
             rabbit:setSpawn(x, y, z, 0)
             if
-                npcUtil.tradeHas(trade, xi.item.SAN_DORIAN_CARROT) and
+                npcUtil.tradeMatches(trade, xi.item.SAN_DORIAN_CARROT) and
                 npcUtil.popFromQM(player, npc, coney)
             then
-                player:confirmTrade()
+                player:tradeComplete()
             end
         end
     end

@@ -10,10 +10,10 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if
-        npcUtil.tradeHasExactly(trade, xi.item.CELADON_YGGRETE_SHARD_I) and
+        npcUtil.tradeMatches(trade, xi.item.CELADON_YGGRETE_SHARD_I) and
         npcUtil.popFromQM(player, npc, ID.mob.UNFETTERED_TWITHERYM, { radius = 1 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
         player:messageSpecial(ID.text.MONSTER_APPEAR)
     end
 end

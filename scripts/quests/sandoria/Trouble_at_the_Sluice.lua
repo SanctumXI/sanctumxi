@@ -78,7 +78,7 @@ quest.sections =
             ['Novalmauge'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.DAHLIA) then
+                    if npcUtil.tradeMatches(trade, xi.item.DAHLIA) then
                         return quest:progressEvent(17)
                     end
                 end,
@@ -90,7 +90,7 @@ quest.sections =
             {
                 [17] = function(player, csid, option, npc)
                     if npcUtil.giveKeyItem(player, xi.ki.NEUTRALIZER) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

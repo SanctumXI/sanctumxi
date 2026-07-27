@@ -3,7 +3,6 @@
 -- Qu'Bia Arena BCNM50, Comet Orb
 -- !additem 1177
 -----------------------------------
-local qubiaID = zones[xi.zone.QUBIA_ARENA]
 -----------------------------------
 
 local content = Battlefield:new({
@@ -15,7 +14,7 @@ local content = Battlefield:new({
     index         = 14,
     entryNpc      = 'BC_Entrance',
     exitNpc       = 'Burning_Circle',
-    requiredItems = { xi.item.COMET_ORB, wearMessage = qubiaID.text.A_CRACK_HAS_FORMED, wornMessage = qubiaID.text.ORB_IS_CRACKED },
+    requiredItems = { xi.item.COMET_ORB },
 })
 
 content:addEssentialMobs({ 'Fire_Golem', 'Water_Golem', 'Wind_Golem', 'Earth_Golem' })

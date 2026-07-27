@@ -12,7 +12,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.questLog.SANDORIA, xi.quest.id.sandoria.PIEUJES_DECISION) == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHasExactly(trade, xi.item.TAVNAZIAN_MASK)
+        npcUtil.tradeMatches(trade, xi.item.TAVNAZIAN_MASK)
     then
         player:startEvent(692)
     end

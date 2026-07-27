@@ -30,7 +30,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.RIPPED_CAP) then
+                    if npcUtil.tradeMatches(trade, xi.item.RIPPED_CAP) then
                         return quest:progressEvent(292)
                     end
                 end,
@@ -61,7 +61,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.SAILORS_CAP) then
+                    if npcUtil.tradeMatches(trade, xi.item.SAILORS_CAP) then
                         return quest:progressEvent(295)
                     end
                 end,
@@ -71,7 +71,7 @@ quest.sections =
             {
                 [295] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                     end
                 end,
@@ -99,12 +99,12 @@ quest.sections =
 
                     if
                         progress == 0 and
-                        npcUtil.tradeHas(trade, xi.item.RIPPED_CAP)
+                        npcUtil.tradeMatches(trade, xi.item.RIPPED_CAP)
                     then
                         return quest:progressEvent(547, 0, xi.item.DHALMEL_HIDE)
                     elseif
                         progress >= 1 and
-                        npcUtil.tradeHas(trade, { { xi.item.DHALMEL_HIDE, 4 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.DHALMEL_HIDE, 4 } }) and
                         not player:hasItem(xi.item.SAILORS_CAP)
                     then
                         if progress == 1 then
@@ -119,18 +119,18 @@ quest.sections =
             onEventFinish =
             {
                 [547] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                 end,
 
                 [549] = function(player, csid, option, npc)
                     if option == 0 then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         npcUtil.giveItem(player, xi.item.SAILORS_CAP)
                         npcUtil.giveItem(player, xi.item.DHALMEL_MANTLE)
                         quest:setVar(player, 'Prog', 2)
                     elseif option == 1 then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         npcUtil.giveItem(player, xi.item.SAILORS_CAP)
                     end
                 end,

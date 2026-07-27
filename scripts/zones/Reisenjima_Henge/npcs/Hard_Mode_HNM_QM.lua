@@ -90,7 +90,7 @@ entity.onTrade = function(player, npc, trade)
         return
     end
 
-    if not npcUtil.tradeHasExactly(trade, requiredItems) then
+    if not npcUtil.tradeMatches(trade, requiredItems) then
         player:printToPlayer('Trade exactly one Fire Crystal and one Earth Crystal.')
         return
     end
@@ -101,7 +101,7 @@ entity.onTrade = function(player, npc, trade)
         return
     end
 
-    player:confirmTrade()
+    player:tradeComplete()
     player:setLocalVar(selectionVar, 0)
     mob:updateClaim(player)
     player:printToPlayer(string.format('%s has been spawned.', encounter.name))

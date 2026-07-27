@@ -54,7 +54,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.EGRET_FISHING_ROD) then
+                    if npcUtil.tradeMatches(trade, xi.item.EGRET_FISHING_ROD) then
                         return quest:progressEvent(10042, 0, 0, 0, 0, xi.item.EGRET_FISHING_ROD)
                     end
                 end,
@@ -64,7 +64,7 @@ quest.sections =
             {
                 [10042] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

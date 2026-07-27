@@ -58,7 +58,7 @@ quest.sections =
             ['Miageau'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.SKIN_OF_CHEVAL_RIVER_WATER) then
+                    if npcUtil.tradeMatches(trade, xi.item.SKIN_OF_CHEVAL_RIVER_WATER) then
                         return quest:progressEvent(515)
                     end
                 end,
@@ -75,7 +75,7 @@ quest.sections =
             ['Nouveil'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { 'gil', 10 } }) then
+                    if npcUtil.tradeMatches(trade, { { 'gil', 10 } }) then
                         player:messageSpecial(northernSandoriaID.text.YOU_DONATE_GIL)
                         return quest:progressEvent(571)
                     end
@@ -96,13 +96,13 @@ quest.sections =
             {
                 [515] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
 
                 [571] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.BLESSED_WATERSKIN, { fromTrade = true }) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },
@@ -114,10 +114,10 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHas(trade, xi.item.BLESSED_WATERSKIN) and
+                        npcUtil.tradeMatches(trade, xi.item.BLESSED_WATERSKIN) and
                         npcUtil.giveItem(player, xi.item.SKIN_OF_CHEVAL_RIVER_WATER, { silent = true, fromTrade = true })
                     then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         return quest:messageSpecial(eastRonfaureID.text.CHEVAL_RIVER_WATER, xi.item.SKIN_OF_CHEVAL_RIVER_WATER)
                     end
                 end,

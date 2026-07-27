@@ -32,7 +32,7 @@ local petitionOnTrade = function(player, npc, trade)
     local npcData = petitionNpcData[npc:getName()]
 
     if
-        npcUtil.tradeHasExactly(trade, xi.item.CLOCK_TOWER_PETITION) and
+        npcUtil.tradeMatches(trade, xi.item.CLOCK_TOWER_PETITION) and
         not quest:isVarBitsSet(player, 'Prog', npcData[1])
     then
         return quest:progressEvent(npcData[2], 9 - utils.mask.countBits(quest:getVar(player, 'Prog')))
@@ -98,7 +98,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.CLOCK_TOWER_PETITION) and
+                        npcUtil.tradeMatches(trade, xi.item.CLOCK_TOWER_PETITION) and
                         utils.mask.countBits(quest:getVar(player, 'Prog')) == 10
                     then
                         return quest:progressEvent(231)
@@ -134,7 +134,7 @@ quest.sections =
 
                 [231] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

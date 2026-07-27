@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
     if player:getQuestStatus(xi.questLog.ADOULIN, xi.quest.id.adoulin.DANCES_WITH_LUOPANS) == xi.questStatus.QUEST_ACCEPTED then
         if
             player:hasKeyItem(xi.ki.FISTFUL_OF_HOMELAND_SOIL) and
-            npcUtil.tradeHas(trade, xi.item.PETRIFIED_LOG)
+            npcUtil.tradeMatches(trade, xi.item.PETRIFIED_LOG)
         then
             player:startEvent(34)
         end
@@ -86,7 +86,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             player:addQuest(xi.questLog.ADOULIN, xi.quest.id.adoulin.DANCES_WITH_LUOPANS)
         end
     elseif csid == 34 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:delKeyItem(xi.ki.FISTFUL_OF_HOMELAND_SOIL)
         npcUtil.giveKeyItem(player, xi.ki.LUOPAN)
     elseif csid == 36 then

@@ -12,11 +12,11 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.questLog.WINDURST, xi.quest.id.windurst.THE_THREE_MAGI) == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHas(trade, xi.item.FADED_CRYSTAL) and
+        npcUtil.tradeMatches(trade, xi.item.FADED_CRYSTAL) and
         not player:hasItem(xi.item.GLOWSTONE) and
         npcUtil.popFromQM(player, npc, ID.mob.CHAOS_ELEMENTAL, { hide = 0 })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

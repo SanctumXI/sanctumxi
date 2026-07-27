@@ -764,7 +764,7 @@ xi.garrison.onTrade = function(player, npc, trade, guardNation)
         return false
     end
 
-    if npcUtil.tradeHasExactly(trade, zoneData.itemReq) then
+    if npcUtil.tradeMatches(trade, zoneData.itemReq) then
         if not xi.garrison.validateEntry(zoneData, player, npc, guardNation) then
             debugLog('Player does not meet entry requirements')
 
@@ -792,7 +792,7 @@ end
 xi.garrison.onEventFinish = function(player, csid, option, guardNation, guardType, guardRegion)
     if xi.settings.main.ENABLE_GARRISON then
         if csid == 32753 + player:getNation() and option == 0 then
-            player:confirmTrade()
+            player:tradeComplete()
 
             local npc = GetNPCByID(player:getLocalVar('GARRISON_NPC'))
             xi.garrison.start(player, npc)

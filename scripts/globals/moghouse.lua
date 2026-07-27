@@ -350,14 +350,14 @@ xi.moghouse.moogleTrade = function(player, npc, trade)
             xi.item.EGG_LANTERN,
         }
 
-        if npcUtil.tradeHasExactly(trade, eggComponents) then
+        if npcUtil.tradeMatches(trade, eggComponents) then
             if npcUtil.giveItem(player, xi.item.EGG_BUFFET) then
-                player:confirmTrade()
+                player:tradeComplete()
             end
 
-        elseif npcUtil.tradeHasExactly(trade, xi.item.EGG_BUFFET) then
+        elseif npcUtil.tradeMatches(trade, xi.item.EGG_BUFFET) then
             if npcUtil.giveItem(player, eggComponents) then
-                player:confirmTrade()
+                player:tradeComplete()
             end
         end
     end

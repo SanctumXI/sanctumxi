@@ -41,6 +41,7 @@ local pTable =
     -- Elegy: https://www.bg-wiki.com/ffxi/Category:Elegy
     [xi.magic.spell.BATTLEFIELD_ELEGY    ] = { xi.effect.ELEGY,    1, 2500, 5000, 120, xi.mod.ELEGY_EFFECT    },
     [xi.magic.spell.CARNAGE_ELEGY        ] = { xi.effect.ELEGY,    1, 5000, 5000, 180, xi.mod.ELEGY_EFFECT    },
+    [xi.magic.spell.MASSACRE_ELEGY       ] = { xi.effect.ELEGY,    1, 10000, 10000, 180, xi.mod.ELEGY_EFFECT  },
     -- Threnody: https://www.bg-wiki.com/ffxi/Category:Threnody
     [xi.magic.spell.FIRE_THRENODY        ] = { xi.effect.THRENODY, 1,   50,   95,  60, xi.mod.THRENODY_EFFECT },
     [xi.magic.spell.ICE_THRENODY         ] = { xi.effect.THRENODY, 1,   50,   95,  60, xi.mod.THRENODY_EFFECT },

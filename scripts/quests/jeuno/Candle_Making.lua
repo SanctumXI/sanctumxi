@@ -46,7 +46,7 @@ quest.sections =
             ['Rouliette'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.LANOLIN_CUBE) then
+                    if npcUtil.tradeMatches(trade, xi.item.LANOLIN_CUBE) then
                         return quest:progressEvent(37)
                     end
                 end,
@@ -60,7 +60,7 @@ quest.sections =
             {
                 [37] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

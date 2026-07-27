@@ -93,7 +93,7 @@ local eldiemeGlobal = {
     handleCandleTrade = function(player, npc, trade)
         if
             GetSystemTime() > GetServerVariable('[ELDIEME]TimeToRespawnSkulls') and
-            npcUtil.tradeHasExactly(trade, xi.item.FLINT_STONE)
+            npcUtil.tradeMatches(trade, xi.item.FLINT_STONE)
         then
             lightBrazier(player, npc)
         else

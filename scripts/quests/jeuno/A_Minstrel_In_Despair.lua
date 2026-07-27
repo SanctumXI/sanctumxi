@@ -31,7 +31,7 @@ quest.sections =
             ['Song_Runes'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SHEET_OF_PARCHMENT) then
+                    if npcUtil.tradeMatches(trade, xi.item.SHEET_OF_PARCHMENT) then
                         return quest:progressCutscene(2)
                     end
                 end,
@@ -42,7 +42,7 @@ quest.sections =
             onEventFinish =
             {
                 [2] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveItem(player, xi.item.POETIC_PARCHMENT)
                     player:messageSpecial(buburimuID.text.SONG_RUNES_WRITING, xi.item.SHEET_OF_PARCHMENT)
                 end,
@@ -59,7 +59,7 @@ quest.sections =
             ['Mertaire'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { xi.item.POETIC_PARCHMENT }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.POETIC_PARCHMENT }) then
                         return quest:progressEvent(101)
                     end
                 end,
@@ -73,7 +73,7 @@ quest.sections =
             {
                 [101] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             }

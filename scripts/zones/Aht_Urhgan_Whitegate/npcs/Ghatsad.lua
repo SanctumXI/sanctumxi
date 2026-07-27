@@ -203,8 +203,8 @@ entity.onTrade = function(player, npc, trade)
         not attachmentReady and
         player:getCharVar('PUP_nextCoffeeTrade') <= VanadielUniqueDay()
     then
-        if npcUtil.tradeHasExactly(trade, xi.item.CUP_OF_IMPERIAL_COFFEE) then
-            player:confirmTrade()
+        if npcUtil.tradeMatches(trade, xi.item.CUP_OF_IMPERIAL_COFFEE) then
+            player:tradeComplete()
             player:setCharVar('PUP_AttachmentReady', player:getCharVar('PUP_AttachmentReady') - 1)
             player:setCharVar('PUP_nextCoffeeTrade', VanadielUniqueDay() + 1)
             player:startEvent(904)

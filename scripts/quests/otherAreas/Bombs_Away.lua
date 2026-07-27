@@ -48,7 +48,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { { xi.item.CLUSTER_CORE, 2 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.CLUSTER_CORE, 2 } }) then
                         return quest:progressEvent(8) -- Quest completed dialog.
                     end
                 end,

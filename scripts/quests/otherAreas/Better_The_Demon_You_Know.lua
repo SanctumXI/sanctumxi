@@ -66,7 +66,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, xi.item.DEMON_PEN) then
+                    if npcUtil.tradeMatches(trade, xi.item.DEMON_PEN) then
                         return quest:progressCutscene(22)
                     end
                 end,
@@ -75,7 +75,7 @@ quest.sections =
             onEventFinish =
             {
                 [22] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
                     quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 Minute wait time
                 end,

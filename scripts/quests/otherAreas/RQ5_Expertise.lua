@@ -114,7 +114,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, { xi.item.SCREAM_FUNGUS, xi.item.SLICE_OF_LAND_CRAB_MEAT }) then
+                    if npcUtil.tradeMatches(trade, { xi.item.SCREAM_FUNGUS, xi.item.SLICE_OF_LAND_CRAB_MEAT }) then
                         return quest:progressEvent(103) -- Give ingredients.
                     end
                 end,
@@ -129,7 +129,7 @@ quest.sections =
                 [103] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
                     quest:setVar(player, 'readyTime', GetSystemTime() + 24 * 144) -- Current time + 24 hours * 144 real seconds (Thats the ammount of seconds a Vana'Diel hour takes)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
 
                 [105] = function(player, csid, option, npc)

@@ -51,7 +51,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHas(trade, { { xi.item.BLOCK_OF_ANIMAL_GLUE, 1 } }) then
+                    if npcUtil.tradeMatches(trade, { { xi.item.BLOCK_OF_ANIMAL_GLUE, 1 } }) then
                         return quest:progressEvent(277, 1500) -- "Obtained X gil." Text is baked into the CS, so gil needs to be given outside of the quest
                     end
                 end,
@@ -63,7 +63,7 @@ quest.sections =
             {
                 [277] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addGil(1500)
                         quest:setMustZone(player)
                     end

@@ -12,10 +12,10 @@ entity.onTrade = function(player, npc, trade)
     -- FLYERS FOR REGINE
     if
         flyersForRegine == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHas(trade, { { 'gil', 10 } })
+        npcUtil.tradeMatches(trade, { { 'gil', 10 } })
     then
         if npcUtil.giveItem(player, xi.item.MAGICMART_FLYER) then
-            player:confirmTrade()
+            player:tradeComplete()
         end
     end
 end

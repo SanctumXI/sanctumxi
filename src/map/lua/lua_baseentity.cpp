@@ -18478,19 +18478,17 @@ void CLuaBaseEntity::castSpell(const sol::object& spell, const sol::object& enti
         m_PBaseEntity->PAI->QueueAction(queueAction_t(0ms, true,
         [targid, spellid](auto PEntity)
         {
-            CMobEntity* PMobEntity = dynamic_cast<CMobEntity*>(PEntity);
-
-            // Always delete recast of spell if mob
-            if (PMobEntity)
+            if (auto* PBattleEntity = dynamic_cast<CBattleEntity*>(PEntity))
             {
-                PMobEntity->PRecastContainer->Del(RECAST_MAGIC, static_cast<Recast>(spellid));
+                // Scripted casts bypass the original spell's recast, allowing a forced echo cast.
+                PBattleEntity->PRecastContainer->Del(RECAST_MAGIC, static_cast<Recast>(spellid));
             }
 
             if (targid)
             {
                 PEntity->PAI->Cast(targid, spellid);
             }
-            else if (PMobEntity)
+            else if (auto* PMobEntity = dynamic_cast<CMobEntity*>(PEntity))
             {
                 PEntity->PAI->Cast(PMobEntity->GetBattleTargetID(), spellid);
             }
@@ -19844,6 +19842,47 @@ uint32 CLuaBaseEntity::getLinkshellID(uint8 slot)
 }
 
 /************************************************************************
+ *  Function: getLinkshellName()
+ *  Purpose : Returns the equipped linkshell's decoded name.
+ ************************************************************************/
+
+auto CLuaBaseEntity::getLinkshellName(uint8 slot) -> std::string
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+
+    if (PChar == nullptr)
+    {
+        return {};
+    }
+
+    CLinkshell* PLinkshell = nullptr;
+
+    switch (slot)
+    {
+        case 1:
+            PLinkshell = PChar->PLinkshell1;
+            break;
+
+        case 2:
+            PLinkshell = PChar->PLinkshell2;
+            break;
+
+        default:
+            return {};
+    }
+
+    if (PLinkshell == nullptr)
+    {
+        return {};
+    }
+
+    char decodedName[LinkshellStringLength] = {};
+    DecodeStringLinkshell(PLinkshell->getName(), decodedName);
+
+    return decodedName;
+}
+
+/************************************************************************
  *  Function: getLinkshellType()
  *  Purpose : Returns the equipped linkshell item's rank/type.
  *
@@ -20953,8 +20992,9 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addPacketMod", CLuaBaseEntity::addPacketMod);
     SOL_REGISTER("clearPacketMods", CLuaBaseEntity::clearPacketMods);
 
-        // Sanctum Custom Linkshell HNM Treasury
+    // Sanctum Custom Linkshell HNM Treasury
     SOL_REGISTER("getLinkshellID", CLuaBaseEntity::getLinkshellID);
+    SOL_REGISTER("getLinkshellName", CLuaBaseEntity::getLinkshellName);
     SOL_REGISTER("getLinkshellType", CLuaBaseEntity::getLinkshellType);
     SOL_REGISTER("getLinkshellTreasuryItemCount", CLuaBaseEntity::getLinkshellTreasuryItemCount);
     SOL_REGISTER("depositLinkshellTreasuryItem", CLuaBaseEntity::depositLinkshellTreasuryItem);

@@ -149,7 +149,7 @@ quest.sections =
                     local questItemSet = quest:getVar(player, 'ItemSet')
                     if
                         questItemSet > 0 and
-                        npcUtil.tradeHasExactly(trade, questItemSets[questItemSet].items)
+                        npcUtil.tradeMatches(trade, questItemSets[questItemSet].items)
                     then
                         return quest:progressEvent(10058, {
                             [0] = warriorsPathComplete,
@@ -163,7 +163,7 @@ quest.sections =
             {
                 [10058] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                     end
                 end,
@@ -221,7 +221,7 @@ quest.sections =
                     local questItemSet = quest:getVar(player, 'ItemSet')
                     if
                         questItemSet > 0 and
-                        npcUtil.tradeHasExactly(trade, questItemSets[questItemSet].items)
+                        npcUtil.tradeMatches(trade, questItemSets[questItemSet].items)
                     then
                         return quest:progressEvent(10058, {
                             [0] = warriorsPathComplete,
@@ -241,7 +241,7 @@ quest.sections =
 
                 [10058] = function(player, csid, option, npc)
                     if not quest:getMustZone(player) then -- if we don't check this we get double reward immediately after first completion
-                        player:confirmTrade()
+                        player:tradeComplete()
                         quest:setMustZone(player)
                         quest:setVar(player, 'ItemSet', 0)
                         npcUtil.giveCurrency(player, 'gil', 4000)

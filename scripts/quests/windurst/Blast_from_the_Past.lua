@@ -53,7 +53,7 @@ quest.sections =
             ['Koru-Moru'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.BURNITE_SHELL_STONE) then
+                    if npcUtil.tradeMatches(trade, xi.item.BURNITE_SHELL_STONE) then
                         return quest:progressEvent(224)
                     else
                         return quest:event(225)
@@ -90,7 +90,7 @@ quest.sections =
 
                 [224] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
 
                         xi.quest.setMustZone(player, xi.questLog.WINDURST, xi.quest.id.windurst.NOTHING_MATTERS)
                     end

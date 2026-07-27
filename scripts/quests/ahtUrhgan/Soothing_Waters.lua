@@ -116,7 +116,7 @@ quest.sections =
             ['qm10'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.TUFT_OF_COLORFUL_HAIR) then
+                    if npcUtil.tradeMatches(trade, xi.item.TUFT_OF_COLORFUL_HAIR) then
                         return quest:progressCutscene(34)
                     end
                 end,
@@ -125,7 +125,7 @@ quest.sections =
             {
                 [34] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 4)
-                    player:confirmTrade()
+                    player:tradeComplete()
                 end,
             },
         },

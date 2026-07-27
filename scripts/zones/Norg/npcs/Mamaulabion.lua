@@ -37,7 +37,7 @@ entity.onTrade = function(player, npc, trade)
         local tradedItem
         local bitToSet
         for i = xi.item.BOTTLE_OF_BUBBLY_WATER, xi.item.ANCIENTS_KEY do
-            if npcUtil.tradeHasExactly(trade, i) then
+            if npcUtil.tradeMatches(trade, i) then
                 tradedItem = i
                 bitToSet = i - xi.item.BOTTLE_OF_BUBBLY_WATER
                 break
@@ -105,9 +105,9 @@ entity.onEventFinish = function(player, csid, option, npc)
     if csid == 191 then
         player:addQuest(xi.questLog.OUTLANDS, xi.quest.id.outlands.MAMA_MIA)
     elseif csid == 193 then
-        player:confirmTrade()
+        player:tradeComplete()
     elseif csid == 195 then
-        player:confirmTrade()
+        player:tradeComplete()
         player:setCharVar('MamaMia_date', JstMidnight())
     elseif csid == 197 then
         if player:getFreeSlotsCount() == 0 then

@@ -132,7 +132,7 @@ quest.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, { { xi.item.BOTTLE_OF_WARDING_OIL, 3 } }) and
+                        npcUtil.tradeMatches(trade, { { xi.item.BOTTLE_OF_WARDING_OIL, 3 } }) and
                         quest:getVar(player, 'Prog') == 2
                     then
                         return quest:progressEvent(22)

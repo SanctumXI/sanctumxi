@@ -95,8 +95,8 @@ quest.sections =
 
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, xi.item.VELKK_NECKLACE) or
-                        npcUtil.tradeHasExactly(trade, xi.item.VELKK_MASK)
+                        npcUtil.tradeMatches(trade, xi.item.VELKK_NECKLACE) or
+                        npcUtil.tradeMatches(trade, xi.item.VELKK_MASK)
                     then
                         return quest:progressEvent(3002)
                     end
@@ -107,7 +107,7 @@ quest.sections =
             {
                 [3002] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:setCharVar('ADOULIN_FAME_QUEST_TRACKER', 2)
                     end
                 end,

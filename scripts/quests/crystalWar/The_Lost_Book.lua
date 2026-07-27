@@ -58,7 +58,7 @@ quest.sections =
             ['Quu_Bokye'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.MYTHRIL_BEASTCOIN) then
+                    if npcUtil.tradeMatches(trade, xi.item.MYTHRIL_BEASTCOIN) then
                         return quest:progressEvent(65)
                     end
                 end,
@@ -71,7 +71,7 @@ quest.sections =
             onEventFinish =
             {
                 [65] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     npcUtil.giveKeyItem(player, xi.ki.LEATHER_BOUND_BOOK)
                     quest:setVar(player, 'Prog', 2)
                 end,
@@ -149,7 +149,7 @@ quest.sections =
             ['Door_Optistery'] =
             {
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SHEET_OF_VELLUM) then
+                    if npcUtil.tradeMatches(trade, xi.item.SHEET_OF_VELLUM) then
                         return quest:progressEvent(146)
                     end
                 end,
@@ -158,7 +158,7 @@ quest.sections =
             onEventFinish =
             {
                 [146] = function(player, csid, option, npc)
-                    player:confirmTrade()
+                    player:tradeComplete()
                     player:delKeyItem(xi.ki.LYNX_PELT)
                     quest:setVar(player, 'Prog', 5)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)

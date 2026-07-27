@@ -11,10 +11,10 @@ entity.onTrade = function(player, npc, trade)
     if
         player:getCharVar('TheHolyCrest_Event') == 3 and
         not player:hasItem(xi.item.WYVERN_EGG) and
-        npcUtil.tradeHas(trade, xi.item.PICKAXE)
+        npcUtil.tradeMatches(trade, xi.item.PICKAXE)
     then
         if npcUtil.giveItem(player, xi.item.WYVERN_EGG) then
-            player:confirmTrade()
+            player:tradeComplete()
         end
     else
         xi.helm.onTrade(player, npc, trade, xi.helmType.EXCAVATION, 60)

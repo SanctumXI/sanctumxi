@@ -100,7 +100,7 @@ quest.sections =
                     local properTestimony = xi.item.WARRIORS_TESTIMONY + playerJob - 1
 
                     if
-                        npcUtil.tradeHasExactly(trade, properTestimony) and
+                        npcUtil.tradeMatches(trade, properTestimony) and
                         quest:getVar(player, 'Prog') == 0
                     then
                         return quest:progressEvent(64, playerJob)

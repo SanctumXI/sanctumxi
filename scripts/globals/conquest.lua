@@ -1128,7 +1128,11 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
         end
 
         -- RECHARGE EXP RING
-        if not tradeConfirmed and expRings[item] and npcUtil.tradeHas(trade, item) then
+        if
+            not tradeConfirmed and
+            expRings[item] and
+            npcUtil.tradeMatches(trade, item)
+        then
             if
                 xi.settings.main.BYPASS_EXP_RING_ONE_PER_WEEK == 1 or
                 player:getCharVar('CONQUEST_RING_RECHARGE') == 0
@@ -1161,7 +1165,7 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
                     -- if enough CP then perform the recharge
                     if player:getCP() >= cpCost then
                         player:delCP(cpCost)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:addItem(item)
                         player:setCharVar('CONQUEST_RING_RECHARGE', 1, NextConquestTally())
                         player:showText(npc, mOffset + 58, item, cpCost, chargesUsed) -- 'Your ring is now fully recharged.'

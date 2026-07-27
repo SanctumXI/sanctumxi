@@ -18,7 +18,7 @@ entity.onTrade = function(player, npc, trade)
     -- Taking a logical guess what criteria displays what message.
     if
         overTheHillsAndFarAway == xi.questStatus.QUEST_ACCEPTED and
-        npcUtil.tradeHas(trade, xi.item.MOBLIN_HOTROK)
+        npcUtil.tradeMatches(trade, xi.item.MOBLIN_HOTROK)
     then
         -- 1729 = Moblin Hotrok
         if player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.LOUVERANCE) == 14 then
@@ -71,7 +71,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             exp = 2000
         })
     then
-        player:confirmTrade()
+        player:tradeComplete()
     end
 end
 

@@ -55,7 +55,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.SHALL_SHELL) then
+                    if npcUtil.tradeMatches(trade, xi.item.SHALL_SHELL) then
                         return quest:progressEvent(75) -- You're so fantastic! Thank you!
                     end
                 end,
@@ -65,7 +65,7 @@ quest.sections =
             {
                 [75] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        player:confirmTrade()
+                        player:tradeComplete()
                     end
                 end,
             },

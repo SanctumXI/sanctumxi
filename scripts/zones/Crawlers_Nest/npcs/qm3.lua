@@ -9,8 +9,8 @@ local ID = zones[xi.zone.CRAWLERS_NEST]
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, xi.item.ROLANBERRY_881_CE) then -- Rolanberry 881
-        player:confirmTrade()
+    if npcUtil.tradeMatches(trade, xi.item.ROLANBERRY_881_CE) then -- Rolanberry 881
+        player:tradeComplete()
         if
             math.randomInt(1, 100) > 50 or
             not npcUtil.popFromQM(player, npc, ID.mob.AWD_GOGGIE - 4, { claim = true, hide = 0 })

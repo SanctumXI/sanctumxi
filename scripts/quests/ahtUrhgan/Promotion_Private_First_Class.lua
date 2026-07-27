@@ -44,7 +44,7 @@ quest.sections =
                 end,
 
                 onTrade = function(player, npc, trade)
-                    if npcUtil.tradeHasExactly(trade, xi.item.IMP_WING) then
+                    if npcUtil.tradeMatches(trade, xi.item.IMP_WING) then
                         return quest:progressEvent(5002, { text_table = 0 })
                     end
                 end,
@@ -55,7 +55,7 @@ quest.sections =
                 [5002] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:setCharVar('AssaultPromotion', 0)
-                        player:confirmTrade()
+                        player:tradeComplete()
                         player:delKeyItem(xi.ki.PSC_WILDCAT_BADGE)
                     end
                 end,
