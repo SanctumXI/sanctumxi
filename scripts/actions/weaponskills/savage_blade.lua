@@ -41,7 +41,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         local duration = 45 + math.floor((tp - 1000) / 100) * 3
 
         if xi.wsEffect.set(player, xi.wsEffect.SAVAGE_BLADE_DAMAGE, 15, duration) then
-            xi.wsEffect.message(player, 'Damage increased by 15%, but enmity generation is doubled!')
+            xi.wsEffect.message(player, 'Damage increased by 15%, and enmity generation is increased by 25%!')
         end
     end
 

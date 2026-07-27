@@ -41,7 +41,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         xi.mod.ENMITY_LOSS_REDUCTION,
         1000,
         duration,
-        'Retribution prevents enmity loss from taking damage!'
+        'Retribution prevents enmity loss when taking damage!'
     )
 
     if not empowered then

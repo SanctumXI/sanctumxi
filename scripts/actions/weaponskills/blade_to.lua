@@ -16,7 +16,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 0.5, 0.75, 1.0 }
+    params.ftpMod = { 0.75, 1.0, 1.25 }
     params.str_wsc = 0.3 params.int_wsc = 0.3
     params.hybridWS = true
     params.ele = xi.element.ICE

@@ -16,8 +16,8 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 2
-    params.ftpMod = { 0.5, 0.75, 1.0 }
-    params.str_wsc = 0.2 params.int_wsc = 0.2
+    params.ftpMod = { 0.75, 1.0, 1.25 }
+    params.str_wsc = 0.30 params.int_wsc = 0.30
     params.hybridWS = true
     params.ele = xi.element.EARTH
     params.skill = xi.skill.KATANA

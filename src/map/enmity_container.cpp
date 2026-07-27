@@ -151,7 +151,7 @@ float CEnmityContainer::CalculateEnmityBonus(CBattleEntity* PEntity)
 
     if (PEntity->getMod(Mod::SAVAGE_BLADE_ENMITY) > 0)
     {
-        bonus *= 2.0f;
+        bonus *= 1.25f;
     }
 
     return bonus;

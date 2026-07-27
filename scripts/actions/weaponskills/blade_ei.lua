@@ -15,8 +15,8 @@ local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.ftpMod = { 1.0, 1.5, 2.0 }
-    params.str_wsc = 0.3 params.int_wsc = 0.3
+    params.ftpMod = { 1.5, 2.0, 2.5 }
+    params.str_wsc = 0.35 params.int_wsc = 0.35
     params.ele = xi.element.DARK
     params.skill = xi.skill.KATANA
     params.includemab = true

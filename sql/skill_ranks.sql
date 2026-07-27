@@ -51,7 +51,7 @@ INSERT INTO `skill_ranks` VALUES (8,'polearm',3,0,0,0,0,0,8,0,0,0,0,5,0,1,0,0,0,
 INSERT INTO `skill_ranks` VALUES (9,'katana',0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (10,'great katana',0,0,0,0,0,0,0,0,0,0,0,1,6,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (11,'club',5,6,2,6,9,10,2,9,9,9,10,10,10,10,6,5,0,9,0,6,3,8); 
-INSERT INTO `skill_ranks` VALUES (12,'staff',4,1,6,5,0,0,7,0,0,6,0,0,0,5,4,0,0,0,0,6,6,0);
+INSERT INTO `skill_ranks` VALUES (12,'staff',4,1,6,5,0,0,2,0,0,6,0,0,0,5,4,0,0,0,0,6,6,0);
 INSERT INTO `skill_ranks` VALUES (25,'archery',7,0,0,0,9,8,0,0,3,0,1,6,10,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (26,'marksmanship',7,0,0,0,0,2,0,10,0,0,1,0,7,0,0,0,2,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (27,'throwing',5,10,10,9,11,5,0,0,0,10,6,6,1,0,0,0,6,6,2,9,0,0);

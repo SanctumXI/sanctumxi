@@ -206,6 +206,12 @@ end
         damage = 0
     end
 
+    -- Daken uses a shuriken from the ammo slot. Keep its temporary throwing
+    -- damage bonuses aligned with the legacy C++ auto-attack path.
+    if physicalAttackType == xi.physicalAttackType.DAKEN then
+        damage = math.floor(damage * (100 + actor:getMod(xi.mod.THROWING_DAMAGEP)) / 100)
+    end
+
     -- Apply Restraint Weaponskill Damage
     if
         isFirstSwing and
@@ -1066,7 +1072,7 @@ xi.combat.physical.canGuard = function(defender, attacker)
     then
         if defender:isPC() and defender:getSkillRank(xi.skill.GUARD) > 0 then
             local mainWeapon = defender:getEquippedItem(xi.slot.MAIN)
-            canGuard = (not mainWeapon) or mainWeapon:getSkillType() == xi.skill.HAND_TO_HAND
+            canGuard = (not mainWeapon) or mainWeapon:getSkillType() == xi.skill.HAND_TO_HAND or mainWeapon:getSkillType() == xi.skill.STAFF
         elseif
             defender:isMob() or
             defender:isPet() or

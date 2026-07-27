@@ -90,8 +90,11 @@ xi.wsEffect.clear = function(player)
 end
 
 xi.wsEffect.set = function(player, effect, power, duration)
+    -- An empowered weaponskill always replaces the previous empowered effect.
+    -- This refreshes matching effects and clears any effect from another WS,
+    -- including its temporary modifiers and listeners.
     if xi.wsEffect.peek(player) ~= xi.wsEffect.NONE then
-        return false
+        xi.wsEffect.clear(player)
     end
 
     player:setCharVar(xi.wsEffect.charVars.EFFECT, effect or xi.wsEffect.NONE)

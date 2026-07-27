@@ -11,7 +11,7 @@ effectObject.onEffectGain = function(target, effect)
             xi.wsEffect.peek(player) ~= xi.wsEffect.NONE
         then
             xi.wsEffect.clear(player)
-            xi.wsEffect.message(player, 'Your power fades')
+            xi.wsEffect.message(player, 'Your power fades...')
         end
     end)
 

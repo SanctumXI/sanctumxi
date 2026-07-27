@@ -19,9 +19,9 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params   = {}
     params.numHits = 1
-    params.ftpMod  = { 1, 1, 1 }
-    params.str_wsc = 0.35
-    params.ignoredDefense = { 0.3, 0.4, 0.5 }
+    params.ftpMod  = { 1.15, 1.35, 1.5 }
+    params.str_wsc = 0.4
+    params.ignoredDefense = { 0.25, 0.35, 0.5 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 1
