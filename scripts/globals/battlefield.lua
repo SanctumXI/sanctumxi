@@ -639,6 +639,36 @@ end
 -- standard battlefield path without exposing the client-localized menu.
 local customEntryVar = '[BCNM]CustomEntry'
 
+-- Attempts to silently finish a custom-menu entry. Returns true if it
+-- succeeded (or already had), false if it should be retried later.
+local function tryAdvanceCustomEntry(content, player, npc)
+    if
+        player:getLocalVar(customEntryVar) == content.battlefieldId and
+        player:getBattlefield() and
+        player:getBattlefield():getID() == content.battlefieldId
+    then
+        player:setLocalVar('noPosUpdate', 0)
+        return true
+    end
+
+    -- The native client normally retries event updates until it finds an
+    -- available arena. A custom menu has already made its selection, so
+    -- perform those retries here.
+    for _ = 1, 3 do
+        local previousArea = player:getLocalVar('[battlefield]area')
+        local result       = content:onEntryEventUpdate(player, 32000, bit.lshift(content.index, 4), npc)
+
+        if result == 1 then
+            player:setLocalVar('noPosUpdate', 0)
+            return true
+        elseif player:getLocalVar('[battlefield]area') == previousArea then
+            break
+        end
+    end
+
+    return false
+end
+
 local function startCustomEntryEvent(content, player, npc)
     local options = utils.mask.setBit(0, content.index, true)
 
@@ -648,25 +678,42 @@ local function startCustomEntryEvent(content, player, npc)
 
     -- Give the client time to enter event 32000 before advancing it. Sending
     -- the update in the same tick as startEvent can be discarded by the
-    -- client, leaving its native battlefield list open.
-    player:timer(250, function(playerArg)
-        -- The native client normally retries event updates until it finds an
-        -- available arena. A custom menu has already made its selection, so
-        -- perform those retries here.
-        for _ = 1, 3 do
-            local previousArea = playerArg:getLocalVar('[battlefield]area')
-            local result       = content:onEntryEventUpdate(playerArg, 32000, bit.lshift(content.index, 4), npc)
-
-            if result == 1 then
-                playerArg:setLocalVar('noPosUpdate', 0)
-                return
-            elseif playerArg:getLocalVar('[battlefield]area') == previousArea then
-                break
-            end
+    -- client, leaving its native battlefield list open. Under real network
+    -- latency 250ms is not guaranteed to be enough, so keep retrying with a
+    -- longer delay for a few seconds rather than giving up after one try.
+    local function attempt(playerArg, attemptsLeft)
+        if tryAdvanceCustomEntry(content, playerArg, npc) then
+            return
         end
 
-        playerArg:setLocalVar('[battlefield]area', 0)
-        playerArg:setLocalVar(customEntryVar, 0)
+        if attemptsLeft > 0 then
+            playerArg:timer(500, function(playerArg2)
+                attempt(playerArg2, attemptsLeft - 1)
+            end)
+
+            return
+        end
+
+        -- Out of retries. If registration never actually succeeded there is
+        -- nothing to preserve, so clear our bookkeeping. But if it DID
+        -- succeed server-side (the player is already in the battlefield and
+        -- its mobs are spawned) and the client simply never got the memo,
+        -- leave customEntryVar set: whenever the client's own event update
+        -- eventually arrives, redirectEventUpdate will forward it here and
+        -- the early check above will resolve it. Clearing it now would
+        -- instead route that late update through the generic per-index
+        -- handler, which no-ops once the player already has a battlefield
+        -- (see RegisterBattlefield's PChar->PBattlefield check) and would
+        -- leave the client stuck on its native menu with nothing spawned.
+        local battlefield = playerArg:getBattlefield()
+        if not (battlefield and battlefield:getID() == content.battlefieldId) then
+            playerArg:setLocalVar('[battlefield]area', 0)
+            playerArg:setLocalVar(customEntryVar, 0)
+        end
+    end
+
+    player:timer(250, function(playerArg)
+        attempt(playerArg, 4)
     end)
 end
 
