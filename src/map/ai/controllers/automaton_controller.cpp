@@ -158,11 +158,12 @@ auto CAutomatonController::shouldStandBack() const -> bool
             return true;
         }
     }
-    else if (PAutomaton->getFrame() == AutomatonFrame::Valoredge)
+    if (PAutomaton->getFrame() == AutomatonFrame::Valoredge)
     {
         return false;
     }
-    else if (PAutomaton->getHead() >= AutomatonHead::Sharpshot)
+
+    if (PAutomaton->getHead() >= AutomatonHead::Sharpshot)
     {
         return true;
     }
@@ -236,10 +237,15 @@ auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 
 void CAutomatonController::Move()
 {
-    const bool hasManafont = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+    const bool hasManafont      = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+    const bool hasCastingMP     = PAutomaton->health.mp >= 8 || PAutomaton->health.maxmp <= 8;
+    const bool isAtCastingRange = isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f);
 
-    if ((shouldStandBack() && !isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f)) ||
-        (!hasManafont && PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
+    if (shouldStandBack() && isAtCastingRange && (hasManafont || hasCastingMP))
+    {
+        PAutomaton->m_Behavior |= BEHAVIOR_STANDBACK;
+    }
+    else
     {
         PAutomaton->m_Behavior &= ~BEHAVIOR_STANDBACK;
     }

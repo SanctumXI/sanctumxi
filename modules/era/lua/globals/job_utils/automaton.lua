@@ -79,6 +79,7 @@ m:addOverride('xi.automaton.onUseManeuver', function(player, target, ability, ac
 
     if
         overload ~= 0 and
+        maneuverInfo.element ~= xi.element.WATER and
         (player:getMod(xi.mod.PREVENT_OVERLOAD) > 0 or pet:getMod(xi.mod.PREVENT_OVERLOAD) > 0) and
         player:delStatusEffectSilent(xi.effect.WATER_MANEUVER)
     then

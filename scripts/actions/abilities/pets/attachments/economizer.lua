@@ -29,6 +29,12 @@ attachmentObject.onEquip = function(pet)
         end
 
         local darkManeuvers = master:countEffect(xi.effect.DARK_MANEUVER)
+
+        -- Economizer requires at least one Dark Maneuver to recover MP.
+        if darkManeuvers == 0 then
+            return
+        end
+
         local maxMP = automaton:getMaxMP()
 
         -- If this automaton has no MP, do nothing.

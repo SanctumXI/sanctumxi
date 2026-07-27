@@ -8,11 +8,10 @@ require('scripts/globals/automaton')
 
 local moduleName = 'attachments'
 
-if xi.module.isContentEnabled('ABYSSEA') then
-    return { name = moduleName }
-end
-
 local m = Module:new(moduleName)
+
+-- Sanctum retains expansion content on a level 75 server. Always load these
+-- attachment adjustments instead of tying them to expansion enablement.
 
 -- Reduces Enmity boost from Strobe                                 : https://wiki.ffo.jp/html/8610.html
 -- Reduces Store TP from Inhibitor                                  : https://wiki.ffo.jp/html/8625.html
@@ -524,7 +523,7 @@ local activationThresholds =
     [3] = 60,
 }
 
-m:addOverride('xi.actions.abilities.pets.automaton.economizer.onEquip', function(pet)
+m:addOverride('xi.actions.abilities.pets.attachments.economizer.onEquip', function(pet)
     pet:addListener('AUTOMATON_ATTACHMENT_CHECK', 'ATTACHMENT_ECONOMIZER', function(automaton, target)
         -- If Economizer is still on cooldown, do nothing.
         if automaton:hasRecast(xi.recast.ABILITY, xi.mobSkill.ECONOMIZER_AUTOMATON) then
