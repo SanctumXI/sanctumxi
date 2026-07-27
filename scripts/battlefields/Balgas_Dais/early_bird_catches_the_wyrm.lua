@@ -12,6 +12,8 @@ local content = Battlefield:new({
     maxPlayers       = 18,
     timeLimit        = utils.minutes(30),
     index            = 11,
+    menuName         = 'Early Bird Catches the Wyrm',
+    entryName        = 'Early Bird Catches the Wyrm',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
     requiredItems    = { xi.item.THEMIS_ORB, wearMessage = balgasID.text.A_CRACK_HAS_FORMED, wornMessage = balgasID.text.ORB_IS_CRACKED },

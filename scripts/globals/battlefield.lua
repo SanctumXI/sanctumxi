@@ -126,7 +126,7 @@ xi.battlefield.id =
     KINDERGARTEN_CAP                           = 18,
     LAST_ORC_SHUNNED_HERO                      = 19,
     BEYOND_INFINITY_HORLAIS_PEAK               = 20,  -- Converted
-    KING_OF_THE_NORTH                          = 21,  -- Reserved: Horlais Peak, index 21
+    KING_OF_THE_NORTH                          = 21,  -- Horlais Peak, index 21
     AMAN_TROVE_MARS_HORLAIS_PEAK               = 24,  -- Incomplete
     AMAN_TROVE_VENUS_HORLAIS_PEAK              = 25,  -- Incomplete
     SAVE_THE_CHILDREN                          = 32,  -- Converted
@@ -157,7 +157,7 @@ xi.battlefield.id =
     PALBOROUGH_PROJECT                         = 83,
     SHELL_SHOCKED                              = 84,
     BEYOND_INFINITY_WAUGHROON_SHRINE           = 85,  -- Converted
-    HEAVY_IS_THE_SHELL                         = 86,  -- Reserved: Waughroon Shrine, index 22
+    HEAVY_IS_THE_SHELL                         = 86,  -- Waughroon Shrine, index 22
     RANK_2_MISSION                             = 96,  -- Converted
     STEAMED_SPROUTS                            = 97,  -- Converted
     DIVINE_PUNISHERS                           = 98,  -- Converted
@@ -179,13 +179,13 @@ xi.battlefield.id =
     V_FORMATION                                = 114,
     AVIAN_APOSTATES                            = 115,
     BEYOND_INFINITY_BALGAS_DAIS                = 116, -- Converted
-    WING_AND_A_PRAYER                          = 118, -- Reserved: Balga's Dais, index 22
+    WING_AND_A_PRAYER                          = 118, -- Balga's Dais, index 22
     TEMPLE_OF_UGGALEPIH                        = 128, -- Converted
     JUNGLE_BOOGYMEN                            = 129, -- Converted
     AMPHIBIAN_ASSAULT                          = 130, -- Converted
     PROJECT_SHANTOTTOFICATION                  = 131,
     WHOM_WILT_THOU_CALL                        = 132,
-    THREES_A_CROWD                             = 133, -- Reserved: Sacrificial Chamber, index 5
+    THREES_A_CROWD                             = 133, -- Sacrificial Chamber, index 5
     SHADOW_LORD_BATTLE                         = 160,
     WHERE_TWO_PATHS_CONVERGE                   = 161,
     KINDRED_SPIRITS                            = 162, -- Experimental
@@ -201,7 +201,7 @@ xi.battlefield.id =
     SCARLET_KING                               = 199,
     CAT_BURGLAR_BARES_FANGS                    = 200, -- Experimental
     DRAGON_SCALES                              = 201,
-    THE_RAVENING_WORM                          = 202, -- Reserved: Chamber of Oracles, index 10
+    THE_RAVENING_WORM                          = 202, -- Chamber of Oracles, index 10
     MOONLIT_PATH                               = 224, -- Converted
     MOON_READING                               = 225, -- Converted
     WAKING_THE_BEAST_FULLMOON                  = 226,
@@ -633,6 +633,38 @@ function Battlefield:checkSkipCutscene(player)
     return false
 end
 
+-- Custom menus make their selection outside of event 32000, so submit the
+-- selected battlefield immediately after starting the normal entry event.
+-- This keeps registration, orb handling, and client positioning on the
+-- standard battlefield path without exposing the client-localized menu.
+local customEntryVar = '[BCNM]CustomEntry'
+
+local function startCustomEntryEvent(content, player, npc)
+    local options = utils.mask.setBit(0, content.index, true)
+
+    player:setLocalVar('[battlefield]area', 0)
+    player:setLocalVar(customEntryVar, content.battlefieldId)
+    player:startEvent(32000, 0, 0, 0, options, 0, 0, 0, 0)
+
+    -- The native client normally retries event updates until it finds an
+    -- available arena.  A custom menu has already made its selection, so
+    -- perform those retries here.
+    for _ = 1, 3 do
+        local previousArea = player:getLocalVar('[battlefield]area')
+        local result       = content:onEntryEventUpdate(player, 32000, bit.lshift(content.index, 4), npc)
+
+        if result == 1 then
+            player:setLocalVar('noPosUpdate', 0)
+            return
+        elseif player:getLocalVar('[battlefield]area') == previousArea then
+            break
+        end
+    end
+
+    player:setLocalVar('[battlefield]area', 0)
+    player:setLocalVar(customEntryVar, 0)
+end
+
 function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     -- Check if player's party has level sync
     if xi.battlefield.rejectLevelSyncedParty(player, npc) then
@@ -725,8 +757,7 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
                             return
                         end
 
-                        local selectedOption = utils.mask.setBit(0, selectedContent.index, true)
-                        playerArg:startEvent(32000, 0, 0, 0, selectedOption, 0, 0, 0, 0)
+                        startCustomEntryEvent(selectedContent, playerArg, npc)
                     end,
                 })
             end
@@ -771,6 +802,11 @@ function Battlefield.onEntryTrigger(player, npc)
 
         local options = utils.mask.setBit(0, content.index, true)
         player:setLocalVar('[BCNM]EnterExisting', 1)
+
+        if content.menuName then
+            return startCustomEntryEvent(content, player, npc)
+        end
+
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
 
@@ -809,6 +845,22 @@ end
 
 -- Static function to lookup the correct battlefield to handle this event update
 function Battlefield.redirectEventUpdate(player, csid, option, npc)
+    local customEntryId = player:getLocalVar(customEntryVar)
+
+    if customEntryId ~= 0 then
+        local customContent = xi.battlefield.contents[customEntryId]
+
+        if
+            customContent and
+            customContent.zoneId == player:getZoneID()
+        then
+            customContent:onEntryEventUpdate(player, csid, option, npc)
+            return
+        end
+
+        player:setLocalVar(customEntryVar, 0)
+    end
+
     if option == 0 or option == 255 then
         return false
     end
@@ -830,6 +882,17 @@ end
 -- will still send the appropriate position packet, but not change the values for the player.
 
 function Battlefield:onEntryEventUpdate(player, csid, option, npc)
+    local battlefield = player:getBattlefield()
+
+    if
+        player:getLocalVar(customEntryVar) == self.battlefieldId and
+        battlefield and
+        battlefield:getID() == self.battlefieldId
+    then
+        player:setLocalVar('noPosUpdate', 0)
+        return 1
+    end
+
     -- Can't enter if party locked the battlefield
     local isEnteringExisting = player:getLocalVar('[BCNM]EnterExisting') == 1
     if isEnteringExisting and not player:hasStatusEffect(xi.effect.BATTLEFIELD) then
@@ -969,6 +1032,7 @@ end
 function Battlefield:onEventFinishEnter(player, csid, option, npc)
     player:setEnteredBattlefield(true)
     player:setLocalVar('[battlefield]area', 0)
+    player:setLocalVar(customEntryVar, 0)
     self:setLocalVar(player, 'CS', 1)
 end
 
@@ -1295,6 +1359,63 @@ function Battlefield:addEssentialMobs(mobNames)
         isParty   = true,
         allDeath  = utils.bind(self.handleAllMonstersDefeated, self),
     })
+end
+
+-- Shared synthesis materials and consumables for custom Themis Orb battles.
+-- Encounter-specific drops should be placed before these groups.
+function xi.battlefield.addKSNM99LootGroups(loot)
+    table.insert(loot,
+    {
+        { itemId = xi.item.CHUNK_OF_DARKSTEEL_ORE,   weight = 500 },
+        { itemId = xi.item.CHUNK_OF_GOLD_ORE,        weight = 500 },
+        { itemId = xi.item.CHUNK_OF_MYTHRIL_ORE,     weight = 500 },
+        { itemId = xi.item.CHUNK_OF_PLATINUM_ORE,    weight = 500 },
+        { itemId = xi.item.EBONY_LOG,                weight = 500 },
+        { itemId = xi.item.MAHOGANY_LOG,             weight = 500 },
+        { itemId = xi.item.PETRIFIED_LOG,            weight = 500 },
+        { itemId = xi.item.PHILOSOPHERS_STONE,       weight = 500 },
+        { itemId = xi.item.SPOOL_OF_GOLD_THREAD,     weight = 500 },
+        { itemId = xi.item.SQUARE_OF_RAINBOW_CLOTH,  weight = 500 },
+        { itemId = xi.item.SQUARE_OF_RAXA,           weight = 500 },
+        { itemId = xi.item.CORAL_FRAGMENT,           weight = 500 },
+        { itemId = xi.item.DEMON_HORN,               weight = 500 },
+        { itemId = xi.item.HANDFUL_OF_WYVERN_SCALES, weight = 500 },
+        { itemId = xi.item.RAM_HORN,                  weight = 500 },
+        { itemId = xi.item.SLAB_OF_GRANITE,           weight = 500 },
+        { itemId = xi.item.RERAISER,                  weight = 500 },
+        { itemId = xi.item.HI_RERAISER,               weight = 500 },
+        { itemId = xi.item.VILE_ELIXIR,               weight = 500 },
+        { itemId = xi.item.VILE_ELIXIR_P1,            weight = 500 },
+    })
+
+    table.insert(loot,
+    {
+        { itemId = xi.item.HI_ETHER_P3,    weight = 2500 },
+        { itemId = xi.item.HI_POTION_P3,   weight = 2500 },
+        { itemId = xi.item.HI_RERAISER,    weight = 2500 },
+        { itemId = xi.item.VILE_ELIXIR_P1, weight = 2500 },
+    })
+
+    table.insert(loot,
+    {
+        { itemId = xi.item.VIAL_OF_BLACK_BEETLE_BLOOD, weight =  625 },
+        { itemId = xi.item.SQUARE_OF_DAMASCENE_CLOTH,  weight =  625 },
+        { itemId = xi.item.DAMASCUS_INGOT,              weight =  625 },
+        { itemId = xi.item.SPOOL_OF_MALBORO_FIBER,     weight =  625 },
+        { itemId = xi.item.PHILOSOPHERS_STONE,         weight = 2000 },
+        { itemId = xi.item.PHOENIX_FEATHER,            weight = 3500 },
+        { itemId = xi.item.SQUARE_OF_RAXA,             weight = 2000 },
+    })
+
+    table.insert(loot,
+    {
+        { itemId = xi.item.DIVINE_LOG,              weight = 1000 },
+        { itemId = xi.item.LACQUER_TREE_LOG,        weight = 2500 },
+        { itemId = xi.item.PETRIFIED_LOG,           weight = 6000 },
+        { itemId = xi.item.SQUARE_OF_SHINING_CLOTH, weight =  500 },
+    })
+
+    return loot
 end
 
 function Battlefield:handleAllMonstersDefeated(battlefield, mob)

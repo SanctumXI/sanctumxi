@@ -4310,31 +4310,55 @@ INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,710); -- Rhino Guard
 INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,711); -- Spoil 
 INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,791); -- Rhinowrecker
 
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,247);   -- foxfire
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,249);   -- netherspikes
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,250);   -- carnal_nightmare
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,251);   -- aegis_schism
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,252);   -- dancing_chains
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2098,253);   -- barbed_crescent
+-- Custom KSNM99 beast kings.
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,762);  -- Ore Toss
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2204); -- Ore Lob
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell Charge
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell_Low_HP',2099,2374); -- Torment of Gu'Dha
 
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,248);   -- grim_halo
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,249);   -- netherspikes
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,250);   -- carnal_nightmare
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,251);   -- aegis_schism
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,252);   -- dancing_chains
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2099,253);   -- barbed_crescent
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,617);  -- Feather Storm
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,618);  -- Double Kick
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,619);  -- Parry
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,620);  -- Sweep
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,764);  -- Doom
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2206); -- Dark Invocation
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2375); -- Vorticose Sands
 
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,246); -- shackled_fists
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,249); -- netherspikes
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,250); -- carnal_nightmare
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,251); -- aegis_schism
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,252); -- dancing_chains
-INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2100,253); -- barbed_crescent
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Battle Dance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,606);  -- Shoulder Attack
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,607);  -- Arm Block
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Howl
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,609);  -- Slam Dunk
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Counterstance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2263); -- Tornado Edge
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2373); -- Veil of Chaos
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,247);   -- foxfire
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,249);   -- netherspikes
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,250);   -- carnal_nightmare
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,251);   -- aegis_schism
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,252);   -- dancing_chains
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,253);   -- barbed_crescent
 
-INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,668); -- kick_back
-INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,671); -- umbra_smash
-INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,672); -- giga_slash
-INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2101,673); -- dark_nova
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,248);   -- grim_halo
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,249);   -- netherspikes
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,250);   -- carnal_nightmare
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,251);   -- aegis_schism
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,252);   -- dancing_chains
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_TWO_HANDED',2103,253);   -- barbed_crescent
+
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,246); -- shackled_fists
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,249); -- netherspikes
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,250); -- carnal_nightmare
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,251); -- aegis_schism
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,252); -- dancing_chains
+INSERT INTO `mob_skill_lists` VALUES ('FOMOR_HAND_TO_HAND',2104,253); -- barbed_crescent
+
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2105,668); -- kick_back
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2105,671); -- umbra_smash
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2105,672); -- giga_slash
+INSERT INTO `mob_skill_lists` VALUES ('Shadow_Lord',2105,673); -- dark_nova
 
 -- Next ID : 2102
 -- ------------------------------------------------------------

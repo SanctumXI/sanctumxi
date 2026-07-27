@@ -51,6 +51,7 @@ zones[xi.zone.BALGAS_DAIS] =
     {
         ATORI_TUTORI            = GetFirstID('Atori-Tutori_qm'),
         BUU_XOLO_THE_BLOODFACED = GetFirstID('Buu_Xolo_the_Bloodfaced'),
+        DIVINE_REPROACH         = GetFirstID('Divine_Reproach'),
         DVOROVOI                = GetFirstID('Dvorovoi'),
         GILAGOGE_TLUGVI         = GetFirstID('Gilagoge_Tlugvi'),
         KING_OF_BATONS          = GetFirstID('King_of_Batons'),
@@ -58,6 +59,7 @@ zones[xi.zone.BALGAS_DAIS] =
         KING_OF_CUPS            = GetFirstID('King_of_Cups'),
         KING_OF_SWORDS          = GetFirstID('King_of_Swords'),
         MAAT                    = GetFirstID('Maat'),
+        TZEE_XICUS_HIEROPHANT   = GetFirstID('Tzee_Xicus_Hierophant'),
         VOO_TOLU_THE_GHOSTFIST  = GetFirstID('Voo_Tolu_the_Ghostfist'),
     },
     npc =

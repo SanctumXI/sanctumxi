@@ -12,6 +12,8 @@ local content = Battlefield:new({
     maxPlayers       = 18,
     timeLimit        = utils.minutes(30),
     index            = 12,
+    menuName         = 'The Hills are Alive',
+    entryName        = 'The Hills are Alive',
     entryNpc         = 'BC_Entrance',
     exitNpc          = 'Burning_Circle',
     requiredItems    = { xi.item.THEMIS_ORB, wearMessage = waughroonID.text.A_CRACK_HAS_FORMED, wornMessage = waughroonID.text.ORB_IS_CRACKED }
