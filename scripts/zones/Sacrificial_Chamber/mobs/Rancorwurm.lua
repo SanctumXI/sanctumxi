@@ -1,25 +1,21 @@
 -----------------------------------
 -- Area: Sacrificial Chamber
---  Mob: Typhon
--- KSNM: Three's a Crowd
+--  Mob: Rancorwurm
+-- KSNM: The Ravening Worm
 -----------------------------------
-mixins =
-{
-    require('scripts/mixins/families/hydra'),
-}
+require('scripts/globals/sandworm')
 -----------------------------------
 
 local tuning =
 {
-    level                 = 80,
+    level                 = 85,
     hpBonus               = 0,
     attackBonus           = 0,
     defenseBonus          = 0,
     accuracyBonus         = 0,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
-    regen                 = 25,
-    regain                = 25,
+    regain                = 20,
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
     breathDamageTaken     = 0,
@@ -29,12 +25,8 @@ local tuning =
 ---@type TMobEntity
 local entity = {}
 
-local function updateHeadBonuses(mob)
-    local intactHeads = 2 - mob:getAnimationSub()
-    local multiplier  = math.max(0, intactHeads) * 0.75
-
-    mob:setMod(xi.mod.REGEN, math.floor(tuning.regen * multiplier))
-    mob:setMod(xi.mod.REGAIN, math.floor(tuning.regain * multiplier))
+entity.onMobInitialize = function(mob)
+    xi.sandworm.onMobInitialize(mob)
 end
 
 entity.onMobSpawn = function(mob)
@@ -48,29 +40,17 @@ entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
     mob:addMod(xi.mod.EVA, tuning.evasionBonus)
     mob:addMod(xi.mod.MATT, tuning.magicAttackBonus)
+    mob:setMod(xi.mod.REGAIN, tuning.regain)
     mob:setMod(xi.mod.UDMGPHYS, tuning.physicalDamageTaken)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
-    mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 0)
-    mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
     mob:setHP(mob:getMaxHP())
-
-    updateHeadBonuses(mob)
-end
-
-entity.onMobEngage = function(mob, target)
-    updateHeadBonuses(mob)
-end
-
-entity.onMobFight = function(mob, target)
-    updateHeadBonuses(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
     if player then
-        player:addTitle(xi.title.HYDRA_HEADHUNTER)
+        player:addTitle(xi.title.SANDWORM_WRANGLER)
     end
 end
 

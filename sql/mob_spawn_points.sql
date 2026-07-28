@@ -58184,10 +58184,10 @@ INSERT INTO `mob_spawn_points` VALUES (17445131,0,'Hyohh_the_Conchblower','Hyohh
 INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv the Riverleaper',30,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
--- Three's a Crowd
-INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Typhon','Typhon',32,80,80,-280.878,-32.500,326.971,32);
-INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Typhon','Typhon',32,80,80,-1.093,-0.500,47.607,32);
-INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Typhon','Typhon',32,80,80,281.130,31.500,-273.224,32);
+-- The Ravening Worm
+INSERT INTO `mob_spawn_points` VALUES (668029,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
+INSERT INTO `mob_spawn_points` VALUES (668030,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
+INSERT INTO `mob_spawn_points` VALUES (668031,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)
@@ -59410,10 +59410,10 @@ INSERT INTO `mob_spawn_points` VALUES (17465512,0,'Retiarius_XI-XIX','Retiarius 
 INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoplomachus XI-XXVI',29,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
 
--- The Ravening Worm
-INSERT INTO `mob_spawn_points` VALUES (17465605,0,'Zepwell_Worm','Zepwell Worm',31,85,85,-1.945,100.325,-240.000,64);
-INSERT INTO `mob_spawn_points` VALUES (17465606,0,'Zepwell_Worm','Zepwell Worm',31,85,85,-1.975,0.000,2.081,64);
-INSERT INTO `mob_spawn_points` VALUES (17465607,0,'Zepwell_Worm','Zepwell Worm',31,85,85,-1.945,-100.000,242.335,64);
+-- Three's a Crowd
+INSERT INTO `mob_spawn_points` VALUES (688389,0,'Typhon','Typhon',31,80,80,-1.945,100.325,-240.000,64);
+INSERT INTO `mob_spawn_points` VALUES (688390,0,'Typhon','Typhon',31,80,80,-1.975,0.000,2.081,64);
+INSERT INTO `mob_spawn_points` VALUES (688391,0,'Typhon','Typhon',31,80,80,-1.945,-100.000,242.335,64);
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)

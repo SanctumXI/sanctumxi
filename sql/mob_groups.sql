@@ -11624,7 +11624,7 @@ INSERT INTO `mob_groups` VALUES (28,3328,163,'Rauu_the_Whaleswooner',0,128,0,0,0
 INSERT INTO `mob_groups` VALUES (29,2038,163,'Hyohh_the_Conchblower',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (30,3123,163,'Pevv_the_Riverleaper',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (31,3442,163,'Sahagins_Wyvern',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (32,7567,163,'Typhon',0,128,0,73000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (31,7567,168,'Typhon',0,128,0,60000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Garlaige_Citadel_[S] (Zone 164)
@@ -11900,7 +11900,7 @@ INSERT INTO `mob_groups` VALUES (27,3527,168,'Secutor_XI-XXXII',0,128,0,0,0,0,NU
 INSERT INTO `mob_groups` VALUES (28,3357,168,'Retiarius_XI-XIX',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (29,1989,168,'Hoplomachus_XI-XXVI',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (30,675,168,'Centurio_XI-I',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (31,7568,168,'Zepwell_Worm',0,128,0,70000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (32,7568,163,'Rancorwurm',0,128,0,55000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Toraimarai_Canal (Zone 169)
@@ -13761,7 +13761,7 @@ INSERT INTO `mob_groups` VALUES (74,0,206,'Mumor',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (75,4006,206,'Trion',0,128,0,1500,0,1,NULL); -- ally
 INSERT INTO `mob_groups` VALUES (76,7292,206,'Generic_Doll',0,128,0,2200,2200,0,NULL);
 INSERT INTO `mob_groups` VALUES (77,7293,206,'Generic_Doll',0,128,0,2200,2200,0,NULL);
-INSERT INTO `mob_groups` VALUES (78,7569,206,'Ixion',0,128,0,100000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (78,7569,206,'Ixion',0,128,0,65000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Cloister_of_Flames (Zone 207)
