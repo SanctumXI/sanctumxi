@@ -19,7 +19,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.ICE_SDT, 1500)
+    mob:setMod(xi.mod.ICE_SDT, -1500)
     mob:setMod(xi.mod.SLOW_RES_RANK, 4)
 
     mob:setMod(xi.mod.ACC, 15)

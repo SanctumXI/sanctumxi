@@ -57,9 +57,9 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGAIN, 20)
 
     -- Frost-forged warlord: strongly resists Ice, slightly weak to its opposite (Fire).
-    mob:setMod(xi.mod.ICE_SDT, 4000)
+    mob:setMod(xi.mod.ICE_SDT, -4000)
     mob:setMod(xi.mod.ICE_RES_RANK, 10)
-    mob:setMod(xi.mod.FIRE_SDT, -1000)
+    mob:setMod(xi.mod.FIRE_SDT, 1000)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
     mob:setLocalVar('auraActive', 0)

@@ -101,10 +101,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
-    
-    mob:setMod(xi.mod.ICE_SDT, 4000)
+
+    mob:setMod(xi.mod.ICE_SDT, -4000)
     mob:setMod(xi.mod.ICE_RES_RANK, 10)
-    mob:setMod(xi.mod.FIRE_SDT, -1000)
+    mob:setMod(xi.mod.FIRE_SDT, 1000)
 
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)

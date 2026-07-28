@@ -58,10 +58,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    mob:setMod(xi.mod.WATER_SDT, 3000)
+    mob:setMod(xi.mod.WATER_SDT, -3000)
     mob:setMod(xi.mod.WATER_RES_RANK, 8)
-    mob:setMod(xi.mod.FIRE_SDT, -1000)
-    mob:setMod(xi.mod.THUNDER_SDT, -1500)
+    mob:setMod(xi.mod.FIRE_SDT, 1000)
+    mob:setMod(xi.mod.THUNDER_SDT, 1500)
 
     mob:setMod(xi.mod.POISON_RES_RANK, 8)
 

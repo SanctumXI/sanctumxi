@@ -99,8 +99,8 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
     mob:setMod(xi.mod.SILENCE_RES_RANK, 12)
-    mob:setMod(xi.mod.WIND_SDT, 1500)
-    mob:setMod(xi.mod.EARTH_SDT, -500)
+    mob:setMod(xi.mod.WIND_SDT, -1500)
+    mob:setMod(xi.mod.EARTH_SDT, 500)
 
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.POISON_RES_RANK, 6)

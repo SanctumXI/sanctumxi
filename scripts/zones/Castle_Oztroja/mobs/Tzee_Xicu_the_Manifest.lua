@@ -98,8 +98,8 @@ entity.onMobSpawn = function(mob)
 
     -- Yagudo priest: high resistance to Silence (a support caster), and mild Wind
     -- alignment (weak to its opposite, Earth) matching its Yagudo family.
-    mob:setMod(xi.mod.WIND_SDT, 1500)
-    mob:setMod(xi.mod.EARTH_SDT, -500)
+    mob:setMod(xi.mod.WIND_SDT, -1500)
+    mob:setMod(xi.mod.EARTH_SDT, 500)
 
     -- A support caster wants to keep casting: resists Paralyze and Poison.
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)

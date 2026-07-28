@@ -40,9 +40,9 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.REGAIN, 20)
 
     -- Quadav king: strongly resists Earth, slightly weak to its opposite (Wind).
-    mob:setMod(xi.mod.EARTH_SDT, 4000)
+    mob:setMod(xi.mod.EARTH_SDT, -4000)
     mob:setMod(xi.mod.EARTH_RES_RANK, 10)
-    mob:setMod(xi.mod.WIND_SDT, -1000)
+    mob:setMod(xi.mod.WIND_SDT, 1000)
 
     -- Tough smith-king: resists Stun and Paralyze.
     mob:setMod(xi.mod.STUN_RES_RANK, 8)
