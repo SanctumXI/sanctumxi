@@ -19,6 +19,7 @@
 ===========================================================================
 */
 
+#include "common/database.h"
 #include "common/logging.h"
 #include "common/macros.h"
 #include "common/settings.h"
@@ -29,7 +30,10 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cstring>
+#include <functional>
 #include <initializer_list>
+#include <stdexcept>
 
 #include "lua/luautils.h"
 
@@ -43,6 +47,7 @@
 #include "packets/s2c/0x009_message.h"
 #include "packets/s2c/0x00b_logout.h"
 #include "packets/s2c/0x01b_job_info.h"
+#include "packets/s2c/0x01c_item_max.h"
 #include "packets/s2c/0x01d_item_same.h"
 #include "packets/s2c/0x01e_item_num.h"
 #include "packets/s2c/0x01f_item_list.h"
@@ -64,6 +69,7 @@
 #include "conquest_system.h"
 #include "grades.h"
 #include "ipc_client.h"
+#include "instance.h"
 #include "item_container.h"
 #include "items.h"
 #include "latent_effect_container.h"
@@ -1214,6 +1220,1062 @@ void LoadInventory(CCharEntity* PChar)
             }
         }
     }
+}
+
+namespace
+{
+constexpr std::array<CONTAINER_ID, 3> linkshellBankContainers = {
+    LOC_MOGSAFE,
+    LOC_MOGSAFE2,
+    LOC_MOGLOCKER,
+};
+
+constexpr auto linkshellBankRegistrationVar = "[SanctumLibrary]LinkshellId";
+constexpr auto linkshellBankInstanceVar     = "SanctumLibraryLinkshellId";
+
+auto canAccessLinkshellBank(const CCharEntity* PChar, const uint32 linkshellId) -> bool
+{
+    return PChar != nullptr &&
+           linkshellId != 0 &&
+           PChar->loc.zone != nullptr &&
+           PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY &&
+           PChar->PInstance != nullptr &&
+           PChar->PInstance->GetLocalVar(linkshellBankInstanceVar) == linkshellId &&
+           static_cast<uint32>(PChar->getCharVar(linkshellBankRegistrationVar)) == linkshellId &&
+           PChar->PLinkshell1 != nullptr &&
+           PChar->PLinkshell1->getID() == linkshellId;
+}
+
+auto isLinkshellActive(const uint32 linkshellId) -> bool
+{
+    const auto rset = db::preparedStmt(
+        "SELECT 1 FROM linkshells WHERE linkshellid = ? AND broken = 0 LIMIT 1",
+        linkshellId);
+    return rset && rset->rowsCount() == 1;
+}
+
+void applyStoredItemData(CItem* PItem)
+{
+    if (auto* PItemUsable = dynamic_cast<CItemUsable*>(PItem))
+    {
+        uint32 useTime = 0;
+        std::memcpy(&useTime, PItemUsable->m_extra + 0x04, sizeof(useTime));
+        if (useTime != 0)
+        {
+            PItemUsable->setLastUseTime(
+                timer::now() -
+                std::chrono::seconds(earth_time::vanadiel_timestamp() - useTime));
+        }
+    }
+
+    if (PItem != nullptr &&
+        (PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)) &&
+        !PItem->isSubType(ITEM_CHARGED))
+    {
+        auto* PEquipment = static_cast<CItemEquipment*>(PItem);
+        for (uint8 augmentIndex = 0; augmentIndex < 4; ++augmentIndex)
+        {
+            if (PEquipment->getAugment(augmentIndex) != 0)
+            {
+                PEquipment->ApplyAugment(augmentIndex);
+            }
+        }
+    }
+}
+
+void sendLinkshellBankView(CCharEntity* PChar, const bool sharedView)
+{
+    PChar->pushPacket<CCharSyncPacket>(PChar);
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_MAX>(PChar);
+
+    for (const auto locationId : linkshellBankContainers)
+    {
+        auto* PContainer = sharedView
+                               ? PChar->getLinkshellBankStorage(locationId)
+                               : PChar->getPersonalStorage(locationId);
+        for (uint8 slotId = 0; slotId <= PContainer->GetSize(); ++slotId)
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PContainer->GetItem(slotId), locationId, slotId);
+        }
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+}
+
+void resetLinkshellBankView(CCharEntity* PChar)
+{
+    PChar->deactivateLinkshellBank();
+    sendLinkshellBankView(PChar, false);
+}
+
+auto bankRowsMatchMemory(CCharEntity* PChar) -> bool
+{
+    const auto rset = db::preparedStmt(
+        "SELECT container_id, slot, itemId, quantity, signature, extra, "
+        "OCTET_LENGTH(extra) AS extra_length, revision "
+        "FROM linkshell_moglocker "
+        "WHERE linkshell_id = ? "
+        "ORDER BY container_id, slot",
+        PChar->getLinkshellBankId());
+    if (!rset)
+    {
+        return false;
+    }
+
+    std::array<uint8, MAX_CONTAINER_ID> databaseItemCounts{};
+    while (rset->next())
+    {
+        const auto locationId = static_cast<CONTAINER_ID>(rset->get<uint8>("container_id"));
+        const auto slotId     = rset->get<uint8>("slot");
+        if (!charutils::IsLinkshellBankContainer(locationId))
+        {
+            return false;
+        }
+
+        auto* PContainer = PChar->getLinkshellBankStorage(locationId);
+        auto* PItem      = PContainer->GetItem(slotId);
+        if (PItem == nullptr ||
+            PItem->getID() != rset->get<uint16>("itemId") ||
+            PItem->getQuantity() != rset->get<uint32>("quantity") ||
+            PItem->getSignature() != rset->get<std::string>("signature") ||
+            rset->get<uint32>("extra_length") != CItem::extra_size ||
+            PChar->getLinkshellBankRevision(locationId, slotId) != rset->get<uint64>("revision"))
+        {
+            return false;
+        }
+
+        uint8 storedExtra[CItem::extra_size]{};
+        db::extractFromBlob(rset, "extra", storedExtra);
+        if (std::memcmp(PItem->m_extra, storedExtra, CItem::extra_size) != 0)
+        {
+            return false;
+        }
+
+        ++databaseItemCounts[locationId];
+    }
+
+    for (const auto locationId : linkshellBankContainers)
+    {
+        const auto* PContainer = PChar->getLinkshellBankStorage(locationId);
+        const auto  itemCount  = PContainer->GetSize() - PContainer->GetFreeSlotsCount();
+        if (databaseItemCounts[locationId] != itemCount)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+} // namespace
+
+bool IsLinkshellBankContainer(const uint8 locationId)
+{
+    return std::find(linkshellBankContainers.begin(), linkshellBankContainers.end(), locationId) != linkshellBankContainers.end();
+}
+
+bool IsLinkshellBankAuthorized(const CCharEntity* PChar)
+{
+    return PChar != nullptr &&
+           PChar->isLinkshellBankActive() &&
+           canAccessLinkshellBank(PChar, PChar->getLinkshellBankId());
+}
+
+bool OpenLinkshellBank(CCharEntity* PChar, const uint32 linkshellId)
+{
+    if (!canAccessLinkshellBank(PChar, linkshellId) || !isLinkshellActive(linkshellId))
+    {
+        if (PChar != nullptr && PChar->isLinkshellBankActive())
+        {
+            resetLinkshellBankView(PChar);
+        }
+
+        return false;
+    }
+
+    PChar->activateLinkshellBank(linkshellId);
+    const auto rset = db::preparedStmt(
+        "SELECT container_id, slot, itemId, quantity, signature, extra, "
+        "OCTET_LENGTH(extra) AS extra_length, revision "
+        "FROM linkshell_moglocker "
+        "WHERE linkshell_id = ? "
+        "ORDER BY container_id, slot",
+        linkshellId);
+    if (!rset)
+    {
+        resetLinkshellBankView(PChar);
+        return false;
+    }
+
+    while (rset->next())
+    {
+        const auto locationId = static_cast<CONTAINER_ID>(rset->get<uint8>("container_id"));
+        const auto slotId     = rset->get<uint8>("slot");
+        const auto quantity   = rset->get<uint32>("quantity");
+        auto       PItem      = xi::items::spawn(rset->get<uint16>("itemId"));
+        auto*      PContainer = PChar->getLinkshellBankStorage(locationId);
+
+        if (PContainer == nullptr ||
+            PItem == nullptr ||
+            slotId == 0 ||
+            slotId > PContainer->GetSize() ||
+            quantity == 0 ||
+            rset->get<uint32>("extra_length") != CItem::extra_size ||
+            quantity > PItem->getStackSize() ||
+            PItem->isType(ITEM_CURRENCY) ||
+            PItem->isType(ITEM_LINKSHELL) ||
+            PItem->hasFlag(ItemFlag::Exclusive))
+        {
+            ShowErrorFmt(
+                "Linkshell Bank: invalid row for linkshell {} (container {}, slot {}, item {}, quantity {})",
+                linkshellId,
+                static_cast<uint8>(locationId),
+                slotId,
+                PItem ? PItem->getID() : 0,
+                quantity);
+            resetLinkshellBankView(PChar);
+            return false;
+        }
+
+        PItem->setQuantity(quantity);
+        PItem->setSignature(rset->get<std::string>("signature"));
+        db::extractFromBlob(rset, "extra", PItem->m_extra);
+        applyStoredItemData(PItem.get());
+
+        if (PContainer->InsertItem(std::move(PItem), slotId) == ERROR_SLOTID)
+        {
+            resetLinkshellBankView(PChar);
+            return false;
+        }
+
+        PChar->setLinkshellBankRevision(locationId, slotId, rset->get<uint64>("revision"));
+    }
+
+    sendLinkshellBankView(PChar, true);
+    return true;
+}
+
+void CloseLinkshellBank(CCharEntity* PChar, const bool restorePersonalView)
+{
+    if (PChar == nullptr || !PChar->isLinkshellBankActive())
+    {
+        return;
+    }
+
+    PChar->deactivateLinkshellBank();
+    if (restorePersonalView)
+    {
+        sendLinkshellBankView(PChar, false);
+    }
+}
+
+bool IsLinkshellBankCurrent(CCharEntity* PChar)
+{
+    if (!IsLinkshellBankAuthorized(PChar) || !isLinkshellActive(PChar->getLinkshellBankId()))
+    {
+        CloseLinkshellBank(PChar);
+        return false;
+    }
+
+    if (bankRowsMatchMemory(PChar))
+    {
+        return true;
+    }
+
+    const auto linkshellId = PChar->getLinkshellBankId();
+    OpenLinkshellBank(PChar, linkshellId);
+    return false;
+}
+
+namespace
+{
+struct LinkshellBankItemSnapshot
+{
+    uint16                               itemId;
+    uint32                               quantity;
+    std::string                          signature;
+    std::array<uint8, CItem::extra_size> extra{};
+    uint64                               revision;
+};
+
+auto getLinkshellBankAwareStorage(CCharEntity* PChar, const CONTAINER_ID locationId) -> CItemContainer*
+{
+    return charutils::IsLinkshellBankContainer(locationId)
+               ? PChar->getLinkshellBankStorage(locationId)
+               : PChar->getPersonalStorage(locationId);
+}
+
+auto makeLinkshellBankSnapshot(const CCharEntity* PChar, const CONTAINER_ID locationId, const CItem* PItem) -> LinkshellBankItemSnapshot
+{
+    LinkshellBankItemSnapshot snapshot{
+        .itemId    = PItem->getID(),
+        .quantity  = PItem->getQuantity(),
+        .signature = PItem->getSignature(),
+        .revision  = charutils::IsLinkshellBankContainer(locationId)
+                         ? PChar->getLinkshellBankRevision(locationId, PItem->getSlotID())
+                         : 0,
+    };
+    std::memcpy(snapshot.extra.data(), PItem->m_extra, CItem::extra_size);
+    return snapshot;
+}
+
+auto cloneLinkshellBankItem(const LinkshellBankItemSnapshot& snapshot, const uint32 quantity) -> std::unique_ptr<CItem>
+{
+    auto PItem = xi::items::spawn(snapshot.itemId);
+    if (PItem == nullptr || quantity == 0 || quantity > PItem->getStackSize())
+    {
+        return nullptr;
+    }
+
+    PItem->setQuantity(quantity);
+    PItem->setSignature(snapshot.signature);
+    std::memcpy(PItem->m_extra, snapshot.extra.data(), CItem::extra_size);
+    applyStoredItemData(PItem.get());
+    return PItem;
+}
+
+auto firstFreeSlot(const CItemContainer* PContainer) -> uint8
+{
+    for (uint8 slotId = 1; slotId <= PContainer->GetSize(); ++slotId)
+    {
+        if (PContainer->GetItem(slotId) == nullptr)
+        {
+            return slotId;
+        }
+    }
+
+    return ERROR_SLOTID;
+}
+
+void requireDatabaseChange(const std::unique_ptr<db::detail::ResultSetWrapper>& result, const std::string& failure)
+{
+    if (!result || result->rowsAffected() != 1)
+    {
+        throw std::runtime_error(failure);
+    }
+}
+
+auto runLinkshellBankTransaction(const std::function<void()>& transactionFunction) -> bool
+{
+    const bool wasAutoCommitOn = db::getAutoCommit();
+    if (!db::setAutoCommit(false))
+    {
+        return false;
+    }
+
+    if (!db::transactionStart())
+    {
+        db::setAutoCommit(wasAutoCommitOn);
+        return false;
+    }
+
+    try
+    {
+        transactionFunction();
+        if (!db::transactionCommit())
+        {
+            db::transactionRollback();
+            db::setAutoCommit(wasAutoCommitOn);
+            return false;
+        }
+    }
+    catch (const std::exception& exception)
+    {
+        ShowCriticalFmt("Linkshell Bank transaction failed: {}", exception.what());
+        db::transactionRollback();
+        db::setAutoCommit(wasAutoCommitOn);
+        return false;
+    }
+
+    if (!db::setAutoCommit(wasAutoCommitOn))
+    {
+        ShowCritical("Linkshell Bank transaction committed but could not restore autocommit");
+    }
+
+    return true;
+}
+
+void updateLinkshellBankEndpoint(
+    CCharEntity*                    PChar,
+    const CONTAINER_ID              locationId,
+    const uint8                     slotId,
+    const LinkshellBankItemSnapshot& snapshot,
+    const uint32                    newQuantity)
+{
+    auto extra = snapshot.extra;
+
+    if (charutils::IsLinkshellBankContainer(locationId))
+    {
+        if (newQuantity == 0)
+        {
+            requireDatabaseChange(
+                db::preparedStmt(
+                    "DELETE FROM linkshell_moglocker "
+                    "WHERE linkshell_id = ? AND container_id = ? AND slot = ? "
+                    "AND itemId = ? AND quantity = ? AND signature = ? AND extra = ? AND revision = ?",
+                    PChar->getLinkshellBankId(),
+                    locationId,
+                    slotId,
+                    snapshot.itemId,
+                    snapshot.quantity,
+                    snapshot.signature,
+                    extra,
+                    snapshot.revision),
+                "Linkshell Bank source row changed during removal");
+        }
+        else
+        {
+            requireDatabaseChange(
+                db::preparedStmt(
+                    "UPDATE linkshell_moglocker "
+                    "SET quantity = ?, revision = revision + 1 "
+                    "WHERE linkshell_id = ? AND container_id = ? AND slot = ? "
+                    "AND itemId = ? AND quantity = ? AND signature = ? AND extra = ? AND revision = ?",
+                    newQuantity,
+                    PChar->getLinkshellBankId(),
+                    locationId,
+                    slotId,
+                    snapshot.itemId,
+                    snapshot.quantity,
+                    snapshot.signature,
+                    extra,
+                    snapshot.revision),
+                "Linkshell Bank source row changed during quantity update");
+        }
+    }
+    else
+    {
+        if (newQuantity == 0)
+        {
+            requireDatabaseChange(
+                db::preparedStmt(
+                    "DELETE FROM char_inventory "
+                    "WHERE charid = ? AND location = ? AND slot = ? AND itemId = ? AND quantity = ?",
+                    PChar->id,
+                    locationId,
+                    slotId,
+                    snapshot.itemId,
+                    snapshot.quantity),
+                "Character inventory source row changed during Linkshell Bank removal");
+        }
+        else
+        {
+            requireDatabaseChange(
+                db::preparedStmt(
+                    "UPDATE char_inventory SET quantity = ? "
+                    "WHERE charid = ? AND location = ? AND slot = ? AND itemId = ? AND quantity = ?",
+                    newQuantity,
+                    PChar->id,
+                    locationId,
+                    slotId,
+                    snapshot.itemId,
+                    snapshot.quantity),
+                "Character inventory source row changed during Linkshell Bank quantity update");
+        }
+    }
+}
+
+void insertLinkshellBankEndpoint(
+    CCharEntity*                    PChar,
+    const CONTAINER_ID              locationId,
+    const uint8                     slotId,
+    const LinkshellBankItemSnapshot& snapshot,
+    const uint32                    quantity)
+{
+    auto extra = snapshot.extra;
+
+    if (charutils::IsLinkshellBankContainer(locationId))
+    {
+        requireDatabaseChange(
+            db::preparedStmt(
+                "INSERT INTO linkshell_moglocker "
+                "(linkshell_id, container_id, slot, itemId, quantity, signature, extra, revision) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
+                PChar->getLinkshellBankId(),
+                locationId,
+                slotId,
+                snapshot.itemId,
+                quantity,
+                snapshot.signature,
+                extra),
+            "Could not create Linkshell Bank destination row");
+    }
+    else
+    {
+        requireDatabaseChange(
+            db::preparedStmt(
+                "INSERT INTO char_inventory "
+                "(charid, location, slot, itemId, quantity, signature, extra) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                PChar->id,
+                locationId,
+                slotId,
+                snapshot.itemId,
+                quantity,
+                snapshot.signature,
+                extra),
+            "Could not create character inventory destination row");
+    }
+}
+
+void moveLinkshellBankSlot(
+    CCharEntity*                    PChar,
+    const CONTAINER_ID              locationId,
+    const uint8                     fromSlot,
+    const uint8                     toSlot,
+    const LinkshellBankItemSnapshot& snapshot)
+{
+    auto extra = snapshot.extra;
+
+    requireDatabaseChange(
+        db::preparedStmt(
+            "UPDATE linkshell_moglocker "
+            "SET slot = ?, revision = revision + 1 "
+            "WHERE linkshell_id = ? AND container_id = ? AND slot = ? "
+            "AND itemId = ? AND quantity = ? AND signature = ? AND extra = ? AND revision = ?",
+            toSlot,
+            PChar->getLinkshellBankId(),
+            locationId,
+            fromSlot,
+            snapshot.itemId,
+            snapshot.quantity,
+            snapshot.signature,
+            extra,
+            snapshot.revision),
+        "Linkshell Bank row changed during slot movement");
+}
+
+void auditLinkshellBankOperation(
+    CCharEntity*                    PChar,
+    const std::string&              operation,
+    const CONTAINER_ID              from,
+    const uint8                     fromSlot,
+    const CONTAINER_ID              to,
+    const uint8                     toSlot,
+    const LinkshellBankItemSnapshot& snapshot,
+    const uint32                    quantity)
+{
+    auto extra = snapshot.extra;
+
+    requireDatabaseChange(
+        db::preparedStmt(
+            "INSERT INTO linkshell_bank_audit "
+            "(linkshell_id, actor_charid, actor_name, operation, "
+            "source_container, source_slot, destination_container, destination_slot, "
+            "itemId, quantity, signature, extra) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            PChar->getLinkshellBankId(),
+            PChar->id,
+            PChar->getName(),
+            operation,
+            from,
+            fromSlot,
+            to,
+            toSlot,
+            snapshot.itemId,
+            quantity,
+            snapshot.signature,
+            extra),
+        "Could not write Linkshell Bank audit record");
+}
+
+auto linkshellBankOperationName(const CONTAINER_ID from, const CONTAINER_ID to, const bool split, const bool merge) -> std::string
+{
+    if (from == LOC_INVENTORY)
+    {
+        return split ? "deposit_split" : (merge ? "deposit_merge" : "deposit");
+    }
+
+    if (to == LOC_INVENTORY)
+    {
+        return split ? "withdraw_split" : (merge ? "withdraw_merge" : "withdraw");
+    }
+
+    return split ? "split" : (merge ? "merge" : "rearrange");
+}
+
+void refreshLinkshellBankAfterConflict(CCharEntity* PChar)
+{
+    const auto linkshellId = PChar->getLinkshellBankId();
+    if (!OpenLinkshellBank(PChar, linkshellId))
+    {
+        CloseLinkshellBank(PChar);
+    }
+}
+
+void updateStyleAfterLinkshellBankDeposit(CCharEntity* PChar, CItem* PItem)
+{
+    if (!PChar->getStyleLocked() || PItem == nullptr || charutils::HasItem(PChar, PItem->getID()))
+    {
+        return;
+    }
+
+    const auto itemId = PItem->getID();
+    if (PItem->isType(ITEM_WEAPON))
+    {
+        if (PChar->styleItems[SLOT_MAIN] == itemId)
+        {
+            charutils::UpdateWeaponStyle(PChar, SLOT_MAIN, static_cast<CItemWeapon*>(PChar->getEquip(SLOT_MAIN)));
+        }
+        else if (PChar->styleItems[SLOT_SUB] == itemId)
+        {
+            charutils::UpdateWeaponStyle(PChar, SLOT_SUB, static_cast<CItemWeapon*>(PChar->getEquip(SLOT_SUB)));
+        }
+    }
+    else if (PItem->isType(ITEM_EQUIPMENT))
+    {
+        const auto equipSlotId = static_cast<CItemEquipment*>(PItem)->getSlotType();
+        if (PChar->styleItems[equipSlotId] == itemId)
+        {
+            switch (equipSlotId)
+            {
+                case SLOT_HEAD:
+                case SLOT_BODY:
+                case SLOT_HANDS:
+                case SLOT_LEGS:
+                case SLOT_FEET:
+                    charutils::UpdateArmorStyle(PChar, equipSlotId);
+                    break;
+            }
+        }
+    }
+}
+
+void notifyLinkshellBankOwnershipChange(
+    CCharEntity*       PChar,
+    const CONTAINER_ID from,
+    const CONTAINER_ID to,
+    CItem*             PItem,
+    const uint32       quantity,
+    const bool         sourceRemoved)
+{
+    if (from == LOC_INVENTORY &&
+        charutils::IsLinkshellBankContainer(to) &&
+        sourceRemoved &&
+        PItem != nullptr)
+    {
+        updateStyleAfterLinkshellBankDeposit(PChar, PItem);
+        luautils::OnItemDrop(PChar, PItem);
+    }
+
+    if (PItem != nullptr &&
+        charutils::IsLinkshellBankContainer(from) &&
+        to == LOC_INVENTORY &&
+        luautils::IsPlayerItemAddedCallbackRegistered(PItem->getID()))
+    {
+        luautils::OnPlayerItemAdded(PChar, PItem->getID(), quantity);
+    }
+}
+} // namespace
+
+bool MoveLinkshellBankItem(
+    CCharEntity*       PChar,
+    const CONTAINER_ID from,
+    const uint8        fromSlot,
+    const CONTAINER_ID to,
+    const uint8        toSlot,
+    const uint32       quantity)
+{
+    if (!IsLinkshellBankCurrent(PChar) || quantity == 0)
+    {
+        return false;
+    }
+
+    const bool fromShared = IsLinkshellBankContainer(from);
+    const bool toShared   = IsLinkshellBankContainer(to);
+    if ((!fromShared && from != LOC_INVENTORY) ||
+        (!toShared && to != LOC_INVENTORY) ||
+        (fromShared && toShared && from != to) ||
+        (!fromShared && !toShared))
+    {
+        return false;
+    }
+
+    auto* PSrc  = getLinkshellBankAwareStorage(PChar, from);
+    auto* PDst  = getLinkshellBankAwareStorage(PChar, to);
+    auto* PItem = PSrc ? PSrc->GetItem(fromSlot) : nullptr;
+    if (PItem == nullptr ||
+        PItem->isSubType(ITEM_LOCKED) ||
+        PItem->isType(ITEM_CURRENCY) ||
+        PItem->getQuantity() - PItem->getReserve() < quantity ||
+        (toShared &&
+         !fromShared &&
+         (PItem->isType(ITEM_LINKSHELL) || PItem->hasFlag(ItemFlag::Exclusive))))
+    {
+        return false;
+    }
+
+    if (fromShared &&
+        to == LOC_INVENTORY &&
+        PItem->hasFlag(ItemFlag::Rare) &&
+        HasItem(PChar, PItem->getID()))
+    {
+        return false;
+    }
+
+    const auto sourceSnapshot = makeLinkshellBankSnapshot(PChar, from, PItem);
+
+    // Split part of a stack into the first available destination slot.
+    if (quantity < PItem->getQuantity())
+    {
+        const uint8 destinationSlot = firstFreeSlot(PDst);
+        auto        PNewItem        = cloneLinkshellBankItem(sourceSnapshot, quantity);
+        if (destinationSlot == ERROR_SLOTID || PNewItem == nullptr)
+        {
+            return false;
+        }
+
+        const bool success = runLinkshellBankTransaction(
+            [&]()
+            {
+                updateLinkshellBankEndpoint(PChar, from, fromSlot, sourceSnapshot, sourceSnapshot.quantity - quantity);
+                insertLinkshellBankEndpoint(PChar, to, destinationSlot, sourceSnapshot, quantity);
+                auditLinkshellBankOperation(
+                    PChar,
+                    linkshellBankOperationName(from, to, true, false),
+                    from,
+                    fromSlot,
+                    to,
+                    destinationSlot,
+                    sourceSnapshot,
+                    quantity);
+            });
+        if (!success)
+        {
+            refreshLinkshellBankAfterConflict(PChar);
+            return false;
+        }
+
+        PItem->setQuantity(sourceSnapshot.quantity - quantity);
+        if (PDst->InsertItem(std::move(PNewItem), destinationSlot) == ERROR_SLOTID)
+        {
+            refreshLinkshellBankAfterConflict(PChar);
+            return false;
+        }
+
+        if (fromShared)
+        {
+            PChar->setLinkshellBankRevision(from, fromSlot, sourceSnapshot.revision + 1);
+        }
+        if (toShared)
+        {
+            PChar->setLinkshellBankRevision(to, destinationSlot, 1);
+        }
+
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_NUM>(from, fromSlot, PItem->getQuantity());
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PDst->GetItem(destinationSlot), to, destinationSlot);
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+        notifyLinkshellBankOwnershipChange(
+            PChar,
+            from,
+            to,
+            PDst->GetItem(destinationSlot),
+            quantity,
+            false);
+        return true;
+    }
+
+    // A concrete destination slot means the client is attempting to merge.
+    if (toSlot < 82)
+    {
+        auto* PDestinationItem = PDst->GetItem(toSlot);
+        if (PDestinationItem == nullptr ||
+            PDestinationItem == PItem ||
+            PDestinationItem->getID() != PItem->getID() ||
+            PDestinationItem->isSubType(ITEM_LOCKED) ||
+            PDestinationItem->getReserve() > 0 ||
+            PDestinationItem->getQuantity() >= PDestinationItem->getStackSize())
+        {
+            return false;
+        }
+
+        const uint32 moveQuantity = std::min(
+            PItem->getQuantity(),
+            PDestinationItem->getStackSize() - PDestinationItem->getQuantity());
+        if (moveQuantity == 0)
+        {
+            return false;
+        }
+
+        const auto destinationSnapshot    = makeLinkshellBankSnapshot(PChar, to, PDestinationItem);
+        const auto sourceNewQuantity      = sourceSnapshot.quantity - moveQuantity;
+        const auto destinationNewQuantity = destinationSnapshot.quantity + moveQuantity;
+        const bool success = runLinkshellBankTransaction(
+            [&]()
+            {
+                updateLinkshellBankEndpoint(PChar, to, toSlot, destinationSnapshot, destinationNewQuantity);
+                updateLinkshellBankEndpoint(PChar, from, fromSlot, sourceSnapshot, sourceNewQuantity);
+                auditLinkshellBankOperation(
+                    PChar,
+                    linkshellBankOperationName(from, to, false, true),
+                    from,
+                    fromSlot,
+                    to,
+                    toSlot,
+                    sourceSnapshot,
+                    moveQuantity);
+            });
+        if (!success)
+        {
+            refreshLinkshellBankAfterConflict(PChar);
+            return false;
+        }
+
+        PDestinationItem->setQuantity(destinationNewQuantity);
+        if (toShared)
+        {
+            PChar->setLinkshellBankRevision(to, toSlot, destinationSnapshot.revision + 1);
+        }
+
+        if (sourceNewQuantity == 0)
+        {
+            auto PRemoved = PSrc->RemoveItem(fromSlot);
+            if (fromShared)
+            {
+                PChar->setLinkshellBankRevision(from, fromSlot, 0);
+            }
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, from, fromSlot);
+            notifyLinkshellBankOwnershipChange(
+                PChar,
+                from,
+                to,
+                PRemoved.get(),
+                moveQuantity,
+                true);
+        }
+        else
+        {
+            PItem->setQuantity(sourceNewQuantity);
+            if (fromShared)
+            {
+                PChar->setLinkshellBankRevision(from, fromSlot, sourceSnapshot.revision + 1);
+            }
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_NUM>(from, fromSlot, sourceNewQuantity);
+            notifyLinkshellBankOwnershipChange(
+                PChar,
+                from,
+                to,
+                PItem,
+                moveQuantity,
+                false);
+        }
+
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_NUM>(to, toSlot, destinationNewQuantity);
+        PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+        return true;
+    }
+
+    // Move the complete stack to a free destination slot.
+    const uint8 destinationSlot = firstFreeSlot(PDst);
+    if (destinationSlot == ERROR_SLOTID)
+    {
+        return false;
+    }
+
+    const bool success = runLinkshellBankTransaction(
+        [&]()
+        {
+            if (fromShared && toShared && from == to)
+            {
+                moveLinkshellBankSlot(PChar, from, fromSlot, destinationSlot, sourceSnapshot);
+            }
+            else
+            {
+                updateLinkshellBankEndpoint(PChar, from, fromSlot, sourceSnapshot, 0);
+                insertLinkshellBankEndpoint(PChar, to, destinationSlot, sourceSnapshot, sourceSnapshot.quantity);
+            }
+
+            auditLinkshellBankOperation(
+                PChar,
+                linkshellBankOperationName(from, to, false, false),
+                from,
+                fromSlot,
+                to,
+                destinationSlot,
+                sourceSnapshot,
+                sourceSnapshot.quantity);
+        });
+    if (!success)
+    {
+        refreshLinkshellBankAfterConflict(PChar);
+        return false;
+    }
+
+    const uint8 movedSlot = PSrc->MoveItemTo(fromSlot, *PDst, destinationSlot);
+    if (movedSlot == ERROR_SLOTID)
+    {
+        refreshLinkshellBankAfterConflict(PChar);
+        return false;
+    }
+
+    if (fromShared)
+    {
+        PChar->setLinkshellBankRevision(from, fromSlot, 0);
+    }
+    if (toShared)
+    {
+        const uint64 destinationRevision = fromShared && from == to
+                                               ? sourceSnapshot.revision + 1
+                                               : 1;
+        PChar->setLinkshellBankRevision(to, destinationSlot, destinationRevision);
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, from, fromSlot);
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(PDst->GetItem(destinationSlot), to, destinationSlot);
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+    notifyLinkshellBankOwnershipChange(
+        PChar,
+        from,
+        to,
+        PDst->GetItem(destinationSlot),
+        sourceSnapshot.quantity,
+        true);
+    return true;
+}
+
+bool SortLinkshellBankContainer(CCharEntity* PChar, const CONTAINER_ID locationId)
+{
+    if (!IsLinkshellBankContainer(locationId) || !IsLinkshellBankCurrent(PChar))
+    {
+        return false;
+    }
+
+    auto* PContainer = PChar->getLinkshellBankStorage(locationId);
+    struct SortTransfer
+    {
+        uint8                     sourceSlot;
+        uint8                     destinationSlot;
+        uint32                    quantity;
+        LinkshellBankItemSnapshot sourceSnapshot;
+    };
+
+    std::array<uint32, MAX_CONTAINER_SIZE + 1> finalQuantities{};
+    std::array<bool, MAX_CONTAINER_SIZE + 1>   changedSlots{};
+    std::vector<SortTransfer>                  transfers;
+
+    for (uint8 slotId = 1; slotId <= PContainer->GetSize(); ++slotId)
+    {
+        if (const auto* PItem = PContainer->GetItem(slotId))
+        {
+            finalQuantities[slotId] = PItem->getQuantity();
+        }
+    }
+
+    for (uint8 destinationSlot = 1; destinationSlot <= PContainer->GetSize(); ++destinationSlot)
+    {
+        const auto* PDestinationItem = PContainer->GetItem(destinationSlot);
+        if (PDestinationItem == nullptr ||
+            PDestinationItem->isSubType(ITEM_LOCKED) ||
+            PDestinationItem->getReserve() > 0)
+        {
+            continue;
+        }
+
+        for (uint8 sourceSlot = destinationSlot + 1;
+             sourceSlot <= PContainer->GetSize() &&
+             finalQuantities[destinationSlot] < PDestinationItem->getStackSize();
+             ++sourceSlot)
+        {
+            const auto* PSourceItem = PContainer->GetItem(sourceSlot);
+            if (PSourceItem == nullptr ||
+                finalQuantities[sourceSlot] == 0 ||
+                PSourceItem->getID() != PDestinationItem->getID() ||
+                PSourceItem->isSubType(ITEM_LOCKED) ||
+                PSourceItem->getReserve() > 0)
+            {
+                continue;
+            }
+
+            const uint32 moveQuantity = std::min(
+                finalQuantities[sourceSlot],
+                PDestinationItem->getStackSize() - finalQuantities[destinationSlot]);
+            if (moveQuantity == 0)
+            {
+                continue;
+            }
+
+            finalQuantities[destinationSlot] += moveQuantity;
+            finalQuantities[sourceSlot] -= moveQuantity;
+            changedSlots[destinationSlot] = true;
+            changedSlots[sourceSlot]      = true;
+            transfers.emplace_back(SortTransfer{
+                .sourceSlot      = sourceSlot,
+                .destinationSlot = destinationSlot,
+                .quantity        = moveQuantity,
+                .sourceSnapshot  = makeLinkshellBankSnapshot(PChar, locationId, PSourceItem),
+            });
+        }
+    }
+
+    if (transfers.empty())
+    {
+        return true;
+    }
+
+    const bool success = runLinkshellBankTransaction(
+        [&]()
+        {
+            for (uint8 slotId = 1; slotId <= PContainer->GetSize(); ++slotId)
+            {
+                if (!changedSlots[slotId])
+                {
+                    continue;
+                }
+
+                const auto* PItem = PContainer->GetItem(slotId);
+                updateLinkshellBankEndpoint(
+                    PChar,
+                    locationId,
+                    slotId,
+                    makeLinkshellBankSnapshot(PChar, locationId, PItem),
+                    finalQuantities[slotId]);
+            }
+
+            for (const auto& transfer : transfers)
+            {
+                auditLinkshellBankOperation(
+                    PChar,
+                    "sort",
+                    locationId,
+                    transfer.sourceSlot,
+                    locationId,
+                    transfer.destinationSlot,
+                    transfer.sourceSnapshot,
+                    transfer.quantity);
+            }
+        });
+    if (!success)
+    {
+        refreshLinkshellBankAfterConflict(PChar);
+        return false;
+    }
+
+    for (uint8 slotId = 1; slotId <= PContainer->GetSize(); ++slotId)
+    {
+        if (!changedSlots[slotId])
+        {
+            continue;
+        }
+
+        auto* PItem = PContainer->GetItem(slotId);
+        if (finalQuantities[slotId] == 0)
+        {
+            auto PRemoved = PContainer->RemoveItem(slotId);
+            PChar->setLinkshellBankRevision(locationId, slotId, 0);
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_ATTR>(nullptr, locationId, slotId);
+        }
+        else
+        {
+            PItem->setQuantity(finalQuantities[slotId]);
+            PChar->setLinkshellBankRevision(
+                locationId,
+                slotId,
+                PChar->getLinkshellBankRevision(locationId, slotId) + 1);
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_NUM>(locationId, slotId, finalQuantities[slotId]);
+        }
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+    return true;
 }
 
 void LoadEquip(CCharEntity* PChar)

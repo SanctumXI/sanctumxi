@@ -79,6 +79,13 @@ auto LoadChar(Scheduler& scheduler, MapConfig config, uint32 charId) -> std::uni
 void LoadSpells(CCharEntity* PChar);
 void LoadInventory(CCharEntity* PChar);
 void LoadEquip(CCharEntity* PChar);
+bool IsLinkshellBankContainer(uint8 locationId);
+bool IsLinkshellBankAuthorized(const CCharEntity* PChar);
+bool OpenLinkshellBank(CCharEntity* PChar, uint32 linkshellId);
+void CloseLinkshellBank(CCharEntity* PChar, bool restorePersonalView = true);
+bool IsLinkshellBankCurrent(CCharEntity* PChar);
+bool MoveLinkshellBankItem(CCharEntity* PChar, CONTAINER_ID from, uint8 fromSlot, CONTAINER_ID to, uint8 toSlot, uint32 quantity);
+bool SortLinkshellBankContainer(CCharEntity* PChar, CONTAINER_ID locationId);
 
 void SendQuestMissionLog(CCharEntity* PChar);
 void SendPartialMissionLog(CCharEntity* PChar, MissionLog log, bool completed);

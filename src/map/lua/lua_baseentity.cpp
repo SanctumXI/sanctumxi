@@ -19842,6 +19842,41 @@ uint32 CLuaBaseEntity::getLinkshellID(uint8 slot)
 }
 
 /************************************************************************
+ *  Function: openLinkshellMogLocker()
+ *  Purpose : Backward-compatible name for the original prototype.
+ ************************************************************************/
+
+bool CLuaBaseEntity::openLinkshellMogLocker(const uint32 linkshellId)
+{
+    return openLinkshellBank(linkshellId);
+}
+
+/************************************************************************
+ *  Function: openLinkshellBank()
+ *  Purpose : Opens isolated Mog Safe, Mog Safe 2, and Mog Locker views
+ *            backed by the registered linkshell.
+ ************************************************************************/
+
+bool CLuaBaseEntity::openLinkshellBank(const uint32 linkshellId)
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar == nullptr)
+    {
+        return false;
+    }
+
+    return charutils::OpenLinkshellBank(PChar, linkshellId);
+}
+
+void CLuaBaseEntity::closeLinkshellBank()
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity))
+    {
+        charutils::CloseLinkshellBank(PChar);
+    }
+}
+
+/************************************************************************
  *  Function: getLinkshellName()
  *  Purpose : Returns the equipped linkshell's decoded name.
  ************************************************************************/
@@ -20999,6 +21034,9 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getLinkshellTreasuryItemCount", CLuaBaseEntity::getLinkshellTreasuryItemCount);
     SOL_REGISTER("depositLinkshellTreasuryItem", CLuaBaseEntity::depositLinkshellTreasuryItem);
     SOL_REGISTER("withdrawLinkshellTreasuryItem", CLuaBaseEntity::withdrawLinkshellTreasuryItem);
+    SOL_REGISTER("openLinkshellMogLocker", CLuaBaseEntity::openLinkshellMogLocker);
+    SOL_REGISTER("openLinkshellBank", CLuaBaseEntity::openLinkshellBank);
+    SOL_REGISTER("closeLinkshellBank", CLuaBaseEntity::closeLinkshellBank);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)

@@ -63,6 +63,20 @@ auto GP_CLI_COMMAND_ITEM_DUMP::validate(MapSession* PSession, const CCharEntity*
 
 void GP_CLI_COMMAND_ITEM_DUMP::process(MapSession* PSession, CCharEntity* PChar) const
 {
+    if (PChar->isLinkshellBankActive() && charutils::IsLinkshellBankContainer(Category))
+    {
+        if (!charutils::IsLinkshellBankCurrent(PChar))
+        {
+            return;
+        }
+
+        if (const CItem* PItem = PChar->getLinkshellBankStorage(Category)->GetItem(ItemIndex))
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(PItem->getID(), MsgStd::UnableToThrowAway);
+        }
+        return;
+    }
+
     // Gil cannot be dropped.
     if (Category == LOC_INVENTORY && ItemIndex == 0)
     {

@@ -68,6 +68,7 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
 auto GP_CLI_COMMAND_SUBCONTAINER::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
     return PacketValidator()
+        .mustEqual(PChar->isLinkshellBankActive(), false, "Linkshell Bank session active")
         .mustEqual(PChar->m_moghouseID, PChar->id, "Character not in their mog house")
         .oneOf<GP_CLI_COMMAND_SUBCONTAINER_KIND>(Kind)
         .oneOf<GP_CLI_COMMAND_SUBCONTAINER_CONTAINERINDEX>(ContainerIndex)

@@ -185,7 +185,7 @@ local function getLibraryTeleporters()
     {
         {
             name = 'Skeevy Bastard',
-            pos = { -106.0, -2.0, -86.0, 128 },
+            pos = { -104.005, -2.150, -84.232, 51 },
             look = getLook({ race = xi.race.HUME_M, face = getFace('A1'), body = 15, legs = 15, feet = 15 }),
             greeting = 'Oi, \'ere the hell you want to go mate?',
             menuTitle = 'Choose Your Destination',
@@ -259,7 +259,7 @@ local function getLibraryTeleporters()
         },
         {
             name = 'Slimy Bastard',
-            pos = { -106.0, -2.0, -90.0, 128 },
+            pos = { -106.357, -2.150, -84.431, 52 },
             look = getLook({ race = xi.race.GALKA, face = getFace('A3'), body = 17, legs = 9, feet = 4 }),
             greeting = 'So you want to travel the seas?',
             menuTitle = 'Choose Your Destination',
@@ -301,7 +301,7 @@ local function getLibraryTeleporters()
         },
         {
             name = 'Smiley Bastard',
-            pos = { -106.0, -2.0, -94.0, 128 },
+            pos = { -109.130, -2.150, -85.010, 47 },
             look = getLook({ race = xi.race.HUME_M, face = getFace('A4'), body = 10, legs = 19, feet = 3 }),
             greeting = 'The sky is the limit...',
             menuTitle = 'Choose Your Destination',
@@ -416,8 +416,21 @@ libraryInstance.setupServices = function(instance)
                 return
             end
 
+            local linkshellId = libraryInstance.getRegisteredLinkshellID(player)
+            if not player:openLinkshellMogLocker(linkshellId) then
+                player:printToPlayer(
+                    'The Linkshell Bank could not be opened. Please report this test failure.',
+                    xi.msg.channel.SYSTEM_3
+                )
+                return
+            end
+
             player:printToPlayer(
-                'I can help you access the items stored in your Mog House, kupo!',
+                'Mog Safe, Mog Safe 2, and Mog Locker are your linkshell\'s shared Bank, kupo!',
+                xi.msg.channel.SYSTEM_3
+            )
+            player:printToPlayer(
+                'Exclusive, currency, and linkshell items cannot be deposited.',
                 xi.msg.channel.SYSTEM_3
             )
             player:sendMenu(xi.menuType.MOOGLE)

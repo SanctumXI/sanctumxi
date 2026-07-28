@@ -943,6 +943,28 @@ end
 
 ---@nodiscard
 ---@param slot integer
+---@return integer
+function CBaseEntity:getLinkshellID(slot)
+end
+
+---@nodiscard
+---@param linkshellId integer
+---@return boolean
+function CBaseEntity:openLinkshellMogLocker(linkshellId)
+end
+
+---@nodiscard
+---@param linkshellId integer
+---@return boolean
+function CBaseEntity:openLinkshellBank(linkshellId)
+end
+
+---@return nil
+function CBaseEntity:closeLinkshellBank()
+end
+
+---@nodiscard
+---@param slot integer
 ---@return CItem?
 function CBaseEntity:getEquippedItem(slot)
 end

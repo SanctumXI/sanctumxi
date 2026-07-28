@@ -1209,6 +1209,10 @@ void CZone::CharZoneOut(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
+    // Shared Linkshell Bank containers are scoped to the Library instance.
+    // Tear down the session before the character can enter another zone.
+    charutils::CloseLinkshellBank(PChar, false);
+
     for (const auto& triggerArea : m_triggerAreaList)
     {
         if (PChar->isInTriggerArea(triggerArea->getTriggerAreaID()))

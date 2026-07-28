@@ -58,5 +58,5 @@ CCharSyncPacket::CCharSyncPacket(CCharEntity* PChar)
     }
 
     ref<uint8>(0x25) = PChar->jobs.job[PChar->GetMJob()];
-    ref<uint8>(0x27) = PChar->profile.mhflag & 0x20 ? 1 : 0; // MogExpansionFlag - Is 2nd floor unlocked.
+    ref<uint8>(0x27) = ((PChar->profile.mhflag & 0x20) || PChar->isLinkshellBankActive()) ? 1 : 0; // MogExpansionFlag - Is 2nd floor unlocked.
 }

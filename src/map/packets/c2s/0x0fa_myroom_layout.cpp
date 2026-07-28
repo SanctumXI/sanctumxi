@@ -139,6 +139,7 @@ auto anyInstalledFurnishing(CCharEntity* PChar, const uint8 selfCat, const uint8
 auto GP_CLI_COMMAND_MYROOM_LAYOUT::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
     return PacketValidator()
+        .mustEqual(PChar->isLinkshellBankActive(), false, "Linkshell Bank session active")
         .range("MyroomFloorFlg", this->MyroomFloorFlg, 0, 1) // Flag indicating if 2nd floor
         .range("v", this->v, 0, 3)                           // Rotation of the item (0-3)
         .range("y", this->y, 0, 25);                         // Stacking elevation (parent height / 10)
