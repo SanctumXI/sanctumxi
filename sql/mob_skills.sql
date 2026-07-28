@@ -4409,4 +4409,4 @@ INSERT INTO `mob_skills` VALUES (4261,2612,'mix_samsons_strength',1,0.0,14.0,200
 -- INSERT INTO `mob_skills` VALUES (4405,0,'perdition',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4406,0,'meikyo_shisui',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4407,0,'tropic_tenor',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
-INSERT INTO `mob_skills` VALUES (4408,1543,'gorge',0,0.0,10.0,2000,1000,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (3976,1543,'gorge',0,0.0,10.0,2000,1000,4,0,0,0,0,0,0);
