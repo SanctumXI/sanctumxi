@@ -227,6 +227,24 @@ struct GP_SERV_CHAR_NPC
 // constexpr uint32_t model_size       = offsetof(GP_SERV_CHAR_PC, name[0]);
 // constexpr uint32_t name_size        = offsetof(GP_SERV_CHAR_PC, name[0]);
 
+// Bomb-family mobs (Balloon, Bomb, Bomb King/Queen, etc. = family 56; Cluster variants = family 68)
+// hover in their client models but the server tracks them at ground height for pathing/hit
+// detection. Raise the rendered position only, so combat math stays untouched.
+constexpr float BOMB_FAMILY_HOVER_OFFSET = 1.2f;
+
+float getVisualHeightOffset(CBaseEntity* PEntity)
+{
+    if (const auto* PMob = dynamic_cast<const CMobEntity*>(PEntity))
+    {
+        if (PMob->m_Family == 56 || PMob->m_Family == 68)
+        {
+            return BOMB_FAMILY_HOVER_OFFSET;
+        }
+    }
+
+    return 0.0f;
+}
+
 std::string getTransportNPCName(CBaseEntity* PEntity)
 {
     bool isElevator = PEntity->look.size == MODEL_ELEVATOR;
@@ -315,7 +333,7 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
     {
         ref<uint8>(0x0B)  = PEntity->loc.p.rotation;
         ref<float>(0x0C)  = PEntity->loc.p.x;
-        ref<float>(0x10)  = PEntity->loc.p.y;
+        ref<float>(0x10)  = PEntity->loc.p.y + getVisualHeightOffset(PEntity);
         ref<float>(0x14)  = PEntity->loc.p.z;
         ref<uint16>(0x18) = PEntity->loc.p.moving;
         ref<uint16>(0x1A) = PEntity->m_TargID << 1;
