@@ -24,7 +24,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PETRIFICATION, 50, 0, 120)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PETRIFICATION, 1, 0, 120)
         mob:resetEnmity(target)
     end
 
