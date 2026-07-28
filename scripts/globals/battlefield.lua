@@ -716,23 +716,7 @@ local function startCustomEntryEvent(content, player, npc)
     end
 
     player:timer(250, function(playerArg)
-        -- The native client normally retries event updates until it finds an
-        -- available arena. A custom menu has already made its selection, so
-        -- perform those retries here.
-        for _ = 1, 3 do
-            local previousArea = playerArg:getLocalVar('[battlefield]area')
-            local result       = content:onEntryEventUpdate(playerArg, 32000, bit.lshift(content.index, 4), npc)
-
-            if result == 1 then
-                playerArg:setLocalVar('noPosUpdate', 0)
-                return
-            elseif playerArg:getLocalVar('[battlefield]area') == previousArea then
-                break
-            end
-        end
-
-        playerArg:setLocalVar('[battlefield]area', 0)
-        playerArg:setLocalVar(customEntryVar, 0)
+        attempt(playerArg, 4)
     end)
 end
 
