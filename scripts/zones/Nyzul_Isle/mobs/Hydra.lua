@@ -13,7 +13,7 @@ mixins =
 local entity = {}
 
 local function handleRegen(mob, broken)
-    local multiplier = (3 - broken) * 0.75
+    local multiplier = (2 - broken) * 0.75
     mob:setMod(xi.mod.REGEN, math.floor(25 * multiplier))
     mob:setMod(xi.mod.REGAIN, math.floor(25 * multiplier))
 end

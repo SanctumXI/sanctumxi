@@ -11,9 +11,21 @@ mixins =
 ---@type TMobEntity
 local entity = {}
 
+local function handleRegen(mob, broken)
+    local multiplier = (2 - broken) * 0.75
+    mob:setMod(xi.mod.REGEN, math.floor(25 * multiplier))
+    mob:setMod(xi.mod.REGAIN, math.floor(25 * multiplier))
+end
+
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
+
+    handleRegen(mob, mob:getAnimationSub())
+end
+
+entity.onMobEngage = function(mob)
+    handleRegen(mob, mob:getAnimationSub())
 end
 
 entity.onMobRoam = function(mob)
@@ -21,6 +33,8 @@ entity.onMobRoam = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
+    handleRegen(mob, mob:getAnimationSub())
+
     local targetPos = target:getPos()
     local spawnPos = mob:getSpawnPos()
 
