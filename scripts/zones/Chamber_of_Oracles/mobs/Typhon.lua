@@ -52,6 +52,14 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Serpentine water-beast: resists Water, slightly weak to its opposite (Fire).
+    -- Also weak to Thunder, a classic pairing against aquatic/scaled creatures.
+    mob:setMod(xi.mod.WATER_SDT, 3000)
+    mob:setMod(xi.mod.WATER_RES_RANK, 8)
+    mob:setMod(xi.mod.FIRE_SDT, -1000)
+    mob:setMod(xi.mod.THUNDER_SDT, -1500)
+
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
     mob:setHP(mob:getMaxHP())

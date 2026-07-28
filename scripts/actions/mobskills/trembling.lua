@@ -1,7 +1,7 @@
 -----------------------------------
 -- Trembling
 -- Family: Hydra
--- Description: Deals physical damage to enemies within an area of effect. Additional Effect: Dispel
+-- Description: Deals physical damage to enemies within an area of effect. Additional Effect: Dispel, Paralyze
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,7 +15,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
-    params.fTP            = { 4.0, 4.0, 4.0 }
+    params.fTP            = { 1.5, 1.5, 1.5 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3 -- TODO: Capture shadowBehavior
@@ -26,6 +26,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
         target:dispelStatusEffect()
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.PARALYSIS, 50, 0, 180)
     end
 
     return info.damage

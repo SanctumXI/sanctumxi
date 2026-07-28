@@ -98,6 +98,13 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Yagudo priest: high resistance to Silence (a support caster), and mild Wind
+    -- alignment (weak to its opposite, Earth) matching its Yagudo family.
+    mob:setMod(xi.mod.SILENCE_RES_RANK, 12)
+    mob:setMod(xi.mod.WIND_SDT, 1500)
+    mob:setMod(xi.mod.EARTH_SDT, -500)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2100)
     mob:setLocalVar('auraPhase', 0)
     mob:setLocalVar('auraReturn', 0)

@@ -82,6 +82,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Air elemental: strongly resists its own element (Wind), weak to its opposite (Earth).
+    mob:setMod(xi.mod.WIND_SDT, 4000)
+    mob:setMod(xi.mod.WIND_RES_RANK, 10)
+    mob:setMod(xi.mod.EARTH_SDT, -1000)
+
     mob:setHP(mob:getMaxHP())
 
     -- Half of the Elemental-Air family's base speed of 55.

@@ -49,6 +49,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Thunder-aligned: strongly resists its own element, slightly weak to its opposite (Ice).
+    mob:setMod(xi.mod.THUNDER_SDT, 4000)
+    mob:setMod(xi.mod.THUNDER_RES_RANK, 10)
+    mob:setMod(xi.mod.ICE_SDT, -1000)
+
     mob:setHP(mob:getMaxHP())
 end
 

@@ -45,6 +45,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Subterranean sandworm: strongly resists Earth, slightly weak to its opposite (Wind).
+    mob:setMod(xi.mod.EARTH_SDT, 4000)
+    mob:setMod(xi.mod.EARTH_RES_RANK, 10)
+    mob:setMod(xi.mod.WIND_SDT, -1000)
+
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200) -- +100% physical damage output
     mob:setHP(mob:getMaxHP())
 end
