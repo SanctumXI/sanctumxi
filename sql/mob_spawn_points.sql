@@ -58185,9 +58185,9 @@ INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv t
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
 -- The Ravening Worm
-INSERT INTO `mob_spawn_points` VALUES (668029,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
-INSERT INTO `mob_spawn_points` VALUES (668030,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
-INSERT INTO `mob_spawn_points` VALUES (668031,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
+INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
+INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
+INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)
@@ -59411,9 +59411,9 @@ INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoploma
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
 
 -- Three's a Crowd
-INSERT INTO `mob_spawn_points` VALUES (688389,0,'Typhon','Typhon',31,80,80,0.000,100.325,-240.000,64);
-INSERT INTO `mob_spawn_points` VALUES (688390,0,'Typhon','Typhon',31,80,80,0.000,0.000,2.081,64);
-INSERT INTO `mob_spawn_points` VALUES (688391,0,'Typhon','Typhon',31,80,80,0.000,-100.000,242.335,64);
+INSERT INTO `mob_spawn_points` VALUES (17465605,0,'Typhon','Typhon',31,80,80,0.000,100.325,-240.000,64);
+INSERT INTO `mob_spawn_points` VALUES (17465606,0,'Typhon','Typhon',31,80,80,0.000,0.000,2.081,64);
+INSERT INTO `mob_spawn_points` VALUES (17465607,0,'Typhon','Typhon',31,80,80,0.000,-100.000,242.335,64);
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)
@@ -70582,9 +70582,9 @@ INSERT INTO `mob_spawn_points` VALUES (17621569,0,'Ullegore','Ullegore',73,0,0,0
 INSERT INTO `mob_spawn_points` VALUES (17621570,0,'Mumor','Mumor',74,0,0,0.000,0.000,0.000,0);
 
 -- Ride the Lightning
-INSERT INTO `mob_spawn_points` VALUES (17621571,0,'Ixion','Ixion',78,85,85,-400.000,-202.125,400.000,192);
-INSERT INTO `mob_spawn_points` VALUES (17621572,0,'Ixion','Ixion',78,85,85,0.000,-2.125,0.000,192);
-INSERT INTO `mob_spawn_points` VALUES (17621573,0,'Ixion','Ixion',78,85,85,400.000,197.875,-400.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621572,0,'Ixion','Ixion',78,85,85,-400.000,-202.125,400.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621573,0,'Ixion','Ixion',78,85,85,0.000,-2.125,0.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621574,0,'Ixion','Ixion',78,85,85,400.000,197.875,-400.000,192);
 
 -- ------------------------------------------------------------
 -- Cloister of Flames(Zone 207)
