@@ -6,8 +6,6 @@
 require('scripts/globals/dark_ixion')
 -----------------------------------
 
--- Right now level, HP, pool stats, and skill list mirror Dark Ixion
--- Following are ways we can easily tune/adjust the fight.
 local tuning =
 {
     level                 =     85,
@@ -50,12 +48,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Thunder-aligned: strongly resists its own element, slightly weak to its opposite (Ice).
     mob:setMod(xi.mod.THUNDER_SDT, 4000)
     mob:setMod(xi.mod.THUNDER_RES_RANK, 10)
     mob:setMod(xi.mod.ICE_SDT, -1000)
 
-    -- A wild, explosive beast: resists Paralyze and Slow.
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
 
