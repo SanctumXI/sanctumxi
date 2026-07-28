@@ -709,20 +709,30 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action) 
     local pet = player:getPet()
     local duration = player:getMerit(xi.merit.RUN_WILD) + 60 
     if pet then
-        -- mods aren't tied to an effect, just applied to the pet. They leave when the pet dies or despawns
+        -- store the exact bonuses granted so we remove precisely this much when the buff fades
+        local accBonus  = pet:getACC() * power / 100
+        local mattBonus = pet:getMod(xi.mod.MATT) * power / 100
+
+        -- mods aren't tied to an effect, just applied to the pet directly. They fade on their own timer below
         pet:addMod(xi.mod.ATTP, power)
-        pet:addMod(xi.mod.ACC, pet:getACC() * power / 100)
+        pet:addMod(xi.mod.ACC, accBonus)
         pet:addMod(xi.mod.REGEN, 5) -- Effect changed for Sanctum
         -- Yep, it's an MAB % addition
         -- "If you have no sources of Magic Attack Bonus while using the slug pet, then Run Wild actually makes his innate MAB penalty even more negative, thus reducing damage."
-        pet:addMod(xi.mod.MATT, pet:getMod(xi.mod.MATT) * power / 100)
+        pet:addMod(xi.mod.MATT, mattBonus)
         pet:addMod(xi.mod.DEFP, power)
         -- pet:addMod(xi.mod.EVA, pet:getEVA() * power / 100)
         -- TODO find out this potency, but appears to be consistently 1% per tick with hare familiar at lvl 99
         -- pet:addMod(xi.mod.REGEN, 0.01 * pet:getMaxHP()) - Old regen formulat
 
-        -- After 5 minutes+ merit duration, the pet just despawns
-        -- pet:setJugRemainingTime(duration)
+        -- After the buff's duration, remove the mods. Pet itself is unaffected and keeps fighting.
+        pet:timer(duration * 1000, function(petArg)
+            petArg:delMod(xi.mod.ATTP, power)
+            petArg:delMod(xi.mod.ACC, accBonus)
+            petArg:delMod(xi.mod.REGEN, 5)
+            petArg:delMod(xi.mod.MATT, mattBonus)
+            petArg:delMod(xi.mod.DEFP, power)
+        end)
     end
 
     -- seems to display nothing in console, but this it the msg id from capture

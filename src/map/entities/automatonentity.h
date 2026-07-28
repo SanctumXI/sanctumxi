@@ -58,7 +58,7 @@ public:
     void setAllBurden(uint8 burden);
     void setBurdenArray(std::array<uint8, 8> burdenArray);
     auto addBurden(uint8 element, int8 burden) -> uint8;
-    auto getOverloadChance(uint8 element) const -> uint8;
+    auto getOverloadChance(uint8 element) -> uint8;
 
     void PostTick() override;
 
@@ -71,5 +71,7 @@ public:
     virtual void OnCastFinished(CMagicState&, action_t&) override;
 
 private:
+    auto getOverloadThreshold() -> int16;
+
     std::array<uint8, 8> m_Burden{};
 };

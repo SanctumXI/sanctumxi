@@ -8,27 +8,20 @@ require('scripts/globals/automaton')
 
 local moduleName = 'attachments'
 
-if xi.module.isContentEnabled('ABYSSEA') then
-    return { name = moduleName }
-end
-
 local m = Module:new(moduleName)
 
--- Reduces Enmity boost from Strobe                                 : https://wiki.ffo.jp/html/8610.html
--- Reduces Store TP from Inhibitor                                  : https://wiki.ffo.jp/html/8625.html
--- Changes Armor Plate and Armor Plate II to Defense instead of PDT : https://wiki.ffo.jp/html/9070.html
--- Adds a Ranged Attack Penalty to Drum Magazine.                   : https://wiki.ffo.jp/html/8882.html
--- Changes Turbo Charger Haste to Gear Haste instead of Magic       : https://wiki.ffo.jp/html/8627.html
--- Adds Burden to Tactical Processor                                : https://wiki.ffo.jp/html/13527.html
--- Restores the pre-LSB Volt Gun damage formula                     : https://wiki.ffo.jp/html/8752.html
--- Reduces Burden Decay From Heatsink                               : https://wiki.ffo.jp/html/8629.html
--- Reduces the potency of Steam Jackets Damage Reduction            : https://wiki.ffo.jp/html/15352.html
-xi.automaton.attachmentModifiers['strobe'            ] = { { modifier = xi.mod.ENMITY,                      values = {   5,   15,   25,   40 }, opticFiber = true  }, }
+-- SANCTUM-SPECIFIC CHANEGS ARE AS FOLLOWS:
+-- Reduces Store TP from Inhibitor
+-- Changes Armor Plate and Armor Plate II to Defense instead of PDT
+-- Adds a Ranged Attack Penalty to Drum Magazine.
+-- Changes Turbo Charger Haste to Gear Haste instead of Magic
+-- Adds Burden to Tactical Processor
+-- Improved Volt Gun damage formula
+-- Reduces Burden Decay From Heatsink
 xi.automaton.attachmentModifiers['inhibitor'         ] = { { modifier = xi.mod.STORETP,                     values = {   5,   10,   15,   20 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['armor_plate'       ] = { { modifier = xi.mod.DEFP,                        values = {  10,   15,   20,   25 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['armor_plate_ii'    ] = { { modifier = xi.mod.DEFP,                        values = {  20,   25,   30,   35 }, opticFiber = true  }, }
-xi.automaton.attachmentModifiers['drum_magazine'     ] = { { modifier = xi.mod.AUTO_RANGED_DELAY,           values = {   2,    4,    6,    8 }, opticFiber = false },
-                                                            { modifier = xi.mod.RACC,                        values = { -15,  -30,  -50,  -75 }, opticFiber = false }, }
+xi.automaton.attachmentModifiers['drum_magazine'     ] = { { modifier = xi.mod.RACC,                        values = { -15,  -30,  -50,  -75 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['flame_holder'      ] = { { modifier = xi.mod.WEAPONSKILL_DAMAGE_BASE,     values = {   0,  125,  150,  175 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['ice_maker'         ] = { { modifier = xi.mod.AUTO_MAB_COEFFICIENT,        values = {   0,   20,   40,   60 }, opticFiber = true  }, }
 xi.automaton.attachmentModifiers['turbo_charger'     ] = { { modifier = xi.mod.HASTE_GEAR,                  values = { 500, 1500, 2000, 2500 }, opticFiber = true  }, }
@@ -36,12 +29,6 @@ xi.automaton.attachmentModifiers['tactical_processor'] = { { modifier = xi.mod.A
                                                             { modifier = xi.mod.OVERLOAD_THRESH,             values = {  -5,   -5,   -5,   -5 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['volt_gun'          ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {   0,    0,    0,    0 }, opticFiber = false }, }
 xi.automaton.attachmentModifiers['heatsink'          ] = { { modifier = xi.mod.BURDEN_DECAY,                values = {   1,    1,    1,    1 }, opticFiber = false }, }
-xi.automaton.attachmentModifiers['steam_jacket'      ] = { { modifier = xi.mod.AUTO_STEAM_JACKET_REDUCTION, values = {  25,   35,   40,   60 }, opticFiber = true  }, }
-
--- Reduces potency of Auto Repair Kit II and removed level based scaling from Mana Tank : https://wiki.ffo.jp/html/19739.html
-xi.automaton.repairKit.data['auto-repair_kit_ii' ] = { id = 196, hpBoost = 2, regenBase   = { 0, 2, 3, 4 }, regenMultiplier   = { 0, 0.4, 0.6, 0.8 } }
-xi.automaton.manaTank.data ['mana_tank'          ] = { id = 225, mpBoost = 1, refreshBase = { 0, 1, 2, 3 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
-xi.automaton.manaTank.data ['mana_tank_ii'       ] = { id = 228, mpBoost = 2, refreshBase = { 0, 2, 3, 4 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } }
 
 -----------------------------------
 -- Volt Gun - Restores the pre-LSB skill and maneuver damage formula.
@@ -524,7 +511,7 @@ local activationThresholds =
     [3] = 60,
 }
 
-m:addOverride('xi.actions.abilities.pets.automaton.economizer.onEquip', function(pet)
+m:addOverride('xi.actions.abilities.pets.attachments.economizer.onEquip', function(pet)
     pet:addListener('AUTOMATON_ATTACHMENT_CHECK', 'ATTACHMENT_ECONOMIZER', function(automaton, target)
         -- If Economizer is still on cooldown, do nothing.
         if automaton:hasRecast(xi.recast.ABILITY, xi.mobSkill.ECONOMIZER_AUTOMATON) then

@@ -110,6 +110,11 @@ void CAutomatonEntity::setBurdenArray(const std::array<uint8, 8> burdenArray)
     m_Burden = burdenArray;
 }
 
+auto CAutomatonEntity::getOverloadThreshold() -> int16
+{
+    return 30 + PMaster->getMod(Mod::OVERLOAD_THRESH) + getMod(Mod::OVERLOAD_THRESH);
+}
+
 auto CAutomatonEntity::addBurden(const uint8 element, int8 burden) -> uint8
 {
     // Handle Kenkonken Suppress Overload
@@ -123,25 +128,27 @@ auto CAutomatonEntity::addBurden(const uint8 element, int8 burden) -> uint8
 
     if (burden > 0)
     {
-        // check for overload
-        const int16 thresh = 30 + PMaster->getMod(Mod::OVERLOAD_THRESH);
-        if (m_Burden[element] > thresh)
+        const uint8 overloadChance = getOverloadChance(element);
+        if (overloadChance > 0 && xirand::GetRandomNumber(100) < overloadChance)
         {
-            if (xirand::GetRandomNumber(100) < (m_Burden[element] - thresh + 5))
-            {
-                // return overload duration
-                return m_Burden[element] - thresh;
-            }
+            // Return one second of overload duration per point over the threshold.
+            return m_Burden[element] - getOverloadThreshold();
         }
     }
+
     return 0;
 }
 
-auto CAutomatonEntity::getOverloadChance(const uint8 element) const -> uint8
+auto CAutomatonEntity::getOverloadChance(const uint8 element) -> uint8
 {
-    const int16 thresh = 30 + PMaster->getMod(Mod::OVERLOAD_THRESH);
+    const int16 threshold = getOverloadThreshold();
+    if (m_Burden[element] <= threshold)
+    {
+        return 0;
+    }
 
-    return std::clamp(m_Burden[element] - thresh + 5, 0, 255);
+    const int16 overloadChance = m_Burden[element] - threshold + 5;
+    return static_cast<uint8>(std::clamp<int16>(overloadChance, 0, 100));
 }
 
 void CAutomatonEntity::PostTick()
@@ -186,7 +193,10 @@ void CAutomatonEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     if (PSpell->tookEffect())
     {
-        puppetutils::TrySkillUP(this, SKILL_AUTOMATON_MAGIC, PTarget->GetMLevel());
+        if (PTarget)
+        {
+            puppetutils::TrySkillUP(this, SKILL_AUTOMATON_MAGIC, PTarget->GetMLevel());
+        }
 
         if (PTarget && PTarget->objtype == TYPE_MOB && PTarget->allegiance != ALLEGIANCE_TYPE::PLAYER)
         {
@@ -218,7 +228,7 @@ void CAutomatonEntity::OnMobSkillFinished(CMobSkillState& state, action_t& actio
     }
 
     // Ranged attack skill up
-    if (PSkill->getID() == 1949 && !PSkill->hasMissMsg())
+    if (PTarget && PSkill->getID() == 1949 && !PSkill->hasMissMsg())
     {
         puppetutils::TrySkillUP(this, SKILL_AUTOMATON_RANGED, PTarget->GetMLevel());
     }

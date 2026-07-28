@@ -158,11 +158,12 @@ auto CAutomatonController::shouldStandBack() const -> bool
             return true;
         }
     }
-    else if (PAutomaton->getFrame() == AutomatonFrame::Valoredge)
+    if (PAutomaton->getFrame() == AutomatonFrame::Valoredge)
     {
         return false;
     }
-    else if (PAutomaton->getHead() >= AutomatonHead::Sharpshot)
+
+    if (PAutomaton->getHead() >= AutomatonHead::Sharpshot)
     {
         return true;
     }
@@ -236,10 +237,15 @@ auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 
 void CAutomatonController::Move()
 {
-    const bool hasManafont = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+    const bool hasManafont      = PAutomaton->StatusEffectContainer->HasStatusEffect(EFFECT_MANAFONT);
+    const bool hasCastingMP     = PAutomaton->health.mp >= 8 || PAutomaton->health.maxmp <= 8;
+    const bool isAtCastingRange = isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f);
 
-    if ((shouldStandBack() && !isWithinDistance(PAutomaton->loc.p, PTarget->loc.p, 15.0f)) ||
-        (!hasManafont && PAutomaton->health.mp < 8 && PAutomaton->health.maxmp > 8))
+    if (shouldStandBack() && isAtCastingRange && (hasManafont || hasCastingMP))
+    {
+        PAutomaton->m_Behavior |= BEHAVIOR_STANDBACK;
+    }
+    else
     {
         PAutomaton->m_Behavior &= ~BEHAVIOR_STANDBACK;
     }
@@ -531,7 +537,7 @@ auto CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers) -> bool
                 {
                     auto enmity_obj = enmityList->find(PMember->id);
                     if (enmity_obj != enmityList->end() && highestEnmity < enmity_obj->second.CE + enmity_obj->second.VE && PMember->GetHPP() <= threshold &&
-                        distance(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20)
+                        distance(PAutomaton->loc.p, PMember->loc.p) < 20)
                     {
                         highestEnmity = enmity_obj->second.CE + enmity_obj->second.VE;
                         PCastTarget   = PMember;
@@ -543,7 +549,7 @@ auto CAutomatonController::TryHeal(const CurrentManeuvers& maneuvers) -> bool
         {
             static_cast<CCharEntity*>(PAutomaton->PMaster)->ForPartyWithTrusts([&](CBattleEntity* PMember)
             {
-                if (PMember->id != PAutomaton->PMaster->id && distance(PAutomaton->loc.p, PAutomaton->PMaster->loc.p) < 20)
+                if (PMember->id != PAutomaton->PMaster->id && distance(PAutomaton->loc.p, PMember->loc.p) < 20)
                 {
                     if (PMember->GetHPP() <= threshold)
                     {
@@ -1356,10 +1362,7 @@ auto CAutomatonController::TryEnhance() -> bool
         PShellTarget = PAutomaton;
     }
 
-    if (!PHasteTarget && !haste)
-    {
-        PHasteTarget = PAutomaton;
-    }
+    // Automatons do not haste themselves; Haste is only ever cast on the master or party.
 
     size_t members = 0;
 
@@ -1445,13 +1448,19 @@ auto CAutomatonController::TryEnhance() -> bool
     // No info on how this spell worked
     if ((members - protectcount) >= 4)
     {
-        Cast(PAutomaton->targid, SpellID::Protectra_V);
+        if (Cast(PAutomaton->targid, SpellID::Protectra_V))
+        {
+            return true;
+        }
     }
 
     // No info on how this spell worked
     if ((members - shellcount) >= 4)
     {
-        Cast(PAutomaton->targid, SpellID::Shellra_V);
+        if (Cast(PAutomaton->targid, SpellID::Shellra_V))
+        {
+            return true;
+        }
     }
 
     if (PRegenTarget &&
