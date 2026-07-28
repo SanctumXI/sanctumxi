@@ -932,6 +932,7 @@ xi.mobSkill =
 
     GRIM_GLOWER                   = 2156,
 
+    BERSERKER_DANCE               = 2202,
     ORE_LOB                       = 2204,
     DARK_INVOCATION               = 2206,
     PEDAL_PIROUETTE               = 2210,

@@ -18,4 +18,13 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
 end
 
+entity.onMobSpawn = function(mob)
+    xi.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            { id = xi.mobSkill.INVINCIBLE_1 },
+        },
+    })
+end
+
 return entity

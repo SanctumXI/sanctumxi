@@ -4329,14 +4329,12 @@ INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2206); -- Dark In
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2375); -- Vorticose Sands
 
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Battle Dance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Aerial Wheel
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,606);  -- Shoulder Attack
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,607);  -- Arm Block
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Howl
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,609);  -- Slam Dunk
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Counterstance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Arm Block
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Howl
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2202); -- Berserker Dance
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2263); -- Tornado Edge
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2373); -- Veil of Chaos
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,247);   -- foxfire
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,249);   -- netherspikes
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,250);   -- carnal_nightmare

@@ -2230,7 +2230,7 @@ INSERT INTO `mob_skills` VALUES (2198,1586,'winter_breeze',1,0.0,10.0,2000,1500,
 INSERT INTO `mob_skills` VALUES (2199,1587,'cyclonic_turmoil',1,0.0,15.0,2000,1500,4,0,0,5,0,0,0);
 INSERT INTO `mob_skills` VALUES (2200,1588,'cyclonic_torrent',1,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2201,1555,'counterstance_orcish',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
--- INSERT INTO `mob_skills` VALUES (2202,1946,'berserker_dance',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2202,1946,'berserker_dance',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2203,1563,'diamond_shell',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2204,1948,'ore_lob',0,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2205,1565,'feathered_furore',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -2291,7 +2291,7 @@ INSERT INTO `mob_skills` VALUES (2257,432,'azure_lore',0,0.0,18.0,2000,0,1,4,30,
 INSERT INTO `mob_skills` VALUES (2260,432,'trance',0,0.0,7.0,2000,0,1,4,30,0,0,0,0); -- TODO : Verify animation and mechanics, current animation is a working placeholder
 INSERT INTO `mob_skills` VALUES (2261,432,'tabula_rasa',0,0.0,7.0,2000,0,1,4,30,0,0,0,0); -- TODO : Verify animation and mechanics, current animation is a working placeholder
 -- INSERT INTO `mob_skills` VALUES (2262,1617,'',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2263,2007,'tornado_edge',4,15.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2263,2007,'tornado_edge',4,15.0,20.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2264,2008,'shoulder_charge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2265,2009,'skull_smash',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2266,2010,'shell_charge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);

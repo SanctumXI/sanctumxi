@@ -10505,15 +10505,15 @@ INSERT INTO `mob_groups` VALUES (48,2202,139,'Keeneyed_Aufwuf',0,128,0,0,0,0,NUL
 INSERT INTO `mob_groups` VALUES (49,2086,139,'Invulnerable_Mazzgozz',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (50,4097,139,'Undefeatable_Sappdapp',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (51,2670,139,'Minds-eyed_Klugwug',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (52,7560,139,'Frostscar_Hrozdag',0,128,0,100000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (52,7560,139,'Frostscar_Hrozdag',0,128,0,30000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (53,6868,139,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (54,6869,139,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (55,0,139,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (56,0,139,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (57,0,139,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (58,0,139,'Naji',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (59,7561,139,'Siege_Sniper',0,128,0,25000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (60,7562,139,'Blackguard',0,128,0,25000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (59,7561,139,'Siege_Sniper',0,128,0,8000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (60,7562,139,'Blackguard',0,128,0,10000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Ghelsba_Outpost (Zone 140)

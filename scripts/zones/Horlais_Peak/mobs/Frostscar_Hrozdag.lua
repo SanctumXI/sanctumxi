@@ -15,7 +15,7 @@ local tuning =
     hpBonus                  = 0,
     attackBonus              = 0,
     defenseBonus             = 0,
-    accuracyBonus            = 0,
+    accuracyBonus            = 150,
     evasionBonus             = 0,
     magicAttackBonus         = 0,
     regain                   = 20,
@@ -111,7 +111,7 @@ entity.onMobSpawn = function(mob)
         specials =
         {
             {
-                id       = xi.mobSkill.INVINCIBLE_1,
+                id       = xi.mobSkill.MIGHTY_STRIKES_1,
                 cooldown = 180,
                 hpp      = 80,
                 begCode  = breakAura,
