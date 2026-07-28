@@ -2577,8 +2577,7 @@ INSERT INTO `instance_entities` VALUES (25900,17838150); -- The Briars (gal)
 -- ------------------------------------------------------------
 
 -- Library Test (28400)
--- Preserve the normal exit without loading the Library's full NPC set.
-INSERT INTO `instance_entities` VALUES (28400,17940508); -- Door: Back to Town
+-- Linkshell Library services are inserted dynamically for each private runtime.
 
 -- ------------------------------------------------------------
 -- Reisenjima Henge (Zone 292)

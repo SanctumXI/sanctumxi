@@ -538,7 +538,9 @@ instanceManager.onInstanceCreated = function(requester, instance)
     for playerId in pairs(waitingPlayers) do
         local player = GetPlayerByID(playerId)
         if player then
-            assignPlayer(player, instance, config)
+            if checkAccess(player, config) then
+                assignPlayer(player, instance, config)
+            end
         end
     end
 
