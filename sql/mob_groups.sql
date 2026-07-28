@@ -10817,14 +10817,14 @@ INSERT INTO `mob_groups` VALUES (60,4526,146,'Zuu_Xowu_the_Darksmoke',0,128,0,0,
 INSERT INTO `mob_groups` VALUES (61,1601,146,'Gii_Jaha_the_Raucous',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (62,15,146,'Aa_Nawu_the_Thunderblade',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (63,4474,146,'Yoo_Mihi_the_Haze',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (64,7565,146,'Tzee_Xicus_Hierophant',0,128,0,100000,20000,0,NULL);
+INSERT INTO `mob_groups` VALUES (64,7565,146,'Tzee_Xicus_Hierophant',0,128,0,30000,20000,0,NULL);
 INSERT INTO `mob_groups` VALUES (65,6868,146,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (66,6869,146,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (67,0,146,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (68,0,146,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (69,0,146,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (70,0,146,'Naji',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (71,7566,146,'Divine_Reproach',0,128,0,20000,10000,0,NULL);
+INSERT INTO `mob_groups` VALUES (71,7566,146,'Divine_Reproach',0,128,0,8000,10000,0,NULL);
 
 -- ------------------------------------------------------------
 -- Beadeaux (Zone 147)

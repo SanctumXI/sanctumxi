@@ -4320,14 +4320,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell 
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell_Low_HP',2099,2374); -- Torment of Gu'Dha
 
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,617);  -- Feather Storm
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,618);  -- Double Kick
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,619);  -- Parry
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,620);  -- Sweep
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,764);  -- Doom
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2206); -- Dark Invocation
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2375); -- Vorticose Sands
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2270); -- Shirahadori
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2413); -- Feather Maelstrom
 
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Aerial Wheel
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,606);  -- Shoulder Attack

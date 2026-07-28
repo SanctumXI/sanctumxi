@@ -5766,7 +5766,29 @@ INSERT INTO `mob_spell_lists` VALUES ('Chemical_Cook_Chemachiq',565,112,1,255); 
 INSERT INTO `mob_spell_lists` VALUES ('RoHyu_Blackanvil_KSNM',566,112,37,255); -- flash (37~255)
 INSERT INTO `mob_spell_lists` VALUES ('RoHyu_Blackanvil_KSNM',566,34,55,255);  -- diaga_ii (55~255)
 
--- Next Available: 567
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,246,1,255); -- drain_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,270,1,255); -- absorb_int
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,275,1,255); -- absorb_tp
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,248,1,255); -- aspir_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,157,1,255); -- aero_iv
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,186,1,255); -- aeroga_iii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,314,1,255); -- enaero_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,231,1,255); -- bio_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,276,1,255); -- blind_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,80,1,255);  -- paralyze_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,79,1,255);  -- slow_ii
+INSERT INTO `mob_spell_lists` VALUES ('Tzee_Xicus_Hierophant_KSNM',567,132,1,255); -- shellra_iii
+
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,156,1,255); -- aero_iii
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,185,1,255); -- aeroga_ii
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,53,1,255);  -- blink
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,237,1,255); -- choke
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,574,1,255); -- feather_barrier
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,57,1,255);  -- haste
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,208,1,255); -- tornado
+INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,647,1,255); -- zephyr_mantle
+
+-- Next Available: 569
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

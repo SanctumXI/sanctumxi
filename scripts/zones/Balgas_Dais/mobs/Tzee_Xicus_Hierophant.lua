@@ -22,7 +22,7 @@ local tuning =
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
     breathDamageTaken     = 0,
-    magicDamageTaken      = 0,
+    magicDamageTaken      = -5000,
     auraPhysicalReduction = -5000,
     auraReturnTime        = 600,
 }
@@ -41,6 +41,38 @@ end
 local function disableAura(mob)
     mob:delStatusEffectSilent(xi.effect.COLURE_ACTIVE)
     mob:setMod(xi.mod.UDMGPHYS, tuning.physicalDamageTaken)
+end
+
+-- Keep this mob's own enmity list in sync with its allies, so the whole pull effectively
+-- shares one hate pool (matters for anything -- like this mob's own aura -- that only
+-- looks at its own enmity list rather than every player in the fight).
+local function syncEnmity(mob)
+    local battlefield = mob:getBattlefield()
+    if not battlefield then
+        return
+    end
+
+    for _, ally in pairs(battlefield:getMobs(true, true)) do
+        if ally:getID() ~= mob:getID() and ally:isAlive() then
+            for _, entry in ipairs(ally:getEnmityList()) do
+                if entry.entity then
+                    local myCE, myVE = 0, 0
+                    for _, mine in ipairs(mob:getEnmityList()) do
+                        if mine.entity:getID() == entry.entity:getID() then
+                            myCE, myVE = mine.ce, mine.ve
+                            break
+                        end
+                    end
+
+                    local ceDelta = entry.ce - myCE
+                    local veDelta = entry.ve - myVE
+                    if ceDelta > 0 or veDelta > 0 then
+                        mob:addEnmity(entry.entity, math.max(ceDelta, 0), math.max(veDelta, 0))
+                    end
+                end
+            end
+        end
+    end
 end
 
 entity.onMobInitialize = function(mob)
@@ -70,11 +102,12 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar('auraPhase', 0)
     mob:setLocalVar('auraReturn', 0)
     mob:setHP(mob:getMaxHP())
+    mob:setBaseSpeed(55)
 
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            { id = xi.mobSkill.ASTRAL_FLOW_1, cooldown = 180, hpp = 75 },
+            { id = xi.mobSkill.VORTICOSE_SANDS, cooldown = 180, hpp = 75 },
         },
     })
 
@@ -82,6 +115,8 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobFight = function(mob, target)
+    syncEnmity(mob)
+
     local auraPhase = mob:getLocalVar('auraPhase')
 
     if
@@ -115,6 +150,15 @@ end
 entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.ENDER_OF_IDOLATRY)
+    end
+
+    local battlefield = mob:getBattlefield()
+    if battlefield then
+        for _, ally in pairs(battlefield:getMobs(true, true)) do
+            if ally:getName() == 'Divine_Reproach' and ally:isAlive() then
+                ally:setHP(0)
+            end
+        end
     end
 end
 

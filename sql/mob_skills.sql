@@ -2298,7 +2298,7 @@ INSERT INTO `mob_skills` VALUES (2266,2010,'shell_charge',0,0.0,7.0,2000,1500,4,
 INSERT INTO `mob_skills` VALUES (2267,2011,'skull_smash',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2268,2012,'shell_charge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2269,1300,'kamaitachi',1,15.0,7.0,2000,1500,4,0,0,3,0,0,0); -- need animation verification
--- INSERT INTO `mob_skills` VALUES (2270,2014,'shirahadori',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2270,2014,'shirahadori',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2271,2015,'rising_dragon',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2272,2016,'bear_killer',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2273,2017,'uriel_blade',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);

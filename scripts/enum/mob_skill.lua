@@ -970,6 +970,7 @@ xi.mobSkill =
     SHELL_CHARGE                  = 2266,
     SKULL_SMASH                   = 2267,
     KAMAITACHI                    = 2269,
+    SHIRAHADORI                   = 2270,
 
     BONE_CRUSHER_AUTOMATON        = 2299,
     ARMOR_PIERCER_AUTOMATON       = 2300,
@@ -998,6 +999,8 @@ xi.mobSkill =
     OPPRESSIVE_GLARE              = 2392,
 
     ROAR_3                        = 2406,
+
+    FEATHER_MAELSTROM             = 2413,
 
     REAVING_WIND                  = 2431,
     REAVING_WIND_KNOCKBACK        = 2434,
