@@ -44,8 +44,7 @@ local function disableAura(mob)
 end
 
 -- Keep this mob's own enmity list in sync with its allies, so the whole pull effectively
--- shares one hate pool (matters for anything -- like this mob's own aura -- that only
--- looks at its own enmity list rather than every player in the fight).
+-- shares one hate pool
 local function syncEnmity(mob)
     local battlefield = mob:getBattlefield()
     if not battlefield then
@@ -99,13 +98,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Yagudo priest: high resistance to Silence (a support caster), and mild Wind
-    -- alignment (weak to its opposite, Earth) matching its Yagudo family.
     mob:setMod(xi.mod.SILENCE_RES_RANK, 12)
     mob:setMod(xi.mod.WIND_SDT, 1500)
     mob:setMod(xi.mod.EARTH_SDT, -500)
 
-    -- A support caster wants to keep casting: resists Paralyze and Poison.
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.POISON_RES_RANK, 6)
 
