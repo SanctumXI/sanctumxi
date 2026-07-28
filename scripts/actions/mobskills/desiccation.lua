@@ -1,7 +1,9 @@
 -----------------------------------
--- Aeolian Void
+-- Desiccation
 -- Family: Sandworm
--- Description: Deals Wind damage to enemies in front of mob. Additional Effect: Blind, Silence, Reset Enmity
+-- Description: Deals Wind damage to targets in a cone in front of the user, around
+--              whoever currently holds the most hate. Consumes all job abilities
+--              (Additional Effect: Amnesia).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -14,7 +16,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 2.00, 2.00, 2.00 }
+    params.fTP            = { 2.5, 2.5, 2.5 }
     params.element        = xi.element.WIND
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.WIND
@@ -25,9 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 180)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 50, 0, 180)
-        mob:resetEnmity(target)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.AMNESIA, 1, 0, 60)
     end
 
     return info.damage

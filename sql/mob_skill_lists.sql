@@ -926,9 +926,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Sahagin',213,780);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2190);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2191);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2192);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2187);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189);
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188); -- slaverous_gale
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189); -- aeolian_void
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2190); -- extreme_purgation
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2191); -- desiccation
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,4408); -- gorge
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,685);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,686);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,687);
@@ -2816,7 +2818,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2210); -- petal pirouette
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2599); -- tepal twist
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2600); -- bloom fouette
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2601); -- petalback spin
-INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2187); -- dustvoid
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2188); -- slaverous gale
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2189); -- aeolian void
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2190); -- extreme purgation
@@ -2948,9 +2949,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,533); -- danse macambre
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,1326); -- final retrobution
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,1329); -- gala mancabre
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,2638); -- hadal summons
-INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2187); -- dustvoid
-INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2188); -- slavernous_gale
+INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2188); -- slaverous_gale
 INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2189); -- aeolian_void
+INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2190); -- extreme_purgation
 INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2191); -- Desiccation
 -- INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2641); -- psyche_suction
 INSERT INTO `mob_skill_lists` VALUES ('Warbler',879,2158); -- Insepid_nip

@@ -58185,9 +58185,9 @@ INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv t
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
 -- The Ravening Worm
-INSERT INTO `mob_spawn_points` VALUES (668029,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
-INSERT INTO `mob_spawn_points` VALUES (668030,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
-INSERT INTO `mob_spawn_points` VALUES (668031,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
+INSERT INTO `mob_spawn_points` VALUES (668029,0,'Rancorwurm','Rancorwurm',32,85,85,-279.785,-32.500,326.971,32);
+INSERT INTO `mob_spawn_points` VALUES (668030,0,'Rancorwurm','Rancorwurm',32,85,85,0.000,-0.500,47.607,32);
+INSERT INTO `mob_spawn_points` VALUES (668031,0,'Rancorwurm','Rancorwurm',32,85,85,282.223,31.500,-273.224,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)

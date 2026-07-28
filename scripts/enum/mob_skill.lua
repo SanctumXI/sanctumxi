@@ -1105,4 +1105,6 @@ xi.mobSkill =
     SANDPIT_3                     = 3883,
     VENOM_SPRAY_3                 = 3884,
     MANDIBULAR_BITE_3             = 3885,
+
+    GORGE                         = 4408,
 }
