@@ -218,6 +218,18 @@ uint8 CBattlefieldHandler::RegisterBattlefield(CCharEntity* PChar, const Battlef
     // attempt to add to an existing battlefield
     auto* PBattlefield = GetBattlefield(PChar, true);
 
+    // GetBattlefield(PChar, true) finds ANY battlefield this character is
+    // registered to in the zone -- it does not check that it's the one being
+    // requested here. If the character has a stale/orphaned registration to
+    // a different BCNM (e.g. from an earlier attempt that never cleanly
+    // exited), using it unconditionally would silently redirect this
+    // registration into the wrong instance instead of the one actually
+    // requested. Only treat it as a match if the IDs agree.
+    if (PBattlefield && PBattlefield->GetID() != registration.id)
+    {
+        PBattlefield = nullptr;
+    }
+
     // Could not find this character registered, try find by id and initiator
     if (!PBattlefield)
     {
