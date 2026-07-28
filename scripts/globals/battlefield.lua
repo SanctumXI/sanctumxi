@@ -639,18 +639,15 @@ end
 -- standard battlefield path without exposing the client-localized menu.
 local customEntryVar = '[BCNM]CustomEntry'
 
--- Attempts to silently finish a custom-menu entry. Returns true if it
--- succeeded (or already had), false if it should be retried later.
+-- Attempts to (re)send the entry update to the client. Returns true once
+-- registration is confirmed (whether this call did it or a prior one
+-- already had), false if it should be retried later. Always calls into
+-- content:onEntryEventUpdate() -- even once already registered -- because
+-- that is what actually (re)sends the client-facing update packet; a
+-- shortcut that skipped it here would silently stop retrying the one
+-- packet that can get dropped by a slow client (see onEntryEventUpdate's
+-- early-return branch).
 local function tryAdvanceCustomEntry(content, player, npc)
-    if
-        player:getLocalVar(customEntryVar) == content.battlefieldId and
-        player:getBattlefield() and
-        player:getBattlefield():getID() == content.battlefieldId
-    then
-        player:setLocalVar('noPosUpdate', 0)
-        return true
-    end
-
     -- The native client normally retries event updates until it finds an
     -- available arena. A custom menu has already made its selection, so
     -- perform those retries here.
@@ -678,13 +675,15 @@ local function startCustomEntryEvent(content, player, npc)
 
     -- Give the client time to enter event 32000 before advancing it. Sending
     -- the update in the same tick as startEvent can be discarded by the
-    -- client, leaving its native battlefield list open. Under real network
-    -- latency 250ms is not guaranteed to be enough, so keep retrying with a
-    -- longer delay for a few seconds rather than giving up after one try.
+    -- client, leaving its native battlefield list open. registerBattlefield()
+    -- itself succeeds immediately regardless of client timing -- it doesn't
+    -- wait on the client at all -- so tryAdvanceCustomEntry can report
+    -- success on the very first attempt even though the one packet that
+    -- tells the client to advance was dropped. Keep resending for a few more
+    -- rounds after success is first seen, not just until it's first seen, to
+    -- give a slow client additional real chances to receive it.
     local function attempt(playerArg, attemptsLeft)
-        if tryAdvanceCustomEntry(content, playerArg, npc) then
-            return
-        end
+        local succeeded = tryAdvanceCustomEntry(content, playerArg, npc)
 
         if attemptsLeft > 0 then
             playerArg:timer(500, function(playerArg2)
@@ -694,21 +693,25 @@ local function startCustomEntryEvent(content, player, npc)
             return
         end
 
-        -- Out of retries. If registration never actually succeeded there is
-        -- nothing to preserve, so clear our bookkeeping. But if it DID
-        -- succeed server-side (the player is already in the battlefield and
-        -- its mobs are spawned) and the client simply never got the memo,
-        -- leave customEntryVar set: whenever the client's own event update
-        -- eventually arrives, redirectEventUpdate will forward it here and
-        -- the early check above will resolve it. Clearing it now would
-        -- instead route that late update through the generic per-index
-        -- handler, which no-ops once the player already has a battlefield
-        -- (see RegisterBattlefield's PChar->PBattlefield check) and would
-        -- leave the client stuck on its native menu with nothing spawned.
-        local battlefield = playerArg:getBattlefield()
-        if not (battlefield and battlefield:getID() == content.battlefieldId) then
-            playerArg:setLocalVar('[battlefield]area', 0)
-            playerArg:setLocalVar(customEntryVar, 0)
+        if not succeeded then
+            -- Out of retries and never confirmed. If registration never
+            -- actually succeeded there is nothing to preserve, so clear our
+            -- bookkeeping. But if it DID succeed server-side (the player is
+            -- already in the battlefield and its mobs are spawned) and the
+            -- client simply never got the memo, leave customEntryVar set:
+            -- whenever the client's own event update eventually arrives,
+            -- redirectEventUpdate will forward it here and the resend in
+            -- onEntryEventUpdate's early-return branch will resolve it.
+            -- Clearing it now would instead route that late update through
+            -- the generic per-index handler, which no-ops once the player
+            -- already has a battlefield (see RegisterBattlefield's
+            -- PChar->PBattlefield check) and would leave the client stuck on
+            -- its native menu with nothing spawned.
+            local battlefield = playerArg:getBattlefield()
+            if not (battlefield and battlefield:getID() == content.battlefieldId) then
+                playerArg:setLocalVar('[battlefield]area', 0)
+                playerArg:setLocalVar(customEntryVar, 0)
+            end
         end
     end
 
@@ -942,6 +945,19 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
         battlefield:getID() == self.battlefieldId
     then
         player:setLocalVar('noPosUpdate', 0)
+
+        -- Registration already succeeded on an earlier attempt, but the
+        -- packet that tells the client to advance past its own menu can be
+        -- dropped if the client hadn't finished entering this event yet
+        -- (see startCustomEntryEvent). Resend it every time this is called:
+        -- harmless if the client already moved on, and gives it another real
+        -- chance to catch up if it didn't.
+        local name, clearTime, partySize = battlefield:getRecord()
+        local autoSkipCS                 = self:getLocalVar(player, 'CS') == 1 and 100 or 0
+
+        player:updateEvent(xi.battlefield.returnCode.CUTSCENE, self.index, autoSkipCS, clearTime, partySize, self:checkSkipCutscene(player), self.csParam7, self.csParam8)
+        player:updateEventString(name)
+
         return 1
     end
 
