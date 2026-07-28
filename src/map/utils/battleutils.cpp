@@ -4932,6 +4932,7 @@ int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damag
     resist = 1.0f + PDefender->getMod(Mod::DMGPHYS) / 10000.0f + PDefender->getMod(Mod::DMG) / 10000.0f;
     resist = std::max(resist, 0.5f);                         // PDT caps at -50%
     resist += PDefender->getMod(Mod::DMGPHYS_II) / 10000.0f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
+    resist = std::max(resist, 0.32f);
     damage = (int32)(damage * resist);
 
     if (damage > 0 && PDefender->getMod(Mod::AUTO_EQUALIZER) > 0)
