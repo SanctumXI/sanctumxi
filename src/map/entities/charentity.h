@@ -491,6 +491,15 @@ public:
 
     CItemContainer* PGuildShop;
     CItemContainer* getStorage(uint8 locationId) const;
+    CItemContainer* getPersonalStorage(uint8 locationId) const;
+
+    CItemContainer* getLinkshellBankStorage(uint8 locationId) const;
+    void            activateLinkshellBank(uint32 linkshellId);
+    void            deactivateLinkshellBank();
+    bool            isLinkshellBankActive() const;
+    uint32          getLinkshellBankId() const;
+    uint64          getLinkshellBankRevision(uint8 locationId, uint8 slotId) const;
+    void            setLinkshellBankRevision(uint8 locationId, uint8 slotId, uint64 revision);
 
     CTradeContainer* TradeContainer; // Container used specifically for trading.
     CTradeContainer* Container;      // Universal container for exchange, synthesis, store, etc.
@@ -703,6 +712,9 @@ private:
     std::unique_ptr<CItemContainer> m_Storage;
     std::unique_ptr<CItemContainer> m_Tempitems;
     std::unique_ptr<CItemContainer> m_Moglocker;
+    std::unique_ptr<CItemContainer> m_LinkshellMogsafe;
+    std::unique_ptr<CItemContainer> m_LinkshellMogsafe2;
+    std::unique_ptr<CItemContainer> m_LinkshellMoglocker;
     std::unique_ptr<CItemContainer> m_Mogsatchel;
     std::unique_ptr<CItemContainer> m_Mogsack;
     std::unique_ptr<CItemContainer> m_Mogcase;
@@ -716,6 +728,8 @@ private:
     std::unique_ptr<CItemContainer> m_Wardrobe7;
     std::unique_ptr<CItemContainer> m_Wardrobe8;
     std::unique_ptr<CItemContainer> m_RecycleBin;
+    uint32                                                        m_LinkshellBankId = 0;
+    std::array<std::array<uint64, MAX_CONTAINER_SIZE + 1>, 3> m_LinkshellBankRevisions{};
 
     bool m_isStyleLocked;
     bool m_isBlockingAid;

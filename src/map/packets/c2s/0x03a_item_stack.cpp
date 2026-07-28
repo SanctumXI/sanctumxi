@@ -33,7 +33,11 @@ auto GP_CLI_COMMAND_ITEM_STACK::validate(MapSession* PSession, const CCharEntity
 
 void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar) const
 {
-    CItemContainer* PItemContainer = PChar->getStorage(Category);
+    const bool linkshellBankSort = PChar->isLinkshellBankActive() &&
+                                   charutils::IsLinkshellBankContainer(Category);
+    CItemContainer* PItemContainer = linkshellBankSort
+                                         ? PChar->getLinkshellBankStorage(Category)
+                                         : PChar->getStorage(Category);
 
     const uint8 size = PItemContainer->GetSize();
 
@@ -50,6 +54,13 @@ void GP_CLI_COMMAND_ITEM_STACK::process(MapSession* PSession, CCharEntity* PChar
 
     PItemContainer->SortingPacket   = 0;
     PItemContainer->LastSortingTime = timer::now();
+
+    if (linkshellBankSort)
+    {
+        charutils::SortLinkshellBankContainer(PChar, static_cast<CONTAINER_ID>(Category));
+        return;
+    }
+
     for (uint8 slotId = 1; slotId <= size; ++slotId)
     {
         const CItem* PItem = PItemContainer->GetItem(slotId);

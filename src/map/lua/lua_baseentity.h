@@ -302,6 +302,9 @@ public:
     uint32 getLinkshellTreasuryItemCount(uint8 slot, uint16 itemID);
     bool   depositLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
     bool   withdrawLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);
+    bool   openLinkshellMogLocker(uint32 linkshellId);
+    bool   openLinkshellBank(uint32 linkshellId);
+    void   closeLinkshellBank();
 
     // Player Appearance
     uint8  getRace();

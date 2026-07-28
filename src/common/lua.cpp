@@ -221,7 +221,9 @@ void lua_print(sol::variadic_args va)
 {
     TracyZoneScoped;
 
-    ShowLua(lua_to_string(va).c_str());
+    // Lua output is data, not a printf-style format string. In particular,
+    // messages containing a literal '%' must not be parsed by fmt::sprintf.
+    ShowLua("%s", lua_to_string(va).c_str());
 }
 
 std::string lua_fmt(const std::string& fmtStr, sol::variadic_args va)
