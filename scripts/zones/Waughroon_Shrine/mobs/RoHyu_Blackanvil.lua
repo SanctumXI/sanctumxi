@@ -15,7 +15,7 @@ local tuning =
     hpBonus               = 0,
     attackBonus           = 0,
     defenseBonus          = 0,
-    accuracyBonus         = 0,
+    accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
     regain                = 20,
@@ -67,6 +67,10 @@ entity.onMobSpawn = function(mob)
     -- Tough smith-king: resists Stun and Paralyze.
     mob:setMod(xi.mod.STUN_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
+    -- Hits noticeably harder than his own Quadav escorts.
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 175)
+    mob:setMod(xi.mod.CURE_POTENCY, 25)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())
