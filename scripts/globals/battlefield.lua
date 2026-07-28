@@ -126,7 +126,7 @@ xi.battlefield.id =
     KINDERGARTEN_CAP                           = 18,
     LAST_ORC_SHUNNED_HERO                      = 19,
     BEYOND_INFINITY_HORLAIS_PEAK               = 20,  -- Converted
-    KING_OF_THE_NORTH                          = 21,  -- Horlais Peak, index 21
+    KING_OF_THE_NORTH                          = 21,  -- Horlais Peak, index 28
     AMAN_TROVE_MARS_HORLAIS_PEAK               = 24,  -- Incomplete
     AMAN_TROVE_VENUS_HORLAIS_PEAK              = 25,  -- Incomplete
     SAVE_THE_CHILDREN                          = 32,  -- Converted
@@ -157,7 +157,7 @@ xi.battlefield.id =
     PALBOROUGH_PROJECT                         = 83,
     SHELL_SHOCKED                              = 84,
     BEYOND_INFINITY_WAUGHROON_SHRINE           = 85,  -- Converted
-    HEAVY_IS_THE_SHELL                         = 86,  -- Waughroon Shrine, index 22
+    HEAVY_IS_THE_SHELL                         = 86,  -- Waughroon Shrine, index 29
     RANK_2_MISSION                             = 96,  -- Converted
     STEAMED_SPROUTS                            = 97,  -- Converted
     DIVINE_PUNISHERS                           = 98,  -- Converted
@@ -179,13 +179,13 @@ xi.battlefield.id =
     V_FORMATION                                = 114,
     AVIAN_APOSTATES                            = 115,
     BEYOND_INFINITY_BALGAS_DAIS                = 116, -- Converted
-    WING_AND_A_PRAYER                          = 118, -- Balga's Dais, index 22
+    WING_AND_A_PRAYER                          = 118, -- Balga's Dais, index 28
     TEMPLE_OF_UGGALEPIH                        = 128, -- Converted
     JUNGLE_BOOGYMEN                            = 129, -- Converted
     AMPHIBIAN_ASSAULT                          = 130, -- Converted
     PROJECT_SHANTOTTOFICATION                  = 131,
     WHOM_WILT_THOU_CALL                        = 132,
-    THREES_A_CROWD                             = 133, -- Sacrificial Chamber, index 5
+    THREES_A_CROWD                             = 133, -- Sacrificial Chamber, index 7
     SHADOW_LORD_BATTLE                         = 160,
     WHERE_TWO_PATHS_CONVERGE                   = 161,
     KINDRED_SPIRITS                            = 162, -- Experimental
@@ -201,7 +201,7 @@ xi.battlefield.id =
     SCARLET_KING                               = 199,
     CAT_BURGLAR_BARES_FANGS                    = 200, -- Experimental
     DRAGON_SCALES                              = 201,
-    THE_RAVENING_WORM                          = 202, -- Chamber of Oracles, index 10
+    THE_RAVENING_WORM                          = 202, -- Chamber of Oracles, index 11
     MOONLIT_PATH                               = 224, -- Converted
     MOON_READING                               = 225, -- Converted
     WAKING_THE_BEAST_FULLMOON                  = 226,
@@ -261,7 +261,7 @@ xi.battlefield.id =
     CLASH_OF_THE_COMRADES                      = 531,
     THOSE_WHO_LURK_IN_SHADOWS                  = 532, -- Experimental
     BEYOND_INFINITY                            = 533, -- Converted
-    RIDE_THE_LIGHTNING                         = 534, -- Qu'Bia Arena, index 22
+    RIDE_THE_LIGHTNING                         = 534, -- Qu'Bia Arena, index 26
     TRIAL_BY_FIRE                              = 544, -- Converted
     TRIAL_SIZE_TRIAL_BY_FIRE                   = 545, -- Converted
     WAKING_THE_BEAST_CLOISTER_OF_FLAMES        = 546,
@@ -639,6 +639,33 @@ end
 -- standard battlefield path without exposing the client-localized menu.
 local customEntryVar = '[BCNM]CustomEntry'
 
+-- Attempts to (re)send the entry update to the client. Returns true once
+-- registration is confirmed (whether this call did it or a prior one
+-- already had), false if it should be retried later. Always calls into
+-- content:onEntryEventUpdate() -- even once already registered -- because
+-- that is what actually (re)sends the client-facing update packet; a
+-- shortcut that skipped it here would silently stop retrying the one
+-- packet that can get dropped by a slow client (see onEntryEventUpdate's
+-- early-return branch).
+local function tryAdvanceCustomEntry(content, player, npc)
+    -- The native client normally retries event updates until it finds an
+    -- available arena. A custom menu has already made its selection, so
+    -- perform those retries here.
+    for _ = 1, 3 do
+        local previousArea = player:getLocalVar('[battlefield]area')
+        local result       = content:onEntryEventUpdate(player, 32000, bit.lshift(content.index, 4), npc)
+
+        if result == 1 then
+            player:setLocalVar('noPosUpdate', 0)
+            return true
+        elseif player:getLocalVar('[battlefield]area') == previousArea then
+            break
+        end
+    end
+
+    return false
+end
+
 local function startCustomEntryEvent(content, player, npc)
     local options = utils.mask.setBit(0, content.index, true)
 
@@ -648,7 +675,46 @@ local function startCustomEntryEvent(content, player, npc)
 
     -- Give the client time to enter event 32000 before advancing it. Sending
     -- the update in the same tick as startEvent can be discarded by the
-    -- client, leaving its native battlefield list open.
+    -- client, leaving its native battlefield list open. registerBattlefield()
+    -- itself succeeds immediately regardless of client timing -- it doesn't
+    -- wait on the client at all -- so tryAdvanceCustomEntry can report
+    -- success on the very first attempt even though the one packet that
+    -- tells the client to advance was dropped. Keep resending for a few more
+    -- rounds after success is first seen, not just until it's first seen, to
+    -- give a slow client additional real chances to receive it.
+    local function attempt(playerArg, attemptsLeft)
+        local succeeded = tryAdvanceCustomEntry(content, playerArg, npc)
+
+        if attemptsLeft > 0 then
+            playerArg:timer(500, function(playerArg2)
+                attempt(playerArg2, attemptsLeft - 1)
+            end)
+
+            return
+        end
+
+        if not succeeded then
+            -- Out of retries and never confirmed. If registration never
+            -- actually succeeded there is nothing to preserve, so clear our
+            -- bookkeeping. But if it DID succeed server-side (the player is
+            -- already in the battlefield and its mobs are spawned) and the
+            -- client simply never got the memo, leave customEntryVar set:
+            -- whenever the client's own event update eventually arrives,
+            -- redirectEventUpdate will forward it here and the resend in
+            -- onEntryEventUpdate's early-return branch will resolve it.
+            -- Clearing it now would instead route that late update through
+            -- the generic per-index handler, which no-ops once the player
+            -- already has a battlefield (see RegisterBattlefield's
+            -- PChar->PBattlefield check) and would leave the client stuck on
+            -- its native menu with nothing spawned.
+            local battlefield = playerArg:getBattlefield()
+            if not (battlefield and battlefield:getID() == content.battlefieldId) then
+                playerArg:setLocalVar('[battlefield]area', 0)
+                playerArg:setLocalVar(customEntryVar, 0)
+            end
+        end
+    end
+
     player:timer(250, function(playerArg)
         -- The native client normally retries event updates until it finds an
         -- available arena. A custom menu has already made its selection, so
@@ -895,6 +961,19 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
         battlefield:getID() == self.battlefieldId
     then
         player:setLocalVar('noPosUpdate', 0)
+
+        -- Registration already succeeded on an earlier attempt, but the
+        -- packet that tells the client to advance past its own menu can be
+        -- dropped if the client hadn't finished entering this event yet
+        -- (see startCustomEntryEvent). Resend it every time this is called:
+        -- harmless if the client already moved on, and gives it another real
+        -- chance to catch up if it didn't.
+        local name, clearTime, partySize = battlefield:getRecord()
+        local autoSkipCS                 = self:getLocalVar(player, 'CS') == 1 and 100 or 0
+
+        player:updateEvent(xi.battlefield.returnCode.CUTSCENE, self.index, autoSkipCS, clearTime, partySize, self:checkSkipCutscene(player), self.csParam7, self.csParam8)
+        player:updateEventString(name)
+
         return 1
     end
 
@@ -967,7 +1046,13 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
         player:hasStatusEffect(xi.effect.BATTLEFIELD)
         -- and id:getStatus() == xi.battlefield.status.OPEN -- TODO: Uncomment only once that can-of-worms is dealt with.
     then
-        player:enterBattlefield()
+        -- Pass the specific area we just registered for rather than calling
+        -- enterBattlefield() with no argument. With no argument it falls back
+        -- to "any battlefield this character is registered to in the zone",
+        -- which -- like the equivalent lookup in RegisterBattlefield -- does
+        -- not verify it's actually this one, and could attach the player to
+        -- a stale registration for a different BCNM instead.
+        player:enterBattlefield(area)
     end
 
     -- Handle record
