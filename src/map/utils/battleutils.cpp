@@ -750,9 +750,13 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
     Weather strongWeatherDouble[8] = { Weather::HeatWave, Weather::Blizzards, Weather::Gales, Weather::SandStorm, Weather::Thunderstorms, Weather::Squall, Weather::StellarGlare, Weather::Darkness };
     Weather weakWeatherSingle[8]   = { Weather::Rain, Weather::HotSpell, Weather::Snow, Weather::Wind, Weather::DustStorm, Weather::Thunder, Weather::Gloom, Weather::Auroras };
     Weather weakWeatherDouble[8]   = { Weather::Squall, Weather::HeatWave, Weather::Blizzards, Weather::Gales, Weather::SandStorm, Weather::Thunderstorms, Weather::Darkness, Weather::StellarGlare };
-    uint32  obi[8]                 = { 15435, 15436, 15437, 15438, 15439, 15440, 15441, 15442 };
+    Mod     forceBonusMod[8]       = { Mod::FORCE_FIRE_DWBONUS, Mod::FORCE_ICE_DWBONUS, Mod::FORCE_WIND_DWBONUS, Mod::FORCE_EARTH_DWBONUS, Mod::FORCE_LIGHTNING_DWBONUS, Mod::FORCE_WATER_DWBONUS, Mod::FORCE_LIGHT_DWBONUS, Mod::FORCE_DARK_DWBONUS };
     Mod     resistarray[8]         = { Mod::FIRE_MEVA, Mod::ICE_MEVA, Mod::WIND_MEVA, Mod::EARTH_MEVA, Mod::THUNDER_MEVA, Mod::WATER_MEVA, Mod::LIGHT_MEVA, Mod::DARK_MEVA };
-    bool    obiBonus               = false;
+
+    // Single-element Obis (Karin, Hyorin, etc.) only guarantee the bonus roll, never the penalty roll.
+    bool obiBonus = PAttacker->getMod(forceBonusMod[element - 1]) >= 1;
+    // Hachirin-no-Obi guarantees BOTH the bonus roll and the penalty roll.
+    bool obiBonusAndPenalty = PAttacker->getMod(Mod::FORCE_DW_BONUS_PENALTY) >= 1;
 
     double half      = (double)(PDefender->getMod(resistarray[element - 1])) / 100;
     double quart     = pow(half, 2);
@@ -778,40 +782,32 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
         resist = 0.5f;
     }
 
-    if (PAttacker->objtype == TYPE_PC)
-    {
-        CItemEquipment* waist = ((CCharEntity*)PAttacker)->getEquip(SLOT_WAIST);
-        if (waist && waist->getID() == obi[element - 1])
-        {
-            obiBonus = true;
-        }
-    }
-    else
+    if (PAttacker->objtype != TYPE_PC)
     {
         // mobs random multiplier
         dBonus += xirand::GetRandomNumber(100) / 1000.0f;
     }
-    if (WeekDay == strongDay[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    if (WeekDay == strongDay[element - 1] && (obiBonus || obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus += 0.1f;
     }
-    else if (WeekDay == weakDay[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    else if (WeekDay == weakDay[element - 1] && (obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus -= 0.1f;
     }
-    if (weather == strongWeatherSingle[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    if (weather == strongWeatherSingle[element - 1] && (obiBonus || obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus += 0.1f;
     }
-    else if (weather == strongWeatherDouble[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    else if (weather == strongWeatherDouble[element - 1] && (obiBonus || obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus += 0.25f;
     }
-    else if (weather == weakWeatherSingle[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    else if (weather == weakWeatherSingle[element - 1] && (obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus -= 0.1f;
     }
-    else if (weather == weakWeatherDouble[element - 1] && (obiBonus || xirand::GetRandomNumber(100) < 33))
+    else if (weather == weakWeatherDouble[element - 1] && (obiBonusAndPenalty || xirand::GetRandomNumber(100) < 33))
     {
         dBonus -= 0.25f;
     }
