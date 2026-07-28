@@ -4586,6 +4586,7 @@ xi.item =
     NARES_CAP                           = 10911,
     DRACHENHORN                         = 10912,
     MUZZLING_COLLAR                     = 10914,
+    TANDEM_NECKLACE                     = 10918,
     CHOCOBO_TORQUE                      = 10924,
     FISHERS_TORQUE                      = 10925,
     FIELD_TORQUE                        = 10926,
