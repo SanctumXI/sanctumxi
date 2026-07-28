@@ -1,7 +1,7 @@
 -----------------------------------
 -- Lightning Spear
 -- Family: Monoceros (Dark Ixion)
--- Description: Wide Cone Attack Thunder damage (600-1500). Additional Effect: Amnesia
+-- Description: Long, narrow line-shaped Thunder damage (600-1500). Additional Effect: Shock
 -- Notes: Will pick a random person on the hate list for this attack.
 -----------------------------------
 ---@type TMobSkill
@@ -28,7 +28,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
         local duration = xi.mobskills.calculateDuration(30, 120)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.AMNESIA, 1, 0, duration) -- TODO: Capture power of Amnesia
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SHOCK, 40, 3, duration)
     end
 
     return info.damage

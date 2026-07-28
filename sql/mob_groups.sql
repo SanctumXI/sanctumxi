@@ -13761,7 +13761,7 @@ INSERT INTO `mob_groups` VALUES (74,0,206,'Mumor',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (75,4006,206,'Trion',0,128,0,1500,0,1,NULL); -- ally
 INSERT INTO `mob_groups` VALUES (76,7292,206,'Generic_Doll',0,128,0,2200,2200,0,NULL);
 INSERT INTO `mob_groups` VALUES (77,7293,206,'Generic_Doll',0,128,0,2200,2200,0,NULL);
-INSERT INTO `mob_groups` VALUES (78,915,206,'Ixion',0,128,0,100000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (78,7569,206,'Ixion',0,128,0,100000,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Cloister_of_Flames (Zone 207)

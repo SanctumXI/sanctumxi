@@ -541,6 +541,7 @@ xi.darkixion.onMobInitialize = function(mob)
 
     mob:setMobMod(xi.mobMod.NO_REST, 10)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200) -- +100% physical damage output
 end
 
 -- either turn in a random direction, or turn away from skillTarget to use acheron kick
@@ -582,12 +583,26 @@ local acheronKickPositioning = function(mob)
     turnForSkill(mob, skillTarget)
 end
 
+-- Lightning Spear picks a random person on the hate list and faces them before firing its line AoE
+local lightningSpearPositioning = function(mob)
+    local targets = mob:getEnmityList()
+    local potentialTargets = {}
+    for _, entry in ipairs(targets) do
+        if entry.entity then
+            table.insert(potentialTargets, entry.entity)
+        end
+    end
+
+    local skillTarget = #potentialTargets > 0 and utils.randomEntry(potentialTargets) or nil
+    turnForSkill(mob, skillTarget)
+end
+
 local setupCombatListeners = function(mob)
     mob:addListener('WEAPONSKILL_STATE_ENTER', 'IXION_WS_STATE_ENTER', function(mobArg, skillId)
         if skillId == xi.mobSkill.ACHERON_KICK then
             acheronKickPositioning(mobArg)
         elseif skillId == xi.mobSkill.LIGHTNING_SPEAR then
-            turnForSkill(mobArg, nil)
+            lightningSpearPositioning(mobArg)
         end
     end)
 end

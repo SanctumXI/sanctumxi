@@ -7510,6 +7510,8 @@ INSERT INTO `mob_pools` VALUES (7565,'Tzee_Xicus_Hierophant_KSNM','Tzee_Xicus_Hi
 INSERT INTO `mob_pools` VALUES (7566,'Divine_Reproach_KSNM','Divine_Reproach',99,0x00000A0000000000000000000000000000000000,4,4,12,240,100,0,1,0,1,16,0,0,0,0,0,0,2,0,0,99,99,NULL,NULL);
 INSERT INTO `mob_pools` VALUES (7567,'Typhon_KSNM','Typhon',164,0x0000040700000000000000000000000000000000,1,1,7,240,125,1024,1,1,0,2,0,0,290,1667,0,0,0,0,0,164,164,1,40);
 INSERT INTO `mob_pools` VALUES (7568,'Zepwell_Worm_KSNM','Zepwell_Worm',215,0x0000EB0700000000000000000000000000000000,1,1,7,280,125,0,1,0,0,2,0,0,126,129,0,0,0,0,0,215,215,0,34);
+-- BCNM-specific Ixion: own skill list (no Damsel Memento) and a sane melee hitbox (was 29, giving an ~31 yalm reach)
+INSERT INTO `mob_pools` VALUES (7569,'Dark_Ixion_KSNM','Dark_Ixion',39,0x0000B20800000000000000000000000000000000,1,1,6,240,125,0,0,0,0,2,0,32,2119,925,20,0,0,0,0,30001,39,2,3);
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
