@@ -15,7 +15,7 @@ local tuning =
     hpBonus             = 0,
     attackBonus         = 0,
     defenseBonus        = 0,
-    accuracyBonus       = 0,
+    accuracyBonus       = 15,
     evasionBonus        = 0,
     magicAttackBonus    = 0,
     regain              = 20,
@@ -75,6 +75,7 @@ entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ATT, tuning.attackBonus)
     mob:addMod(xi.mod.DEF, tuning.defenseBonus)
     mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
+    mob:setMod(xi.mod.RACC, 15)
     mob:addMod(xi.mod.EVA, tuning.evasionBonus)
     mob:addMod(xi.mod.MATT, tuning.magicAttackBonus)
     mob:setMod(xi.mod.REGAIN, tuning.regain)
