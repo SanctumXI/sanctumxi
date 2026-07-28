@@ -7,21 +7,6 @@
 ---@type TMobSkill
 local mobskillObject = {}
 
--- Common buffs and debuffs eligible to be drained from the target and applied to the mob.
-local transferableEffects =
-{
-    xi.effect.HASTE, xi.effect.BLINK, xi.effect.STONESKIN, xi.effect.AQUAVEIL, xi.effect.PROTECT,
-    xi.effect.SHELL, xi.effect.REGEN, xi.effect.REFRESH, xi.effect.PHALANX,
-    xi.effect.FLASH, xi.effect.BLINDNESS, xi.effect.ELEGY, xi.effect.REQUIEM, xi.effect.PARALYSIS,
-    xi.effect.POISON, xi.effect.CURSE_I, xi.effect.CURSE_II, xi.effect.DISEASE, xi.effect.PLAGUE,
-    xi.effect.WEIGHT, xi.effect.BIND, xi.effect.BIO, xi.effect.DIA, xi.effect.BURN, xi.effect.FROST,
-    xi.effect.CHOKE, xi.effect.RASP, xi.effect.SHOCK, xi.effect.DROWN, xi.effect.STR_DOWN,
-    xi.effect.DEX_DOWN, xi.effect.VIT_DOWN, xi.effect.AGI_DOWN, xi.effect.INT_DOWN, xi.effect.MND_DOWN,
-    xi.effect.CHR_DOWN, xi.effect.ADDLE, xi.effect.SLOW, xi.effect.ACCURACY_DOWN, xi.effect.ATTACK_DOWN,
-    xi.effect.EVASION_DOWN, xi.effect.DEFENSE_DOWN, xi.effect.MAGIC_ACC_DOWN, xi.effect.MAGIC_ATK_DOWN,
-    xi.effect.MAGIC_EVASION_DOWN, xi.effect.MAGIC_DEF_DOWN,
-}
-
 mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
@@ -41,11 +26,26 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        for _, effectId in ipairs(transferableEffects) do
+        -- Drain every dispelable/waltzable/erasable effect (buff or debuff) from the
+        -- target onto the mob -- same approach as Contagion Transfer (Deadly Moa
+        -- family). Uses copyStatusEffect rather than rebuilding addStatusEffect's
+        -- params table by hand: getDuration()/getTick() return milliseconds, but
+        -- addStatusEffect's duration/tick fields are read as seconds (and duration
+        -- was the original full length, not what's left) -- passing them through
+        -- directly was inflating both by ~1000x on the mob's copy.
+        local availableEffects = {}
+        for _, effect in pairs(target:getStatusEffects()) do
+            local flags = effect:getEffectFlags()
+            if bit.band(flags, bit.bor(xi.effectFlag.DISPELABLE, xi.effectFlag.WALTZABLE, xi.effectFlag.ERASABLE)) ~= 0 then
+                table.insert(availableEffects, effect:getEffectType())
+            end
+        end
+
+        for _, effectId in ipairs(availableEffects) do
             local statusEffect = target:getStatusEffect(effectId)
 
             if statusEffect then
-                mob:addStatusEffect(effectId, { power = statusEffect:getPower(), duration = statusEffect:getDuration(), origin = mob, tick = statusEffect:getTick() })
+                mob:copyStatusEffect(statusEffect)
                 target:delStatusEffectSilent(effectId)
             end
         end
