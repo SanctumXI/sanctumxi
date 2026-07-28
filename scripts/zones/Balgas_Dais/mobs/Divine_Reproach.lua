@@ -29,7 +29,6 @@ local tuning =
 local entity = {}
 
 -- Keep this mob's own enmity list in sync with its allies -- see Tzee_Xicus_Hierophant.lua
--- for the full explanation of why this matters.
 local function syncEnmity(mob)
     local battlefield = mob:getBattlefield()
     if not battlefield then
@@ -84,19 +83,16 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Air elemental: strongly resists its own element (Wind), weak to its opposite (Earth).
     mob:setMod(xi.mod.WIND_SDT, 4000)
     mob:setMod(xi.mod.WIND_RES_RANK, 10)
     mob:setMod(xi.mod.EARTH_SDT, -1000)
 
-    -- An ephemeral wind-being: resists Slow and Paralyze.
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
 
     mob:setHP(mob:getMaxHP())
 
-    -- Half of the Elemental-Air family's base speed of 55.
-    mob:setBaseSpeed(27)
+    mob:setBaseSpeed(15)
 end
 
 entity.onMobFight = function(mob, target)
