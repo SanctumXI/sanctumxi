@@ -105,6 +105,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.WIND_SDT, 1500)
     mob:setMod(xi.mod.EARTH_SDT, -500)
 
+    -- A support caster wants to keep casting: resists Paralyze and Poison.
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+    mob:setMod(xi.mod.POISON_RES_RANK, 6)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2100)
     mob:setLocalVar('auraPhase', 0)
     mob:setLocalVar('auraReturn', 0)

@@ -88,6 +88,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.WIND_RES_RANK, 10)
     mob:setMod(xi.mod.EARTH_SDT, -1000)
 
+    -- An ephemeral wind-being: resists Slow and Paralyze.
+    mob:setMod(xi.mod.SLOW_RES_RANK, 8)
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
     mob:setHP(mob:getMaxHP())
 
     -- Half of the Elemental-Air family's base speed of 55.

@@ -55,6 +55,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.THUNDER_RES_RANK, 10)
     mob:setMod(xi.mod.ICE_SDT, -1000)
 
+    -- A wild, explosive beast: resists Paralyze and Slow.
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+    mob:setMod(xi.mod.SLOW_RES_RANK, 8)
+
     mob:setHP(mob:getMaxHP())
 end
 

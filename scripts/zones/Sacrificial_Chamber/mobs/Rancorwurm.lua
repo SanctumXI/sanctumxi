@@ -51,6 +51,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.EARTH_RES_RANK, 10)
     mob:setMod(xi.mod.WIND_SDT, -1000)
 
+    -- A burrowing worm: resists Paralyze and Poison.
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+    mob:setMod(xi.mod.POISON_RES_RANK, 6)
+
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200) -- +100% physical damage output
     mob:setHP(mob:getMaxHP())
 end

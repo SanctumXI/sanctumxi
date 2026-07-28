@@ -37,6 +37,12 @@ local function updateHeadBonuses(mob)
     mob:setMod(xi.mod.REGAIN, math.floor(tuning.regain * multiplier))
 end
 
+entity.onMobInitialize = function(mob)
+    -- A huge, multi-headed beast: too large and alert to be put to sleep.
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+end
+
 entity.onMobSpawn = function(mob)
     if mob:getMainLvl() ~= tuning.level then
         mob:setMobLevel(tuning.level)
@@ -59,6 +65,9 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.WATER_RES_RANK, 8)
     mob:setMod(xi.mod.FIRE_SDT, -1000)
     mob:setMod(xi.mod.THUNDER_SDT, -1500)
+
+    -- Thick, scaled hide: resists Poison.
+    mob:setMod(xi.mod.POISON_RES_RANK, 8)
 
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)

@@ -21,6 +21,7 @@ end
 entity.onMobSpawn = function(mob)
     -- Frost-forged orc: mild resistance to Ice, its liege's element.
     mob:setMod(xi.mod.ICE_SDT, 1500)
+    mob:setMod(xi.mod.SLOW_RES_RANK, 4)
 
     xi.mix.jobSpecial.config(mob, {
         specials =

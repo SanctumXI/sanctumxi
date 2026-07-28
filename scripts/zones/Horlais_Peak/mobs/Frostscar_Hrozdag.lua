@@ -107,6 +107,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.ICE_RES_RANK, 10)
     mob:setMod(xi.mod.FIRE_SDT, -1000)
 
+    -- Disciplined warlord: resists Slow and Paralyze.
+    mob:setMod(xi.mod.SLOW_RES_RANK, 8)
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
     mob:setLocalVar('auraActive', 0)
     mob:setLocalVar('auraPhase', 0)

@@ -23,6 +23,7 @@ entity.onMobSpawn = function(mob)
     -- Quadav: mild resistance to Earth, weak to its opposite (Wind).
     mob:setMod(xi.mod.EARTH_SDT, 1500)
     mob:setMod(xi.mod.WIND_SDT, -500)
+    mob:setMod(xi.mod.POISON_RES_RANK, 4)
 end
 
 return entity
