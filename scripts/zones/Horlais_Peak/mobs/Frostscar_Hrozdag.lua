@@ -101,20 +101,16 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
-
-    -- Frost-forged warlord: strongly resists Ice, slightly weak to its opposite (Fire).
+    
     mob:setMod(xi.mod.ICE_SDT, 4000)
     mob:setMod(xi.mod.ICE_RES_RANK, 10)
     mob:setMod(xi.mod.FIRE_SDT, -1000)
 
-    -- Disciplined warlord: resists Slow and Paralyze.
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
 
-    -- Warlord in his own right: hits harder than his escorts, with a real
-    -- chance to double attack and crit.
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
-    mob:setMod(xi.mod.DOUBLE_ATTACK, 50)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 40)
     mob:setMod(xi.mod.CRITHITRATE, 10)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
@@ -152,11 +148,6 @@ entity.onMobFight = function(mob, target)
     end
 end
 
--- Howl's own doc comment promises Warcry to "any linked allies" but the
--- shared xi.mobskills.mobBuffMove helper it uses only ever buffs the
--- caster -- that's why the orcs' damage barely moved when Howl landed.
--- Extend it here rather than in the shared howl.lua action (used by many
--- unrelated mobs game-wide) so this stays scoped to this fight's escorts.
 entity.onMobWeaponSkill = function(target, mob, skill)
     if skill:getID() == xi.mobSkill.HOWL_ORC then
         local battlefield = mob:getBattlefield()
@@ -167,7 +158,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
                     ally:isAlive() and
                     (ally:getName() == 'Siege_Sniper' or ally:getName() == 'Blackguard')
                 then
-                    ally:addStatusEffect(xi.effect.WARCRY, { power = 25, origin = mob, duration = 180 })
+                    ally:addStatusEffect(xi.effect.WARCRY, { power = 30, origin = mob, duration = 60 })
                 end
             end
         end
