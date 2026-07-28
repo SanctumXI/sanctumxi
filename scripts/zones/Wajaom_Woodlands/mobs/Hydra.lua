@@ -53,6 +53,10 @@ entity.onMobFight = function(mob, target)
     end
 end
 
+entity.onCriticalHit = function(mob, attacker)
+    xi.mixin.hydra.onCriticalHit(mob)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     if player then
         player:addTitle(xi.title.HYDRA_HEADHUNTER)

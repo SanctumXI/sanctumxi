@@ -12,7 +12,7 @@ local content = Battlefield:new({
     battlefieldId    = xi.battlefield.id.HEAVY_IS_THE_SHELL,
     maxPlayers       = 18,
     timeLimit        = utils.minutes(30),
-    index            = 29,
+    index            = 19,
     menuName         = 'Heavy Is the Shell',
     entryName        = 'Heavy Is the Shell',
     entryNpc         = 'BC_Entrance',
@@ -34,7 +34,6 @@ content.groups =
             {
                 waughroonID.mob.ROHYU_BLACKANVIL,
                 waughroonID.mob.QUADAV_EARTHSHAPER,
-                waughroonID.mob.QUADAV_EARTHSHAPER + 1,
                 waughroonID.mob.QUADAV_LITURGIST,
                 waughroonID.mob.QUADAV_LITURGIST + 1,
             },
@@ -42,7 +41,6 @@ content.groups =
             {
                 waughroonID.mob.ROHYU_BLACKANVIL + 1,
                 waughroonID.mob.QUADAV_EARTHSHAPER + 2,
-                waughroonID.mob.QUADAV_EARTHSHAPER + 3,
                 waughroonID.mob.QUADAV_LITURGIST + 2,
                 waughroonID.mob.QUADAV_LITURGIST + 3,
             },
@@ -50,7 +48,6 @@ content.groups =
             {
                 waughroonID.mob.ROHYU_BLACKANVIL + 2,
                 waughroonID.mob.QUADAV_EARTHSHAPER + 4,
-                waughroonID.mob.QUADAV_EARTHSHAPER + 5,
                 waughroonID.mob.QUADAV_LITURGIST + 4,
                 waughroonID.mob.QUADAV_LITURGIST + 5,
             },

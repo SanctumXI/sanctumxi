@@ -15,7 +15,7 @@ local tuning =
     hpBonus                  = 0,
     attackBonus              = 0,
     defenseBonus             = 0,
-    accuracyBonus            = 0,
+    accuracyBonus            = 150,
     evasionBonus             = 0,
     magicAttackBonus         = 0,
     regain                   = 20,
@@ -101,6 +101,16 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Frost-forged warlord: strongly resists Ice, slightly weak to its opposite (Fire).
+    mob:setMod(xi.mod.ICE_SDT, 4000)
+    mob:setMod(xi.mod.ICE_RES_RANK, 10)
+    mob:setMod(xi.mod.FIRE_SDT, -1000)
+
+    -- Disciplined warlord: resists Slow and Paralyze.
+    mob:setMod(xi.mod.SLOW_RES_RANK, 8)
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
     mob:setLocalVar('auraActive', 0)
     mob:setLocalVar('auraPhase', 0)
@@ -111,7 +121,7 @@ entity.onMobSpawn = function(mob)
         specials =
         {
             {
-                id       = xi.mobSkill.INVINCIBLE_1,
+                id       = xi.mobSkill.MIGHTY_STRIKES_1,
                 cooldown = 180,
                 hpp      = 80,
                 begCode  = breakAura,

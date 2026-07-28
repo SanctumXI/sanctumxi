@@ -1,8 +1,7 @@
 -----------------------------------
--- Tornado Edge
--- Family: Bloodcrown Brradhod
--- Description: Deals high physical damage in a 20-yalm frontal cone.
--- Additional Effect: HP Down, MP Down, Max TP Down
+-- Berserker Dance
+-- Family: Orc
+-- Description: A reckless flurry of blows. Additional Effect: Defense Down
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,8 +14,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getWeaponDmg()
-    params.numHits        = 1
-    params.fTP            = { 5.0, 5.0, 5.0 }
+    params.numHits        = 2
+    params.fTP            = { 2.0, 2.0, 2.0 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_4
@@ -26,11 +25,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        local duration = xi.mobskills.calculateDuration(skill:getTP(), 30, 90)
-
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.MAX_HP_DOWN, 50, 0, duration)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.MAX_MP_DOWN, 50, 0, duration)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.MAX_TP_DOWN, 50, 0, duration)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.DEFENSE_DOWN, 15, 9, 180)
     end
 
     return info.damage

@@ -926,9 +926,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Sahagin',213,780);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2190);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2191);
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',214,2192);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2187);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188);
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189);
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188); -- slaverous_gale
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189); -- aeolian_void
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2190); -- extreme_purgation
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2191); -- desiccation
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,4408); -- gorge
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,685);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,686);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,687);
@@ -2816,7 +2818,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2210); -- petal pirouette
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2599); -- tepal twist
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2600); -- bloom fouette
 -- INSERT INTO `mob_skill_lists` VALUES ('Gancanagh',838,2601); -- petalback spin
-INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2187); -- dustvoid
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2188); -- slaverous gale
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2189); -- aeolian void
 INSERT INTO `mob_skill_lists` VALUES ('Glavoid',839,2190); -- extreme purgation
@@ -2948,9 +2949,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,533); -- danse macambre
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,1326); -- final retrobution
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,1329); -- gala mancabre
 INSERT INTO `mob_skill_lists` VALUES ('Titlacauan',877,2638); -- hadal summons
-INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2187); -- dustvoid
-INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2188); -- slavernous_gale
+INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2188); -- slaverous_gale
 INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2189); -- aeolian_void
+INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2190); -- extreme_purgation
 INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2191); -- Desiccation
 -- INSERT INTO `mob_skill_lists` VALUES ('Ulhuadshi',878,2641); -- psyche_suction
 INSERT INTO `mob_skill_lists` VALUES ('Warbler',879,2158); -- Insepid_nip
@@ -4143,6 +4144,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Infernal_Swarm',2060,335);
 INSERT INTO `mob_skill_lists` VALUES ('Dark_Ixion',2061,2333); -- di_glow, to telegraph next mobskill
 INSERT INTO `mob_skill_lists` VALUES ('Dark_Ixion',2061,2337); -- damsel memento
 
+-- BCNM-only Ixion (QuBia Arena): same as Dark_Ixion but without damsel memento
+INSERT INTO `mob_skill_lists` VALUES ('Dark_Ixion_KSNM',30001,2333); -- di_glow, to telegraph next mobskill
+
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',2062,396);
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',2062,397);
 INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',2062,398);
@@ -4317,23 +4321,16 @@ INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell 
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell_Low_HP',2099,2374); -- Torment of Gu'Dha
 
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,617);  -- Feather Storm
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,618);  -- Double Kick
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,619);  -- Parry
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,620);  -- Sweep
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,764);  -- Doom
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2206); -- Dark Invocation
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
-INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2375); -- Vorticose Sands
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2270); -- Shirahadori
+INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2413); -- Feather Maelstrom
 
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Battle Dance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,605);  -- Aerial Wheel
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,606);  -- Shoulder Attack
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,607);  -- Arm Block
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Howl
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,609);  -- Slam Dunk
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Counterstance
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,608);  -- Arm Block
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,766);  -- Howl
+INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2202); -- Berserker Dance
 INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2263); -- Tornado Edge
-INSERT INTO `mob_skill_lists` VALUES ('King_of_The_North',2101,2373); -- Veil of Chaos
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,247);   -- foxfire
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,249);   -- netherspikes
 INSERT INTO `mob_skill_lists` VALUES ('FOMOR_ONE_HANDED',2102,250);   -- carnal_nightmare

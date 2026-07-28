@@ -932,6 +932,7 @@ xi.mobSkill =
 
     GRIM_GLOWER                   = 2156,
 
+    BERSERKER_DANCE               = 2202,
     ORE_LOB                       = 2204,
     DARK_INVOCATION               = 2206,
     PEDAL_PIROUETTE               = 2210,
@@ -969,6 +970,7 @@ xi.mobSkill =
     SHELL_CHARGE                  = 2266,
     SKULL_SMASH                   = 2267,
     KAMAITACHI                    = 2269,
+    SHIRAHADORI                   = 2270,
 
     BONE_CRUSHER_AUTOMATON        = 2299,
     ARMOR_PIERCER_AUTOMATON       = 2300,
@@ -997,6 +999,8 @@ xi.mobSkill =
     OPPRESSIVE_GLARE              = 2392,
 
     ROAR_3                        = 2406,
+
+    FEATHER_MAELSTROM             = 2413,
 
     REAVING_WIND                  = 2431,
     REAVING_WIND_KNOCKBACK        = 2434,
@@ -1101,4 +1105,6 @@ xi.mobSkill =
     SANDPIT_3                     = 3883,
     VENOM_SPRAY_3                 = 3884,
     MANDIBULAR_BITE_3             = 3885,
+
+    GORGE                         = 4408,
 }

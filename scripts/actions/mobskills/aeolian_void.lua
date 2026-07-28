@@ -1,7 +1,7 @@
 -----------------------------------
 -- Aeolian Void
 -- Family: Sandworm
--- Description: Deals Wind damage to enemies in front of mob. Additional Effect: Blind, Silence
+-- Description: Deals Wind damage to enemies in front of mob. Additional Effect: Blind, Silence, Reset Enmity
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -27,6 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 180)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 50, 0, 180)
+        mob:resetEnmity(target)
     end
 
     return info.damage

@@ -1,5 +1,5 @@
 -----------------------------------
--- Three's a Crowd
+-- The Ravening Worm
 -- Sacrificial Chamber KSNM99, Themis Orb
 -- !additem 1553
 -----------------------------------
@@ -8,12 +8,12 @@ local sacrificialChamberID = zones[xi.zone.SACRIFICIAL_CHAMBER]
 
 local content = Battlefield:new({
     zoneId           = xi.zone.SACRIFICIAL_CHAMBER,
-    battlefieldId    = xi.battlefield.id.THREES_A_CROWD,
+    battlefieldId    = xi.battlefield.id.THE_RAVENING_WORM,
     maxPlayers       = 18,
-    timeLimit        = utils.minutes(30),
+    timeLimit        = utils.minutes(15),
     index            = 7,
-    menuName         = 'Three\'s a Crowd',
-    entryName        = 'Three\'s a Crowd',
+    menuName         = 'The Ravening Worm',
+    entryName        = 'The Ravening Worm',
     entryNpc         = '_4j0',
     exitNpcs         = { '_4j2', '_4j3', '_4j4' },
     requiredItems    = { xi.item.THEMIS_ORB },
@@ -25,27 +25,11 @@ local content = Battlefield:new({
     },
 })
 
-content:addEssentialMobs({ 'Typhon' })
+content:addEssentialMobs({ 'Rancorwurm' })
 
 content.loot = xi.battlefield.addKSNM99LootGroups({
     {
         { itemId = xi.item.GIL, weight = 10000, amount = 32000 },
-    },
-
-    {
-        { itemId = xi.item.HYDRA_SCALE,         weight = 3500 },
-        { itemId = xi.item.HYDRA_FANG,          weight = 3500 },
-        { itemId = xi.item.CHUNK_OF_HYDRA_MEAT, weight = 3000 },
-    },
-
-    {
-        { itemId = xi.item.BERSERKERS_TORQUE, weight = 2400 },
-        { itemId = xi.item.NONE,              weight = 7600 },
-    },
-
-    {
-        { itemId = xi.item.SIRIUS_AXE, weight = 2400 },
-        { itemId = xi.item.NONE,       weight = 7600 },
     },
 })
 

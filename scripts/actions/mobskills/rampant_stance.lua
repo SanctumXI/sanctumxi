@@ -4,6 +4,7 @@
 -- Description: Deals physical AoE damage to targets in range. Additional Effect: Stun
 -- Range: 7.0 (add 0.1-4 depending on terrain elevation)
 -- Notes: Takes roughly three seconds to charge the TP move up, enough time for anyone within range to easily back out and run back in directly after the animation begins.
+-- Also buffs the user with Counterstance briefly afterward.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -29,6 +30,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 5) -- TODO: Capture stun duration
     end
+
+    xi.mobskills.mobBuffMove(mob, xi.effect.COUNTERSTANCE, 45, 0, 30)
 
     return info.damage
 end

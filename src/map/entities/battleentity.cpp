@@ -2575,7 +2575,9 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     }
     else if (PSkill->isConal())
     {
-        float angle = 45.0f;
+        // mob_skill_param doubles as an optional narrow-cone override (in degrees) for conal
+        // mob skills that need a tighter line-shaped hitbox than the standard 45 degree cone.
+        float angle = PSkill->getParam() > 0 ? static_cast<float>(PSkill->getParam()) : 45.0f;
         PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, PSkill->getValidTargets(), PSkill->getAoe());
     }
     else

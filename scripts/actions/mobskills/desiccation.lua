@@ -1,8 +1,9 @@
 -----------------------------------
--- Lightning Spear
--- Family: Monoceros (Dark Ixion)
--- Description: Long, narrow line-shaped Thunder damage (600-1500). Additional Effect: Shock
--- Notes: Will pick a random person on the hate list for this attack.
+-- Desiccation
+-- Family: Sandworm
+-- Description: Deals Wind damage to targets in a cone in front of the user, around
+--              whoever currently holds the most hate. Consumes all job abilities
+--              (Additional Effect: Amnesia).
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -15,20 +16,18 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 20.0, 20.0, 20.0 }
-    params.element        = xi.element.THUNDER
+    params.fTP            = { 2.5, 2.5, 2.5 }
+    params.element        = xi.element.WIND
     params.attackType     = xi.attackType.MAGICAL
-    params.damageType     = xi.damageType.THUNDER
-    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.damageType     = xi.damageType.WIND
+    params.shadowBehavior = xi.mobskills.shadowBehavior.WIPE_SHADOWS
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        local duration = xi.mobskills.calculateDuration(30, 120)
-
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SHOCK, 40, 3, duration)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.AMNESIA, 1, 0, 60)
     end
 
     return info.damage

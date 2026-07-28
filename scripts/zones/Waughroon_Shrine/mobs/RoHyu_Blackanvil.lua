@@ -58,6 +58,16 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+
+    -- Quadav king: strongly resists Earth, slightly weak to its opposite (Wind).
+    mob:setMod(xi.mod.EARTH_SDT, 4000)
+    mob:setMod(xi.mod.EARTH_RES_RANK, 10)
+    mob:setMod(xi.mod.WIND_SDT, -1000)
+
+    -- Tough smith-king: resists Stun and Paralyze.
+    mob:setMod(xi.mod.STUN_RES_RANK, 8)
+    mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())
 
