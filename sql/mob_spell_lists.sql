@@ -5763,7 +5763,10 @@ INSERT INTO `mob_spell_lists` VALUES ('Chemical_Cook_Chemachiq',565,57,1,255);  
 INSERT INTO `mob_spell_lists` VALUES ('Chemical_Cook_Chemachiq',565,59,1,255);  -- Silence (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Chemical_Cook_Chemachiq',565,112,1,255); -- Flash (1~255)
 
--- Next Available: 566
+INSERT INTO `mob_spell_lists` VALUES ('RoHyu_Blackanvil_KSNM',566,112,37,255); -- flash (37~255)
+INSERT INTO `mob_spell_lists` VALUES ('RoHyu_Blackanvil_KSNM',566,34,55,255);  -- diaga_ii (55~255)
+
+-- Next Available: 567
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

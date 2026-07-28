@@ -10701,7 +10701,7 @@ INSERT INTO `mob_groups` VALUES (57,2200,144,'KaNha_Jabbertongue',0,128,0,0,0,0,
 INSERT INTO `mob_groups` VALUES (58,426,144,'BiFho_Jestergrin',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (59,2305,144,'KuTya_Hotblood',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (60,1167,144,'EaTho_Cruelheart',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (61,7559,144,'RoHyu_Blackanvil',0,128,0,100000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (61,7559,144,'RoHyu_Blackanvil',0,128,0,30000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (62,6868,144,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (63,6869,144,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (64,0,144,'Naji',0,128,0,0,0,0,NULL);
@@ -10710,8 +10710,8 @@ INSERT INTO `mob_groups` VALUES (66,0,144,'Kupipi',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (67,0,144,'Excenmille',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (68,304,144,'Ayakashi',0,128,0,2400,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (69,7295,144,'Flesh_Eater',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (70,7563,144,'Quadav_Earthshaper',0,128,0,25000,10000,0,NULL);
-INSERT INTO `mob_groups` VALUES (71,7564,144,'Quadav_Liturgist',0,128,0,25000,10000,0,NULL);
+INSERT INTO `mob_groups` VALUES (70,7563,144,'Quadav_Earthshaper',0,128,0,20000,10000,0,NULL);
+INSERT INTO `mob_groups` VALUES (71,7564,144,'Quadav_Liturgist',0,128,0,12000,10000,0,NULL);
 
 -- ------------------------------------------------------------
 -- Giddeus (Zone 145)

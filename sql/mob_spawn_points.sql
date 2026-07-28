@@ -52236,21 +52236,21 @@ INSERT INTO `mob_spawn_points` VALUES (17367692,0,'KuTya_Hotblood','Ku\'Tya Hotb
 INSERT INTO `mob_spawn_points` VALUES (17367693,0,'EaTho_Cruelheart','Ea\'Tho Cruelheart',60,0,0,0.000,0.000,0.000,0);
 
 -- Heavy Is the Shell
-INSERT INTO `mob_spawn_points` VALUES (17367695,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,-177.358,60.188,-141.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367696,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,22.916,0.188,17.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367697,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,222.866,-59.812,137.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367819,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-183.358,60.188,-145.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367695,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,-177.358,60.188,-141.977,252);
+INSERT INTO `mob_spawn_points` VALUES (17367696,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,22.916,0.188,17.987,252);
+INSERT INTO `mob_spawn_points` VALUES (17367697,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,222.866,-59.812,137.969,252);
+INSERT INTO `mob_spawn_points` VALUES (17367819,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-177.358,60.188,-150.977,124);
 INSERT INTO `mob_spawn_points` VALUES (17367820,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-171.358,60.188,-145.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367821,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,16.916,0.188,13.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367821,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,22.916,0.188,8.987,124);
 INSERT INTO `mob_spawn_points` VALUES (17367822,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,28.916,0.188,13.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367823,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,216.866,-59.812,133.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367823,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,222.866,-59.812,128.969,124);
 INSERT INTO `mob_spawn_points` VALUES (17367824,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,228.866,-59.812,133.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-183.358,60.188,-137.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-171.358,60.188,-137.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,16.916,0.188,21.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,28.916,0.188,21.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,216.866,-59.812,141.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,228.866,-59.812,141.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-180.358,60.188,-140.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-174.358,60.188,-140.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,19.916,0.188,18.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,25.916,0.188,18.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,219.866,-59.812,138.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,225.866,-59.812,138.969,124);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17367698,0,'Chest_OPlenty','Chest O\'Plenty',62,0,0,-181.424,59.230,-134.764,128);
