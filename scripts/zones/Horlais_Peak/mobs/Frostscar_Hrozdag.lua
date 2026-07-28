@@ -15,7 +15,7 @@ local tuning =
     hpBonus                  = 0,
     attackBonus              = 0,
     defenseBonus             = 0,
-    accuracyBonus            = 150,
+    accuracyBonus            = 30,
     evasionBonus             = 0,
     magicAttackBonus         = 0,
     regain                   = 20,
@@ -111,6 +111,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
 
+    -- Warlord in his own right: hits harder than his escorts, with a real
+    -- chance to double attack and crit.
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 50)
+    mob:setMod(xi.mod.CRITHITRATE, 10)
+
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
     mob:setLocalVar('auraActive', 0)
     mob:setLocalVar('auraPhase', 0)
@@ -143,6 +149,28 @@ entity.onMobFight = function(mob, target)
     then
         enableAura(mob)
         mob:setLocalVar('auraPhase', 2)
+    end
+end
+
+-- Howl's own doc comment promises Warcry to "any linked allies" but the
+-- shared xi.mobskills.mobBuffMove helper it uses only ever buffs the
+-- caster -- that's why the orcs' damage barely moved when Howl landed.
+-- Extend it here rather than in the shared howl.lua action (used by many
+-- unrelated mobs game-wide) so this stays scoped to this fight's escorts.
+entity.onMobWeaponSkill = function(target, mob, skill)
+    if skill:getID() == xi.mobSkill.HOWL_ORC then
+        local battlefield = mob:getBattlefield()
+        if battlefield then
+            for _, ally in pairs(battlefield:getMobs(true, true)) do
+                if
+                    ally:getID() ~= mob:getID() and
+                    ally:isAlive() and
+                    (ally:getName() == 'Siege_Sniper' or ally:getName() == 'Blackguard')
+                then
+                    ally:addStatusEffect(xi.effect.WARCRY, { power = 25, origin = mob, duration = 180 })
+                end
+            end
+        end
     end
 end
 

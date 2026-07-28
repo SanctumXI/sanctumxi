@@ -392,6 +392,8 @@ xi.mobSkill =
 
     FISSION                       =  755,
 
+    HOWL_ORC                      =  766, -- King of The North (Frostscar Hrozdag)
+
     GREAT_WHIRLWIND_1             =  803,
     TORTOISE_SONG_1               =  804,
     HEAD_BUTT_TURTLE_1            =  805,

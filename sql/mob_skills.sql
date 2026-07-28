@@ -634,7 +634,7 @@ INSERT INTO `mob_skills` VALUES (602,888,'hypothermal_combustion_tzar',1,0.0,20.
 INSERT INTO `mob_skills` VALUES (603,432,'counterstance_1',0,0.0,7.0,2000,0,1,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (604,433,'throat_stab',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (605,349,'aerial_wheel',0,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (606,350,'shoulder_attack',0,0.0,7.0,2000,1500,4,0,0,1,0,0,0);
+INSERT INTO `mob_skills` VALUES (606,350,'shoulder_attack',0,0.0,7.0,2000,1500,4,0,0,2,0,0,0);
 INSERT INTO `mob_skills` VALUES (607,351,'slam_dunk',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (608,352,'arm_block',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (609,353,'battle_dance',1,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
