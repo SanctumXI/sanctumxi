@@ -1030,7 +1030,13 @@ function Battlefield:onEntryEventUpdate(player, csid, option, npc)
         player:hasStatusEffect(xi.effect.BATTLEFIELD)
         -- and id:getStatus() == xi.battlefield.status.OPEN -- TODO: Uncomment only once that can-of-worms is dealt with.
     then
-        player:enterBattlefield()
+        -- Pass the specific area we just registered for rather than calling
+        -- enterBattlefield() with no argument. With no argument it falls back
+        -- to "any battlefield this character is registered to in the zone",
+        -- which -- like the equivalent lookup in RegisterBattlefield -- does
+        -- not verify it's actually this one, and could attach the player to
+        -- a stale registration for a different BCNM instead.
+        player:enterBattlefield(area)
     end
 
     -- Handle record
