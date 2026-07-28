@@ -19,7 +19,7 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.percentMultipier = 0.01 -- TODO: Capture breath values.
+    params.percentMultipier = 0.10
     params.damageCap        = 700 -- TODO: Capture cap
     params.bonusDamage      = 0
     params.mAccuracyBonus   = { 0, 0, 0 }

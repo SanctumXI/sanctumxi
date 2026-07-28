@@ -59411,9 +59411,9 @@ INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoploma
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
 
 -- Three's a Crowd
-INSERT INTO `mob_spawn_points` VALUES (688389,0,'Typhon','Typhon',31,80,80,-1.945,100.325,-240.000,64);
-INSERT INTO `mob_spawn_points` VALUES (688390,0,'Typhon','Typhon',31,80,80,-1.975,0.000,2.081,64);
-INSERT INTO `mob_spawn_points` VALUES (688391,0,'Typhon','Typhon',31,80,80,-1.945,-100.000,242.335,64);
+INSERT INTO `mob_spawn_points` VALUES (688389,0,'Typhon','Typhon',31,80,80,0.000,100.325,-240.000,64);
+INSERT INTO `mob_spawn_points` VALUES (688390,0,'Typhon','Typhon',31,80,80,0.000,0.000,2.081,64);
+INSERT INTO `mob_spawn_points` VALUES (688391,0,'Typhon','Typhon',31,80,80,0.000,-100.000,242.335,64);
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)

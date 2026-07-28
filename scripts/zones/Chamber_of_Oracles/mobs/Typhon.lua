@@ -18,8 +18,8 @@ local tuning =
     accuracyBonus         = 0,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
-    regen                 = 25,
-    regain                = 25,
+    regen                 = 60,
+    regain                = 50,
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
     breathDamageTaken     = 0,
@@ -52,7 +52,6 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
-    mob:setMod(xi.mod.DOUBLE_ATTACK, 10)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
     mob:setHP(mob:getMaxHP())
@@ -66,6 +65,10 @@ end
 
 entity.onMobFight = function(mob, target)
     updateHeadBonuses(mob)
+end
+
+entity.onCriticalHit = function(mob, attacker)
+    xi.mixin.hydra.onCriticalHit(mob)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

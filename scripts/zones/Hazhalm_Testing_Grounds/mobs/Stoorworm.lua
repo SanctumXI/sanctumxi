@@ -27,4 +27,8 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar('headRegrowMax', 90)
 end
 
+entity.onCriticalHit = function(mob, attacker)
+    xi.mixin.hydra.onCriticalHit(mob)
+end
+
 return entity

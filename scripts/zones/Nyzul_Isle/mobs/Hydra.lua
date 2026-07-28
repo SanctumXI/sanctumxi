@@ -49,6 +49,10 @@ entity.onMobFight = function(mob, target)
     handleRegen(mob, mob:getAnimationSub())
 end
 
+entity.onCriticalHit = function(mob, attacker)
+    xi.mixin.hydra.onCriticalHit(mob)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     if optParams.isKiller or optParams.noKiller then
         xi.nyzul.enemyLeaderKill(mob)
