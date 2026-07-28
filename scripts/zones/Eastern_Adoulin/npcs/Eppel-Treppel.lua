@@ -1,22 +1,14 @@
 -----------------------------------
 -- Area: Eastern Adoulin (257)
 --  NPC: Eppel-Treppel
--- Speak to Eppel-Treppel to enter the Celennia Memorial Library.
+-- The Linkshell Concierge service is currently available in Aht Urhgan Whitegate.
 -- !pos -90.922 -2.650 -80.891 257
 -----------------------------------
 ---@type TNpcEntity
-local libraryInstance = require('scripts/globals/library_instance')
-
 local entity = {}
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(591)
-end
-
-entity.onEventFinish = function(player, csid, option, npc)
-    if csid == 591 and option == 1 then
-        libraryInstance.enter(player)
-    end
+    player:printToPlayer('Please visit the Linkshell Concierge beside Hugo in Aht Urhgan Whitegate.', xi.msg.channel.SYSTEM_3)
 end
 
 return entity
