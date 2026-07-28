@@ -1,65 +1,15 @@
 -----------------------------------
 -- NM Hitbox Scale
 --
--- Companion to the client-side "SanctumSize" Ashita addon, which enlarges
--- the *visual* model of configured NMs for players who have it installed.
--- That addon is purely cosmetic and client-local; it cannot change how
--- melee, weaponskills, spells, abilities, or aura ranges are actually
--- calculated, since all of that runs here on the server against
--- modelHitboxSize (see src/map/entities/mobentity.cpp,
--- src/map/ai/states/ability_state.cpp, src/map/ai/states/magic_state.cpp,
--- and src/map/status_effect_container.cpp, which all add modelHitboxSize
--- into their range checks).
---
--- This module scales that server-authoritative value to match, so the
--- bigger model is backed by a bigger real hitbox for every player, not
--- just those with the client addon installed.
+-- Companion to the client-side 'SanctumSize' Ashita addon that enlarges
+-- enemies. Then, this module scales the server-size mob value to match.
+-- Bigger hitbox, better coffee.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 local m = Module:new('nm_hitbox_scale')
 m:setEnabled(true)
 
--- NOTE: These names are as they are as filenames.
--- Example: Behemoth's Dominion => Behemoths_Dominion
--- Example: King Behemoth       => King_Behemoth
--- { zone name, mob name, base hitbox in yalms (mob_pools.modelHitboxSize / 10), scale }
---
--- To add another NM: add a row here AND a matching entry in the client's
--- scaled_mobs table (E:\FFXI\addons\SanctumSize\SanctumSize.lua) so the
--- visual and the real hitbox stay in sync. Note the client only matches by
--- display (packet) name, so name-alike duplicates below (Nyzul Isle floors,
--- HM_Roc/HM_Simurgh, King Arthro's Everbloom Hollow reskin, the Shrine
--- "pet version" gods) do NOT need their own client-side entry - only the
--- server needs a distinct row per zone+mob-file since each is a physically
--- separate mob instance server-side.
---
--- This deliberately DOES include (per explicit request, resolved via
--- mob_groups -> zoneid -> mob_pools joins, not guessed):
---   - Nyzul Isle's reused copies of ~35 of these NMs. Every one checked
---     reuses the exact same poolid/baseline as its overworld counterpart.
---   - Everbloom_Hollow's "King Arthro (Sandworm)" - also the same poolid
---     (2254) as the classic Jugner_Forest fight, just a different skin/zone.
---   - The_Shrine_of_RuAvitau's Seiryu/Genbu/Suzaku/Byakko "(Pet version)"
---     summons used during the Kirin fight. These have no mob_groups/
---     mob_pools row at all (they're spawned as pets, not popped), so their
---     baseline reuses the real RuAun_Gardens god's value as the closest
---     available proxy - not independently sourced.
---   - HM_Roc / HM_Simurgh in Reisenjima_Henge (separate script files there;
---     their packet_name is still 'Roc'/'Simurgh', same baseline as normal).
---
--- Still NOT here, and why:
---   - Cancer, Father Frost, Snow Maiden: excluded per explicit request.
---   - Kirin_ER (Escha_RuAun): same category as Father Frost/Snow Maiden -
---     mob_groups resolves a real baseline (poolid 5693, 4.4 yalms, same as
---     regular Kirin) but there is no scripts/zones/Escha_RuAun/mobs/Kirin.lua
---     file, so there's no onMobInitialize table to override. Needs either a
---     new script file or a different hook to be included.
---   - Blackbeard: no mob_pools or mob script match at all - it's spawned as
---     part of the Ship_bound_for_Selbina_Pirates boarding event
---     (see scripts/zones/Ship_bound_for_Selbina_Pirates/IDs.lua), not a
---     standalone NM pop. Needs its own investigation.
---   - Sea Horror gets two rows: it's the same NM on both ferry routes.
 local nmsToScale =
 {
     -- 200%
@@ -233,7 +183,7 @@ for _, entry in pairs(nmsToScale) do
 
     -- onMobInitialize fires once when the persistent mob entity is created
     -- (not on every respawn), so this sets the hitbox exactly once and it
-    -- sticks across pops without compounding on repeated overrides.
+    -- sticks across pops without.
     m:addOverride(string.format('xi.zones.%s.mobs.%s.onMobInitialize', zoneName, mobName),
     function(mob)
         super(mob)
