@@ -325,7 +325,7 @@ INSERT INTO `zone_settings` VALUES (280,1,'50.103.128.168',54230,'Mog_Garden',67
 INSERT INTO `zone_settings` VALUES (281,0,'50.103.128.168',54230,'Leafallia',0,0,0,0,0,0.00,0);
 INSERT INTO `zone_settings` VALUES (282,0,'50.103.128.168',54230,'Mount_Kamihr',0,0,0,0,0,0.00,0);
 INSERT INTO `zone_settings` VALUES (283,0,'50.103.128.168',54230,'Silver_Knife',0,0,0,0,0,0.00,0);
-INSERT INTO `zone_settings` VALUES (284,257,'50.103.128.168',54230,'Celennia_Memorial_Library',63,63,0,0,0,0.00,4096);
+INSERT INTO `zone_settings` VALUES (284,257,'50.103.128.168',54230,'Celennia_Memorial_Library',63,63,0,0,0,0.00,4128);
 INSERT INTO `zone_settings` VALUES (285,1,'50.103.128.168',54230,'Feretory',0,0,0,0,0,0.00,4096);
 INSERT INTO `zone_settings` VALUES (286,0,'50.103.128.168',0,'286',0,0,0,0,0,0.00,0); -- Crashes the client if enabled and you try to go there
 INSERT INTO `zone_settings` VALUES (287,256,'50.103.128.168',54230,'Maquette_Abdhaljs-Legion_B',0,0,143,143,0,0.00,6298);

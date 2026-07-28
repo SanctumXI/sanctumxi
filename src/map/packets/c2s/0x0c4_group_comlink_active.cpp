@@ -202,6 +202,11 @@ void GP_CLI_COMMAND_GROUP_COMLINK_ACTIVE::process(MapSession* PSession, CCharEnt
         return;
     }
 
+    if (PChar->isLinkshellBankActive() && LinkshellId == 1)
+    {
+        charutils::CloseLinkshellBank(PChar);
+    }
+
     switch (static_cast<GP_CLI_COMMAND_GROUP_COMLINK_ACTIVE_ACTIVEFLG>(ActiveFlg))
     {
         case GP_CLI_COMMAND_GROUP_COMLINK_ACTIVE_ACTIVEFLG::EquipOrCreate:

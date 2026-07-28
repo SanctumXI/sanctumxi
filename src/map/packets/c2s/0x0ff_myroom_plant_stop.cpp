@@ -40,6 +40,7 @@ const std::set<uint8_t> validPlantCategories = { LOC_MOGSAFE, LOC_MOGSAFE2 };
 auto GP_CLI_COMMAND_MYROOM_PLANT_STOP::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
     return PacketValidator()
+        .mustEqual(PChar->isLinkshellBankActive(), false, "Linkshell Bank session active")
         .mustNotEqual(MyroomPlantItemNo, 0, "MyroomPlantItemNo must not be 0")
         .oneOf("MyroomPlantCategory", MyroomPlantCategory, validPlantCategories);
 }

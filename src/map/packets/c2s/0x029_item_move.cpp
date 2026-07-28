@@ -46,6 +46,8 @@ const std::set wardrobeContainers = {
 //       However, you do not get access to your own Safe, Locker or Storage.
 const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_ID>
 {
+    const bool inLinkshellLibrary = PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY;
+
     // These are always available in both LSB and retail.
     std::set allowedContainers = {
         LOC_INVENTORY,
@@ -67,7 +69,8 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
     };
 
     // Retail allows injecting into Safe from anywhere in a zone with a Nomad Moogle.
-    if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || PChar->m_moghouseID == PChar->id)
+    if ((!inLinkshellLibrary && PChar->loc.zone->CanUseMisc(MISC_MOGMENU)) ||
+        PChar->m_moghouseID == PChar->id)
     {
         allowedContainers.insert(LOC_MOGSAFE);
 
@@ -79,8 +82,15 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
     }
 
     // Same comment as Safe, but this is handled in the helper.
-    if (charutils::hasMogLockerAccess(PChar))
+    if (!inLinkshellLibrary && charutils::hasMogLockerAccess(PChar))
     {
+        allowedContainers.insert(LOC_MOGLOCKER);
+    }
+
+    if (PChar->isLinkshellBankActive())
+    {
+        allowedContainers.insert(LOC_MOGSAFE);
+        allowedContainers.insert(LOC_MOGSAFE2);
         allowedContainers.insert(LOC_MOGLOCKER);
     }
 
@@ -109,6 +119,36 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
 // Validate that moving item 'itemIndex' from container 'from' to container 'to' is allowed.
 const auto isValidMovement = [](const CCharEntity* PChar, const CONTAINER_ID from, const CONTAINER_ID to, const uint16_t itemIndex) -> bool
 {
+    const bool bankMovement = PChar->isLinkshellBankActive() &&
+                              (charutils::IsLinkshellBankContainer(from) || charutils::IsLinkshellBankContainer(to));
+    if (bankMovement)
+    {
+        if ((!charutils::IsLinkshellBankContainer(from) && from != LOC_INVENTORY) ||
+            (!charutils::IsLinkshellBankContainer(to) && to != LOC_INVENTORY) ||
+            (charutils::IsLinkshellBankContainer(from) &&
+             charutils::IsLinkshellBankContainer(to) &&
+             from != to))
+        {
+            return false;
+        }
+
+        const auto* PSourceContainer = charutils::IsLinkshellBankContainer(from)
+                                           ? PChar->getLinkshellBankStorage(from)
+                                           : PChar->getPersonalStorage(from);
+        const auto* PItem = PSourceContainer ? PSourceContainer->GetItem(itemIndex) : nullptr;
+        if (PItem == nullptr ||
+            PItem->isSubType(ITEM_LOCKED) ||
+            PItem->isType(ITEM_CURRENCY) ||
+            (charutils::IsLinkshellBankContainer(to) &&
+             !charutils::IsLinkshellBankContainer(from) &&
+             (PItem->isType(ITEM_LINKSHELL) || PItem->hasFlag(ItemFlag::Exclusive))))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     const CItem* PItem = PChar->getStorage(from)->GetItem(itemIndex);
 
     // Always disallowed to move locked items or Gil.
@@ -163,6 +203,23 @@ auto GP_CLI_COMMAND_ITEM_MOVE::validate(MapSession* PSession, const CCharEntity*
 
 void GP_CLI_COMMAND_ITEM_MOVE::process(MapSession* PSession, CCharEntity* PChar) const
 {
+    if (PChar->isLinkshellBankActive() &&
+        (charutils::IsLinkshellBankContainer(Category1) ||
+         charutils::IsLinkshellBankContainer(Category2)))
+    {
+        if (!charutils::MoveLinkshellBankItem(
+                PChar,
+                static_cast<CONTAINER_ID>(Category1),
+                ItemIndex1,
+                static_cast<CONTAINER_ID>(Category2),
+                ItemIndex2,
+                ItemNum))
+        {
+            PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+        }
+        return;
+    }
+
     CItem* PItem = PChar->getStorage(Category1)->GetItem(ItemIndex1);
 
     if (!PItem)

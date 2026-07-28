@@ -98,6 +98,7 @@ local nmsToScale =
     { 'Nyzul_Isle', 'Valkurm_Emperor', 1.7, 1.2 },
     { 'Ordelles_Caves', 'Morbolger', 4.4, 1.2 },
     { 'QuBia_Arena', 'Doll_Factory', 1.0, 1.2 },
+    { 'QuBia_Arena', 'Ixion', 3.6, 1.2 },
     { 'RuAun_Gardens', 'Byakko', 3.6, 1.2 },
     { 'RuAun_Gardens', 'Genbu', 3.6, 1.2 },
     { 'RuAun_Gardens', 'Suzaku', 4.4, 1.2 },

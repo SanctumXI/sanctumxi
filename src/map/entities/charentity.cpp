@@ -132,24 +132,30 @@ CCharEntity::CCharEntity()
     UContainer     = new CUContainer();
     CraftContainer = new CTradeContainer();
 
-    m_Inventory  = std::make_unique<CItemContainer>(LOC_INVENTORY);
-    m_Mogsafe    = std::make_unique<CItemContainer>(LOC_MOGSAFE);
-    m_Storage    = std::make_unique<CItemContainer>(LOC_STORAGE);
-    m_Tempitems  = std::make_unique<CItemContainer>(LOC_TEMPITEMS);
-    m_Moglocker  = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
-    m_Mogsatchel = std::make_unique<CItemContainer>(LOC_MOGSATCHEL);
-    m_Mogsack    = std::make_unique<CItemContainer>(LOC_MOGSACK);
-    m_Mogcase    = std::make_unique<CItemContainer>(LOC_MOGCASE);
-    m_Wardrobe   = std::make_unique<CItemContainer>(LOC_WARDROBE);
-    m_Mogsafe2   = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
-    m_Wardrobe2  = std::make_unique<CItemContainer>(LOC_WARDROBE2);
-    m_Wardrobe3  = std::make_unique<CItemContainer>(LOC_WARDROBE3);
-    m_Wardrobe4  = std::make_unique<CItemContainer>(LOC_WARDROBE4);
-    m_Wardrobe5  = std::make_unique<CItemContainer>(LOC_WARDROBE5);
-    m_Wardrobe6  = std::make_unique<CItemContainer>(LOC_WARDROBE6);
-    m_Wardrobe7  = std::make_unique<CItemContainer>(LOC_WARDROBE7);
-    m_Wardrobe8  = std::make_unique<CItemContainer>(LOC_WARDROBE8);
-    m_RecycleBin = std::make_unique<CItemContainer>(LOC_RECYCLEBIN);
+    m_Inventory        = std::make_unique<CItemContainer>(LOC_INVENTORY);
+    m_Mogsafe          = std::make_unique<CItemContainer>(LOC_MOGSAFE);
+    m_Storage          = std::make_unique<CItemContainer>(LOC_STORAGE);
+    m_Tempitems        = std::make_unique<CItemContainer>(LOC_TEMPITEMS);
+    m_Moglocker        = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
+    m_LinkshellMogsafe = std::make_unique<CItemContainer>(LOC_MOGSAFE);
+    m_LinkshellMogsafe->AddBuff(80);
+    m_LinkshellMogsafe2 = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
+    m_LinkshellMogsafe2->AddBuff(80);
+    m_LinkshellMoglocker = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
+    m_LinkshellMoglocker->AddBuff(80);
+    m_Mogsatchel       = std::make_unique<CItemContainer>(LOC_MOGSATCHEL);
+    m_Mogsack          = std::make_unique<CItemContainer>(LOC_MOGSACK);
+    m_Mogcase          = std::make_unique<CItemContainer>(LOC_MOGCASE);
+    m_Wardrobe         = std::make_unique<CItemContainer>(LOC_WARDROBE);
+    m_Mogsafe2         = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
+    m_Wardrobe2        = std::make_unique<CItemContainer>(LOC_WARDROBE2);
+    m_Wardrobe3        = std::make_unique<CItemContainer>(LOC_WARDROBE3);
+    m_Wardrobe4        = std::make_unique<CItemContainer>(LOC_WARDROBE4);
+    m_Wardrobe5        = std::make_unique<CItemContainer>(LOC_WARDROBE5);
+    m_Wardrobe6        = std::make_unique<CItemContainer>(LOC_WARDROBE6);
+    m_Wardrobe7        = std::make_unique<CItemContainer>(LOC_WARDROBE7);
+    m_Wardrobe8        = std::make_unique<CItemContainer>(LOC_WARDROBE8);
+    m_RecycleBin       = std::make_unique<CItemContainer>(LOC_RECYCLEBIN);
 
     keys = {};
 
@@ -743,6 +749,11 @@ auto CCharEntity::getAutomatonElementCapacity(const uint8 element) const -> uint
 
 auto CCharEntity::getStorage(const uint8 locationId) const -> CItemContainer*
 {
+    return getPersonalStorage(locationId);
+}
+
+auto CCharEntity::getPersonalStorage(const uint8 locationId) const -> CItemContainer*
+{
     switch (locationId)
     {
         case LOC_INVENTORY:
@@ -785,6 +796,98 @@ auto CCharEntity::getStorage(const uint8 locationId) const -> CItemContainer*
 
     ShowWarning("Unhandled or Invalid Location ID (%d) passed to function.", locationId);
     return nullptr;
+}
+
+auto CCharEntity::getLinkshellBankStorage(const uint8 locationId) const -> CItemContainer*
+{
+    switch (locationId)
+    {
+        case LOC_MOGSAFE:
+            return m_LinkshellMogsafe.get();
+        case LOC_MOGSAFE2:
+            return m_LinkshellMogsafe2.get();
+        case LOC_MOGLOCKER:
+            return m_LinkshellMoglocker.get();
+        default:
+            return nullptr;
+    }
+}
+
+void CCharEntity::activateLinkshellBank(const uint32 linkshellId)
+{
+    m_LinkshellMogsafe = std::make_unique<CItemContainer>(LOC_MOGSAFE);
+    m_LinkshellMogsafe->AddBuff(80);
+    m_LinkshellMogsafe2 = std::make_unique<CItemContainer>(LOC_MOGSAFE2);
+    m_LinkshellMogsafe2->AddBuff(80);
+    m_LinkshellMoglocker = std::make_unique<CItemContainer>(LOC_MOGLOCKER);
+    m_LinkshellMoglocker->AddBuff(80);
+    m_LinkshellBankRevisions = {};
+    m_LinkshellBankId        = linkshellId;
+}
+
+void CCharEntity::deactivateLinkshellBank()
+{
+    activateLinkshellBank(0);
+}
+
+bool CCharEntity::isLinkshellBankActive() const
+{
+    return m_LinkshellBankId != 0;
+}
+
+uint32 CCharEntity::getLinkshellBankId() const
+{
+    return m_LinkshellBankId;
+}
+
+uint64 CCharEntity::getLinkshellBankRevision(const uint8 locationId, const uint8 slotId) const
+{
+    uint8 containerIndex = 0;
+    switch (locationId)
+    {
+        case LOC_MOGSAFE:
+            containerIndex = 0;
+            break;
+        case LOC_MOGSAFE2:
+            containerIndex = 1;
+            break;
+        case LOC_MOGLOCKER:
+            containerIndex = 2;
+            break;
+        default:
+            return 0;
+    }
+
+    if (slotId > MAX_CONTAINER_SIZE)
+    {
+        return 0;
+    }
+
+    return m_LinkshellBankRevisions[containerIndex][slotId];
+}
+
+void CCharEntity::setLinkshellBankRevision(const uint8 locationId, const uint8 slotId, const uint64 revision)
+{
+    uint8 containerIndex = 0;
+    switch (locationId)
+    {
+        case LOC_MOGSAFE:
+            containerIndex = 0;
+            break;
+        case LOC_MOGSAFE2:
+            containerIndex = 1;
+            break;
+        case LOC_MOGLOCKER:
+            containerIndex = 2;
+            break;
+        default:
+            return;
+    }
+
+    if (slotId <= MAX_CONTAINER_SIZE)
+    {
+        m_LinkshellBankRevisions[containerIndex][slotId] = revision;
+    }
 }
 
 auto CCharEntity::aman() -> CAMANContainer&

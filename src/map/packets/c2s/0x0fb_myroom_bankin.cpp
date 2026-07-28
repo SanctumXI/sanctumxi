@@ -43,6 +43,7 @@ const std::set<uint8_t> validContainers = { LOC_MOGSAFE, LOC_MOGSAFE2 };
 auto GP_CLI_COMMAND_MYROOM_BANKIN::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
     return PacketValidator()
+        .mustEqual(PChar->isLinkshellBankActive(), false, "Linkshell Bank session active")
         .mustNotEqual(this->MyroomItemNo, 0, "MyroomItemNo must not equal 0")
         .oneOf("MyroomCategory", this->MyroomCategory, validContainers);
 }

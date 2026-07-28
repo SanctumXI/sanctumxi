@@ -24,21 +24,35 @@
 #include "entities/charentity.h"
 #include "item_container.h"
 #include "utils/charutils.h"
+#include "zone.h"
 
 GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
 {
     auto& packet = this->data();
+    const bool personalBankUnavailable =
+        PChar->loc.zone != nullptr &&
+        PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY &&
+        !PChar->isLinkshellBankActive();
+    const auto storage = [PChar](const CONTAINER_ID locationId)
+    {
+        if (PChar->isLinkshellBankActive() && charutils::IsLinkshellBankContainer(locationId))
+        {
+            return PChar->getLinkshellBankStorage(locationId);
+        }
+
+        return PChar->getStorage(locationId);
+    };
 
     packet.ItemNum[LOC_INVENTORY]  = 1 + PChar->getStorage(LOC_INVENTORY)->GetSize();
-    packet.ItemNum[LOC_MOGSAFE]    = 1 + PChar->getStorage(LOC_MOGSAFE)->GetSize();
+    packet.ItemNum[LOC_MOGSAFE]    = 1 + storage(LOC_MOGSAFE)->GetSize();
     packet.ItemNum[LOC_STORAGE]    = 1 + PChar->getStorage(LOC_STORAGE)->GetSize();
     packet.ItemNum[LOC_TEMPITEMS]  = 1 + PChar->getStorage(LOC_TEMPITEMS)->GetSize();
-    packet.ItemNum[LOC_MOGLOCKER]  = 1 + PChar->getStorage(LOC_MOGLOCKER)->GetSize();
+    packet.ItemNum[LOC_MOGLOCKER]  = 1 + storage(LOC_MOGLOCKER)->GetSize();
     packet.ItemNum[LOC_MOGSATCHEL] = 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetSize();
     packet.ItemNum[LOC_MOGSACK]    = 1 + PChar->getStorage(LOC_MOGSACK)->GetSize();
     packet.ItemNum[LOC_MOGCASE]    = 1 + PChar->getStorage(LOC_MOGCASE)->GetSize();
     packet.ItemNum[LOC_WARDROBE]   = 1 + PChar->getStorage(LOC_WARDROBE)->GetSize();
-    packet.ItemNum[LOC_MOGSAFE2]   = 1 + PChar->getStorage(LOC_MOGSAFE2)->GetSize();
+    packet.ItemNum[LOC_MOGSAFE2]   = 1 + storage(LOC_MOGSAFE2)->GetSize();
     packet.ItemNum[LOC_WARDROBE2]  = 1 + PChar->getStorage(LOC_WARDROBE2)->GetSize();
     packet.ItemNum[LOC_WARDROBE3]  = 1 + PChar->getStorage(LOC_WARDROBE3)->GetSize();
     packet.ItemNum[LOC_WARDROBE4]  = 1 + PChar->getStorage(LOC_WARDROBE4)->GetSize();
@@ -50,15 +64,18 @@ GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
 
     // These set the usable amount of the container. 0x00 disables the container.
     packet.ItemNum2[LOC_INVENTORY]  = 1 + PChar->getStorage(LOC_INVENTORY)->GetBuff();
-    packet.ItemNum2[LOC_MOGSAFE]    = 1 + PChar->getStorage(LOC_MOGSAFE)->GetBuff();
+    packet.ItemNum2[LOC_MOGSAFE]    = personalBankUnavailable ? 0x00 : 1 + storage(LOC_MOGSAFE)->GetBuff();
     packet.ItemNum2[LOC_STORAGE]    = 1 + PChar->getStorage(LOC_STORAGE)->GetBuff();
     packet.ItemNum2[LOC_TEMPITEMS]  = 1 + PChar->getStorage(LOC_TEMPITEMS)->GetBuff();
-    packet.ItemNum2[LOC_MOGLOCKER]  = charutils::hasMogLockerAccess(PChar) ? 1 + PChar->getStorage(LOC_MOGLOCKER)->GetBuff() : 0x00;
+    packet.ItemNum2[LOC_MOGLOCKER]  = (PChar->isLinkshellBankActive() ||
+                                        (!personalBankUnavailable && charutils::hasMogLockerAccess(PChar)))
+                                          ? 1 + storage(LOC_MOGLOCKER)->GetBuff()
+                                          : 0x00;
     packet.ItemNum2[LOC_MOGSATCHEL] = 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetBuff();
     packet.ItemNum2[LOC_MOGSACK]    = 1 + PChar->getStorage(LOC_MOGSACK)->GetBuff();
     packet.ItemNum2[LOC_MOGCASE]    = 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE]   = 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
-    packet.ItemNum2[LOC_MOGSAFE2]   = 1 + PChar->getStorage(LOC_MOGSAFE2)->GetBuff();
+    packet.ItemNum2[LOC_MOGSAFE2]   = personalBankUnavailable ? 0x00 : 1 + storage(LOC_MOGSAFE2)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE2]  = 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE3]  = 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE4]  = 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
