@@ -30,7 +30,7 @@ local tuning =
 local entity = {}
 
 local function updateHeadBonuses(mob)
-    local intactHeads = 2 - mob:getAnimationSub()
+    local intactHeads = 3 - mob:getAnimationSub()
     local multiplier  = math.max(0, intactHeads) * 0.75
 
     mob:setMod(xi.mod.REGEN, math.floor(tuning.regen * multiplier))
