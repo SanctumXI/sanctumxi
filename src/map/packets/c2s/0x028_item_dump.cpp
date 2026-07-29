@@ -65,7 +65,7 @@ auto GP_CLI_COMMAND_ITEM_DUMP::validate(MapSession* PSession, const CCharEntity*
         (PChar->isLinkshellBankActive() && charutils::IsLinkshellBankContainer(Category));
 
     return PacketValidator()
-        .mustEqual(containerAvailable, true, "Container unavailable during Linkshell Bank session")
+        .mustEqual(containerAvailable, true, "Container unavailable in Linkshell Library")
         .oneOf("Category", static_cast<CONTAINER_ID>(Category), validContainers)
         .range("ItemNum", ItemNum, 0, 99); // Retail honors 0 quantity.
 }
