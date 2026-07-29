@@ -9,6 +9,15 @@ mixins =
 }
 -----------------------------------
 
+local tuning =
+{
+    level                = 75,
+    accuracyBonus        = 15,
+    rangedAccuracyBonus  = 15,
+    baseDamageMultiplier = 125,
+    curePotency          = 25,
+}
+
 ---@type TMobEntity
 local entity = {}
 
@@ -20,15 +29,18 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    -- Quadav: mild resistance to Earth, weak to its opposite (Wind).
+    if mob:getMainLvl() ~= tuning.level then
+        mob:setMobLevel(tuning.level)
+    end
+
     mob:setMod(xi.mod.EARTH_SDT, -1500)
     mob:setMod(xi.mod.WIND_SDT, 500)
     mob:setMod(xi.mod.POISON_RES_RANK, 4)
 
-    mob:setMod(xi.mod.ACC, 15)
-    mob:setMod(xi.mod.RACC, 15)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 125)
-    mob:setMod(xi.mod.CURE_POTENCY, 25)
+    mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
+    mob:addMod(xi.mod.RACC, tuning.rangedAccuracyBonus)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
+    mob:setMod(xi.mod.CURE_POTENCY, tuning.curePotency)
 end
 
 return entity

@@ -18,6 +18,8 @@ local tuning =
     accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
+    baseDamageMultiplier  = 125,
+    enspellDamageBonus    = 30,
     regain                = 20,
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
@@ -25,6 +27,11 @@ local tuning =
     magicDamageTaken      = -5000,
     auraPhysicalReduction = -5000,
     auraReturnTime        = 600,
+    auraSize              = -125,
+    auraWeightPower       = 50,
+    addEffectChance       = 25,
+    addEffectPower        = 20,
+    addEffectDuration     = 60,
 }
 
 ---@type TMobEntity
@@ -32,7 +39,7 @@ local entity = {}
 
 local function enableAura(mob)
     if not mob:hasStatusEffect(xi.effect.COLURE_ACTIVE) then
-        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.WEIGHT, subPower = 50, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
+        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.WEIGHT, subPower = tuning.auraWeightPower, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
     end
 
     mob:setMod(xi.mod.UDMGPHYS, tuning.physicalDamageTaken + tuning.auraPhysicalReduction)
@@ -79,7 +86,7 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setMod(xi.mod.AURA_SIZE, -125)
+    mob:setMod(xi.mod.AURA_SIZE, tuning.auraSize)
 end
 
 entity.onMobSpawn = function(mob)
@@ -97,6 +104,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
 
     mob:setMod(xi.mod.SILENCE_RES_RANK, 12)
     mob:setMod(xi.mod.WIND_SDT, -1500)
@@ -104,6 +112,7 @@ entity.onMobSpawn = function(mob)
 
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.POISON_RES_RANK, 6)
+    mob:setMod(xi.mod.ENSPELL_DMG_BONUS, tuning.enspellDamageBonus)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2100)
     mob:setLocalVar('auraPhase', 0)
@@ -145,10 +154,10 @@ end
 entity.onAdditionalEffect = function(mob, target, damage)
     local params =
     {
-        chance   = 25,
+        chance   = tuning.addEffectChance,
         effectId = xi.effect.PARALYSIS,
-        power    = 20,
-        duration = 60,
+        power    = tuning.addEffectPower,
+        duration = tuning.addEffectDuration,
     }
 
     return xi.combat.action.executeAddEffectEnfeeblement(mob, target, params)

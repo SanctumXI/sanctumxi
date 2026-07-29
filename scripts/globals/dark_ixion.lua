@@ -117,7 +117,8 @@ local changeHornState = function(mob, state)
         mob:setAnimationSub(hornStateData.animationSub)
     end
 
-    mob:hideHP(hornStateData.hideHP)
+    -- Battlefield Ixion keeps a visible HP bar through both horn phases.
+    mob:hideHP(not isBattlefieldIxion and hornStateData.hideHP)
 
     -- reset phasechange timer
     mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
@@ -484,6 +485,46 @@ xi.darkixion.onWeaponskillHit = function(mob, attacker, weaponskill)
     checkHornBreak(mob, attacker)
 end
 
+local getLightningSpearTarget = function(mob)
+    local potentialTargets = {}
+    local battlefield      = mob:getBattlefield()
+
+    if battlefield then
+        for _, player in pairs(battlefield:getPlayers()) do
+            if
+                player:isAlive() and
+                mob:checkDistance(player) <= 22
+            then
+                table.insert(potentialTargets, player)
+            end
+        end
+    else
+        for _, entry in ipairs(mob:getEnmityList()) do
+            if
+                entry.entity and
+                entry.entity:isAlive() and
+                mob:checkDistance(entry.entity) <= 22
+            then
+                table.insert(potentialTargets, entry.entity)
+            end
+        end
+    end
+
+    if #potentialTargets > 0 then
+        return utils.randomEntry(potentialTargets)
+    end
+
+    return mob:getTarget()
+end
+
+local useTelegraphedSkill = function(mob, skillID, target)
+    if target then
+        mob:useMobAbility(skillID, target)
+    else
+        mob:useMobAbility(skillID)
+    end
+end
+
 xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
     local skillID = skill:getID()
     if skillID == xi.mobSkill.DAMSEL_MEMENTO then -- sometimes after healing, fix horn
@@ -526,13 +567,17 @@ xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
             end
         end
 
-        -- adjust behavior so he doesn't sneak another move in between the sequence
+        local chosenTarget = chosenSkill == xi.mobSkill.LIGHTNING_SPEAR and getLightningSpearTarget(mob) or nil
+        if chosenTarget then
+            mob:lookAt(chosenTarget:getPos())
+        end
+
         mob:setBehavior(xi.behavior.NO_TURN + xi.behavior.STANDBACK)
         mob:setAutoAttackEnabled(false)
-        mob:useMobAbility(chosenSkill)
+        useTelegraphedSkill(mob, chosenSkill, chosenTarget)
         if mob:getAnimationSub() == animationSubs.GLOWING then
             -- queue a second if in glowing phase
-            mob:useMobAbility(chosenSkill)
+            useTelegraphedSkill(mob, chosenSkill, chosenTarget)
         end
     elseif
         skillID == xi.mobSkill.DI_HORN_ATTACK or
@@ -579,7 +624,7 @@ xi.darkixion.onMobInitialize = function(mob)
 
     mob:setMobMod(xi.mobMod.NO_REST, 10)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200) -- +100% physical damage output
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200)
 end
 
 -- either turn in a random direction, or turn away from skillTarget to use acheron kick
@@ -621,49 +666,10 @@ local acheronKickPositioning = function(mob)
     turnForSkill(mob, skillTarget)
 end
 
--- Unlike turnForSkill (used for Acheron Kick's rear-cone, which deliberately
--- turns away from its target), Lightning Spear is a forward line/cone and needs
--- to actually face the person it's about to hit.
-local turnTowardSkill = function(mob, skillTarget)
-    if skillTarget then
-        mob:lookAt(skillTarget:getPos())
-    else
-        local mobPos = mob:getPos()
-        mob:lookAt({ x = mobPos.x + math.randomInt(-4, 4), y = mobPos.y, z = mobPos.z + math.randomInt(-4, 4) })
-    end
-end
-
--- Lightning Spear picks a random person -- on a battlefield, anyone present,
--- regardless of hate (so someone who hasn't generated any threat yet is still a
--- fair target) -- faces them directly, then fires its line AoE at them.
-local lightningSpearPositioning = function(mob)
-    local potentialTargets = {}
-
-    local battlefield = mob:getBattlefield()
-    if battlefield then
-        for _, player in pairs(battlefield:getPlayers()) do
-            if player:isAlive() then
-                table.insert(potentialTargets, player)
-            end
-        end
-    else
-        for _, entry in ipairs(mob:getEnmityList()) do
-            if entry.entity then
-                table.insert(potentialTargets, entry.entity)
-            end
-        end
-    end
-
-    local skillTarget = #potentialTargets > 0 and utils.randomEntry(potentialTargets) or nil
-    turnTowardSkill(mob, skillTarget)
-end
-
 local setupCombatListeners = function(mob)
     mob:addListener('WEAPONSKILL_STATE_ENTER', 'IXION_WS_STATE_ENTER', function(mobArg, skillId)
         if skillId == xi.mobSkill.ACHERON_KICK then
             acheronKickPositioning(mobArg)
-        elseif skillId == xi.mobSkill.LIGHTNING_SPEAR then
-            lightningSpearPositioning(mobArg)
         end
     end)
 end

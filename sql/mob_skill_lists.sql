@@ -4315,7 +4315,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,711); -- Spoil
 INSERT INTO `mob_skill_lists` VALUES ('Jug_BeetleHi',2097,791); -- Rhinowrecker
 
 -- Custom KSNM99 beast kings.
-INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,762);  -- Ore Toss
+INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,611);  -- Ore Toss
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2204); -- Ore Lob
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell Charge
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash

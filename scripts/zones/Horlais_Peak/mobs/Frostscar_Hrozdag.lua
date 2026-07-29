@@ -18,6 +18,9 @@ local tuning =
     accuracyBonus            = 30,
     evasionBonus             = 0,
     magicAttackBonus         = 0,
+    baseDamageMultiplier     = 150,
+    doubleAttack             = 40,
+    criticalHitRate          = 10,
     regain                   = 20,
     physicalDamageTaken      = 0,
     rangedDamageTaken        = 0,
@@ -27,6 +30,10 @@ local tuning =
     auraMagicDefenseBonus    = 100,
     minionDefeatAttackBonus  = 15,
     auraReturnTime           = 600,
+    auraSize                 = -125,
+    auraFlashPower           = 100,
+    howlWarcryPower          = 30,
+    howlWarcryDuration       = 60,
 }
 
 ---@type TMobEntity
@@ -34,7 +41,7 @@ local entity = {}
 
 local function enableAura(mob)
     if mob:getLocalVar('auraActive') == 0 then
-        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.FLASH, subPower = 100, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
+        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.FLASH, subPower = tuning.auraFlashPower, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
         mob:addMod(xi.mod.DEF, tuning.auraDefenseBonus)
         mob:addMod(xi.mod.MDEF, tuning.auraMagicDefenseBonus)
         mob:setLocalVar('auraActive', 1)
@@ -82,7 +89,7 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
-    mob:setMod(xi.mod.AURA_SIZE, -125)
+    mob:setMod(xi.mod.AURA_SIZE, tuning.auraSize)
 end
 
 entity.onMobSpawn = function(mob)
@@ -109,9 +116,9 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
 
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 150)
-    mob:setMod(xi.mod.DOUBLE_ATTACK, 40)
-    mob:setMod(xi.mod.CRITHITRATE, 10)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, tuning.doubleAttack)
+    mob:setMod(xi.mod.CRITHITRATE, tuning.criticalHitRate)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2101)
     mob:setLocalVar('auraActive', 0)
@@ -148,7 +155,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobWeaponSkill = function(target, mob, skill)
+entity.onMobWeaponSkill = function(mob, target, skill, action)
     if skill:getID() == xi.mobSkill.HOWL_ORC then
         local battlefield = mob:getBattlefield()
         if battlefield then
@@ -158,7 +165,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
                     ally:isAlive() and
                     (ally:getName() == 'Siege_Sniper' or ally:getName() == 'Blackguard')
                 then
-                    ally:addStatusEffect(xi.effect.WARCRY, { power = 30, origin = mob, duration = 60 })
+                    ally:addStatusEffect(xi.effect.WARCRY, { power = tuning.howlWarcryPower, origin = mob, duration = tuning.howlWarcryDuration })
                 end
             end
         end

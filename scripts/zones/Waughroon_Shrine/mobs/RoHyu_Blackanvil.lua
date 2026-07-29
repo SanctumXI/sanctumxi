@@ -18,11 +18,15 @@ local tuning =
     accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
+    baseDamageMultiplier  = 175,
+    curePotency           = 25,
     regain                = 20,
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
     breathDamageTaken     = 0,
     magicDamageTaken      = 0,
+    auraSize              = -125,
+    auraSlowPower         = 5000,
 }
 
 ---@type TMobEntity
@@ -30,7 +34,7 @@ local entity = {}
 
 local function applySlowAura(mob)
     if not mob:hasStatusEffect(xi.effect.COLURE_ACTIVE) then
-        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.SLOW, subPower = 5000, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
+        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.SLOW, subPower = tuning.auraSlowPower, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
     end
 end
 
@@ -39,7 +43,7 @@ entity.onMobInitialize = function(mob)
     mob:addImmunity(xi.immunity.GRAVITY)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
-    mob:setMod(xi.mod.AURA_SIZE, -125)
+    mob:setMod(xi.mod.AURA_SIZE, tuning.auraSize)
 end
 
 entity.onMobSpawn = function(mob)
@@ -66,8 +70,8 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STUN_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
 
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 175)
-    mob:setMod(xi.mod.CURE_POTENCY, 25)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
+    mob:setMod(xi.mod.CURE_POTENCY, tuning.curePotency)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())

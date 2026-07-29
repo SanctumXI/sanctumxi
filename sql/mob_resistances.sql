@@ -201,8 +201,8 @@ INSERT INTO `mob_resistances` VALUES (159,'HybridElemental - Ice',0,0,0,0,0,0,0,
 INSERT INTO `mob_resistances` VALUES (160,'HybridElemental - Light',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,-3,0,0,0,0,0,11,-3,-3);
 INSERT INTO `mob_resistances` VALUES (161,'HybridElemental - Lightning',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,11,11,0,0,0,0,0,-3,11,0,0,0);
 INSERT INTO `mob_resistances` VALUES (162,'HybridElemental - Water',0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0,-3,11,0,0,0,0,0,0,11,0,0,0);
-INSERT INTO `mob_resistances` VALUES (163,'Hydra',0,0,0,-1250,0,0,0,0,0,0,0,0,0,6,6,6,3,3,3,3,3,6,6,6,3,3,3,3,3);
-INSERT INTO `mob_resistances` VALUES (164,'Hydra',0,0,0,-1250,0,0,0,0,0,0,0,0,0,6,6,6,3,3,3,3,3,6,6,6,3,3,3,3,3);
+INSERT INTO `mob_resistances` VALUES (163,'Hydra',-1000,-1000,0,1000,0,0,0,0,0,0,0,0,0,6,6,6,3,3,3,3,3,6,6,6,3,3,3,3,3);
+INSERT INTO `mob_resistances` VALUES (164,'Hydra',-1000,-1000,0,1000,0,0,0,0,0,0,0,0,0,6,6,6,3,3,3,3,3,6,6,6,3,3,3,3,3);
 INSERT INTO `mob_resistances` VALUES (165,'Imp',0,2500,0,0,0,0,0,0,0,0,0,0,0,-1,-1,2,-1,-1,-1,-2,6,-1,-1,2,-1,-1,-2,6,6);
 INSERT INTO `mob_resistances` VALUES (166,'Imp - Jakko',0,2500,0,0,0,0,0,0,0,0,0,0,0,-1,-1,2,-1,-1,-1,-2,6,-1,-1,2,-1,-1,-2,6,6);
 INSERT INTO `mob_resistances` VALUES (167,'Karakul',0,0,0,0,0,0,0,0,0,0,0,0,0,-1,1,-1,1,-2,-2,-1,-1,1,1,-1,1,-2,-1,-1,-1);
@@ -351,7 +351,7 @@ INSERT INTO `mob_resistances` VALUES (309,'Vampyre - Nosferatu - ZNM Tier 3',0,0
 INSERT INTO `mob_resistances` VALUES (310,'Lamia - ExperimentalLa - ZNM Tier 3',0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,5,0,4,0,0,1,1,5,0,4,4);
 INSERT INTO `mob_resistances` VALUES (311,'Soulflayer - MahjlaefThePai - ZNM Tier 3',0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,2,2,2,10,1,11,4,4,2,2,10,1,11,11);
 INSERT INTO `mob_resistances` VALUES (312,'Orobon - Nuhn - ZNM Tier 3',0,0,0,0,0,0,0,0,0,0,0,0,0,-1,1,-1,-1,-2,6,-2,3,1,1,-1,-1,6,-2,3,3);
-INSERT INTO `mob_resistances` VALUES (313,'Hydra - Tinnin - ZNM Tier 4',0,0,0,-1250,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,3,3,3,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (313,'Hydra - Tinnin - ZNM Tier 4',-1000,-1000,0,1000,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,3,3,3,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (314,'Cerberus - Sarameya - ZNM Tier 4',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (315,'Khimaira - Tyger - ZNM Tier 4',0,0,0,0,0,0,0,0,0,0,0,0,0,8,5,8,7,9,5,7,5,5,5,8,7,5,7,5,5);
 INSERT INTO `mob_resistances` VALUES (316,'Dvergr - Pandemonium - ZNM Tier 4',0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,4,6,4,6,2,11,6,6,4,6,6,2,11,11);

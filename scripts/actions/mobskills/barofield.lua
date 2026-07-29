@@ -11,10 +11,12 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local params = {}
+    local params      = {}
+    local customFTP   = mob:getLocalVar('BarofieldFTP')
+    local fTP         = customFTP > 0 and customFTP / 100 or 4
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 4, 4, 4 } -- TODO: Capture fTPs
+    params.fTP            = { fTP, fTP, fTP }
     params.element        = xi.element.WIND
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.WIND

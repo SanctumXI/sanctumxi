@@ -11,19 +11,23 @@ mixins =
 
 local tuning =
 {
-    level                 = 80,
-    hpBonus               = 0,
-    attackBonus           = 0,
-    defenseBonus          = 0,
-    accuracyBonus         = 30,
-    evasionBonus          = 0,
-    magicAttackBonus      = 0,
-    regen                 = 25,
-    regain                = 25,
-    physicalDamageTaken   = 0,
-    rangedDamageTaken     = 0,
-    breathDamageTaken     = 0,
-    magicDamageTaken      = 0,
+    level                   = 80,
+    hpBonus                 = 0,
+    attackBonus             = 0,
+    defenseBonus            = 0,
+    accuracyBonus           = 30,
+    evasionBonus            = 0,
+    magicAttackBonus        = 0,
+    baseDamageMultiplier    = 163,
+    barofieldFTPHundredths  = 520,
+    barofieldHastePower     = 1500,
+    barofieldHasteDuration  = 120,
+    regen                   = 25,
+    regain                  = 25,
+    physicalDamageTaken     = 0,
+    rangedDamageTaken       = 0,
+    breathDamageTaken       = 0,
+    magicDamageTaken        = 0,
 }
 
 ---@type TMobEntity
@@ -43,6 +47,8 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:renameEntity('Typhon', true)
+
     if mob:getMainLvl() ~= tuning.level then
         mob:setMobLevel(tuning.level)
     end
@@ -67,6 +73,8 @@ entity.onMobSpawn = function(mob)
 
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
     mob:setMobMod(xi.mobMod.AOE_HIT_ALL, 1)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
+    mob:setLocalVar('BarofieldFTP', tuning.barofieldFTPHundredths)
     mob:setHP(mob:getMaxHP())
 
     updateHeadBonuses(mob)
@@ -82,6 +90,12 @@ end
 
 entity.onCriticalHit = function(mob, attacker)
     xi.mixin.hydra.onCriticalHit(mob)
+end
+
+entity.onMobWeaponSkill = function(mob, target, skill, action)
+    if skill:getID() == xi.mobSkill.BAROFIELD then
+        mob:addStatusEffect(xi.effect.HASTE, { power = tuning.barofieldHastePower, duration = tuning.barofieldHasteDuration, origin = mob })
+    end
 end
 
 entity.onMobDeath = function(mob, player, optParams)
