@@ -34,6 +34,7 @@
 #include "enums/music_slot.h"
 
 #include <set>
+#include <unordered_map>
 #include <vector>
 
 class CZoneEntities
@@ -104,6 +105,13 @@ public:
     auto GetUsedDynamicTargIDsCount() const -> std::size_t;
 
 private:
+    struct MobRenderDistanceState
+    {
+        uint8             tier = 0;
+        timer::time_point nextDensityEvaluation{};
+        timer::time_point nextExpansion{};
+    };
+
     auto mobTick(CMobEntity* PMob, timer::time_point tick) -> Task<void>;
     auto mobAggroCheck(CMobEntity* PMob, timer::time_point tick) -> Task<void>;
     auto npcTick(CNpcEntity* PNpc, timer::time_point tick) -> Task<void>;
@@ -124,6 +132,10 @@ private:
     EntityList_t m_npcList;
     EntityList_t m_TransportList;
     EntityList_t m_charList;
+
+    // Keyed by character ID. Kept on the zone/instance so adaptive mob visibility
+    // state is discarded naturally when a player leaves that entity container.
+    std::unordered_map<uint32, MobRenderDistanceState> m_mobRenderDistanceStates;
 
     uint16           m_nextDynamicTargID; // The next dynamic targ ID to chosen -- SE rotates them forwards and skips entries that already exist.
     std::set<uint16> m_charTargIds;       // sorted set of targids for characters

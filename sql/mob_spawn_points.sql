@@ -85296,6 +85296,14 @@ INSERT INTO `mob_spawn_points` VALUES (17973587,0,'HM_Knight_Crab','Knight Crab'
 INSERT INTO `mob_spawn_points` VALUES (17973588,0,'HM_Knight_Crab','Knight Crab',82,85,85,8.842,5.515,-8.225,64);
 INSERT INTO `mob_spawn_points` VALUES (17973589,0,'HM_Knight_Crab','Knight Crab',82,85,85,11.842,5.515,-1.225,160);
 INSERT INTO `mob_spawn_points` VALUES (17973590,0,'HM_Knight_Crab','Knight Crab',82,85,85,5.842,5.515,-7.225,32);
+INSERT INTO `mob_spawn_points` VALUES (17973591,0,'HM_Simurgh_Aspect','Aetherplume',83,85,85,12.842,5.515,-4.225,128);
+INSERT INTO `mob_spawn_points` VALUES (17973592,0,'HM_Simurgh_Aspect','Ironplume',83,85,85,4.842,5.515,-4.225,0);
+INSERT INTO `mob_spawn_points` VALUES (17973593,0,'HM_Simurgh_Aspect','Lifequill',83,85,85,8.842,5.515,-0.225,192);
+INSERT INTO `mob_spawn_points` VALUES (17973594,0,'HM_Simurgh_Aspect','Warquill',83,85,85,8.842,5.515,-8.225,64);
+INSERT INTO `mob_spawn_points` VALUES (17973595,0,'HM_Simurgh_Aspect','Ragewing',83,85,85,11.842,5.515,-1.225,160);
+INSERT INTO `mob_spawn_points` VALUES (17973596,0,'HM_Simurgh_Aspect','Miragewing',83,85,85,5.842,5.515,-7.225,32);
+INSERT INTO `mob_spawn_points` VALUES (17973597,0,'HM_Simurgh_Aspect','Hexbane Plume',83,85,85,11.842,5.515,-7.225,96);
+INSERT INTO `mob_spawn_points` VALUES (17973598,0,'HM_Simurgh_Aspect','Stormtalon',83,85,85,5.842,5.515,-1.225,224);
 -- TVR: Nii's Last Stand
 INSERT INTO `mob_spawn_points` VALUES (20983809,0,'Nii_Aquu','Nii Aquu',75,0,0,0.000,0.000,0.000,0);
 INSERT INTO `mob_spawn_points` VALUES (20983810,0,'Katashiro','Katashiro',74,0,0,0.000,0.000,0.000,0);

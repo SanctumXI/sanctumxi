@@ -5788,7 +5788,17 @@ INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,57,1,255);  -- 
 INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,208,1,255); -- tornado
 INSERT INTO `mob_spell_lists` VALUES ('Divine_Reproach_KSNM',568,647,1,255); -- zephyr_mantle
 
--- Next Available: 569
+-- Hard Mode Simurgh (569)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,4,1,255);   -- Cure IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,53,1,255);  -- Blink (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,156,1,255); -- Aero III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,185,1,255); -- Aeroga II (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,208,1,255); -- Tornado (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,376,1,255); -- Horde Lullaby (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,423,1,255); -- Massacre Elegy (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,462,1,255); -- Magic Finale (1~255)
+
+-- Next Available: 570
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
