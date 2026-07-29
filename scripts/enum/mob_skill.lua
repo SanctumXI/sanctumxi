@@ -1109,4 +1109,5 @@ xi.mobSkill =
     MANDIBULAR_BITE_3             = 3885,
 
     GORGE                         = 3976,
+    HM_STORMWIND                  = 4391,
 }

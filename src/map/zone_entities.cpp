@@ -58,6 +58,8 @@
 
 #include <map/ximesh/ximesh.h>
 
+#include <array>
+
 namespace
 {
 
@@ -75,6 +77,74 @@ constexpr auto CHARACTER_SYNC_PARTY_SIGNIFICANCE      = 100000U;
 constexpr auto CHARACTER_SYNC_ALLI_SIGNIFICANCE       = 10000U;
 constexpr auto PERSIST_CHECK_CHARACTERS               = 20U;
 constexpr auto INTERMEDIATE_CONTAINER_RESERVE_SIZE    = 16U;
+
+struct MobRenderDistanceBand
+{
+    float spawnDistance;
+    float despawnDistance;
+};
+
+// Mob visibility is deliberately separate from ENTITY_RENDER_DISTANCE so NPC,
+// pet, trust, PC, and mob-versus-mob behavior retain their existing ranges.
+//
+// A mob must cross the smaller spawn boundary to become visible, then cross the
+// larger despawn boundary to be removed. The five-yalm gap prevents repeated
+// spawn/despawn packets when a player or mob moves along a boundary.
+constexpr std::array<MobRenderDistanceBand, 3> MOB_RENDER_DISTANCE_BANDS = {
+    MobRenderDistanceBand{ 50.0f, 55.0f },
+    MobRenderDistanceBand{ 60.0f, 65.0f },
+    MobRenderDistanceBand{ 70.0f, 75.0f },
+};
+
+// These form density hysteresis: expansion requires a clearly sparse next
+// band, while contraction requires a clearly crowded current band.
+constexpr std::size_t MOB_RENDER_EXPAND_LIMIT   = 32U;
+constexpr std::size_t MOB_RENDER_CONTRACT_LIMIT = 48U;
+
+// Density is sampled infrequently to keep normal position handling close to
+// its existing cost. Contraction remains responsive, while expansion is rate
+// limited to one band per five seconds.
+constexpr auto MOB_RENDER_DENSITY_EVALUATION_INTERVAL = 2s;
+constexpr auto MOB_RENDER_EXPANSION_INTERVAL          = 5s;
+
+constexpr auto selectMobRenderDistanceTier(
+    std::size_t                                                      currentTier,
+    const std::array<std::size_t, MOB_RENDER_DISTANCE_BANDS.size()>& candidateMobCounts) -> std::size_t
+{
+    currentTier = std::min(currentTier, MOB_RENDER_DISTANCE_BANDS.size() - 1U);
+
+    if (currentTier > 0U && candidateMobCounts[currentTier] >= MOB_RENDER_CONTRACT_LIMIT)
+    {
+        return currentTier - 1U;
+    }
+
+    const auto nextTier = currentTier + 1U;
+    if (nextTier < MOB_RENDER_DISTANCE_BANDS.size() && candidateMobCounts[nextTier] <= MOB_RENDER_EXPAND_LIMIT)
+    {
+        return nextTier;
+    }
+
+    return currentTier;
+}
+
+constexpr bool isWithinMobRenderRange(bool isSpawned, float distanceSquaredToMob, const MobRenderDistanceBand& band)
+{
+    const auto relevantDistance = isSpawned ? band.despawnDistance : band.spawnDistance;
+    return distanceSquaredToMob <= square(relevantDistance);
+}
+
+static_assert(MOB_RENDER_DISTANCE_BANDS.front().spawnDistance == ENTITY_RENDER_DISTANCE);
+static_assert(MOB_RENDER_DISTANCE_BANDS.back().despawnDistance == 75.0f);
+static_assert(MOB_RENDER_DISTANCE_BANDS[0].spawnDistance < MOB_RENDER_DISTANCE_BANDS[0].despawnDistance);
+static_assert(MOB_RENDER_DISTANCE_BANDS[1].spawnDistance < MOB_RENDER_DISTANCE_BANDS[1].despawnDistance);
+static_assert(MOB_RENDER_DISTANCE_BANDS[2].spawnDistance < MOB_RENDER_DISTANCE_BANDS[2].despawnDistance);
+static_assert(selectMobRenderDistanceTier(0U, { 0U, 32U, 32U }) == 1U);
+static_assert(selectMobRenderDistanceTier(0U, { 0U, 33U, 33U }) == 0U);
+static_assert(selectMobRenderDistanceTier(1U, { 0U, 40U, 40U }) == 1U);
+static_assert(selectMobRenderDistanceTier(2U, { 0U, 20U, 48U }) == 1U);
+static_assert(!isWithinMobRenderRange(false, square(52.0f), MOB_RENDER_DISTANCE_BANDS[0]));
+static_assert(isWithinMobRenderRange(true, square(52.0f), MOB_RENDER_DISTANCE_BANDS[0]));
+static_assert(!isWithinMobRenderRange(true, square(76.0f), MOB_RENDER_DISTANCE_BANDS[2]));
 
 inline bool isWithinVerticalDistance(CBaseEntity* source, CBaseEntity* target)
 {
@@ -154,7 +224,19 @@ void CZoneEntities::TryAddToNearbySpawnLists(CBaseEntity* PEntity)
 
     FOR_EACH_PAIR_CAST_SECOND(CCharEntity*, PCurrentChar, m_charList)
     {
-        const auto isInRange = isWithinDistance(PEntity->loc.p, PCurrentChar->loc.p, ENTITY_RENDER_DISTANCE);
+        auto renderDistance = ENTITY_RENDER_DISTANCE;
+        if (PEntity->objtype == TYPE_MOB)
+        {
+            const auto stateIterator = m_mobRenderDistanceStates.find(PCurrentChar->id);
+            const auto tier =
+                stateIterator != m_mobRenderDistanceStates.end()
+                    ? std::min<std::size_t>(stateIterator->second.tier, MOB_RENDER_DISTANCE_BANDS.size() - 1U)
+                    : 0U;
+
+            renderDistance = MOB_RENDER_DISTANCE_BANDS[tier].spawnDistance;
+        }
+
+        const auto isInRange = isWithinDistance(PEntity->loc.p, PCurrentChar->loc.p, renderDistance);
 
         if (isInRange)
         {
@@ -225,6 +307,7 @@ void CZoneEntities::InsertPC(CCharEntity* PChar)
     PChar->loc.zone = m_zone;
     m_charTargIds.insert(PChar->targid);
     m_charList[PChar->targid] = PChar;
+    m_mobRenderDistanceStates.try_emplace(PChar->id);
 
     TryAddToNearbySpawnLists(PChar);
 
@@ -582,6 +665,7 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
 
     m_charList.erase(PChar->targid);
     m_charTargIds.erase(PChar->targid);
+    m_mobRenderDistanceStates.erase(PChar->id);
 
     ShowDebug("CZone:: %s DecreaseZoneCounter <%u> %s", m_zone->getName(), m_charList.size(), PChar->getName());
 }
@@ -759,16 +843,36 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
 {
     TracyZoneScoped;
 
+    auto& renderState = m_mobRenderDistanceStates[PChar->id];
+
+    const auto now         = timer::now();
+    const auto currentTier = std::min<std::size_t>(renderState.tier, MOB_RENDER_DISTANCE_BANDS.size() - 1U);
+    const auto currentBand = MOB_RENDER_DISTANCE_BANDS[currentTier];
+
+    const bool                                                shouldEvaluateDensity = now >= renderState.nextDensityEvaluation;
+    std::array<std::size_t, MOB_RENDER_DISTANCE_BANDS.size()> candidateMobCounts{};
+
     FOR_EACH_PAIR_CAST_SECOND(CMobEntity*, PCurrentMob, m_mobList)
     {
         auto& spawnList = PChar->SpawnMOBList;
 
-        const auto id              = PCurrentMob->id;
-        const auto itr             = spawnList.find(id);
-        const auto isInSpawnList   = itr != spawnList.end();
-        const auto isInHeightRange = isWithinVerticalDistance(PChar, PCurrentMob);
-        const auto isInRange       = isWithinDistance(PChar->loc.p, PCurrentMob->loc.p, ENTITY_RENDER_DISTANCE);
-        const auto isVisibleStatus = PCurrentMob->status != STATUS_TYPE::DISAPPEAR;
+        const auto id                   = PCurrentMob->id;
+        const auto itr                  = spawnList.find(id);
+        const auto isInSpawnList        = itr != spawnList.end();
+        const auto isInHeightRange      = isWithinVerticalDistance(PChar, PCurrentMob);
+        const auto isVisibleStatus      = PCurrentMob->status != STATUS_TYPE::DISAPPEAR;
+        const auto distanceSquaredToMob = distanceSquared(PChar->loc.p, PCurrentMob->loc.p);
+
+        if (shouldEvaluateDensity && isVisibleStatus && isInHeightRange)
+        {
+            for (std::size_t tier = 0; tier < MOB_RENDER_DISTANCE_BANDS.size(); ++tier)
+            {
+                if (distanceSquaredToMob <= square(MOB_RENDER_DISTANCE_BANDS[tier].despawnDistance))
+                {
+                    ++candidateMobCounts[tier];
+                }
+            }
+        }
 
         const auto tryAddToSpawnList = [&]()
         {
@@ -819,7 +923,9 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         };
 
         // Is this mob "visible" to the player?
-        if (isVisibleStatus && isInHeightRange && isInRange)
+        const auto isWithinRelevantRange =
+            isWithinMobRenderRange(isInSpawnList, distanceSquaredToMob, currentBand);
+        if (isVisibleStatus && isInHeightRange && isWithinRelevantRange)
         {
             tryAddToSpawnList();
 
@@ -830,6 +936,29 @@ void CZoneEntities::SpawnMOBs(CCharEntity* PChar)
         {
             tryRemoveFromSpawnList();
         }
+    }
+
+    if (shouldEvaluateDensity)
+    {
+        auto nextTier = currentTier;
+
+        // Contraction always takes priority and can happen at every density
+        // evaluation. Expansion is deliberately slower to prevent sparse/dense
+        // boundary movement from repeatedly changing the radius.
+        const auto selectedTier = selectMobRenderDistanceTier(currentTier, candidateMobCounts);
+        if (selectedTier < currentTier)
+        {
+            nextTier                  = selectedTier;
+            renderState.nextExpansion = now + MOB_RENDER_EXPANSION_INTERVAL;
+        }
+        else if (selectedTier > currentTier && now >= renderState.nextExpansion)
+        {
+            nextTier                  = selectedTier;
+            renderState.nextExpansion = now + MOB_RENDER_EXPANSION_INTERVAL;
+        }
+
+        renderState.tier                  = static_cast<uint8>(nextTier);
+        renderState.nextDensityEvaluation = now + MOB_RENDER_DENSITY_EVALUATION_INTERVAL;
     }
 }
 

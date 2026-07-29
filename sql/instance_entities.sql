@@ -2594,6 +2594,14 @@ INSERT INTO `instance_entities` VALUES (29200,17973587); -- HM Knight Crab 3
 INSERT INTO `instance_entities` VALUES (29200,17973588); -- HM Knight Crab 4
 INSERT INTO `instance_entities` VALUES (29200,17973589); -- HM Knight Crab 5
 INSERT INTO `instance_entities` VALUES (29200,17973590); -- HM Knight Crab 6
+INSERT INTO `instance_entities` VALUES (29200,17973591); -- HM Simurgh Aspect: Aetherplume
+INSERT INTO `instance_entities` VALUES (29200,17973592); -- HM Simurgh Aspect: Ironplume
+INSERT INTO `instance_entities` VALUES (29200,17973593); -- HM Simurgh Aspect: Lifequill
+INSERT INTO `instance_entities` VALUES (29200,17973594); -- HM Simurgh Aspect: Warquill
+INSERT INTO `instance_entities` VALUES (29200,17973595); -- HM Simurgh Aspect: Ragewing
+INSERT INTO `instance_entities` VALUES (29200,17973596); -- HM Simurgh Aspect: Miragewing
+INSERT INTO `instance_entities` VALUES (29200,17973597); -- HM Simurgh Aspect: Hexbane Plume
+INSERT INTO `instance_entities` VALUES (29200,17973598); -- HM Simurgh Aspect: Stormtalon
 
 -- ------------------------------------------------------------
 -- Ambuscade

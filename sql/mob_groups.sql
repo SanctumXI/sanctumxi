@@ -16052,6 +16052,7 @@ INSERT INTO `mob_groups` VALUES (79,7555,292,'HM_Roc',0,128,0,28500,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (80,7556,292,'HM_Simurgh',0,128,0,51000,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (81,7557,292,'HM_King_Arthro',0,128,0,70000,7500,0,NULL);
 INSERT INTO `mob_groups` VALUES (82,7558,292,'HM_Knight_Crab',0,128,0,4500,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (83,7570,292,'HM_Simurgh_Aspect',0,128,0,7500,0,0,NULL);
 
 -- ------------------------------------------------------------
 -- Reisenjima_Sanctorium (Zone 293)

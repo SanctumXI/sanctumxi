@@ -216,7 +216,17 @@ void LoadMobSkillsList()
                                  "FROM mob_skills");
     FOR_DB_MULTIPLE_RESULTS(rset)
     {
-        auto* PMobSkill = new CMobSkill(rset->get<uint16>("mob_skill_id"));
+        const auto mobSkillId = rset->get<uint16>("mob_skill_id");
+        if (mobSkillId >= g_PMobSkillList.size())
+        {
+            ShowErrorFmt(
+                "Mob skill {} exceeds MAX_MOBSKILL_ID ({}); skipping it",
+                mobSkillId,
+                g_PMobSkillList.size() - 1);
+            continue;
+        }
+
+        auto* PMobSkill = new CMobSkill(mobSkillId);
 
         PMobSkill->setAnimationID(rset->get<uint16>("mob_anim_id"));
         PMobSkill->setName(rset->get<std::string>("mob_skill_name"));
