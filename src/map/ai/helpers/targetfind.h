@@ -100,7 +100,7 @@ public:
     // Main methods for finding targets
     void findSingleTarget(CBattleEntity* PTarget, uint8 findFlags, uint16 targetflags);
     void findWithinArea(CBattleEntity* PTarget, AOE_RADIUS radiusType, float radius, uint8 findFlags, uint16 targetFlags);
-    void findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 findFlags, uint16 targetFlags, uint8 aoeType = 4);
+    void findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 findFlags, uint16 targetFlags, uint8 aoeType = 4, bool validatePrimaryTarget = false);
 
     // add all targets in contexts
     void addAllInZone(CBattleEntity* PTarget, bool withPet);
@@ -149,6 +149,10 @@ protected:
 
     // For self-centered AoEs (radiusType == AOE_RADIUS::ATTACKER)
     bool m_selfCenteredAoE;
+
+    // Direction-locked cones must geometrically validate their original target
+    // instead of force-adding it after the target leaves the telegraphed area.
+    bool m_validateConalPrimaryTarget;
 };
 
 #endif

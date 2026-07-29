@@ -13,7 +13,7 @@ local tuning =
     attackBonus           =      0,
     defenseBonus          =      0,
     accuracyBonus         =     30,
-    evasionBonus          =    -10,
+    evasionBonus          =      0,
     magicAttackBonus      =      0,
     baseDamageMultiplier  =    200,
     regain                =     20,
@@ -87,10 +87,12 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.darkixion.hitLists[mob:getID()] = nil
+    xi.darkixion.skillTargets[mob:getID()] = nil
 end
 
 entity.onMobDespawn = function(mob)
     xi.darkixion.hitLists[mob:getID()] = nil
+    xi.darkixion.skillTargets[mob:getID()] = nil
 end
 
 return entity

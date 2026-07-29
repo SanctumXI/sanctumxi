@@ -7,11 +7,16 @@ xi = xi or {}
 xi.mixin = xi.mixin or {}
 xi.mixin.hydra = xi.mixin.hydra or {}
 
-local function nextRegrow(mob)
+local function scheduleHeadRegrow(mob)
     local headRegrowMin = (mob:getLocalVar('headRegrowMin') ~= 0 and mob:getLocalVar('headRegrowMin')) or 120
     local headRegrowMax = (mob:getLocalVar('headRegrowMax') ~= 0 and mob:getLocalVar('headRegrowMax')) or 240
 
-    mob:setLocalVar('headgrow', GetSystemTime() + math.randomInt(headRegrowMin, headRegrowMax))
+    for slot = 1, 2 do
+        if mob:getLocalVar('headgrow' .. slot) == 0 then
+            mob:setLocalVar('headgrow' .. slot, GetSystemTime() + math.randomInt(headRegrowMin, headRegrowMax))
+            return
+        end
+    end
 end
 
 -- 15% base chance to Double/Triple Attack, +10% each at 75/50/25% HP (45% total at
@@ -40,15 +45,46 @@ local function recalcAttackRates(mob)
 end
 
 local function checkRegrowHead(mob)
-    local headgrow = mob:getLocalVar('headgrow')
-    local broken   = mob:getAnimationSub()
+    local currentTime = GetSystemTime()
+    local broken      = mob:getAnimationSub()
+    local regrown     = 0
 
-    if headgrow < GetSystemTime() and broken > 0 then
-        mob:setAnimationSub(broken - 1)
-        nextRegrow(mob)
+    for slot = 1, 2 do
+        local regrowTime = mob:getLocalVar('headgrow' .. slot)
+
+        if regrowTime > 0 and regrowTime <= currentTime then
+            mob:setLocalVar('headgrow' .. slot, 0)
+            regrown = regrown + 1
+        end
+    end
+
+    if regrown > 0 and broken > 0 then
+        mob:setAnimationSub(math.max(0, broken - regrown))
+    elseif broken > 0 then
+        -- Safeguard mobs that spawn with missing heads but no scheduled timer.
+        local scheduledHeads = 0
+        for slot = 1, 2 do
+            if mob:getLocalVar('headgrow' .. slot) > 0 then
+                scheduledHeads = scheduledHeads + 1
+            end
+        end
+
+        for _ = scheduledHeads + 1, broken do
+            scheduleHeadRegrow(mob)
+        end
     end
 
     recalcAttackRates(mob)
+end
+
+local function breakHead(mob)
+    local broken = mob:getAnimationSub()
+
+    if broken < 2 then
+        mob:setAnimationSub(broken + 1)
+        scheduleHeadRegrow(mob)
+        recalcAttackRates(mob)
+    end
 end
 
 -- Call this from the mob's own entity.onCriticalHit hook. Unlike the CRITICAL_TAKE
@@ -56,13 +92,23 @@ end
 -- also fires for weaponskill crits (and crits that land for 0 damage), matching
 -- bgwiki's documented head-loss behavior.
 xi.mixin.hydra.onCriticalHit = function(mob)
-    local broken          = mob:getAnimationSub()
+    -- A configured damage threshold replaces the retail-style random critical check.
+    if mob:getLocalVar('headBreakDamageThreshold') > 0 then
+        return
+    end
+
     local headBreakChance = (mob:getLocalVar('headBreakChance') ~= 0 and mob:getLocalVar('headBreakChance')) or 15
 
-    if math.randomInt(1, 100) <= headBreakChance and broken < 2 then
-        mob:setAnimationSub(broken + 1)
-        nextRegrow(mob)
-        recalcAttackRates(mob)
+    if math.randomInt(1, 100) <= headBreakChance then
+        breakHead(mob)
+    end
+end
+
+xi.mixin.hydra.onDamageTaken = function(mob, amount)
+    local damageThreshold = mob:getLocalVar('headBreakDamageThreshold')
+
+    if damageThreshold > 0 and amount >= damageThreshold then
+        breakHead(mob)
     end
 end
 
@@ -73,6 +119,10 @@ g_mixins.families.hydra = function(hydraMob)
     -- 1 -> 2 = 2 to 1 heads
     -- 2 -> 1 = 1 to 2 heads, plays regrow anim
     -- 1 -> 0 = 2 to 3 heads, plays regrow anim
+    hydraMob:addListener('TAKE_DAMAGE', 'HYDRA_TAKE_DAMAGE', function(mob, amount)
+        xi.mixin.hydra.onDamageTaken(mob, amount)
+    end)
+
     hydraMob:addListener('ROAM_TICK', 'HYDRA_ROAM_TICK', checkRegrowHead)
     hydraMob:addListener('COMBAT_TICK', 'HYDRA_COMBAT_TICK', checkRegrowHead)
 end

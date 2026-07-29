@@ -3,10 +3,7 @@
 --  Mob: Ro'Hyu Blackanvil
 -- KSNM: Heavy Is the Shell
 -----------------------------------
-mixins =
-{
-    require('scripts/mixins/job_special'),
-}
+local adamantking = require('scripts/globals/adamantking')
 -----------------------------------
 
 local tuning =
@@ -76,25 +73,13 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())
 
-    xi.mix.jobSpecial.config(mob, {
-        between = 5,
-        specials =
-        {
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 80 },
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 40 },
-            { id = xi.mobSkill.MIGHTY_STRIKES_1, hpp = 5 },
-        },
-    })
-
+    adamantking.reset(mob)
     applySlowAura(mob)
 end
 
 entity.onMobFight = function(mob, target)
     applySlowAura(mob)
-
-    if mob:getHPP() <= 40 then
-        mob:setMobMod(xi.mobMod.SKILL_LIST, 2099)
-    end
+    adamantking.tryTorment(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

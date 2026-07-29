@@ -2,7 +2,7 @@
 -- Shirahadori
 -- Family: Yagudo
 -- Description: Deals physical damage in a frontal cone.
--- Additional Effect: Bind, Knockback
+-- Additional Effect: TP reset, Bind, Knockback
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -27,6 +27,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+        target:setTP(0)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 20)
     end
 

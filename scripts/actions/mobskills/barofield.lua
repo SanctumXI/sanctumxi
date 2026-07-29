@@ -1,7 +1,8 @@
 -----------------------------------
 -- Barofield
 -- Family: Hydra
--- Description: Deals Wind damage to enemies within a fan-shaped area. Additional Effect: Weight
+-- Description: Deals Wind damage to enemies within a fan-shaped area.
+-- Additional Effect: Bind, Blind
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -27,7 +28,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.WEIGHT, 75, 0, 30) -- TODO: Capture power/duration
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 30)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BLINDNESS, 50, 0, 30)
     end
 
     return info.damage

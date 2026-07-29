@@ -112,8 +112,12 @@ CMobSkillState::CMobSkillState(CBattleEntity* PEntity, uint16 targid, uint16 wsi
 
         m_PEntity->loc.zone->PushPacket(m_PEntity, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE2>(action));
 
-        // face toward target // TODO : add force param to turnTowardsTarget on certain TP moves like Petro Eyes
-        battleutils::turnTowardsTarget(m_PEntity, PTarget);
+        // Direction-locked skills preserve the heading their script selected
+        // before entering this state.
+        if (!(m_PSkill->getFlag() & SKILLFLAG_LOCK_FACING))
+        {
+            battleutils::turnTowardsTarget(m_PEntity, PTarget);
+        }
     }
     m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_STATE_ENTER", m_PEntity, m_PSkill->getID());
     SpendCost();
@@ -160,8 +164,13 @@ bool CMobSkillState::Update(timer::time_point tick)
     // Reset the state for the current skill attempt
     m_skillSuccess = false;
 
-    // Rotate towards target during ability // TODO : add force param to turnTowardsTarget on certain TP moves like Petro Eyes
-    if (m_castTime > 0s && tick < GetEntryTime() + m_castTime)
+    // Most skills track their target while readying. Direction-locked skills keep
+    // the heading selected at state entry so their telegraph can be dodged.
+    if (
+        m_castTime > 0s &&
+        tick < GetEntryTime() + m_castTime &&
+        !(m_PSkill->getFlag() & SKILLFLAG_LOCK_FACING)
+    )
     {
         if (CBaseEntity* PTarget = GetTarget())
         {

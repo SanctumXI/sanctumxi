@@ -783,6 +783,7 @@ void LoadAbilitiesList();
 CAbility* GetAbility(uint16 AbilityID);
 
 CAbility* GetTwoHourAbility(JOBTYPE JobID);
+bool      IgnoresParalysis(CAbility* PAbility);
 bool      CanLearnAbility(CBattleEntity* PUser, uint16 AbilityID);
 Charge_t* GetCharge(CBattleEntity* PUser, uint16 chargeID);
 

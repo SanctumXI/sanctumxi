@@ -15,7 +15,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     -- TODO: JP wiki says this can miss and may be a physical skill. Need more captures to confirm.
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 5.0, 5.0, 5.0 }
+    -- Average damage is 50% higher, with TP-based variance instead of a fixed result.
+    params.fTP            = { 6.75, 7.5, 8.25 }
     params.element        = xi.element.EARTH
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.EARTH

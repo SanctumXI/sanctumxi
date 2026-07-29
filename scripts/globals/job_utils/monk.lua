@@ -9,7 +9,7 @@ local chakraStatusEffects =
 {
     POISON       = 0, -- Removed by default
     BLINDNESS    = 0, -- Removed by default
-    PARALYSIS    = 1,
+    PARALYSIS    = 0, -- Removed by default
     DISEASE      = 2,
     PLAGUE       = 4,
 }

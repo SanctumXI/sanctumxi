@@ -3,6 +3,8 @@
 -- Family: Za'Dha Adamantking
 -- Description: Deals heavy Earth damage, petrifies, and resets enmity.
 -----------------------------------
+local adamantking = require('scripts/globals/adamantking')
+
 ---@type TMobSkill
 local mobskillObject = {}
 
@@ -12,6 +14,8 @@ end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
+
+    adamantking.beginDiamondShell(mob)
 
     params.baseDamage     = mob:getMainLvl() + 2
     params.fTP            = { 6.5, 7.5, 8.5 }

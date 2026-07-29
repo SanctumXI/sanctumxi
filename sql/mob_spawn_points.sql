@@ -50398,21 +50398,21 @@ INSERT INTO `mob_spawn_points` VALUES (17347029,0,'Undefeatable_Sappdapp','Undef
 INSERT INTO `mob_spawn_points` VALUES (17347030,0,'Minds-eyed_Klugwug','Mind\'s-eyed Klugwug',51,0,0,87.897,-145.617,296.385,96);
 
 -- King of The North
-INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,238);
-INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,238);
-INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,238);
-INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Siege_Sniper','Siege Sniper',59,75,75,-409.153,94.703,-64.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Siege_Sniper','Siege Sniper',59,75,75,-383.153,94.703,-64.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Siege_Sniper','Siege Sniper',59,75,75,-169.218,-25.306,115.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347178,0,'Siege_Sniper','Siege Sniper',59,75,75,-143.218,-25.306,115.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347179,0,'Siege_Sniper','Siege Sniper',59,75,75,70.775,-145.323,295.455,46);
-INSERT INTO `mob_spawn_points` VALUES (17347180,0,'Siege_Sniper','Siege Sniper',59,75,75,96.775,-145.323,295.455,46);
-INSERT INTO `mob_spawn_points` VALUES (17347181,0,'Blackguard','Blackguard',60,75,75,-402.153,94.703,-64.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347182,0,'Blackguard','Blackguard',60,75,75,-390.153,94.703,-64.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347183,0,'Blackguard','Blackguard',60,75,75,-162.218,-25.306,115.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347184,0,'Blackguard','Blackguard',60,75,75,-150.218,-25.306,115.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347185,0,'Blackguard','Blackguard',60,75,75,77.775,-145.323,295.455,46);
-INSERT INTO `mob_spawn_points` VALUES (17347186,0,'Blackguard','Blackguard',60,75,75,89.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Siege_Sniper','Siege Sniper',59,75,75,-393.148,94.703,-49.653,46);
+INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Siege_Sniper','Siege Sniper',59,75,75,-409.420,94.703,-57.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Siege_Sniper','Siege Sniper',59,75,75,-153.213,-25.306,130.317,46);
+INSERT INTO `mob_spawn_points` VALUES (17347178,0,'Siege_Sniper','Siege Sniper',59,75,75,-169.485,-25.306,122.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347179,0,'Siege_Sniper','Siege Sniper',59,75,75,86.780,-145.323,310.151,46);
+INSERT INTO `mob_spawn_points` VALUES (17347180,0,'Siege_Sniper','Siege Sniper',59,75,75,70.508,-145.323,302.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347181,0,'Blackguard','Blackguard',60,75,75,-395.102,94.703,-57.215,46);
+INSERT INTO `mob_spawn_points` VALUES (17347182,0,'Blackguard','Blackguard',60,75,75,-402.334,94.703,-60.635,46);
+INSERT INTO `mob_spawn_points` VALUES (17347183,0,'Blackguard','Blackguard',60,75,75,-155.167,-25.306,122.755,46);
+INSERT INTO `mob_spawn_points` VALUES (17347184,0,'Blackguard','Blackguard',60,75,75,-162.399,-25.306,119.335,46);
+INSERT INTO `mob_spawn_points` VALUES (17347185,0,'Blackguard','Blackguard',60,75,75,84.826,-145.323,302.589,46);
+INSERT INTO `mob_spawn_points` VALUES (17347186,0,'Blackguard','Blackguard',60,75,75,77.594,-145.323,299.169,46);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17347035,0,'Chest_OPlenty','Chest O\'Plenty',53,99,99,-400.500,93.744,-71.000,46);
@@ -52239,18 +52239,18 @@ INSERT INTO `mob_spawn_points` VALUES (17367693,0,'EaTho_Cruelheart','Ea\'Tho Cr
 INSERT INTO `mob_spawn_points` VALUES (17367695,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,-177.358,60.188,-141.977,124);
 INSERT INTO `mob_spawn_points` VALUES (17367696,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,22.916,0.188,17.987,124);
 INSERT INTO `mob_spawn_points` VALUES (17367697,0,'RoHyu_Blackanvil','Ro\'Hyu Blackanvil',61,85,85,222.866,-59.812,137.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367819,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-177.358,60.188,-150.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367819,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-171.387,60.188,-141.389,124);
 INSERT INTO `mob_spawn_points` VALUES (17367820,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,-171.358,60.188,-145.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367821,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,22.916,0.188,8.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367821,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,28.887,0.188,18.575,124);
 INSERT INTO `mob_spawn_points` VALUES (17367822,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,28.916,0.188,13.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367823,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,222.866,-59.812,128.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367823,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,228.837,-59.812,138.557,124);
 INSERT INTO `mob_spawn_points` VALUES (17367824,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,228.866,-59.812,133.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-183.358,60.188,-150.977,252);
-INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-171.358,60.188,-150.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,16.916,0.188,8.987,252);
-INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,28.916,0.188,8.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,216.866,-59.812,128.969,252);
-INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,228.866,-59.812,128.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-170.897,60.188,-146.365,152);
+INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-171.877,60.188,-136.413,96);
+INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,29.377,0.188,13.599,152);
+INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,28.397,0.188,23.551,96);
+INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,229.327,-59.812,133.581,152);
+INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,228.347,-59.812,143.533,96);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17367698,0,'Chest_OPlenty','Chest O\'Plenty',62,0,0,-181.424,59.230,-134.764,128);

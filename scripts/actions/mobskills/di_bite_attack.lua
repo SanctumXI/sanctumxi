@@ -16,10 +16,15 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
 
     params.baseDamage     = mob:getWeaponDmg()
     params.numHits        = 1
+    if mob:getAnimationSub() == 2 and math.randomInt(1, 100) <= 25 then
+        params.numHits = 2
+    end
+
     params.fTP            = { 1.0, 1.0, 1.0 } -- TODO: Capture fTPs
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING
     params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1
+    params.isAutoAttack   = true
     params.primaryMessage = xi.msg.basic.HIT_DMG
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)

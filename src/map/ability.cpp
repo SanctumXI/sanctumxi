@@ -485,6 +485,33 @@ CAbility* GetTwoHourAbility(JOBTYPE JobID)
     return nullptr;
 }
 
+bool IgnoresParalysis(CAbility* PAbility)
+{
+    if (PAbility == nullptr)
+    {
+        return false;
+    }
+
+    if (PAbility->getID() == ABILITY_CHAKRA)
+    {
+        return true;
+    }
+
+    if (PAbility->getRecastId() == Recast::Special2)
+    {
+        return true;
+    }
+
+    const auto job = PAbility->getJob();
+    if (PAbility->getRecastId() != Recast::Special || job < JOB_WAR || job > JOB_RUN)
+    {
+        return false;
+    }
+
+    const auto* PInitialSpecialAbility = GetTwoHourAbility(job);
+    return PInitialSpecialAbility != nullptr && PInitialSpecialAbility->getID() == PAbility->getID();
+}
+
 bool CanLearnAbility(CBattleEntity* PUser, uint16 AbilityID)
 {
     auto* PAbility = GetAbility(AbilityID);

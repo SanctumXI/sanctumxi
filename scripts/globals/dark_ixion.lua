@@ -48,13 +48,14 @@ local animationSubs =
 {
     NORMAL      = 0, -- can trample
     TRAMPLE     = 1, -- animation during trample event
-    HORN_BROKEN = 2, -- broken horn, cannot trample or double-up mobskills
+    HORN_BROKEN = 2, -- broken horn, cannot use Wrath, trample, or double-up mobskills
     GLOWING     = 3, -- glowing: doubles up mobskills and used shortly during horn regrowth
 }
 
 xi.darkixion.hpValue = GetServerVariable('DarkIxion_HP')
 xi.darkixion.hornState = GetServerVariable('DarkIxion_HornState')
 xi.darkixion.hitLists = xi.darkixion.hitLists or {}
+xi.darkixion.skillTargets = xi.darkixion.skillTargets or {}
 xi.darkixion.hornStates =
 {
     [1] =
@@ -70,19 +71,14 @@ xi.darkixion.hornStates =
     },
 }
 
--- Retail's 60-240s phase cycle suits a long, drawn-out open-world hunt. A capped,
--- buffed BCNM alliance fight is frequently over (or lasts its whole duration)
--- before that window even elapses once, which reads as "stuck" in one phase.
--- Use a much shorter cycle on the battlefield version only.
-local nextPhaseDelay = function(mob)
-    if mob:getLocalVar('BattlefieldIxion') == 1 then
-        return math.randomInt(20, 45)
-    end
-
+-- Retail's aura is retained for the open-world hunt. The battlefield version
+-- uses DI Glow strictly as a telegraph and does not run an aura phase cycle.
+local nextPhaseDelay = function()
     return math.randomInt(60, 240)
 end
 
-local changeHornState = function(mob, state)
+local changeHornState
+changeHornState = function(mob, state)
     local isBattlefieldIxion = mob:getLocalVar('BattlefieldIxion') == 1
     local hornState          = state
 
@@ -109,8 +105,29 @@ local changeHornState = function(mob, state)
 
     if isBattlefieldIxion then
         mob:setLocalVar('IxionHornState', hornState)
+        if hornState == 1 then
+            mob:setLocalVar('hornBreakHits', 0)
+            mob:setLocalVar('hornBreakPending', 0)
+        end
     else
         SetServerVariable('DarkIxion_HornState', hornState)
+    end
+
+    if hornState == 2 then
+        if mob:getLocalVar('hornRegrowAt') == 0 then
+            local hornRegrowAt = GetSystemTime() + 30
+            mob:setLocalVar('hornRegrowAt', hornRegrowAt)
+            mob:timer(30000, function(mobArg)
+                if
+                    mobArg:getAnimationSub() == animationSubs.HORN_BROKEN and
+                    mobArg:getLocalVar('hornRegrowAt') == hornRegrowAt
+                then
+                    changeHornState(mobArg, 1)
+                end
+            end)
+        end
+    else
+        mob:setLocalVar('hornRegrowAt', 0)
     end
 
     if hornStateData.animationSub ~= mob:getAnimationSub() then
@@ -120,8 +137,9 @@ local changeHornState = function(mob, state)
     -- Battlefield Ixion keeps a visible HP bar through both horn phases.
     mob:hideHP(not isBattlefieldIxion and hornStateData.hideHP)
 
-    -- reset phasechange timer
-    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
+    if not isBattlefieldIxion then
+        mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay())
+    end
 end
 
 xi.darkixion.zoneinfo =
@@ -435,6 +453,8 @@ xi.darkixion.zoneOnGameHour = function(zone)
 end
 
 xi.darkixion.onMobDeath = function(mob, player, optParams)
+    xi.darkixion.skillTargets[mob:getID()] = nil
+
     if player then
         player:addTitle(xi.title.IXION_HORNBREAKER)
     end
@@ -448,6 +468,7 @@ xi.darkixion.onMobDeath = function(mob, player, optParams)
 end
 
 xi.darkixion.onMobDespawn = function(mob)
+    xi.darkixion.skillTargets[mob:getID()] = nil
     DisallowRespawn(mob:getID(), true)
     if mob:getZoneID() == GetServerVariable('DarkIxion_ZoneID') then
         xi.darkixion.repop(mob)
@@ -455,24 +476,37 @@ xi.darkixion.onMobDespawn = function(mob)
     end
 end
 
+local breakIxionHorn = function(mob)
+    mob:setLocalVar('hornBreakHits', 0)
+    mob:setLocalVar('hornBreakPending', 0)
+    changeHornState(mob, 2)
+end
+
 local checkHornBreak = function(mob, attacker)
     local animationSub = mob:getAnimationSub()
     if
-        not xi.combat.behavior.isEntityBusy(mob) and
         (animationSub == animationSubs.NORMAL or animationSub == animationSubs.GLOWING) and
-        (attacker ~= nil and attacker:isInfront(mob)) and
-        math.randomInt(1, 100) <= 5
+        attacker ~= nil and
+        attacker:isInfront(mob)
     then
-        changeHornState(mob, 2)
-
-        -- Damsel Memento (the only thing that ever regrows the horn normally) isn't
-        -- in this Ixion's battlefield skill list, so without this he'd stay
-        -- horn-broken -- and phase-alternation frozen wherever it last was -- for
-        -- the rest of any fight where the horn happens to break at all, which over
-        -- a full alliance fight is close to guaranteed. Open-world Dark Ixion is
-        -- unaffected; he still only regrows via Damsel Memento.
         if mob:getLocalVar('BattlefieldIxion') == 1 then
-            mob:setLocalVar('hornRegrowAt', GetSystemTime() + math.randomInt(45, 75))
+            -- Give the battlefield horn a readable interaction instead of a hidden
+            -- 5% roll: five front-facing critical hits or weapon skills break it.
+            local breakHits = mob:getLocalVar('hornBreakHits') + 1
+            mob:setLocalVar('hornBreakHits', breakHits)
+
+            if breakHits >= 5 then
+                if xi.combat.behavior.isEntityBusy(mob) then
+                    mob:setLocalVar('hornBreakPending', 1)
+                else
+                    breakIxionHorn(mob)
+                end
+            end
+        elseif
+            not xi.combat.behavior.isEntityBusy(mob) and
+            math.randomInt(1, 100) <= 5
+        then
+            breakIxionHorn(mob)
         end
     end
 end
@@ -493,7 +527,7 @@ local getLightningSpearTarget = function(mob)
         for _, player in pairs(battlefield:getPlayers()) do
             if
                 player:isAlive() and
-                mob:checkDistance(player) <= 22
+                mob:checkDistance(player) <= 25
             then
                 table.insert(potentialTargets, player)
             end
@@ -503,7 +537,7 @@ local getLightningSpearTarget = function(mob)
             if
                 entry.entity and
                 entry.entity:isAlive() and
-                mob:checkDistance(entry.entity) <= 22
+                mob:checkDistance(entry.entity) <= 25
             then
                 table.insert(potentialTargets, entry.entity)
             end
@@ -514,7 +548,16 @@ local getLightningSpearTarget = function(mob)
         return utils.randomEntry(potentialTargets)
     end
 
-    return mob:getTarget()
+    local currentTarget = mob:getTarget()
+    if
+        currentTarget and
+        currentTarget:isAlive() and
+        mob:checkDistance(currentTarget) <= 25
+    then
+        return currentTarget
+    end
+
+    return nil
 end
 
 local useTelegraphedSkill = function(mob, skillID, target)
@@ -525,58 +568,128 @@ local useTelegraphedSkill = function(mob, skillID, target)
     end
 end
 
-xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
-    local skillID = skill:getID()
-    if skillID == xi.mobSkill.DAMSEL_MEMENTO then -- sometimes after healing, fix horn
-        if
-            mob:getAnimationSub() == animationSubs.HORN_BROKEN and
-            math.randomInt(1, 100) <= 25
-        then
-            -- If horn is restored by heal, glow and allow animation to finish, then restore horn
-            skill:setFinalAnimationSub(3)
-            mob:queue(0, function(mobArg)
-                mobArg:stun(500)
-                changeHornState(mobArg, 1)
-            end)
-        end
-    elseif skillID == xi.mobSkill.DI_GLOW then
-        -- glow TP move telegraphs a damaging TP move, perform it now.
-        -- Lightning Spear is his signature move (it's the fight's namesake), so
-        -- weight it to come up roughly twice as often as the other three.
-        local skillWeights =
-        {
-            { id = xi.mobSkill.LIGHTNING_SPEAR, weight = 40 },
-            { id = xi.mobSkill.WRATH_OF_ZEUS,    weight = 20 },
-            { id = xi.mobSkill.ACHERON_KICK,     weight = 20 },
-            { id = xi.mobSkill.RAMPANT_STANCE,   weight = 20 },
-        }
+local telegraphedSkillWeights =
+{
+    { id = xi.mobSkill.LIGHTNING_SPEAR, weight = 40 },
+    { id = xi.mobSkill.WRATH_OF_ZEUS,    weight = 20 },
+    { id = xi.mobSkill.ACHERON_KICK,     weight = 20 },
+    { id = xi.mobSkill.RAMPANT_STANCE,   weight = 20 },
+}
 
-        local totalWeight = 0
-        for _, entry in ipairs(skillWeights) do
+local chooseTelegraphedSkill = function(mob)
+    if mob:getLocalVar('forceLightningSpear') == 1 then
+        mob:setLocalVar('forceLightningSpear', 0)
+        return xi.mobSkill.LIGHTNING_SPEAR
+    end
+
+    -- Normal battlefield rolls avoid repeating their previous follow-up.
+    -- A forced decile Spear can override this, while retail's open-world glowing
+    -- phase retains its deliberate double-use below.
+    local excludedSkill = 0
+    if mob:getLocalVar('BattlefieldIxion') == 1 then
+        excludedSkill = mob:getLocalVar('lastIxionSkill')
+    end
+
+    local totalWeight = 0
+    for _, entry in ipairs(telegraphedSkillWeights) do
+        if
+            entry.id ~= excludedSkill and
+            not (
+                mob:getAnimationSub() == animationSubs.HORN_BROKEN and
+                entry.id == xi.mobSkill.WRATH_OF_ZEUS
+            )
+        then
             totalWeight = totalWeight + entry.weight
         end
+    end
 
-        local roll          = math.randomInt(1, totalWeight)
-        local runningWeight = 0
-        local chosenSkill   = skillWeights[1].id
-        for _, entry in ipairs(skillWeights) do
+    local roll          = math.randomInt(1, totalWeight)
+    local runningWeight = 0
+    for _, entry in ipairs(telegraphedSkillWeights) do
+        if
+            entry.id ~= excludedSkill and
+            not (
+                mob:getAnimationSub() == animationSubs.HORN_BROKEN and
+                entry.id == xi.mobSkill.WRATH_OF_ZEUS
+            )
+        then
             runningWeight = runningWeight + entry.weight
             if roll <= runningWeight then
-                chosenSkill = entry.id
-                break
+                return entry.id
+            end
+        end
+    end
+
+    return xi.mobSkill.LIGHTNING_SPEAR
+end
+
+local prepareTelegraphedSkill = function(mob)
+    local chosenSkill  = chooseTelegraphedSkill(mob)
+    local chosenTarget = nil
+
+    if chosenSkill == xi.mobSkill.LIGHTNING_SPEAR then
+        chosenTarget = getLightningSpearTarget(mob)
+        if not chosenTarget then
+            chosenSkill = xi.mobSkill.RAMPANT_STANCE
+        end
+    end
+
+    mob:setLocalVar('pendingIxionSkill', chosenSkill)
+    mob:setLocalVar('lastIxionSkill', chosenSkill)
+    xi.darkixion.skillTargets[mob:getID()] = chosenTarget
+
+    -- Face the selected player during the horn-charge telegraph. The target is
+    -- revalidated and its position is snapshotted when Lightning Spear begins.
+    if chosenTarget then
+        mob:lookAt(chosenTarget:getPos())
+    end
+
+    mob:setBehavior(xi.behavior.NO_TURN + xi.behavior.STANDBACK)
+    mob:setAutoAttackEnabled(false)
+    mob:setMobAbilityEnabled(false)
+end
+
+xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
+    local skillID = skill:getID()
+    if skillID == xi.mobSkill.DI_GLOW then
+        local chosenSkill = mob:getLocalVar('pendingIxionSkill')
+        if chosenSkill == 0 then
+            prepareTelegraphedSkill(mob)
+            chosenSkill = mob:getLocalVar('pendingIxionSkill')
+        end
+
+        local chosenTarget = xi.darkixion.skillTargets[mob:getID()]
+        if
+            chosenSkill == xi.mobSkill.LIGHTNING_SPEAR and
+            (
+                not chosenTarget or
+                not chosenTarget:isAlive() or
+                mob:checkDistance(chosenTarget) > 25
+            )
+        then
+            chosenTarget = getLightningSpearTarget(mob)
+        end
+
+        if chosenSkill == xi.mobSkill.LIGHTNING_SPEAR then
+            if chosenTarget then
+                -- Snapshot the target's position at the start of Lightning
+                -- Spear's own three-second cast. The engine then locks this line.
+                mob:lookAt(chosenTarget:getPos())
+            else
+                chosenSkill = xi.mobSkill.RAMPANT_STANCE
+                mob:setLocalVar('lastIxionSkill', chosenSkill)
             end
         end
 
-        local chosenTarget = chosenSkill == xi.mobSkill.LIGHTNING_SPEAR and getLightningSpearTarget(mob) or nil
-        if chosenTarget then
-            mob:lookAt(chosenTarget:getPos())
-        end
-
-        mob:setBehavior(xi.behavior.NO_TURN + xi.behavior.STANDBACK)
-        mob:setAutoAttackEnabled(false)
+        mob:setLocalVar('pendingIxionSkill', 0)
+        xi.darkixion.skillTargets[mob:getID()] = nil
         useTelegraphedSkill(mob, chosenSkill, chosenTarget)
-        if mob:getAnimationSub() == animationSubs.GLOWING then
-            -- queue a second if in glowing phase
+
+        if
+            mob:getLocalVar('BattlefieldIxion') ~= 1 and
+            mob:getAnimationSub() == animationSubs.GLOWING
+        then
+            -- Open-world Dark Ixion retains its retail-style glowing double-use.
             useTelegraphedSkill(mob, chosenSkill, chosenTarget)
         end
     elseif
@@ -668,7 +781,9 @@ end
 
 local setupCombatListeners = function(mob)
     mob:addListener('WEAPONSKILL_STATE_ENTER', 'IXION_WS_STATE_ENTER', function(mobArg, skillId)
-        if skillId == xi.mobSkill.ACHERON_KICK then
+        if skillId == xi.mobSkill.DI_GLOW then
+            prepareTelegraphedSkill(mobArg)
+        elseif skillId == xi.mobSkill.ACHERON_KICK then
             acheronKickPositioning(mobArg)
         end
     end)
@@ -688,6 +803,7 @@ end
 xi.darkixion.onBattlefieldMobSpawn = function(mob)
     mob:clearPath()
     xi.darkixion.hitLists[mob:getID()] = nil
+    xi.darkixion.skillTargets[mob:getID()] = nil
     mob:setLocalVar('BattlefieldIxion', 1)
     mob:setBaseSpeed(40)
     mob:setMod(xi.mod.UDMGPHYS, 0)
@@ -700,6 +816,10 @@ xi.darkixion.onBattlefieldMobSpawn = function(mob)
     mob:setLocalVar('nextTrampleTime', 0)
     mob:setLocalVar('trampleTargID', 0)
     mob:setLocalVar('tramplePathTime', 0)
+    mob:setLocalVar('nextLightningSpearHPP', 90)
+    mob:setLocalVar('forceLightningSpear', 0)
+    mob:setLocalVar('pendingIxionSkill', 0)
+    mob:setLocalVar('lastIxionSkill', 0)
     mob:setLocalVar('isBusy', 0)
     mob:setBehavior(0)
     mob:setAutoAttackEnabled(true)
@@ -750,11 +870,11 @@ xi.darkixion.onMobEngage = function(mob, target)
     mob:setMod(xi.mod.UDMGBREATH, 0)
     mob:setMod(xi.mod.UDMGMAGIC, 0)
     mob:setMod(xi.mod.REGAIN, 20) -- 'has tp regen': https://www.bluegartr.com/threads/59044-Ixion-discussion-thread/page8
-    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
+    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay())
 end
 
 xi.darkixion.onBattlefieldMobEngage = function(mob, target)
-    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
+    mob:setLocalVar('phaseChange', 0)
 end
 
 xi.darkixion.onMobDisengage = function(mob)
@@ -783,10 +903,13 @@ xi.darkixion.onBattlefieldMobDisengage = function(mob)
 
     mob:clearPath()
     xi.darkixion.hitLists[mob:getID()] = nil
+    xi.darkixion.skillTargets[mob:getID()] = nil
     mob:setLocalVar('trampleCount', 0)
     mob:setLocalVar('nextTrampleTime', 0)
     mob:setLocalVar('trampleTargID', 0)
     mob:setLocalVar('tramplePathTime', 0)
+    mob:setLocalVar('forceLightningSpear', 0)
+    mob:setLocalVar('pendingIxionSkill', 0)
     mob:setLocalVar('isBusy', 0)
     changeHornState(mob, hornState)
     mob:setBaseSpeed(40)
@@ -797,29 +920,40 @@ end
 
 xi.darkixion.onMobFight = function(mob, target)
     local animationSub = mob:getAnimationSub()
+    local isBattlefieldIxion = mob:getLocalVar('BattlefieldIxion') == 1
 
-    -- Damsel Memento isn't in this Ixion's battlefield skill list, so it's the
-    -- only thing that would normally regrow a broken horn -- without this,
-    -- once it breaks (close to guaranteed over a full alliance fight) it would
-    -- stay broken, and phase-alternation frozen, for the rest of the fight.
+    -- Defer a horn break until the current animation is finished so the visible
+    -- broken-horn model state cannot be immediately overwritten.
     if
-        mob:getLocalVar('BattlefieldIxion') == 1 and
+        isBattlefieldIxion and
+        mob:getLocalVar('hornBreakPending') == 1 and
+        animationSub == animationSubs.NORMAL and
+        not xi.combat.behavior.isEntityBusy(mob)
+    then
+        breakIxionHorn(mob)
+        animationSub = mob:getAnimationSub()
+    end
+
+    -- Both versions regrow their horn exactly 30 seconds after it visibly breaks.
+    if
         animationSub == animationSubs.HORN_BROKEN and
-        not xi.combat.behavior.isEntityBusy(mob) and
+        mob:getLocalVar('hornRegrowAt') > 0 and
         GetSystemTime() >= mob:getLocalVar('hornRegrowAt')
     then
         changeHornState(mob, 1)
         animationSub = mob:getAnimationSub()
     end
 
-    -- This section deals with him glowing (double TP moves)
+    -- The glowing double-TP phase belongs to the open-world encounter. Battlefield
+    -- Ixion uses DI Glow only as a short, explicit horn-charge telegraph.
     if
+        not isBattlefieldIxion and
         not xi.combat.behavior.isEntityBusy(mob) and
         GetSystemTime() >= mob:getLocalVar('phaseChange') and
         (animationSub == animationSubs.NORMAL or
         animationSub == animationSubs.GLOWING)
     then
-        mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
+        mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay())
 
         -- alternate phase between normal (can trample) and glowing (double-up mobskills)
         animationSub = animationSub ~= animationSubs.NORMAL and animationSubs.NORMAL or animationSubs.GLOWING
@@ -848,6 +982,29 @@ xi.darkixion.onMobFight = function(mob, target)
             xi.darkixion.trampleEntitiesInFront(mob)
         else
             xi.darkixion.endTramplePath(mob)
+        end
+    end
+
+    if
+        isBattlefieldIxion and
+        animationSub ~= animationSubs.TRAMPLE and
+        not xi.combat.behavior.isEntityBusy(mob) and
+        mob:canUseAbilities()
+    then
+        local nextSpearHPP = mob:getLocalVar('nextLightningSpearHPP')
+        if nextSpearHPP > 0 and mob:getHPP() <= nextSpearHPP then
+            -- Consume every crossed decile, but schedule one Spear rather than
+            -- backlogging several if a large weaponskill crosses multiple marks.
+            repeat
+                nextSpearHPP = nextSpearHPP - 10
+            until nextSpearHPP <= 0 or mob:getHPP() > nextSpearHPP
+
+            mob:setLocalVar('nextLightningSpearHPP', nextSpearHPP)
+            mob:setLocalVar('forceLightningSpear', 1)
+            -- Stop core AI from independently selecting a second TP move before
+            -- this queued HP-threshold sequence enters its skill state.
+            mob:setMobAbilityEnabled(false)
+            mob:useMobAbility(xi.mobSkill.DI_GLOW)
         end
     end
 end
@@ -895,7 +1052,8 @@ xi.darkixion.beginTramplePath = function(mob)
         -- this target will be hit by trample if it's ever within 7 yalms during the trample pathing
         mob:setLocalVar('trampleTargID', trampleTarget:getTargID())
 
-        -- choose point by drawing a line between Ixion and target, then extending it beyond
+        -- Battlefield Ixion stops short of the selected player so its model does
+        -- not pass through them. Open-world Ixion retains its retail overshoot.
         local overshootDistance = 5
         local mobPos = mob:getPos()
         local xM  = mobPos.x
@@ -913,7 +1071,12 @@ xi.darkixion.beginTramplePath = function(mob)
         if rss > 0 then
             local xU  = xD / rss
             local zU  = zD / rss
-            tramplePos = { x  = xT + (xU * overshootDistance), y = yT, z = zT + (zU * overshootDistance) }
+            if mob:getLocalVar('BattlefieldIxion') == 1 then
+                local stopDistance = math.min(2.5, rss)
+                tramplePos = { x = xT - (xU * stopDistance), y = yT, z = zT - (zU * stopDistance) }
+            else
+                tramplePos = { x = xT + (xU * overshootDistance), y = yT, z = zT + (zU * overshootDistance) }
+            end
         end
     end
 

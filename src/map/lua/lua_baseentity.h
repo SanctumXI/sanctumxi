@@ -643,6 +643,7 @@ public:
     void timer(int ms, sol::function func); // execute lua closure after some time
     void queue(int ms, sol::function func);
     void addRecast(uint8 recastCont, uint16 recastID, uint32 duration);
+    void maxAbilityRecasts(); // Set all currently available ability recasts to their maximum
     bool hasRecast(uint8 rType, uint16 recastID, const sol::object& arg2);
     void resetRecast(uint8 rType, uint16 recastID); // Reset one recast ID
     void resetRecasts();                            // Reset recasts for the caller
