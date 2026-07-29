@@ -48,6 +48,21 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
 {
     const bool inLinkshellLibrary = PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY;
 
+    if (inLinkshellLibrary)
+    {
+        if (PChar->isLinkshellBankActive())
+        {
+            return {
+                LOC_INVENTORY,
+                LOC_MOGSAFE,
+                LOC_MOGSAFE2,
+                LOC_MOGLOCKER,
+            };
+        }
+
+        return { LOC_INVENTORY };
+    }
+
     // These are always available in both LSB and retail.
     std::set allowedContainers = {
         LOC_INVENTORY,
@@ -84,13 +99,6 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
     // Same comment as Safe, but this is handled in the helper.
     if (!inLinkshellLibrary && charutils::hasMogLockerAccess(PChar))
     {
-        allowedContainers.insert(LOC_MOGLOCKER);
-    }
-
-    if (PChar->isLinkshellBankActive())
-    {
-        allowedContainers.insert(LOC_MOGSAFE);
-        allowedContainers.insert(LOC_MOGSAFE2);
         allowedContainers.insert(LOC_MOGLOCKER);
     }
 

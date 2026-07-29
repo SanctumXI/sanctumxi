@@ -40,6 +40,7 @@ local lowHpFocusDuration   = 3
 local stationaryTime       = 30
 local stationaryMoveRadius = 10
 local positionPrecision    = 100
+local simurghMp            = 5000
 
 local stationaryBonuses =
 {
@@ -49,6 +50,7 @@ local stationaryBonuses =
 
 local function configureMob(mob)
     mob:renameEntity('Simurgh', true)
+    mob:setModelSize(3)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
@@ -201,10 +203,7 @@ local function startLowHpFocus(mob, focusTarget)
     end
 
     mob:updateTarget()
-    simurghMechanics.sendMessage(mob, string.format(
-        'Simurgh marks %s for Dread Dive! Recover above 20%% HP within 3 seconds!',
-        focusTarget:getName()
-    ))
+    simurghMechanics.sendMessage(mob, string.format('Simurgh marks %s for death', focusTarget:getName()))
 
     mob:timer(lowHpFocusDuration * 1000, function(simurgh)
         if not simurgh:isAlive() then
@@ -268,6 +267,8 @@ end
 
 entity.onMobSpawn = function(mob)
     configureMob(mob)
+    mob:setMaxMP(simurghMp)
+    mob:setMP(simurghMp)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 250)
     mob:setMod(xi.mod.EVA, 400)
     mob:setMod(xi.mod.ACC, 519)

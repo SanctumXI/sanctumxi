@@ -31,6 +31,7 @@ end
 
 entity.onMobSpawn = function(mob)
     xi.darkixion.onBattlefieldMobSpawn(mob)
+    mob:renameEntity('Ixion', true)
 
     if mob:getMainLvl() ~= tuning.level then
         mob:setMobLevel(tuning.level)

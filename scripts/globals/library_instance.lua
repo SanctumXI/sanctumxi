@@ -407,8 +407,8 @@ libraryInstance.setupServices = function(instance)
     instance:insertDynamicEntity(
     {
         objtype = xi.objType.NPC,
-        name = 'Nomad_Moogle',
-        packetName = 'Nomad Moogle',
+        name = 'Linkshell_Moogle',
+        packetName = 'Linkshell Moogle',
         look = 82,
         x = -94.733, y = -2.193, z = -97.705, rotation = 137,
         onTrigger = function(player, npc)
@@ -419,7 +419,7 @@ libraryInstance.setupServices = function(instance)
             local linkshellId = libraryInstance.getRegisteredLinkshellID(player)
             if not player:openLinkshellMogLocker(linkshellId) then
                 player:printToPlayer(
-                    'The Linkshell Bank could not be opened. Please report this test failure.',
+                    'The Linkshell Bank could not be opened. Please report this failure.',
                     xi.msg.channel.SYSTEM_3
                 )
                 return
@@ -430,7 +430,7 @@ libraryInstance.setupServices = function(instance)
                 xi.msg.channel.SYSTEM_3
             )
             player:printToPlayer(
-                'Exclusive, currency, and linkshell items cannot be deposited.',
+                'Exclusive items cannot be deposited.',
                 xi.msg.channel.SYSTEM_3
             )
             player:sendMenu(xi.menuType.MOOGLE)
