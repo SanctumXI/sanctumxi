@@ -12,7 +12,7 @@ local tuning =
     hpBonus               = 0,
     attackBonus           = 0,
     defenseBonus          = 0,
-    accuracyBonus         = 0,
+    accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
     regain                = 20,
@@ -46,12 +46,10 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Subterranean sandworm: strongly resists Earth, slightly weak to its opposite (Wind).
-    mob:setMod(xi.mod.EARTH_SDT, 4000)
+    mob:setMod(xi.mod.EARTH_SDT, -4000)
     mob:setMod(xi.mod.EARTH_RES_RANK, 10)
-    mob:setMod(xi.mod.WIND_SDT, -1000)
+    mob:setMod(xi.mod.WIND_SDT, 1000)
 
-    -- A burrowing worm: resists Paralyze and Poison.
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.POISON_RES_RANK, 6)
 

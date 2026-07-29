@@ -63,17 +63,81 @@ entity.spawnPoints =
     { x = -103.268, y = -72.000, z =   96.397 }
 }
 
+-- Mirrors Tzee Xicu's Hierophant (KSNM: Wing and a Prayer). See scripts/zones/Balgas_Dais/mobs/Tzee_Xicus_Hierophant.lua
+local physicalDamageTaken   = 0
+local auraPhysicalReduction = -5000
+local auraReturnTime        = 600
+
+local function enableAura(mob)
+    if not mob:hasStatusEffect(xi.effect.COLURE_ACTIVE) then
+        mob:addStatusEffect(xi.effect.COLURE_ACTIVE, { power = 6, origin = mob, tick = 3, subType = xi.effect.WEIGHT, subPower = 50, tier = xi.auraTarget.ENEMIES, flag = xi.effectFlag.AURA })
+    end
+
+    mob:setMod(xi.mod.UDMGPHYS, physicalDamageTaken + auraPhysicalReduction)
+end
+
+local function disableAura(mob)
+    mob:delStatusEffectSilent(xi.effect.COLURE_ACTIVE)
+    mob:setMod(xi.mod.UDMGPHYS, physicalDamageTaken)
+end
+
 entity.onMobInitialize = function(mob)
     xi.pet.setMobPet(mob, 1, 'Yagudos_Elemental')
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:addImmunity(xi.immunity.BIND)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:setMod(xi.mod.AURA_SIZE, -125)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setMod(xi.mod.DARK_SLEEP_RES_RANK, 11)
+    mob:setMod(xi.mod.SILENCE_RES_RANK, 12)
+    mob:setMod(xi.mod.REGAIN, 20)
+    mob:setMod(xi.mod.UDMGMAGIC, -5000)
+    mob:setMod(xi.mod.ACC, 30)
+
+    -- Yagudo priest: high resistance to Silence (a support caster), and mild Wind
+    -- alignment (weak to its opposite, Earth) matching its Yagudo family.
+    mob:setMod(xi.mod.WIND_SDT, -1500)
+    mob:setMod(xi.mod.EARTH_SDT, 500)
+
+    -- A support caster wants to keep casting: resists Paralyze and Poison.
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.SLOW_RES_RANK, 8)
-    mob:setMod(xi.mod.SILENCE_RES_RANK, 10)
+    mob:setMod(xi.mod.POISON_RES_RANK, 6)
+
+    mob:setMobMod(xi.mobMod.SKILL_LIST, 2100)
+    mob:setLocalVar('auraPhase', 0)
+    mob:setLocalVar('auraReturn', 0)
+    mob:setBaseSpeed(55)
+
+    xi.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            { id = xi.mobSkill.VORTICOSE_SANDS, cooldown = 180, hpp = 75 },
+        },
+    })
+
+    enableAura(mob)
+end
+
+entity.onMobFight = function(mob, target)
+    local auraPhase = mob:getLocalVar('auraPhase')
+
+    if
+        auraPhase == 0 and
+        mob:getHPP() <= 70
+    then
+        disableAura(mob)
+        mob:setLocalVar('auraPhase', 1)
+        mob:setLocalVar('auraReturn', GetSystemTime() + auraReturnTime)
+    elseif
+        auraPhase == 1 and
+        GetSystemTime() >= mob:getLocalVar('auraReturn')
+    then
+        enableAura(mob)
+        mob:setLocalVar('auraPhase', 2)
+    end
 end
 
 entity.onMobEngage = function(mob, target)

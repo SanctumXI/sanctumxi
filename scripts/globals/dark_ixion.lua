@@ -70,6 +70,18 @@ xi.darkixion.hornStates =
     },
 }
 
+-- Retail's 60-240s phase cycle suits a long, drawn-out open-world hunt. A capped,
+-- buffed BCNM alliance fight is frequently over (or lasts its whole duration)
+-- before that window even elapses once, which reads as "stuck" in one phase.
+-- Use a much shorter cycle on the battlefield version only.
+local nextPhaseDelay = function(mob)
+    if mob:getLocalVar('BattlefieldIxion') == 1 then
+        return math.randomInt(20, 45)
+    end
+
+    return math.randomInt(60, 240)
+end
+
 local changeHornState = function(mob, state)
     local isBattlefieldIxion = mob:getLocalVar('BattlefieldIxion') == 1
     local hornState          = state
@@ -108,7 +120,7 @@ local changeHornState = function(mob, state)
     mob:hideHP(hornStateData.hideHP)
 
     -- reset phasechange timer
-    mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
+    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
 end
 
 xi.darkixion.zoneinfo =
@@ -451,6 +463,16 @@ local checkHornBreak = function(mob, attacker)
         math.randomInt(1, 100) <= 5
     then
         changeHornState(mob, 2)
+
+        -- Damsel Memento (the only thing that ever regrows the horn normally) isn't
+        -- in this Ixion's battlefield skill list, so without this he'd stay
+        -- horn-broken -- and phase-alternation frozen wherever it last was -- for
+        -- the rest of any fight where the horn happens to break at all, which over
+        -- a full alliance fight is close to guaranteed. Open-world Dark Ixion is
+        -- unaffected; he still only regrows via Damsel Memento.
+        if mob:getLocalVar('BattlefieldIxion') == 1 then
+            mob:setLocalVar('hornRegrowAt', GetSystemTime() + math.randomInt(45, 75))
+        end
     end
 end
 
@@ -477,16 +499,32 @@ xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
             end)
         end
     elseif skillID == xi.mobSkill.DI_GLOW then
-        -- glow TP move telegraphs a damaging TP move, perform it now
-        local skillList =
+        -- glow TP move telegraphs a damaging TP move, perform it now.
+        -- Lightning Spear is his signature move (it's the fight's namesake), so
+        -- weight it to come up roughly twice as often as the other three.
+        local skillWeights =
         {
-            xi.mobSkill.WRATH_OF_ZEUS,
-            xi.mobSkill.LIGHTNING_SPEAR,
-            xi.mobSkill.ACHERON_KICK,
-            xi.mobSkill.RAMPANT_STANCE,
+            { id = xi.mobSkill.LIGHTNING_SPEAR, weight = 40 },
+            { id = xi.mobSkill.WRATH_OF_ZEUS,    weight = 20 },
+            { id = xi.mobSkill.ACHERON_KICK,     weight = 20 },
+            { id = xi.mobSkill.RAMPANT_STANCE,   weight = 20 },
         }
 
-        local chosenSkill = utils.randomEntry(skillList)
+        local totalWeight = 0
+        for _, entry in ipairs(skillWeights) do
+            totalWeight = totalWeight + entry.weight
+        end
+
+        local roll          = math.randomInt(1, totalWeight)
+        local runningWeight = 0
+        local chosenSkill   = skillWeights[1].id
+        for _, entry in ipairs(skillWeights) do
+            runningWeight = runningWeight + entry.weight
+            if roll <= runningWeight then
+                chosenSkill = entry.id
+                break
+            end
+        end
 
         -- adjust behavior so he doesn't sneak another move in between the sequence
         mob:setBehavior(xi.behavior.NO_TURN + xi.behavior.STANDBACK)
@@ -583,18 +621,41 @@ local acheronKickPositioning = function(mob)
     turnForSkill(mob, skillTarget)
 end
 
--- Lightning Spear picks a random person on the hate list and faces them before firing its line AoE
+-- Unlike turnForSkill (used for Acheron Kick's rear-cone, which deliberately
+-- turns away from its target), Lightning Spear is a forward line/cone and needs
+-- to actually face the person it's about to hit.
+local turnTowardSkill = function(mob, skillTarget)
+    if skillTarget then
+        mob:lookAt(skillTarget:getPos())
+    else
+        local mobPos = mob:getPos()
+        mob:lookAt({ x = mobPos.x + math.randomInt(-4, 4), y = mobPos.y, z = mobPos.z + math.randomInt(-4, 4) })
+    end
+end
+
+-- Lightning Spear picks a random person -- on a battlefield, anyone present,
+-- regardless of hate (so someone who hasn't generated any threat yet is still a
+-- fair target) -- faces them directly, then fires its line AoE at them.
 local lightningSpearPositioning = function(mob)
-    local targets = mob:getEnmityList()
     local potentialTargets = {}
-    for _, entry in ipairs(targets) do
-        if entry.entity then
-            table.insert(potentialTargets, entry.entity)
+
+    local battlefield = mob:getBattlefield()
+    if battlefield then
+        for _, player in pairs(battlefield:getPlayers()) do
+            if player:isAlive() then
+                table.insert(potentialTargets, player)
+            end
+        end
+    else
+        for _, entry in ipairs(mob:getEnmityList()) do
+            if entry.entity then
+                table.insert(potentialTargets, entry.entity)
+            end
         end
     end
 
     local skillTarget = #potentialTargets > 0 and utils.randomEntry(potentialTargets) or nil
-    turnForSkill(mob, skillTarget)
+    turnTowardSkill(mob, skillTarget)
 end
 
 local setupCombatListeners = function(mob)
@@ -683,11 +744,11 @@ xi.darkixion.onMobEngage = function(mob, target)
     mob:setMod(xi.mod.UDMGBREATH, 0)
     mob:setMod(xi.mod.UDMGMAGIC, 0)
     mob:setMod(xi.mod.REGAIN, 20) -- 'has tp regen': https://www.bluegartr.com/threads/59044-Ixion-discussion-thread/page8
-    mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
+    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
 end
 
 xi.darkixion.onBattlefieldMobEngage = function(mob, target)
-    mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
+    mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
 end
 
 xi.darkixion.onMobDisengage = function(mob)
@@ -729,15 +790,30 @@ xi.darkixion.onBattlefieldMobDisengage = function(mob)
 end
 
 xi.darkixion.onMobFight = function(mob, target)
-    -- This section deals with him glowing (double TP moves)
     local animationSub = mob:getAnimationSub()
+
+    -- Damsel Memento isn't in this Ixion's battlefield skill list, so it's the
+    -- only thing that would normally regrow a broken horn -- without this,
+    -- once it breaks (close to guaranteed over a full alliance fight) it would
+    -- stay broken, and phase-alternation frozen, for the rest of the fight.
+    if
+        mob:getLocalVar('BattlefieldIxion') == 1 and
+        animationSub == animationSubs.HORN_BROKEN and
+        not xi.combat.behavior.isEntityBusy(mob) and
+        GetSystemTime() >= mob:getLocalVar('hornRegrowAt')
+    then
+        changeHornState(mob, 1)
+        animationSub = mob:getAnimationSub()
+    end
+
+    -- This section deals with him glowing (double TP moves)
     if
         not xi.combat.behavior.isEntityBusy(mob) and
         GetSystemTime() >= mob:getLocalVar('phaseChange') and
         (animationSub == animationSubs.NORMAL or
         animationSub == animationSubs.GLOWING)
     then
-        mob:setLocalVar('phaseChange', GetSystemTime() + math.randomInt(60, 240))
+        mob:setLocalVar('phaseChange', GetSystemTime() + nextPhaseDelay(mob))
 
         -- alternate phase between normal (can trample) and glowing (double-up mobskills)
         animationSub = animationSub ~= animationSubs.NORMAL and animationSubs.NORMAL or animationSubs.GLOWING

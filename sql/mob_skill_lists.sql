@@ -930,7 +930,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188); -- slaverous_gale
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189); -- aeolian_void
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2190); -- extreme_purgation
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2191); -- desiccation
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,4408); -- gorge
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,3976); -- gorge
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,685);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,686);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,687);

@@ -392,6 +392,8 @@ xi.mobSkill =
 
     FISSION                       =  755,
 
+    HOWL_ORC                      =  766, -- King of The North (Frostscar Hrozdag)
+
     GREAT_WHIRLWIND_1             =  803,
     TORTOISE_SONG_1               =  804,
     HEAD_BUTT_TURTLE_1            =  805,
@@ -1106,6 +1108,6 @@ xi.mobSkill =
     VENOM_SPRAY_3                 = 3884,
     MANDIBULAR_BITE_3             = 3885,
 
+    GORGE                         = 3976,
     HM_STORMWIND                  = 4391,
-    GORGE                         = 4408,
 }

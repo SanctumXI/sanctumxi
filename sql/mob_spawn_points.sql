@@ -50398,21 +50398,21 @@ INSERT INTO `mob_spawn_points` VALUES (17347029,0,'Undefeatable_Sappdapp','Undef
 INSERT INTO `mob_spawn_points` VALUES (17347030,0,'Minds-eyed_Klugwug','Mind\'s-eyed Klugwug',51,0,0,87.897,-145.617,296.385,96);
 
 -- King of The North
-INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,110);
-INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,110);
-INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,110);
-INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Siege_Sniper','Siege Sniper',59,75,75,-405.153,94.703,-71.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Siege_Sniper','Siege Sniper',59,75,75,-387.153,94.703,-71.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Siege_Sniper','Siege Sniper',59,75,75,-165.218,-25.306,108.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347178,0,'Siege_Sniper','Siege Sniper',59,75,75,-147.218,-25.306,108.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347179,0,'Siege_Sniper','Siege Sniper',59,75,75,74.775,-145.323,288.455,46);
-INSERT INTO `mob_spawn_points` VALUES (17347180,0,'Siege_Sniper','Siege Sniper',59,75,75,92.775,-145.323,288.455,46);
-INSERT INTO `mob_spawn_points` VALUES (17347181,0,'Blackguard','Blackguard',60,75,75,-399.653,94.703,-62.849,46);
-INSERT INTO `mob_spawn_points` VALUES (17347182,0,'Blackguard','Blackguard',60,75,75,-392.653,94.703,-62.849,46);
-INSERT INTO `mob_spawn_points` VALUES (17347183,0,'Blackguard','Blackguard',60,75,75,-159.718,-25.306,117.121,46);
-INSERT INTO `mob_spawn_points` VALUES (17347184,0,'Blackguard','Blackguard',60,75,75,-152.718,-25.306,117.121,46);
-INSERT INTO `mob_spawn_points` VALUES (17347185,0,'Blackguard','Blackguard',60,75,75,80.275,-145.323,296.955,46);
-INSERT INTO `mob_spawn_points` VALUES (17347186,0,'Blackguard','Blackguard',60,75,75,87.275,-145.323,296.955,46);
+INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Siege_Sniper','Siege Sniper',59,75,75,-409.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Siege_Sniper','Siege Sniper',59,75,75,-383.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Siege_Sniper','Siege Sniper',59,75,75,-169.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347178,0,'Siege_Sniper','Siege Sniper',59,75,75,-143.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347179,0,'Siege_Sniper','Siege Sniper',59,75,75,70.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347180,0,'Siege_Sniper','Siege Sniper',59,75,75,96.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347181,0,'Blackguard','Blackguard',60,75,75,-402.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347182,0,'Blackguard','Blackguard',60,75,75,-390.153,94.703,-64.349,46);
+INSERT INTO `mob_spawn_points` VALUES (17347183,0,'Blackguard','Blackguard',60,75,75,-162.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347184,0,'Blackguard','Blackguard',60,75,75,-150.218,-25.306,115.621,46);
+INSERT INTO `mob_spawn_points` VALUES (17347185,0,'Blackguard','Blackguard',60,75,75,77.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347186,0,'Blackguard','Blackguard',60,75,75,89.775,-145.323,295.455,46);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17347035,0,'Chest_OPlenty','Chest O\'Plenty',53,99,99,-400.500,93.744,-71.000,46);
@@ -58185,9 +58185,9 @@ INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv t
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
 -- The Ravening Worm
-INSERT INTO `mob_spawn_points` VALUES (668029,0,'Rancorwurm','Rancorwurm',32,85,85,-279.785,-32.500,326.971,32);
-INSERT INTO `mob_spawn_points` VALUES (668030,0,'Rancorwurm','Rancorwurm',32,85,85,0.000,-0.500,47.607,32);
-INSERT INTO `mob_spawn_points` VALUES (668031,0,'Rancorwurm','Rancorwurm',32,85,85,282.223,31.500,-273.224,32);
+INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
+INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
+INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)
@@ -59411,9 +59411,9 @@ INSERT INTO `mob_spawn_points` VALUES (17465513,0,'Hoplomachus_XI-XXVI','Hoploma
 INSERT INTO `mob_spawn_points` VALUES (17465514,0,'Centurio_XI-I','Centurio XI-I',30,0,0,0.000,0.000,0.000,0);
 
 -- Three's a Crowd
-INSERT INTO `mob_spawn_points` VALUES (688389,0,'Typhon','Typhon',31,80,80,0.000,100.325,-240.000,64);
-INSERT INTO `mob_spawn_points` VALUES (688390,0,'Typhon','Typhon',31,80,80,0.000,0.000,2.081,64);
-INSERT INTO `mob_spawn_points` VALUES (688391,0,'Typhon','Typhon',31,80,80,0.000,-100.000,242.335,64);
+INSERT INTO `mob_spawn_points` VALUES (17465605,0,'Typhon','Typhon',31,80,80,0.000,100.325,-240.000,64);
+INSERT INTO `mob_spawn_points` VALUES (17465606,0,'Typhon','Typhon',31,80,80,0.000,0.000,2.081,64);
+INSERT INTO `mob_spawn_points` VALUES (17465607,0,'Typhon','Typhon',31,80,80,0.000,-100.000,242.335,64);
 
 -- ------------------------------------------------------------
 -- Toraimarai Canal (Zone 169)
@@ -70582,9 +70582,9 @@ INSERT INTO `mob_spawn_points` VALUES (17621569,0,'Ullegore','Ullegore',73,0,0,0
 INSERT INTO `mob_spawn_points` VALUES (17621570,0,'Mumor','Mumor',74,0,0,0.000,0.000,0.000,0);
 
 -- Ride the Lightning
-INSERT INTO `mob_spawn_points` VALUES (17621571,0,'Ixion','Ixion',78,85,85,-400.000,-202.125,400.000,192);
-INSERT INTO `mob_spawn_points` VALUES (17621572,0,'Ixion','Ixion',78,85,85,0.000,-2.125,0.000,192);
-INSERT INTO `mob_spawn_points` VALUES (17621573,0,'Ixion','Ixion',78,85,85,400.000,197.875,-400.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621572,0,'Ixion','Ixion',78,85,85,-400.000,-202.125,400.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621573,0,'Ixion','Ixion',78,85,85,0.000,-2.125,0.000,192);
+INSERT INTO `mob_spawn_points` VALUES (17621574,0,'Ixion','Ixion',78,85,85,400.000,197.875,-400.000,192);
 
 -- ------------------------------------------------------------
 -- Cloister of Flames(Zone 207)

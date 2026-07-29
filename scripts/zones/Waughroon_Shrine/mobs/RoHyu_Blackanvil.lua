@@ -15,7 +15,7 @@ local tuning =
     hpBonus               = 0,
     attackBonus           = 0,
     defenseBonus          = 0,
-    accuracyBonus         = 0,
+    accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
     regain                = 20,
@@ -59,14 +59,15 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Quadav king: strongly resists Earth, slightly weak to its opposite (Wind).
-    mob:setMod(xi.mod.EARTH_SDT, 4000)
+    mob:setMod(xi.mod.EARTH_SDT, -4000)
     mob:setMod(xi.mod.EARTH_RES_RANK, 10)
-    mob:setMod(xi.mod.WIND_SDT, -1000)
+    mob:setMod(xi.mod.WIND_SDT, 1000)
 
-    -- Tough smith-king: resists Stun and Paralyze.
     mob:setMod(xi.mod.STUN_RES_RANK, 8)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
+
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 175)
+    mob:setMod(xi.mod.CURE_POTENCY, 25)
 
     mob:setMobMod(xi.mobMod.SKILL_LIST, 2098)
     mob:setHP(mob:getMaxHP())

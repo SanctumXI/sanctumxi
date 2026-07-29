@@ -126,7 +126,7 @@ xi.battlefield.id =
     KINDERGARTEN_CAP                           = 18,
     LAST_ORC_SHUNNED_HERO                      = 19,
     BEYOND_INFINITY_HORLAIS_PEAK               = 20,  -- Converted
-    KING_OF_THE_NORTH                          = 21,  -- Horlais Peak, index 18
+    KING_OF_THE_NORTH                          = 21,  -- Horlais Peak, index 28
     AMAN_TROVE_MARS_HORLAIS_PEAK               = 24,  -- Incomplete
     AMAN_TROVE_VENUS_HORLAIS_PEAK              = 25,  -- Incomplete
     SAVE_THE_CHILDREN                          = 32,  -- Converted
@@ -157,7 +157,7 @@ xi.battlefield.id =
     PALBOROUGH_PROJECT                         = 83,
     SHELL_SHOCKED                              = 84,
     BEYOND_INFINITY_WAUGHROON_SHRINE           = 85,  -- Converted
-    HEAVY_IS_THE_SHELL                         = 86,  -- Waughroon Shrine, index 19
+    HEAVY_IS_THE_SHELL                         = 86,  -- Waughroon Shrine, index 29
     RANK_2_MISSION                             = 96,  -- Converted
     STEAMED_SPROUTS                            = 97,  -- Converted
     DIVINE_PUNISHERS                           = 98,  -- Converted
@@ -179,13 +179,13 @@ xi.battlefield.id =
     V_FORMATION                                = 114,
     AVIAN_APOSTATES                            = 115,
     BEYOND_INFINITY_BALGAS_DAIS                = 116, -- Converted
-    WING_AND_A_PRAYER                          = 118, -- Balga's Dais, index 18
+    WING_AND_A_PRAYER                          = 118, -- Balga's Dais, index 28
     TEMPLE_OF_UGGALEPIH                        = 128, -- Converted
     JUNGLE_BOOGYMEN                            = 129, -- Converted
     AMPHIBIAN_ASSAULT                          = 130, -- Converted
     PROJECT_SHANTOTTOFICATION                  = 131,
     WHOM_WILT_THOU_CALL                        = 132,
-    THREES_A_CROWD                             = 133, -- Sacrificial Chamber, index 7
+    THE_RAVENING_WORM                          = 133, -- Sacrificial Chamber, index 7
     SHADOW_LORD_BATTLE                         = 160,
     WHERE_TWO_PATHS_CONVERGE                   = 161,
     KINDRED_SPIRITS                            = 162, -- Experimental
@@ -201,7 +201,7 @@ xi.battlefield.id =
     SCARLET_KING                               = 199,
     CAT_BURGLAR_BARES_FANGS                    = 200, -- Experimental
     DRAGON_SCALES                              = 201,
-    THE_RAVENING_WORM                          = 202, -- Chamber of Oracles, index 11
+    THREES_A_CROWD                             = 202, -- Chamber of Oracles, index 11
     MOONLIT_PATH                               = 224, -- Converted
     MOON_READING                               = 225, -- Converted
     WAKING_THE_BEAST_FULLMOON                  = 226,
@@ -410,8 +410,6 @@ end
 --  - canLoseExp: Determines if a character loses experience points upon death while inside the battlefield. Defaults to true. (optional)
 --  - showTimer: Show the time remaining in the battlefield in the UI for the player. Defaults to true. (optional)
 --  - delayToExit: Amount of time to wait before exiting the battlefield. Defaults to 5 seconds. (optional)
---  - menuName: Custom name used when a battlefield needs a server-driven selection menu. (optional)
---  - entryName: Custom name printed upon entry instead of the client-localized battlefield name. (optional)
 --  - requiredItems: Items required to be traded to enter the battlefield.
 --                   Needs to be in the format of { itemid, quantity, useMessage = ID.text.*, wearMessage = ID.text.*, wornMessage = ID.text.* }. (optional)
 --  - requiredKeyItems: Key items required to be able to enter the battlefield - these are removed upon entry unless 'keep = true' (optional)
@@ -453,8 +451,6 @@ function Battlefield:new(data)
     obj.canLoseExp       = (data.canLoseExp == nil or data.canLoseExp) or false
     obj.showTimer        = (data.showTimer == nil or data.showTimer) or false
     obj.delayToExit      = data.delayToExit or 5
-    obj.menuName         = data.menuName
-    obj.entryName        = data.entryName
     obj.requiredItems    = data.requiredItems or {}
     obj.requiredKeyItems = data.requiredKeyItems or {}
     obj.lossEventParams  = data.lossEventParams or {}
@@ -633,109 +629,6 @@ function Battlefield:checkSkipCutscene(player)
     return false
 end
 
--- Custom menus make their selection outside of event 32000, so submit the
--- selected battlefield immediately after starting the normal entry event.
--- This keeps registration, orb handling, and client positioning on the
--- standard battlefield path without exposing the client-localized menu.
-local customEntryVar = '[BCNM]CustomEntry'
-
--- Attempts to (re)send the entry update to the client. Returns true once
--- registration is confirmed (whether this call did it or a prior one
--- already had), false if it should be retried later. Always calls into
--- content:onEntryEventUpdate() -- even once already registered -- because
--- that is what actually (re)sends the client-facing update packet; a
--- shortcut that skipped it here would silently stop retrying the one
--- packet that can get dropped by a slow client (see onEntryEventUpdate's
--- early-return branch).
-local function tryAdvanceCustomEntry(content, player, npc)
-    -- The native client normally retries event updates until it finds an
-    -- available arena. A custom menu has already made its selection, so
-    -- perform those retries here.
-    for _ = 1, 3 do
-        local previousArea = player:getLocalVar('[battlefield]area')
-        local result       = content:onEntryEventUpdate(player, 32000, bit.lshift(content.index, 4), npc)
-
-        if result == 1 then
-            player:setLocalVar('noPosUpdate', 0)
-            return true
-        elseif player:getLocalVar('[battlefield]area') == previousArea then
-            break
-        end
-    end
-
-    return false
-end
-
-local function startCustomEntryEvent(content, player, npc)
-    local options = utils.mask.setBit(0, content.index, true)
-
-    player:setLocalVar('[battlefield]area', 0)
-    player:setLocalVar(customEntryVar, content.battlefieldId)
-    player:startEvent(32000, 0, 0, 0, options, 0, 0, 0, 0)
-
-    -- Give the client time to enter event 32000 before advancing it. Sending
-    -- the update in the same tick as startEvent can be discarded by the
-    -- client, leaving its native battlefield list open. registerBattlefield()
-    -- itself succeeds immediately regardless of client timing -- it doesn't
-    -- wait on the client at all -- so tryAdvanceCustomEntry can report
-    -- success on the very first attempt even though the one packet that
-    -- tells the client to advance was dropped. Keep resending for a few more
-    -- rounds after success is first seen, not just until it's first seen, to
-    -- give a slow client additional real chances to receive it.
-    local function attempt(playerArg, attemptsLeft)
-        local succeeded = tryAdvanceCustomEntry(content, playerArg, npc)
-
-        if attemptsLeft > 0 then
-            playerArg:timer(500, function(playerArg2)
-                attempt(playerArg2, attemptsLeft - 1)
-            end)
-
-            return
-        end
-
-        if not succeeded then
-            -- Out of retries and never confirmed. If registration never
-            -- actually succeeded there is nothing to preserve, so clear our
-            -- bookkeeping. But if it DID succeed server-side (the player is
-            -- already in the battlefield and its mobs are spawned) and the
-            -- client simply never got the memo, leave customEntryVar set:
-            -- whenever the client's own event update eventually arrives,
-            -- redirectEventUpdate will forward it here and the resend in
-            -- onEntryEventUpdate's early-return branch will resolve it.
-            -- Clearing it now would instead route that late update through
-            -- the generic per-index handler, which no-ops once the player
-            -- already has a battlefield (see RegisterBattlefield's
-            -- PChar->PBattlefield check) and would leave the client stuck on
-            -- its native menu with nothing spawned.
-            local battlefield = playerArg:getBattlefield()
-            if not (battlefield and battlefield:getID() == content.battlefieldId) then
-                playerArg:setLocalVar('[battlefield]area', 0)
-                playerArg:setLocalVar(customEntryVar, 0)
-            end
-        end
-    end
-
-    player:timer(250, function(playerArg)
-        -- The native client normally retries event updates until it finds an
-        -- available arena. A custom menu has already made its selection, so
-        -- perform those retries here.
-        for _ = 1, 3 do
-            local previousArea = playerArg:getLocalVar('[battlefield]area')
-            local result       = content:onEntryEventUpdate(playerArg, 32000, bit.lshift(content.index, 4), npc)
-
-            if result == 1 then
-                playerArg:setLocalVar('noPosUpdate', 0)
-                return
-            elseif playerArg:getLocalVar('[battlefield]area') == previousArea then
-                break
-            end
-        end
-
-        playerArg:setLocalVar('[battlefield]area', 0)
-        playerArg:setLocalVar(customEntryVar, 0)
-    end)
-end
-
 function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     -- Check if player's party has level sync
     if xi.battlefield.rejectLevelSyncedParty(player, npc) then
@@ -813,39 +706,6 @@ function Battlefield.onEntryTrade(player, npc, trade, onUpdate)
     end
 
     if not onUpdate then
-        local customMenuOptions = {}
-
-        for _, content in ipairs(availableBattlefields) do
-            if content.menuName then
-                local selectedContent = content
-
-                table.insert(customMenuOptions,
-                {
-                    selectedContent.menuName,
-                    function(playerArg)
-                        if playerArg:battlefieldAtCapacity(selectedContent.battlefieldId) then
-                            playerArg:messageBasic(xi.msg.basic.WAIT_LONGER, 0, 0)
-                            return
-                        end
-
-                        startCustomEntryEvent(selectedContent, playerArg, npc)
-                    end,
-                })
-            end
-        end
-
-        if
-            #customMenuOptions > 0 and
-            #customMenuOptions == #availableBattlefields
-        then
-            player:customMenu({
-                title   = 'Select a battlefield',
-                options = customMenuOptions,
-            })
-
-            return
-        end
-
         -- Open menu of valid battlefields
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
@@ -874,10 +734,6 @@ function Battlefield.onEntryTrigger(player, npc)
         local options = utils.mask.setBit(0, content.index, true)
         player:setLocalVar('[BCNM]EnterExisting', 1)
 
-        if content.menuName then
-            return startCustomEntryEvent(content, player, npc)
-        end
-
         return Battlefield:event(32000, 0, 0, 0, options, 0, 0, 0, 0)
     end
 
@@ -897,10 +753,10 @@ function Battlefield.onEntryTrigger(player, npc)
 
     -- GMs get access to all BCNMs with visible GM
     if player:getGMLevel() > 0 and player:getVisibleGMLevel() >= 3 then
-        options = 268435455
+        options = 1073741823
     end
 
-    -- options = 268435455 -- uncomment to open menu with all possible battlefields
+    -- options = 1073741823 -- uncomment to open menu with all possible battlefields
     if options == 0 then
         local noEntryMessage = zones[player:getZoneID()].text.NO_BATTLEFIELD_ENTRY
 
@@ -916,22 +772,6 @@ end
 
 -- Static function to lookup the correct battlefield to handle this event update
 function Battlefield.redirectEventUpdate(player, csid, option, npc)
-    local customEntryId = player:getLocalVar(customEntryVar)
-
-    if customEntryId ~= 0 then
-        local customContent = xi.battlefield.contents[customEntryId]
-
-        if
-            customContent and
-            customContent.zoneId == player:getZoneID()
-        then
-            customContent:onEntryEventUpdate(player, csid, option, npc)
-            return
-        end
-
-        player:setLocalVar(customEntryVar, 0)
-    end
-
     if option == 0 or option == 255 then
         return false
     end
@@ -953,30 +793,6 @@ end
 -- will still send the appropriate position packet, but not change the values for the player.
 
 function Battlefield:onEntryEventUpdate(player, csid, option, npc)
-    local battlefield = player:getBattlefield()
-
-    if
-        player:getLocalVar(customEntryVar) == self.battlefieldId and
-        battlefield and
-        battlefield:getID() == self.battlefieldId
-    then
-        player:setLocalVar('noPosUpdate', 0)
-
-        -- Registration already succeeded on an earlier attempt, but the
-        -- packet that tells the client to advance past its own menu can be
-        -- dropped if the client hadn't finished entering this event yet
-        -- (see startCustomEntryEvent). Resend it every time this is called:
-        -- harmless if the client already moved on, and gives it another real
-        -- chance to catch up if it didn't.
-        local name, clearTime, partySize = battlefield:getRecord()
-        local autoSkipCS                 = self:getLocalVar(player, 'CS') == 1 and 100 or 0
-
-        player:updateEvent(xi.battlefield.returnCode.CUTSCENE, self.index, autoSkipCS, clearTime, partySize, self:checkSkipCutscene(player), self.csParam7, self.csParam8)
-        player:updateEventString(name)
-
-        return 1
-    end
-
     -- Can't enter if party locked the battlefield
     local isEnteringExisting = player:getLocalVar('[BCNM]EnterExisting') == 1
     if isEnteringExisting and not player:hasStatusEffect(xi.effect.BATTLEFIELD) then
@@ -1122,7 +938,6 @@ end
 function Battlefield:onEventFinishEnter(player, csid, option, npc)
     player:setEnteredBattlefield(true)
     player:setLocalVar('[battlefield]area', 0)
-    player:setLocalVar(customEntryVar, 0)
     self:setLocalVar(player, 'CS', 1)
 end
 
@@ -1345,11 +1160,7 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
     end
 
     local ID = zones[self.zoneId]
-    if self.entryName then
-        player:printToPlayer(string.format('Entering the battlefield for %s!', self.entryName), xi.msg.channel.SYSTEM_3)
-    else
-        player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
-    end
+    player:messageSpecial(ID.text.ENTERING_THE_BATTLEFIELD_FOR, 0, self.index)
 
     if self.maxPlayers > 6 then
         -- NOTE: Update tooling does not allow for duplicate messages to be stored in IDs.lua, even if the ID is different.

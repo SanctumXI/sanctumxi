@@ -15,7 +15,7 @@ local tuning =
     hpBonus               = 0,
     attackBonus           = 0,
     defenseBonus          = 0,
-    accuracyBonus         = 0,
+    accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
     regen                 = 25,
@@ -38,7 +38,6 @@ local function updateHeadBonuses(mob)
 end
 
 entity.onMobInitialize = function(mob)
-    -- A huge, multi-headed beast: too large and alert to be put to sleep.
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
 end
@@ -59,14 +58,11 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
 
-    -- Serpentine water-beast: resists Water, slightly weak to its opposite (Fire).
-    -- Also weak to Thunder, a classic pairing against aquatic/scaled creatures.
-    mob:setMod(xi.mod.WATER_SDT, 3000)
+    mob:setMod(xi.mod.WATER_SDT, -3000)
     mob:setMod(xi.mod.WATER_RES_RANK, 8)
-    mob:setMod(xi.mod.FIRE_SDT, -1000)
-    mob:setMod(xi.mod.THUNDER_SDT, -1500)
+    mob:setMod(xi.mod.FIRE_SDT, 1000)
+    mob:setMod(xi.mod.THUNDER_SDT, 1500)
 
-    -- Thick, scaled hide: resists Poison.
     mob:setMod(xi.mod.POISON_RES_RANK, 8)
 
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
