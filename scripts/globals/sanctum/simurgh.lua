@@ -44,7 +44,7 @@ simurgh.aspectData =
         modifiers   = { { xi.mod.EVA, 500 } },
     },
     {
-        name        = 'Hexbane Plume',
+        name        = 'Hexbane',
         effectText  = 'Simurgh gains immense resistance to enfeebling effects.',
         modifiers   = { { xi.mod.STATUSRES, 100 } },
     },
@@ -123,7 +123,7 @@ function simurgh.setAspectActive(mob, index, isActive, silent)
 
     if not silent then
         if isActive then
-            simurgh.sendMessage(mob, string.format('%s takes wing! %s', aspect.name, aspect.effectText))
+            simurgh.sendMessage(mob, string.format('%s joins the fight! Simurgh is empowered!', aspect.name))
         else
             simurgh.sendMessage(mob, string.format('%s falls. Its blessing fades from Simurgh.', aspect.name))
         end

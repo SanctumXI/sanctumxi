@@ -4395,7 +4395,7 @@ INSERT INTO `mob_skills` VALUES (4261,2612,'mix_samsons_strength',1,0.0,14.0,200
 -- INSERT INTO `mob_skills` VALUES (4388,0,'tartarus_tocsin',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4389,0,'chainweave',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4390,0,'dissatisfaction',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
-INSERT INTO `mob_skills` VALUES (4391,147,'hm_stormwind',1,0.0,20.0,0,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (4391,147,'hm_stormwind',1,20.0,20.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (4394,0,'batholithic_shell',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4395,0,'sentinel',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?
 -- INSERT INTO `mob_skills` VALUES (4396,0,'mana_wall',0,0.0,0.0,0,0,0,0,0,0,0,0,0); -- ?

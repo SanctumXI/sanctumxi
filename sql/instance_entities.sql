@@ -2600,7 +2600,7 @@ INSERT INTO `instance_entities` VALUES (29200,17973593); -- HM Simurgh Aspect: L
 INSERT INTO `instance_entities` VALUES (29200,17973594); -- HM Simurgh Aspect: Warquill
 INSERT INTO `instance_entities` VALUES (29200,17973595); -- HM Simurgh Aspect: Ragewing
 INSERT INTO `instance_entities` VALUES (29200,17973596); -- HM Simurgh Aspect: Miragewing
-INSERT INTO `instance_entities` VALUES (29200,17973597); -- HM Simurgh Aspect: Hexbane Plume
+INSERT INTO `instance_entities` VALUES (29200,17973597); -- HM Simurgh Aspect: Hexbane
 INSERT INTO `instance_entities` VALUES (29200,17973598); -- HM Simurgh Aspect: Stormtalon
 
 -- ------------------------------------------------------------

@@ -85302,7 +85302,7 @@ INSERT INTO `mob_spawn_points` VALUES (17973593,0,'HM_Simurgh_Aspect','Lifequill
 INSERT INTO `mob_spawn_points` VALUES (17973594,0,'HM_Simurgh_Aspect','Warquill',83,85,85,8.842,5.515,-8.225,64);
 INSERT INTO `mob_spawn_points` VALUES (17973595,0,'HM_Simurgh_Aspect','Ragewing',83,85,85,11.842,5.515,-1.225,160);
 INSERT INTO `mob_spawn_points` VALUES (17973596,0,'HM_Simurgh_Aspect','Miragewing',83,85,85,5.842,5.515,-7.225,32);
-INSERT INTO `mob_spawn_points` VALUES (17973597,0,'HM_Simurgh_Aspect','Hexbane Plume',83,85,85,11.842,5.515,-7.225,96);
+INSERT INTO `mob_spawn_points` VALUES (17973597,0,'HM_Simurgh_Aspect','Hexbane',83,85,85,11.842,5.515,-7.225,96);
 INSERT INTO `mob_spawn_points` VALUES (17973598,0,'HM_Simurgh_Aspect','Stormtalon',83,85,85,5.842,5.515,-1.225,224);
 -- TVR: Nii's Last Stand
 INSERT INTO `mob_spawn_points` VALUES (20983809,0,'Nii_Aquu','Nii Aquu',75,0,0,0.000,0.000,0.000,0);

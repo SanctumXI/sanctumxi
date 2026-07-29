@@ -29,13 +29,14 @@
 GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
 {
     auto& packet = this->data();
-    const bool personalBankUnavailable =
+    const bool linkshellBankActive = PChar->isLinkshellBankActive();
+    const bool inLinkshellLibrary =
         PChar->loc.zone != nullptr &&
-        PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY &&
-        !PChar->isLinkshellBankActive();
-    const auto storage = [PChar](const CONTAINER_ID locationId)
+        PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY;
+    const bool personalBankUnavailable = inLinkshellLibrary && !linkshellBankActive;
+    const auto storage = [PChar, linkshellBankActive](const CONTAINER_ID locationId)
     {
-        if (PChar->isLinkshellBankActive() && charutils::IsLinkshellBankContainer(locationId))
+        if (linkshellBankActive && charutils::IsLinkshellBankContainer(locationId))
         {
             return PChar->getLinkshellBankStorage(locationId);
         }
@@ -63,25 +64,26 @@ GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
     packet.ItemNum[LOC_RECYCLEBIN] = 1 + PChar->getStorage(LOC_RECYCLEBIN)->GetSize();
 
     // These set the usable amount of the container. 0x00 disables the container.
+    // Inventory remains available because all Linkshell Bank deposits and withdrawals pass through it.
     packet.ItemNum2[LOC_INVENTORY]  = 1 + PChar->getStorage(LOC_INVENTORY)->GetBuff();
     packet.ItemNum2[LOC_MOGSAFE]    = personalBankUnavailable ? 0x00 : 1 + storage(LOC_MOGSAFE)->GetBuff();
-    packet.ItemNum2[LOC_STORAGE]    = 1 + PChar->getStorage(LOC_STORAGE)->GetBuff();
-    packet.ItemNum2[LOC_TEMPITEMS]  = 1 + PChar->getStorage(LOC_TEMPITEMS)->GetBuff();
-    packet.ItemNum2[LOC_MOGLOCKER]  = (PChar->isLinkshellBankActive() ||
+    packet.ItemNum2[LOC_STORAGE]    = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_STORAGE)->GetBuff();
+    packet.ItemNum2[LOC_TEMPITEMS]  = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_TEMPITEMS)->GetBuff();
+    packet.ItemNum2[LOC_MOGLOCKER]  = (linkshellBankActive ||
                                         (!personalBankUnavailable && charutils::hasMogLockerAccess(PChar)))
                                           ? 1 + storage(LOC_MOGLOCKER)->GetBuff()
                                           : 0x00;
-    packet.ItemNum2[LOC_MOGSATCHEL] = 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetBuff();
-    packet.ItemNum2[LOC_MOGSACK]    = 1 + PChar->getStorage(LOC_MOGSACK)->GetBuff();
-    packet.ItemNum2[LOC_MOGCASE]    = 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE]   = 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
+    packet.ItemNum2[LOC_MOGSATCHEL] = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetBuff();
+    packet.ItemNum2[LOC_MOGSACK]    = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_MOGSACK)->GetBuff();
+    packet.ItemNum2[LOC_MOGCASE]    = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE]   = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
     packet.ItemNum2[LOC_MOGSAFE2]   = personalBankUnavailable ? 0x00 : 1 + storage(LOC_MOGSAFE2)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE2]  = 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE3]  = 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE4]  = 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE5]  = 1 + PChar->getStorage(LOC_WARDROBE5)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE6]  = 1 + PChar->getStorage(LOC_WARDROBE6)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE7]  = 1 + PChar->getStorage(LOC_WARDROBE7)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE8]  = 1 + PChar->getStorage(LOC_WARDROBE8)->GetBuff();
-    packet.ItemNum2[LOC_RECYCLEBIN] = 1 + PChar->getStorage(LOC_RECYCLEBIN)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE2]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE3]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE4]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE4)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE5]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE5)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE6]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE6)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE7]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE7)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE8]  = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE8)->GetBuff();
+    packet.ItemNum2[LOC_RECYCLEBIN] = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_RECYCLEBIN)->GetBuff();
 }
