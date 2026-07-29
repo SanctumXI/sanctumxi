@@ -15,6 +15,7 @@ local tuning =
     accuracyBonus         = 30,
     evasionBonus          = 0,
     magicAttackBonus      = 0,
+    baseDamageMultiplier  = 200,
     regain                = 20,
     physicalDamageTaken   = 0,
     rangedDamageTaken     = 0,
@@ -30,6 +31,8 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    mob:renameEntity('Rancorwurm', true)
+
     if mob:getMainLvl() ~= tuning.level then
         mob:setMobLevel(tuning.level)
     end
@@ -53,7 +56,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.PARALYZE_RES_RANK, 8)
     mob:setMod(xi.mod.POISON_RES_RANK, 6)
 
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 200) -- +100% physical damage output
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
     mob:setHP(mob:getMaxHP())
 end
 

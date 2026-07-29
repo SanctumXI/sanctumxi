@@ -15,6 +15,7 @@ local tuning =
     accuracyBonus         =     30,
     evasionBonus          =    -10,
     magicAttackBonus      =      0,
+    baseDamageMultiplier  =    200,
     regain                =     20,
     physicalDamageTaken   =      0, -- -2500 is -25%, etc
     rangedDamageTaken     =      0,
@@ -31,6 +32,7 @@ end
 
 entity.onMobSpawn = function(mob)
     xi.darkixion.onBattlefieldMobSpawn(mob)
+    mob:renameEntity('Ixion', true)
 
     if mob:getMainLvl() ~= tuning.level then
         mob:setMobLevel(tuning.level)
@@ -47,6 +49,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
 
     mob:setMod(xi.mod.THUNDER_SDT, -4000)
     mob:setMod(xi.mod.THUNDER_RES_RANK, 10)

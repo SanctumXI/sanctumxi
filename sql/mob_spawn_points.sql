@@ -50398,9 +50398,9 @@ INSERT INTO `mob_spawn_points` VALUES (17347029,0,'Undefeatable_Sappdapp','Undef
 INSERT INTO `mob_spawn_points` VALUES (17347030,0,'Minds-eyed_Klugwug','Mind\'s-eyed Klugwug',51,0,0,87.897,-145.617,296.385,96);
 
 -- King of The North
-INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,46);
-INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,46);
-INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,46);
+INSERT INTO `mob_spawn_points` VALUES (17347032,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-396.153,94.703,-64.349,238);
+INSERT INTO `mob_spawn_points` VALUES (17347033,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,-156.218,-25.306,115.621,238);
+INSERT INTO `mob_spawn_points` VALUES (17347034,0,'Frostscar_Hrozdag','Frostscar Hrozdag',52,85,85,83.775,-145.323,295.455,238);
 INSERT INTO `mob_spawn_points` VALUES (17347175,0,'Siege_Sniper','Siege Sniper',59,75,75,-409.153,94.703,-64.349,46);
 INSERT INTO `mob_spawn_points` VALUES (17347176,0,'Siege_Sniper','Siege Sniper',59,75,75,-383.153,94.703,-64.349,46);
 INSERT INTO `mob_spawn_points` VALUES (17347177,0,'Siege_Sniper','Siege Sniper',59,75,75,-169.218,-25.306,115.621,46);
@@ -52245,12 +52245,12 @@ INSERT INTO `mob_spawn_points` VALUES (17367821,0,'Quadav_Earthshaper','Quadav E
 INSERT INTO `mob_spawn_points` VALUES (17367822,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,28.916,0.188,13.987,124);
 INSERT INTO `mob_spawn_points` VALUES (17367823,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,222.866,-59.812,128.969,124);
 INSERT INTO `mob_spawn_points` VALUES (17367824,0,'Quadav_Earthshaper','Quadav Earthshaper',70,75,75,228.866,-59.812,133.969,124);
-INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-180.358,60.188,-140.977,252);
-INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-174.358,60.188,-140.977,124);
-INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,19.916,0.188,18.987,252);
-INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,25.916,0.188,18.987,124);
-INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,219.866,-59.812,138.969,252);
-INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,225.866,-59.812,138.969,124);
+INSERT INTO `mob_spawn_points` VALUES (17367825,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-183.358,60.188,-150.977,252);
+INSERT INTO `mob_spawn_points` VALUES (17367826,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,-171.358,60.188,-150.977,124);
+INSERT INTO `mob_spawn_points` VALUES (17367827,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,16.916,0.188,8.987,252);
+INSERT INTO `mob_spawn_points` VALUES (17367828,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,28.916,0.188,8.987,124);
+INSERT INTO `mob_spawn_points` VALUES (17367829,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,216.866,-59.812,128.969,252);
+INSERT INTO `mob_spawn_points` VALUES (17367830,0,'Quadav_Liturgist','Quadav Liturgist',71,75,75,228.866,-59.812,128.969,124);
 
 -- A.M.A.N. Trove
 INSERT INTO `mob_spawn_points` VALUES (17367698,0,'Chest_OPlenty','Chest O\'Plenty',62,0,0,-181.424,59.230,-134.764,128);
@@ -58185,9 +58185,9 @@ INSERT INTO `mob_spawn_points` VALUES (17445132,0,'Pevv_the_Riverleaper','Pevv t
 INSERT INTO `mob_spawn_points` VALUES (17445134,0,'Sahagins_Wyvern','Sahagin\'s Wyvern',31,0,0,0.000,0.000,0.000,0);
 
 -- The Ravening Worm
-INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Rancorwurm','Rancorwurm',32,85,85,-280.878,-32.500,326.971,32);
-INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Rancorwurm','Rancorwurm',32,85,85,-1.093,-0.500,47.607,32);
-INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Rancorwurm','Rancorwurm',32,85,85,281.130,31.500,-273.224,32);
+INSERT INTO `mob_spawn_points` VALUES (17445245,0,'Rancorwurm','Rancorwurm',32,85,85,-283.000,-32.500,323.000,32);
+INSERT INTO `mob_spawn_points` VALUES (17445246,0,'Rancorwurm','Rancorwurm',32,85,85,-3.000,-0.500,43.000,32);
+INSERT INTO `mob_spawn_points` VALUES (17445247,0,'Rancorwurm','Rancorwurm',32,85,85,277.000,31.500,-277.000,32);
 
 -- ------------------------------------------------------------
 -- Garlaige Citadel [S] (Zone 164)

@@ -11,18 +11,20 @@ mixins =
 
 local tuning =
 {
-    level               = 85,
-    hpBonus             = 0,
-    attackBonus         = 0,
-    defenseBonus        = 0,
-    accuracyBonus       = 15,
-    evasionBonus        = 0,
-    magicAttackBonus    = 0,
-    regain              = 20,
-    physicalDamageTaken = -5000,
-    rangedDamageTaken   = 0,
-    breathDamageTaken   = 0,
-    magicDamageTaken    = 0,
+    level                = 75,
+    hpBonus              = 0,
+    attackBonus          = 0,
+    defenseBonus         = 0,
+    accuracyBonus        = 15,
+    rangedAccuracyBonus  = 15,
+    evasionBonus         = 0,
+    magicAttackBonus     = 0,
+    baseDamageMultiplier = 100,
+    regain               = 20,
+    physicalDamageTaken  = -5000,
+    rangedDamageTaken    = 0,
+    breathDamageTaken    = 0,
+    magicDamageTaken     = 0,
 }
 
 ---@type TMobEntity
@@ -74,7 +76,7 @@ entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ATT, tuning.attackBonus)
     mob:addMod(xi.mod.DEF, tuning.defenseBonus)
     mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
-    mob:setMod(xi.mod.RACC, 15)
+    mob:addMod(xi.mod.RACC, tuning.rangedAccuracyBonus)
     mob:addMod(xi.mod.EVA, tuning.evasionBonus)
     mob:addMod(xi.mod.MATT, tuning.magicAttackBonus)
     mob:setMod(xi.mod.REGAIN, tuning.regain)
@@ -82,6 +84,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, tuning.rangedDamageTaken)
     mob:setMod(xi.mod.UDMGBREATH, tuning.breathDamageTaken)
     mob:setMod(xi.mod.UDMGMAGIC, tuning.magicDamageTaken)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
 
     mob:setMod(xi.mod.WIND_SDT, -4000)
     mob:setMod(xi.mod.WIND_RES_RANK, 10)

@@ -9,6 +9,14 @@ mixins =
 }
 -----------------------------------
 
+local tuning =
+{
+    level                = 75,
+    accuracyBonus        = 30,
+    rangedAccuracyBonus  = 30,
+    baseDamageMultiplier = 125,
+}
+
 ---@type TMobEntity
 local entity = {}
 
@@ -19,12 +27,16 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
+    if mob:getMainLvl() ~= tuning.level then
+        mob:setMobLevel(tuning.level)
+    end
+
     mob:setMod(xi.mod.ICE_SDT, -1500)
     mob:setMod(xi.mod.SLOW_RES_RANK, 4)
 
-    mob:setMod(xi.mod.ACC, 15)
-    mob:setMod(xi.mod.RACC, 15)
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 125)
+    mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
+    mob:addMod(xi.mod.RACC, tuning.rangedAccuracyBonus)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
 
     xi.mix.jobSpecial.config(mob, {
         specials =

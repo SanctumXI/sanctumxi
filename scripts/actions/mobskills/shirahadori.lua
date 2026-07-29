@@ -1,7 +1,8 @@
 -----------------------------------
 -- Shirahadori
 -- Family: Yagudo
--- Description: Greatly boosts parry rate for a short time.
+-- Description: Deals physical damage in a frontal cone.
+-- Additional Effect: Bind, Knockback
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -11,16 +12,25 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local duration = 30000
+    local params = {}
 
-    mob:addMod(xi.mod.PARRY, 500)
-    mob:queue(duration, function(mobArg)
-        mobArg:delMod(xi.mod.PARRY, 500)
-    end)
+    params.baseDamage         = mob:getWeaponDmg()
+    params.numHits            = 1
+    params.fTP                = { 2.5, 2.5, 2.5 }
+    params.accuracyModifier   = { 50, 50, 50 }
+    params.guaranteedFirstHit = true
+    params.attackType         = xi.attackType.PHYSICAL
+    params.damageType         = xi.damageType.PIERCING
+    params.shadowBehavior     = xi.mobskills.shadowBehavior.NUMSHADOWS_3
 
-    skill:setMsg(xi.msg.basic.NONE)
+    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
-    return 0
+    if xi.mobskills.processDamage(mob, target, skill, action, info) then
+        target:takeDamage(info.damage, mob, info.attackType, info.damageType)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 20)
+    end
+
+    return info.damage
 end
 
 return mobskillObject

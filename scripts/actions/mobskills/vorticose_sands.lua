@@ -1,7 +1,7 @@
 -----------------------------------
 -- Vorticose Sands
 -- Family: Tzee Xicu the Manifest
--- Description: Deals Wind damage, silences, strips equipment, and resets enmity.
+-- Description: Deals Wind damage, silences, and resets enmity.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -25,12 +25,6 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.SILENCE, 1, 0, 60)
-
-        if target:isPC() then
-            for slot = xi.slot.MAIN, xi.slot.BACK do
-                target:unequipItem(slot)
-            end
-        end
 
         mob:resetEnmity(target)
     end
