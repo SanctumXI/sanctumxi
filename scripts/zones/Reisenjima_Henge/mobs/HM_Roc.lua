@@ -8,7 +8,7 @@ mixins =
     require('scripts/mixins/job_special'),
 }
 
-
+local hardModeLoot = require('scripts/globals/sanctum/hard_mode_loot')
 
 ---@type TMobEntity
 local entity = {}
@@ -294,6 +294,7 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
 end
 
 -----------------------------------

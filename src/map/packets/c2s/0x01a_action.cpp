@@ -40,6 +40,7 @@
 #include "status_effect_container.h"
 #include "trade_container.h"
 #include "utils/battleutils.h"
+#include "utils/charutils.h"
 
 namespace
 {
@@ -182,6 +183,13 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
     {
         case GP_CLI_COMMAND_ACTION_ACTIONID::Talk:
         {
+            // Starting another NPC interaction ends any previous Linkshell Moogle session.
+            // Talking to the Linkshell Moogle again immediately opens a fresh session.
+            if (PChar->isLinkshellBankActive())
+            {
+                charutils::CloseLinkshellBank(PChar);
+            }
+
             // Monstrosity: Can't really do anything while under Gestation until you click it off.
             //            : MONs can trigger doors, so we'll handle that later.
             if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_GESTATION))

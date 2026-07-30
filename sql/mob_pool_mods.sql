@@ -546,6 +546,9 @@ INSERT INTO `mob_pool_mods` VALUES (6019,3,-10,0);      -- HPP: -10
 -- Kaiser Behemoth (Apollyon NW)
 INSERT INTO `mob_pool_mods` VALUES (6732,3,100,1); -- MP_BASE: 100
 
+-- Ro'Hyu Blackanvil (Heavy Is the Shell)
+INSERT INTO `mob_pool_mods` VALUES (7559,3,100,1); -- MP_BASE: 100
+
 -- Custom KSNM99 encounters: all rewards come from the armoury crate.
 INSERT INTO `mob_pool_mods` VALUES (7559,38,1,1); -- Ro'Hyu Blackanvil: NO_DROPS
 INSERT INTO `mob_pool_mods` VALUES (7560,38,1,1); -- Frostscar Hrozdag: NO_DROPS

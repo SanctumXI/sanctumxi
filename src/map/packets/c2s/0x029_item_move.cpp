@@ -48,19 +48,14 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
 {
     const bool inLinkshellLibrary = PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY;
 
-    if (inLinkshellLibrary)
+    if (PChar->isLinkshellBankActive())
     {
-        if (PChar->isLinkshellBankActive())
-        {
-            return {
-                LOC_INVENTORY,
-                LOC_MOGSAFE,
-                LOC_MOGSAFE2,
-                LOC_MOGLOCKER,
-            };
-        }
-
-        return { LOC_INVENTORY };
+        return {
+            LOC_INVENTORY,
+            LOC_MOGSAFE,
+            LOC_MOGSAFE2,
+            LOC_MOGLOCKER,
+        };
     }
 
     // These are always available in both LSB and retail.

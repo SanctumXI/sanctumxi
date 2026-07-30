@@ -8,7 +8,8 @@ mixins =
     require('scripts/mixins/rage'),
 }
 
-local ID = zones[xi.zone.REISENJIMA_HENGE]
+local hardModeLoot = require('scripts/globals/sanctum/hard_mode_loot')
+local ID           = zones[xi.zone.REISENJIMA_HENGE]
 
 ---@type TMobEntity
 local entity = {}
@@ -74,6 +75,7 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
 end
 
 entity.onMobSpawn = function(mob)

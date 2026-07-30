@@ -13,6 +13,8 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
+    action:actionID(403) -- Use the client-known Stormwind ID for the combat log.
+
     params.baseDamage     = mob:getMainLvl() + 50
     params.fTP            = { 8.00, 8.00, 8.00 }
     params.element        = xi.element.WIND

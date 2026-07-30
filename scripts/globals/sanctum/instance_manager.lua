@@ -21,7 +21,8 @@ local function validateConfig(config)
         type(config.destinationZone) ~= 'number' or
         type(config.exitZone) ~= 'number' or
         type(config.copyKey) ~= 'string' or
-        config.copyKey == ''
+        config.copyKey == '' or
+        (config.entryMessage ~= nil and type(config.entryMessage) ~= 'function')
     then
         return false, 'Invalid Sanctum instance configuration.'
     end
@@ -280,10 +281,20 @@ local function assignPlayer(player, instance, config)
         runtimeId
     ))
 
+    local zoneName    = destinationZone:getName():gsub('_', ' ')
+    local entryDetail = string.format('Channel: %u', runtimeId)
+
+    if config.entryMessage then
+        local customEntryDetail = config.entryMessage(player, instance)
+        if type(customEntryDetail) == 'string' and customEntryDetail ~= '' then
+            entryDetail = customEntryDetail
+        end
+    end
+
     player:printToPlayer(string.format(
-        'Entering definition %u, runtime %u.',
-        instance:getID(),
-        runtimeId
+        'You are now entering an instanced version of %s.\n%s',
+        zoneName,
+        entryDetail
     ))
 
     log(config, string.format(
