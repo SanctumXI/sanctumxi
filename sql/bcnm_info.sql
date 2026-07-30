@@ -55,7 +55,7 @@ INSERT INTO `bcnm_records` VALUES (17,139,'contaminated_colosseum','nobody',0,18
 INSERT INTO `bcnm_records` VALUES (18,139,'kindergarten_cap','nobody',0,900);
 INSERT INTO `bcnm_records` VALUES (19,139,'last_orc-shunned_hero','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (20,139,'beyond_infinity','nobody',0,600);
-INSERT INTO `bcnm_records` VALUES (21,139,'king_of_the_north','nobody',0,1800);
+INSERT INTO `bcnm_records` VALUES (21,139,'King of the North','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (32,140,'save_the_children','nobody',0,600);
 INSERT INTO `bcnm_records` VALUES (33,140,'holy_crest','nobody',0,600);
 INSERT INTO `bcnm_records` VALUES (34,140,'wings_of_fury','nobody',0,900);
@@ -84,7 +84,7 @@ INSERT INTO `bcnm_records` VALUES (82,144,'prehistoric_pigeons','nobody',0,1800)
 INSERT INTO `bcnm_records` VALUES (83,144,'palborough_project','nobody',0,900);
 INSERT INTO `bcnm_records` VALUES (84,144,'shell_shocked','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (85,144,'beyond_infinity','nobody',0,600);
-INSERT INTO `bcnm_records` VALUES (86,144,'heavy_is_the_shell','nobody',0,1800);
+INSERT INTO `bcnm_records` VALUES (86,144,'Heavy is the Shell','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (96,146,'rank_2_mission','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (97,146,'steamed_sprouts','nobody',0,1800);
 INSERT INTO `bcnm_records` VALUES (98,146,'divine_punishers','nobody',0,1800);

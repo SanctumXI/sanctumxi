@@ -1939,16 +1939,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             action.recast = 0s;
         }
 
-        // Check paralysis and consume recast for non-SP abilities
-        if (battleutils::IsParalyzed(this))
+        // Chakra and SP abilities must remain usable while paralyzed.
+        if (!ability::IgnoresParalysis(PAbility) && battleutils::IsParalyzed(this))
         {
-            // SP abilities don't consume recast when paralyzed
-            const auto recastId = PAbility->getRecastId();
-            if (recastId != Recast::Special && recastId != Recast::Special2)
-            {
-                charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, action.recast);
-            }
-
+            charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, action.recast);
             ActionInterrupts::AbilityParalyzed(this, PTarget);
             return;
         }

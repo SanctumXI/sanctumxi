@@ -51,6 +51,7 @@ CTargetFind::CTargetFind(CBattleEntity* PBattleEntity)
 , m_BPoint{}
 , m_CPoint{}
 , m_selfCenteredAoE(false)
+, m_validateConalPrimaryTarget(false)
 {
     reset();
 }
@@ -64,6 +65,7 @@ void CTargetFind::reset()
     m_zone            = 0;
     m_findFlags       = FINDFLAGS_NONE;
     m_selfCenteredAoE = false;
+    m_validateConalPrimaryTarget = false;
 
     m_APoint        = nullptr;
     m_PRadiusAround = nullptr;
@@ -132,6 +134,13 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOE_RADIUS radiusType, 
     // add original target first except for self-centered moves
     if (radiusType != AOE_RADIUS::ATTACKER || m_conal)
     {
+        if (m_conal && m_validateConalPrimaryTarget)
+        {
+            // Establish the allegiance anchor before validation so a primary
+            // target that dodges cannot cause the next entity to bypass geometry.
+            m_PTarget = PTarget;
+        }
+
         addEntity(PTarget, false); // pet will be added later
         m_PTarget = PTarget;
     }
@@ -241,7 +250,7 @@ void CTargetFind::findWithinArea(CBattleEntity* PTarget, AOE_RADIUS radiusType, 
     }
 }
 
-void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 findFlags, uint16 targetFlags, uint8 aoeType)
+void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float angle, uint8 findFlags, uint16 targetFlags, uint8 aoeType, bool validatePrimaryTarget)
 {
     // Ensure caster and target are valid before proceeding.
     if (m_PBattleEntity == nullptr || PTarget == nullptr)
@@ -252,6 +261,7 @@ void CTargetFind::findWithinCone(CBattleEntity* PTarget, float distance, float a
     m_findFlags   = findFlags;
     m_targetFlags = targetFlags;
     m_conal       = true;
+    m_validateConalPrimaryTarget = validatePrimaryTarget;
 
     m_APoint = &m_PBattleEntity->loc.p;
 
@@ -504,7 +514,12 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
         return false;
     }
 
-    if (m_PTarget == PTarget || PTarget->getZone() != m_zone || PTarget->GetUntargetable() || PTarget->status == STATUS_TYPE::INVISIBLE)
+    if (
+        (m_PTarget == PTarget && !m_validateConalPrimaryTarget) ||
+        PTarget->getZone() != m_zone ||
+        PTarget->GetUntargetable() ||
+        PTarget->status == STATUS_TYPE::INVISIBLE
+    )
     {
         return false;
     }
@@ -530,10 +545,13 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
         }
     }
 
-    // this is first target, always add him first
-    // Exception: for self-centered AoEs, all targets must pass radius validation
-    // Conals always add the main target
-    if (m_PTarget == nullptr && (!m_selfCenteredAoE || m_conal))
+    // The first target normally establishes the target context without a radius
+    // check. Direction-locked cones opt out so their primary target can dodge.
+    if (
+        m_PTarget == nullptr &&
+        (!m_selfCenteredAoE || m_conal) &&
+        !(m_conal && m_validateConalPrimaryTarget)
+    )
     {
         return true;
     }

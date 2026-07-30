@@ -994,6 +994,7 @@ xi.mobSkill =
     VEIL_OF_CHAOS                 = 2373,
     TORMENT_OF_GUDHA              = 2374,
     VORTICOSE_SANDS               = 2375,
+    DIAMOND_SHELL                 = 2378,
     -- INVINCIBLE                    = 2379,
 
     -- MIJIN_GAKURE                  = 2382,
@@ -1108,6 +1109,6 @@ xi.mobSkill =
     VENOM_SPRAY_3                 = 3884,
     MANDIBULAR_BITE_3             = 3885,
 
-    GORGE                         = 3976,
+    GORGE                         = 2604,
     HM_STORMWIND                  = 4391,
 }

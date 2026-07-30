@@ -85,6 +85,7 @@ xi.mobskills.magicalTpBonus =
 --- @field skipParry           boolean
 --- @field skipGuard           boolean
 --- @field skipBlock           boolean
+--- @field isAutoAttack        boolean
 --- @field terminateOnMiss     boolean
 --- @field primaryMessage      xi.msg.basic
 
@@ -121,6 +122,7 @@ local function normalizePhysicalSkillParams(skillParams)
         skipParry             = false,
         skipGuard             = false,
         skipBlock             = false,
+        isAutoAttack          = false,
         terminateOnMiss       = false,
         primaryMessage        = xi.msg.basic.DAMAGE,
     }
@@ -708,7 +710,7 @@ xi.mobskills.mobRangedMove = function(mob, target, skill, action, skillParams)
     totalDamage = resolveMissMessage(skill, hitsLanded, hitsYaegasumi, hitsAnticipated, hitsAbsorbed, shadowsAbsorbed, params.primaryMessage, totalDamage)
 
     -- Mob only gets TP for hitting the initial target. AOE hits do not count.
-    xi.mobskills.calculateSkillTPReturn(totalDamage, mob, skill, target, params.attackType, hitsLanded)
+    xi.mobskills.calculateSkillTPReturn(totalDamage, mob, skill, target, params.attackType, hitsLanded, params.isAutoAttack)
 
     returnInfo.damage       = totalDamage
     returnInfo.hybridDamage = magicDamage
@@ -947,7 +949,7 @@ xi.mobskills.mobPhysicalMove = function(mob, target, skill, action, skillParams)
     ----------------------------------
     -- Handle TP Returns
     ----------------------------------
-    xi.mobskills.calculateSkillTPReturn(totalDamage, mob, skill, target, params.attackType, hitsLanded)
+    xi.mobskills.calculateSkillTPReturn(totalDamage, mob, skill, target, params.attackType, hitsLanded, params.isAutoAttack)
 
     returnInfo.damage       = totalDamage
     returnInfo.hybridDamage = magicDamage
@@ -1429,7 +1431,7 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
     return returnInfo
 end
 
-xi.mobskills.calculateSkillTPReturn = function(damage, mob, skill, target, attackType, hitsLanded)
+xi.mobskills.calculateSkillTPReturn = function(damage, mob, skill, target, attackType, hitsLanded, isAutoAttack)
     -- Calculate TP return of the mob skill.
     if
         hitsLanded > 0 and
@@ -1452,11 +1454,22 @@ xi.mobskills.calculateSkillTPReturn = function(damage, mob, skill, target, attac
             targetTPReturn = xi.combat.tp.calculateTPGainOnPhysicalDamage(mob, target, damage, mob:getBaseDelay())
         end
 
-        -- Handle additional hit TP return for mob.
-        mobTPReturn = mobTPReturn + 10 * (hitsLanded - 1) -- Extra hits give 10 TP each
+        if isAutoAttack then
+            -- Attack-list mob skills stand in for ordinary melee rounds, so each
+            -- landed multi-attack swing grants the normal per-hit TP amount.
+            mobTPReturn    = mobTPReturn * hitsLanded
+            targetTPReturn = targetTPReturn * hitsLanded
+        else
+            -- Handle additional hit TP return for mob skills.
+            mobTPReturn = mobTPReturn + 10 * (hitsLanded - 1) -- Extra hits give 10 TP each
+        end
 
-        -- Mob gains TP if skill hit the primary target.
-        if skill:getPrimaryTargetID() == target:getID() then
+        -- Attack-list mob skills are always single-target but do not reliably
+        -- expose their selected target as the skill's primary target.
+        if
+            isAutoAttack or
+            skill:getPrimaryTargetID() == target:getID()
+        then
             mob:addTP(mobTPReturn)
         end
 

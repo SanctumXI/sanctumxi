@@ -930,7 +930,7 @@ INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2188); -- slaverous_gale
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2189); -- aeolian_void
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2190); -- extreme_purgation
 INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2191); -- desiccation
-INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,3976); -- gorge
+INSERT INTO `mob_skill_lists` VALUES ('Sandworm',215,2604); -- gorge
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,685);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,686);
 INSERT INTO `mob_skill_lists` VALUES ('Sapling',216,687);
@@ -4319,7 +4319,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,611);  -- Ore To
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2204); -- Ore Lob
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2266); -- Shell Charge
 INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell',2098,2267); -- Skull Smash
-INSERT INTO `mob_skill_lists` VALUES ('Heavy_Is_the_Shell_Low_HP',2099,2374); -- Torment of Gu'Dha
 
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2269); -- Kamaitachi
 INSERT INTO `mob_skill_lists` VALUES ('Wing_and_a_Prayer',2100,2270); -- Shirahadori

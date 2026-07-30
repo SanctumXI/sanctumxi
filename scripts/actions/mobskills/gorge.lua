@@ -1,7 +1,8 @@
 -----------------------------------
 -- Gorge
 -- Family: Sandworm
--- Description: Drains HP from a target. Also consumes the target's Food effect.
+-- Description: Drains HP from targets in a frontal cone, splitting the damage
+--              between everyone hit. Also consumes each target's Food effect.
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -11,9 +12,11 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local params = {}
+    local params      = {}
+    local targetCount = math.max(1, skill:getTotalTargets())
 
-    params.baseDamage         = mob:getMainLvl() + 2
+    -- Three times the previous total damage, divided evenly across the cone.
+    params.baseDamage         = (mob:getMainLvl() + 2) * 3 / targetCount
     params.fTP                = { 3.5, 3.5, 3.5 }
     params.element            = xi.element.NONE
     params.attackType         = xi.attackType.MAGICAL

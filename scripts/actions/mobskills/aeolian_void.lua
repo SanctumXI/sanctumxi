@@ -14,7 +14,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.fTP            = { 2.00, 2.00, 2.00 }
+    -- Average damage is 50% higher, with TP-based variance instead of a fixed result.
+    params.fTP            = { 2.7, 3.0, 3.3 }
     params.element        = xi.element.WIND
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.WIND

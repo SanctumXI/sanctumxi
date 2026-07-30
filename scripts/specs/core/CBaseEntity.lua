@@ -2680,6 +2680,10 @@ end
 function CBaseEntity:addRecast(recastCont, recastID, duration)
 end
 
+---@return nil
+function CBaseEntity:maxAbilityRecasts()
+end
+
 ---@nodiscard
 ---@param rType integer
 ---@param recastID integer

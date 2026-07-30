@@ -5798,7 +5798,30 @@ INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,376,1,255); -- Horde Lull
 INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,423,1,255); -- Massacre Elegy (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('HM_Simurgh',569,462,1,255); -- Magic Finale (1~255)
 
--- Next Available: 570
+-- Quadav Earthshaper (KSNM: Heavy is the Shell)
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Earthshaper_KSNM',570,210,1,255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Earthshaper_KSNM',570,162,1,255); -- Stone IV
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Earthshaper_KSNM',570,161,1,255); -- Stone III
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Earthshaper_KSNM',570,190,1,255); -- Stonega II
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Earthshaper_KSNM',570,191,1,255); -- Stonega III
+
+-- Quadav Liturgist (KSNM: Heavy is the Shell)
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,15,1,255);  -- Paralyna
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,16,1,255);  -- Blindna
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,56,1,255);  -- Slow
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,132,1,255); -- Shellra III
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,110,1,255); -- Regen II
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,4,1,255);   -- Cure IV
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,5,1,255);   -- Cure V
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,54,1,255);  -- Stoneskin
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,29,1,255);  -- Banish II
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,8,1,255);   -- Curaga II
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,95,1,255);  -- Esuna
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,98,1,255);  -- Repose
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,30,1,255);  -- Banish III
+INSERT INTO `mob_spell_lists` VALUES ('Quadav_Liturgist_KSNM',571,39,1,255);  -- Banishga II
+
+-- Next Available: 572
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

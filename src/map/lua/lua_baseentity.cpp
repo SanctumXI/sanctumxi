@@ -173,6 +173,8 @@
 
 #include <magic_enum/magic_enum.hpp>
 
+#include <map>
+
 extern std::unordered_map<uint32, std::unordered_map<uint16, std::vector<std::pair<uint16, uint8>>>> PacketMods;
 
 //======================================================//
@@ -12662,6 +12664,71 @@ void CLuaBaseEntity::addRecast(uint8 recastCont, uint16 recastID, uint32 duratio
 }
 
 /************************************************************************
+ *  Function: maxAbilityRecasts()
+ *  Purpose : Sets all currently available Ability cooldowns to maximum
+ *  Example : target:maxAbilityRecasts()
+ *  Notes   :
+ ************************************************************************/
+
+void CLuaBaseEntity::maxAbilityRecasts()
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        return;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+
+    std::map<Recast, timer::duration> maxRecastDurations;
+    const auto collectRecasts = [&PChar, &maxRecastDurations](JOBTYPE job, uint8 level)
+    {
+        for (const auto* PAbility : ability::GetAbilities(job))
+        {
+            if (PAbility == nullptr || PAbility->getLevel() > level)
+            {
+                continue;
+            }
+
+            const auto recastId = PAbility->getRecastId();
+            if (!PChar->PRecastContainer->Has(RECAST_ABILITY, recastId))
+            {
+                continue;
+            }
+
+            auto& maxDuration = maxRecastDurations[recastId];
+            maxDuration       = std::max(maxDuration, PAbility->getRecastTime());
+        }
+    };
+
+    collectRecasts(PChar->GetMJob(), PChar->GetMLevel());
+    if (PChar->GetSJob() != JOB_NON)
+    {
+        collectRecasts(PChar->GetSJob(), PChar->GetSLevel());
+    }
+
+    for (const auto& [recastId, maxDuration] : maxRecastDurations)
+    {
+        auto* recast = PChar->PRecastContainer->GetRecast(RECAST_ABILITY, recastId);
+        if (recast != nullptr && recast->chargeTime > 0s && recast->maxCharges > 0)
+        {
+            // Add() normally accumulates charge recasts. Clear the current timer
+            // first so this sets exactly one full bank rather than extending it.
+            const auto chargeTime = recast->chargeTime;
+            const auto maxCharges = recast->maxCharges;
+            PChar->PRecastContainer->Del(RECAST_ABILITY, recastId);
+            PChar->PRecastContainer->Add(RECAST_ABILITY, recastId, chargeTime * maxCharges, chargeTime, maxCharges);
+        }
+        else if (maxDuration > 0s)
+        {
+            PChar->PRecastContainer->Add(RECAST_ABILITY, recastId, maxDuration);
+        }
+    }
+
+    PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS2>(PChar);
+    PChar->pushPacket<GP_SERV_COMMAND_ABIL_RECAST>(PChar);
+}
+
+/************************************************************************
  *  Function: hasRecast()
  *  Purpose : Checks to see if a particular Ability is on cooldown
  *  Example : automaton:hasRecast(xi.recast.ABILITY, skill:getID(), recast)
@@ -20671,6 +20738,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("timer", CLuaBaseEntity::timer);
     SOL_REGISTER("queue", CLuaBaseEntity::queue);
     SOL_REGISTER("addRecast", CLuaBaseEntity::addRecast);
+    SOL_REGISTER("maxAbilityRecasts", CLuaBaseEntity::maxAbilityRecasts);
     SOL_REGISTER("hasRecast", CLuaBaseEntity::hasRecast);
     SOL_REGISTER("resetRecast", CLuaBaseEntity::resetRecast);
     SOL_REGISTER("resetRecasts", CLuaBaseEntity::resetRecasts);

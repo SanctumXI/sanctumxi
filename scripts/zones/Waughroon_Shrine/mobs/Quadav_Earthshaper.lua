@@ -16,6 +16,8 @@ local tuning =
     rangedAccuracyBonus  = 15,
     baseDamageMultiplier = 125,
     curePotency          = 25,
+    magicCooldown        = 12,
+    refresh              = 20,
 }
 
 ---@type TMobEntity
@@ -40,7 +42,22 @@ entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.ACC, tuning.accuracyBonus)
     mob:addMod(xi.mod.RACC, tuning.rangedAccuracyBonus)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, tuning.baseDamageMultiplier)
+    mob:setMobMod(xi.mobMod.MAGIC_COOL, tuning.magicCooldown)
     mob:setMod(xi.mod.CURE_POTENCY, tuning.curePotency)
+    mob:setMod(xi.mod.REFRESH, tuning.refresh)
+end
+
+entity.onMobSpellChoose = function(mob, target, spellId)
+    local spellList =
+    {
+        { xi.magic.spell.QUAKE,       target, false, xi.action.type.DAMAGE_TARGET, nil, 0, 125 },
+        { xi.magic.spell.STONE_IV,    target, false, xi.action.type.DAMAGE_TARGET, nil, 0, 100 },
+        { xi.magic.spell.STONE_III,   target, false, xi.action.type.DAMAGE_TARGET, nil, 0,  50 },
+        { xi.magic.spell.STONEGA_II,  target, false, xi.action.type.DAMAGE_TARGET, nil, 0,  75 },
+        { xi.magic.spell.STONEGA_III, target, false, xi.action.type.DAMAGE_TARGET, nil, 0, 100 },
+    }
+
+    return xi.combat.behavior.chooseAction(mob, target, nil, spellList)
 end
 
 return entity

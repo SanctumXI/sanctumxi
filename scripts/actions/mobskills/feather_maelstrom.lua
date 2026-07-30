@@ -1,7 +1,7 @@
 -----------------------------------
 -- Feather Maelstrom
 -- Family: Yagudo
--- Description: Deals physical damage to a single target. Additional Effect: Amnesia, Bio
+-- Description: Deals physical damage to a single target. Additional Effect: Bio
 -----------------------------------
 ---@type TMobSkill
 local mobskillObject = {}
@@ -26,9 +26,8 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
 
-        -- TODO: Capture power/duration of effects
+        -- TODO: Capture power/duration of effect
         xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIO, 6, 3, 60, 0, 15) -- TODO: Capture subPower (ATTP Modifier). Using Bio II value for now (15%)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.AMNESIA, 1, 0, 60) -- Note: Power matters for things that attempt to remove Amnesia.
     end
 
     return info.damage

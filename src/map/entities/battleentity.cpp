@@ -898,6 +898,17 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/, DAMAGE_TYPE damageType /* = DAMAGE_NONE*/, bool isSkillchainDamage /* = false */)
 {
     TracyZoneScoped;
+
+    // Opt-in support for Diamond Shell-style rear physical damage immunity.
+    if (amount > 0 &&
+        attacker &&
+        GetLocalVar("rearDamageNull") > 0 &&
+        (attackType == ATTACK_TYPE::PHYSICAL || attackType == ATTACK_TYPE::RANGED) &&
+        behind(attacker->loc.p, loc.p, 64))
+    {
+        amount = 0;
+    }
+
     if (attacker)
     {
         lastAttackerId_.id     = attacker->id;
@@ -2549,9 +2560,11 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     // Self-centered AoEs (mob_skill_aoe = 1) don't have a "primary target" concept
     // They should find targets around the mob regardless of where any specific entity is
     const bool isSelfCenteredAoE = PSkill->getAoe() == static_cast<uint8>(AOE_RADIUS::ATTACKER);
+    const bool isDirectionLocked = (PSkill->getFlag() & SKILLFLAG_LOCK_FACING) != 0;
 
-    // For non-self-centered skills, check if the primary target is within range
-    if (!isSelfCenteredAoE && !PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance))
+    // Direction-locked cones still resolve at their original heading when the
+    // primary target runs out of range during the readying window.
+    if (!isSelfCenteredAoE && !isDirectionLocked && !PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance))
     {
         ActionInterrupts::MobSkillOutOfRange(this, PTarget);
         return;
@@ -2578,7 +2591,14 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         // mob_skill_param doubles as an optional narrow-cone override (in degrees) for conal
         // mob skills that need a tighter line-shaped hitbox than the standard 45 degree cone.
         float angle = PSkill->getParam() > 0 ? static_cast<float>(PSkill->getParam()) : 45.0f;
-        PAI->TargetFind->findWithinCone(PTarget, distance, angle, findFlags, PSkill->getValidTargets(), PSkill->getAoe());
+        PAI->TargetFind->findWithinCone(
+            PTarget,
+            distance,
+            angle,
+            findFlags,
+            PSkill->getValidTargets(),
+            PSkill->getAoe(),
+            isDirectionLocked);
     }
     else
     {

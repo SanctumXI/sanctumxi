@@ -17,12 +17,13 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
-    local params = {}
+    local params             = {}
+    local magicAccuracyBonus = mob:getLocalVar('HydraBlastMacc')
 
     params.percentMultipier = 0.10
     params.damageCap        = 700 -- TODO: Capture cap
     params.bonusDamage      = 0
-    params.mAccuracyBonus   = { 0, 0, 0 }
+    params.mAccuracyBonus   = { magicAccuracyBonus, magicAccuracyBonus, magicAccuracyBonus }
     params.resistStat       = xi.mod.INT
     params.element          = xi.element.FIRE
     params.attackType       = xi.attackType.BREATH
