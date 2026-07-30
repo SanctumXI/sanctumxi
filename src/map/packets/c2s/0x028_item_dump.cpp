@@ -56,16 +56,13 @@ const std::set validContainers = {
 
 auto GP_CLI_COMMAND_ITEM_DUMP::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
-    const bool inLinkshellLibrary =
-        PChar->loc.zone != nullptr &&
-        PChar->loc.zone->GetID() == ZONE_CELENNIA_MEMORIAL_LIBRARY;
     const bool containerAvailable =
-        !inLinkshellLibrary ||
+        !PChar->isLinkshellBankActive() ||
         Category == LOC_INVENTORY ||
-        (PChar->isLinkshellBankActive() && charutils::IsLinkshellBankContainer(Category));
+        charutils::IsLinkshellBankContainer(Category);
 
     return PacketValidator()
-        .mustEqual(containerAvailable, true, "Container unavailable in Linkshell Library")
+        .mustEqual(containerAvailable, true, "Container unavailable during Linkshell Bank session")
         .oneOf("Category", static_cast<CONTAINER_ID>(Category), validContainers)
         .range("ItemNum", ItemNum, 0, 99); // Retail honors 0 quantity.
 }

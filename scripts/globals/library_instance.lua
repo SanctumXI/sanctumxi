@@ -140,6 +140,10 @@ local function getLinkshellConfig(linkshellId)
         canEnter        = function(player)
             return libraryInstance.isRegisteredMember(player, linkshellId)
         end,
+
+        entryMessage    = function(player)
+            return string.format('Library of %s', libraryInstance.getRegisteredLinkshellName(player))
+        end,
     }
 end
 

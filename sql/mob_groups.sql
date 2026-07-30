@@ -10701,7 +10701,7 @@ INSERT INTO `mob_groups` VALUES (57,2200,144,'KaNha_Jabbertongue',0,128,0,0,0,0,
 INSERT INTO `mob_groups` VALUES (58,426,144,'BiFho_Jestergrin',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (59,2305,144,'KuTya_Hotblood',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (60,1167,144,'EaTho_Cruelheart',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (61,7559,144,'RoHyu_Blackanvil',0,128,0,30000,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (61,7559,144,'RoHyu_Blackanvil',0,128,0,30000,500,0,NULL);
 INSERT INTO `mob_groups` VALUES (62,6868,144,'Chest_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (63,6869,144,'Coffer_OPlenty',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (64,0,144,'Naji',0,128,0,0,0,0,NULL);
@@ -16048,9 +16048,9 @@ INSERT INTO `mob_groups` VALUES (75,6032,292,'Nii_Aquu',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (76,6034,292,'Zhuu_Buxu_the_Silent',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (77,6035,292,'Gessho',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (78,6033,292,'Reikuu',0,128,0,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (79,7555,292,'HM_Roc',0,128,0,28500,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (80,7556,292,'HM_Simurgh',0,128,0,51000,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (81,7557,292,'HM_King_Arthro',0,128,0,70000,7500,0,NULL);
+INSERT INTO `mob_groups` VALUES (79,7555,292,'HM_Roc',0,128,2112,28500,0,0,NULL); -- Normal Roc loot (Sauromugue Champaign)
+INSERT INTO `mob_groups` VALUES (80,7556,292,'HM_Simurgh',0,128,2255,51000,0,0,NULL); -- Normal Simurgh loot (Rolanberry Fields)
+INSERT INTO `mob_groups` VALUES (81,7557,292,'HM_King_Arthro',0,128,1449,70000,7500,0,NULL); -- Normal King Arthro loot (Jugner Forest)
 INSERT INTO `mob_groups` VALUES (82,7558,292,'HM_Knight_Crab',0,128,0,4500,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (83,7570,292,'HM_Simurgh_Aspect',0,128,0,7500,0,0,NULL);
 

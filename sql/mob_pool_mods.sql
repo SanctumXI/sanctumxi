@@ -531,6 +531,9 @@ INSERT INTO `mob_pool_mods` VALUES (6019,3,-10,0);      -- HPP: -10
 -- Kaiser Behemoth (Apollyon NW)
 INSERT INTO `mob_pool_mods` VALUES (6732,3,100,1); -- MP_BASE: 100
 
+-- Ro'Hyu Blackanvil (Heavy Is the Shell)
+INSERT INTO `mob_pool_mods` VALUES (7559,3,100,1); -- MP_BASE: 100
+
 /*!40000 ALTER TABLE `mob_pool_mods` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

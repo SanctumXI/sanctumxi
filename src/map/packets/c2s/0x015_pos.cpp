@@ -23,6 +23,7 @@
 
 #include "entities/charentity.h"
 #include "packets/s2c/0x0f5_tracking_pos.h"
+#include "utils/charutils.h"
 
 auto GP_CLI_COMMAND_POS::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
@@ -43,6 +44,10 @@ void GP_CLI_COMMAND_POS::process(MapSession* PSession, CCharEntity* PChar) const
     const float  newZ        = y; // Not a typo.
     const uint16 newTargID   = facetarget;
     const uint8  newRotation = dir;
+    const bool   changedPosition =
+        PChar->loc.p.x != newX ||
+        PChar->loc.p.y != newY ||
+        PChar->loc.p.z != newZ;
 
     // clang-format off
     const bool moved =
@@ -70,6 +75,14 @@ void GP_CLI_COMMAND_POS::process(MapSession* PSession, CCharEntity* PChar) const
 
     if (moved)
     {
+        // The stock client does not send a dedicated packet when its Mog Menu closes.
+        // Walking away is the reliable boundary between the Linkshell Moogle session
+        // and normal inventory use, so restore the personal container view here.
+        if (changedPosition && PChar->isLinkshellBankActive())
+        {
+            charutils::CloseLinkshellBank(PChar);
+        }
+
         PChar->updatemask |= UPDATE_POS; // Indicate that we want to update this PChar's PChar->loc or targID
 
         // Calculate rough amount of steps taken

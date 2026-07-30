@@ -8,6 +8,7 @@ mixins =
     require('scripts/mixins/job_special'),
 }
 
+local hardModeLoot     = require('scripts/globals/sanctum/hard_mode_loot')
 local simurghMechanics = require('scripts/globals/sanctum/simurgh')
 local ID               = zones[xi.zone.REISENJIMA_HENGE]
 
@@ -263,6 +264,7 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
 end
 
 entity.onMobSpawn = function(mob)
