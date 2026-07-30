@@ -364,6 +364,8 @@ xi.mod =
     AMNESIARES                      = 253,
     LULLABYRES                      = 254,
     DEATHRES                        = 255,
+    BIORES                          = 1210, -- Sanctum: Enhances resistance to Bio
+    DISEASERES                      = 1211, -- Sanctum: Enhances resistance to Disease
     STATUSRES                       = 958, -- "Resistance to All Status Ailments"
 
     -- Status effect Magic Evasion modifiers.

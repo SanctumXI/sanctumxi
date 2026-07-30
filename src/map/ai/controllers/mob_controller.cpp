@@ -52,6 +52,12 @@ constexpr float SeparationDistance{ 1.0f };
 constexpr float FormationDistanceScale{ 0.5f };
 constexpr float FormationAngularSpan{ static_cast<float>(M_PI) };
 constexpr float FormationTolerance{ 0.25f };
+
+uint16 RollMobSkillTPThreshold()
+{
+    // Keep the full retail-style range while making lower-TP moves more common.
+    return static_cast<uint16>(std::min(xirand::GetRandomNumber(1000, 3000), xirand::GetRandomNumber(1000, 3000)));
+}
 } // namespace
 
 CMobController::CMobController(CMobEntity* PEntity)
@@ -758,7 +764,7 @@ auto CMobController::DoCombatTick(timer::time_point tick) -> Task<void>
 
         if (m_Tick >= m_LastMobSkillTime && PMob->shouldUseTPMove(m_tpThreshold) && MobSkill())
         {
-            m_tpThreshold = xirand::GetRandomNumber(1000, 3000);
+            m_tpThreshold = RollMobSkillTPThreshold();
             co_return;
         }
     }
@@ -1493,7 +1499,7 @@ auto CMobController::Engage(const uint16 targid) -> bool
                                                               xirand::GetRandomNumber(PMob->getMobMod(MOBMOD_SPECIAL_DELAY)));
         }
 
-        m_tpThreshold = xirand::GetRandomNumber(1000, 3000);
+        m_tpThreshold = RollMobSkillTPThreshold();
 
         // Pet should also fight the target if they can
         if (PMob->PPet && !PMob->PPet->PAI->IsEngaged())

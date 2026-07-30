@@ -15,9 +15,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params      = {}
     local targetCount = math.max(1, skill:getTotalTargets())
 
-    -- Three times the previous total damage, divided evenly across the cone.
+    -- 25% above the previous boosted damage, divided evenly across the cone.
     params.baseDamage         = (mob:getMainLvl() + 2) * 3 / targetCount
-    params.fTP                = { 3.5, 3.5, 3.5 }
+    params.fTP                = { 4.375, 4.375, 4.375 }
     params.element            = xi.element.NONE
     params.attackType         = xi.attackType.MAGICAL
     params.damageType         = xi.damageType.NONE

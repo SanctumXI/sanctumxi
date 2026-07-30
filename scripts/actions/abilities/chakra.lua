@@ -9,6 +9,10 @@
 local abilityObject = {}
 
 abilityObject.onAbilityCheck = function(player, target, ability)
+    -- Chakra must remain usable through Paralyze and cleanse it when activated.
+    -- The core also exempts Chakra from the paralysis interruption roll.
+    player:delStatusEffect(xi.effect.PARALYSIS)
+
     return 0, 0
 end
 

@@ -20,17 +20,15 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params             = {}
     local magicAccuracyBonus = mob:getLocalVar('HydraBlastMacc')
 
-    params.percentMultipier = 0.10
-    params.damageCap        = 700 -- TODO: Capture cap
-    params.bonusDamage      = 0
-    params.mAccuracyBonus   = { magicAccuracyBonus, magicAccuracyBonus, magicAccuracyBonus }
-    params.resistStat       = xi.mod.INT
-    params.element          = xi.element.FIRE
-    params.attackType       = xi.attackType.BREATH
-    params.damageType       = xi.damageType.FIRE
-    params.shadowBehavior   = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
+    params.baseDamage     = mob:getMainLvl() + 2
+    params.fTP            = { 8.5, 8.5, 8.5 }
+    params.mACCBonus      = { magicAccuracyBonus, magicAccuracyBonus, magicAccuracyBonus }
+    params.element        = xi.element.FIRE
+    params.attackType     = xi.attackType.MAGICAL
+    params.damageType     = xi.damageType.FIRE
+    params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
 
-    local info = xi.mobskills.mobBreathMove(mob, target, skill, action, params)
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)

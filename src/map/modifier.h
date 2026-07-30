@@ -382,6 +382,8 @@ enum class Mod
     AMNESIARES  = 253, // Enhances "Resist Amnesia" effect
     LULLABYRES  = 254, // Enhances "Resist Lullaby" effect
     DEATHRES    = 255, // Used by gear and ATMA that give resistance to instance KO
+    BIORES      = 1210, // Sanctum: Enhances resistance to Bio
+    DISEASERES  = 1211, // Sanctum: Enhances resistance to Disease
     STATUSRES   = 958, // "Resistance to All Status Ailments"
 
     // MEVA bonus to enfeebles (Bar-Effect, for example. And modifiers in mobs)
@@ -1166,7 +1168,7 @@ enum class Mod
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
     //
-    // SPARE IDs: 938, 1210 and onward
+    // SPARE IDs: 938, 1212 and onward
 };
 
 // temporary workaround for using enum class as unordered_map key until compilers support it

@@ -2403,11 +2403,11 @@ INSERT INTO `mob_skills` VALUES (2369,1652,'scintillant_lance',4,0.0,10.0,2000,1
 -- INSERT INTO `mob_skills` VALUES (2371,2115,'noxious_spray',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2372,2116,'hellborn_yawp',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 INSERT INTO `mob_skills` VALUES (2373,2117,'veil_of_chaos',1,15.0,7.0,2000,1500,4,0,0,4,0,0,0);
-INSERT INTO `mob_skills` VALUES (2374,2118,'torment_of_gudha',1,5.0,7.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2374,357,'torment_of_gudha',1,5.0,7.0,2000,1500,4,0,0,0,0,0,0); -- Quadav shell bash animation
 INSERT INTO `mob_skills` VALUES (2375,364,'vorticose_sands',1,15.0,15.0,2000,1500,4,0,0,3,0,0,0); -- Yagudo radial sweep/whirlwind animation
 -- INSERT INTO `mob_skills` VALUES (2376,2120,'paroxysm',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2377,2121,'reviviscence',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2378,2122,'diamond_shell',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2378,358,'diamond_shell',0,0.0,7.0,2000,1500,1,0,0,0,0,0,0); -- Quadav shell guard animation
 -- INSERT INTO `mob_skills` VALUES (2379,2123,'invincible',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2380,2124,'monocular_scowl',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2381,2125,'double_kick',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
@@ -2633,7 +2633,7 @@ INSERT INTO `mob_skills` VALUES (2578,1805,'colossal_slam',1,0.0,15.0,2000,3000,
 -- INSERT INTO `mob_skills` VALUES (2601,2345,'petalback_spin',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2602,2346,'mortal_blast',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); TODO: Capture Animation & Range from Abyssea
 -- INSERT INTO `mob_skills` VALUES (2603,2347,'heat_breath',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
-INSERT INTO `mob_skills` VALUES (2604,2348,'gorge',4,0.0,15.0,2000,1500,4,0,0,0,0,0,0);
+INSERT INTO `mob_skills` VALUES (2604,1540,'gorge',4,0.0,15.0,2000,1500,4,0,0,0,0,0,0); -- Safe Sandworm animation (Extreme Purgation)
 -- INSERT INTO `mob_skills` VALUES (2605,2349,'disgorge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2606,2350,'carousel',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (2607,2351,'agaricus',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0); -- TODO: Capture Animation

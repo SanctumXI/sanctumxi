@@ -3,11 +3,6 @@
 --  Mob: Divine Reproach
 -- KSNM: Wing and a Prayer
 -----------------------------------
-mixins =
-{
-    require('scripts/mixins/job_special'),
-}
------------------------------------
 
 local tuning =
 {
@@ -95,7 +90,7 @@ entity.onMobSpawn = function(mob)
 
     mob:setHP(mob:getMaxHP())
 
-    mob:setBaseSpeed(15)
+    mob:setBaseSpeed(8)
 end
 
 entity.onMobFight = function(mob, target)

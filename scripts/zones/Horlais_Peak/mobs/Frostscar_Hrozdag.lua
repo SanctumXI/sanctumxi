@@ -32,7 +32,7 @@ local tuning =
     auraReturnTime           = 600,
     auraSize                 = -125,
     auraFlashPower           = 100,
-    howlWarcryPower          = 30,
+    howlWarcryPower          = 50,
     howlWarcryDuration       = 60,
 }
 
