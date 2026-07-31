@@ -146,7 +146,6 @@ addCraftEvent(12556, 'hauberk', 'Hauberk')
 addCraftEvent(13793, 'hauberk_plus1', 'Hauberk +1')
 addCraftEvent(13748, 'vermillion_cloak', 'Vermillion Cloak')
 addCraftEvent(13749, 'royal_cloak', 'Royal Cloak')
-addCraftEvent(12605, 'nobles_tunic', "Noble's Tunic")
 addCraftEvent(13774, 'aristocrats_coat', "Aristocrat's Coat")
 addCraftEvent(13779, 'black_cloak', 'Black Cloak')
 addCraftEvent(13780, 'demons_cloak', "Demon's Cloak")
@@ -254,6 +253,29 @@ local specialItemEvents =
     },
 }
 
+-- Hand picked drops. Noble's Tunic sits here rather than in craftEvents so the
+-- first one to turn up gets the wording we want, and a later synth can't fire a
+-- second announcement for it.
+local rareItemEvents = {}
+
+local function addRareItemEvent(itemId, eventKeySuffix, displayName)
+    rareItemEvents[itemId] =
+    {
+        eventKey = 'item.' .. eventKeySuffix,
+        category = 'rare_item',
+        display = displayName,
+    }
+end
+
+-- addRareItemEvent(itemId, eventKeySuffix, displayName)
+addRareItemEvent(13056, 'peacock_charm', 'Peacock Charm')
+addRareItemEvent(17440, 'kraken_club', 'Kraken Club')
+addRareItemEvent(13189, 'speed_belt', 'Speed Belt')
+addRareItemEvent(17652, 'joyeuse', 'Joyeuse')
+addRareItemEvent(12605, 'nobles_tunic', "Noble's Tunic")
+addRareItemEvent(16555, 'ridill', 'Ridill')
+addRareItemEvent(13566, 'defending_ring', 'Defending Ring')
+
 -- Every finished relic and mythic gets written down. The first one of either
 -- kind on the server also gets its own louder announcement.
 local legendaryWeapons =
@@ -302,6 +324,9 @@ local trackedItemIds = {}
 for itemId in pairs(specialItemEvents) do
     table.insert(trackedItemIds, itemId)
 end
+for itemId in pairs(rareItemEvents) do
+    table.insert(trackedItemIds, itemId)
+end
 for itemId in pairs(legendaryWeapons) do
     table.insert(trackedItemIds, itemId)
 end
@@ -318,6 +343,26 @@ local skillMilestones =
     [xi.skill.BONECRAFT]    = { name = 'Bonecraft',    title = xi.title.LEGENDARY_BONEWORKER },
     [xi.skill.ALCHEMY]      = { name = 'Alchemy',      title = xi.title.LEGENDARY_ALCHEMIST },
     [xi.skill.COOKING]      = { name = 'Cooking',      title = xi.title.LEGENDARY_CULINARIAN },
+}
+
+-- Advanced jobs worth announcing the first unlock of. The names are spelled out
+-- rather than derived so the list stays easy to edit.
+local advancedJobEvents =
+{
+    [xi.job.PLD] = { eventKey = 'job.unlock_paladin',      display = 'Paladin' },
+    [xi.job.DRK] = { eventKey = 'job.unlock_dark_knight',  display = 'Dark Knight' },
+    [xi.job.BST] = { eventKey = 'job.unlock_beastmaster',  display = 'Beastmaster' },
+    [xi.job.BRD] = { eventKey = 'job.unlock_bard',         display = 'Bard' },
+    [xi.job.RNG] = { eventKey = 'job.unlock_ranger',       display = 'Ranger' },
+    [xi.job.SAM] = { eventKey = 'job.unlock_samurai',      display = 'Samurai' },
+    [xi.job.NIN] = { eventKey = 'job.unlock_ninja',        display = 'Ninja' },
+    [xi.job.DRG] = { eventKey = 'job.unlock_dragoon',      display = 'Dragoon' },
+    [xi.job.SMN] = { eventKey = 'job.unlock_summoner',     display = 'Summoner' },
+    [xi.job.BLU] = { eventKey = 'job.unlock_blue_mage',    display = 'Blue Mage' },
+    [xi.job.COR] = { eventKey = 'job.unlock_corsair',      display = 'Corsair' },
+    [xi.job.PUP] = { eventKey = 'job.unlock_puppetmaster', display = 'Puppetmaster' },
+    [xi.job.DNC] = { eventKey = 'job.unlock_dancer',       display = 'Dancer' },
+    [xi.job.SCH] = { eventKey = 'job.unlock_scholar',      display = 'Scholar' },
 }
 
 -- IDs are looked up once at load. Anything missing gets printed and skipped so
@@ -691,6 +736,26 @@ local function announceSolo(definition, player, message)
     return announceFirst(definition, participants, player, message, 'player', participants[1].char_name)
 end
 
+local function announceCraftMastery(player, craft)
+    local participant = participantFor(player)
+    if not participant then
+        return false
+    end
+
+    participant.is_leader = true
+    return announceFirst(
+        {
+            eventKey = string.format('craft.personal_100.%u.%s', participant.char_id, eventKey(craft.name)),
+            category = 'personal_milestone',
+            display = craft.name .. ' 100',
+        },
+        { participant },
+        player,
+        string.format('A new master artisan has emerged! %s has mastered %s!', player:getName(), craft.name),
+        'player',
+        participant.char_name)
+end
+
 local function announceLegend(player, itemId, weapon)
     local participant = participantFor(player)
     if not participant or not xi.serverFirst or not xi.serverFirst.recordLegend then
@@ -750,6 +815,14 @@ local function receivedItem(player, itemId)
         announceSolo(special, player, special.message(player))
     end
 
+    local rareItem = rareItemEvents[itemId]
+    if rareItem then
+        announceSolo(
+            rareItem,
+            player,
+            string.format("A realm first! %s has obtained the server's first %s!", player:getName(), rareItem.display))
+    end
+
     local weapon = legendaryWeapons[itemId]
     if weapon then
         announceLegend(player, itemId, weapon)
@@ -782,6 +855,30 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         string.format('SERVER FIRST! %s has been defeated by %s!', definition.display, creditPhrase),
         creditType,
         creditName)
+end)
+
+m:addOverride('xi.player.onPlayerJobUnlock', function(player, jobId)
+    super(player, jobId)
+
+    -- This setting unlocks every advanced job automatically at character
+    -- creation, which is intentionally not treated as a realm-first quest.
+    if xi.settings.main.ADVANCED_JOB_LEVEL == 0 then
+        return
+    end
+
+    local definition = advancedJobEvents[jobId]
+    if not definition then
+        return
+    end
+
+    announceSolo(
+        {
+            eventKey = definition.eventKey,
+            category = 'job_unlock',
+            display = definition.display .. ' job',
+        },
+        player,
+        string.format('A realm first! %s is the first to unlock the %s job!', player:getName(), definition.display))
 end)
 
 m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
@@ -863,7 +960,7 @@ m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldS
         return
     end
 
-    announceSolo(
+    local isServerFirst = announceSolo(
         {
             eventKey = 'craft.first_100_' .. eventKey(craft.name),
             category = 'craft_skill',
@@ -872,6 +969,10 @@ m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldS
         },
         player,
         string.format('SERVER FIRST! %s has become Vana\'diel\'s first %s 100 artisan!', player:getName(), craft.name))
+
+    if not isServerFirst then
+        announceCraftMastery(player, craft)
+    end
 end)
 
 m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, skillType)

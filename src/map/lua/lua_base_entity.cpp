@@ -6834,7 +6834,8 @@ void CLuaBaseEntity::unlockJob(uint8 JobID)
 
     if (JobID < MAX_JOBTYPE)
     {
-        PChar->jobs.unlocked |= (1 << JobID);
+        const bool alreadyUnlocked = (PChar->jobs.unlocked & (1u << JobID)) != 0;
+        PChar->jobs.unlocked |= (1u << JobID);
 
         if (JobID == JOB_NON)
         {
@@ -6847,6 +6848,11 @@ void CLuaBaseEntity::unlockJob(uint8 JobID)
 
         charutils::SaveCharJob(PChar, static_cast<JOBTYPE>(JobID));
         PChar->pushPacket<GP_SERV_COMMAND_JOB_INFO>(PChar);
+
+        if (!alreadyUnlocked)
+        {
+            luautils::OnPlayerJobUnlock(PChar, JobID);
+        }
     }
 }
 

@@ -252,6 +252,9 @@ end
 
 -- Completion callbacks are deliberately empty by default.  Content modules
 -- can opt in without adding polling or broad event interception.
+xi.player.onPlayerJobUnlock = function(player, jobId)
+end
+
 xi.player.onPlayerSynthesis = function(player, itemId, quantity, skillType)
 end
 
