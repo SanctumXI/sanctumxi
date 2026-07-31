@@ -16,8 +16,8 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Check for Dia.
     local dia = target:getStatusEffect(xi.effect.DIA)
     if
-        not dia or
-        (dia and dia:getTier() < tier)
+        not xi.data.statusEffect.isTargetResistant(caster, target, xi.effect.BIO) and
+        (not dia or (dia and dia:getTier() < tier))
     then
         target:delStatusEffect(xi.effect.DIA)
 

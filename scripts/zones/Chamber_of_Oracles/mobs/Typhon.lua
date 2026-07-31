@@ -33,8 +33,26 @@ local tuning =
     magicDamageTaken        = 0,
 }
 
+local tremblingThresholds = { 75, 50, 25 }
+
 ---@type TMobEntity
 local entity = {}
+
+local function tryThresholdTrembling(mob)
+    local phase     = mob:getLocalVar('tremblingPhase') + 1
+    local threshold = tremblingThresholds[phase]
+
+    if
+        threshold and
+        mob:getHPP() <= threshold and
+        mob:canChangeState() and
+        mob:actionQueueEmpty()
+    then
+        mob:setLocalVar('tremblingPhase', phase)
+        mob:setLocalVar('[MobSkill]NoTPCost', xi.mobSkill.TREMBLING)
+        mob:useMobAbility(xi.mobSkill.TREMBLING)
+    end
+end
 
 local function updateHeadBonuses(mob)
     local brokenHeads  = mob:getAnimationSub()
@@ -98,6 +116,8 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar('forcePyricBlast', 1)
     mob:setLocalVar('forcePolarBlast', 0)
     mob:setLocalVar('previousBrokenHeads', 0)
+    mob:setLocalVar('tremblingPhase', 0)
+    mob:setLocalVar('[MobSkill]NoTPCost', 0)
     mob:setHP(mob:getMaxHP())
 
     updateHeadBonuses(mob)
@@ -109,6 +129,7 @@ end
 
 entity.onMobFight = function(mob, target)
     updateHeadBonuses(mob)
+    tryThresholdTrembling(mob)
 end
 
 entity.onCriticalHit = function(mob, attacker)

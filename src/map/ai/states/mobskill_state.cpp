@@ -137,7 +137,13 @@ CMobSkill* CMobSkillState::GetSkill()
 
 void CMobSkillState::SpendCost()
 {
-    if (!m_PSkill->isTpFreeSkill())
+    const bool hasOneShotTPCostOverride = m_PEntity->GetLocalVar("[MobSkill]NoTPCost") == m_PSkill->getID();
+    if (hasOneShotTPCostOverride)
+    {
+        m_PEntity->SetLocalVar("[MobSkill]NoTPCost", 0);
+    }
+
+    if (!m_PSkill->isTpFreeSkill() && !hasOneShotTPCostOverride)
     {
         if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_SEKKANOKI))
         {

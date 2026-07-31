@@ -107,6 +107,16 @@ INSERT INTO `mob_pool_mods` VALUES (1013,28,-100,1); -- EXP_BONUS: -100
 -- Effigy Prototype
 INSERT INTO `mob_pool_mods` VALUES (1178,163,-1000,0); -- DMGMAGIC: -1000
 
+-- Elemental Gyves (family 237 is shared by unrelated structures)
+INSERT INTO `mob_pool_mods` VALUES (1197,240,100,0);  -- SLEEPRES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,241,100,0);  -- POISONRES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,242,100,0);  -- PARALYZERES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,243,100,0);  -- BLINDRES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,244,100,0);  -- SILENCERES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,245,100,0);  -- PLAGUERES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,246,100,0);  -- PETRIFYRES: 100
+INSERT INTO `mob_pool_mods` VALUES (1197,1211,100,0); -- DISEASERES: 100
+
 -- Enkidu
 INSERT INTO `mob_pool_mods` VALUES (1234,4,4,1); -- SIGHT_RANGE: 4
 
@@ -498,6 +508,11 @@ INSERT INTO `mob_pool_mods` VALUES (5409,30,1036,1); -- SPECIAL_SKILL: 1036
 INSERT INTO `mob_pool_mods` VALUES (5409,33,50,1);   -- SPECIAL_COOL: 50
 INSERT INTO `mob_pool_mods` VALUES (5409,58,40,1);   -- SPECIAL_DELAY: 40
 
+-- Naphula's Corpselight (family 91 is shared with Pandemonium Lamp)
+INSERT INTO `mob_pool_mods` VALUES (5683,241,100,0);  -- POISONRES: 100
+INSERT INTO `mob_pool_mods` VALUES (5683,244,25,0);   -- SILENCERES: 25
+INSERT INTO `mob_pool_mods` VALUES (5683,1211,100,0); -- DISEASERES: 100
+
 -- Trust: Shikaree Z
 INSERT INTO `mob_pool_mods` VALUES (5915,6,100,0);      -- MPP: 100
 
@@ -533,6 +548,19 @@ INSERT INTO `mob_pool_mods` VALUES (6732,3,100,1); -- MP_BASE: 100
 
 -- Ro'Hyu Blackanvil (Heavy Is the Shell)
 INSERT INTO `mob_pool_mods` VALUES (7559,3,100,1); -- MP_BASE: 100
+
+-- Custom KSNM99 encounters: all rewards come from the armoury crate.
+INSERT INTO `mob_pool_mods` VALUES (7559,38,1,1); -- Ro'Hyu Blackanvil: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7560,38,1,1); -- Frostscar Hrozdag: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7561,38,1,1); -- Siege Sniper: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7562,38,1,1); -- Blackguard: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7563,38,1,1); -- Quadav Earthshaper: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7564,38,1,1); -- Quadav Liturgist: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7565,38,1,1); -- Tzee Xicu's Hierophant: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7566,38,1,1); -- Divine Reproach: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7567,38,1,1); -- Typhon: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7568,38,1,1); -- Rancorwurm: NO_DROPS
+INSERT INTO `mob_pool_mods` VALUES (7569,38,1,1); -- Ixion: NO_DROPS
 
 /*!40000 ALTER TABLE `mob_pool_mods` ENABLE KEYS */;
 UNLOCK TABLES;

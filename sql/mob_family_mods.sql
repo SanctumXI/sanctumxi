@@ -35,6 +35,9 @@ LOCK TABLES `mob_family_mods` WRITE;
 INSERT INTO `mob_family_mods` VALUES (2,36,50,1); -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (2,52,30,1); -- ROAM_RATE: 30
 INSERT INTO `mob_family_mods` VALUES (2,63,20,0); -- DEFP: 20
+INSERT INTO `mob_family_mods` VALUES (2,247,20,0); -- BINDRES: 20
+INSERT INTO `mob_family_mods` VALUES (2,249,20,0); -- GRAVITYRES: 20
+INSERT INTO `mob_family_mods` VALUES (2,250,-20,0); -- SLOWRES: -20
 
 -- Ahriman
 INSERT INTO `mob_family_mods` VALUES (4,7,60,1);   -- GA_CHANCE: 60
@@ -52,6 +55,7 @@ INSERT INTO `mob_family_mods` VALUES (26,36,50,1); -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (26,51,2,1);  -- ROAM_TURNS: 2
 INSERT INTO `mob_family_mods` VALUES (26,52,30,1); -- ROAM_RATE: 30
 INSERT INTO `mob_family_mods` VALUES (26,63,20,0); -- DEFP: 20
+INSERT INTO `mob_family_mods` VALUES (26,243,40,0); -- BLINDRES: 40
 
 -- Apkallu
 INSERT INTO `mob_family_mods` VALUES (27,10,14,1); -- SUBLINK: 14 (Apkallu)
@@ -104,6 +108,7 @@ INSERT INTO `mob_family_mods` VALUES (46,10,3,1);  -- SUBLINK: 3 (Single Bat, Ba
 INSERT INTO `mob_family_mods` VALUES (46,36,35,1); -- ROAM_COOL: 35
 INSERT INTO `mob_family_mods` VALUES (46,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (46,52,30,1); -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (46,243,50,0); -- BLINDRES: 50
 
 -- Bat Trio
 INSERT INTO `mob_family_mods` VALUES (47,10,3,1);   -- SUBLINK: 3 (Single Bat, Bat Trio, Vampyr)
@@ -130,6 +135,7 @@ INSERT INTO `mob_family_mods` VALUES (52,242,20,0);  -- PARALYZERES: 20
 INSERT INTO `mob_family_mods` VALUES (56,36,30,1); -- ROAM_COOL: 30
 INSERT INTO `mob_family_mods` VALUES (56,51,5,1);  -- ROAM_TURNS: 5
 INSERT INTO `mob_family_mods` VALUES (56,52,20,1); -- ROAM_RATE: 20
+INSERT INTO `mob_family_mods` VALUES (56,241,20,0); -- POISONRES: 20
 
 -- Buffalo
 INSERT INTO `mob_family_mods` VALUES (57,3,50,1);   -- MP_BASE: 50
@@ -158,7 +164,11 @@ INSERT INTO `mob_family_mods` VALUES (61,29,25,0);     -- MDEF: 25
 INSERT INTO `mob_family_mods` VALUES (61,36,40,1);     -- ROAM_COOL: 40
 INSERT INTO `mob_family_mods` VALUES (61,51,2,1);      -- ROAM_TURNS: 2
 INSERT INTO `mob_family_mods` VALUES (61,52,20,1);     -- ROAM_RATE: 20
+INSERT INTO `mob_family_mods` VALUES (61,240,100,0);   -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (61,241,100,0);   -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (61,245,100,0);   -- PLAGUERES: 100
 INSERT INTO `mob_family_mods` VALUES (61,389,-2500,0); -- UDMGMAGIC: -2500
+INSERT INTO `mob_family_mods` VALUES (61,1211,100,0);  -- DISEASERES: 100
 
 -- Cerberus
 INSERT INTO `mob_family_mods` VALUES (62,36,50,1); -- ROAM_COOL: 50
@@ -170,6 +180,7 @@ INSERT INTO `mob_family_mods` VALUES (63,10,15,1); -- SUBLINK: 15 (Chariot, Gear
 INSERT INTO `mob_family_mods` VALUES (68,36,40,1); -- ROAM_COOL: 40
 INSERT INTO `mob_family_mods` VALUES (68,51,2,1);  -- ROAM_TURNS: 2
 INSERT INTO `mob_family_mods` VALUES (68,52,20,1); -- ROAM_RATE: 20
+INSERT INTO `mob_family_mods` VALUES (68,241,20,0); -- POISONRES: 20
 
 -- Cockatrice
 INSERT INTO `mob_family_mods` VALUES (70,36,30,1); -- ROAM_COOL: 30
@@ -267,34 +278,122 @@ INSERT INTO `mob_family_mods` VALUES (98,52,30,1); -- ROAM_RATE: 30
 -- Elemental-Air
 INSERT INTO `mob_family_mods` VALUES (99,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (99,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (99,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (99,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (99,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (99,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (99,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (99,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (99,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (99,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (99,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (99,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (99,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Dark
 INSERT INTO `mob_family_mods` VALUES (100,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (100,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (100,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (100,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (100,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (100,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (100,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (100,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (100,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (100,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (100,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (100,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (100,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Earth
 INSERT INTO `mob_family_mods` VALUES (101,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (101,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (101,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (101,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (101,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (101,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (101,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (101,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (101,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (101,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (101,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (101,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (101,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Fire
 INSERT INTO `mob_family_mods` VALUES (102,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (102,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (102,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (102,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (102,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (102,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (102,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (102,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (102,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (102,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (102,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (102,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (102,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Ice
 INSERT INTO `mob_family_mods` VALUES (103,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (103,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (103,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (103,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (103,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (103,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (103,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (103,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (103,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (103,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (103,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (103,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (103,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Light
 INSERT INTO `mob_family_mods` VALUES (104,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (104,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (104,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (104,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (104,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (104,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (104,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (104,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (104,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (104,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (104,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (104,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (104,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Lightning
 INSERT INTO `mob_family_mods` VALUES (105,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (105,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (105,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (105,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (105,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (105,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (105,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (105,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (105,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (105,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (105,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (105,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (105,1211,100,0); -- DISEASERES: 100
 
 -- Elemental-Water
 INSERT INTO `mob_family_mods` VALUES (106,51,3,1);  -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (106,56,-1,1); -- HP_STANDBACK: -1
+INSERT INTO `mob_family_mods` VALUES (106,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (106,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (106,242,100,0); -- PARALYZERES: 100
+INSERT INTO `mob_family_mods` VALUES (106,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (106,244,50,0); -- SILENCERES: 50
+INSERT INTO `mob_family_mods` VALUES (106,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (106,246,100,0); -- PETRIFYRES: 100
+INSERT INTO `mob_family_mods` VALUES (106,247,-25,0); -- BINDRES: -25
+INSERT INTO `mob_family_mods` VALUES (106,249,-25,0); -- GRAVITYRES: -25
+INSERT INTO `mob_family_mods` VALUES (106,1210,50,0); -- BIORES: 50
+INSERT INTO `mob_family_mods` VALUES (106,1211,100,0); -- DISEASERES: 100
 
 -- Evil Weapon: https://www.bg-wiki.com/ffxi/Category:Evil_Weapon
 INSERT INTO `mob_family_mods` VALUES (110,3,50,1);      -- MP_BASE: 50
@@ -330,6 +429,11 @@ INSERT INTO `mob_family_mods` VALUES (120,10,15,1); -- SUBLINK: 15 (Chariot, Gea
 -- Ghost
 INSERT INTO `mob_family_mods` VALUES (121,36,50,1);   -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (121,52,30,1);   -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (121,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (121,243,20,0);  -- BLINDRES: 20
+INSERT INTO `mob_family_mods` VALUES (121,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (121,246,20,0);  -- PETRIFYRES: 20
+INSERT INTO `mob_family_mods` VALUES (121,1211,100,0); -- DISEASERES: 100
 
 -- Ghrah: https://www.bg-wiki.com/ffxi/Category:Ghrah
 INSERT INTO `mob_family_mods` VALUES (122,389,-1250,0); -- UDMGMAGIC: -1250
@@ -354,6 +458,9 @@ INSERT INTO `mob_family_mods` VALUES (135,4,4,1);   -- SIGHT_RANGE: 4
 INSERT INTO `mob_family_mods` VALUES (135,31,5,1);  -- ROAM_DISTANCE: 5
 INSERT INTO `mob_family_mods` VALUES (135,36,55,1); -- ROAM_COOL: 55
 INSERT INTO `mob_family_mods` VALUES (135,52,30,1); -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (135,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (135,241,20,0);  -- POISONRES: 20
+INSERT INTO `mob_family_mods` VALUES (135,1211,20,0); -- DISEASERES: 20
 
 -- Goobbue
 INSERT INTO `mob_family_mods` VALUES (136,31,5,1);   -- ROAM_DISTANCE: 5
@@ -376,11 +483,17 @@ INSERT INTO `mob_family_mods` VALUES (140,51,2,1);  -- ROAM_TURNS: 2
 INSERT INTO `mob_family_mods` VALUES (142,36,50,1);   -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (142,51,3,1);    -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (142,52,30,1);   -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (142,241,20,0);  -- POISONRES: 20
+INSERT INTO `mob_family_mods` VALUES (142,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (142,1211,20,0); -- DISEASERES: 20
 
 -- Hound
 INSERT INTO `mob_family_mods` VALUES (143,36,50,1);   -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (143,51,3,1);    -- ROAM_TURNS: 3
 INSERT INTO `mob_family_mods` VALUES (143,52,30,1);   -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (143,241,20,0);  -- POISONRES: 20
+INSERT INTO `mob_family_mods` VALUES (143,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (143,1211,20,0); -- DISEASERES: 20
 
 -- Humanoid-Hume
 INSERT INTO `mob_family_mods` VALUES (150,4,30,1); -- SIGHT_RANGE: 30
@@ -502,6 +615,15 @@ INSERT INTO `mob_family_mods` VALUES (189,10,2,1); -- SUBLINK: 2 (Orc, Orc Warma
 INSERT INTO `mob_family_mods` VALUES (190,10,2,1);  -- SUBLINK: 2 (Orc, Orc Warmachine)
 INSERT INTO `mob_family_mods` VALUES (190,36,50,1); -- ROAM_COOL: 50
 INSERT INTO `mob_family_mods` VALUES (190,52,30,1); -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (190,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (190,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (190,242,10,0);  -- PARALYZERES: 10
+INSERT INTO `mob_family_mods` VALUES (190,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (190,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (190,247,-20,0); -- BINDRES: -20
+INSERT INTO `mob_family_mods` VALUES (190,249,-20,0); -- GRAVITYRES: -20
+INSERT INTO `mob_family_mods` VALUES (190,250,-20,0); -- SLOWRES: -20
+INSERT INTO `mob_family_mods` VALUES (190,1211,100,0); -- DISEASERES: 100
 
 -- Wyvern-Pet
 INSERT INTO `mob_family_mods` VALUES (193,3,40,1); -- MP_BASE: 40
@@ -549,6 +671,12 @@ INSERT INTO `mob_family_mods` VALUES (212,52,20,1); -- ROAM_RATE: 20
 INSERT INTO `mob_family_mods` VALUES (213,10,8,1);   -- SUBLINK: 8 (Mamool Ja, Sahagin)
 INSERT INTO `mob_family_mods` VALUES (213,20,128,0); -- WATER_MEVA: 128
 
+-- Sandworm
+INSERT INTO `mob_family_mods` VALUES (214,243,20,0); -- BLINDRES: 20
+
+-- Sandworm
+INSERT INTO `mob_family_mods` VALUES (215,243,20,0); -- BLINDRES: 20
+
 -- Sapling
 INSERT INTO `mob_family_mods` VALUES (216,10,4,1);  -- SUBLINK: 4 (Sapling, Treant)
 INSERT INTO `mob_family_mods` VALUES (216,31,20,1); -- ROAM_DISTANCE: 20
@@ -580,11 +708,25 @@ INSERT INTO `mob_family_mods` VALUES (226,52,30,1); -- ROAM_RATE: 30
 INSERT INTO `mob_family_mods` VALUES (227,36,65,1);   -- ROAM_COOL: 65
 INSERT INTO `mob_family_mods` VALUES (227,51,5,1);    -- ROAM_TURNS: 5
 INSERT INTO `mob_family_mods` VALUES (227,52,30,1);   -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (227,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (227,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (227,1211,100,0); -- DISEASERES: 100
+
+-- Slime
+INSERT INTO `mob_family_mods` VALUES (229,240,10,0);  -- SLEEPRES: 10
+INSERT INTO `mob_family_mods` VALUES (229,241,20,0);  -- POISONRES: 20
+INSERT INTO `mob_family_mods` VALUES (229,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (229,244,10,0);  -- SILENCERES: 10
+INSERT INTO `mob_family_mods` VALUES (229,245,20,0);  -- PLAGUERES: 20
+INSERT INTO `mob_family_mods` VALUES (229,247,-10,0); -- BINDRES: -10
+INSERT INTO `mob_family_mods` VALUES (229,249,-10,0); -- GRAVITYRES: -10
+INSERT INTO `mob_family_mods` VALUES (229,1211,20,0); -- DISEASERES: 20
 
 -- Snoll
 INSERT INTO `mob_family_mods` VALUES (232,36,40,1); -- ROAM_COOL: 40
 INSERT INTO `mob_family_mods` VALUES (232,51,2,1);  -- ROAM_TURNS: 2
 INSERT INTO `mob_family_mods` VALUES (232,52,20,1); -- ROAM_RATE: 20
+INSERT INTO `mob_family_mods` VALUES (232,241,20,0); -- POISONRES: 20
 
 -- Soulflayer
 INSERT INTO `mob_family_mods` VALUES (233,10,11,1); -- SUBLINK: 11 (Soulflayers)
@@ -624,6 +766,9 @@ INSERT INTO `mob_family_mods` VALUES (245,10,4,1);  -- SUBLINK: 4 (Sapling, Trea
 INSERT INTO `mob_family_mods` VALUES (245,36,65,1); -- ROAM_COOL: 65
 INSERT INTO `mob_family_mods` VALUES (245,52,30,1); -- ROAM_RATE: 30
 INSERT INTO `mob_family_mods` VALUES (245,63,20,0); -- DEFP: 20
+INSERT INTO `mob_family_mods` VALUES (245,241,-20,0); -- POISONRES: -20
+INSERT INTO `mob_family_mods` VALUES (245,245,-20,0); -- PLAGUERES: -20
+INSERT INTO `mob_family_mods` VALUES (245,1211,-20,0); -- DISEASERES: -20
 
 -- Troll
 INSERT INTO `mob_family_mods` VALUES (246,10,9,1); -- SUBLINK: 9 (Trolls)
@@ -631,6 +776,7 @@ INSERT INTO `mob_family_mods` VALUES (246,10,9,1); -- SUBLINK: 9 (Trolls)
 -- Uragnite
 INSERT INTO `mob_family_mods` VALUES (251,36,40,1); -- ROAM_COOL: 40
 INSERT INTO `mob_family_mods` VALUES (251,52,30,1); -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (251,250,-20,0); -- SLOWRES: -20
 
 -- Wamoura
 INSERT INTO `mob_family_mods` VALUES (253,3,50,1); -- MP_BASE: 50
@@ -650,6 +796,8 @@ INSERT INTO `mob_family_mods` VALUES (257,52,30,1); -- ROAM_RATE: 30
 INSERT INTO `mob_family_mods` VALUES (258,34,25,1); -- MAGIC_COOL: 25
 INSERT INTO `mob_family_mods` VALUES (258,36,90,1); -- ROAM_COOL: 90
 INSERT INTO `mob_family_mods` VALUES (258,52,30,1); -- ROAM_RATE: 30
+INSERT INTO `mob_family_mods` VALUES (258,243,100,0); -- BLINDRES: 100
+INSERT INTO `mob_family_mods` VALUES (258,247,100,0); -- BINDRES: 100
 
 -- Wyrm-Ouryu
 INSERT INTO `mob_family_mods` VALUES (259,36,55,1);  -- ROAM_COOL: 55
@@ -724,6 +872,13 @@ INSERT INTO `mob_family_mods` VALUES (311,10,11,1); -- SUBLINK: 11 (Soulflayers)
 
 -- Troll-Gurfurlur
 INSERT INTO `mob_family_mods` VALUES (326,10,9,1); -- SUBLINK: 9 (Trolls)
+
+-- Iron Giant
+INSERT INTO `mob_family_mods` VALUES (350,240,100,0); -- SLEEPRES: 100
+INSERT INTO `mob_family_mods` VALUES (350,241,100,0); -- POISONRES: 100
+INSERT INTO `mob_family_mods` VALUES (350,245,100,0); -- PLAGUERES: 100
+INSERT INTO `mob_family_mods` VALUES (350,250,-50,0); -- SLOWRES: -50
+INSERT INTO `mob_family_mods` VALUES (350,1211,100,0); -- DISEASERES: 100
 
 -- Antlion-Ambush
 INSERT INTO `mob_family_mods` VALUES (357,63,20,0); -- DEFP: 20
