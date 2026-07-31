@@ -9,15 +9,15 @@ local ID = zones[xi.zone.ALZADAAL_UNDERSEA_RUINS]
 local entity = {}
 
 entity.onTrigger = function(player, npc)
---    if not xi.instance.onTrigger(player, npc, xi.zone.ZHAYOLM_REMNANTS) then
+    if not xi.instance.onTrigger(player, npc, xi.zone.ZHAYOLM_REMNANTS) then
         player:messageSpecial(ID.text.NOTHING_HAPPENS)
---    end
+    end
 end
 
 entity.onEventUpdate = function(player, csid, option, npc)
-    for _, players in pairs(player:getAlliance()) do
-        if players:checkImbuedItems() then
-            if players:getID() == player:getID() then
+    for _, member in pairs(player:getParty()) do
+        if member:getZoneID() == player:getZoneID() and member:checkImbuedItems() then
+            if member:getID() == player:getID() then
                 player:messageText(player, ID.text.IMBUED_ITEM, false)
             else
                 player:messageText(player, ID.text.MEMBER_IMBUED_ITEM, false)

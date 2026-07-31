@@ -75,11 +75,11 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
-    hardModeLoot.register(mob)
 end
 
 entity.onMobSpawn = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
     cleanupAdds(mob)
     mob:setLocalVar('KnightCrabWave', 0)
     mob:setMobMod(xi.mobMod.CANNOT_GUARD, 1)

@@ -7,6 +7,9 @@ local simurghMechanics = require('scripts/globals/sanctum/simurgh')
 ---@type TMobEntity
 local entity = {}
 
+local aspectModelSize  = 3 -- Simurgh's smallest model-specific size variant.
+local aspectHitboxSize = 1.5
+
 local function configureMob(mob)
     local aspectIndex = simurghMechanics.getAspectIndex(mob)
     local aspect      = aspectIndex and simurghMechanics.aspectData[aspectIndex] or nil
@@ -15,7 +18,8 @@ local function configureMob(mob)
         mob:renameEntity(aspect.name, true)
     end
 
-    mob:setModelSize(0)
+    mob:setModelSize(aspectModelSize)
+    mob:setHitboxSize(aspectHitboxSize)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.LIGHT_SLEEP)

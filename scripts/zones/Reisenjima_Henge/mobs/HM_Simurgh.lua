@@ -42,6 +42,7 @@ local stationaryTime       = 30
 local stationaryMoveRadius = 10
 local positionPrecision    = 100
 local simurghMp            = 5000
+local simurghModelSize     = 0 -- Simurgh's largest model-specific size variant.
 
 local stationaryBonuses =
 {
@@ -51,7 +52,7 @@ local stationaryBonuses =
 
 local function configureMob(mob)
     mob:renameEntity('Simurgh', true)
-    mob:setModelSize(3)
+    mob:setModelSize(simurghModelSize)
     mob:addImmunity(xi.immunity.DARK_SLEEP)
     mob:addImmunity(xi.immunity.TERROR)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
@@ -264,11 +265,11 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
-    hardModeLoot.register(mob)
 end
 
 entity.onMobSpawn = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
     mob:setMaxMP(simurghMp)
     mob:setMP(simurghMp)
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 250)

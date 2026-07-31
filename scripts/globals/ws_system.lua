@@ -25,7 +25,7 @@ xi.wsEffect =
     GROUND_STRIKE_BASH = 16,
     GROUND_STRIKE_DA   = 17,
     GROUND_STRIKE_HOLY = 18,
-    ASURAN_FISTS_HITS  = 19,
+    ASURAN_FISTS_H2H   = 19,
     BLADE_TEN_NINJUTSU = 20,
     WHEELING_THRUST_JUMP = 21,
     IMPULSE_DRIVE_DAMAGE = 22,
@@ -72,6 +72,9 @@ xi.wsEffect.clear = function(player)
         player:delMod(xi.mod.WS_NO_DEPLETE, power)
     elseif effect == xi.wsEffect.GROUND_STRIKE_DA then
         player:delMod(xi.mod.DOUBLE_ATTACK, power)
+    elseif effect == xi.wsEffect.ASURAN_FISTS_H2H then
+        player:delMod(xi.mod.SUBTLE_BLOW, power)
+        player:delMod(xi.mod.ADDITIVE_GUARD, power)
     elseif effect == xi.wsEffect.BLADE_TEN_NINJUTSU then
         player:delMod(xi.mod.BLADE_TEN_NINJUTSU, 1)
     elseif effect == xi.wsEffect.DETONATOR_BARRAGE then

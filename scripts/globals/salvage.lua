@@ -550,7 +550,7 @@ xi.salvage.tempBoxFinish = function(player, csid, option, npc)
 
             npc:queue(12000, function(npcArg)
                 npcArg:setStatus(xi.status.DISAPPEAR)
-                npc:setAnimationSub(8)
+                npcArg:setAnimationSub(8)
             end)
         end
     end

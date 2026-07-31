@@ -17,7 +17,7 @@ zoneObject.onInitialize = function(zone)
     zone:registerCylindricalTriggerArea(10, -340, -100, 4)
     zone:registerCylindricalTriggerArea(11, -340, 140, 4)
     zone:registerCylindricalTriggerArea(12, -380, 500, 4)
-    zone:registerCylindricalTriggerArea(13, -380, 500, 4)
+    zone:registerCylindricalTriggerArea(13, -300, 500, 4)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

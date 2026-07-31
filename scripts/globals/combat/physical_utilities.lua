@@ -546,7 +546,8 @@ end
 ---@param isWeaponskill boolean
 ---@param weaponSlot xi.slot
 ---@param isCannonball boolean
-xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAttackMod, isCritical, applyLevelCorrection, tpIgnoresDefense, tpFactor, isWeaponskill, weaponSlot, isCannonball)
+---@param flatAttackBonus number?
+xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAttackMod, isCritical, applyLevelCorrection, tpIgnoresDefense, tpFactor, isWeaponskill, weaponSlot, isCannonball, flatAttackBonus)
     local pDif = 0
 
     ----------------------------------------
@@ -571,7 +572,7 @@ end
 
     -- TODO: it is unknown if ws attack mod and flourish bonus are additive or multiplicative
     -- TODO: do flourish and attack mods come before or after food?
-    actorAttack = math.max(1, math.floor(actor:getStat(xi.mod.ATT, weaponSlot) * wsAttackMod * flourishBonus))
+    actorAttack = math.max(1, math.floor((actor:getStat(xi.mod.ATT, weaponSlot) + (flatAttackBonus or 0)) * wsAttackMod * flourishBonus))
 
     -- handle attuner
     -- note: isAutomaton is checked inside xi.automaton.handleAttuner and could be removed
