@@ -2854,12 +2854,14 @@ void CCharEntity::Die()
 {
     TracyZoneScoped;
 
-    if (auto* PLastAttacker = GetEntity(lastAttackerId_.targid); PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
+    CBaseEntity* PLastAttacker = GetEntity(lastAttackerId_.targid);
+    if (PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLastAttacker, this, 0, 0, MsgBasic::PlayerDefeatedBy));
     }
     else
     {
+        PLastAttacker = nullptr;
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(this, this, 0, 0, MsgBasic::FallsToGround));
     }
 
@@ -2883,7 +2885,7 @@ void CCharEntity::Die()
         GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
         float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
-        charutils::DelExperiencePoints(this, retainPercent, 0);
+        charutils::DelExperiencePoints(this, retainPercent, 0, PLastAttacker, true);
     }
 
     luautils::OnPlayerDeath(this);

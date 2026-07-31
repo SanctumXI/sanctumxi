@@ -247,7 +247,7 @@ end
 xi.player.onPlayerLevelUp = function(player)
 end
 
-xi.player.onPlayerLevelDown = function(player)
+xi.player.onPlayerLevelDown = function(player, source, previousLevel, isDeath)
 end
 
 -- Completion callbacks are deliberately empty by default.  Content modules

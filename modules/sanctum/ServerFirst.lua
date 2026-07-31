@@ -28,6 +28,29 @@ local decoration =
     legendary = '\129\159',
 }
 
+-- Ordinary, per-character milestones. These are deliberately separate from
+-- the SERVER FIRST wording below: every character can earn one of these.
+local firstLevel75Messages =
+{
+    'A new hero! %s has reached level 75 as a %s!',
+    'Raise a glass: %s has reached level 75 as a %s!',
+    'Word travels fast: %s has reached level 75 as a %s!',
+}
+
+-- Delevel notices only occur after a death that drops a level. The callback
+-- receives the pre-delevel level, so a level 20 character falling to 19 is
+-- still announced.
+local minimumDelevelAnnouncementLevel = 20
+local delevelMessages =
+{
+    'A costly defeat....! %s has sent %s back to level %u!',
+    '%s learned a harsh lesson from %s, falling to level %u!',
+    'Ouch. %s defeated %s, reducing them to level %u!',
+    '%s has cut %s down to size...level %u, to be precise!',
+    '%s has been thoroughly humbled by %s and de-levels to %u!',
+    'Somewhere, %s is feeling very proud. %s falls to level %u!',
+}
+
 local function eventKey(part)
     return string.gsub(string.lower(part), '[^a-z0-9]+', '_')
 end
@@ -600,6 +623,25 @@ local function decorate(message, kind)
     return string.format('%s %s %s', mark, message, mark)
 end
 
+local function randomMessage(messages, ...)
+    return string.format(messages[math.randomInt(1, #messages)], ...)
+end
+
+local function jobDisplayName(jobId)
+    local job = xi.jobName[jobId]
+    return job and job[2] or 'adventurer'
+end
+
+local function hasAnotherLevel75Job(player, currentJob)
+    for jobId in pairs(xi.jobName) do
+        if jobId > 0 and jobId ~= currentJob and player:getJobLevel(jobId) >= 75 then
+            return true
+        end
+    end
+
+    return false
+end
+
 local function awardTitle(participants, title)
     if not title then
         return
@@ -750,6 +792,31 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
     end
 
     local playerName = player:getName()
+    local jobId = player:getMainJob()
+    local jobName = jobDisplayName(jobId)
+
+    -- Each character gets one personal first-level-75 event. The unique
+    -- event key makes it permanent across delevels and restarts. Checking
+    -- existing jobs also avoids announcing a second job for characters that
+    -- already had a level 75 before this feature was introduced.
+    if not hasAnotherLevel75Job(player, jobId) then
+        local participant = participantFor(player)
+        if participant then
+            participant.is_leader = true
+            announceFirst(
+                {
+                    eventKey = string.format('level.personal_first_75.%u', participant.char_id),
+                    category = 'personal_milestone',
+                    display = 'first level 75 job',
+                },
+                { participant },
+                player,
+                randomMessage(firstLevel75Messages, playerName, jobName),
+                'player',
+                participant.char_name)
+        end
+    end
+
     announceSolo(
         {
             eventKey = 'level.first_75',
@@ -759,8 +826,6 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
         player,
         string.format("SERVER FIRST! %s has become Vana'diel's first level 75 adventurer!", playerName))
 
-    local jobId = player:getMainJob()
-    local jobName = xi.jobName[jobId] and xi.jobName[jobId][2]
     local jobKey = xi.jobName[jobId] and xi.jobName[jobId][1]
     if jobName and jobKey then
         announceSolo(
@@ -772,6 +837,22 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
             player,
             string.format("SERVER FIRST! %s has become Vana'diel's first level 75 %s!", playerName, jobName))
     end
+end)
+
+m:addOverride('xi.player.onPlayerLevelDown', function(player, source, previousLevel, isDeath)
+    super(player, source, previousLevel, isDeath)
+
+    if not isDeath or previousLevel < minimumDelevelAnnouncementLevel then
+        return
+    end
+
+    local enemyName = source and source:getName() or 'an unknown foe'
+    player:printToArea(
+        decorate(randomMessage(delevelMessages, enemyName, player:getName(), previousLevel - 1)),
+        xi.msg.channel.SYSTEM_3,
+        xi.msg.area.SYSTEM,
+        '',
+        false)
 end)
 
 m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldSkill, newSkill)

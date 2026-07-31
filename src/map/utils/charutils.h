@@ -107,7 +107,7 @@ EMobDifficulty CheckMob(uint8 charlvl, CBattleEntity* PMob);
 uint32 GetBaseExp(uint8 charlvl, int16 moblvl);
 uint32 GetExpNEXTLevel(uint8 charlvl);
 
-void DelExperiencePoints(CCharEntity* PChar, float retainpct, uint16 forcedXpLoss);
+void DelExperiencePoints(CCharEntity* PChar, float retainpct, uint16 forcedXpLoss, CBaseEntity* PSource = nullptr, bool isDeath = false);
 void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob);
 void DistributeGil(CCharEntity* PChar, CMobEntity* PMob);
 void DistributeItem(CCharEntity* PChar, CBaseEntity* PEntity, uint16 itemid, uint16 droprate);
