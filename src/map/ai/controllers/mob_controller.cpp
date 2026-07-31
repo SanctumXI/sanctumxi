@@ -51,8 +51,7 @@ namespace
 constexpr float SeparationDistance{ 1.0f };
 constexpr float FormationAngularSpan{ static_cast<float>(M_PI) };
 constexpr float FormationTolerance{ 0.5f };
-constexpr float CombatRepathDistance{ 0.75f };
-  
+
 uint16 RollMobSkillTPThreshold()
 {
     // Keep the full retail-style range while making lower-TP moves more common.
@@ -854,15 +853,6 @@ void CMobController::Move()
             }
         }
 
-        // Do not finish an outdated chase path through the target after they make a
-        // small movement. Stop at the mob's preferred melee distance instead.
-        if (move && currentDistance <= closeDistance)
-        {
-            PMob->PAI->PathFind->Clear();
-            FaceTarget();
-            return;
-        }
-
         if (!move && currentDistance <= attack_range && TrySeparateFromAttackers())
         {
             return;
@@ -897,9 +887,7 @@ void CMobController::Move()
                             PMob->PAI->PathFind->PathInRange(projectedPosition, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                         }
                     }
-                    // Keep the current chase path through small target movements. The
-                    // close-distance guard above still prevents the mob overshooting.
-                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, CombatRepathDistance))
+                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, 0.1)) // This checks against the previous frames distance, and can false positive for where we want to be _now_
                     {
                         auto projectedPosition = nearPosition(PTarget->loc.p, 0, rotationToRadian(worldAngle(PMob->loc.p, PTarget->loc.p)));
 
@@ -935,10 +923,11 @@ void CMobController::Move()
 
 auto CMobController::TrySeparateFromAttackers() -> bool
 {
+    // position_t::moving is the client's movement/render counter, not a
+    // reliable indication that the target is currently changing position.
     if (
         !PTarget ||
         m_Tick < PTarget->m_NextMobSeparationTime ||
-        PTarget->loc.p.moving ||
         PMob->GetSpeed() == 0 ||
         PMob->getMobMod(MOBMOD_NO_MOVE) != 0 ||
         PMob->getMobMod(MOBMOD_SHARE_POS) != 0 ||

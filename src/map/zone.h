@@ -613,6 +613,7 @@ public:
     bool CanUseMisc(uint16 misc) const;
     void SetWeather(Weather weather);
     void UpdateWeather();
+    bool CheckMobsPathedBack();
 
     virtual void SpawnPCs(CCharEntity* PChar);
     virtual void SpawnMOBs(CCharEntity* PChar);
@@ -646,10 +647,10 @@ public:
 
     virtual void UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask, bool alwaysInclude = false);
 
+    bool           IsZoneActive() const;
     CZoneEntities* GetZoneEntities();
 
     weatherVector_t m_WeatherVector; // The probability of each weather type
-    void createZoneTimers();
 
     virtual auto ZoneServer(timer::time_point tick) -> Task<void>;
     virtual auto CheckTriggerAreas() -> Task<void>;
@@ -698,6 +699,7 @@ protected:
 
     triggerAreaList_t m_triggerAreaList;
 
+    void createZoneTimers();
     void CharZoneIn(CCharEntity* PChar);
     void CharZoneOut(CCharEntity* PChar);
 
@@ -734,6 +736,8 @@ private:
     void LoadZoneWeather();
 
     CTreasurePool* m_TreasurePool;
+
+    timer::time_point m_timeZoneEmpty; // The time point when the last player left the zone
 
     std::unordered_map<std::string, QueryByNameResult_t> m_queryByNameResults;
 };

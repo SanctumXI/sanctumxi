@@ -94,6 +94,20 @@ CZone::CZone(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE 
 
     LoadZoneLines();
     LoadZoneWeather();
+
+    if (config_.isTestServer)
+    {
+        return;
+    }
+
+    // Spawn handling must continue even while the zone AI is asleep.
+    spawnHandlerTimerToken_ = scheduler.intervalOnMainThread(
+        kSpawnHandlerInterval,
+        [this]() -> Task<void>
+        {
+            this->spawnHandler()->Tick(timer::now());
+            co_return;
+        });
 }
 
 CZone::~CZone()
@@ -746,7 +760,34 @@ void CZone::UpdateWeather()
 
 /************************************************************************
  *                                                                       *
- *  Remove a character from the zone.                                     *
+ *  Check whether an empty zone can safely stop its AI timers.            *
+ *                                                                       *
+ ************************************************************************/
+
+bool CZone::CheckMobsPathedBack()
+{
+    bool allMobsHomeAndHealed = true;
+    if (m_zoneEntities && !m_zoneEntities->GetMobList().empty())
+    {
+        const EntityList_t mobListMap = m_zoneEntities->GetMobList();
+        for (const auto& pair : mobListMap)
+        {
+            auto* mob = dynamic_cast<CMobEntity*>(pair.second);
+            if (mob && ((!mob->isDead() && !mob->isFullyHealed()) || mob->m_IsPathingHome))
+            {
+                allMobsHomeAndHealed = false;
+                break;
+            }
+        }
+    }
+
+    return allMobsHomeAndHealed;
+}
+
+/************************************************************************
+ *                                                                       *
+ *  Remove a character from the zone. If it becomes empty, mark when its  *
+ *  AI timers may be stopped after mobs finish returning home.            *
  *                                                                       *
  ************************************************************************/
 
@@ -756,7 +797,11 @@ void CZone::DecreaseZoneCounter(CCharEntity* PChar)
 
     m_zoneEntities->DecreaseZoneCounter(PChar);
 
-    if (!m_zoneEntities->CharListEmpty())
+    if (m_zoneEntities->CharListEmpty())
+    {
+        m_timeZoneEmpty = timer::now();
+    }
+    else
     {
         m_zoneEntities->DespawnPC(PChar);
     }
@@ -791,6 +836,11 @@ void CZone::IncreaseZoneCounter(CCharEntity* PChar)
     }
 
     m_zoneEntities->InsertPC(PChar);
+
+    if (!zoneTimerToken_.has_value() && !m_zoneEntities->CharListEmpty())
+    {
+        createZoneTimers();
+    }
 
     PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ON_ZONE_PATHOS, EffectNotice::Silent);
 
@@ -908,6 +958,12 @@ auto CZone::ZoneServer(timer::time_point tick) -> Task<void>
         m_BattlefieldHandler->HandleBattlefields(tick);
     }
 
+    if (zoneTimerToken_.has_value() && m_zoneEntities->CharListEmpty() && m_timeZoneEmpty + 5s < timer::now() && CheckMobsPathedBack())
+    {
+        zoneTimerToken_.reset();
+        zoneTimerTriggerAreasToken_.reset();
+    }
+
     co_return;
 }
 
@@ -1004,14 +1060,6 @@ void CZone::createZoneTimers()
     {
         return;
     }
-
-    spawnHandlerTimerToken_ = scheduler_.intervalOnMainThread(
-        kSpawnHandlerInterval,
-        [this]() -> Task<void>
-        {
-            this->spawnHandler()->Tick(timer::now());
-            co_return;
-        });
 
     zoneTimerToken_ = scheduler_.intervalOnMainThread(
         kLogicUpdateInterval,
@@ -1251,6 +1299,11 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     }
 
     charutils::WriteHistory(PChar);
+}
+
+bool CZone::IsZoneActive() const
+{
+    return zoneTimerToken_.has_value();
 }
 
 CZoneEntities* CZone::GetZoneEntities()
