@@ -49,10 +49,10 @@
 namespace
 {
 constexpr float SeparationDistance{ 1.0f };
-constexpr float FormationDistanceScale{ 0.5f };
 constexpr float FormationAngularSpan{ static_cast<float>(M_PI) };
-constexpr float FormationTolerance{ 0.25f };
-
+constexpr float FormationTolerance{ 0.5f };
+constexpr float CombatRepathDistance{ 0.75f };
+  
 uint16 RollMobSkillTPThreshold()
 {
     // Keep the full retail-style range while making lower-TP moves more common.
@@ -854,6 +854,15 @@ void CMobController::Move()
             }
         }
 
+        // Do not finish an outdated chase path through the target after they make a
+        // small movement. Stop at the mob's preferred melee distance instead.
+        if (move && currentDistance <= closeDistance)
+        {
+            PMob->PAI->PathFind->Clear();
+            FaceTarget();
+            return;
+        }
+
         if (!move && currentDistance <= attack_range && TrySeparateFromAttackers())
         {
             return;
@@ -888,7 +897,9 @@ void CMobController::Move()
                             PMob->PAI->PathFind->PathInRange(projectedPosition, closeDistance, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                         }
                     }
-                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, 0.1)) // This checks against the previous frames distance, and can false positive for where we want to be _now_
+                    // Keep the current chase path through small target movements. The
+                    // close-distance guard above still prevents the mob overshooting.
+                    else if (!isWithinDistance(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p, CombatRepathDistance))
                     {
                         auto projectedPosition = nearPosition(PTarget->loc.p, 0, rotationToRadian(worldAngle(PMob->loc.p, PTarget->loc.p)));
 
@@ -927,6 +938,7 @@ auto CMobController::TrySeparateFromAttackers() -> bool
     if (
         !PTarget ||
         m_Tick < PTarget->m_NextMobSeparationTime ||
+        PTarget->loc.p.moving ||
         PMob->GetSpeed() == 0 ||
         PMob->getMobMod(MOBMOD_NO_MOVE) != 0 ||
         PMob->getMobMod(MOBMOD_SHARE_POS) != 0 ||
@@ -1024,11 +1036,10 @@ auto CMobController::TrySeparateFromAttackers() -> bool
         const int16 offsetMod       = PAttacker->getMobMod(MOBMOD_TARGET_DISTANCE_OFFSET);
         const float offset          = static_cast<float>(offsetMod) / 10.0f;
         const float closeDistance   = std::max(0.0f, attackRange - (offsetMod == 0 ? 0.4f : offset));
-        const float formationRadius = closeDistance * FormationDistanceScale;
 
         position_t formationPosition = PTarget->loc.p;
-        formationPosition.x += std::cos(angle) * formationRadius;
-        formationPosition.z += std::sin(angle) * formationRadius;
+        formationPosition.x += std::cos(angle) * closeDistance;
+        formationPosition.z += std::sin(angle) * closeDistance;
 
         if (
             isWithinDistance(PAttacker->loc.p, formationPosition, FormationTolerance) ||

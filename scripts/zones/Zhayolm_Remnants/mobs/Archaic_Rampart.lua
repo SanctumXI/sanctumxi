@@ -3,6 +3,7 @@
 -- MOB: Archaic Rampart
 -----------------------------------
 local ID = zones[xi.zone.ZHAYOLM_REMNANTS]
+local zhayolmGlobal = require('scripts/zones/Zhayolm_Remnants/globals')
 mixins = { require('scripts/mixins/families/rampart') }
 -----------------------------------
 
@@ -34,39 +35,13 @@ entity.onMobDeath = function(mob, player, optParams)
             local mobID    = mob:getID()
 
             if stage == 3 then
-                local poroggo    = ID.mob.POROGGO_MADAME[3]
-                local stageBoss  = GetMobByID(mobID, instance)
-                local southGroup =
-                {
-                    utils.slice(ID.mob.MAMOOL_JA_ZENIST, 6, 12),
-                    utils.slice(ID.mob.MAMOOL_JA_SPEARMAN, 2, 8),
-                    utils.slice(ID.mob.MAMOOL_JA_STRAPER, 1, 7),
-                    utils.slice(ID.mob.MAMOOL_JA_BOUNDER, 2, 4)
-                }
-                local northGroup =
-                {
-                    utils.slice(ID.mob.MAMOOL_JA_SAVANT, 2, 11),
-                    utils.slice(ID.mob.MAMOOL_JA_SOPHIST, 1, 10),
-                    utils.slice(ID.mob.MAMOOL_JA_MIMICKER, 1, 12),
-                }
-
                 xi.salvage.spawnTempChest(mob, { rate = 1000 })
 
-                if xi.salvage.groupKilled(instance, southGroup) then
-                    if stageBoss and stageBoss:getLocalVar('spawned') == 0 then
-                        SpawnMob(poroggo, instance):setPos(380, -4, 389)
-                        stageBoss:setDropID(3409)
-                        stageBoss:setLocalVar('spawned', 1)
-                    end
-                elseif xi.salvage.groupKilled(instance, northGroup) then
-                    if stageBoss and stageBoss:getLocalVar('spawned') == 0 then
-                        SpawnMob(poroggo, instance):setPos(300, -4, 526)
-                        stageBoss:setDropID(3408)
-                        stageBoss:setMaxHP(10150)
-                        stageBoss:updateHealth()
-                        stageBoss:setLocalVar('spawned', 1)
-                    end
-                end
+                local path = mobID == ID.mob.ARCHAIC_RAMPART[1] and
+                    zhayolmGlobal.thirdFloorPath.SOUTH or
+                    zhayolmGlobal.thirdFloorPath.NORTH
+
+                zhayolmGlobal.trySpawnThirdFloorMadame(instance, path)
             elseif
                 instance:getStage() == 5 and
                 mobID ~= ID.mob.ARCHAIC_RAMPART[6] and

@@ -10,12 +10,7 @@ mixins = { require('scripts/mixins/families/imp') }
 local entity = {}
 
 entity.onMobSpawn = function(mob)
-    local instance = mob:getInstance()
-
     mob:addImmunity(xi.immunity.SILENCE)
-    if instance then
-        instance:setLocalVar('killedNMs', instance:getLocalVar('killedNMs') + 1)
-    end
 end
 
 -- upon trading card to slot, jakko aggroed a completely different target
@@ -39,6 +34,13 @@ entity.onMobEngage = function(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller or optParams.noKiller then
+        local instance = mob:getInstance()
+
+        if instance then
+            instance:setLocalVar('killedNMs', instance:getLocalVar('killedNMs') + 1)
+        end
+    end
 end
 
 return entity

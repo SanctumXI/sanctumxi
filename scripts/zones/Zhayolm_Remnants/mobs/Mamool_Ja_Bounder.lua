@@ -2,7 +2,7 @@
 -- Area: Zhayolm Remnants
 -- MOB: Mamool Ja Bounder (THF)
 -----------------------------------
-local ID = zones[xi.zone.ZHAYOLM_REMNANTS]
+local zhayolmGlobal = require('scripts/zones/Zhayolm_Remnants/globals')
 -----------------------------------
 
 ---@type TMobEntity
@@ -34,36 +34,10 @@ entity.onMobDeath = function(mob, player, optParams)
                     itemAmount_1 = 10,
                 })
                 if progress == 4 then
-                    instance:setLocalVar('stageComplete', 2)
-                    GetNPCByID(ID.npc.SOCKET, instance):setStatus(xi.status.NORMAL)
-                    xi.salvage.unsealDoors(instance, { ID.npc.DOOR_2_1, ID.npc.DOOR_2_2, ID.npc.DOOR_2_3, ID.npc.DOOR_2_4 })
-                    xi.salvage.spawnGroup(instance, utils.slice(ID.mob.DRACO_LIZARD, 9, 16))
-                    xi.salvage.spawnGroup(instance, utils.slice(ID.mob.DRACO_LIZARD, 1, 8))
-                    xi.salvage.spawnGroup(instance, utils.slice(ID.mob.WYVERN, 9, 16))
-                    xi.salvage.onDoorOpen(GetNPCByID(ID.npc.DOOR_2_1, instance), nil, 5)
-                    xi.salvage.onDoorOpen(GetNPCByID(ID.npc.DOOR_2_2, instance))
-                    xi.salvage.onDoorOpen(GetNPCByID(ID.npc.DOOR_2_3, instance))
-                    xi.salvage.onDoorOpen(GetNPCByID(ID.npc.DOOR_2_4, instance))
+                    zhayolmGlobal.completeSecondFloorRoute(instance, progress)
                 end
             elseif stage == 3 then
-                local group =
-                {
-                    utils.slice(ID.mob.MAMOOL_JA_ZENIST, 6, 12),
-                    utils.slice(ID.mob.MAMOOL_JA_SPEARMAN, 2, 8),
-                    utils.slice(ID.mob.MAMOOL_JA_STRAPER, 1, 7),
-                    utils.slice(ID.mob.MAMOOL_JA_BOUNDER, 2, 4),
-                    ID.mob.ARCHAIC_RAMPART[1]
-                }
-
-                if xi.salvage.groupKilled(instance, group) then
-                    local id        = ID.mob.POROGGO_MADAME[3]
-                    local stageBoss = GetMobByID(id, instance)
-                    if stageBoss and stageBoss:getLocalVar('spawned') == 0 then
-                        SpawnMob(id, instance):setPos(380, -4, 389)
-                        stageBoss:setDropID(3409)
-                        stageBoss:setLocalVar('spawned', 1)
-                    end
-                end
+                zhayolmGlobal.trySpawnThirdFloorMadame(instance, zhayolmGlobal.thirdFloorPath.SOUTH)
             end
         end
     end

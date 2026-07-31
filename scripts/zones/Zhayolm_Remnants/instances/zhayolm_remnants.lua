@@ -109,7 +109,7 @@ local mobTable =
             STAGE_START =
             {
                 utils.slice(ID.mob.MAMOOL_JA_SAVANT, 12, 13),
-                utils.slice(ID.mob.MAMOOL_JA_SOPHIST, 10, 11),
+                utils.slice(ID.mob.MAMOOL_JA_SOPHIST, 11, 12),
                 utils.slice(ID.mob.MAMOOL_JA_MIMICKER, 13, 14),
                 ID.mob.FIRST_RAMPART[2],
                 ID.mob.SECOND_RAMPART[2],
@@ -123,7 +123,7 @@ local mobTable =
             STAGE_START =
             {
                 utils.slice(ID.mob.MAMOOL_JA_SAVANT, 14, 15),
-                utils.slice(ID.mob.MAMOOL_JA_SOPHIST, 12, 13),
+                utils.slice(ID.mob.MAMOOL_JA_SOPHIST, 13, 14),
                 utils.slice(ID.mob.MAMOOL_JA_MIMICKER, 15, 16),
                 ID.mob.FIRST_RAMPART[3],
                 ID.mob.SECOND_RAMPART[3],
@@ -176,7 +176,7 @@ local mobTable =
                     utils.slice(ID.mob.ARCHAIC_GEAR, 9, 16),
                 },
                 utils.slice(ID.mob.ARCHAIC_RAMPART, 3, 6),
-                ID.mob.ARCHAIC_CHARIOT[2],
+                ID.mob.ARCHAIC_CHARIOT[1],
             },
         },
     },
@@ -323,14 +323,22 @@ end
 instanceObject.onEventUpdate = function(player, csid, option, npc)
     local instance = player:getInstance()
 
-    if instance:getLocalVar('transportUser') ~= 0 then
+    if not instance then
         return
     end
 
-    if option == 1 and instance:getLocalVar('stageComplete') == instance:getStage() then
-        if csid ~= 3 or csid ~= 211 then
-            xi.salvage.onTransportUpdate(player, instance)
+    if
+        option == 1 and
+        csid >= 200 and
+        csid <= 210 and
+        instance:getLocalVar('stageComplete') == instance:getStage()
+    then
+        if instance:getLocalVar('transportUser') ~= 0 then
+            player:release()
+            return
         end
+
+        xi.salvage.onTransportUpdate(player, instance)
 
         if csid >= 200 and csid <= 203 then
             instance:setStage(2)
@@ -382,17 +390,19 @@ end
 
 instanceObject.onEventFinish = function(player, csid, option, npc)
     local instance = player:getInstance()
-    local chars    = instance:getChars()
 
     if csid == 1 then
-        for _, players in ipairs(chars) do
-            players:setPos(-580, 0, -433, 64, xi.zone.ALZADAAL_UNDERSEA_RUINS)
-        end
-    elseif csid == 101 then
+        player:setPos(-580, 0, -433, 64, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+        return
+    elseif not instance then
+        return
+    end
+
+    if csid == 101 then
         player:messageSpecial(ID.text.TIME_TO_COMPLETE, 100)
         player:messageSpecial(ID.text.SALVAGE_START, 1)
     elseif csid == 211 and option == 1 then
-        for _, players in pairs(chars) do
+        for _, players in pairs(instance:getChars()) do
             players:startCutscene(1)
         end
     end
@@ -400,7 +410,13 @@ instanceObject.onEventFinish = function(player, csid, option, npc)
     if option == 1 and instance:getLocalVar('transportUser') == player:getID() then
         if csid >= 200 and csid <= 210 then
             xi.salvage.teleportGroup(player)
-            xi.salvage.spawnGroup(instance, mobTable[instance:getStage()][instance:getProgress()].STAGE_START)
+            local stageData = mobTable[instance:getStage()]
+            local floorData = stageData and stageData[instance:getProgress()]
+
+            if floorData and floorData.STAGE_START then
+                xi.salvage.spawnGroup(instance, floorData.STAGE_START)
+            end
+
             -- 2nd floor
             if csid == 200 then
                 GetNPCByID(ID.npc.SOCKET, instance):setStatus(xi.status.NORMAL)

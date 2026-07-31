@@ -30,21 +30,19 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    local empoweredConsumed = player:getCharVar('Sanctum_AsuranFistsConsumed') == 1
-
-    player:setCharVar('Sanctum_AsuranFistsConsumed', 0)
+    local duration = 45 + math.floor((tp - 1000) / 100) * 3
 
     if player:getMainJob() == xi.job.MNK then
-        if empoweredConsumed then
-            xi.wsEffect.message(player, 'Your empowered Asuran Fists landed all eight hits!')
-        elseif xi.wsEffect.set(player, xi.wsEffect.ASURAN_FISTS_HITS, 1, 60) then
-            xi.wsEffect.message(player, 'Your next Asuran Fists will land all eight hits!')
-        else
-            xi.wsEffect.message(player, 'An empowered effect is already active.')
-        end
+        xi.wsEffect.set(
+            player,
+            xi.wsEffect.ASURAN_FISTS_H2H,
+            5,
+            duration
+        )
+
+        xi.wsEffect.message(player, 'Asuran Fists empowered your next H2H weapon skill and raised Subtle Blow and Guard rate!')
     elseif player:getMainJob() == xi.job.PUP then
-        local duration = 45 + math.floor((tp - 1000) / 100) * 3
-        local pet      = player:getPet()
+        local pet = player:getPet()
 
         player:addStatusEffect(xi.effect.GEO_HASTE, { power = 500, duration = duration, origin = player })
         player:addStatusEffect(xi.effect.REGAIN, { power = 5, duration = duration, origin = player })

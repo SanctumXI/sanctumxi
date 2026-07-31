@@ -35,7 +35,7 @@ entity.onMobSpawn = function(mob)
         mob:addMod(elementMods[enteringDay].null, 100)
         mob:addMod(elementMods[enteringDay].res, -3)
         mob:addMod(xi.mod.SPELLINTERRUPT, -20)
-        if enteringDay == xi.day.DARKSDAY then -- takes double dmg on Darksday
+        if enteringDay - 1 == xi.day.DARKSDAY then -- takes double dmg on Darksday
             mob:addMod(xi.mod.UDMGPHYS, 100)
             mob:addMod(xi.mod.UDMGBREATH, 100)
             mob:addMod(xi.mod.UDMGMAGIC, 1000)

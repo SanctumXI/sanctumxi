@@ -18,7 +18,7 @@ entity.onMobDeath = function(mob, player, optParams)
     if optParams.isKiller or optParams.noKiller then
         local instance = mob:getInstance()
 
-        if xi.salvage.groupKilled(instance, ID.mob.BULL_BUGARD) then
+        if instance and xi.salvage.groupKilled(instance, ID.mob.BULL_BUGARD) then
             SpawnMob(ID.mob.POROGGO_GENT[4], instance):setDropID(3377)
         end
     end

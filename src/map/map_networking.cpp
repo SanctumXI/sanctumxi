@@ -105,7 +105,7 @@ void MapNetworking::tapStatistics()
 
     for (auto& [id, PZone] : g_PZoneList)
     {
-        if (PZone->IsZoneActive())
+        if (!PZone->GetZoneEntities()->CharListEmpty())
         {
             activeZoneCount += 1;
             playerCount += PZone->GetZoneEntities()->GetCharList().size();

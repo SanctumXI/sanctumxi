@@ -170,7 +170,7 @@ local function getSingleHitDamage(attacker, target, dmg, ftp, wsParams, calcPara
     end
 
     if calcParams.attackType == xi.attackType.PHYSICAL then
-        calcParams.pdif = xi.combat.physical.calculateMeleePDIF(attacker, target, calcParams.attackInfo.weaponType, atkMultiplier, criticalHit, applyLevelCorrection, ignoresDefense, ignoreDefMultiplier, true, calcParams.attackInfo.slot, false)
+        calcParams.pdif = xi.combat.physical.calculateMeleePDIF(attacker, target, calcParams.attackInfo.weaponType, atkMultiplier, criticalHit, applyLevelCorrection, ignoresDefense, ignoreDefMultiplier, true, calcParams.attackInfo.slot, false, calcParams.bonusAttack)
     else
         calcParams.pdif = xi.combat.physical.calculateRangedPDIF(attacker, target, calcParams.skillType, atkMultiplier, criticalHit, applyLevelCorrection, ignoresDefense, ignoreDefMultiplier, true, 0)
     end
@@ -701,25 +701,23 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         calcParams.bonusAcc = calcParams.bonusAcc + accMod
     end
 
+    calcParams.skillType = attack.weaponType
+
+    local asuranFistsEmpowered =
+        wsID ~= 0 and
+        calcParams.skillType == xi.skill.HAND_TO_HAND and
+        xi.wsEffect.has(attacker, xi.wsEffect.ASURAN_FISTS_H2H)
+
+    if asuranFistsEmpowered then
+        calcParams.bonusAttack = 25
+        calcParams.bonusAcc    = calcParams.bonusAcc + 25
+    end
+
     calcParams.firstHitRate = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc + 100, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.hitRate      = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc, xi.attackAnimation.RIGHT_ATTACK)
-    calcParams.skillType    = attack.weaponType
 
-    local asuranFistsEmpowered = false
     local impulseDriveEmpowered = false
     local fullSwingDamageBonus = 0
-
-    if
-        wsID == xi.weaponskill.ASURAN_FISTS and
-        xi.wsEffect.has(attacker, xi.wsEffect.ASURAN_FISTS_HITS)
-    then
-        calcParams.firstHitRate = 1
-        calcParams.hitRate      = 1
-
-        xi.wsEffect.consume(attacker)
-        asuranFistsEmpowered = true
-        attacker:setCharVar('Sanctum_AsuranFistsConsumed', 1)
-    end
 
     if
         wsID ~= 0 and
@@ -862,10 +860,6 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
 
-    if asuranFistsEmpowered then
-        finaldmg = math.floor(finaldmg * 1.15)
-    end
-
     if impulseDriveEmpowered then
         finaldmg = math.floor(finaldmg * 1.25)
         xi.wsEffect.message(attacker, 'Impulse Drive empowered this weaponskill!')
@@ -878,6 +872,11 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+
+    if asuranFistsEmpowered then
+        xi.wsEffect.consume(attacker)
+        xi.wsEffect.message(attacker, 'Asuran Fists granted +25 attack and +25 accuracy to your H2H weapon skill!')
+    end
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end

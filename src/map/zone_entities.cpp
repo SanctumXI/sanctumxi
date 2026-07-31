@@ -1602,15 +1602,26 @@ void CZoneEntities::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
             case CHAR_INRANGE:
             {
                 TracyZoneCString("CHAR_INRANGE");
-                // TODO: rewrite packet handlers and use enums instead of rawdog packet ids
-                // 30 yalms if action packet, 50 otherwise
-                const int checkDistance = packet->getType() == 0x0028 ? 30 : 50;
 
                 FOR_EACH_PAIR_CAST_SECOND(CCharEntity*, PCurrentChar, m_charList)
                 {
                     if (PEntity != PCurrentChar)
                     {
-                        if (isWithinDistance(PEntity->loc.p, PCurrentChar->loc.p, checkDistance) &&
+                        // A visible mob can now be farther away than the legacy
+                        // packet ranges. Use the per-player spawn list so its
+                        // actions, cast completions, and interrupts remain in
+                        // sync with the adaptive render distance.
+                        //
+                        // Non-mob sources retain their existing packet ranges.
+                        const bool isInPacketRange =
+                            PEntity->objtype == TYPE_MOB
+                                ? charutils::hasEntitySpawned(PCurrentChar, PEntity)
+                                : isWithinDistance(
+                                      PEntity->loc.p,
+                                      PCurrentChar->loc.p,
+                                      packet->getType() == 0x0028 ? 30.0f : ENTITY_RENDER_DISTANCE);
+
+                        if (isInPacketRange &&
                             (PEntity->objtype != TYPE_PC || static_cast<CCharEntity*>(PEntity)->m_moghouseID == PCurrentChar->m_moghouseID))
                         {
                             uint16 packetType = packet->getType();

@@ -294,7 +294,6 @@ end
 
 entity.onMobInitialize = function(mob)
     configureMob(mob)
-    hardModeLoot.register(mob)
 end
 
 -----------------------------------
@@ -303,6 +302,7 @@ end
 
 entity.onMobSpawn = function(mob)
     configureMob(mob)
+    hardModeLoot.register(mob)
 
     -----------------------------------
     -- Base combat statistics
