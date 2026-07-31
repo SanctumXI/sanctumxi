@@ -382,6 +382,9 @@ xi.darkixion.roamingMods = function(mob)
     -- ensure he's in initial state for beginning of fight
     mob:setMobSkillAttack(39)
     mob:setLocalVar('trampleCount', 0)
+    mob:setLocalVar('pendingIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkillCount', 0)
     mob:setBehavior(0)
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
@@ -568,6 +571,26 @@ local useTelegraphedSkill = function(mob, skillID, target)
     end
 end
 
+local telegraphBehavior = bit.bor(xi.behavior.NO_TURN, xi.behavior.STANDBACK)
+
+local restoreTelegraphedCombatState = function(mob)
+    mob:setLocalVar('activeIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkillCount', 0)
+
+    -- Trample owns these controls while its scripted path is active and performs
+    -- its own cleanup in endTramplePath.
+    if
+        mob:getAnimationSub() == animationSubs.TRAMPLE or
+        mob:getLocalVar('isBusy') ~= 0
+    then
+        return
+    end
+
+    mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(telegraphBehavior)))
+    mob:setAutoAttackEnabled(true)
+    mob:setMobAbilityEnabled(true)
+end
+
 local telegraphedSkillWeights =
 {
     { id = xi.mobSkill.LIGHTNING_SPEAR, weight = 40 },
@@ -635,6 +658,8 @@ local prepareTelegraphedSkill = function(mob)
     end
 
     mob:setLocalVar('pendingIxionSkill', chosenSkill)
+    mob:setLocalVar('activeIxionSkill', chosenSkill)
+    mob:setLocalVar('activeIxionSkillCount', 0)
     mob:setLocalVar('lastIxionSkill', chosenSkill)
     xi.darkixion.skillTargets[mob:getID()] = chosenTarget
 
@@ -644,7 +669,7 @@ local prepareTelegraphedSkill = function(mob)
         mob:lookAt(chosenTarget:getPos())
     end
 
-    mob:setBehavior(xi.behavior.NO_TURN + xi.behavior.STANDBACK)
+    mob:setBehavior(bit.bor(mob:getBehavior(), telegraphBehavior))
     mob:setAutoAttackEnabled(false)
     mob:setMobAbilityEnabled(false)
 end
@@ -682,13 +707,20 @@ xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
         end
 
         mob:setLocalVar('pendingIxionSkill', 0)
-        xi.darkixion.skillTargets[mob:getID()] = nil
-        useTelegraphedSkill(mob, chosenSkill, chosenTarget)
-
+        mob:setLocalVar('activeIxionSkill', chosenSkill)
+        local followUpCount = 1
         if
             mob:getLocalVar('BattlefieldIxion') ~= 1 and
             mob:getAnimationSub() == animationSubs.GLOWING
         then
+            followUpCount = 2
+        end
+
+        mob:setLocalVar('activeIxionSkillCount', followUpCount)
+        xi.darkixion.skillTargets[mob:getID()] = nil
+        useTelegraphedSkill(mob, chosenSkill, chosenTarget)
+
+        if followUpCount == 2 then
             -- Open-world Dark Ixion retains its retail-style glowing double-use.
             useTelegraphedSkill(mob, chosenSkill, chosenTarget)
         end
@@ -716,14 +748,17 @@ xi.darkixion.onMobWeaponSkill = function(target, mob, skill)
         end
     end
 
-    -- once TP move sequences are done, reset mob behaviors
-    mob:queue(0, function(mobArg)
-        if not xi.combat.behavior.isEntityBusy(mobArg) then
-            mobArg:setBehavior(0)
-            mobArg:setAutoAttackEnabled(true)
-            mobArg:setMobAbilityEnabled(true)
-        end
-    end)
+    if skillID == xi.mobSkill.DI_GLOW then
+        -- If the selected follow-up cannot enter its skill state (for example,
+        -- its target moved out of range), this runs after that failed request
+        -- and releases the telegraph lock. Successful follow-ups are released
+        -- by IXION_WS_STATE_EXIT instead.
+        mob:queue(0, function(mobArg)
+            if mobArg:getLocalVar('activeIxionSkill') ~= 0 then
+                restoreTelegraphedCombatState(mobArg)
+            end
+        end)
+    end
 end
 
 xi.darkixion.onMobInitialize = function(mob)
@@ -787,6 +822,22 @@ local setupCombatListeners = function(mob)
             acheronKickPositioning(mobArg)
         end
     end)
+
+    mob:addListener('WEAPONSKILL_STATE_EXIT', 'IXION_WS_STATE_EXIT', function(mobArg, skillId, completed)
+        local activeSkill = mobArg:getLocalVar('activeIxionSkill')
+
+        if
+            (skillId == xi.mobSkill.DI_GLOW and not completed) or
+            (activeSkill ~= 0 and skillId == activeSkill)
+        then
+            local remainingSkills = math.max(0, mobArg:getLocalVar('activeIxionSkillCount') - 1)
+            mobArg:setLocalVar('activeIxionSkillCount', remainingSkills)
+
+            if skillId == xi.mobSkill.DI_GLOW or remainingSkills == 0 then
+                restoreTelegraphedCombatState(mobArg)
+            end
+        end
+    end)
 end
 
 xi.darkixion.onMobSpawn = function(mob)
@@ -819,6 +870,8 @@ xi.darkixion.onBattlefieldMobSpawn = function(mob)
     mob:setLocalVar('nextLightningSpearHPP', 90)
     mob:setLocalVar('forceLightningSpear', 0)
     mob:setLocalVar('pendingIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkillCount', 0)
     mob:setLocalVar('lastIxionSkill', 0)
     mob:setLocalVar('isBusy', 0)
     mob:setBehavior(0)
@@ -910,6 +963,8 @@ xi.darkixion.onBattlefieldMobDisengage = function(mob)
     mob:setLocalVar('tramplePathTime', 0)
     mob:setLocalVar('forceLightningSpear', 0)
     mob:setLocalVar('pendingIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkill', 0)
+    mob:setLocalVar('activeIxionSkillCount', 0)
     mob:setLocalVar('isBusy', 0)
     changeHornState(mob, hornState)
     mob:setBaseSpeed(40)
@@ -921,6 +976,17 @@ end
 xi.darkixion.onMobFight = function(mob, target)
     local animationSub = mob:getAnimationSub()
     local isBattlefieldIxion = mob:getLocalVar('BattlefieldIxion') == 1
+
+    -- Recover a telegraph lock if a sequence was interrupted or its queued
+    -- follow-up never entered a skill state. This also repairs an already-stuck
+    -- Ixion after a script reload without requiring the battlefield to reset.
+    if
+        animationSub ~= animationSubs.TRAMPLE and
+        bit.band(mob:getBehavior(), telegraphBehavior) ~= 0 and
+        not xi.combat.behavior.isEntityBusy(mob)
+    then
+        restoreTelegraphedCombatState(mob)
+    end
 
     -- Defer a horn break until the current animation is finished so the visible
     -- broken-horn model state cannot be immediately overwritten.
