@@ -183,9 +183,18 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
     {
         case GP_CLI_COMMAND_ACTION_ACTIONID::Talk:
         {
-            // Starting another NPC interaction ends any previous Linkshell Moogle session.
-            // Talking to the Linkshell Moogle again immediately opens a fresh session.
-            if (PChar->isLinkshellBankActive())
+            CBaseEntity* PNpc = PChar->GetEntity(this->ActIndex, TYPE_NPC | TYPE_MOB | TYPE_TRUST);
+            if (!PNpc)
+            {
+                return;
+            }
+
+            // Starting a different NPC interaction ends the Linkshell Bank session.
+            // Reopening the Linkshell Moogle must not send the personal view immediately
+            // before the shared view, because the overlapping refreshes can race client-side.
+            if (
+                PChar->isLinkshellBankActive() &&
+                PNpc->GetLocalVar("[SanctumLibrary]LinkshellBankMoogle") == 0)
             {
                 charutils::CloseLinkshellBank(PChar);
             }
@@ -214,12 +223,6 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
                 PChar->isFishing())
             {
                 PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Standard);
-                return;
-            }
-
-            CBaseEntity* PNpc = PChar->GetEntity(this->ActIndex, TYPE_NPC | TYPE_MOB | TYPE_TRUST);
-            if (!PNpc)
-            {
                 return;
             }
 

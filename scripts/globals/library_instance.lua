@@ -408,11 +408,11 @@ libraryInstance.setupServices = function(instance)
         end,
     })
 
-    instance:insertDynamicEntity(
+    local linkshellMoogle = instance:insertDynamicEntity(
     {
         objtype = xi.objType.NPC,
         name = 'Linkshell_Moogle',
-        packetName = 'Linkshell Moogle',
+        packetName = 'LS Bank Moogle',
         look = 82,
         x = -94.733, y = -2.193, z = -97.705, rotation = 137,
         onTrigger = function(player, npc)
@@ -440,6 +440,10 @@ libraryInstance.setupServices = function(instance)
             player:sendMenu(xi.menuType.MOOGLE)
         end,
     })
+
+    if linkshellMoogle then
+        linkshellMoogle:setLocalVar('[SanctumLibrary]LinkshellBankMoogle', 1)
+    end
 
     for _, teleporterConfig in ipairs(getLibraryTeleporters()) do
         teleporterNpc.insert(instance, teleporterConfig, printLibraryAccessDenied)
