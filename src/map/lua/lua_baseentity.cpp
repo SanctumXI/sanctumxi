@@ -19985,6 +19985,177 @@ auto CLuaBaseEntity::getLinkshellName(uint8 slot) -> std::string
 }
 
 /************************************************************************
+ *  Function: getLinkshellNameByID()
+ *  Purpose : Returns the persistent name for a linkshell database ID.
+ ************************************************************************/
+
+auto CLuaBaseEntity::getLinkshellNameByID(const uint32 linkshellId) -> std::string
+{
+    if (linkshellId == 0)
+    {
+        return {};
+    }
+
+    const auto rset = db::preparedStmt(
+        "SELECT name FROM linkshells WHERE linkshellid = ? LIMIT 1",
+        linkshellId);
+
+    if (!rset || !rset->rowsCount() || !rset->next())
+    {
+        return {};
+    }
+
+    return rset->get<std::string>("name");
+}
+
+/************************************************************************
+ *  Function: hasLinkshellLibraryAccess()
+ *  Purpose : Returns whether a linkshell has purchased Library access.
+ ************************************************************************/
+
+bool CLuaBaseEntity::hasLinkshellLibraryAccess(const uint32 linkshellId)
+{
+    if (linkshellId == 0)
+    {
+        return false;
+    }
+
+    const auto rset = db::preparedStmt(
+        "SELECT 1 FROM linkshell_library_access WHERE linkshell_id = ? LIMIT 1",
+        linkshellId);
+
+    return rset && rset->rowsCount() && rset->next();
+}
+
+/************************************************************************
+ *  Function: getOwnedLinkshellLibraryID()
+ *  Purpose : Returns the Library entitlement purchased by this character.
+ ************************************************************************/
+
+uint32 CLuaBaseEntity::getOwnedLinkshellLibraryID()
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar == nullptr)
+    {
+        return 0;
+    }
+
+    const auto rset = db::preparedStmt(
+        "SELECT linkshell_id FROM linkshell_library_access WHERE purchased_by = ? LIMIT 1",
+        PChar->id);
+
+    if (!rset || !rset->rowsCount() || !rset->next())
+    {
+        return 0;
+    }
+
+    return rset->get<uint32>("linkshell_id");
+}
+
+/************************************************************************
+ *  Function: purchaseLinkshellLibraryAccess()
+ *  Purpose : Atomically claims a linkshell's one-time Library unlock and
+ *            charges the equipped linkshell holder.
+ *
+ *  Results:
+ *      0 = Purchased
+ *      1 = Already purchased
+ *      2 = No linkshell in that slot
+ *      3 = Not the linkshell holder
+ *      4 = Insufficient Gil
+ *      5 = Database or payment failure
+ *      6 = Personal registration cooldown is active
+ ************************************************************************/
+
+uint8 CLuaBaseEntity::purchaseLinkshellLibraryAccess(
+    const uint8  slot,
+    const uint32 expectedLinkshellId,
+    const uint32 cost,
+    const uint32 cooldownSeconds)
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar == nullptr)
+    {
+        return 5;
+    }
+
+    const auto linkshellId = getLinkshellID(slot);
+    if (linkshellId == 0 || linkshellId != expectedLinkshellId)
+    {
+        return 2;
+    }
+
+    if (getLinkshellType(slot) != static_cast<uint8>(LSTYPE_LINKSHELL))
+    {
+        return 3;
+    }
+
+    if (hasLinkshellLibraryAccess(linkshellId))
+    {
+        return 1;
+    }
+
+    const auto registeredLinkshellId = static_cast<uint32>(std::max(0, PChar->getCharVar("[SanctumLibrary]LinkshellId")));
+    const auto currentTime           = earth_time::timestamp();
+
+    if (registeredLinkshellId != 0 && registeredLinkshellId != linkshellId)
+    {
+        auto registeredAt = static_cast<uint32>(std::max(0, PChar->getCharVar("[SanctumLibrary]RegisteredAt")));
+        if (registeredAt == 0)
+        {
+            PChar->setCharVar("[SanctumLibrary]RegisteredAt", currentTime);
+            return 6;
+        }
+
+        if (static_cast<uint64>(registeredAt) + cooldownSeconds > currentTime)
+        {
+            return 6;
+        }
+    }
+
+    if (
+        linkshellId > static_cast<uint32>(std::numeric_limits<int32>::max()) ||
+        cost > static_cast<uint32>(std::numeric_limits<int32>::max()) ||
+        getGil() < cost)
+    {
+        return 4;
+    }
+
+    if (!delGil(static_cast<int32>(cost)))
+    {
+        return 5;
+    }
+
+    const auto ownedLinkshellId = getOwnedLinkshellLibraryID();
+    const auto result = ownedLinkshellId != 0 && ownedLinkshellId != linkshellId ?
+                            db::preparedStmt(
+                                "UPDATE linkshell_library_access "
+                                "SET linkshell_id = ?, price = ?, purchased_at = CURRENT_TIMESTAMP "
+                                "WHERE purchased_by = ? AND linkshell_id = ?",
+                                linkshellId,
+                                cost,
+                                PChar->id,
+                                ownedLinkshellId) :
+                            db::preparedStmt(
+                                "INSERT IGNORE INTO linkshell_library_access "
+                                "(linkshell_id, purchased_by, price) VALUES (?, ?, ?)",
+                                linkshellId,
+                                PChar->id,
+                                cost);
+
+    if (!result || result->rowsAffected() != 1)
+    {
+        addGil(static_cast<int32>(cost));
+        return hasLinkshellLibraryAccess(linkshellId) ? 1 : 5;
+    }
+
+    PChar->setCharVar("[SanctumLibrary]LinkshellId", static_cast<int32>(linkshellId));
+    PChar->setCharVar("[SanctumLibrary]RegisteredAt", currentTime);
+
+    return 0;
+}
+
+/************************************************************************
  *  Function: getLinkshellType()
  *  Purpose : Returns the equipped linkshell item's rank/type.
  *
@@ -21098,6 +21269,10 @@ void CLuaBaseEntity::Register()
     // Sanctum Custom Linkshell HNM Treasury
     SOL_REGISTER("getLinkshellID", CLuaBaseEntity::getLinkshellID);
     SOL_REGISTER("getLinkshellName", CLuaBaseEntity::getLinkshellName);
+    SOL_REGISTER("getLinkshellNameByID", CLuaBaseEntity::getLinkshellNameByID);
+    SOL_REGISTER("hasLinkshellLibraryAccess", CLuaBaseEntity::hasLinkshellLibraryAccess);
+    SOL_REGISTER("getOwnedLinkshellLibraryID", CLuaBaseEntity::getOwnedLinkshellLibraryID);
+    SOL_REGISTER("purchaseLinkshellLibraryAccess", CLuaBaseEntity::purchaseLinkshellLibraryAccess);
     SOL_REGISTER("getLinkshellType", CLuaBaseEntity::getLinkshellType);
     SOL_REGISTER("getLinkshellTreasuryItemCount", CLuaBaseEntity::getLinkshellTreasuryItemCount);
     SOL_REGISTER("depositLinkshellTreasuryItem", CLuaBaseEntity::depositLinkshellTreasuryItem);

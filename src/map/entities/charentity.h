@@ -612,6 +612,7 @@ public:
     void ReloadPartyInc();
     void ReloadPartyDec();
     bool ReloadParty() const;
+    void MarkChatZoneClientReady();
     void ClearTrusts();
     void RemoveTrust(CTrustEntity*);
 
@@ -734,6 +735,12 @@ private:
     bool m_isStyleLocked;
     bool m_isBlockingAid;
     bool m_reloadParty;
+
+    void trySendChatZoneReady();
+
+    bool              m_chatZoneClientReady{};
+    bool              m_chatZoneReadySent{};
+    timer::time_point m_chatZoneClientReadyAt{};
 
     InventorySyncState inventorySyncState_;
 

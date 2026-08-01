@@ -30,17 +30,26 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
-    local duration = 45 + math.floor((tp - 1000) / 100) * 3
+    local hitsLanded = tpHits + extraHits
+    local duration   = 45 + math.floor((tp - 1000) / 100) * 3
+
+    if damage > 0 and hitsLanded > 0 then
+        target:addStatusEffect(xi.effect.BLUNT_TRAUMA, { power = 500, duration = 60, origin = player })
+    end
 
     if player:getMainJob() == xi.job.MNK then
-        xi.wsEffect.set(
-            player,
-            xi.wsEffect.ASURAN_FISTS_H2H,
-            5,
-            duration
-        )
+        if hitsLanded > 0 then
+            xi.wsEffect.set(
+                player,
+                xi.wsEffect.ASURAN_FISTS_COMBO,
+                hitsLanded,
+                duration
+            )
 
-        xi.wsEffect.message(player, 'Asuran Fists empowered your next H2H weapon skill and raised Subtle Blow and Guard rate!')
+            xi.wsEffect.message(player, string.format('Asuran Fists landed %i hits and empowered Raging Fists and Exploding Palm!', hitsLanded))
+        elseif xi.wsEffect.peek(player) ~= xi.wsEffect.NONE then
+            xi.wsEffect.clear(player)
+        end
     elseif player:getMainJob() == xi.job.PUP then
         local pet = player:getPet()
 

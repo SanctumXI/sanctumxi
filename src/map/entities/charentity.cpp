@@ -299,14 +299,20 @@ CCharEntity::~CCharEntity()
 
     ClearTrusts(); // trusts don't survive zone lines
 
+    const bool preserveLinkshellMembership = settings::get<bool>("main.ENABLE_LINKSHELL_ZONING_BUFFER") &&
+                                             loc.destination != 0 && loc.destination != 0xFFFF;
+
     if (PLinkshell1 != nullptr)
     {
-        PLinkshell1->DelMember(this);
+        // Keep the session-table membership stable across a zone line. The
+        // destination map refreshes it while loading equipment; clearing it
+        // here creates a window where world cannot discover this recipient.
+        PLinkshell1->DelMember(this, !preserveLinkshellMembership);
     }
 
     if (PLinkshell2 != nullptr)
     {
-        PLinkshell2->DelMember(this);
+        PLinkshell2->DelMember(this, !preserveLinkshellMembership);
     }
 
     if (PUnityChat != nullptr)
@@ -1123,6 +1129,43 @@ bool CCharEntity::ReloadParty() const
     return m_reloadParty;
 }
 
+void CCharEntity::MarkChatZoneClientReady()
+{
+    if (!m_chatZoneClientReady)
+    {
+        m_chatZoneClientReady   = true;
+        m_chatZoneClientReadyAt = timer::now();
+    }
+
+    trySendChatZoneReady();
+}
+
+void CCharEntity::trySendChatZoneReady()
+{
+    if (!m_chatZoneClientReady || m_chatZoneReadySent)
+    {
+        return;
+    }
+
+    // Party/alliance objects are reconstructed on PostTick. Wait for that
+    // work before releasing buffered group chat, but never let a failed party
+    // reload hold tells and linkshell messages indefinitely.
+    if (ReloadParty() && timer::now() < m_chatZoneClientReadyAt + std::chrono::seconds(5))
+    {
+        return;
+    }
+
+    if (ReloadParty())
+    {
+        ShowWarningFmt("Party data was still loading 5 seconds after zone-in for char<{}>; releasing buffered chat", id);
+    }
+
+    message::send(ipc::ChatZoneReady{
+        .charId = id,
+    });
+    m_chatZoneReadySent = true;
+}
+
 void CCharEntity::RemoveTrust(CTrustEntity* PTrust)
 {
     if (!PTrust->PAI->IsSpawned())
@@ -1257,6 +1300,8 @@ void CCharEntity::PostTick()
     {
         charutils::ReloadParty(this);
     }
+
+    trySendChatZoneReady();
 
     if (m_EffectsChanged)
     {

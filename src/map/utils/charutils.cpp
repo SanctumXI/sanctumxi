@@ -8480,6 +8480,17 @@ void SendToZone(CCharEntity* PChar, uint16 zoneId)
 
     auto ip   = ipp.getIP();
     auto port = ipp.getPort();
+
+    if (settings::get<bool>("main.ENABLE_TELL_ZONING_BUFFER") ||
+        settings::get<bool>("main.ENABLE_PARTY_ZONING_BUFFER") ||
+        settings::get<bool>("main.ENABLE_LINKSHELL_ZONING_BUFFER"))
+    {
+        // Publish the zoning state before changing the map route. World uses
+        // this flag to hold chat during the brief period where neither map
+        // process can deliver them to the character.
+        db::preparedStmt("UPDATE char_stats SET zoning = 1 WHERE charid = ?", PChar->id);
+    }
+
     db::preparedStmt("UPDATE accounts_sessions "
                      "SET server_addr = ?, server_port = ? "
                      "WHERE charid = ?",

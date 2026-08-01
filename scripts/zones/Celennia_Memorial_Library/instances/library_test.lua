@@ -1,6 +1,5 @@
 -----------------------------------
--- Celennia Memorial Library test instance
--- !libraryinstance
+-- Linkshell Library instance definition
 -----------------------------------
 local libraryInstance = require('scripts/globals/library_instance')
 

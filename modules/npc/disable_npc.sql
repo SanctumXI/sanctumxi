@@ -47,7 +47,8 @@ WHERE BINARY `name` IN
     'Synergy_Engineer',
     'Pursuivant',
     'Tillecoe',
-    'Curio_Vendor_Moogle'
+    'Curio_Vendor_Moogle',
+    'Chat_Manual'
     
 )
 -- Treasure Coffers associated with Gobbie Mystery NPCs

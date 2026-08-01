@@ -703,16 +703,6 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     calcParams.skillType = attack.weaponType
 
-    local asuranFistsEmpowered =
-        wsID ~= 0 and
-        calcParams.skillType == xi.skill.HAND_TO_HAND and
-        xi.wsEffect.has(attacker, xi.wsEffect.ASURAN_FISTS_H2H)
-
-    if asuranFistsEmpowered then
-        calcParams.bonusAttack = 25
-        calcParams.bonusAcc    = calcParams.bonusAcc + 25
-    end
-
     calcParams.firstHitRate = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc + 100, xi.attackAnimation.RIGHT_ATTACK)
     calcParams.hitRate      = xi.weaponskills.getHitRate(attacker, target, calcParams.bonusAcc, xi.attackAnimation.RIGHT_ATTACK)
 
@@ -859,6 +849,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     finaldmg            = finaldmg * xi.settings.main.WEAPON_SKILL_POWER -- Add server bonus
     finaldmg            = xi.wsEffect.applyDamageBonus(attacker, finaldmg)
+    finaldmg            = math.floor(finaldmg * (wsParams.damageMultiplier or 1))
 
     if impulseDriveEmpowered then
         finaldmg = math.floor(finaldmg * 1.25)
@@ -872,11 +863,6 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
 
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
-
-    if asuranFistsEmpowered then
-        xi.wsEffect.consume(attacker)
-        xi.wsEffect.message(attacker, 'Asuran Fists granted +25 attack and +25 accuracy to your H2H weapon skill!')
-    end
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end

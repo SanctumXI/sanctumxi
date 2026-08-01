@@ -55,11 +55,15 @@ public:
     void handleMessage_EmptyStruct(const IPP& ipp, const ipc::EmptyStruct& message);
     void handleMessage_AccountLogin(const IPP& ipp, const ipc::AccountLogin& message);
     void handleMessage_CharZone(const IPP& ipp, const ipc::CharZone& message);
+    void handleMessage_ChatZoneReady(const IPP& ipp, const ipc::ChatZoneReady& message);
     void handleMessage_CharVarUpdate(const IPP& ipp, const ipc::CharVarUpdate& message);
     void handleMessage_ChatMessageTell(const IPP& ipp, const ipc::ChatMessageTell& message);
+    void handleMessage_ChatMessageTellRetry(const IPP& ipp, const ipc::ChatMessageTellRetry& message);
     void handleMessage_ChatMessageParty(const IPP& ipp, const ipc::ChatMessageParty& message);
     void handleMessage_ChatMessageAlliance(const IPP& ipp, const ipc::ChatMessageAlliance& message);
     void handleMessage_ChatMessageLinkshell(const IPP& ipp, const ipc::ChatMessageLinkshell& message);
+    void handleMessage_ChatMessageTargeted(const IPP& ipp, const ipc::ChatMessageTargeted& message);
+    void handleMessage_ChatMessageTargetedRetry(const IPP& ipp, const ipc::ChatMessageTargetedRetry& message);
     void handleMessage_ChatMessageUnity(const IPP& ipp, const ipc::ChatMessageUnity& message);
     void handleMessage_ChatMessageYell(const IPP& ipp, const ipc::ChatMessageYell& message);
     void handleMessage_ChatMessageAssist(const IPP& ipp, const ipc::ChatMessageAssist& message) const;

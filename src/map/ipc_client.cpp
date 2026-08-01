@@ -57,6 +57,44 @@
 // TODO: Don't do this
 std::unique_ptr<IPCClient> ipcClient_;
 
+namespace
+{
+
+auto getTargetedChatType(CCharEntity* PChar, const ipc::ChatMessageTargeted& message) -> Maybe<CHAT_MESSAGE_TYPE>
+{
+    switch (message.targetType)
+    {
+        case ipc::ChatMessageTargetType::Party:
+            if (PChar->PParty && PChar->PParty->GetPartyID() == message.groupId)
+            {
+                return message.messageType;
+            }
+            break;
+        case ipc::ChatMessageTargetType::Alliance:
+            if (PChar->PParty && PChar->PParty->m_PAlliance && PChar->PParty->m_PAlliance->m_AllianceID == message.groupId)
+            {
+                return message.messageType;
+            }
+            break;
+        case ipc::ChatMessageTargetType::Linkshell:
+            // Match CLinkshell::PushPacket: linkshell slot 2 controls the color
+            // when the same linkshell is equipped in both slots.
+            if (PChar->PLinkshell2 && PChar->PLinkshell2->getID() == message.groupId)
+            {
+                return MESSAGE_LINKSHELL2;
+            }
+            if (PChar->PLinkshell1 && PChar->PLinkshell1->getID() == message.groupId)
+            {
+                return MESSAGE_LINKSHELL;
+            }
+            break;
+    }
+
+    return std::nullopt;
+}
+
+} // namespace
+
 void message::init(MapNetworking& networking)
 {
     TracyZoneScoped;
@@ -206,6 +244,14 @@ void IPCClient::handleMessage_CharZone(const IPP& ipp, const ipc::CharZone& mess
     }
 }
 
+void IPCClient::handleMessage_ChatZoneReady(const IPP& ipp, const ipc::ChatZoneReady& message)
+{
+    // This notification only travels from map to world. The generated IPC
+    // interface is shared by both processes, so map still supplies a handler.
+    std::ignore = ipp;
+    std::ignore = message;
+}
+
 void IPCClient::handleMessage_CharVarUpdate(const IPP& ipp, const ipc::CharVarUpdate& message)
 {
     TracyZoneScoped;
@@ -246,11 +292,30 @@ void IPCClient::handleMessage_ChatMessageTell(const IPP& ipp, const ipc::ChatMes
     }
     else
     {
-        message::send(ipc::MessageStandard{
-            .recipientId = message.senderId,
-            .message     = MsgStd::TellNotReceivedOffline,
-        });
+        if (settings::get<bool>("main.ENABLE_TELL_ZONING_BUFFER"))
+        {
+            // World may have routed this tell while the recipient was moving
+            // between map processes. Give the central router one chance to
+            // buffer it using the authoritative zoning state.
+            message::send(ipc::ChatMessageTellRetry{
+                .tell = message,
+            });
+        }
+        else
+        {
+            message::send(ipc::MessageStandard{
+                .recipientId = message.senderId,
+                .message     = MsgStd::TellNotReceivedOffline,
+            });
+        }
     }
+}
+
+void IPCClient::handleMessage_ChatMessageTellRetry(const IPP& ipp, const ipc::ChatMessageTellRetry& message)
+{
+    // Retry notifications only travel from map to world.
+    std::ignore = ipp;
+    std::ignore = message;
 }
 
 void IPCClient::handleMessage_ChatMessageParty(const IPP& ipp, const ipc::ChatMessageParty& message)
@@ -331,6 +396,56 @@ void IPCClient::handleMessage_ChatMessageLinkshell(const IPP& ipp, const ipc::Ch
         // TODO: Linkshell 1 vs 2?
         PLinkshell->PushPacket(message.senderId, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, MESSAGE_LINKSHELL, message.message, message.gmLevel));
     }
+}
+
+void IPCClient::handleMessage_ChatMessageTargeted(const IPP& ipp, const ipc::ChatMessageTargeted& message)
+{
+    TracyZoneScoped;
+    std::ignore = ipp;
+
+    auto retry = message;
+    retry.recipientIds.clear();
+
+    for (const auto recipientId : message.recipientIds)
+    {
+        CCharEntity* PChar = zoneutils::GetChar(recipientId);
+        if (!PChar || PChar->status == STATUS_TYPE::DISAPPEAR)
+        {
+            retry.recipientIds.emplace_back(recipientId);
+            continue;
+        }
+
+        if (recipientId == message.senderId || jailutils::InPrison(PChar))
+        {
+            continue;
+        }
+
+        if (const auto messageType = getTargetedChatType(PChar, message))
+        {
+            PChar->pushPacket(std::make_unique<GP_SERV_COMMAND_CHAT_STD>(message.senderName, message.zoneId, *messageType, message.message, message.gmLevel));
+        }
+        else if (PChar->loc.zoning || PChar->ReloadParty())
+        {
+            // The character exists, but its destination-map social objects are
+            // not ready yet. Do not confuse this transient state with having
+            // left the party, alliance, or linkshell.
+            retry.recipientIds.emplace_back(recipientId);
+        }
+    }
+
+    if (!retry.recipientIds.empty())
+    {
+        message::send(ipc::ChatMessageTargetedRetry{
+            .message = std::move(retry),
+        });
+    }
+}
+
+void IPCClient::handleMessage_ChatMessageTargetedRetry(const IPP& ipp, const ipc::ChatMessageTargetedRetry& message)
+{
+    // Retry notifications only travel from map to world.
+    std::ignore = ipp;
+    std::ignore = message;
 }
 
 void IPCClient::handleMessage_ChatMessageUnity(const IPP& ipp, const ipc::ChatMessageUnity& message)

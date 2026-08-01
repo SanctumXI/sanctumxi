@@ -942,6 +942,32 @@ function CBaseEntity:getLinkshellName(slot)
 end
 
 ---@nodiscard
+---@param linkshellId integer
+---@return string
+function CBaseEntity:getLinkshellNameByID(linkshellId)
+end
+
+---@nodiscard
+---@param linkshellId integer
+---@return boolean
+function CBaseEntity:hasLinkshellLibraryAccess(linkshellId)
+end
+
+---@nodiscard
+---@return integer
+function CBaseEntity:getOwnedLinkshellLibraryID()
+end
+
+---@nodiscard
+---@param slot integer
+---@param expectedLinkshellId integer
+---@param cost integer
+---@param cooldownSeconds integer
+---@return integer
+function CBaseEntity:purchaseLinkshellLibraryAccess(slot, expectedLinkshellId, cost, cooldownSeconds)
+end
+
+---@nodiscard
 ---@param slot integer
 ---@return integer
 function CBaseEntity:getLinkshellID(slot)

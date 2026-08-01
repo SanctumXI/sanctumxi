@@ -64,11 +64,6 @@ effectObject.onEffectGain = function(target, effect)
         target:addMod(xi.mod.DOUBLE_ATTACK, target:getCharVar(xi.wsEffect.charVars.POWER))
         target:addListener('MELEE_SWING_HIT', 'GROUND_STRIKE_DA_HIT', consumeGroundStrikeDoubleAttack)
         target:addListener('MELEE_SWING_MISS', 'GROUND_STRIKE_DA_MISS', consumeGroundStrikeDoubleAttack)
-    elseif xi.wsEffect.has(target, xi.wsEffect.ASURAN_FISTS_H2H) then
-        local power = target:getCharVar(xi.wsEffect.charVars.POWER)
-
-        target:addMod(xi.mod.SUBTLE_BLOW, power)
-        target:addMod(xi.mod.ADDITIVE_GUARD, power)
     elseif xi.wsEffect.has(target, xi.wsEffect.DETONATOR_QUICK_DRAW) then
         local quickDrawAbilities =
         {
@@ -196,9 +191,7 @@ effectObject.onEffectLose = function(target, effect)
         target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
         target:setCharVar(xi.wsEffect.charVars.POWER, 0)
         target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)
-    elseif target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.ASURAN_FISTS_H2H then
-        target:delMod(xi.mod.SUBTLE_BLOW, target:getCharVar(xi.wsEffect.charVars.POWER))
-        target:delMod(xi.mod.ADDITIVE_GUARD, target:getCharVar(xi.wsEffect.charVars.POWER))
+    elseif target:getCharVar(xi.wsEffect.charVars.EFFECT) == xi.wsEffect.ASURAN_FISTS_COMBO then
         target:setCharVar(xi.wsEffect.charVars.EFFECT, xi.wsEffect.NONE)
         target:setCharVar(xi.wsEffect.charVars.POWER, 0)
         target:setCharVar(xi.wsEffect.charVars.EXPIRE, 0)

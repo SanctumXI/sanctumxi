@@ -9,10 +9,10 @@ effectObject.onEffectGain = function(target, effect)
     local power = math.floor((darkSkill / 20) + 5)
 
        effect:addMod(xi.mod.ARCANA_KILLER, effect:getPower())
-    -- Sanctum Custom effect
-    effect:addMod(xi.mod.ENSPELL, xi.element.DARK)
-    effect:addMod(xi.mod.ENSPELL_DMG, power)
-    effect:addMod(xi.mod.ATTP, 5)
+    -- Sanctum Custom effect (Disabled)
+    -- effect:addMod(xi.mod.ENSPELL, xi.element.DARK)
+    -- effect:addMod(xi.mod.ENSPELL_DMG, power)
+    -- effect:addMod(xi.mod.ATTP, 5)
  
 end
 

@@ -28,6 +28,10 @@
 
 #include "entities/charentity.h"
 
+#include "alliance.h"
+#include "linkshell.h"
+#include "party.h"
+
 #include "packets/basic.h"
 #include "packets/s2c/0x00b_logout.h"
 
@@ -772,9 +776,18 @@ int32 MapNetworking::send_parse(uint8* buff, size_t* buffsize, MapSession* map_s
         // GP_GAME_LOGOUT_STATE::GP_GAME_LOGOUT_STATE_LOGOUT = disconnect/logout/shutdown
         if (map_session_data->zone_type != GP_GAME_LOGOUT_STATE::LOGOUT)
         {
+            const auto partyId      = PChar->PParty ? PChar->PParty->GetPartyID() : 0;
+            const auto allianceId   = PChar->PParty && PChar->PParty->m_PAlliance ? PChar->PParty->m_PAlliance->m_AllianceID : 0;
+            const auto linkshellId1 = PChar->PLinkshell1 ? PChar->PLinkshell1->getID() : 0;
+            const auto linkshellId2 = PChar->PLinkshell2 ? PChar->PLinkshell2->getID() : 0;
+
             message::send(ipc::CharZone{
                 .charId            = PChar->id,
                 .destinationZoneId = PChar->loc.destination,
+                .partyId           = partyId,
+                .allianceId        = allianceId,
+                .linkshellId1      = linkshellId1,
+                .linkshellId2      = linkshellId2,
             });
         }
 

@@ -36,6 +36,8 @@ auto GP_CLI_COMMAND_ZONE_TRANSITION::validate(MapSession* PSession, const CCharE
 
 void GP_CLI_COMMAND_ZONE_TRANSITION::process(MapSession* PSession, CCharEntity* PChar) const
 {
+    PChar->MarkChatZoneClientReady();
+
     // All this packet does on retail is respond with Kupowers messages.
     // Retail will respond exactly once to it.
     // TODO: Kupowers messages

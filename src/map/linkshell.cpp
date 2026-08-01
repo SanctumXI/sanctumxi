@@ -141,7 +141,7 @@ void CLinkshell::AddMember(CCharEntity* PChar, int8 type, uint8 lsNum)
 }
 
 // delete a character to the list of online members
-bool CLinkshell::DelMember(CCharEntity* PChar)
+bool CLinkshell::DelMember(CCharEntity* PChar, const bool clearSessionMembership)
 {
     for (uint32 i = 0; i < members.size(); ++i)
     {
@@ -149,12 +149,18 @@ bool CLinkshell::DelMember(CCharEntity* PChar)
         {
             if (PChar->PLinkshell1 == this)
             {
-                db::preparedStmt("UPDATE accounts_sessions SET linkshellid1 = 0, linkshellrank1 = 0 WHERE charid = ?", PChar->id);
+                if (clearSessionMembership)
+                {
+                    db::preparedStmt("UPDATE accounts_sessions SET linkshellid1 = 0, linkshellrank1 = 0 WHERE charid = ?", PChar->id);
+                }
                 PChar->PLinkshell1 = nullptr;
             }
             else if (PChar->PLinkshell2 == this)
             {
-                db::preparedStmt("UPDATE accounts_sessions SET linkshellid2 = 0, linkshellrank2 = 0 WHERE charid = ?", PChar->id);
+                if (clearSessionMembership)
+                {
+                    db::preparedStmt("UPDATE accounts_sessions SET linkshellid2 = 0, linkshellrank2 = 0 WHERE charid = ?", PChar->id);
+                }
                 PChar->PLinkshell2 = nullptr;
             }
             members.erase(members.begin() + i);

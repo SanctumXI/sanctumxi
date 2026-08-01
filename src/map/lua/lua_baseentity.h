@@ -298,6 +298,10 @@ public:
     // Sanctum Custom Linkshell HNM Treasury System
     uint32 getLinkshellID(uint8 slot);
     auto   getLinkshellName(uint8 slot) -> std::string;
+    auto   getLinkshellNameByID(uint32 linkshellId) -> std::string;
+    bool   hasLinkshellLibraryAccess(uint32 linkshellId);
+    uint32 getOwnedLinkshellLibraryID();
+    uint8  purchaseLinkshellLibraryAccess(uint8 slot, uint32 expectedLinkshellId, uint32 cost, uint32 cooldownSeconds);
     uint8  getLinkshellType(uint8 slot);
     uint32 getLinkshellTreasuryItemCount(uint8 slot, uint16 itemID);
     bool   depositLinkshellTreasuryItem(uint8 slot, uint16 itemID, uint32 quantity);

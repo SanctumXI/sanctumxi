@@ -55,7 +55,7 @@ public:
     void               setMessage(const std::string& message, const std::string& poster);
 
     void AddMember(CCharEntity* PChar, int8 type, uint8 lsNum);
-    bool DelMember(CCharEntity* PChar);
+    bool DelMember(CCharEntity* PChar, bool clearSessionMembership = true);
 
     void BreakLinkshell();
     void RemoveMemberByName(const std::string& MemberName, uint8 requesterRank, bool breakLinkshell = false);

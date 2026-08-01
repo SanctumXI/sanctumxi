@@ -661,6 +661,7 @@ xi.effect =
     PROWESS_KILLER           = 788, -- *flat +4 for now
     -- End GoV Prowess fakery
 
+    BLUNT_TRAUMA             = 789, -- Sanctum Custom effect (server-side only)
     MARK_OF_SEED             = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
     ALL_MISS                 = 791, -- Indicates a target is unable to be hit by normal melee attacks (formerly TOO_HIGH)
     SUPER_BUFF               = 792,
@@ -681,7 +682,6 @@ xi.effect =
     CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
     KICK_DAMAGE              = 808, -- Sanctum Custom effect
   
-    -- 789
     -- 807-1022
     -- PLACEHOLDER           = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }

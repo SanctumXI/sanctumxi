@@ -65,6 +65,12 @@ IPC_STRUCT_NAMES = [
 
     "GMCallRequest",
     "GMCallResponse",
+
+    # Keep new message types at the end so existing IPC numeric IDs remain stable.
+    "ChatZoneReady",
+    "ChatMessageTellRetry",
+    "ChatMessageTargeted",
+    "ChatMessageTargetedRetry",
 ]
 
 

@@ -29,6 +29,7 @@
 #include "character_cache.h"
 #include "world_engine.h"
 #include "zone_settings.h"
+#include "zoning_chat_buffer.h"
 
 #include <atomic>
 #include <thread>
@@ -39,6 +40,13 @@
 class IPCServer final : public ipc::IPCMessageHandlerBase<IPCServer>
 {
 public:
+    struct CharacterRoute
+    {
+        uint32 charId{};
+        IPP    ipp{};
+        bool   isZoning{};
+    };
+
     IPCServer(WorldEngine& worldServer);
 
     void handleIncomingMessages();
@@ -54,11 +62,16 @@ public:
     //
 
     auto getIPPForCharId(uint32 charId) -> Maybe<IPP>;
+    auto getRouteForCharId(uint32 charId) -> Maybe<CharacterRoute>;
     auto getIPPForCharName(const std::string& charName) -> Maybe<IPP>;
+    auto getRouteForCharName(const std::string& charName) -> Maybe<CharacterRoute>;
     auto getIPPForZoneId(uint16 zoneId) -> Maybe<IPP>;
     auto getIPPsForParty(uint32 partyId) -> std::vector<IPP>;
     auto getIPPsForAlliance(uint32 allianceId) -> std::vector<IPP>;
     auto getIPPsForLinkshell(uint32 linkshellId) -> std::vector<IPP>;
+    auto getRoutesForParty(uint32 partyId) -> std::vector<CharacterRoute>;
+    auto getRoutesForAlliance(uint32 allianceId) -> std::vector<CharacterRoute>;
+    auto getRoutesForLinkshell(uint32 linkshellId) -> std::vector<CharacterRoute>;
     auto getIPPsForUnity(uint32 unityId) -> std::vector<IPP>;
     auto getIPPsForYellZones() -> std::vector<IPP>;
     auto getIPPsForAssistZones() -> std::vector<IPP>;
@@ -86,11 +99,15 @@ public:
     void handleMessage_EmptyStruct(const IPP& ipp, const ipc::EmptyStruct& message);
     void handleMessage_AccountLogin(const IPP& ipp, const ipc::AccountLogin& message);
     void handleMessage_CharZone(const IPP& ipp, const ipc::CharZone& message);
+    void handleMessage_ChatZoneReady(const IPP& ipp, const ipc::ChatZoneReady& message);
     void handleMessage_CharVarUpdate(const IPP& ipp, const ipc::CharVarUpdate& message);
     void handleMessage_ChatMessageTell(const IPP& ipp, const ipc::ChatMessageTell& message);
+    void handleMessage_ChatMessageTellRetry(const IPP& ipp, const ipc::ChatMessageTellRetry& message);
     void handleMessage_ChatMessageParty(const IPP& ipp, const ipc::ChatMessageParty& message);
     void handleMessage_ChatMessageAlliance(const IPP& ipp, const ipc::ChatMessageAlliance& message);
     void handleMessage_ChatMessageLinkshell(const IPP& ipp, const ipc::ChatMessageLinkshell& message);
+    void handleMessage_ChatMessageTargeted(const IPP& ipp, const ipc::ChatMessageTargeted& message);
+    void handleMessage_ChatMessageTargetedRetry(const IPP& ipp, const ipc::ChatMessageTargetedRetry& message);
     void handleMessage_ChatMessageUnity(const IPP& ipp, const ipc::ChatMessageUnity& message);
     void handleMessage_ChatMessageYell(const IPP& ipp, const ipc::ChatMessageYell& message);
     void handleMessage_ChatMessageAssist(const IPP& ipp, const ipc::ChatMessageAssist& message);
@@ -124,10 +141,15 @@ public:
     void handleUnknownMessage(const IPP& ipp, const std::span<uint8_t> message);
 
 private:
+    void routeTargetedChat(const std::vector<CharacterRoute>& routes, const ipc::ChatMessageTargeted& message);
+    void discardBufferedMessages(const std::vector<ZoningChatBuffer::BufferedMessage>& messages);
+    void expireZoningChatBuffers();
+
     WorldEngine& worldServer_;
 
     CharacterCache   characterCache_;
     ZoneSettings     zoneSettings_;
+    ZoningChatBuffer zoningChatBuffer_;
     ZMQRouterWrapper zmqRouterWrapper_;
 };
 

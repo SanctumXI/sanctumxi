@@ -26,9 +26,22 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.str_wsc = 0.3 params.dex_wsc = 0.3
     end
 
+    local asuranHitCount = 0
+
+    if xi.wsEffect.has(player, xi.wsEffect.ASURAN_FISTS_COMBO) then
+        local _, hitCount = xi.wsEffect.peek(player)
+        asuranHitCount = hitCount
+
+        local critBonus = asuranHitCount * 0.03
+        params.critVaries = { critBonus, critBonus, critBonus }
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-        player:addStatusEffect(xi.effect.ATTACK_BOOST, { power = 10, duration = 45, origin = player })
+    if asuranHitCount > 0 then
+        xi.wsEffect.consume(player)
+        xi.wsEffect.message(player, string.format('Asuran Fists granted +%i%% critical hit rate!', asuranHitCount * 3))
+    end
 
     return tpHits, extraHits, criticalHit, damage
 end

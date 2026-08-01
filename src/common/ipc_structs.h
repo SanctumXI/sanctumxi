@@ -49,6 +49,21 @@ struct CharZone
 {
     uint32 charId{};
     uint16 destinationZoneId{};
+
+    // Snapshot the social groups before the old map destroys its character
+    // object. World uses these only while the character is zoning, when the
+    // live session rows and destination-map objects may be temporarily empty.
+    uint32 partyId{};
+    uint32 allianceId{};
+    uint32 linkshellId1{};
+    uint32 linkshellId2{};
+};
+
+// Sent by a map process after the client confirms that it has entered its new
+// zone. World uses this to release chat held during the map-server handoff.
+struct ChatZoneReady
+{
+    uint32 charId{};
 };
 
 struct CharVarUpdate
@@ -67,6 +82,13 @@ struct ChatMessageTell
     std::string message{};
     uint16      zoneId{};
     uint8       gmLevel{};
+};
+
+// Returned to world when a routed tell reaches a map process during the
+// recipient's handoff window and cannot be delivered there.
+struct ChatMessageTellRetry
+{
+    ChatMessageTell tell{};
 };
 
 struct ChatMessageParty
@@ -99,6 +121,37 @@ struct ChatMessageLinkshell
     std::string message{};
     uint16      zoneId{};
     uint8       gmLevel{};
+};
+
+enum class ChatMessageTargetType : uint8
+{
+    Party,
+    Alliance,
+    Linkshell,
+};
+
+// Delivers group chat to an explicit set of characters on one map process.
+// Explicit recipients let world omit zoning members from the live fan-out and
+// later replay exactly one buffered copy to each of them.
+struct ChatMessageTargeted
+{
+    std::vector<uint32>   recipientIds{};
+    uint32                groupId{};
+    uint32                senderId{};
+    std::string           senderName{};
+    std::string           message{};
+    uint16                zoneId{};
+    uint8                 gmLevel{};
+    CHAT_MESSAGE_TYPE     messageType{ MESSAGE_PARTY };
+    ChatMessageTargetType targetType{ ChatMessageTargetType::Party };
+    uint8                 retryCount{};
+};
+
+// Returned to world when an explicitly targeted recipient starts zoning after
+// world selected their map route but before that map can deliver the message.
+struct ChatMessageTargetedRetry
+{
+    ChatMessageTargeted message{};
 };
 
 struct ChatMessageUnity

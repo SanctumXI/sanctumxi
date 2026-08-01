@@ -25,6 +25,8 @@ set(SOURCES
     world_engine.cpp
     world_engine.h
     zone_settings.h
+    zoning_chat_buffer.cpp
+    zoning_chat_buffer.h
 )
 
 if(UNIX)

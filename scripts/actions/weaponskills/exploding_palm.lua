@@ -28,10 +28,29 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.multiHitfTP = true
     end
 
+    local asuranHitCount = 0
+
+    if xi.wsEffect.has(player, xi.wsEffect.ASURAN_FISTS_COMBO) then
+        local _, hitCount = xi.wsEffect.peek(player)
+        asuranHitCount = hitCount
+        params.damageMultiplier = 1 + asuranHitCount * 0.05
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     if damage > 0 then
         target:addStatusEffect(xi.effect.MAGIC_DEF_DOWN, { power = 5, duration = 45, origin = player })
+    end
+
+    -- Exploding Palm is an AoE weaponskill. Delay consumption so every target
+    -- processed by the same action receives the empowered damage multiplier.
+    if asuranHitCount > 0 then
+        player:timer(0, function(playerArg)
+            if xi.wsEffect.has(playerArg, xi.wsEffect.ASURAN_FISTS_COMBO) then
+                xi.wsEffect.consume(playerArg)
+                xi.wsEffect.message(playerArg, string.format('Asuran Fists increased Exploding Palm damage by %i%%!', asuranHitCount * 5))
+            end
+        end)
     end
 
     return tpHits, extraHits, criticalHit, damage

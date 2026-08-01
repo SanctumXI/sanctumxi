@@ -230,6 +230,7 @@ player_data = [
     "linkshell_bank_audit.sql",
     "linkshell_bank_quarantine.sql",
     "linkshells.sql",
+    "linkshell_library_access.sql",
     "linkshell_moglocker.sql",
     "server_variables.sql",
     "site_discord_links.sql",

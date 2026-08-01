@@ -10,6 +10,29 @@ local libraryInstance = {}
 
 libraryInstance.id = 28400
 libraryInstance.registrationVar = '[SanctumLibrary]LinkshellId'
+libraryInstance.registrationTimeVar = '[SanctumLibrary]RegisteredAt'
+libraryInstance.pendingRefundVar = '[SanctumLibrary]RefundGil'
+libraryInstance.registrationCooldown =
+    xi.settings and
+    xi.settings.sanctum and
+    xi.settings.sanctum.LIBRARY_REGISTRATION_COOLDOWN or
+    7 * 24 * 60 * 60
+libraryInstance.linkshellAccessCost =
+    xi.settings and
+    xi.settings.sanctum and
+    xi.settings.sanctum.LIBRARY_LINKSHELL_ACCESS_COST or
+    500000
+libraryInstance.linkshellHolderType = 1
+libraryInstance.purchaseResult =
+{
+    SUCCESS          = 0,
+    ALREADY_UNLOCKED = 1,
+    NO_LINKSHELL     = 2,
+    NOT_HOLDER       = 3,
+    INSUFFICIENT_GIL = 4,
+    FAILED           = 5,
+    COOLDOWN_ACTIVE  = 6,
+}
 
 -- The normal shop client displays a maximum of 16 entries.
 libraryInstance.specialShopStock =
@@ -32,81 +55,170 @@ libraryInstance.specialShopStock =
     { xi.item.YELLOW_CURRY_BUN,          5000 },
 }
 
-libraryInstance.configs =
-{
-    A =
-    {
-        definitionId    = libraryInstance.id,
-        destinationZone = xi.zone.CELENNIA_MEMORIAL_LIBRARY,
-        exitZone        = xi.zone.EASTERN_ADOULIN,
-        exitPosition    = { x = -86.2, y = -0.15, z = -76, rot = 220 },
-        copyKey         = 'library_a',
-    },
-    B =
-    {
-        definitionId    = libraryInstance.id,
-        destinationZone = xi.zone.CELENNIA_MEMORIAL_LIBRARY,
-        exitZone        = xi.zone.EASTERN_ADOULIN,
-        exitPosition    = { x = -86.2, y = -0.15, z = -76, rot = 220 },
-        copyKey         = 'library_b',
-    },
-}
-
-local function getConfig(copyName)
-    return libraryInstance.configs[string.upper(copyName or '')]
+libraryInstance.getEquippedLinkshellID = function(player)
+    return player:getLinkshellID(1)
 end
 
-libraryInstance.enterCopy = function(player, copyName)
-    local config = getConfig(copyName)
-    if not config then
-        player:printToPlayer('Invalid Library test copy.')
+libraryInstance.getEquippedLinkshellType = function(player)
+    return player:getLinkshellType(1)
+end
+
+libraryInstance.hasLinkshellAccess = function(player, linkshellId)
+    if not linkshellId or linkshellId == 0 then
         return false
     end
 
-    return instanceManager.enter(player, config)
+    local lookupSucceeded, hasAccess = pcall(function()
+        return player:hasLinkshellLibraryAccess(linkshellId)
+    end)
+
+    return lookupSucceeded and hasAccess
 end
 
-libraryInstance.enter = function(player)
-    return libraryInstance.enterCopy(player, 'A')
+libraryInstance.getOwnedLinkshellLibraryID = function(player)
+    local lookupSucceeded, linkshellId = pcall(function()
+        return player:getOwnedLinkshellLibraryID()
+    end)
+
+    return lookupSucceeded and linkshellId or 0
 end
 
-libraryInstance.getEquippedLinkshellID = function(player)
-    return player:getLinkshellID(1)
+libraryInstance.purchaseLinkshellAccess = function(player, expectedLinkshellId)
+    local purchaseSucceeded, result = pcall(function()
+        return player:purchaseLinkshellLibraryAccess(
+            1,
+            expectedLinkshellId,
+            libraryInstance.linkshellAccessCost,
+            libraryInstance.registrationCooldown
+        )
+    end)
+
+    return purchaseSucceeded and result or libraryInstance.purchaseResult.FAILED
 end
 
 libraryInstance.getRegisteredLinkshellID = function(player)
     return player:getCharVar(libraryInstance.registrationVar)
 end
 
-libraryInstance.getRegisteredLinkshellName = function(player)
-    local registeredId = libraryInstance.getRegisteredLinkshellID(player)
-    if
-        registeredId > 0 and
-        libraryInstance.getEquippedLinkshellID(player) == registeredId
-    then
-        local linkshellName = player:getLinkshellName(1)
-        if linkshellName and linkshellName ~= '' then
-            return linkshellName
+libraryInstance.claimPendingRefund = function(player)
+    local amount = player:getCharVar(libraryInstance.pendingRefundVar)
+    if amount <= 0 then
+        return 0
+    end
+
+    local previousGil = player:getGil()
+    player:addGil(amount)
+    if player:getGil() < previousGil + amount then
+        return 0
+    end
+
+    player:setCharVar(libraryInstance.pendingRefundVar, 0)
+    return amount
+end
+
+libraryInstance.getRegistrationCooldownRemaining = function(player)
+    if libraryInstance.getRegisteredLinkshellID(player) == 0 then
+        return 0
+    end
+
+    local registeredAt = player:getCharVar(libraryInstance.registrationTimeVar)
+    if registeredAt == 0 then
+        -- Existing registrations predate cooldown tracking. Start their first
+        -- cooldown when the new system encounters them.
+        registeredAt = GetSystemTime()
+        player:setCharVar(libraryInstance.registrationTimeVar, registeredAt)
+    end
+
+    return math.max(0, registeredAt + libraryInstance.registrationCooldown - GetSystemTime())
+end
+
+libraryInstance.formatRegistrationCooldown = function(seconds)
+    local totalMinutes = math.max(1, math.ceil(seconds / 60))
+    local totalHours = math.ceil(totalMinutes / 60)
+
+    if totalHours >= 24 then
+        local days = math.floor(totalHours / 24)
+        local hours = totalHours % 24
+        local result = string.format('%u day%s', days, days == 1 and '' or 's')
+
+        if hours > 0 then
+            result = string.format('%s, %u hour%s', result, hours, hours == 1 and '' or 's')
+        end
+
+        return result
+    end
+
+    if totalMinutes >= 60 then
+        return string.format('%u hour%s', totalHours, totalHours == 1 and '' or 's')
+    end
+
+    return string.format('%u minute%s', totalMinutes, totalMinutes == 1 and '' or 's')
+end
+
+libraryInstance.getLinkshellNameByID = function(player, linkshellId)
+    if not linkshellId or linkshellId == 0 then
+        return nil
+    end
+
+    local lookupSucceeded, linkshellName = pcall(function()
+        return player:getLinkshellNameByID(linkshellId)
+    end)
+
+    if lookupSucceeded and linkshellName ~= '' then
+        return linkshellName
+    end
+
+    -- Keep Lua-only reloads useful until the map server is rebuilt.
+    for slot = 1, 2 do
+        if player:getLinkshellID(slot) == linkshellId then
+            local linkshellName = player:getLinkshellName(slot)
+            if linkshellName and linkshellName ~= '' then
+                return linkshellName
+            end
         end
     end
 
-    return registeredId > 0 and string.format('Linkshell #%u', registeredId) or 'None'
+    return nil
 end
 
-libraryInstance.register = function(player)
+libraryInstance.getRegisteredLinkshellName = function(player)
+    local registeredId = libraryInstance.getRegisteredLinkshellID(player)
+    if registeredId == 0 then
+        return 'None'
+    end
+
+    return libraryInstance.getLinkshellNameByID(player, registeredId) or 'a linkshell'
+end
+
+libraryInstance.register = function(player, expectedLinkshellId)
     local linkshellId = libraryInstance.getEquippedLinkshellID(player)
     if linkshellId == 0 then
-        player:printToPlayer('Equip the linkshell you want to register in Linkshell 1.', xi.msg.channel.SYSTEM_3)
-        return false
+        return false, 'Equip the linkshell you want to register in Linkshell slot 1.'
     end
 
-    local previousId = libraryInstance.getRegisteredLinkshellID(player)
+    if expectedLinkshellId and linkshellId ~= expectedLinkshellId then
+        return false, 'The linkshell in slot 1 changed. Please speak with me again.'
+    end
+
+    if not libraryInstance.hasLinkshellAccess(player, linkshellId) then
+        return false, 'The linkshell holder must unlock Library access before members can register.'
+    end
+
+    local registeredId = libraryInstance.getRegisteredLinkshellID(player)
+    if registeredId ~= 0 and registeredId ~= linkshellId then
+        local cooldownRemaining = libraryInstance.getRegistrationCooldownRemaining(player)
+        if cooldownRemaining > 0 then
+            return false, string.format(
+                'You can register a new linkshell in %s.',
+                libraryInstance.formatRegistrationCooldown(cooldownRemaining)
+            )
+        end
+    elseif registeredId == linkshellId then
+        return true
+    end
+
     player:setCharVar(libraryInstance.registrationVar, linkshellId)
-
-    if previousId ~= linkshellId then
-        player:printToPlayer('Your Library registration now belongs to the linkshell in Linkshell 1.', xi.msg.channel.SYSTEM_3)
-    end
-
+    player:setCharVar(libraryInstance.registrationTimeVar, GetSystemTime())
     return true
 end
 
@@ -116,6 +228,10 @@ libraryInstance.isRegisteredMember = function(player, linkshellId)
 
     if registeredId == 0 then
         return false, 'Register a linkshell with the secretary first.'
+    end
+
+    if not libraryInstance.hasLinkshellAccess(player, registeredId) then
+        return false, 'Your registered linkshell has not unlocked Library access.'
     end
 
     if equippedId ~= registeredId then
@@ -412,7 +528,7 @@ libraryInstance.setupServices = function(instance)
     {
         objtype = xi.objType.NPC,
         name = 'Linkshell_Moogle',
-        packetName = 'LS Bank Moogle',
+        packetName = 'Vault Moogle',
         look = 82,
         x = -94.733, y = -2.193, z = -97.705, rotation = 137,
         onTrigger = function(player, npc)
@@ -448,21 +564,6 @@ libraryInstance.setupServices = function(instance)
     for _, teleporterConfig in ipairs(getLibraryTeleporters()) do
         teleporterNpc.insert(instance, teleporterConfig, printLibraryAccessDenied)
     end
-end
-
-libraryInstance.clearCopy = function(copyName)
-    local config = getConfig(copyName)
-    return config and instanceManager.clear(config, true) or false
-end
-
-libraryInstance.clearCopies = function()
-    libraryInstance.clearCopy('A')
-    libraryInstance.clearCopy('B')
-end
-
-libraryInstance.getRuntimeID = function(copyName)
-    local config = getConfig(copyName)
-    return config and instanceManager.getRuntimeID(config) or nil
 end
 
 libraryInstance.onCreated = function(player, instance)

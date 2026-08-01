@@ -57,6 +57,12 @@ xi.settings.main =
     ASSIST_CHANNEL_MEMBERSHIP_LENGTH  = 240,  -- How long returnees and new players will have access to the assist channel, in playtime hours.
     ASSIST_CHANNEL_RETURNEE_LOGIN_GAP =  48,  -- How many days must have elapsed before returnees are added to the assist channel.
 
+    -- Hold chat during a zone transition and deliver it after the client confirms zone-in.
+    -- Party includes alliance chat. Each channel can be disabled independently for rollback.
+    ENABLE_TELL_ZONING_BUFFER      = true,
+    ENABLE_PARTY_ZONING_BUFFER     = true,
+    ENABLE_LINKSHELL_ZONING_BUFFER = true,
+
     -- Records of Eminence
     ENABLE_ROE            = 1, -- Enable Records of Eminence
     ENABLE_ROE_TIMED      = 1, -- Enable 4-hour timed records

@@ -2576,7 +2576,7 @@ INSERT INTO `instance_entities` VALUES (25900,17838150); -- The Briars (gal)
 -- Celennia Memorial Library (Zone 284)
 -- ------------------------------------------------------------
 
--- Library Test (28400)
+-- Linkshell Library (28400)
 -- Linkshell Library services are inserted dynamically for each private runtime.
 
 -- ------------------------------------------------------------
