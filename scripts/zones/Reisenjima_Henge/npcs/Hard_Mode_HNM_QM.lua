@@ -8,6 +8,8 @@ require('scripts/globals/npc_util')
 local ID = zones[xi.zone.REISENJIMA_HENGE]
 
 local selectionVar = 'HengeHnmSelection'
+local respawnDelay = 3 * 60 * 1000
+local deathListener = 'HARD_MODE_HNM_QM_RESPAWN'
 local requiredItems =
 {
     xi.item.FIRE_CRYSTAL,
@@ -59,6 +61,27 @@ local function selectEncounter(player, encounter)
     ))
 end
 
+local function hideUntilEncounterCooldown(npc, mob)
+    npc:setStatus(xi.status.DISAPPEAR)
+
+    mob:addListener('DEATH', deathListener, function(defeatedMob)
+        defeatedMob:removeListener(deathListener)
+
+        local instance = defeatedMob:getInstance()
+        local qm       = instance and GetNPCByID(ID.npc.HARD_MODE_HNM_QM, instance) or nil
+        if not qm then
+            return
+        end
+
+        qm:timer(respawnDelay, function(qmArg)
+            local qmInstance = qmArg:getInstance()
+            if qmInstance and not getActiveEncounter(qmInstance) then
+                qmArg:setStatus(xi.status.NORMAL)
+            end
+        end)
+    end)
+end
+
 ---@type TNpcEntity
 local entity = {}
 
@@ -101,6 +124,7 @@ entity.onTrade = function(player, npc, trade)
         return
     end
 
+    hideUntilEncounterCooldown(npc, mob)
     player:tradeComplete()
     player:setLocalVar(selectionVar, 0)
     mob:updateClaim(player)
