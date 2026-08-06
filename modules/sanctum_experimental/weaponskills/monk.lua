@@ -1,0 +1,264 @@
+-----------------------------------
+-- Sanctum weapon-skill integration snapshot
+-- Source: scripts/globals/job_utils/monk.lua
+-- Generated from the current custom implementation so the module remains
+-- independent from later edits to the original script.
+-----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+-----------------------------------
+-- Monk Job Utilities
+-----------------------------------
+xi = xi or {}
+xi.job_utils = xi.job_utils or {}
+xi.job_utils.monk = xi.job_utils.monk or {}
+
+local chakraStatusEffects =
+{
+    POISON       = 0, -- Removed by default
+    BLINDNESS    = 0, -- Removed by default
+    PARALYSIS    = 0, -- Removed by default
+    DISEASE      = 2,
+    PLAGUE       = 4,
+}
+
+-----------------------------------
+-- Ability Check Functions
+-----------------------------------
+xi.job_utils.monk.checkHundredFists = function(player, target, ability)
+    ability:setRecast(math.max(0, ability:getRecast() - player:getMod(xi.mod.ONE_HOUR_RECAST) * 60))
+    return 0, 0
+end
+
+xi.job_utils.monk.checkInnerStrength = function(player, target, ability)
+    ability:setRecast(math.max(0, ability:getRecast() - player:getMod(xi.mod.ONE_HOUR_RECAST) * 60))
+    return 0, 0
+end
+
+-----------------------------------
+-- Ability Use Functions
+-----------------------------------
+xi.job_utils.monk.useBoost = function(player, target, ability)
+    local power = 12.5 + (0.10 * player:getMod(xi.mod.BOOST_EFFECT))
+
+    if player:hasStatusEffect(xi.effect.BOOST) then
+        local effect = player:getStatusEffect(xi.effect.BOOST)
+
+        effect:setPower(effect:getPower() + power) -- Store updated power in boost for zoning
+        effect:addMod(xi.mod.ATTP, power)
+    else
+        player:addStatusEffect(xi.effect.BOOST, { power = power, duration = 180, origin = player })
+    end
+end
+
+-- TODO: add Melee Gloves +2 aug
+xi.job_utils.monk.useChakra = function(player, target, ability)
+    local chakraRemoval = player:getMod(xi.mod.CHAKRA_REMOVAL)
+
+    for k, v in pairs(chakraStatusEffects) do
+        if bit.band(chakraRemoval, v) == v then
+            player:delStatusEffect(xi.effect[k])
+        end
+    end
+
+    -- see https://www.bg-wiki.com/ffxi/Chakra
+    local monkLevel         = utils.getActiveJobLevel(player, xi.job.MNK)
+    local jpModifier        = target:getJobPointLevel(xi.jp.CHAKRA_EFFECT) -- NOTE: Level is the modified value, so 10 per point spent
+    local hpModifier        = ((monkLevel + 1) * 0.2 / 100) * player:getMaxHP()
+    local chakraMultiplier  = 1 + player:getMod(xi.mod.CHAKRA_MULT) / 100
+    local maxRecoveryAmount = (player:getStat(xi.mod.VIT) * 2 + hpModifier) * chakraMultiplier + jpModifier
+    local recoveryAmount    = math.min(player:getMaxHP() - player:getHP(), maxRecoveryAmount)
+    local consumedWsEffect  = false
+
+    -- Sanctum Combo: Chakra Boost
+    local effect, power = xi.wsEffect.peek(player)
+
+    if effect == xi.wsEffect.CHAKRA_BOOST then
+        xi.wsEffect.consume(player)
+        recoveryAmount = math.floor(recoveryAmount * (1 + power / 100))
+        consumedWsEffect = true
+    end
+
+    player:setHP(player:getHP() + recoveryAmount)
+
+    if consumedWsEffect then
+        xi.wsEffect.message(player, 'Howling Fist empowered your Chakra!')
+    end
+
+    local merits = player:getMerit(xi.merit.INVIGORATE)
+    if merits > 0 then
+        if player:hasStatusEffect(xi.effect.REGEN) then
+            player:delStatusEffect(xi.effect.REGEN)
+        end
+
+        player:addStatusEffect(xi.effect.REGEN, { power = 15, duration = merits, origin = player, tier = 1 })
+    end
+
+    return recoveryAmount
+end
+
+xi.job_utils.monk.useChiBlast = function(player, target, ability)
+    local penanceMerits = player:getMerit(xi.merit.PENANCE) -- 20/40/60/80/100
+    if penanceMerits > 0 then
+        target:delStatusEffectSilent(xi.effect.INHIBIT_TP)
+        target:addStatusEffect(xi.effect.INHIBIT_TP, { power = 25, duration = penanceMerits, origin = player })
+    end
+
+    local boost = player:getStatusEffect(xi.effect.BOOST)
+    local multiplier = 1.0
+    if boost ~= nil then
+        multiplier = (boost:getPower() / 100) * 5 -- power is the raw % atk boost
+    end
+
+    local level = player:getMainLvl()
+    if level > 65 then
+        target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })  
+    end
+
+    local dmg = math.floor(player:getStat(xi.mod.VIT) * (1.4 + (math.randomFloat(0, 1) / 2))) * multiplier
+
+    dmg = xi.ability.adjustDamage(dmg, player, ability, target, xi.attackType.BREATH, xi.damageType.ELEMENTAL, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
+    target:takeDamage(dmg, player, xi.attackType.BREATH, xi.damageType.ELEMENTAL)
+    target:updateClaim(player)
+    player:delStatusEffect(xi.effect.BOOST)
+
+    return dmg
+end
+
+xi.job_utils.monk.useCounterstance = function(player, target, ability)
+    local power = 35 + player:getMod(xi.mod.COUNTERSTANCE_EFFECT)
+
+    target:delStatusEffect(xi.effect.COUNTERSTANCE) --if not found this will do nothing
+    target:addStatusEffect(xi.effect.COUNTERSTANCE, { power = power, duration = 300, origin = player })
+
+
+    return xi.effect.COUNTERSTANCE
+end
+
+xi.job_utils.monk.useIronGuard = function(player, target, ability)
+    --local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
+    --local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
+    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 300, origin = player }) 
+    return xi.effect.IRON_GUARD
+end
+
+xi.job_utils.monk.useFocus = function(player, target, ability)
+    local jpLevel  = target:getJobPointLevel(xi.jp.FOCUS_EFFECT)
+    local focusMod = target:getMod(xi.mod.FOCUS_EFFECT)
+    player:addStatusEffect(xi.effect.FOCUS, { power = jpLevel + focusMod, duration = 180, origin = player })
+
+    return xi.effect.FOCUS
+end
+
+xi.job_utils.monk.useFootwork = function(player, target, ability)
+    local kickDmg = 20 + player:getWeaponDmg()
+    local kickAttPercent = 25 + player:getMod(xi.mod.FOOTWORK_ATT_BONUS)
+
+    player:addStatusEffect(xi.effect.FOOTWORK, { power = kickDmg, duration = 120, origin = player, subPower = kickAttPercent })
+
+    return xi.effect.FOOTWORK
+end
+
+xi.job_utils.monk.useFormlessStrikes = function(player, target, ability)
+    player:addStatusEffect(xi.effect.FORMLESS_STRIKES, { power = 1, duration = 180, origin = player })
+
+    return xi.effect.FORMLESS_STRIKES
+end
+
+xi.job_utils.monk.useHundredFists = function(player, target, ability)
+    player:addStatusEffect(xi.effect.HUNDRED_FISTS, { power = 1, duration = 45, origin = player })
+
+    return xi.effect.HUNDRED_FISTS
+end
+
+-- TODO: Support Tantra Cyclas + 1 (does not give critical hit damage)
+-- Probably will be exceptionally jank, very low priority
+xi.job_utils.monk.impetusMissListener = function(attacker, victim, attack)
+    local effect = attacker:getStatusEffect(xi.effect.IMPETUS)
+
+    if effect then
+        local mainPower = effect:getPower()    -- Stores Attack & Critical Hit Rate bonuses
+        local subPower  = effect:getSubPower() -- Stores Critical Hit Damage & Accuracy bonuses
+
+        if mainPower > 0 then
+            attacker:delMod(xi.mod.ATT, mainPower * 2)
+            attacker:delMod(xi.mod.CRITHITRATE, mainPower)
+
+            effect:setPower(0)
+        end
+
+        if subPower > 0 then
+            attacker:delMod(xi.mod.ACC, subPower * 2)
+            attacker:delMod(xi.mod.CRIT_DMG_INCREASE, subPower)
+
+            effect:setSubPower(0)
+        end
+    end
+end
+
+-- TODO: Support Tantra Cyclas + 1 (does not give critical hit damage)
+-- Probably will be exceptionally jank, very low priority
+xi.job_utils.monk.impetusHitListener = function(attacker, victim, attack)
+    local effect = attacker:getStatusEffect(xi.effect.IMPETUS)
+
+    if effect then
+        local mainPower = effect:getPower()    -- Stores Attack & Critical Hit Rate bonuses
+        local subPower  = effect:getSubPower() -- Stores Critical Hit Damage & Accuracy bonuses
+
+        if mainPower < 50 then
+            attacker:addMod(xi.mod.ATT, 2)
+            attacker:addMod(xi.mod.CRITHITRATE, 1)
+
+            effect:setPower(mainPower + 1)
+        end
+
+        if attacker:getMod(xi.mod.AUGMENTS_IMPETUS) > 0 and subPower < 50 then
+            attacker:addMod(xi.mod.ACC, 2)
+            attacker:addMod(xi.mod.CRIT_DMG_INCREASE, 1)
+
+            effect:setSubPower(subPower + 1)
+        end
+    end
+end
+
+xi.job_utils.monk.useImpetus = function(player, target, ability)
+    player:addStatusEffect(xi.effect.IMPETUS, { duration = 180, origin = player })
+
+    return xi.effect.IMPETUS
+end
+
+xi.job_utils.monk.useInnerStrength = function(player, target, ability)
+    player:addStatusEffect(xi.effect.INNER_STRENGTH, { power = 2, duration = 30, origin = player })
+
+    return xi.effect.INNER_STRENGTH
+end
+
+xi.job_utils.monk.useMantra = function(player, target, ability)
+    local merits = player:getMerit(xi.merit.MANTRA)
+
+    target:delStatusEffect(xi.effect.MAX_HP_BOOST) -- TODO: confirm which versions of HP boost mantra can overwrite
+    target:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = merits, duration = 300, origin = player })
+
+    return xi.effect.MAX_HP_BOOST
+end
+
+xi.job_utils.monk.usePerfectCounter = function(player, target, ability)
+    player:addStatusEffect(xi.effect.PERFECT_COUNTER, { power = 10, duration = 30, origin = player })
+
+    return xi.effect.PERFECT_COUNTER
+end
+
+
+local sanctumCapturedFunctions =
+{
+    ['xi.job_utils.monk.useChakra'] = xi.job_utils.monk.useChakra,
+}
+
+local sanctumModule = Module:new('sanctum_ws_monk')
+
+for functionName, implementation in pairs(sanctumCapturedFunctions) do
+    sanctumModule:addOverride(functionName, implementation)
+end
+
+return sanctumModule

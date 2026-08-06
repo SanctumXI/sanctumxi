@@ -1,4 +1,13 @@
 -----------------------------------
+-- Sanctum weapon-skill integration snapshot
+-- Source: scripts/globals/spells/damage_spell.lua
+-- Generated from the current custom implementation so the module remains
+-- independent from later edits to the original script.
+-----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+-----------------------------------
 -- Damage Spell Utilities
 -- Used for spells that deal direct damage. (Black, White, Dark and Ninjutsu)
 -----------------------------------
@@ -1321,3 +1330,43 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
 
     return finalDamage
 end
+
+
+local sanctumCapturedFunctions =
+{
+    ['xi.spells.damage.calculateBaseDamage'] = xi.spells.damage.calculateBaseDamage,
+    ['xi.spells.damage.calculateMTDR'] = xi.spells.damage.calculateMTDR,
+    ['xi.spells.damage.calculateElementalStaffBonus'] = xi.spells.damage.calculateElementalStaffBonus,
+    ['xi.spells.damage.calculateElementalAffinityBonus'] = xi.spells.damage.calculateElementalAffinityBonus,
+    ['xi.spells.damage.calculateAdditionalResistTier'] = xi.spells.damage.calculateAdditionalResistTier,
+    ['xi.spells.damage.calculateDayAndWeather'] = xi.spells.damage.calculateDayAndWeather,
+    ['xi.spells.damage.calculateMagicBonusDiff'] = xi.spells.damage.calculateMagicBonusDiff,
+    ['xi.spells.damage.calculateMagicCriticalMultiplier'] = xi.spells.damage.calculateMagicCriticalMultiplier,
+    ['xi.spells.damage.calculateDivineSealMultiplier'] = xi.spells.damage.calculateDivineSealMultiplier,
+    ['xi.spells.damage.calculateDivineEmblemMultiplier'] = xi.spells.damage.calculateDivineEmblemMultiplier,
+    ['xi.spells.damage.calculateEnhancedElementalSealMultiplier'] = xi.spells.damage.calculateEnhancedElementalSealMultiplier,
+    ['xi.spells.damage.calculateWeaponBashElementalMultiplier'] = xi.spells.damage.calculateWeaponBashElementalMultiplier,
+    ['xi.spells.damage.calculateEbullienceMultiplier'] = xi.spells.damage.calculateEbullienceMultiplier,
+    ['xi.spells.damage.calculateSkillTypeMultiplier'] = xi.spells.damage.calculateSkillTypeMultiplier,
+    ['xi.spells.damage.calculateNinSkillBonus'] = xi.spells.damage.calculateNinSkillBonus,
+    ['xi.spells.damage.calculateNinFutaeBonus'] = xi.spells.damage.calculateNinFutaeBonus,
+    ['xi.spells.damage.calculateNinjutsuMultiplier'] = xi.spells.damage.calculateNinjutsuMultiplier,
+    ['xi.spells.damage.calculateUndeadDivinePenalty'] = xi.spells.damage.calculateUndeadDivinePenalty,
+    ['xi.spells.damage.calculateHelixMeritMultiplier'] = xi.spells.damage.calculateHelixMeritMultiplier,
+    ['xi.spells.damage.calculateHolyMeritMultiplier'] = xi.spells.damage.calculateHolyMeritMultiplier,
+    ['xi.spells.damage.calculateAreaOfEffectResistance'] = xi.spells.damage.calculateAreaOfEffectResistance,
+    ['xi.spells.damage.calculateSpellActionTypeMultiplier'] = xi.spells.damage.calculateSpellActionTypeMultiplier,
+    ['xi.spells.damage.calculateAbsorption'] = xi.spells.damage.calculateAbsorption,
+    ['xi.spells.damage.calculateNullification'] = xi.spells.damage.calculateNullification,
+    ['xi.spells.damage.calculateIfMagicBurst'] = xi.spells.damage.calculateIfMagicBurst,
+    ['xi.spells.damage.calculateIfMagicBurstBonus'] = xi.spells.damage.calculateIfMagicBurstBonus,
+    ['xi.spells.damage.useDamageSpell'] = xi.spells.damage.useDamageSpell,
+}
+
+local sanctumModule = Module:new('sanctum_ws_damage_spells')
+
+for functionName, implementation in pairs(sanctumCapturedFunctions) do
+    sanctumModule:addOverride(functionName, implementation)
+end
+
+return sanctumModule

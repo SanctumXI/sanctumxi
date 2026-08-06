@@ -681,6 +681,7 @@ xi.effect =
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
     CRITICAL_BOOST           = 807, -- Sanctum Custom effect for Bully
     KICK_DAMAGE              = 808, -- Sanctum Custom effect
+    RESOLVE                  = 810, -- Sanctum Custom effect for Palisade charges (server-side ID; client icon 26 at 10 stacks)
   
     -- 807-1022
     -- PLACEHOLDER           = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.

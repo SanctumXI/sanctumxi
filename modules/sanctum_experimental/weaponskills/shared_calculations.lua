@@ -1,4 +1,13 @@
 -----------------------------------
+-- Sanctum weapon-skill integration snapshot
+-- Source: scripts/globals/weaponskills.lua
+-- Generated from the current custom implementation so the module remains
+-- independent from later edits to the original script.
+-----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+-----------------------------------
 -- Contains all common weaponskill calculations including but not limited to:
 -- fSTR
 -- Alpha
@@ -1296,3 +1305,27 @@ xi.weaponskills.handleWeaponskillEffect = function(actor, target, effectId, acti
         target:addStatusEffect(effectId, { power = power, duration = duration, origin = actor })
     end
 end
+
+
+local sanctumCapturedFunctions =
+{
+    ['xi.weaponskills.getRangedHitRate'] = xi.weaponskills.getRangedHitRate,
+    ['xi.weaponskills.calculateRawWSDmg'] = xi.weaponskills.calculateRawWSDmg,
+    ['xi.weaponskills.doPhysicalWeaponskill'] = xi.weaponskills.doPhysicalWeaponskill,
+    ['xi.weaponskills.doRangedWeaponskill'] = xi.weaponskills.doRangedWeaponskill,
+    ['xi.weaponskills.doMagicWeaponskill'] = xi.weaponskills.doMagicWeaponskill,
+    ['xi.weaponskills.takeWeaponskillDamage'] = xi.weaponskills.takeWeaponskillDamage,
+    ['xi.weaponskills.getMeleeDmg'] = xi.weaponskills.getMeleeDmg,
+    ['xi.weaponskills.getHitRate'] = xi.weaponskills.getHitRate,
+    ['xi.weaponskills.fTP'] = xi.weaponskills.fTP,
+    ['xi.weaponskills.calculatedIgnoredDef'] = xi.weaponskills.calculatedIgnoredDef,
+    ['xi.weaponskills.handleWeaponskillEffect'] = xi.weaponskills.handleWeaponskillEffect,
+}
+
+local sanctumModule = Module:new('sanctum_ws_shared_calculations')
+
+for functionName, implementation in pairs(sanctumCapturedFunctions) do
+    sanctumModule:addOverride(functionName, implementation)
+end
+
+return sanctumModule

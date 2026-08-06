@@ -9,12 +9,9 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
 
     if not zoning then
-        -- PChar->loc.zone might not be populated by now, so we'll add a delay before we send this
-        -- message.
+        -- Allow linkshell state and online-session rows to settle before selecting recipients.
         player:timer(2500, function(playerArg)
-            local decoratedMessage = string.format('Player %s has logged in.', playerArg:getName())
-            -- Sends announcement via ZMQ to all processes and zones
-            playerArg:printToArea(decoratedMessage, xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', true)
+            xi.announcePlayerLogin.notifyLinkshellOneMembers(playerArg)
         end)
     end
 end)

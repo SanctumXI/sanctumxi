@@ -1,4 +1,13 @@
 -----------------------------------
+-- Sanctum weapon-skill integration snapshot
+-- Source: scripts/globals/job_utils/paladin.lua
+-- Generated from the current custom implementation so the module remains
+-- independent from later edits to the original script.
+-----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+-----------------------------------
 -- Paladin Job Utilities
 -----------------------------------
 xi = xi or {}
@@ -332,3 +341,23 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
 
     return damage
 end
+
+
+local sanctumCapturedFunctions =
+{
+    ['xi.job_utils.paladin.restoreShieldMasteryMP'] = xi.job_utils.paladin.restoreShieldMasteryMP,
+    ['xi.job_utils.paladin.getResolveStacks'] = xi.job_utils.paladin.getResolveStacks,
+    ['xi.job_utils.paladin.addResolveStack'] = xi.job_utils.paladin.addResolveStack,
+    ['xi.job_utils.paladin.consumeResolve'] = xi.job_utils.paladin.consumeResolve,
+    ['xi.job_utils.paladin.applyResolveDamageBonus'] = xi.job_utils.paladin.applyResolveDamageBonus,
+    ['xi.job_utils.paladin.usePalisade'] = xi.job_utils.paladin.usePalisade,
+    ['xi.job_utils.paladin.useShieldBash'] = xi.job_utils.paladin.useShieldBash,
+}
+
+local sanctumModule = Module:new('sanctum_ws_paladin')
+
+for functionName, implementation in pairs(sanctumCapturedFunctions) do
+    sanctumModule:addOverride(functionName, implementation)
+end
+
+return sanctumModule

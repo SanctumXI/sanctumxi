@@ -107,6 +107,44 @@ namespace battleutils
 const float worldAngleMinDistance = 0.5f;
 const uint8 worldAngleMaxDeviance = 8;
 
+namespace
+{
+constexpr uint16 resolveMaxStacks   = 5;
+constexpr uint16 resolveChargedIcon = 26;
+constexpr uint32 resolveEffectFlags =
+    EFFECTFLAG_DEATH |
+    EFFECTFLAG_ON_ZONE |
+    EFFECTFLAG_NO_LOSS_MESSAGE |
+    EFFECTFLAG_ON_JOBCHANGE |
+    EFFECTFLAG_NO_CANCEL;
+
+void AddPalisadeResolveStack(CBattleEntity* PDefender)
+{
+    if (!PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_PALISADE))
+    {
+        return;
+    }
+
+    if (auto* PResolveEffect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_RESOLVE))
+    {
+        const auto stacks = std::min<uint16>(PResolveEffect->GetPower() + 1, resolveMaxStacks);
+
+        PResolveEffect->SetPower(stacks);
+
+        if (stacks == resolveMaxStacks && PResolveEffect->GetIcon() != resolveChargedIcon)
+        {
+            PResolveEffect->SetIcon(resolveChargedIcon);
+        }
+
+        return;
+    }
+
+    PDefender->StatusEffectContainer->AddStatusEffect(
+        new CStatusEffect(EFFECT_RESOLVE, 0, 1, 0s, 0s, 0, 0, 0, resolveEffectFlags, EffectSourceType::SOURCE_NONE, 0, PDefender->id),
+        EffectNotice::Silent);
+}
+} // namespace
+
 void LoadSkillTable()
 {
     uint32 x    = 0;
@@ -2082,6 +2120,8 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         {
             uint8 absorb = 100;
 
+            AddPalisadeResolveStack(PDefender);
+
             // shield def bonus is a flat raw damage reduction that occurs before absorb
             // however do not reduce below 0 or if damage is negative
             if (damage > 0)
@@ -2103,6 +2143,14 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
                         // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
                         // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
                         PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
+
+                        // Sanctum custom: Shield Mastery II and above restores 1-3 MP to main-job Paladins.
+                        if (PChar->GetMJob() == JOB_PLD &&
+                            PChar->GetMLevel() >= 50 &&
+                            PDefender->getMod(Mod::SHIELD_MASTERY_TP) >= 20)
+                        {
+                            PDefender->addMP(xirand::GetRandomNumber(1, 4));
+                        }
                     }
                 }
             }

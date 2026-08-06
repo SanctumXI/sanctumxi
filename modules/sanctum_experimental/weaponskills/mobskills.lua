@@ -1,4 +1,13 @@
 -----------------------------------
+-- Sanctum weapon-skill integration snapshot
+-- Source: scripts/globals/mobskills.lua
+-- Generated from the current custom implementation so the module remains
+-- independent from later edits to the original script.
+-----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+-----------------------------------
 -- Monster TP Moves Global
 -- NOTE: A lot of this is good estimating since the FFXI playerbase has not found all of info for individual moves.
 -- What is known is that they roughly follow player Weaponskill calculations (pDIF, dMOD, ratio, etc) so this is what
@@ -7,7 +16,6 @@
 require('scripts/globals/magic')
 require('scripts/globals/job_utils/paladin')
 require('scripts/globals/spells/damage_spell')
-require('scripts/globals/ws_system')
 -----------------------------------
 xi = xi or {}
 xi.mobskills = xi.mobskills or {}
@@ -1822,3 +1830,18 @@ xi.mobskills.handleHybridDamage = function(mob, target, physicalDamage, element)
 
     return magicDamage
 end
+
+
+local sanctumCapturedFunctions =
+{
+    ['xi.mobskills.mobPhysicalMove'] = xi.mobskills.mobPhysicalMove,
+    ['xi.mobskills.mobMagicalMove'] = xi.mobskills.mobMagicalMove,
+}
+
+local sanctumModule = Module:new('sanctum_ws_mobskills')
+
+for functionName, implementation in pairs(sanctumCapturedFunctions) do
+    sanctumModule:addOverride(functionName, implementation)
+end
+
+return sanctumModule

@@ -9,6 +9,7 @@
 -- Aligned with the Flame Belt & Light Belt.
 -- Element: None
 -- Modifiers: AGI:30%
+-- Corsair main job: Magic Attack Bonus increases damage by 1% per point.
 -- 100%TP    200%TP    300%TP
 -- 1.50      2.00      2.50
 -----------------------------------
@@ -26,6 +27,10 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.ftpMod  = { 1.5, 2.5, 5.0 }
         params.agi_wsc = 0.7
+    end
+
+    if player:getMainJob() == xi.job.COR then
+        params.damageMultiplier = math.max(0, 1 + player:getMod(xi.mod.MATT) / 100)
     end
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, wsID, params, tp, action, primary)

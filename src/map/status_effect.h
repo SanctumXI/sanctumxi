@@ -754,12 +754,13 @@ enum EFFECT : uint16
     EFFECT_CRITICAL_BOOST      = 807, // Sanctum Custom Effect for crit hit rate
     EFFECT_KICK_DAMAGE         = 808, // Sanctum Custom effect to boost Kick Damage
     EFFECT_DOUBLE_PALM_SHIELD  = 809, // Sanctum Custom effect
+    EFFECT_RESOLVE             = 810, // Sanctum Custom effect for Palisade charges (client icon 26 at 5 stacks)
 
     // 789
     // 807-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
-#define MAX_EFFECTID 810 // 768 real + 39 custom
+#define MAX_EFFECTID 811 // 768 real + 40 custom
 DECLARE_FORMAT_AS_UNDERLYING(EFFECT);
 
 /************************************************************************
