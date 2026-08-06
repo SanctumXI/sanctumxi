@@ -3575,7 +3575,7 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                         {
                             // one-handed main: keep a dual-wield weapon or shield, but drop a grip
                             auto*      PSubWeapon = dynamic_cast<CItemWeapon*>(PChar->getEquip(SLOT_SUB));
-                            const bool subIsGrip  = PSubWeapon != nullptr && PSubWeapon->getSkillType() == xi::SkillType::None;
+                            const bool subIsGrip  = PSubWeapon != nullptr && PSubWeapon->getSkillType() == SKILL_NONE;
                             if (subIsGrip)
                             {
                                 UnequipItem(PChar, SLOT_SUB, Recalculate::No);

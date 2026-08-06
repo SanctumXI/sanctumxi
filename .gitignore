@@ -267,5 +267,5 @@ sanity_checks_summary.md
 changed-files.txt
 clang_tidy_summary.md
 
-# Network Settings
-settings/default/network.lua
+# Server Settings
+settings/
