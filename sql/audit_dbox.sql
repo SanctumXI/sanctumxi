@@ -8,12 +8,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Table structure of `audit_dbox`
 --
-<<<<<<< Updated upstream
-DROP TABLE IF EXISTS`audit_dbox` (
-=======
-DROP TABLE IF EXISTS`audit_dbox`;
+DROP TABLE IF EXISTS `audit_dbox`;
 CREATE TABLE `audit_dbox` (
->>>>>>> Stashed changes
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `itemid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `quantity` int(10) unsigned NOT NULL DEFAULT '0',
@@ -21,7 +17,7 @@ CREATE TABLE `audit_dbox` (
   `sender_name` varchar(15) DEFAULT NULL,
   `receiver` int(10) unsigned NOT NULL DEFAULT '0',
   `receiver_name` varchar(15) DEFAULT NULL,
-  `price`int(10) unsigned NOT NULL DEFAULT '0',
+  `price` int(10) unsigned NOT NULL DEFAULT '0',
   `date` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `itemid` (`itemid`),
