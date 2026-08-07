@@ -107,9 +107,6 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
 
         if (!PItem)
         {
-<<<<<<< HEAD
-            ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with invalid item!", PChar->getName(), PNpc->getName());
-=======
             ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with an empty inventory slot {}!", PChar->getName(), PNpc->getName(), invSlotId);
             return;
         }
@@ -123,7 +120,6 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
         if (std::find(tradeItems.begin(), tradeItems.begin() + slotId, PItem) != tradeItems.begin() + slotId)
         {
             ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with duplicate inventory slot {}!", PChar->getName(), PNpc->getName(), invSlotId);
->>>>>>> 37042223eb (Unreserve partial confirmed stack)
             return;
         }
 
