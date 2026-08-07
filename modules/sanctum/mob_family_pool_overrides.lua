@@ -55,6 +55,9 @@ local poolOverrides =
     [7153] = { speed = 50 },
 }
 
+-- Attach overrides to the mob lifecycle instead of querying zone entities.
+-- This supports static, dynamic, and instance mobs without startup warnings,
+-- and ensures stat ranks are set before CalculateMobStats runs on spawn.
 local zoneMobNames =
 {
     ['Abyssea-Grauberg'] = { 'Rencounter_Chariot' },
@@ -105,18 +108,38 @@ local function applyPoolOverride(mob)
     end
 end
 
-for zoneName, mobNames in pairs(zoneMobNames) do
-    local configuredMobNames = mobNames
+local function mobScriptExists(zoneName, mobName)
+    local scriptPath = string.format('scripts/zones/%s/mobs/%s.lua', zoneName, mobName)
+    local scriptFile = io.open(scriptPath, 'r')
 
-    m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', zoneName), function(zone)
-        super(zone)
+    if not scriptFile then
+        return false
+    end
 
-        for _, mobName in ipairs(configuredMobNames) do
-            for _, mob in ipairs(zone:queryEntitiesByName(mobName)) do
-                applyPoolOverride(mob)
-            end
+    scriptFile:close()
+    return true
+end
+
+local function addPoolOverride(zoneName, mobName)
+    if mobScriptExists(zoneName, mobName) then
+        m:addOverride(string.format('xi.zones.%s.mobs.%s.onMobInitialize', zoneName, mobName), function(mob)
+            super(mob)
+            applyPoolOverride(mob)
+        end)
+    else
+        -- Scriptless entities still need a cached lifecycle table so static,
+        -- dynamic, and instance-spawned copies all receive the override.
+        xi.module.ensureTable(string.format('xi.zones.%s.mobs.%s', zoneName, mobName))
+        xi.zones[zoneName].mobs[mobName].onMobInitialize = function(mob)
+            applyPoolOverride(mob)
         end
-    end)
+    end
+end
+
+for zoneName, mobNames in pairs(zoneMobNames) do
+    for _, mobName in ipairs(mobNames) do
+        addPoolOverride(zoneName, mobName)
+    end
 end
 
 return m
