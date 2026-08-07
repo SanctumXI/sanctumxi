@@ -27,12 +27,17 @@
 #include "packets/s2c/0x053_systemmes.h"
 #include "status_effect_container.h"
 #include "trade_container.h"
-#include "utils/synthutils.h"
+
+#include <algorithm>
+#include <array>
 
 namespace
 {
 
-const auto auditTrade = [](Scheduler& scheduler, CCharEntity* PChar, CBaseEntity* PNpc, uint32_t itemId, uint8_t quantity)
+// 8 trade window slots plus gil
+constexpr uint8 MAX_TRADE_SLOTS = 9;
+
+const auto auditTrade = [](Scheduler& scheduler, const CCharEntity* PChar, const CBaseEntity* PNpc, uint32_t itemId, uint32_t quantity)
 {
     if (settings::get<bool>("map.AUDIT_PLAYER_TRADES"))
     {
@@ -58,9 +63,10 @@ const auto auditTrade = [](Scheduler& scheduler, CCharEntity* PChar, CBaseEntity
 
 auto GP_CLI_COMMAND_ITEM_TRANSFER::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
-    return PacketValidator()
-        .isNotMonstrosity(PChar)
-        .range("ItemNum", this->ItemNum, 1, 9);
+return PacketValidator()
+    .isNotInEvent(PChar)
+    .isNotMonstrosity(PChar)
+    .range("ItemNum", this->ItemNum, 1, MAX_TRADE_SLOTS);
 }
 
 void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PChar) const
@@ -90,6 +96,8 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
 
     PChar->TradeContainer->Clean();
 
+    std::array<CItem*, MAX_TRADE_SLOTS> tradeItems{};
+
     for (int32 slotId = 0; slotId < this->ItemNum; ++slotId)
     {
         const uint8_t  invSlotId = this->PropertyItemIndexTbl[slotId];
@@ -97,9 +105,25 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
 
         CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotId);
 
-        if (PItem == nullptr || PItem->getQuantity() < quantity)
+        if (!PItem)
         {
+<<<<<<< HEAD
             ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with invalid item!", PChar->getName(), PNpc->getName());
+=======
+            ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with an empty inventory slot {}!", PChar->getName(), PNpc->getName(), invSlotId);
+            return;
+        }
+
+        if (PItem->getQuantity() < quantity)
+        {
+            ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with {} of item {} ({}) they do not have!", PChar->getName(), PNpc->getName(), quantity, PItem->getName(), PItem->getID());
+            return;
+        }
+
+        if (std::find(tradeItems.begin(), tradeItems.begin() + slotId, PItem) != tradeItems.begin() + slotId)
+        {
+            ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with duplicate inventory slot {}!", PChar->getName(), PNpc->getName(), invSlotId);
+>>>>>>> 37042223eb (Unreserve partial confirmed stack)
             return;
         }
 
@@ -109,11 +133,20 @@ void GP_CLI_COMMAND_ITEM_TRANSFER::process(MapSession* PSession, CCharEntity* PC
             return;
         }
 
-        if (PItem->isSubType(ITEM_LOCKED))
+        if (PItem->isSubType(ITEM_LOCKED) || PItem->isBusy())
         {
             ShowErrorFmt("GP_CLI_COMMAND_ITEM_TRANSFER: {} trying to trade NPC {} with locked item!", PChar->getName(), PNpc->getName());
             return;
         }
+
+        tradeItems[slotId] = PItem;
+    }
+
+    for (int32 slotId = 0; slotId < this->ItemNum; ++slotId)
+    {
+        CItem*         PItem     = tradeItems[slotId];
+        const uint8_t  invSlotId = this->PropertyItemIndexTbl[slotId];
+        const uint32_t quantity  = this->ItemNumTbl[slotId];
 
         // TODO: Don't pass around Scheduler& through PSession
         auditTrade(*PSession->scheduler, PChar, PNpc, PItem->getID(), quantity);
