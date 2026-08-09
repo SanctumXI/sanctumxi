@@ -682,7 +682,7 @@ INSERT INTO `mob_groups` VALUES (3,2048,16,'Idle_Wanderer',300,0,0,260000,0,0,'A
 INSERT INTO `mob_groups` VALUES (1,6651,16,'Wanderer',300,0,2612,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (2,6652,16,'Weeper',300,0,2634,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (4,3897,16,'Thinker',300,0,2398,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (5,2614,16,'Memory_Receptacle',300,0,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (5,2614,16,'Memory_Receptacle',300,0,0,2300,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (6,3784,16,'Stray',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (7,6651,16,'Wanderer',300,0,2612,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (8,6652,16,'Weeper',300,0,2634,0,0,0,NULL);
@@ -729,7 +729,7 @@ INSERT INTO `mob_groups` VALUES (2,2048,18,'Idle_Wanderer',300,0,0,260000,0,0,'A
 INSERT INTO `mob_groups` VALUES (1,6651,18,'Wanderer',300,0,2613,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (3,6652,18,'Weeper',300,0,2635,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (4,1768,18,'Gorger',300,0,1207,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (5,6645,18,'Memory_Receptacle',300,0,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (5,6645,18,'Memory_Receptacle',300,0,0,2300,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (6,3784,18,'Stray',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (7,6652,18,'Weeper',300,0,2635,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (8,6651,18,'Wanderer',300,0,2613,0,0,0,NULL);
@@ -773,7 +773,7 @@ INSERT INTO `mob_groups` VALUES (1,6651,20,'Wanderer',300,0,2614,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (2,6652,20,'Weeper',300,0,2636,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (3,2048,20,'Idle_Wanderer',300,0,0,260000,0,0,'ABYSSEA'); -- TODO: Apex Idle Drifter
 INSERT INTO `mob_groups` VALUES (4,830,20,'Craver',300,0,526,0,0,0,NULL);
-INSERT INTO `mob_groups` VALUES (5,6646,20,'Memory_Receptacle',300,0,0,0,0,0,NULL);
+INSERT INTO `mob_groups` VALUES (5,6646,20,'Memory_Receptacle',300,0,0,2300,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (6,3784,20,'Stray',0,128,0,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (7,6651,20,'Wanderer',300,0,2614,0,0,0,NULL);
 INSERT INTO `mob_groups` VALUES (8,6652,20,'Weeper',300,0,2636,0,0,0,NULL);
