@@ -42,7 +42,7 @@ local stationaryTime       = 30
 local stationaryMoveRadius = 10
 local positionPrecision    = 100
 local simurghMp            = 5000
-local simurghModelSize     = 0 -- Simurgh's largest model-specific size variant.
+local simurghModelSize     = 2 -- Simurgh's largest model-specific size variant.
 
 local stationaryBonuses =
 {

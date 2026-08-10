@@ -22,6 +22,7 @@
 #include "common/timer.h"
 #include "common/utils.h"
 
+#include <algorithm>
 #include <vector>
 
 #include "ability.h"
@@ -51,16 +52,184 @@
 #include "ai/states/ability_state.h"
 
 #include "enums/automaton.h"
+#include "enums/chat_message_type.h"
 #include "data/enums/mob_mod.h"
 #include "packets/char_status.h"
 #include "packets/entity_update.h"
 #include "packets/pet_sync.h"
 #include "packets/s2c/0x0ac_command_data.h"
+#include "packets/s2c/0x017_chat_std.h"
 
 std::vector<Pet_t*> g_PPetList;
 
 namespace petutils
 {
+
+namespace
+{
+constexpr char        SanctumPetOwnerSeparator       = '@';
+constexpr size_t      SanctumOwnerIdTokenLength      = 7;
+constexpr const char* SanctumChatEnabledLocalVar     = "[SanctumChat]Enabled";
+constexpr const char* SanctumChatMappingRecordPrefix = "[SCMAP1]";
+
+bool IsAsciiUpper(const char character)
+{
+    return character >= 'A' && character <= 'Z';
+}
+
+bool IsAsciiLower(const char character)
+{
+    return character >= 'a' && character <= 'z';
+}
+
+bool IsAsciiDigit(const char character)
+{
+    return character >= '0' && character <= '9';
+}
+
+std::string FormatSanctumPetDisplayName(const std::string& petName)
+{
+    std::string displayName;
+    displayName.reserve(petName.size() + 4);
+
+    for (size_t index = 0; index < petName.size(); ++index)
+    {
+        const char character = petName[index];
+        if (character == '_')
+        {
+            if (!displayName.empty() && displayName.back() != ' ')
+            {
+                displayName.push_back(' ');
+            }
+            continue;
+        }
+
+        const bool isWordBoundary =
+            index > 0 &&
+            IsAsciiUpper(character) &&
+            (IsAsciiLower(petName[index - 1]) ||
+             IsAsciiDigit(petName[index - 1]) ||
+             (IsAsciiUpper(petName[index - 1]) &&
+              index + 1 < petName.size() &&
+              IsAsciiLower(petName[index + 1])));
+
+        if (isWordBoundary && !displayName.empty() && displayName.back() != ' ')
+        {
+            displayName.push_back(' ');
+        }
+
+        displayName.push_back(character);
+    }
+
+    while (!displayName.empty() && displayName.back() == ' ')
+    {
+        displayName.pop_back();
+    }
+
+    return displayName;
+}
+
+std::string FormatSanctumOwnerIdToken(const uint32 ownerId)
+{
+    // A uint32 requires at most seven base-36 characters. Unlike the previous
+    // shortened name hash, the character's server ID cannot collide with
+    // another active player.
+    static constexpr char Base36Digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    uint32                value          = ownerId;
+    std::string           token(SanctumOwnerIdTokenLength, '0');
+
+    for (size_t index = SanctumOwnerIdTokenLength; index > 0; --index)
+    {
+        token[index - 1] = Base36Digits[value % 36U];
+        value /= 36U;
+    }
+
+    return token;
+}
+
+std::string GetSanctumPetPacketName(const std::string& petName, const std::string& ownerName, const uint32 ownerId)
+{
+    constexpr size_t  maxVisibleNameLength = PacketNameLength - 1;
+    const std::string displayPetName       = FormatSanctumPetDisplayName(petName);
+    const std::string possessivePrefix     = ownerName + "'s ";
+    const std::string possessiveName       = possessivePrefix + displayPetName;
+
+    if (possessiveName.size() <= maxVisibleNameLength)
+    {
+        return possessiveName;
+    }
+
+    // A player can only have one active pet, so retaining the complete owner
+    // name keeps this alias authoritative while giving the client the most
+    // readable name that fits its 15-character spawn-packet limit.
+    if (possessivePrefix.size() < maxVisibleNameLength)
+    {
+        return possessivePrefix + displayPetName.substr(0, maxVisibleNameLength - possessivePrefix.size());
+    }
+
+    // Exceptionally long owner names leave no room for a readable pet name.
+    // Keep part of the owner visible and add the collision-free entity token.
+    const std::string tokenSuffix = SanctumPetOwnerSeparator + FormatSanctumOwnerIdToken(ownerId);
+    const size_t      ownerLength = maxVisibleNameLength - tokenSuffix.size();
+    return ownerName.substr(0, ownerLength) + tokenSuffix;
+}
+
+std::string SanitizeSanctumChatProtocolField(std::string value)
+{
+    std::replace_if(
+        value.begin(),
+        value.end(),
+        [](const unsigned char character)
+        {
+            return character < 0x20 || character == '|';
+        },
+        '_');
+
+    return value;
+}
+
+void ApplySanctumPetPacketName(CBattleEntity* PMaster, CPetEntity* PPet)
+{
+    if (PMaster->objtype != TYPE_PC || PPet->name.empty() || PMaster->getName().empty())
+    {
+        return;
+    }
+
+    PPet->packetName = GetSanctumPetPacketName(PPet->name, PMaster->getName(), PMaster->id);
+    PPet->isRenamed  = true;
+}
+
+void PushSanctumPetMapping(CBattleEntity* PMaster, CPetEntity* PPet)
+{
+    if (PMaster->objtype != TYPE_PC || PPet->packetName.empty())
+    {
+        return;
+    }
+
+    const std::string mappingRecord = fmt::format(
+        "{}{}|{}|{}|{}",
+        SanctumChatMappingRecordPrefix,
+        SanitizeSanctumChatProtocolField(PPet->packetName),
+        SanitizeSanctumChatProtocolField(PMaster->getName()),
+        SanitizeSanctumChatProtocolField(FormatSanctumPetDisplayName(PPet->getName())),
+        PPet->id);
+
+    PMaster->ForAlliance([&](CBattleEntity* PMember)
+    {
+        auto* PRecipient = dynamic_cast<CCharEntity*>(PMember);
+        if (PRecipient &&
+            PRecipient->loc.zone == PMaster->loc.zone &&
+            PRecipient->status != STATUS_TYPE::DISAPPEAR &&
+            PRecipient->GetLocalVar(SanctumChatEnabledLocalVar) == 1)
+        {
+            PRecipient->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
+                PRecipient,
+                CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1,
+                mappingRecord);
+        }
+    });
+}
+} // namespace
 
 void LoadPetList()
 {
@@ -1332,6 +1501,8 @@ void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
         PPet->PMaster = PMaster;
         PPet->setBattleID(PMaster->getBattleID());
 
+        ApplySanctumPetPacketName(PMaster, PPet);
+
         if (PMaster->PBattlefield)
         {
             PPet->PBattlefield = PMaster->PBattlefield;
@@ -1360,6 +1531,8 @@ void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
         {
             PPet->loadPetZoningInfo();
         }
+
+        PushSanctumPetMapping(PMaster, PPet);
     }
     else if (PMaster->objtype == TYPE_PC)
     {

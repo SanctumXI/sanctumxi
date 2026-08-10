@@ -50,7 +50,7 @@ INSERT INTO `abilities` VALUES (148,'dark_maneuver',18,1,1,10,169,0,0,333,0,0,6,
 INSERT INTO `abilities` VALUES (152,'formless_strikes',2,75,1,300,20,0,0,156,2000,0,6,0,0,0,1,300,2114,1,'TOAU');
 INSERT INTO `abilities` VALUES (156,'feint',6,75,1,300,68,0,0,159,2000,0,6,0,0,0,1,300,2370,1,'TOAU');
 INSERT INTO `abilities` VALUES (157,'fealty',7,75,1,300,78,0,0,148,2000,0,6,0,0,0,1,300,2432,1,'TOAU');
-INSERT INTO `abilities` VALUES (161,'feral_howl',9,65,4,300,105,0,0,146,2000,0,6,16,0,0,1,600,0,1,'TOAU');
+INSERT INTO `abilities` VALUES (161,'feral_howl',9,65,4,300,105,0,0,146,2000,0,6,16,0,0,1,600,0,0,'TOAU');
 INSERT INTO `abilities` VALUES (165,'stealth_shot',11,75,1,180,127,0,0,150,2000,0,6,0,0,0,1,300,2688,1,'TOAU');
 INSERT INTO `abilities` VALUES (175,'convergence',16,75,1,300,183,0,0,165,2000,0,6,0,0,0,1,300,3008,1,'TOAU');
 INSERT INTO `abilities` VALUES (176,'diffusion',16,75,1,300,184,0,0,166,2000,0,6,0,1,0,1,300,3010,1,'TOAU');

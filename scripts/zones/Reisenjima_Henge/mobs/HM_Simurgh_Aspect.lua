@@ -7,7 +7,7 @@ local simurghMechanics = require('scripts/globals/sanctum/simurgh')
 ---@type TMobEntity
 local entity = {}
 
-local aspectModelSize  = 3 -- Simurgh's smallest model-specific size variant.
+local aspectModelSize  = 1 -- Simurgh's smallest model-specific size variant.
 local aspectHitboxSize = 1.5
 
 local function configureMob(mob)
