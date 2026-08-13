@@ -244,8 +244,7 @@ enum class MsgBasic : uint16_t
     PetCannotDoAction               = 574, // <player>'s pet is currently unable to perform that action.
     PetNotEnoughTP                  = 575, // <player>'s pet does not have enough TP to perform that action.
     RangedAttackSquarely            = 576, // <user> ranged attack hits the <target> squarely for <amount> points of damage.,
-    RangedAttackPummels             = 577, // <user> ranged attack strikes true, pummeling <target> for <amount> points of damage!,
-    RangedAttackBarely              = 578, // <user> ranged attack barely hits the <target> for <amount> points of damage. -- needs the string added to the client DAT at this index
+    RangedAttackBarely              = 577, // <user> ranged attack barely hits the <target> for <amount> points of damage.
     TargetRegainsHP                 = 587, // <target> regains <amount> HP.
     TargetRegainsMP                 = 588, // <target> regains <amount> MP.
     PerfectCounterMiss              = 592, // <player> attempts to counter <target>'s attack, but misses.
