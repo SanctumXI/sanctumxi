@@ -1,12 +1,12 @@
 -----------------------------------
 -- Server First Announcements
 --
--- Editable server-wide first-achievement configuration. Event catalogues are
--- grouped below; the callback logic begins after the Configuration section.
+-- Everything worth shouting about the first time somebody pulls it off. The
+-- lists below are the parts you edit; the callbacks that fire them are down
+-- at the bottom of the file.
 --
--- Title note:
---   setTitle() makes a client-supported title active and permanently unlocks
---   it. New custom titles also require the appropriate DAT changes.
+-- NOTE: setTitle() turns a title on and unlocks it for good, but only for
+-- titles the client already knows about. Anything new needs DAT work first.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/battlefield')
@@ -21,7 +21,7 @@ local m = Module:new('ServerFirst')
 -- Configuration
 -----------------------------------
 
--- Chat decorations used for normal and legendary announcements.
+-- Symbols wrapped around the shout. Legendary weapons get their own.
 local decoration =
 {
     standard  = '\129\154', -- gold star
@@ -42,8 +42,8 @@ local function addNMEvent(tableRef, mobName, displayName, zoneName, title)
     }
 end
 
--- Notorious monsters. Zone restrictions keep Nyzul and battlefield variants
--- from claiming an open-world server first.
+-- Notorious monsters. The zone restriction stops Nyzul and battlefield copies
+-- of a mob from stealing the open-world first.
 local nmEvents = {}
 addNMEvent(nmEvents, 'Jaggedy-Eared_Jack',       'Jaggedy-Eared Jack',       'West_Ronfaure')
 addNMEvent(nmEvents, 'Leaping_Lizzy',            'Leaping Lizzy',            'South_Gustaberg')
@@ -99,11 +99,10 @@ addNMEvent(nmEvents, 'Sarameya',                 'Sarameya',                 'Mo
 addNMEvent(nmEvents, 'Tyger',                    'Tyger',                    'Caedarva_Mire')
 addNMEvent(nmEvents, 'Pandemonium_Warden',       'Pandemonium Warden',       'Aydeewa_Subterrane', xi.title.PANDEMONIUM_QUELLER)
 addNMEvent(nmEvents, 'Proto-Omega',              'Proto-Omega',              'Apollyon')
-addNMEvent(nmEvents, 'Proto-Ultima',              'Proto-Ultima',             'Temenos')
+addNMEvent(nmEvents, 'Proto-Ultima',             'Proto-Ultima',             'Temenos')
 
--- Each entry is an authoritative synthesis result ID. Keep the event key
--- stable once published; the display name is safe to edit for presentation.
--- addCraftEvent(itemId, eventKeySuffix, displayName)
+-- Keyed on the item ID the synth produces. Once an event key has gone live on
+-- the server, leave it alone; display names are safe to reword any time.
 local craftEvents = {}
 
 local function addCraftEvent(itemId, eventKeySuffix, displayName)
@@ -115,7 +114,7 @@ local function addCraftEvent(itemId, eventKeySuffix, displayName)
     }
 end
 
--- Curated iconic crafts, regardless of their skill requirements.
+-- Hand picked for being iconic, not for how hard they are to make.
 addCraftEvent(12579, 'scorpion_harness', 'Scorpion Harness')
 addCraftEvent(13734, 'scorpion_harness_plus1', 'Scorpion Harness +1')
 addCraftEvent(12555, 'haubergeon', 'Haubergeon')
@@ -232,8 +231,8 @@ local specialItemEvents =
     },
 }
 
--- Every completed relic and mythic is archived; the first of either kind also
--- receives the separate "first legendary weapon" announcement.
+-- Every finished relic and mythic gets written down. The first one of either
+-- kind on the server also gets its own louder announcement.
 local legendaryWeapons =
 {
     [15070] = { name = 'Aegis',         kind = 'relic' },
@@ -274,8 +273,8 @@ local legendaryWeapons =
     [19008] = { name = 'Kenkonken',     kind = 'mythic' },
 }
 
--- Only these item IDs need the onPlayerItemAdded callback, avoiding Lua work
--- for ordinary item acquisition.
+-- Only these IDs register onPlayerItemAdded, so picking up ordinary loot never
+-- has to come through here.
 local trackedItemIds = {}
 for itemId in pairs(specialItemEvents) do
     table.insert(trackedItemIds, itemId)
@@ -298,8 +297,8 @@ local skillMilestones =
     [xi.skill.COOKING]      = { name = 'Cooking',      title = xi.title.LEGENDARY_CULINARIAN },
 }
 
--- Battlefield IDs are resolved once during module load. Missing IDs are
--- reported and skipped so a branch without optional content keeps loading.
+-- IDs are looked up once at load. Anything missing gets printed and skipped so
+-- a branch without that content still loads.
 local battlefieldEvents = {}
 local function addBattlefieldEvent(enumName, displayName, title)
     local id = xi.battlefield.id[enumName]
@@ -461,6 +460,7 @@ local function participantFor(entity)
         char_id            = participant.char_id,
         char_name          = participant.char_name,
         linkshell_name     = participant.linkshell_name or '',
+        in_alliance        = participant.in_alliance or false,
         is_party_leader    = participant.is_party_leader or false,
         is_alliance_leader = participant.is_alliance_leader or false,
         is_leader          = false,
@@ -492,32 +492,94 @@ local function collectAllianceParticipants(player, zoneId)
     return collectParticipants(player:getAlliance(), zoneId)
 end
 
+-- A party caps at six, so anything bigger came out of an alliance even if the
+-- flag went missing on whoever we happened to look at.
+local function isAllianceRun(participants)
+    if #participants > 6 then
+        return true
+    end
+
+    for _, participant in ipairs(participants) do
+        if participant.in_alliance then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Player1, Player2, and Player3
+local function nameList(participants)
+    local names = {}
+    for _, participant in ipairs(participants) do
+        table.insert(names, participant.char_name)
+    end
+
+    if #names == 1 then
+        return names[1]
+    elseif #names == 2 then
+        return string.format('%s and %s', names[1], names[2])
+    end
+
+    local last = table.remove(names)
+    return string.format('%s, and %s', table.concat(names, ', '), last)
+end
+
+-- A linkshell only takes the credit when it brought at least half the group.
+local function majorityLinkshell(participants)
+    local counts = {}
+    for _, participant in ipairs(participants) do
+        local linkshell = participant.linkshell_name
+        if linkshell ~= '' then
+            counts[linkshell] = (counts[linkshell] or 0) + 1
+        end
+    end
+
+    local winner = nil
+    local winnerCount = 0
+    for linkshell, count in pairs(counts) do
+        local hasMajority = count * 2 >= #participants
+        local winsCount = count > winnerCount
+        -- pairs() order is not stable, so ties settle alphabetically.
+        local winsTieBreak = count == winnerCount and (not winner or linkshell < winner)
+        if hasMajority and (winsCount or winsTieBreak) then
+            winner = linkshell
+            winnerCount = count
+        end
+    end
+
+    return winner
+end
+
+local function findLeader(participants, wantAllianceLeader)
+    for _, participant in ipairs(participants) do
+        local isEligibleLeader =
+            (wantAllianceLeader and participant.is_alliance_leader) or
+            (not wantAllianceLeader and participant.is_party_leader)
+        if isEligibleLeader then
+            return participant
+        end
+    end
+
+    return participants[1]
+end
+
 local function resolveAttribution(participants)
     if #participants == 0 then
         return 'unknown', 'unknown', 'an uncredited group'
     end
 
-    local linkshells = {}
-    local linkshellWinner = nil
-    local linkshellCount = 0
+    -- Up to a full party everybody gets named. Past that the shout turns into
+    -- a wall of text, so alliances fall back to a linkshell or their leader.
+    if not isAllianceRun(participants) then
+        local leader = findLeader(participants, false)
+        leader.is_leader = true
 
-    for _, participant in ipairs(participants) do
-        local linkshell = participant.linkshell_name
-        if linkshell ~= '' then
-            linkshells[linkshell] = (linkshells[linkshell] or 0) + 1
-        end
+        local creditType = #participants == 1 and 'player' or 'party'
+        return creditType, leader.char_name, nameList(participants)
     end
 
-    for linkshell, count in pairs(linkshells) do
-        local hasMajority = count * 2 >= #participants
-        local winsCount = count > linkshellCount
-        local winsTieBreak = count == linkshellCount and (not linkshellWinner or linkshell < linkshellWinner)
-        if hasMajority and (winsCount or winsTieBreak) then
-            linkshellWinner = linkshell
-            linkshellCount = count
-        end
-    end
-
+    local linkshellWinner = majorityLinkshell(participants)
     if linkshellWinner then
         for _, participant in ipairs(participants) do
             participant.is_leader = false
@@ -526,25 +588,10 @@ local function resolveAttribution(participants)
         return 'linkshell', linkshellWinner, string.format('the linkshell %s', linkshellWinner)
     end
 
-    local wantAllianceLeader = #participants > 6
-    local leader = nil
-    for _, participant in ipairs(participants) do
-        local isEligibleLeader =
-            (wantAllianceLeader and participant.is_alliance_leader) or
-            (not wantAllianceLeader and participant.is_party_leader)
-        if isEligibleLeader then
-            leader = participant
-            break
-        end
-    end
-    leader = leader or participants[1]
+    local leader = findLeader(participants, true)
     leader.is_leader = true
 
-    if wantAllianceLeader then
-        return 'alliance', leader.char_name, string.format('an alliance led by %s', leader.char_name)
-    end
-
-    return 'party', leader.char_name, string.format("%s's party", leader.char_name)
+    return 'alliance', leader.char_name, string.format('an alliance led by %s', leader.char_name)
 end
 
 -- Announcement delivery
@@ -621,9 +668,8 @@ local function announceLegend(player, itemId, weapon)
         string.format('awakened the mythic weapon %s', weapon.name) or
         string.format('restored the legendary relic weapon %s', weapon.name)
 
-    -- The permanent every-weapon record must succeed before either kind of
-    -- legendary notice is sent.  A first-event row alone is not enough: the
-    -- all-legends archive is part of the feature's guarantee.
+    -- Nothing gets announced until the weapon is safely in the archive. The
+    -- full relic/mythic list is the point of that table, not just the first.
     if not xi.serverFirst.recordLegend(
         {
             char_id = participant.char_id,
@@ -752,7 +798,7 @@ m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, 
 
     local definition = craftEvents[itemId]
     if definition then
-    announceSolo(
+        announceSolo(
             definition,
             player,
             string.format('SERVER FIRST! A %s has been crafted by %s!', definition.display, player:getName()))
@@ -837,12 +883,12 @@ m:addOverride('xi.dynamis.megaBossOnDeath', function(mob, player, optParams)
     end
 
     local participants = collectAllianceParticipants(player, mob:getZoneID())
-    local creditType, creditName = resolveAttribution(participants)
+    local creditType, creditName, creditPhrase = resolveAttribution(participants)
     announceFirst(
         definition,
         participants,
         player,
-        string.format('SERVER FIRST! %s has been overcome!', definition.display),
+        string.format('SERVER FIRST! %s has been overcome by %s!', definition.display, creditPhrase),
         creditType,
         creditName)
 end)

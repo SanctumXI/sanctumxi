@@ -55,7 +55,7 @@ auto toParticipant(CLuaBaseEntity* luaEntity, sol::state& lua) -> sol::table
     result["char_id"]   = player->id;
     result["char_name"] = std::string(player->getName());
 
-    // Uses the EQUIPPED linkshell.  A player carrying a second pearl isn't treated as actively representing that LS.
+    // Only the equipped pearl counts.  A spare in the sack doesn't mean they are out representing that LS.
     if (auto* item = dynamic_cast<CItemLinkshell*>(player->getEquip(SLOT_LINK1)); item && item->isType(ITEM_LINKSHELL))
     {
         result["linkshell_name"] = item->getSignature();
@@ -64,6 +64,7 @@ auto toParticipant(CLuaBaseEntity* luaEntity, sol::state& lua) -> sol::table
     if (player->PParty)
     {
         result["is_party_leader"] = player->PParty->GetLeader() == player;
+        result["in_alliance"]     = player->PParty->m_PAlliance != nullptr;
 
         if (player->PParty->m_PAlliance && player->PParty->m_PAlliance->getMainParty())
         {
@@ -224,7 +225,7 @@ class ServerFirstModule final : public CPPModule
 {
     void OnInit() override
     {
-    const sol::object trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
+        const sol::object trackedItems = lua["xi"]["serverFirstConfig"]["trackedItemIds"];
         if (trackedItems.valid() && trackedItems.is<sol::table>())
         {
             for (const auto& entry : trackedItems.as<sol::table>())
