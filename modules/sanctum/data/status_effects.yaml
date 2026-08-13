@@ -59,3 +59,11 @@ status_effects:
       - no_loss_message
       - on_jobchange
       - no_cancel
+
+  # Upstream points this at magic_evasion_boost_ii, which has no script, so the
+  # effect grants nothing. Point it back at the script that exists.
+  magic_evasion_boost:
+    id: 611
+    name: magic_evasion_boost
+    flags:
+      - death
