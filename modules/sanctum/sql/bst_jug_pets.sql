@@ -12,3 +12,11 @@ UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 697; -- Metallic Bod
 
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 694; -- Bubble Curtain, party
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 696; -- Scissor Guard, party
+
+-- Funguar: Funguar Familiar
+-- Charge costs are unchanged: the shrooms stay at 2, Silence Gas and Dark Spore
+-- stay at 3.
+
+-- WAR to RDM. Trades Attack Bonus II, Double Attack II, Smite II and 60 base HP
+-- for Fast Cast, Magic Atk/Def Bonus and Resist Petrify. Net +9 INT, -11 STR.
+UPDATE `mob_pools` SET `mJob` = 5 WHERE `poolid` = 4614; -- Funguar Familiar
