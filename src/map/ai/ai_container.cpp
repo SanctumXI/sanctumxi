@@ -23,6 +23,7 @@
 #include "ai/controllers/mob_controller.h"
 #include "ai/controllers/pet_controller.h"
 #include "ai/controllers/player_controller.h"
+#include "common/utils.h"
 #include "entities/base_entity.h"
 #include "entities/battle_entity.h"
 #include "entities/char_entity.h"
@@ -524,6 +525,36 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
 
                 Cast(queuedSpellTargId, queuedSpell);
             }
+        }
+    }
+
+    // Ranged attack repeat (!ra repeat): keep firing while the player is engaged
+    // with a weapon drawn. Shots we can't take yet are dropped silently, since the
+    // player didn't ask for this one specifically.
+    if (
+        PChar &&
+        !m_queuedRangedAttack &&
+        PChar->GetLocalVar("rangedRepeat") == 1 &&
+        PChar->animation == ANIMATION_ATTACK &&
+        PChar->PAI->CanChangeState()
+    )
+    {
+        auto* playerController = dynamic_cast<CPlayerController*>(Controller.get());
+        auto* PTarget          = PChar->GetBattleTarget();
+
+        if (
+            PTarget &&
+            playerController &&
+            playerController->canAct() &&
+            m_Tick - PChar->m_LastRangedAttackTime > std::chrono::milliseconds(1100) &&
+            distance(PChar->loc.p, PTarget->loc.p) <= PChar->GetRangedAttackRange()
+        )
+        {
+            // Straight to the state change: CPlayerController::RangedAttack pushes
+            // its refusals directly and would talk over the suppression flag.
+            PChar->m_suppressActionErrors = true;
+            Internal_RangedAttack(PTarget->targid);
+            PChar->m_suppressActionErrors = false;
         }
     }
 

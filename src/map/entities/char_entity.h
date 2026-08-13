@@ -581,6 +581,10 @@ public:
     timer::time_point m_LastSynthTime{};
     timer::time_point m_LastRangedAttackTime{};
 
+    // Set while the server acts on the player's behalf (ranged attack repeat), so
+    // attempts that aren't ready yet don't spam them with refusals.
+    bool m_suppressActionErrors{ false };
+
     void flushEquipChanges();
     auto inventorySyncState() -> InventorySyncState&;
 

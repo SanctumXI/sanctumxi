@@ -2366,18 +2366,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 distancePenalty = distancePenaltyResult.get_type() == sol::type::number ? distancePenaltyResult.get<int16>(0) : 0;
             }
 
-            if (distancePenalty == 0)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackPummels;
-            }
-            else if (distancePenalty <= 15)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackSquarely;
-            }
-            else
-            {
-                actionResult.messageID = MsgBasic::RangedAttackHit;
-            }
+            // No sweet spot tiers. A clean shot reads as a plain hit; a close-range
+            // shot should read weaker, but the client has no "barely hits" ranged
+            // string to point at, so it falls back to the same line for now.
+            constexpr auto cleanShotMessage      = MsgBasic::RangedAttackHit;
+            constexpr auto closeRangeShotMessage = MsgBasic::RangedAttackHit;
+
+            actionResult.messageID = distancePenalty == 0 ? cleanShotMessage : closeRangeShotMessage;
         }
 
         // any misses with barrage/sange cause remaining shots to miss, meaning we must check Action.reaction
@@ -2595,7 +2590,7 @@ void CCharEntity::HandleErrorMessage(std::unique_ptr<CBasicPacket>& msg)
 {
     TracyZoneScoped;
 
-    if (msg && !isCharmed)
+    if (msg && !isCharmed && !m_suppressActionErrors)
     {
         pushPacket(std::move(msg));
     }

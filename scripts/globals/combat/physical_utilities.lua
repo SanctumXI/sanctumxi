@@ -326,8 +326,8 @@ xi.combat.physical.calculateRangedStatFactor = function(actor, target)
         return 1
     end
 
-    -- Calculate statDiff.
-    local statDiff = actor:getStat(xi.mod.STR) - target:getStat(xi.mod.VIT)
+    -- Calculate statDiff. Ranged weapons weigh DEX rather than STR.
+    local statDiff = actor:getStat(xi.mod.DEX) - target:getStat(xi.mod.VIT)
 
     -- Pets and Mobs.
     if actor:isMob() or actor:isPet() then
