@@ -23,6 +23,10 @@
 
 #include "common/cbasetypes.h"
 
+#include <optional>
+
+enum SKILLTYPE : uint8;
+
 enum MERIT_CATEGORY
 {
     MCATEGORY_HP_MP      = 0x0040,
@@ -581,6 +585,8 @@ private:
 
 namespace meritNameSpace
 {
+
+auto GetSkillMerit(SKILLTYPE skill) -> std::optional<MERIT_TYPE>;
 
 void LoadMeritsList(); // load the global list of merits
 

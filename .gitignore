@@ -231,6 +231,9 @@ memcheck.out.*
 # Auto-generated files
 /src/common/version.cpp
 
+# Local Codex work files
+.codex/
+
 # Module init file
 modules/init.txt
 

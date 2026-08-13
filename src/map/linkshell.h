@@ -53,6 +53,7 @@ public:
     const std::string& getName();
     void               setName(const std::string& name);
     void               setMessage(const std::string& message, const std::string& poster);
+    bool               trySetMessage(const std::string& message, const std::string& poster, uint32 expectedPostTime, const std::string& expectedMessage);
 
     void AddMember(CCharEntity* PChar, int8 type, uint8 lsNum);
     bool DelMember(CCharEntity* PChar, bool clearSessionMembership = true);

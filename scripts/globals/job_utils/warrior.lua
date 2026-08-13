@@ -48,6 +48,7 @@ xi.job_utils.warrior.useBerserk = function(player, target, ability)
     local power    = 15 + player:getMod(xi.mod.BERSERK_POTENCY) + utils.clamp(levelScale, 0, 10)
     local duration = 300 + player:getMod(xi.mod.BERSERK_DURATION)
 
+    player:delStatusEffect(xi.effect.DEFENDER)
     player:addStatusEffect(xi.effect.BERSERK, { power = power, duration = duration, origin = player })
 
     return xi.effect.BERSERK
@@ -81,6 +82,7 @@ xi.job_utils.warrior.useDefender = function(player, target, ability)
     local power    = 25 + utils.clamp(levelScale, 0, 10)
     local duration = 300 + player:getMod(xi.mod.DEFENDER_DURATION)
 
+    player:delStatusEffect(xi.effect.BERSERK)
     player:addStatusEffect(xi.effect.DEFENDER, { power = power, duration = duration, origin = player })
 
     return xi.effect.DEFENDER

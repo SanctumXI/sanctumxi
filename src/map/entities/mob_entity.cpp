@@ -1060,7 +1060,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     if (!getMobMod(xi::MobMod::NoDrops) && validZone && charutils::CheckMob(m_HiPCLvl, this) > EMobDifficulty::TooWeak && getMobMod(xi::MobMod::ExpBonus) > -100)
     {
         // Seals, geodes and avatarites do not drop from notorious monsters. Crystals still do.
-        const bool isNotorious = (m_Type & xi::MobType::Notorious) != xi::MobType::Normal;
+        const bool isNotorious = (m_Type & MOBTYPE_NOTORIOUS) != MOBTYPE_NORMAL;
 
         // Check for seal drops
         // Only one type of seal can drop per mob

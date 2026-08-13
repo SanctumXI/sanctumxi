@@ -4921,45 +4921,6 @@ int16 ArtsBonusSkill(CCharEntity* PChar, SKILLTYPE SkillID)
 // TODO: This whole thing should eventually get a refactored to be less dependent on arbitrary ordering of modifier IDs and conditionals on skill ranges.
 void BuildingCharSkillsTable(CCharEntity* PChar)
 {
-    MERIT_TYPE skillMerit[] = { MERIT_H2H,
-                                MERIT_DAGGER,
-                                MERIT_SWORD,
-                                MERIT_GSWORD,
-                                MERIT_AXE,
-                                MERIT_GAXE,
-                                MERIT_SCYTHE,
-                                MERIT_POLEARM,
-                                MERIT_KATANA,
-                                MERIT_GKATANA,
-                                MERIT_CLUB,
-                                MERIT_STAFF,
-                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
-                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
-                               // MERIT_AUTOMATON_SKILLS, Sanctum Custom
-                                MERIT_ARCHERY,
-                                MERIT_MARKSMANSHIP,
-                                MERIT_THROWING,
-                                MERIT_GUARDING,
-                                MERIT_EVASION,
-                                MERIT_SHIELD,
-                                MERIT_PARRYING,
-                                MERIT_DIVINE,
-                                MERIT_HEALING,
-                                MERIT_ENHANCING,
-                                MERIT_ENFEEBLING,
-                                MERIT_ELEMENTAL,
-                                MERIT_DARK,
-                                MERIT_SUMMONING,
-                                MERIT_NINJITSU,
-                                MERIT_SINGING,
-                                MERIT_STRING,
-                                MERIT_WIND,
-                                MERIT_BLUE,
-                                MERIT_GEO,
-                                MERIT_HANDBELL };
-
-    uint8 meritIndex = 0;
-
     bool automatonSkillUpdated = false;
 
     // Iterate over skill IDs (offsetting by 79 to get modifier ID)
@@ -4986,8 +4947,10 @@ void BuildingCharSkillsTable(CCharEntity* PChar)
             maxMainSkill = battleutils::GetMaxSkill(1, PChar->GetMLevel()); // A+ capped down to the Automaton's rating
         }
 
-        skillBonus += PChar->PMeritPoints->GetMeritValue(skillMerit[meritIndex], PChar);
-        meritIndex++;
+        if (const auto skillMerit = meritNameSpace::GetSkillMerit(static_cast<SKILLTYPE>(i)))
+        {
+            skillBonus += PChar->PMeritPoints->GetMeritValue(*skillMerit, PChar);
+        }
 
         // Add 79 to get the modifier ID
         skillBonus += PChar->getMod(static_cast<Mod>(i + 79)); // This can be a negative value. Example: Shiva's Shotel.
