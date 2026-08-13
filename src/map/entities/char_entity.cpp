@@ -2366,13 +2366,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 distancePenalty = distancePenaltyResult.get_type() == sol::type::number ? distancePenaltyResult.get<int16>(0) : 0;
             }
 
-            // No sweet spot tiers. A clean shot reads as a plain hit; a close-range
-            // shot should read weaker, but the client has no "barely hits" ranged
-            // string to point at, so it falls back to the same line for now.
-            constexpr auto cleanShotMessage      = MsgBasic::RangedAttackHit;
-            constexpr auto closeRangeShotMessage = MsgBasic::RangedAttackHit;
-
-            actionResult.messageID = distancePenalty == 0 ? cleanShotMessage : closeRangeShotMessage;
+            // No sweet spot tiers. A clean shot is a plain hit, anything taken from
+            // inside the minimum distance barely lands.
+            actionResult.messageID = distancePenalty == 0 ? MsgBasic::RangedAttackHit : MsgBasic::RangedAttackBarely;
         }
 
         // any misses with barrage/sange cause remaining shots to miss, meaning we must check Action.reaction

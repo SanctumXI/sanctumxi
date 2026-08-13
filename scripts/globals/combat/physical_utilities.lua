@@ -800,19 +800,19 @@ end
     ----------------------------------------
     -- Step 3: pDif Caps (Ranged)
     ----------------------------------------
-    local pDifUpperCap = 0
-    local pDifLowerCap = 0
+    local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
+    local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
+    local pDifFinalCap       = (xi.combat.physical.pDifWeaponCapTable[weaponType][2] + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
 
-    -- pDIF upper and lower caps.
-    if cRatio < 0.9 then
-        pDifUpperCap = cRatio * 10 / 9
-        pDifLowerCap = cRatio
-    elseif cRatio < 1.1 then
-        pDifUpperCap = 1
-        pDifLowerCap = 1
+    -- Shares the melee band. The pair ranged used to carry inverted above cRatio 3
+    -- (lower ended up over upper), which pinned every capped shot to one number.
+    local pDifLowerCap = 0
+    local pDifUpperCap = 0
+
+    if actor:isPC() then
+        pDifLowerCap, pDifUpperCap = xi.combat.physical.wRatioCapPC(cRatio, pDifFinalCap)
     else
-        pDifUpperCap = cRatio
-        pDifLowerCap = cRatio * 20 / 19 - 3 / 19
+        pDifLowerCap, pDifUpperCap = xi.combat.physical.wRatioCapOthers(cRatio, pDifFinalCap)
     end
 
     pDif = math.randomInt(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
@@ -820,10 +820,6 @@ end
     ----------------------------------------
     -- Step 4: Apply weapon type caps.
     ----------------------------------------
-    local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
-    local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
-    local pDifFinalCap       = (xi.combat.physical.pDifWeaponCapTable[weaponType][2] + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
-
     pDif = utils.clamp(pDif, 0, pDifFinalCap)
 
     ----------------------------------------
