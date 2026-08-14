@@ -20,8 +20,10 @@ local m = Module:new('sanctum_bst_antlion')
 -- The single target bite becomes a cone, and the flat rate becomes a curve.
 --
 -- The 50% attack bonus on the move is upstream and kept: it stacks on top of
--- the DRK attack trait rather than replacing it. Detonation is dropped, so the
--- family carries no skillchain property at all.
+-- the DRK attack trait rather than replacing it. That combination was worth
+-- roughly double any other single-charge move on the roster, so the curve
+-- carries half a point less than the rest of the family. Detonation is
+-- dropped, so the family carries no skillchain property at all.
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.mandibular_bite.onPetAbility', function(target, pet, petskill, owner, action)
@@ -29,7 +31,7 @@ m:addOverride('xi.actions.abilities.pets.mandibular_bite.onPetAbility', function
 
     params.baseDamage       = pet:getWeaponDmg()
     params.numHits          = 1
-    params.fTP              = { 2.0, 2.5, 3.0 }
+    params.fTP              = { 1.5, 2.0, 2.5 }
     params.attackType       = xi.attackType.PHYSICAL
     params.damageType       = xi.damageType.PIERCING
     params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1
