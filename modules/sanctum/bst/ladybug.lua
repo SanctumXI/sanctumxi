@@ -1,6 +1,6 @@
 -----------------------------------
 -- Sanctum jug pet: Ladybug
--- Dipper Yuly (75-80), the only pet in its family
+-- Lucky Lyra (75-80), the only pet in its family
 --
 -- Role: the pet is deliberately feeble. Its value is that it is a THF, so its
 -- Treasure Hunter II and Gilfinder land on the mob's hate list, and it hands

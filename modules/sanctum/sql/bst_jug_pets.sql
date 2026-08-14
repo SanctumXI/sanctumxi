@@ -44,7 +44,11 @@ UPDATE `mob_pools`
 
 -- Rage's 25% attack put Nazuna second on the roster for raw damage, which is
 -- not what a sheep is for. Merits land it at 78 rather than 80.
-UPDATE `pet_list` SET `maxLevel` = 73 WHERE `petid` = 57; -- Nursery Nazuna, was 80
+--
+-- minLevel comes down with the cap. It was left at 75 when the cap dropped to
+-- 73, which read as "Lv. 75 to Lv. 73" on the jug and let a minimum sit above
+-- a maximum. Same treatment Amigo Sabotender already had.
+UPDATE `pet_list` SET `minLevel` = 73, `maxLevel` = 73 WHERE `petid` = 57; -- Nursery Nazuna, was 75 / 80
 
 -- Lizard: Lizard Familiar / Coldblood Como / Audacious Anna
 -- Brain Crush opens Liquefaction and Tail Blow closes it for Fusion, a tier 2
@@ -196,11 +200,17 @@ UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 725; -- Toxic Spit, 
 UPDATE `pet_skills` SET `pet_skill_radius` = 8, `primary_sc` = 0 WHERE `pet_skill_id` = 724; -- Cyclotail, was radius 10 / Impaction
 UPDATE `pet_skills` SET `pet_skill_distance` = 20.0 WHERE `pet_skill_id` = 725;              -- Toxic Spit, was 3
 
--- Ladybug: Dipper Yuly
+-- Ladybug: Lucky Lyra, formerly Dipper Yuly
 -- A THF pet, so it carries Treasure Hunter II and Gilfinder to the mob's hate
 -- list. That is the reason to bring one; the rest of the kit is deliberately
 -- feeble. Family VIT is rank 7, the worst on the roster, and the resist row
 -- takes 25% extra piercing damage.
+
+-- Dipper Yuly becomes Lucky Lyra. The displayed name comes from pet_list.name
+-- by way of FormatSanctumPetDisplayName, which splits the camel case, so
+-- LuckyLyra reads as "Lucky Lyra" in game. The pool's internal name is left
+-- alone; no player sees it.
+UPDATE `pet_list` SET `name` = 'LuckyLyra' WHERE `petid` = 55; -- was DipperYuly
 
 UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 737; -- Spiral Spin, was 1
 
