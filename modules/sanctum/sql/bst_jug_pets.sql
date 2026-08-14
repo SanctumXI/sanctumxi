@@ -119,9 +119,10 @@ UPDATE `mob_resistances`
 
 UPDATE `pet_skills` SET `pet_skill_radius` = 4 WHERE `pet_skill_id` = 699; -- 1,000 Needles, was 10
 
--- Merits land a merited master at 79. minLevel stays 75: that column gates the
--- master's level, not the pet's, so it is independent of the cap.
-UPDATE `pet_list` SET `maxLevel` = 74 WHERE `petid` = 47; -- Amigo Sabotender, was 80
+-- Merits land a merited master at 79. minLevel comes down with the cap so the
+-- row reads consistently; that column gates the master's level to summon,
+-- while maxLevel caps the pet itself.
+UPDATE `pet_list` SET `minLevel` = 74, `maxLevel` = 74 WHERE `petid` = 47; -- Amigo Sabotender, was 75 / 80
 
 -- Diremite: Mite Familiar / Lifedrinker Lars
 -- Skillchain properties are consolidated onto Spinning Top, which becomes the

@@ -26,7 +26,7 @@ m:addOverride('xi.actions.abilities.pets.cursed_sphere.onPetAbility', function(t
     local params = {}
 
     params.baseDamage     = pet:getMainLvl() + 2
-    params.fTP            = { 3.0, 3.5, 4.0 }
+    params.fTP            = { 3.5, 4.0, 4.5 }
     params.element        = xi.element.DARK
     params.attackType     = xi.attackType.MAGICAL
     params.damageType     = xi.damageType.DARK
