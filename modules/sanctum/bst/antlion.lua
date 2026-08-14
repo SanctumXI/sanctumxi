@@ -31,7 +31,7 @@ m:addOverride('xi.actions.abilities.pets.mandibular_bite.onPetAbility', function
 
     params.baseDamage       = pet:getWeaponDmg()
     params.numHits          = 1
-    params.fTP              = { 1.5, 2.0, 2.5 }
+    params.fTP              = { 1.75, 2.25, 2.75 }
     params.attackType       = xi.attackType.PHYSICAL
     params.damageType       = xi.damageType.PIERCING
     params.shadowBehavior   = xi.mobskills.shadowBehavior.NUMSHADOWS_1

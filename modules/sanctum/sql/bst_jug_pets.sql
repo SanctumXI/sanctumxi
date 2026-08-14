@@ -42,6 +42,10 @@ UPDATE `mob_pools`
        `modelHitboxSize` = 24
  WHERE `poolid` = 4629; -- Nursery Nazuna
 
+-- Rage's 25% attack put Nazuna second on the roster for raw damage, which is
+-- not what a sheep is for. Merits land it at 78 rather than 80.
+UPDATE `pet_list` SET `maxLevel` = 73 WHERE `petid` = 57; -- Nursery Nazuna, was 80
+
 -- Lizard: Lizard Familiar / Coldblood Como / Audacious Anna
 -- Brain Crush opens Liquefaction and Tail Blow closes it for Fusion, a tier 2
 -- chain for 2 charges. Blockhead into Tail Blow gives Impaction instead.
@@ -114,6 +118,10 @@ UPDATE `mob_resistances`
  WHERE `resist_id` = 212; -- was fire -2 / bind -3 / slow 0
 
 UPDATE `pet_skills` SET `pet_skill_radius` = 4 WHERE `pet_skill_id` = 699; -- 1,000 Needles, was 10
+
+-- Merits land a merited master at 79. minLevel stays 75: that column gates the
+-- master's level, not the pet's, so it is independent of the cap.
+UPDATE `pet_list` SET `maxLevel` = 74 WHERE `petid` = 47; -- Amigo Sabotender, was 80
 
 -- Diremite: Mite Familiar / Lifedrinker Lars
 -- Skillchain properties are consolidated onto Spinning Top, which becomes the
@@ -392,7 +400,10 @@ UPDATE `mob_pools`
 
 UPDATE `mob_pools` SET `mJob` = 4, `sJob` = 4 WHERE `poolid` IN (4596, 4597); -- was WAR
 
-UPDATE `mob_family_system` SET `DEX` = 3, `AGI` = 2 WHERE `familyID` = 444; -- was DEX 4 / AGI 3
+-- Strength to rank A. BLM's own strength grade is F, the second worst in the
+-- game, and auto-attacks are the bulk of any pet's output, so the family rank
+-- is what stops a caster chassis from being dead weight between charges.
+UPDATE `mob_family_system` SET `STR` = 1, `DEX` = 3, `AGI` = 2 WHERE `familyID` = 444; -- was STR 5 / DEX 4 / AGI 3
 
 -- Beast Affinity merits are added after the cap, so 70 lands a merited master
 -- at 73 to 75. Note this is a reduction: the row read 75, not the 65 assumed.
