@@ -73,3 +73,19 @@ UPDATE `mob_pools` SET `modelid` = 0x0000910700000000000000000000000000000000 WH
 UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 734; -- Snow Cloud, was 1
 
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1 WHERE `pet_skill_id` = 734; -- Snow Cloud, cone -> radial like Whirl Claws
+
+-- Beetle: Beetle Familiar / Panzer Galahad
+-- Cannot self skillchain: Power Attack is Reverberation and Rhino Attack is
+-- Detonation, and neither closes the other. Power Attack does close a party
+-- member's Induration for Fragmentation.
+-- Light sleep was already -3 and dark sleep already 0, so neither moved.
+
+UPDATE `mob_resistances`
+   SET `fire_res_rank`  =  2,
+       `wind_res_rank`  = -2,
+       `earth_res_rank` =  2,
+       `dark_res_rank`  =  2,
+       `blind_res_rank` =  2
+ WHERE `resist_id` = 49; -- Beetle, all five were 0
+
+UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 708; -- Hi-Freq Field, was 2
