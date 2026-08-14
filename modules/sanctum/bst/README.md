@@ -110,12 +110,12 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug, Mandragora
+Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Frog, Tiger, Antlion, Fly, Flytrap
+**Remaining:** Coeurl, Frog, Antlion, Fly, Flytrap
 
 ### Per-family workflow
 
@@ -136,6 +136,10 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
 - **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
   in `pet_skills` but are wired only to Jug_Lynx at 99
 - **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert
-- **Tiger** Predatory Glare is an unimplemented stub, live in its skill list
+- **Jug pets with a `spellList` cast in combat.** `CPetController` does not
+  override `DoCombatTick`, so `CMobController` runs `TryCastSpell` ahead of TP
+  moves. The Flytrap pets and Cait Sith carry list 3 (Beastmen_RDM); Antlion,
+  Mite, Lifedrinker Lars and Chopsuey Chucky carry list 5 on DRK. The Diremite
+  pass did not account for this
 - **Sabotender** moves fast but does not swing fast; needs the delay fix
 - Wing Slap and Beak Lunge tooltips say fivefold/twofold; the code does 4 and 1

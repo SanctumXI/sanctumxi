@@ -235,3 +235,28 @@ UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 675; -- Head But
 UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 677; -- Wild Oats, was Transfixion
 
 UPDATE `pet_skills` SET `pet_skill_distance` = 5.0 WHERE `pet_skill_id` = 678; -- Leaf Dagger, was 3
+
+-- Tiger: Tiger Familiar / Saber Siravarde
+-- The party's attack buff on the best melee chassis on the roster: A ranks in
+-- attack and accuracy, and WAR's A grade strength on top. Nearly all of WAR's
+-- kit works on a pet, unlike MNK's; only Smite and the two shield traits are
+-- dead.
+
+-- Beast Affinity merits are added after the level cap in petutils, so this is a
+-- soft cap: a master with the merits can still exceed it.
+UPDATE `pet_list` SET `maxLevel` = 69 WHERE `petid` = 39; -- Saber Siravarde, was 75
+
+UPDATE `mob_family_system` SET `STR` = 3, `AGI` = 3, `DEF` = 4 WHERE `familyID` = 114; -- was STR 4 / AGI 4 / DEF 3
+
+-- Roar stops being an area paralyse and becomes the party's attack buff. It
+-- already reached radius 10 from the pet; 3 = SELF | PLAYER_PARTY, and 238 is
+-- the message the Crab's party buffs use.
+UPDATE `pet_skills`
+   SET `pet_valid_targets` = 3,
+       `pet_message`       = 238
+ WHERE `pet_skill_id` = 680; -- was 4 (enemy) / 242
+
+-- Crossthrash keeps Distortion / Detonation and becomes the family's only
+-- skillchain, so the Tiger cannot chain with itself.
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 681; -- Razor Fang, was Impaction
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 682; -- Claw Cyclone, was Scission
