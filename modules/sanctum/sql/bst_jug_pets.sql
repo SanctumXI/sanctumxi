@@ -374,3 +374,26 @@ UPDATE `mob_pools`
    SET `modelSize`       = 1,
        `modelHitboxSize` = 16
  WHERE `poolid` = 4608; -- Crafty Clyvonne, both were NULL
+
+-- Fly: Mayfly Familiar / Shellbuster Orob
+-- Magic damage out of ready moves, against Slippery Silas doing his with
+-- spells. WAR gave this family neither of the two things magical mobskill
+-- damage scales on, so both pets move to BLM for its intelligence grade and
+-- Magic Attack Bonus 32.
+
+UPDATE `mob_pools` SET `mJob` = 4, `sJob` = 4 WHERE `poolid` IN (4596, 4597); -- was WAR
+
+UPDATE `mob_family_system` SET `DEX` = 3, `AGI` = 2 WHERE `familyID` = 444; -- was DEX 4 / AGI 3
+
+-- Beast Affinity merits are added after the cap, so 70 lands a merited master
+-- at 73 to 75. Note this is a reduction: the row read 75, not the 65 assumed.
+UPDATE `pet_list` SET `maxLevel` = 70 WHERE `petid` = 41; -- Shellbuster Orob, was 75
+
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 712; -- Cursed Sphere, was 1
+
+-- Sizes were NULL, the same zero-hitbox defect as the Flytrap Familiar and
+-- Crafty Clyvonne. 0 and 15 match Mayfly Familiar, which shares the model.
+UPDATE `mob_pools`
+   SET `modelSize`       = 0,
+       `modelHitboxSize` = 15
+ WHERE `poolid` = 4597; -- Shellbuster Orob, both were NULL

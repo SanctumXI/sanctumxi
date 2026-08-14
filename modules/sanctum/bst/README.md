@@ -3,9 +3,9 @@
 Working notes for the jug pet pass. Read this before touching any family.
 
 The goal is to give each jug pet family a distinct, legible role at the 75 cap.
-Seventeen of nineteen families are done and the Pugil is cut; the Fly
-remains. Balance and data changes live in this module so upstream LSB data keeps
-flowing; only genuine engine bugs are patched in core.
+All eighteen surviving families are done and the Pugil is cut. Balance and data
+changes live in this module so upstream LSB data keeps flowing; only genuine
+engine bugs are patched in core.
 
 ---
 
@@ -120,12 +120,12 @@ type change too. That is intended.
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
 Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog, Antlion,
-Coeurl
+Coeurl, Fly
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Fly
+**Remaining:** none
 
 ### Per-family workflow
 
