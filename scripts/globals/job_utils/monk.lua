@@ -79,11 +79,7 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
 
     local merits = player:getMerit(xi.merit.INVIGORATE)
     if merits > 0 then
-        if player:hasStatusEffect(xi.effect.REGEN) then
-            player:delStatusEffect(xi.effect.REGEN)
-        end
-
-        player:addStatusEffect(xi.effect.REGEN, { power = 15, duration = merits, origin = player, tier = 1 })
+        player:addStatusEffect(xi.effect.INVIGORATE_REGEN, { power = 15, duration = merits, origin = player, icon = 640 })
     end
 
     return recoveryAmount
