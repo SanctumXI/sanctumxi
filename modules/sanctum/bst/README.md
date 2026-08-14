@@ -110,12 +110,12 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger
+Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Frog, Antlion, Fly, Flytrap
+**Remaining:** Coeurl, Frog, Antlion, Fly
 
 ### Per-family workflow
 
@@ -136,10 +136,12 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
 - **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
   in `pet_skills` but are wired only to Jug_Lynx at 99
 - **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert
-- **Jug pets with a `spellList` cast in combat.** `CPetController` does not
-  override `DoCombatTick`, so `CMobController` runs `TryCastSpell` ahead of TP
-  moves. The Flytrap pets and Cait Sith carry list 3 (Beastmen_RDM); Antlion,
-  Mite, Lifedrinker Lars and Chopsuey Chucky carry list 5 on DRK. The Diremite
-  pass did not account for this
+- **`mob_pools.spellList` does nothing for pets.** `petutils` assigns
+  `m_SpellListContainer`, the raw database list, but never calls
+  `mobutils::GetAvailableSpells` to compile it into `SpellContainer`. That is
+  what `CanCastSpells` checks through `HasSpells()`, so it is always empty and
+  no pet ever casts. Confirmed in game. Several jug pets carry a list that has
+  never done anything: Flytrap on list 3 (Beastmen_RDM), and Antlion, Mite,
+  Lifedrinker Lars and Chopsuey Chucky on list 5
 - **Sabotender** moves fast but does not swing fast; needs the delay fix
 - Wing Slap and Beak Lunge tooltips say fivefold/twofold; the code does 4 and 1

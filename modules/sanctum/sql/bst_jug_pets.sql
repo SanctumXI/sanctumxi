@@ -260,3 +260,36 @@ UPDATE `pet_skills`
 -- skillchain, so the Tiger cannot chain with itself.
 UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 681; -- Razor Fang, was Impaction
 UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 682; -- Claw Cyclone, was Scission
+
+-- Flytrap: Flytrap Familiar / Voracious Audrey
+-- The slow and paralyse specialist. Both moves drop to a single charge and the
+-- area sleep pays for them, staying deliberately worse than Sheep Song and
+-- Dream Flower. No behaviour changes, so the family needs no module file: the
+-- upstream Slow 2000 over 120 seconds and Paralyze 30 over 60 are kept as they
+-- are.
+--
+-- The pools already run RDM. Note their spellList is inert: petutils never
+-- compiles it into the container the caster checks, so no pet has ever cast.
+
+UPDATE `mob_family_system` SET `INT` = 3, `MND` = 2 WHERE `familyID` = 336; -- was INT 4 / MND 4
+
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 718; -- Soporific, was 1
+UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 719; -- Gloeosuccus, was 2
+
+-- Palsy Pollen is Paralysis Pollen in the client now, and picks up the cone its
+-- own script header always claimed it had. 4 = conal, same shape as
+-- Gloeosuccus.
+UPDATE `pet_skills`
+   SET `pet_skill_aoe`    = 4,
+       `pet_skill_radius` = 10
+ WHERE `pet_skill_id` = 720; -- was single target at radius 0
+
+-- Flytrap Familiar's sizes were NULL, which left it a zero hitbox and shorter
+-- reach than Voracious Audrey. Both pools carried cmbDelay 200, which the
+-- hard-coded jug delay of 240 discards; set to 240 so the data is honest.
+UPDATE `mob_pools`
+   SET `modelSize`       = 0,
+       `modelHitboxSize` = 12
+ WHERE `poolid` = 4619; -- Flytrap Familiar, both were NULL
+
+UPDATE `mob_pools` SET `cmbDelay` = 240 WHERE `poolid` IN (4619, 4620); -- was 200
