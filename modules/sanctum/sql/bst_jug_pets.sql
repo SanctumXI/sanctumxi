@@ -218,6 +218,11 @@ DELETE FROM `synth_recipes` WHERE `ID` = 74516; -- Auroral Broth, Cooking 93
 
 UPDATE `mob_family_system` SET `INT` = 2 WHERE `familyID` = 350; -- was 4
 
+-- Flowerpot Ben lands a merited master at 66 to 68. Note Homunculus shares the
+-- family and its kit, is available from level 23, and still caps at 75, so Ben
+-- is now strictly the worse of the two.
+UPDATE `pet_list` SET `maxLevel` = 63 WHERE `petid` = 38; -- Flowerpot Ben, was 75
+
 -- 2500 is a quarter again as much damage taken. It moves from piercing to
 -- slashing; the rest of the row is elemental and status ranks.
 UPDATE `mob_resistances`
