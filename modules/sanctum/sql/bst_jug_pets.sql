@@ -45,35 +45,23 @@ UPDATE `mob_pools`
 
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 688; -- Secretion, party
 
--- Earth resistance for the lizard pets. Resist row 174 is shared by 57 wild
--- lizard pools, so the pets get their own copy rather than changing the family.
--- Row 523 is 174 with earth_res_rank raised from 0 to 4; everything else matches.
-REPLACE INTO `mob_resistances` VALUES
-(523,'Jug_Lizard',0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,-3,4,0,-2,-2,-2,-3,-3,-3,0,-2,-2,-2,-2);
-
-UPDATE `mob_pools` SET `resist_id` = 523 WHERE `poolid` IN (4600, 4601, 4631); -- Lizard Familiar, Coldblood Como, Audacious Anna
-
--- Family stat ranks. These cannot be scoped to the pets: mob_family_system is
--- what every wild mob of the family loads from too.
+-- Family-wide stat and resistance changes. These apply to every wild mob of the
+-- family as well as the jug pets, which is intended.
 UPDATE `mob_family_system` SET `STR` = 4, `INT` = 4 WHERE `familyID` = 338; -- Funguar, was STR 3 / INT 5
 UPDATE `mob_family_system` SET `CHR` = 3 WHERE `familyID` = 111;            -- Sheep, was 4
 
--- Pet-scoped resistance rows, each a copy of the family row with one rank
--- changed. Point the pet pools at them so wild mobs keep the family values.
-REPLACE INTO `mob_resistances` VALUES
-(524,'Jug_Crab',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,-3,-2,-2,-3,2,-2,-2,-3,-3,-2,-4,2,-2,-2,-2),      -- slow -2 -> -4
-(525,'Jug_Funguar',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,-2,-2,0,-2,4,-3,4,-2,-2,-2,-2,4,-3,4,6),       -- earth -2 -> 0
-(526,'Jug_Sheep',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,-2,-2,-3,-3,-2,-2,0,0,-2,-2,-3,4,-2,-2);       -- light sleep -2 -> 4
-
-UPDATE `mob_pools` SET `resist_id` = 524 WHERE `poolid` IN (4610, 4611);       -- Crab Familiar, Courier Carrie
-UPDATE `mob_pools` SET `resist_id` = 525 WHERE `poolid` IN (4614, 4615);       -- Funguar Familiar, Discreet Louise
-UPDATE `mob_pools` SET `resist_id` = 526 WHERE `poolid` IN (4598, 4599, 4629); -- Sheep Familiar, Lullaby Melodia, Nursery Nazuna
+UPDATE `mob_resistances` SET `earth_res_rank`      =  4 WHERE `resist_id` = 174; -- Lizard, was 0
+UPDATE `mob_resistances` SET `slow_res_rank`       = -4 WHERE `resist_id` = 77;  -- Crab, was -2
+UPDATE `mob_resistances` SET `earth_res_rank`      =  0 WHERE `resist_id` = 116; -- Funguar, was -2
+UPDATE `mob_resistances` SET `light_sleep_res_rank` = 4 WHERE `resist_id` = 226; -- Sheep, was -2
 
 -- Rabbit: Hare Familiar / Keeneared Steffi / Lucky Lulush
--- WAR to THF. Trades Attack Bonus II, Double Attack III and 120 base HP for
--- Evasion Bonus V, Triple Attack, Resist Gravity IV and Treasure Hunter II.
--- Net +8 DEX and +4 AGI against -12 STR at level 78.
-UPDATE `mob_pools` SET `mJob` = 6 WHERE `poolid` IN (4595, 4612, 4641);
+-- WAR to DNC. Trades Attack Bonus II, Double Attack III and 120 base HP for
+-- Accuracy Bonus III, Evasion Bonus III, Subtle Blow IV and Skillchain Bonus
+-- III. Net +4 AGI and +11 CHR against -12 STR and -3 VIT at level 78.
+-- THF was the other candidate but carries Treasure Hunter and Gilfinder, which
+-- a pet applies to the mob's hate list.
+UPDATE `mob_pools` SET `mJob` = 19 WHERE `poolid` IN (4595, 4612, 4641);
 
 -- Keeneared Steffi wears the Lapinion model (pool 4961, East Ulbuka).
 -- Lucky Lulush already uses the snow rabbit model, same as Snowpaw Rabbit.

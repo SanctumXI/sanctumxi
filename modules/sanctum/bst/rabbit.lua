@@ -47,15 +47,14 @@ end)
 -- Wild Carrot
 -- Party heal centred on the pet.
 --
--- Was 104/1024 of the pet's max HP, roughly 350 at level 78. Raised to a fifth
--- so it lands near a Cure IV per target, which is what makes it worth two
--- charges as an emergency button.
+-- Was 104/1024 of the pet's max HP, a hair over a tenth. Raised to 12%, which
+-- is around 415 at level 78.
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.wild_carrot.onPetAbility', function(target, pet, petskill, owner, action)
     petskill:setMsg(xi.msg.basic.SELF_HEAL)
 
-    return xi.mobskills.mobHealMove(target, math.floor(pet:getMaxHP() * 0.2))
+    return xi.mobskills.mobHealMove(target, math.floor(pet:getMaxHP() * 0.12))
 end)
 
 -----------------------------------
