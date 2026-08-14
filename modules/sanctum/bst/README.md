@@ -81,7 +81,17 @@ type change too. That is intended.
 - **Dead Aim and Kick Attacks** do nothing for pets (unimplemented / auto-attack only)
 - **`onMobSkillFinalize` is not called for pets** (commented out in `petskill_state.cpp`)
 - **Pet Treasure Hunter applies to the mob's hate list** — a THF pet gives the party TH
-- Jug attack delay is hard-coded 240, discarding `mob_pools.cmbDelay` (open defect)
+- **Pet TP moves carry real TP.** `petskill_state` spends whatever the pet has
+  banked and zeroes it, so a three-entry fTP is live: spam Ready and every move
+  sits at fTP[1], let the pet swing and it climbs toward fTP[3]. fTP
+  interpolates smoothly between entries
+- Jug attack delay is hard-coded 240, discarding `mob_pools.cmbDelay` (open defect).
+  `LoadJugStats` has a "reduce weapon delay of MNK" branch, but `CalculateJugPetStats`
+  sets base delay to 240 two lines earlier, so `resetDelay()` restores 240 and the
+  branch does nothing
+- **Sleep is `overwrite: higher`**, a strict `>`. Sleep/Sleepga are power 1,
+  Sleep II/Sleepga II power 2. A pet sleep at power 1 cannot overwrite either,
+  and cannot refresh its own; `delStatusEffect` first is the only way round it
 - Call Beast and Bestial Loyalty flatten every pet to base speed 55 after
   spawning; override both with `super()` first if a family needs different
 
@@ -100,12 +110,12 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug
+Diremite, Apkallu, Eft, Ladybug, Mandragora
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Frog, Tiger, Antlion, Fly, Flytrap, Mandragora
+**Remaining:** Coeurl, Frog, Tiger, Antlion, Fly, Flytrap
 
 ### Per-family workflow
 
@@ -119,6 +129,10 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
 ### Known open items
 
+- **Mandragora** Dream Flower is left at sleep power 1 and a random 15 to 45
+  second duration, so it cannot overwrite a Sleepga or refresh itself. It is
+  also centred on the pet and catches the pet's own target, which the pet then
+  auto-attacks awake
 - **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
   in `pet_skills` but are wired only to Jug_Lynx at 99
 - **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert

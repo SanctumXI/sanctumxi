@@ -203,3 +203,35 @@ UPDATE `pet_skills`
 -- database, so dropping it retires the pet.
 
 DELETE FROM `synth_recipes` WHERE `ID` = 74516; -- Auroral Broth, Cooking 93
+
+-- Mandragora: Homunculus / Flowerpot Bill / Flowerpot Ben
+-- Dream Flower goes to a single charge, the cheapest area sleep in the game.
+-- Wild Oats picks up the charge it gives away.
+-- Family INT is rank 4 against MNK's INT grade 7, the worst pairing on the
+-- roster; rank 2 buys back most of what the job costs. Sleep magic accuracy is
+-- the A+ skill cap plus the INT difference and nothing else, so this is the
+-- only lever the family has.
+
+UPDATE `mob_family_system` SET `INT` = 2 WHERE `familyID` = 350; -- was 4
+
+-- 2500 is a quarter again as much damage taken. It moves from piercing to
+-- slashing; the rest of the row is elemental and status ranks.
+UPDATE `mob_resistances`
+   SET `slash_sdt`          = 2500,
+       `pierce_sdt`         =    0,
+       `lightning_res_rank` =    0,
+       `water_res_rank`     =    1,
+       `light_res_rank`     =    3,
+       `dark_res_rank`      =   -2,
+       `poison_res_rank`    =   -1
+ WHERE `resist_id` = 178; -- was slash 0 / pierce 2500 / lightning -3 / water 0 / light 0 / dark -3 / poison 0
+
+UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 676; -- Dream Flower, was 2
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 677; -- Wild Oats, was 1
+
+-- Scission on Leaf Dagger is the family's only skillchain property, so the
+-- Mandragora cannot chain with itself.
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 675; -- Head Butt, was Detonation
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 677; -- Wild Oats, was Transfixion
+
+UPDATE `pet_skills` SET `pet_skill_distance` = 5.0 WHERE `pet_skill_id` = 678; -- Leaf Dagger, was 3
