@@ -110,3 +110,32 @@ UPDATE `mob_resistances`
  WHERE `resist_id` = 212; -- was fire -2 / bind -3 / slow 0
 
 UPDATE `pet_skills` SET `pet_skill_radius` = 4 WHERE `pet_skill_id` = 699; -- 1,000 Needles, was 10
+
+-- Diremite: Mite Familiar / Lifedrinker Lars
+-- Skillchain properties are consolidated onto Spinning Top, which becomes the
+-- family's premium closer. Darkness closes Darkness for Darkness II and
+-- Fragmentation closes Fusion for Light. Nothing else in the kit carries a
+-- property, so the Diremite no longer self chains.
+
+UPDATE `mob_family_system`
+   SET `VIT` = 5,
+       `DEX` = 3,
+       `CHR` = 3,
+       `DEF` = 4,
+       `EVA` = 4
+ WHERE `familyID` = 442; -- was VIT 4 / DEX 4 / CHR 4 / DEF 3 / EVA 3
+
+UPDATE `mob_resistances` SET `light_sleep_res_rank` = -3 WHERE `resist_id` = 81; -- Diremite, was -2
+
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 727; -- Grapple, was 1
+UPDATE `abilities` SET `recastTime` = 3 WHERE `abilityId` = 728; -- Spinning Top, was 1
+UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 729; -- Filamented Hold, was 2
+
+-- 14 = Darkness, 12 = Fragmentation. The @SC_ variables are only defined while
+-- pet_skills.sql itself is running, so these are the raw values.
+UPDATE `pet_skills` SET `primary_sc` = 14, `secondary_sc` = 12 WHERE `pet_skill_id` = 728; -- Spinning Top, was Impaction
+UPDATE `pet_skills` SET `primary_sc` = 0, `secondary_sc` = 0 WHERE `pet_skill_id` IN (
+    699, -- 1,000 Needles, was Darkness / Fragmentation
+    726, -- Double Claw, was Liquefaction
+    727  -- Grapple, was Reverberation
+);
