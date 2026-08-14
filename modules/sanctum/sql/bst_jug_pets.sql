@@ -154,3 +154,27 @@ UPDATE `mob_resistances`
 -- 12 = Fragmentation, 13 = Light.
 UPDATE `pet_skills` SET `primary_sc` = 12, `secondary_sc` = 13 WHERE `pet_skill_id` = 756; -- Wing Slap, was Gravitation / Liquefaction
 UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 757;                       -- Beak Lunge, was Scission
+
+-- Eft: Eft Familiar / Ambusher Allie / Bugeyed Broncha
+-- WAR to RNG. Trades Attack Bonus II, Double Attack III and 120 base HP for
+-- Accuracy Bonus IV and RNG's AGI grade 1, the best in the game. With the
+-- family rank also moving that is +16 AGI against -15 STR at level 78; DEX
+-- comes out level, since the family gain cancels the job's weaker grade.
+UPDATE `mob_pools` SET `mJob` = 11 WHERE `poolid` IN (4621, 4622, 4633);
+
+UPDATE `mob_family_system` SET `DEX` = 3, `AGI` = 2 WHERE `familyID` = 303; -- was DEX 4 / AGI 4
+
+UPDATE `mob_resistances`
+   SET `lightning_res_rank` = -2,
+       `water_res_rank`     =  3,
+       `poison_res_rank`    =  3,
+       `blind_res_rank`     = -2
+ WHERE `resist_id` = 98; -- Eft, was lightning -1 / water +2 / poison +2 / blind -1
+
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 721; -- Geist Wall, was 1
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 722; -- Numbing Noise, was 1
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 723; -- Nimble Snap, was 1
+UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 725; -- Toxic Spit, was 2
+
+UPDATE `pet_skills` SET `pet_skill_radius` = 8, `primary_sc` = 0 WHERE `pet_skill_id` = 724; -- Cyclotail, was radius 10 / Impaction
+UPDATE `pet_skills` SET `pet_skill_distance` = 20.0 WHERE `pet_skill_id` = 725;              -- Toxic Spit, was 3
