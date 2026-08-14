@@ -5,8 +5,6 @@
 -- Role: crowd control. Dream Flower drops to a single charge, which makes this
 -- the cheapest area sleep anyone can bring. The rest of the kit pays for it.
 --
--- Dream Flower itself needs no script change, only the charge cost.
---
 -- Charge costs, family INT, resistances, skillchain properties and Leaf
 -- Dagger's range live in modules/sanctum/sql/bst_jug_pets.sql.
 -----------------------------------
@@ -14,6 +12,29 @@ require('modules/module_utils')
 -----------------------------------
 
 local m = Module:new('sanctum_bst_mandragora')
+
+-----------------------------------
+-- Dream Flower
+-- Sleep is overwrite-higher, a strict greater-than, so at power 1 the move
+-- could never land on anything it had already slept. Clearing the old effect
+-- first lets the pet refresh its own sleep.
+--
+-- Sleep II and Sleepga II are power 2, so those are left alone and the move
+-- reports no effect against them rather than trading a 90 second sleep for a
+-- shorter one. Power and duration are otherwise untouched.
+-----------------------------------
+
+m:addOverride('xi.actions.abilities.pets.dream_flower.onPetAbility', function(target, pet, petskill, owner, action)
+    local existing = target:getStatusEffect(xi.effect.SLEEP_I)
+
+    if existing and existing:getPower() <= 1 then
+        target:delStatusEffect(xi.effect.SLEEP_I)
+    end
+
+    petskill:setMsg(xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.SLEEP_I, 1, 0, math.randomInt(15, 45)))
+
+    return xi.effect.SLEEP_I
+end)
 
 -----------------------------------
 -- Head Butt
