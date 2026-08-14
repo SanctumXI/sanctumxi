@@ -99,8 +99,9 @@ type change too. That is intended.
   sets base delay to 240 two lines earlier, so `resetDelay()` restores 240 and the
   branch does nothing
 - **Sleep is `overwrite: higher`**, a strict `>`. Sleep/Sleepga are power 1,
-  Sleep II/Sleepga II power 2. A pet sleep at power 1 cannot overwrite either,
-  and cannot refresh its own; `delStatusEffect` first is the only way round it
+  Sleep II/Sleepga II power 2. An equal power can never land, so no sleep can
+  refresh its own; `delStatusEffect` first is the only way round it. Gate that
+  on `getTimeRemaining()` or the refresh can cut short a longer sleep
 - Call Beast and Bestial Loyalty flatten every pet to base speed 55 after
   spawning; override both with `super()` first if a family needs different
 
@@ -139,10 +140,8 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
 ### Known open items
 
-- **Mandragora** Dream Flower is left at sleep power 1 and a random 15 to 45
-  second duration, so it cannot overwrite a Sleepga or refresh itself. It is
-  also centred on the pet and catches the pet's own target, which the pet then
-  auto-attacks awake
+- **Mandragora** Dream Flower is centred on the pet, so it catches the pet's
+  own target, which the pet then auto-attacks awake
 - **Coeurl** still has no damaging ready move; its damage is all auto-attack,
   bought with haste. Charged Whisker (746, radial thunder) and Frenzied Rage
   (790, self attack boost) are finished and carry `abilities` rows, but are
@@ -168,4 +167,3 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
 - **MP is granted by main job only**, in `LoadJugStats`: PLD, WHM, BLM, RDM,
   DRK, BLU and SCH. Any other job gets a flat 0 and cannot pay for a spell
 - **Sabotender** moves fast but does not swing fast; needs the delay fix
-- Wing Slap and Beak Lunge tooltips say fivefold/twofold; the code does 4 and 1

@@ -15,23 +15,29 @@ local m = Module:new('sanctum_bst_mandragora')
 
 -----------------------------------
 -- Dream Flower
--- Sleep is overwrite-higher, a strict greater-than, so at power 1 the move
--- could never land on anything it had already slept. Clearing the old effect
--- first lets the pet refresh its own sleep.
+-- Power 2 puts it on the Sleep II and Sleepga II tier, so it overwrites a
+-- Sleep or Sleepga and cannot be overwritten by one.
 --
--- Sleep II and Sleepga II are power 2, so those are left alone and the move
--- reports no effect against them rather than trading a 90 second sleep for a
--- shorter one. Power and duration are otherwise untouched.
+-- Sleep is overwrite-higher, a strict greater-than, so an equal power can
+-- never land and the move could not refresh its own sleep. Clearing the old
+-- effect first is the way round that, but only when the replacement would
+-- actually last longer: otherwise a 15 second roll would cut short a white
+-- mage's 90 second Sleepga II. Anything at a higher power is left alone.
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.dream_flower.onPetAbility', function(target, pet, petskill, owner, action)
+    local duration = math.randomInt(15, 45)
     local existing = target:getStatusEffect(xi.effect.SLEEP_I)
 
-    if existing and existing:getPower() <= 1 then
+    if
+        existing and
+        existing:getPower() <= 2 and
+        existing:getTimeRemaining() < duration * 1000
+    then
         target:delStatusEffect(xi.effect.SLEEP_I)
     end
 
-    petskill:setMsg(xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.SLEEP_I, 1, 0, math.randomInt(15, 45)))
+    petskill:setMsg(xi.mobskills.mobStatusEffectMove(pet, target, xi.effect.SLEEP_I, 2, 0, duration))
 
     return xi.effect.SLEEP_I
 end)
