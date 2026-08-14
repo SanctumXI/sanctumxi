@@ -74,6 +74,27 @@ UPDATE `mob_family_system` SET `AGI` = 1 WHERE `familyID` IN (
     180  -- Toucalibri
 ); -- both were 5
 
+-- Six pools filed under the wrong family. In each case the resist row they
+-- point at is right for what the mob actually is, so the rows are left alone
+-- and the family is repointed instead. familyid drives stats and ecosystem
+-- independently of resist_id, so being misfiled cost these mobs their stat
+-- ranks and their killer-trait interaction, not just tidy bookkeeping.
+--
+-- Porphyrion is a giant that carried Hume stat ranks and sat in Humanoid, so
+-- Beastmen Killer never fired on it. Rencounter Chariot is a war machine that
+-- carried Elvaan's rank F strength and rank A intelligence against Chariot's
+-- rank A strength.
+--
+-- Note this changes those six mobs' stat ranks, so it is a real balance move
+-- on whatever content they sit in, not only a data tidy.
+
+UPDATE `mob_pools` SET `familyid` =  75 WHERE `poolid` = 3350; -- Rencounter_Chariot, was 293 Elvaan
+UPDATE `mob_pools` SET `familyid` = 121 WHERE `poolid` = 3188; -- Porphyrion, was 295 Humes
+UPDATE `mob_pools` SET `familyid` = 479 WHERE `poolid` = 5785; -- Fangmonger_Colossus, was 139 Orc
+UPDATE `mob_pools` SET `familyid` =  55 WHERE `poolid` = 5466; -- Mamool_Ja_Warder_whm, was 132 Knight_Ja
+UPDATE `mob_pools` SET `familyid` = 305 WHERE `poolid` = 4925; -- Tchakka, was 39 Rockfin
+UPDATE `mob_pools` SET `familyid` = 350 WHERE `poolid` = 5631; -- Balamor_ER, was 397 Defiant
+
 -- The five pools left unresolved by the generated pass below. All sit in
 -- family 0, which does not exist in mob_family_system, so neither a family
 -- nor an ecosystem sibling could supply a value.
