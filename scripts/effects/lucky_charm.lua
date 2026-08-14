@@ -1,5 +1,5 @@
 -----------------------------------
--- xi.effect.LUCKY_SPOTS
+-- xi.effect.LUCKY_CHARM
 -- Sanctum: critical hit rate granted by the Ladybug jug pet.
 -- Runtime definition lives in modules/sanctum/data/status_effects.yaml.
 -----------------------------------

@@ -62,7 +62,7 @@ status_effects:
 
   trust_aura_exp:
     id: 809
-    name: lucky_spots
+    name: lucky_charm
     flags:
       - dispelable
       - empathy

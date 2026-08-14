@@ -185,6 +185,8 @@ UPDATE `pet_skills` SET `pet_skill_distance` = 20.0 WHERE `pet_skill_id` = 725; 
 -- feeble. Family VIT is rank 7, the worst on the roster, and the resist row
 -- takes 25% extra piercing damage.
 
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 737; -- Spiral Spin, was 1
+
 UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 736; -- Sudden Lunge, was Impaction
 UPDATE `pet_skills` SET `primary_sc` = 6 WHERE `pet_skill_id` = 737; -- Spiral Spin: Detonation, was Scission
 
