@@ -89,3 +89,24 @@ UPDATE `mob_resistances`
  WHERE `resist_id` = 49; -- Beetle, all five were 0
 
 UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 708; -- Hi-Freq Field, was 2
+
+-- Sabotender: Amigo Sabotender
+-- Needleshot opens Transfixion; 1,000 Needles carries Darkness with
+-- Fragmentation as its secondary, the best chain properties on any pet move.
+-- Neither closes the other, so no self chain.
+
+UPDATE `mob_family_system`
+   SET `STR`   = 4,
+       `DEX`   = 1,
+       `AGI`   = 1,
+       `EVA`   = 1,
+       `speed` = 90
+ WHERE `familyID` = 334; -- was STR 2 / DEX 5 / AGI 3 / EVA 3 / speed 40
+
+UPDATE `mob_resistances`
+   SET `fire_res_rank` = -3,
+       `bind_res_rank` =  4,
+       `slow_res_rank` =  4
+ WHERE `resist_id` = 212; -- was fire -2 / bind -3 / slow 0
+
+UPDATE `pet_skills` SET `pet_skill_radius` = 4 WHERE `pet_skill_id` = 699; -- 1,000 Needles, was 10
