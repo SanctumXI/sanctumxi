@@ -1191,7 +1191,7 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
         end
 
         if canMagicBurst then
-            local skillchainCount = xi.combat.magicBurst.getMagicBurstTier(target, actionElement)
+            local _, skillchainCount = xi.magicburst.formMagicBurst(target, actionElement)
 
             if skillchainCount > 0 then
                 -- TODO: Glyphic Bracers magic burst modifiers. https://www.bg-wiki.com/ffxi/Glyphic_Bracers
@@ -1378,7 +1378,7 @@ xi.mobskills.mobBreathMove = function(mob, target, skill, action, skillParams)
     -- Note: Elemental absorb mechanics such as Liement are calculated BEFORE resist/damage adjustments (such as shell/magic bursts).
     if absorbDamage > 0 then
         if canMagicBurst then
-            local skillchainCount = xi.combat.magicBurst.getMagicBurstTier(target, actionElement)
+            local _, skillchainCount = xi.magicburst.formMagicBurst(target, actionElement)
 
             if skillchainCount > 0 then
                 if mob:isPet() and mob:getMaster() ~= nil then
@@ -1775,7 +1775,7 @@ xi.mobskills.calculatePetMagicAccuracyBonus = function(mob, target, actionElemen
             petAccBonus = utils.clamp(masterSkillLevel - masterMaxSkillLevel, 0, 200)
         end
 
-        local skillchainCount = xi.combat.magicBurst.getMagicBurstTier(target, actionElement)
+        local _, skillchainCount = xi.magicburst.formMagicBurst(target, actionElement)
         if
             mob:getPetID() > 0 and
             skillchainCount > 0

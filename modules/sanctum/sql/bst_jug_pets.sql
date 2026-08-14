@@ -44,3 +44,11 @@ UPDATE `mob_pools`
 -- Infrasonics stays at 2 charges.
 
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 688; -- Secretion, party
+
+-- Earth resistance for the lizard pets. Resist row 174 is shared by 57 wild
+-- lizard pools, so the pets get their own copy rather than changing the family.
+-- Row 523 is 174 with earth_res_rank raised from 0 to 4; everything else matches.
+REPLACE INTO `mob_resistances` VALUES
+(523,'Jug_Lizard',0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,-3,4,0,-2,-2,-2,-3,-3,-3,0,-2,-2,-2,-2);
+
+UPDATE `mob_pools` SET `resist_id` = 523 WHERE `poolid` IN (4600, 4601, 4631); -- Lizard Familiar, Coldblood Como, Audacious Anna
