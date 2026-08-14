@@ -726,7 +726,7 @@ local overseerInvCommon =
     [32942] = { cp =  1000, lvl =  1, item = xi.item.CIPHER_OF_MAKKIS_ALTER_EGO  },
 }
 
----@class overseerInvNation : { [xi.nation] : { [integer]: { rank: integer, cp: integer, lvl: integer, item: xi.item, place: integer? } } }
+---@class overseerInvNation : { [xi.nation] : { [integer]: { rank: integer, cp: integer, lvl: integer, item: xi.item, place: integer?, ignoreConquestRank: boolean? } } }
 local overseerInvNation =
 {
     [xi.nation.SANDORIA] =
@@ -750,7 +750,7 @@ local overseerInvNation =
         [32804] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.ROYAL_SQUIRES_SOLLERETS        },
         [32805] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.ROYAL_SQUIRES_DAGGER,          },
         [32806] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.ROYAL_SQUIRES_MACE,            },
-        [32807] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.SAN_DORIAN_RING,               },
+        [32807] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.SAN_DORIAN_RING,                ignoreConquestRank = true },
         [32816] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.ROYAL_SWORDSMANS_BLADE         },
         [32817] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.ROYAL_SQUIRES_CHAINMAIL        },
         [32818] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.ROYAL_SQUIRES_BREECHES         },
@@ -815,7 +815,7 @@ local overseerInvNation =
         [32806] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.CENTURIONS_GREAVES               },
         [32807] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.CENTURIONS_SWORD,                },
         [32808] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.LEGIONNAIRES_CIRCLET,            },
-        [32809] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.BASTOKAN_RING,                   },
+        [32809] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.BASTOKAN_RING,                    ignoreConquestRank = true },
         [32816] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.JUNIOR_MUSKETEERS_TUCK           },
         [32817] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.IRON_MUSKETEERS_ARMET            },
         [32818] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.IRON_MUSKETEERS_GAUNTLETS        },
@@ -872,7 +872,7 @@ local overseerInvNation =
         [32805] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.MERCENARY_CAPTAINS_GAITERS   },
         [32806] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.MERCENARY_CAPTAINS_KUKRI,    },
         [32807] = { rank =  3, cp =  4000, lvl = 30, item = xi.item.MERCENARY_CAPTAINS_BELT,     },
-        [32808] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.WINDURSTIAN_RING,            },
+        [32808] = { rank =  3, cp =  4000, lvl =  1, item = xi.item.WINDURSTIAN_RING,             ignoreConquestRank = true },
         [32816] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.COMBAT_CASTERS_DAGGER        },
         [32817] = { rank =  4, cp =  8000, lvl = 40, item = xi.item.COMBAT_CASTERS_BOOMERANG     },
         [32818] = { rank =  4, cp =  8000, lvl = 10, item = xi.item.GREEN_SCARF                  },
@@ -1268,20 +1268,22 @@ xi.conquest.overseerOnEventUpdate = function(player, csid, option, guardNation)
         end
 
         local rankCheck = true
-        if
-            guardNation ~= xi.nation.OTHER and
-            guardNation ~= pNation and
-            GetNationRank(guardNation) <= pRank
-        then -- buy from other nation, must be higher ranked
-            rankCheck = false
-        elseif
-            guardNation ~= xi.nation.OTHER and
-            stock.place ~= nil and
-            guardNation ~= pNation
-        then -- buy from other nation, cannot buy items with nation rank requirement
-            rankCheck = false
-        elseif stock.place ~= nil and pRank > stock.place then -- buy from own nation, check nation rank
-            rankCheck = false
+        if not stock.ignoreConquestRank then
+            if
+                guardNation ~= xi.nation.OTHER and
+                guardNation ~= pNation and
+                GetNationRank(guardNation) <= pRank
+            then -- buy from other nation, must be higher ranked
+                rankCheck = false
+            elseif
+                guardNation ~= xi.nation.OTHER and
+                stock.place ~= nil and
+                guardNation ~= pNation
+            then -- buy from other nation, cannot buy items with nation rank requirement
+                rankCheck = false
+            elseif stock.place ~= nil and pRank > stock.place then -- buy from own nation, check nation rank
+                rankCheck = false
+            end
         end
 
         if rankCheck and u2 == 0 then

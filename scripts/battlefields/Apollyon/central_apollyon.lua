@@ -49,7 +49,7 @@ content.groups =
     },
 
     {
-        mobs    = { 'Gunpod' },
+        mobIds  = ID.CENTRAL_APOLLYON.mob.GUNPODS,
         spawned = false,
     }
 }
@@ -59,21 +59,42 @@ content.loot =
     [ID.npc.CENTRAL_LOOT_CRATE] =
     {
         {
-            quantity = 5,
-            { itemId= xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+            quantity = 3,
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = xi.loot.weight.NORMAL },
+        },
+
+        -- Each chip has an independent 20% chance. Failed rolls award one Ancient Beastcoin.
+        {
+            { itemId = xi.item.CHARCOAL_CHIP,     weight = 20 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = 80 },
+        },
+
+        {
+            { itemId = xi.item.SMOKY_CHIP,        weight = 20 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = 80 },
+        },
+
+        {
+            { itemId = xi.item.MAGENTA_CHIP,      weight = 20 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = 80 },
+        },
+
+        {
+            { itemId = xi.item.SMALT_CHIP,         weight = 20 },
+            { itemId = xi.item.ANCIENT_BEASTCOIN, weight = 80 },
         },
 
         {
             quantity = 2,
-            { itemId= xi.item.PIECE_OF_OMEGAS_EYE,        weight = xi.loot.weight.NORMAL },
-            { itemId= xi.item.SEGMENT_OF_OMEGAS_FORELEG,  weight = xi.loot.weight.LOW    },
-            { itemId= xi.item.SEGMENT_OF_OMEGAS_HIND_LEG, weight = xi.loot.weight.LOW    },
-            { itemId= xi.item.SEGMENT_OF_OMEGAS_TAIL,     weight = xi.loot.weight.LOW    },
+            { itemId = xi.item.PIECE_OF_OMEGAS_EYE,        weight = xi.loot.weight.NORMAL },
+            { itemId = xi.item.SEGMENT_OF_OMEGAS_FORELEG,  weight = xi.loot.weight.LOW    },
+            { itemId = xi.item.SEGMENT_OF_OMEGAS_HIND_LEG, weight = xi.loot.weight.LOW    },
+            { itemId = xi.item.SEGMENT_OF_OMEGAS_TAIL,     weight = xi.loot.weight.LOW    },
         },
 
         {
-            { itemId= xi.item.NONE,                  weight = xi.loot.weight.EXTREMELY_HIGH },
-            { itemId= xi.item.PIECE_OF_OMEGAS_HEART, weight = xi.loot.weight.NORMAL         },
+            { itemId = xi.item.NONE,                  weight = xi.loot.weight.EXTREMELY_HIGH },
+            { itemId = xi.item.PIECE_OF_OMEGAS_HEART, weight = xi.loot.weight.NORMAL         },
         },
     },
 }

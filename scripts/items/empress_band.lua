@@ -5,7 +5,7 @@
 -----------------------------------
 -- Bonus: +50%
 -- Duration: 720 min
--- Max bonus: 15000 exp
+-- Max bonus: 3000 exp
 -----------------------------------
 ---@type TItem
 local itemObject = {}
@@ -23,7 +23,7 @@ itemObject.onItemUse = function(target)
     local effect    = xi.effect.DEDICATION
     local power     = 50
     local duration  = 43200
-    local subpower  = 15000
+    local subpower  = 3000
 
     xi.itemUtils.addItemExpEffect(target, effect, power, duration, subpower)
 end

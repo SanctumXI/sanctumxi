@@ -5,6 +5,20 @@
 ---@type TMobEntity
 local entity = {}
 
+local gunpodIds = zones[xi.zone.APOLLYON].CENTRAL_APOLLYON.mob.GUNPODS
+
+local areGunpodsDefeated = function()
+    for _, gunpodId in ipairs(gunpodIds) do
+        local gunpod = GetMobByID(gunpodId)
+
+        if not gunpod or gunpod:getStatus() ~= xi.status.DISAPPEAR then
+            return false
+        end
+    end
+
+    return true
+end
+
 local quadrupedForm = function(mob)
     mob:setAnimationSub(1)
     mob:setMod(xi.mod.ATTP, 100)
@@ -25,8 +39,6 @@ end
 
 local finalForm = function(mob)
     mob:setLocalVar('final', 1)
-    mob:setLocalVar('gunpodCount', 0)
-    mob:setLocalVar('gunpodTime', GetSystemTime() + utils.minutes(1.5))
     mob:setAnimationSub(2)
     mob:setMod(xi.mod.ATTP, 250)
     mob:setMod(xi.mod.UDMGPHYS, -5000)
@@ -50,6 +62,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.CANNOT_GUARD, 1)
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 115)
     mob:setMod(xi.mod.COUNTER, 10)
     mob:setMod(xi.mod.REGAIN, 50)
     mob:setMod(xi.mod.REGEN, 25)
@@ -62,24 +75,23 @@ end
 
 entity.onMobEngage = function(mob, target)
     mob:setLocalVar('formTime', GetSystemTime() + 120)
+    mob:setLocalVar('gunpodTime', GetSystemTime() + math.randomInt(60, 90))
 end
 
 entity.onMobFight = function(mob, target)
     local now = GetSystemTime()
 
-    -- If in Final form then do Pod Ejection every 1.5 minutes, up to 7 total
-    if mob:getLocalVar('final') == 1 then
-        if
-            mob:getLocalVar('gunpodCount') < 7 and
-            now >= mob:getLocalVar('gunpodTime') and
-            mob:getCurrentAction() == xi.action.category.BASIC_ATTACK and
-            GetMobByID(mob:getID() + 1):getStatus() == xi.status.DISAPPEAR
-        then
-            mob:setLocalVar('gunpodCount', mob:getLocalVar('gunpodCount') + 1)
-            mob:setLocalVar('gunpodTime', now + utils.minutes(1.5))
-            mob:useMobAbility(1532) -- Pod Ejection
-        end
+    if
+        now >= mob:getLocalVar('gunpodTime') and
+        mob:getCurrentAction() == xi.action.category.BASIC_ATTACK and
+        areGunpodsDefeated()
+    then
+        mob:setLocalVar('gunpodTime', now + math.randomInt(60, 90))
+        mob:useMobAbility(1532) -- Pod Ejection
+        return
+    end
 
+    if mob:getLocalVar('final') == 1 then
         return
     end
 
@@ -98,15 +110,7 @@ entity.onMobFight = function(mob, target)
         mob:setLocalVar('formTime', now + utils.minutes(2))
         if mob:getAnimationSub() == 1 then
             bipedForm(mob)
-
-            -- Wait for 4.5s while changing form and then do Pod Ejection
             mob:wait(4500)
-            mob:timer(4500, function(mobArg)
-                if mob:isAlive() and mob:getLocalVar('initialGunpod') == 0 then
-                    mob:setLocalVar('initialGunpod', 1)
-                    mob:useMobAbility(1532) -- Pod Ejection
-                end
-            end)
         else
             quadrupedForm(mob)
             mob:wait(4500)

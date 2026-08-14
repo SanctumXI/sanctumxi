@@ -4906,6 +4906,7 @@ INSERT INTO `item_mods` VALUES (11092,25,18);   -- ACC: 18
 INSERT INTO `item_mods` VALUES (11092,68,18);   -- EVA: 18
 INSERT INTO `item_mods` VALUES (11092,84,7);    -- AXE: 7
 INSERT INTO `item_mods` VALUES (11092,384,200); -- HASTE_GEAR: 200
+INSERT INTO `item_mods` VALUES (11092,1212,50); -- AUGMENT_KILLER_EFFECTS: 50
 
 -- Aoidos Hongreline +2
 INSERT INTO `item_mods` VALUES (11093,1,51);   -- DEF: 51
@@ -5612,11 +5613,12 @@ INSERT INTO `item_mods` VALUES (11191,23,28);   -- ATT: 28
 INSERT INTO `item_mods` VALUES (11191,384,200); -- HASTE_GEAR: 200
 
 -- Ferine Gausape +1
-INSERT INTO `item_mods` VALUES (11192,1,64);  -- DEF: 64
-INSERT INTO `item_mods` VALUES (11192,23,15); -- ATT: 15
-INSERT INTO `item_mods` VALUES (11192,25,15); -- ACC: 15
-INSERT INTO `item_mods` VALUES (11192,68,15); -- EVA: 15
-INSERT INTO `item_mods` VALUES (11192,84,5);  -- AXE: 5
+INSERT INTO `item_mods` VALUES (11192,1,64);    -- DEF: 64
+INSERT INTO `item_mods` VALUES (11192,23,15);   -- ATT: 15
+INSERT INTO `item_mods` VALUES (11192,25,15);   -- ACC: 15
+INSERT INTO `item_mods` VALUES (11192,68,15);   -- EVA: 15
+INSERT INTO `item_mods` VALUES (11192,84,5);    -- AXE: 5
+INSERT INTO `item_mods` VALUES (11192,1212,25); -- AUGMENT_KILLER_EFFECTS: 25
 
 -- Aoidos Hongreline +1
 INSERT INTO `item_mods` VALUES (11193,1,48);  -- DEF: 48
@@ -34801,6 +34803,24 @@ INSERT INTO `item_mods` VALUES (17510,950,8);  -- ITEM_ADDEFFECT_ELEMENT: 8
 -- Indra Katars
 INSERT INTO `item_mods` VALUES (17511,302,2); -- TRIPLE_ATTACK: 2
 
+-- Hydro Baghnakhs
+INSERT INTO `item_mods` VALUES (17512,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Baghnakhs +1
+INSERT INTO `item_mods` VALUES (17513,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Claws
+INSERT INTO `item_mods` VALUES (17514,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Claws +1
+INSERT INTO `item_mods` VALUES (17515,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Patas
+INSERT INTO `item_mods` VALUES (17516,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Patas +1
+INSERT INTO `item_mods` VALUES (17517,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
 -- Manoples +1
 INSERT INTO `item_mods` VALUES (17518,10,3); -- VIT: 3
 
@@ -35858,6 +35878,30 @@ INSERT INTO `item_mods` VALUES (17774,68,3); -- EVA: 3
 -- Fukuro
 INSERT INTO `item_mods` VALUES (17775,8,1);  -- STR: 1
 INSERT INTO `item_mods` VALUES (17775,11,1); -- AGI: 1
+
+-- Muketsu
+INSERT INTO `item_mods` VALUES (17778,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Muketsu +1
+INSERT INTO `item_mods` VALUES (17779,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Kyofu
+INSERT INTO `item_mods` VALUES (17780,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Kyofu +1
+INSERT INTO `item_mods` VALUES (17781,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Reppu
+INSERT INTO `item_mods` VALUES (17782,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Reppu +1
+INSERT INTO `item_mods` VALUES (17783,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Keppu
+INSERT INTO `item_mods` VALUES (17784,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Keppu +1
+INSERT INTO `item_mods` VALUES (17785,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
 
 -- Ohaguro
 INSERT INTO `item_mods` VALUES (17787,8,1); -- STR: 1
@@ -37045,6 +37089,24 @@ INSERT INTO `item_mods` VALUES (18198,230,4); -- BEAST_KILLER: 4
 -- Ulfhedinn Axe
 INSERT INTO `item_mods` VALUES (18199,73,1); -- STORETP: 1
 
+-- Hydro Axe
+INSERT INTO `item_mods` VALUES (18200,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Axe +1
+INSERT INTO `item_mods` VALUES (18201,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Cutter
+INSERT INTO `item_mods` VALUES (18202,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Cutter +1
+INSERT INTO `item_mods` VALUES (18203,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Chopper
+INSERT INTO `item_mods` VALUES (18204,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Hydro Chopper +1
+INSERT INTO `item_mods` VALUES (18205,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
 -- Gawains Axe
 INSERT INTO `item_mods` VALUES (18211,8,1);   -- STR: 1
 INSERT INTO `item_mods` VALUES (18211,10,5);  -- VIT: 5
@@ -37512,7 +37574,7 @@ INSERT INTO `item_mods` VALUES (18359,501,100); -- ITEM_ADDEFFECT_CHANCE: 100
 INSERT INTO `item_mods` VALUES (18359,950,3);   -- ITEM_ADDEFFECT_ELEMENT: 3
 
 -- Faith Baghnakhs
-INSERT INTO `item_mods` VALUES (18360,13,7);  -- MND: 7
+INSERT INTO `item_mods` VALUES (18360,13,7);   -- MND: 7
 INSERT INTO `item_mods` VALUES (18360,523,50); -- AMMO_SWING
 
 -- Ponderous Manoples
@@ -37526,13 +37588,27 @@ INSERT INTO `item_mods` VALUES (18362,68,1); -- EVA: 1
 INSERT INTO `item_mods` VALUES (18363,25,3); -- ACC: 3
 INSERT INTO `item_mods` VALUES (18363,68,2); -- EVA: 2
 
+-- Gust Claymore
+INSERT INTO `item_mods` VALUES (18366,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Gust Claymore +1
+INSERT INTO `item_mods` VALUES (18367,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Gust Sword
+INSERT INTO `item_mods` VALUES (18368,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
+-- Gust Sword +1
+INSERT INTO `item_mods` VALUES (18369,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
+
 -- Gust Tongue
-INSERT INTO `item_mods` VALUES (18370,13,2); -- MND: 2
-INSERT INTO `item_mods` VALUES (18370,23,5); -- ATT: 5
+INSERT INTO `item_mods` VALUES (18370,13,2);   -- MND: 2
+INSERT INTO `item_mods` VALUES (18370,23,5);   -- ATT: 5
+INSERT INTO `item_mods` VALUES (18370,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
 
 -- Gust Tongue +1
-INSERT INTO `item_mods` VALUES (18371,13,3); -- MND: 3
-INSERT INTO `item_mods` VALUES (18371,23,7); -- ATT: 7
+INSERT INTO `item_mods` VALUES (18371,13,3);   -- MND: 3
+INSERT INTO `item_mods` VALUES (18371,23,7);   -- ATT: 7
+INSERT INTO `item_mods` VALUES (18371,1181,1); -- ITEM_ADDEFFECT_SCRIPTED: 1
 
 -- Balans Sword
 INSERT INTO `item_mods` VALUES (18372,2,13); -- HP: 13
@@ -49712,7 +49788,7 @@ INSERT INTO `item_mods` VALUES (23160,68,84);   -- EVA: 84
 INSERT INTO `item_mods` VALUES (23160,84,16);   -- AXE: 16
 INSERT INTO `item_mods` VALUES (23160,384,300); -- HASTE_GEAR: 3%
 INSERT INTO `item_mods` VALUES (23160,841,8);   -- ALL_WSDMG_FIRST_HIT: 8
--- TODO: Augments "Killer" effects - Damage dealt and damage reduction are improved by 1/2 of your total Killer Effect %
+INSERT INTO `item_mods` VALUES (23160,1212,50); -- AUGMENT_KILLER_EFFECTS: 50
 
 -- Fili Hongreline +2
 INSERT INTO `item_mods` VALUES (23161,1,145);   -- DEF: 145
@@ -66392,6 +66468,7 @@ INSERT INTO `item_mods` VALUES (26914,31,40);   -- MEVA: 40
 INSERT INTO `item_mods` VALUES (26914,68,38);   -- EVA: 38
 INSERT INTO `item_mods` VALUES (26914,84,9);    -- AXE: 9
 INSERT INTO `item_mods` VALUES (26914,384,300); -- HASTE_GEAR: 300
+INSERT INTO `item_mods` VALUES (26914,1212,50); -- AUGMENT_KILLER_EFFECTS: 50
 
 -- Nukumi Gausape +1
 INSERT INTO `item_mods` VALUES (26915,1,133);   -- DEF: 133
@@ -66410,6 +66487,7 @@ INSERT INTO `item_mods` VALUES (26915,31,59);   -- MEVA: 59
 INSERT INTO `item_mods` VALUES (26915,68,69);   -- EVA: 69
 INSERT INTO `item_mods` VALUES (26915,84,11);   -- AXE: 11
 INSERT INTO `item_mods` VALUES (26915,384,300); -- HASTE_GEAR: 300
+INSERT INTO `item_mods` VALUES (26915,1212,50); -- AUGMENT_KILLER_EFFECTS: 50
 
 -- Fili Hongreline
 INSERT INTO `item_mods` VALUES (26916,1,90);    -- DEF: 90

@@ -242,6 +242,18 @@ zones[xi.zone.APOLLYON] =
 
     CENTRAL_APOLLYON =
     {
+        mob =
+        {
+            GUNPODS =
+            {
+                16933125,
+                16933193,
+            },
+        },
+
+        npc =
+        {
+        },
     },
 
     CS_APOLLYON =

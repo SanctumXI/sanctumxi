@@ -23,6 +23,7 @@
 #include "common/utils.h"
 
 #include <algorithm>
+#include <string_view>
 #include <vector>
 
 #include "ability.h"
@@ -129,6 +130,27 @@ std::string FormatSanctumPetDisplayName(const std::string& petName)
     return displayName;
 }
 
+std::string GetSanctumPetDisplayName(CPetEntity* PPet)
+{
+    std::string displayName = FormatSanctumPetDisplayName(PPet->getName());
+
+    // The legacy names for several Beastmaster pets end in "Familiar".
+    // That describes the pet category rather than the pet's actual name, so
+    // omit it from both the packet alias and the authoritative addon mapping.
+    static constexpr std::string_view FamiliarSuffix = "Familiar";
+    if (PPet->getPetType() == PET_TYPE::JUG_PET && displayName.ends_with(FamiliarSuffix))
+    {
+        displayName.erase(displayName.size() - FamiliarSuffix.size());
+        while (!displayName.empty() &&
+               (displayName.back() == ' ' || displayName.back() == '.' || displayName.back() == '_' || displayName.back() == '-'))
+        {
+            displayName.pop_back();
+        }
+    }
+
+    return displayName;
+}
+
 std::string FormatSanctumOwnerIdToken(const uint32 ownerId)
 {
     // A uint32 requires at most seven base-36 characters. Unlike the previous
@@ -147,10 +169,9 @@ std::string FormatSanctumOwnerIdToken(const uint32 ownerId)
     return token;
 }
 
-std::string GetSanctumPetPacketName(const std::string& petName, const std::string& ownerName, const uint32 ownerId)
+std::string GetSanctumPetPacketName(const std::string& displayPetName, const std::string& ownerName, const uint32 ownerId)
 {
     constexpr size_t  maxVisibleNameLength = PacketNameLength - 1;
-    const std::string displayPetName       = FormatSanctumPetDisplayName(petName);
     const std::string possessivePrefix     = ownerName + "'s ";
     const std::string possessiveName       = possessivePrefix + displayPetName;
 
@@ -190,18 +211,24 @@ std::string SanitizeSanctumChatProtocolField(std::string value)
 
 void ApplySanctumPetPacketName(CBattleEntity* PMaster, CPetEntity* PPet)
 {
-    if (PMaster->objtype != TYPE_PC || PPet->name.empty() || PMaster->getName().empty())
+    if (PMaster->objtype != TYPE_PC ||
+        PPet->getPetType() == PET_TYPE::WYVERN ||
+        PPet->name.empty() ||
+        PMaster->getName().empty())
     {
         return;
     }
 
-    PPet->packetName = GetSanctumPetPacketName(PPet->name, PMaster->getName(), PMaster->id);
+    PPet->packetName = GetSanctumPetPacketName(GetSanctumPetDisplayName(PPet), PMaster->getName(), PMaster->id);
     PPet->isRenamed  = true;
 }
 
 void PushSanctumPetMapping(CBattleEntity* PMaster, CPetEntity* PPet)
 {
-    if (PMaster->objtype != TYPE_PC || PPet->packetName.empty())
+    if (PMaster->objtype != TYPE_PC ||
+        PPet->getPetType() == PET_TYPE::WYVERN ||
+        PPet->packetName.empty() ||
+        PMaster->loc.zone == nullptr)
     {
         return;
     }
@@ -211,15 +238,15 @@ void PushSanctumPetMapping(CBattleEntity* PMaster, CPetEntity* PPet)
         SanctumChatMappingRecordPrefix,
         SanitizeSanctumChatProtocolField(PPet->packetName),
         SanitizeSanctumChatProtocolField(PMaster->getName()),
-        SanitizeSanctumChatProtocolField(FormatSanctumPetDisplayName(PPet->getName())),
+        SanitizeSanctumChatProtocolField(GetSanctumPetDisplayName(PPet)),
         PPet->id);
 
-    PMaster->ForAlliance([&](CBattleEntity* PMember)
+    // Register the ownership record with every addon user who can share this
+    // zone/instance, not only the pet owner's alliance. The addon resolves the
+    // entity locally and ignores mappings for entities the client cannot see.
+    PMaster->loc.zone->ForEachCharInstance(PMaster, [&](CCharEntity* PRecipient)
     {
-        auto* PRecipient = dynamic_cast<CCharEntity*>(PMember);
-        if (PRecipient &&
-            PRecipient->loc.zone == PMaster->loc.zone &&
-            PRecipient->status != STATUS_TYPE::DISAPPEAR &&
+        if (PRecipient->status != STATUS_TYPE::DISAPPEAR &&
             PRecipient->GetLocalVar(SanctumChatEnabledLocalVar) == 1)
         {
             PRecipient->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
@@ -1983,6 +2010,17 @@ void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
         ShowWarning("PetID (%d) exceeds MAX_PETID", PetID);
         return;
+    }
+
+    // Ensure a stowed automaton frame always matches the current automaton frame of the master.
+    if (PMaster->objtype == TYPE_PC &&
+        (PetID == PETID_HARLEQUINFRAME || PetID == PETID_VALOREDGEFRAME || PetID == PETID_SHARPSHOTFRAME || PetID == PETID_STORMWAKERFRAME))
+    {
+        const auto frameEquipped = static_cast<CCharEntity*>(PMaster)->getAutomatonFrame();
+        if (frameEquipped >= AutomatonFrame::Harlequin && frameEquipped <= AutomatonFrame::Stormwaker)
+        {
+            PetID = static_cast<uint32>(PETID_HARLEQUINFRAME) + static_cast<uint32>(frameEquipped) - static_cast<uint32>(AutomatonFrame::Harlequin);
+        }
     }
 
     auto maybePetData = std::find_if(

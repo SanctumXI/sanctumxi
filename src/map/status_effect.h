@@ -755,12 +755,13 @@ enum EFFECT : uint16
     EFFECT_KICK_DAMAGE         = 808, // Sanctum Custom effect to boost Kick Damage
     EFFECT_DOUBLE_PALM_SHIELD  = 809, // Sanctum Custom effect
     EFFECT_RESOLVE             = 810, // Sanctum Custom effect for Palisade charges (client icon 26 at 5 stacks)
+    EFFECT_INVIGORATE_REGEN    = 811, // Sanctum Custom effect for Chakra's Invigorate regen
 
     // 789
     // 807-1022
     // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
-#define MAX_EFFECTID 811 // 768 real + 40 custom
+#define MAX_EFFECTID 812 // 768 real + 44 custom
 DECLARE_FORMAT_AS_UNDERLYING(EFFECT);
 
 /************************************************************************

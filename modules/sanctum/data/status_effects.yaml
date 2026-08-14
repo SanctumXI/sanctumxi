@@ -59,3 +59,13 @@ status_effects:
       - no_loss_message
       - on_jobchange
       - no_cancel
+
+  trust_aura_refresh:
+    id: 811
+    name: invigorate_regen
+    flags:
+      - dispelable
+      - empathy
+      - death
+    element: light
+    sort_key: 700

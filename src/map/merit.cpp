@@ -445,6 +445,84 @@ namespace meritNameSpace
 Merit_t GMeritsTemplate[MERITS_COUNT]         = {};    // global list of merits and their properties
 int16   groupOffset[MCATEGORY_COUNT / 64 - 1] = { 0 }; // the first merit offset of each category
 
+auto GetSkillMerit(const SKILLTYPE skill) -> std::optional<MERIT_TYPE>
+{
+    switch (skill)
+    {
+        case SKILL_HAND_TO_HAND:
+            return MERIT_H2H;
+        case SKILL_DAGGER:
+            return MERIT_DAGGER;
+        case SKILL_SWORD:
+            return MERIT_SWORD;
+        case SKILL_GREAT_SWORD:
+            return MERIT_GSWORD;
+        case SKILL_AXE:
+            return MERIT_AXE;
+        case SKILL_GREAT_AXE:
+            return MERIT_GAXE;
+        case SKILL_SCYTHE:
+            return MERIT_SCYTHE;
+        case SKILL_POLEARM:
+            return MERIT_POLEARM;
+        case SKILL_KATANA:
+            return MERIT_KATANA;
+        case SKILL_GREAT_KATANA:
+            return MERIT_GKATANA;
+        case SKILL_CLUB:
+            return MERIT_CLUB;
+        case SKILL_STAFF:
+            return MERIT_STAFF;
+        case SKILL_ARCHERY:
+            return MERIT_ARCHERY;
+        case SKILL_MARKSMANSHIP:
+            return MERIT_MARKSMANSHIP;
+        case SKILL_THROWING:
+            return MERIT_THROWING;
+        case SKILL_GUARD:
+            return MERIT_GUARDING;
+        case SKILL_EVASION:
+            return MERIT_EVASION;
+        case SKILL_SHIELD:
+            return MERIT_SHIELD;
+        case SKILL_PARRY:
+            return MERIT_PARRYING;
+        case SKILL_DIVINE_MAGIC:
+            return MERIT_DIVINE;
+        case SKILL_HEALING_MAGIC:
+            return MERIT_HEALING;
+        case SKILL_ENHANCING_MAGIC:
+            return MERIT_ENHANCING;
+        case SKILL_ENFEEBLING_MAGIC:
+            return MERIT_ENFEEBLING;
+        case SKILL_ELEMENTAL_MAGIC:
+            return MERIT_ELEMENTAL;
+        case SKILL_DARK_MAGIC:
+            return MERIT_DARK;
+        case SKILL_SUMMONING_MAGIC:
+            return MERIT_SUMMONING;
+        case SKILL_NINJUTSU:
+            return MERIT_NINJITSU;
+        case SKILL_SINGING:
+            return MERIT_SINGING;
+        case SKILL_STRING_INSTRUMENT:
+            return MERIT_STRING;
+        case SKILL_WIND_INSTRUMENT:
+            return MERIT_WIND;
+        case SKILL_BLUE_MAGIC:
+            return MERIT_BLUE;
+        case SKILL_GEOMANCY:
+            return MERIT_GEO;
+        case SKILL_HANDBELL:
+            return MERIT_HANDBELL;
+        case SKILL_AUTOMATON_MELEE:
+        case SKILL_AUTOMATON_RANGED:
+        case SKILL_AUTOMATON_MAGIC:
+        default:
+            return std::nullopt;
+    }
+}
+
 void LoadMeritsList()
 {
     const auto rset = db::preparedStmt("SELECT m.meritid, m.value, m.jobs, m.upgrade, m.upgradeid, m.catagoryid, sl.spellid, ws.unlock_id "

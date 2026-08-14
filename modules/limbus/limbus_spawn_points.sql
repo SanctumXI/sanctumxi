@@ -554,6 +554,7 @@ INSERT INTO `mob_spawn_points` VALUES (16933122,0,'Troglodyte_Dhalmel','Troglody
 -- Central Apollyon
 INSERT INTO `mob_spawn_points` VALUES (16933124,0,'Proto-Omega','Proto-Omega',257,85,85,0.000,-0.500,138.000,192);
 INSERT INTO `mob_spawn_points` VALUES (16933125,0,'Gunpod','Gunpod',258,85,85,-2.072,-0.500,161.557,200);
+INSERT INTO `mob_spawn_points` VALUES (16933193,0,'Gunpod','Gunpod',258,85,85,2.072,-0.500,161.557,56);
 
 -- CS Apollyon
 INSERT INTO `mob_spawn_points` VALUES (16933129,0,'Carnagechief_Jackbodokk','Carnagechief Jackbodokk',260,80,81,-25.000,-0.500,-155.000,0);
