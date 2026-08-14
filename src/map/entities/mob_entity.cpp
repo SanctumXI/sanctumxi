@@ -494,9 +494,10 @@ void CMobEntity::setMobMod(xi::MobMod type, int16 value)
     m_mobModStat[type] = value;
 }
 
-int16 CMobEntity::getMobMod(xi::MobMod type)
+auto CMobEntity::getMobMod(xi::MobMod type) const -> int16
 {
-    return m_mobModStat[type];
+    const auto it = m_mobModStat.find(type);
+    return it != m_mobModStat.end() ? it->second : 0;
 }
 
 void CMobEntity::addMobMod(xi::MobMod type, int16 value)
@@ -807,22 +808,39 @@ void CMobEntity::DistributeRewards()
 }
 
 // Return the list of seals that can drop based on the mob's level.
+// Each tier is exclusive, a mob only rolls between the seals of its own tier.
 // Rules:
 // - Mob  < 50: Beastmen's Seal
 // - Mob >= 50: Beastmen's Seal, Kindred's Seal
-// - Mob >= 70: Beastmen's Seal, Kindred's Seal, Kindred's Crest
-// - Mob >= 80: Beastmen's Seal, Kindred's Seal, Kindred's Crest, High Kindred's Crest
-// If Abyssea is not enabled, pool is limited to Beastmen's Seal and Kindred's Seal.
-auto CMobEntity::GetEligibleSeals() -> std::vector<uint16>
+// - Mob >= 70: Kindred's Seal, Kindred's Crest
+// - Mob >= 80: Kindred's Crest, High Kindred's Crest
+// - Mob >= 100: Kindred's Crest, High Kindred's Crest, Sacred Kindred's Crest
+auto CMobEntity::GetEligibleSeals() const -> std::vector<uint16>
 {
-    if (GetMLevel() >= 80 && luautils::IsContentEnabled("ABYSSEA"))
+    // Using Abyssea being enabled as a marker for """era""" servers to return the old bands.
+    if (!luautils::IsContentEnabled("ABYSSEA"))
     {
-        return { BEASTMENS_SEAL, KINDREDS_SEAL, KINDREDS_CREST, HIGH_KINDREDS_CREST };
+        if (GetMLevel() >= 50)
+        {
+            return { BEASTMENS_SEAL, KINDREDS_SEAL };
+        }
+
+        return { BEASTMENS_SEAL };
     }
 
-    if (GetMLevel() >= 70 && luautils::IsContentEnabled("ABYSSEA"))
+    if (GetMLevel() >= 100)
     {
-        return { BEASTMENS_SEAL, KINDREDS_SEAL, KINDREDS_CREST };
+        return { KINDREDS_CREST, HIGH_KINDREDS_CREST, SACRED_KINDREDS_CREST };
+    }
+
+    if (GetMLevel() >= 80)
+    {
+        return { KINDREDS_CREST, HIGH_KINDREDS_CREST };
+    }
+
+    if (GetMLevel() >= 70)
+    {
+        return { KINDREDS_SEAL, KINDREDS_CREST };
     }
 
     if (GetMLevel() >= 50)
@@ -1041,9 +1059,12 @@ void CMobEntity::DropItems(CCharEntity* PChar)
     // Check if mob can drop seals -- mobmod to disable drops, zone type isnt battlefield/dynamis, mob is stronger than Too Weak, or mobmod for EXP bonus is -100 or lower (-100% exp)
     if (!getMobMod(xi::MobMod::NoDrops) && validZone && charutils::CheckMob(m_HiPCLvl, this) > EMobDifficulty::TooWeak && getMobMod(xi::MobMod::ExpBonus) > -100)
     {
+        // Seals, geodes and avatarites do not drop from notorious monsters. Crystals still do.
+        const bool isNotorious = (m_Type & MOBTYPE_NOTORIOUS) != MOBTYPE_NORMAL;
+
         // Check for seal drops
         // Only one type of seal can drop per mob
-        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Seal))
+        if (!isNotorious && xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Seal))
         {
             const auto seals = GetEligibleSeals();
             AddItemToPool(seals[xirand::GetRandomNumber(seals.size())]);
@@ -1052,7 +1073,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 
         // Check for geode/avatarites drops
         // Only one type of geode can drop per mob
-        if (xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Geode))
+        if (!isNotorious && xirand::GetRandomNumber(100) < 20 && CanAddSpecial(LootRecastID::Geode))
         {
             if (const auto geodes = GetEligibleGeodes(); !geodes.empty())
             {

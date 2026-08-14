@@ -112,6 +112,44 @@ void CLinkshell::setMessage(const std::string& message, const std::string& poste
     }
 }
 
+bool CLinkshell::trySetMessage(const std::string& message, const std::string& poster, uint32 expectedPostTime, const std::string& expectedMessage)
+{
+    const auto postTime = earth_time::timestamp();
+    const auto result   = db::preparedStmt(
+        "UPDATE linkshells SET poster = ?, message = ?, messagetime = ? "
+        "WHERE linkshellid = ? AND broken = 0 AND messagetime = ? AND COALESCE(message, '') = ?",
+        poster,
+        message,
+        postTime,
+        m_id,
+        expectedPostTime,
+        expectedMessage);
+
+    if (!result)
+    {
+        ShowError("Failed to conditionally update linkshell message for linkshell %u", m_id);
+        return false;
+    }
+
+    if (result->rowsAffected() != 1)
+    {
+        return false;
+    }
+
+    if (!message.empty())
+    {
+        message::send(ipc::LinkshellSetMessage{
+            .linkshellId   = m_id,
+            .linkshellName = m_name,
+            .poster        = poster,
+            .message       = message,
+            .postTime      = 0, // Indicator to look up the LS message
+        });
+    }
+
+    return true;
+}
+
 // add a character to the list of online members
 void CLinkshell::AddMember(CCharEntity* PChar, int8 type, uint8 lsNum)
 {

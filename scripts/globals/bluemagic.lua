@@ -142,17 +142,6 @@ local function calculateHitrate(attacker, target, bonusacc)
     return xi.combat.physicalHitRate.getPhysicalHitRate(attacker, target, bonusacc + attacker:getMerit(xi.merit.PHYSICAL_POTENCY) * 2, xi.attackAnimation.RIGHT_ATTACK, false)
 end
 
--- Get the effect of ecosystem correlation
-local function calculateCorrelation(spellEcosystem, monsterEcosystem, merits)
-    local effect = utils.getEcosystemStrengthBonus(spellEcosystem, monsterEcosystem) * 0.25
-
-    if effect > 0 then -- merits don't impose a penalty, only a benefit in case of strength
-        effect = effect + 0.001 * merits
-    end
-
-    return effect
-end
-
 -- Consecutive Elemental Damage Penalty. Most commonly known as "Nuke Wall".
 -- NOTE: Duplicate of the same function in damage_spell.lua, until Blue magic gets rewritten.
 local function calculateNukeWallFactor(target, spellElement, finalDamage)
@@ -276,8 +265,10 @@ end
 local wsc = calculateWSC(caster, params)
 wsc = wsc + wsc * bonusWSC -- Bonus WSC from AF3/CA
 
--- Monster correlation
-local correlationMultiplier = calculateCorrelation(params.ecosystem, target:getEcosystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
+    -- Monster correlation
+    -- ecosystemMultiplier returns 1 for a neutral pairing, while the spell formulas
+    -- below expect only the additive correlation bonus.
+    local correlationBonus = xi.combat.damage.ecosystemMultiplier(caster, target, params.ecosystem or 0) - 1
 
 -- Azure Lore
 if hasAzureLore then
@@ -357,9 +348,9 @@ end
 
             -- Add it to our final damage
             if hitsdone == 0 then
-                finaldmg = finaldmg + finalD * (multiplier + correlationMultiplier) * pdif -- first hit gets full multiplier
+                finaldmg = finaldmg + finalD * (multiplier + correlationBonus) * pdif -- first hit gets full multiplier
             else
-                finaldmg = finaldmg + finalD * (1 + correlationMultiplier) * pdif
+                finaldmg = finaldmg + finalD * (1 + correlationBonus) * pdif
             end
 
             hitslanded        = hitslanded + 1
@@ -436,7 +427,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     end
 
     -- Monster correlation
-    local correlationMultiplier = calculateCorrelation(params.ecosystem, target:getEcosystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
+    local correlationBonus = xi.combat.damage.ecosystemMultiplier(caster, target, params.ecosystem or 0) - 1
 
     -- Data
     local spellId            = spell:getID()
@@ -447,7 +438,7 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
 
     -- Final D value
     local finalDamage =
-        ((initialD + wsc + universalIntWSC) * (params.multiplier + azureBonus + correlationMultiplier) + statBonus + flatIntBonus) *
+        ((initialD + wsc + universalIntWSC) * (params.multiplier + azureBonus + correlationBonus) + statBonus + flatIntBonus) *
         intPotency
 
     finalDamage = math.floor(finalDamage * xi.combat.magicHitRate.calculateResistRate(caster, target, spellGroup, skillType, 0, spellElement, params.attribute, 0, 0))
@@ -589,7 +580,7 @@ xi.spells.blue.useBreathSpell = function(caster, target, spell, params)
     local damageType   = params.damageType or xi.damageType.NONE
 
     -- Multipliers
-    local correlationMultiplier       = 1 + calculateCorrelation(params.ecosystem, target:getEcosystem(), caster:getMerit(xi.merit.MONSTER_CORRELATION))
+    local correlationMultiplier       = xi.combat.damage.ecosystemMultiplier(caster, target, params.ecosystem or 0)
     local breathSDT                   = 1 + caster:getMod(xi.mod.BREATH_DMG_DEALT) / 100
     local absorb                      = xi.spells.damage.calculateAbsorption(target, spellElement, false)
     local nullify                     = xi.spells.damage.calculateNullification(target, spellElement, false, true)

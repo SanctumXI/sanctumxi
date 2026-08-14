@@ -35,6 +35,7 @@
 #include "packets/s2c/0x052_eventucoff.h"
 #include "packets/s2c/0x053_systemmes.h"
 #include "packets/s2c/0x119_abil_recast.h"
+#include "petskill.h"
 #include "recast_container.h"
 #include "status_effect.h"
 #include "status_effect_container.h"
@@ -340,10 +341,25 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
         break;
         case GP_CLI_COMMAND_ACTION_ACTIONID::JobAbility:
         {
-            // Don't allow BST to use ready before level 25
-            if (PChar->PPet != nullptr && (!charutils::hasAbility(PChar, ABILITY_READY) || !PChar->PPet->PAI->IsEngaged()))
+            const auto abilityId = this->JobAbility.SkillId;
+            const bool isBstReadyAbility =
+                abilityId >= ABILITY_FOOT_KICK &&
+                abilityId <= ABILITY_PENTAPECK;
+
+            if (PChar->PPet != nullptr && isBstReadyAbility)
             {
-                if (this->JobAbility.SkillId >= ABILITY_FOOT_KICK && this->JobAbility.SkillId <= ABILITY_PENTAPECK) // Is this a BST ability?
+                const auto* petSkill = battleutils::GetPetSkill(abilityId);
+
+                // Level-75-era self/friendly Ready moves can be used outside combat.
+                // Enemy-targeted moves still require the pet to be engaged.
+                const bool canUseUnengaged =
+                    abilityId <= ABILITY_WATER_WALL &&
+                    petSkill != nullptr &&
+                    !(petSkill->getValidTargets() & TARGET_ENEMY);
+
+                if (
+                    !charutils::hasAbility(PChar, ABILITY_READY) ||
+                    (!PChar->PPet->PAI->IsEngaged() && !canUseUnengaged))
                 {
                     PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, 0, 0, MsgBasic::UnableToUseJobAbility2);
                     return;

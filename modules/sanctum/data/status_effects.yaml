@@ -60,6 +60,16 @@ status_effects:
       - on_jobchange
       - no_cancel
 
+  trust_aura_refresh:
+    id: 811
+    name: invigorate_regen
+    flags:
+      - dispelable
+      - empathy
+      - death
+    element: light
+    sort_key: 700
+
   # Upstream points this at magic_evasion_boost_ii, which has no script, so the
   # effect grants nothing. Point it back at the script that exists.
   magic_evasion_boost:
