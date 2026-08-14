@@ -52,6 +52,10 @@ N Charge(s): <what it does>.
 
 - Optional `Skillchain: <Property>` at the end, **no trailing period** on that clause
 - Two properties read `Skillchain: Darkness / Fragmentation`
+- Gaze moves are tagged `(Gaze)` before the full stop, so players know the move
+  needs the target facing the pet. Only moves that actually call `mobGazeMove`
+  get the tag. Among pet abilities that is Chaotic Eye (730), Jettatura (750)
+  and Intimidate (758); **Blaster is not one**, despite the paired naming
 - Never claim TP scaling that does not exist. Most jug fTPs are flat, so
   "Damage varies with TP" is usually false
 - Never name the stat a move scales off. Scaling off max HP is fine to mention
