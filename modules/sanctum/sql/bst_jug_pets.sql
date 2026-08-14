@@ -37,3 +37,10 @@ UPDATE `mob_pools`
        `modelSize`       = 1,
        `modelHitboxSize` = 24
  WHERE `poolid` = 4629; -- Nursery Nazuna
+
+-- Lizard: Lizard Familiar / Coldblood Como / Audacious Anna
+-- Brain Crush opens Liquefaction and Tail Blow closes it for Fusion, a tier 2
+-- chain for 2 charges. Blockhead into Tail Blow gives Impaction instead.
+-- Infrasonics stays at 2 charges.
+
+UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 688; -- Secretion, party
