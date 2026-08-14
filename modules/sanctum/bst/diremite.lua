@@ -19,15 +19,17 @@ local m = Module:new('sanctum_bst_diremite')
 
 -----------------------------------
 -- Double Claw
--- Two hits instead of one. fTP stays flat, so the second hit lands at the
--- standard subsequent-hit multiplier rather than scaling with TP.
+-- A single hit. It is the only move in the kit that serves neither the drain
+-- nor the Darkness chain, and at two hits on one charge it was carrying the
+-- family to second on the roster for raw damage, which is not what a pet
+-- built to survive is for.
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.double_claw.onPetAbility', function(target, pet, petskill, owner, action)
     local params = {}
 
     params.baseDamage     = pet:getWeaponDmg()
-    params.numHits        = 2
+    params.numHits        = 1
     params.fTP            = { 1.5, 1.5, 1.5 }
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.SLASHING

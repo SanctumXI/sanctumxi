@@ -130,13 +130,17 @@ UPDATE `pet_list` SET `minLevel` = 74, `maxLevel` = 74 WHERE `petid` = 47; -- Am
 -- Fragmentation closes Fusion for Light. Nothing else in the kit carries a
 -- property, so the Diremite no longer self chains.
 
+-- Attack rank A to D. That column is pure offence: HP, VIT, DEF and EVA are
+-- untouched, so the family loses damage without losing any of the durability
+-- it is brought for.
 UPDATE `mob_family_system`
    SET `VIT` = 5,
        `DEX` = 3,
        `CHR` = 3,
        `DEF` = 4,
-       `EVA` = 4
- WHERE `familyID` = 442; -- was VIT 4 / DEX 4 / CHR 4 / DEF 3 / EVA 3
+       `EVA` = 4,
+       `ATT` = 4
+ WHERE `familyID` = 442; -- was VIT 4 / DEX 4 / CHR 4 / DEF 3 / EVA 3 / ATT 1
 
 UPDATE `mob_resistances` SET `light_sleep_res_rank` = -3 WHERE `resist_id` = 81; -- Diremite, was -2
 
