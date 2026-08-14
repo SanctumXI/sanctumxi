@@ -307,7 +307,7 @@ UPDATE `mob_pools` SET `mJob` = 4, `sJob` = 4 WHERE `poolid` = 4639;
 -- Ancient Magic. The spawn hook in modules/sanctum/bst/frog.lua is what
 -- actually compiles it; setting the pool column keeps the data honest.
 INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 171, 1, 255); -- water_iii
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 201, 1, 255); -- waterga_iii
+INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 200, 1, 255); -- waterga_ii
 INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 214, 1, 255); -- flood
 INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 240, 1, 255); -- drown
 INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 247, 1, 255); -- aspir
