@@ -197,3 +197,9 @@ UPDATE `pet_skills`
    SET `pet_valid_targets` = 3,
        `pet_message`       = 238
  WHERE `pet_skill_id` = 738; -- was 4 (enemy) / 242
+
+-- Pugil: Turbid Toloi
+-- Cut rather than rebalanced. The recipe is the only source of jug 17906 in the
+-- database, so dropping it retires the pet.
+
+DELETE FROM `synth_recipes` WHERE `ID` = 74516; -- Auroral Broth, Cooking 93

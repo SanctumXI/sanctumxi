@@ -102,7 +102,10 @@ type change too. That is intended.
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
 Diremite, Apkallu, Eft, Ladybug
 
-**Remaining:** Pugil, Coeurl, Frog, Tiger, Antlion, Fly, Flytrap, Mandragora
+**Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
+jug 17906, so Turbid Toloi is retired instead of rebalanced.
+
+**Remaining:** Coeurl, Frog, Tiger, Antlion, Fly, Flytrap, Mandragora
 
 ### Per-family workflow
 
@@ -116,11 +119,6 @@ Diremite, Apkallu, Eft, Ladybug
 
 ### Known open items
 
-- **Pugil** analysed but not implemented. Water Wall is still `DEFENSE_BOOST 100`;
-  the intended change is magic damage reduction (`Mod::DMGMAGIC`) so it is
-  distinct from the Crab's magic evasion. Intimidate is a **gaze** move and
-  frequently does nothing. Recoil Dive has a 20/40/60% crit curve and is
-  underpriced at 1 charge. Resist row 197 is shared by 125 pools
 - **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
   in `pet_skills` but are wired only to Jug_Lynx at 99
 - **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert
