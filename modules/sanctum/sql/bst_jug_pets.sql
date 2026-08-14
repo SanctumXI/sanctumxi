@@ -55,6 +55,9 @@ UPDATE `mob_resistances` SET `slow_res_rank`       = -4 WHERE `resist_id` = 77; 
 UPDATE `mob_resistances` SET `earth_res_rank`      =  0 WHERE `resist_id` = 116; -- Funguar, was -2
 UPDATE `mob_resistances` SET `light_sleep_res_rank` = 4 WHERE `resist_id` = 226; -- Sheep, was -2
 
+UPDATE `mob_family_system` SET `AGI` = 3, `EVA` = 2 WHERE `familyID` = 106;      -- Rabbit, was AGI 4 / EVA 3
+UPDATE `mob_resistances` SET `slow_res_rank`        = 4 WHERE `resist_id` = 206; -- Rabbit, was -1
+
 -- Rabbit: Hare Familiar / Keeneared Steffi / Lucky Lulush
 -- WAR to DNC. Trades Attack Bonus II, Double Attack III and 120 base HP for
 -- Accuracy Bonus III, Evasion Bonus III, Subtle Blow IV and Skillchain Bonus
