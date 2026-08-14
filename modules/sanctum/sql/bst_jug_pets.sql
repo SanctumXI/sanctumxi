@@ -328,3 +328,24 @@ INSERT INTO `pet_skills` VALUES (739, 1960, 1362, 'frog_cheer', 1, 10, 3, 2000, 
 INSERT INTO `mob_skill_lists` VALUES ('Jug_Frog', 30002, 739);
 
 UPDATE `mob_pools` SET `skill_list_id` = 30002 WHERE `poolid` = 4639; -- was 0
+
+-- Antlion: Antlion Familiar / Chopsuey Chucky
+-- The widest area coverage on the roster: one radial and two cones. DRK gives
+-- it Attack Bonus V, the largest flat attack trait in the game, which is why
+-- the family leans physical.
+--
+-- Sandblast stays radial rather than becoming a cone; a circle around the pet
+-- covers more ground than a 45 degree wedge, which is the point of the family.
+
+UPDATE `mob_family_system` SET `STR` = 2, `EVA` = 4 WHERE `familyID` = 422; -- was STR 4 / EVA 3
+
+UPDATE `mob_resistances` SET `earth_res_rank` = 6 WHERE `resist_id` = 26; -- was 3
+
+-- 4 = conal. Detonation goes, leaving the family with no skillchain property.
+UPDATE `pet_skills`
+   SET `pet_skill_aoe`    = 4,
+       `pet_skill_radius` = 10,
+       `primary_sc`       = 0
+ WHERE `pet_skill_id` = 717; -- Mandibular Bite, was single target at radius 0 / Detonation
+
+UPDATE `pet_skills` SET `pet_skill_radius` = 12 WHERE `pet_skill_id` = 716; -- Venom Spray, was 10

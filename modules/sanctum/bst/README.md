@@ -3,9 +3,9 @@
 Working notes for the jug pet pass. Read this before touching any family.
 
 The goal is to give each jug pet family a distinct, legible role at the 75 cap.
-Eleven of eighteen families are done. Balance and data changes live in this
-module so upstream LSB data keeps flowing; only genuine engine bugs are patched
-in core.
+Sixteen of nineteen families are done and the Pugil is cut; Coeurl and Fly
+remain. Balance and data changes live in this module so upstream LSB data keeps
+flowing; only genuine engine bugs are patched in core.
 
 ---
 
@@ -110,12 +110,12 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog
+Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog, Antlion
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Antlion, Fly
+**Remaining:** Coeurl, Fly
 
 ### Per-family workflow
 
@@ -149,10 +149,10 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
   carry lists that have never fired
 - **To make one pet cast**, call `pet:setSpellList(id)` on spawn:
   `mobutils::SetSpellList` compiles the container, which is the step the
-  ecosystem gate skips. The hook is `xi.pets.jug.onMobSpawn` —
-  `CPetEntity::Spawn` calls `OnMobSpawn` and `GetScriptName` returns `jug` for
-  every jug pet. There is no `scripts/globals/pets/jug.lua` yet; the other pet
-  types all have one
+  ecosystem gate skips. The hook is `xi.pets.jug.onMobSpawn` in
+  `scripts/globals/pets/jug.lua`, added for the Frog — `CPetEntity::Spawn` calls
+  `OnMobSpawn` and `GetScriptName` returns `jug` for every jug pet, so gate any
+  override on the pet id
 - **MP is granted by main job only**, in `LoadJugStats`: PLD, WHM, BLM, RDM,
   DRK, BLU and SCH. Any other job gets a flat 0 and cannot pay for a spell
 - **Sabotender** moves fast but does not swing fast; needs the delay fix
