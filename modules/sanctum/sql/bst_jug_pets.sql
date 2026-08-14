@@ -178,3 +178,20 @@ UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 725; -- Toxic Spit, 
 
 UPDATE `pet_skills` SET `pet_skill_radius` = 8, `primary_sc` = 0 WHERE `pet_skill_id` = 724; -- Cyclotail, was radius 10 / Impaction
 UPDATE `pet_skills` SET `pet_skill_distance` = 20.0 WHERE `pet_skill_id` = 725;              -- Toxic Spit, was 3
+
+-- Ladybug: Dipper Yuly
+-- A THF pet, so it carries Treasure Hunter II and Gilfinder to the mob's hate
+-- list. That is the reason to bring one; the rest of the kit is deliberately
+-- feeble. Family VIT is rank 7, the worst on the roster, and the resist row
+-- takes 25% extra piercing damage.
+
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 736; -- Sudden Lunge, was Impaction
+UPDATE `pet_skills` SET `primary_sc` = 6 WHERE `pet_skill_id` = 737; -- Spiral Spin: Detonation, was Scission
+
+-- Noisome Powder becomes Lucky Spots, a party buff rather than an enemy debuff.
+-- 3 = SELF | PLAYER_PARTY, and 238 is the buff message the other party-facing
+-- moves use.
+UPDATE `pet_skills`
+   SET `pet_valid_targets` = 3,
+       `pet_message`       = 238
+ WHERE `pet_skill_id` = 738; -- was 4 (enemy) / 242
