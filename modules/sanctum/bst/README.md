@@ -1,0 +1,129 @@
+# Sanctum BST jug pet rebalance
+
+Working notes for the jug pet pass. Read this before touching any family.
+
+The goal is to give each jug pet family a distinct, legible role at the 75 cap.
+Eleven of eighteen families are done. Balance and data changes live in this
+module so upstream LSB data keeps flowing; only genuine engine bugs are patched
+in core.
+
+---
+
+## Where everything lives
+
+| What | Where |
+|---|---|
+| Per-family behaviour | `modules/sanctum/bst/<family>.lua`, via `m:addOverride('xi.actions.abilities.pets.<move>.onPetAbility', ...)` |
+| Charge costs, AoE shape, skillchains, models, jobs, family stats, resistances | `modules/sanctum/sql/bst_jug_pets.sql` |
+| Custom status effects | `modules/sanctum/data/status_effects.yaml` + `scripts/effects/<name>.lua` + alias in `scripts/enum/effect.lua` |
+| Client skill **names** | `ROM/181/72.DAT` |
+| Client **descriptions** | `ROM/181/74.DAT` |
+
+DAT working copies:
+`E:\FFXI\polplugins\DATs\Sanctum\ROM\181\` and a mirror in `...\Sanctum\Transfer\ROM\181\`
+for upload. **Both must be written identically.** Back up before first touching a
+new DAT file.
+
+### DAT record maths
+
+```
+72.DAT  names:        record = 41040 + abilityId * 80          text at +24, 39 chars usable
+74.DAT  descriptions: record = 303184 + (abilityId - 672) * 256 text at +24, 215 chars usable
+```
+
+Both use a 24-byte zero header and a constant 16-byte trailer at the end of the
+record. Zero the whole text field before writing. Never change file length.
+
+---
+
+## Conventions
+
+**Never edit `scripts/actions/abilities/pets/*.lua` or `scripts/actions/mobskills/*.lua`.**
+Those are shared with every wild mob. Override `onPetAbility` from this module
+instead. The one exception is engine bugs in shared globals, which get a small
+core patch because overriding a 250-line function from a module would shadow
+future upstream work on it.
+
+**Tooltip house style**
+
+```
+N Charge(s): <what it does>.
+```
+
+- Optional `Skillchain: <Property>` at the end, **no trailing period** on that clause
+- Two properties read `Skillchain: Darkness / Fragmentation`
+- Never claim TP scaling that does not exist. Most jug fTPs are flat, so
+  "Damage varies with TP" is usually false
+- Never name the stat a move scales off. Scaling off max HP is fine to mention
+- Charge counts in the text must match `abilities.recastTime`
+
+**Family stat and resistance changes are family-wide by design** — they update
+the shared `mob_family_system` and `mob_resistances` rows, so wild mobs of the
+type change too. That is intended.
+
+---
+
+## Engine facts worth knowing
+
+- **Charge cost lives in `abilities.recastTime`** for anything on recast id 102
+- **Party reach** is `pet_skills.pet_skill_aoe`: `0` + valid_targets `3` reaches
+  the pet and master only; `1` + `3` reaches the whole party. Party moves use
+  radius 10
+- **`mob_pool_mods` and `mob_family_mods` are never loaded for pets.** There is
+  no per-pet modifier table. Passives come only from `mob_pools.mJob` traits and
+  the family stat/resist rows. This was investigated and deliberately abandoned
+- **Skillchain properties** are `pet_skills.primary_sc` / `secondary_sc`. Lookup
+  key is `{new skill property, existing resonance}` so order matters. Same-property
+  pairs never chain except Light+Light and Darkness+Darkness
+- **Smite never applies to pets** — gated behind `objtype & TYPE_PC`
+- **Martial Arts never applies to pets** — `isHandToHand()` checks weapon *skill
+  type*, which jug pets never get
+- **Dead Aim and Kick Attacks** do nothing for pets (unimplemented / auto-attack only)
+- **`onMobSkillFinalize` is not called for pets** (commented out in `petskill_state.cpp`)
+- **Pet Treasure Hunter applies to the mob's hate list** — a THF pet gives the party TH
+- Jug attack delay is hard-coded 240, discarding `mob_pools.cmbDelay` (open defect)
+- Call Beast and Bestial Loyalty flatten every pet to base speed 55 after
+  spawning; override both with `super()` first if a family needs different
+
+### Core fixes already made
+
+- `xi.combat.magicBurst` does not exist. Three call sites in `mobskills.lua`
+  indexed it; one was reachable by any pet using a magical mobskill, so **every
+  pet magical move dealt zero damage**. Now calls `xi.magicburst.formMagicBurst`
+- `calculateNullification` / `calculateAbsorption` were called with six arguments
+  against four- and three-parameter signatures
+- Effect 611 pointed at a script that does not exist, so Magic Evasion Boost
+  granted nothing
+
+---
+
+## Status
+
+**Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
+Diremite, Apkallu, Eft, Ladybug
+
+**Remaining:** Pugil, Coeurl, Frog, Tiger, Antlion, Fly, Flytrap, Mandragora
+
+### Per-family workflow
+
+1. Report family stats (`mob_family_system`), resistances (`mob_resistances`,
+   noting how many pools share the row), job traits at level 78-80, damage
+   expectations, and how the repo's believed behaviour differs from the code
+2. Wait for the numbers and design decisions
+3. Implement: module Lua + SQL, then both DAT copies
+4. Verify the DAT writes by reading the records back and diffing copies
+5. Commit and push to `origin/steel-comitt`
+
+### Known open items
+
+- **Pugil** analysed but not implemented. Water Wall is still `DEFENSE_BOOST 100`;
+  the intended change is magic damage reduction (`Mod::DMGMAGIC`) so it is
+  distinct from the Crab's magic evasion. Intimidate is a **gaze** move and
+  frequently does nothing. Recoil Dive has a 20/40/60% crit curve and is
+  underpriced at 1 charge. Resist row 197 is shared by 125 pools
+- **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
+  in `pet_skills` but are wired only to Jug_Lynx at 99
+- **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert
+- **Tiger** Predatory Glare is an unimplemented stub, live in its skill list
+- **Sabotender** moves fast but does not swing fast; needs the delay fix
+- Wing Slap and Beak Lunge tooltips say fivefold/twofold; the code does 4 and 1
