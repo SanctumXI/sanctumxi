@@ -52,3 +52,33 @@ REPLACE INTO `mob_resistances` VALUES
 (523,'Jug_Lizard',0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,-3,4,0,-2,-2,-2,-3,-3,-3,0,-2,-2,-2,-2);
 
 UPDATE `mob_pools` SET `resist_id` = 523 WHERE `poolid` IN (4600, 4601, 4631); -- Lizard Familiar, Coldblood Como, Audacious Anna
+
+-- Family stat ranks. These cannot be scoped to the pets: mob_family_system is
+-- what every wild mob of the family loads from too.
+UPDATE `mob_family_system` SET `STR` = 4, `INT` = 4 WHERE `familyID` = 338; -- Funguar, was STR 3 / INT 5
+UPDATE `mob_family_system` SET `CHR` = 3 WHERE `familyID` = 111;            -- Sheep, was 4
+
+-- Pet-scoped resistance rows, each a copy of the family row with one rank
+-- changed. Point the pet pools at them so wild mobs keep the family values.
+REPLACE INTO `mob_resistances` VALUES
+(524,'Jug_Crab',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,-3,-2,-2,-3,2,-2,-2,-3,-3,-2,-4,2,-2,-2,-2),      -- slow -2 -> -4
+(525,'Jug_Funguar',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,-2,-2,0,-2,4,-3,4,-2,-2,-2,-2,4,-3,4,6),       -- earth -2 -> 0
+(526,'Jug_Sheep',0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,-2,-2,-3,-3,-2,-2,0,0,-2,-2,-3,4,-2,-2);       -- light sleep -2 -> 4
+
+UPDATE `mob_pools` SET `resist_id` = 524 WHERE `poolid` IN (4610, 4611);       -- Crab Familiar, Courier Carrie
+UPDATE `mob_pools` SET `resist_id` = 525 WHERE `poolid` IN (4614, 4615);       -- Funguar Familiar, Discreet Louise
+UPDATE `mob_pools` SET `resist_id` = 526 WHERE `poolid` IN (4598, 4599, 4629); -- Sheep Familiar, Lullaby Melodia, Nursery Nazuna
+
+-- Rabbit: Hare Familiar / Keeneared Steffi / Lucky Lulush
+-- WAR to THF. Trades Attack Bonus II, Double Attack III and 120 base HP for
+-- Evasion Bonus V, Triple Attack, Resist Gravity IV and Treasure Hunter II.
+-- Net +8 DEX and +4 AGI against -12 STR at level 78.
+UPDATE `mob_pools` SET `mJob` = 6 WHERE `poolid` IN (4595, 4612, 4641);
+
+-- Keeneared Steffi wears the Lapinion model (pool 4961, East Ulbuka).
+-- Lucky Lulush already uses the snow rabbit model, same as Snowpaw Rabbit.
+UPDATE `mob_pools` SET `modelid` = 0x0000910700000000000000000000000000000000 WHERE `poolid` = 4595;
+
+UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 734; -- Snow Cloud, was 1
+
+UPDATE `pet_skills` SET `pet_skill_aoe` = 1 WHERE `pet_skill_id` = 734; -- Snow Cloud, cone -> radial like Whirl Claws
