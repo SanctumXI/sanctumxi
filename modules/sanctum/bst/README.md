@@ -3,8 +3,8 @@
 Working notes for the jug pet pass. Read this before touching any family.
 
 The goal is to give each jug pet family a distinct, legible role at the 75 cap.
-Sixteen of nineteen families are done and the Pugil is cut; Coeurl and Fly
-remain. Balance and data changes live in this module so upstream LSB data keeps
+Seventeen of nineteen families are done and the Pugil is cut; the Fly
+remains. Balance and data changes live in this module so upstream LSB data keeps
 flowing; only genuine engine bugs are patched in core.
 
 ---
@@ -69,9 +69,14 @@ type change too. That is intended.
 - **Party reach** is `pet_skills.pet_skill_aoe`: `0` + valid_targets `3` reaches
   the pet and master only; `1` + `3` reaches the whole party. Party moves use
   radius 10
-- **`mob_pool_mods` and `mob_family_mods` are never loaded for pets.** There is
-  no per-pet modifier table. Passives come only from `mob_pools.mJob` traits and
-  the family stat/resist rows. This was investigated and deliberately abandoned
+- **`mob_pool_mods` and `mob_family_mods` are never loaded for pets.**
+  `AddSqlModifiers` is called from mob and trust loading only, never from
+  `petutils`, so those rows reach every wild mob of a family and skip the jug
+  pet. Passives otherwise come only from `mob_pools.mJob` traits and the family
+  stat/resist rows. Useful as a split: put the family-wide value in
+  `mob_family_mods` and give the pet its own in `xi.pets.jug.onMobSpawn`, which
+  is how the Coeurl carries 40% haste against the family's 25%. Use `setMod`
+  there, not `addMod`, so a respawn cannot stack it
 - **Skillchain properties** are `pet_skills.primary_sc` / `secondary_sc`. Lookup
   key is `{new skill property, existing resonance}` so order matters. Same-property
   pairs never chain except Light+Light and Darkness+Darkness
@@ -110,12 +115,13 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog, Antlion
+Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog, Antlion,
+Coeurl
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Fly
+**Remaining:** Fly
 
 ### Per-family workflow
 
@@ -133,8 +139,10 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
   second duration, so it cannot overwrite a Sleepga or refresh itself. It is
   also centred on the pet and catches the pet's own target, which the pet then
   auto-attacks awake
-- **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
-  in `pet_skills` but are wired only to Jug_Lynx at 99
+- **Coeurl** still has no damaging ready move; its damage is all auto-attack,
+  bought with haste. Charged Whisker (746, radial thunder) and Frenzied Rage
+  (790, self attack boost) are finished and carry `abilities` rows, but are
+  wired only to Jug_Lynx at 99. Adding either to skill list 747 is one row
 - **Frog Cheer is a new ability id (739)**, taken from a free slot inside the
   jug pet block whose client name and description records were empty
   placeholders. Needs in-game confirmation that it lists in the Ready menu.

@@ -349,3 +349,28 @@ UPDATE `pet_skills`
  WHERE `pet_skill_id` = 717; -- Mandibular Bite, was single target at radius 0 / Detonation
 
 UPDATE `pet_skills` SET `pet_skill_radius` = 12 WHERE `pet_skill_id` = 716; -- Venom Spray, was 10
+
+-- Coeurl: Crafty Clyvonne
+-- Single target damage carried by attack speed. The resist row is -2 or worse
+-- on every element and every status, the softest on the roster, which is the
+-- price of it.
+
+UPDATE `mob_family_system` SET `AGI` = 3, `CHR` = 2, `INT` = 2 WHERE `familyID` = 92; -- was AGI 4 / CHR 4 / INT 3
+
+-- 25% haste for every coeurl in the game. 383 is HASTE_ABILITY, which caps at
+-- exactly 25% and is a separate bucket from magic haste, so a Haste spell still
+-- stacks on top instead of being wasted.
+--
+-- This row never reaches Crafty Clyvonne: AddSqlModifiers runs for mobs and
+-- trusts only, never from petutils. She takes 40% on spawn in coeurl.lua.
+INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (92, 383, 2500, 0)
+    ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- HASTE_ABILITY 25%
+
+UPDATE `abilities` SET `recastTime` = 3 WHERE `abilityId` = 731; -- Blaster, was 2
+
+-- Sizes were NULL, so she had a zero hitbox and less melee reach than any wild
+-- coeurl. 1 and 16 are the family standard.
+UPDATE `mob_pools`
+   SET `modelSize`       = 1,
+       `modelHitboxSize` = 16
+ WHERE `poolid` = 4608; -- Crafty Clyvonne, both were NULL
