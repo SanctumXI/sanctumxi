@@ -139,3 +139,18 @@ UPDATE `pet_skills` SET `primary_sc` = 0, `secondary_sc` = 0 WHERE `pet_skill_id
     726, -- Double Claw, was Liquefaction
     727  -- Grapple, was Reverberation
 );
+
+-- Apkallu: Dapper Mac
+-- Wing Slap becomes the Light counterpart to the Diremite's Spinning Top.
+-- Fragmentation closes Fusion for Light; Light closes Light for Light II.
+
+UPDATE `mob_resistances`
+   SET `fire_res_rank`      =  2,
+       `ice_res_rank`       =  2,
+       `lightning_res_rank` = -3,
+       `dark_res_rank`      = -2
+ WHERE `resist_id` = 27; -- Apkallu, was fire +1 / ice +1 / lightning -2 / dark -1
+
+-- 12 = Fragmentation, 13 = Light.
+UPDATE `pet_skills` SET `primary_sc` = 12, `secondary_sc` = 13 WHERE `pet_skill_id` = 756; -- Wing Slap, was Gravitation / Liquefaction
+UPDATE `pet_skills` SET `primary_sc` = 0 WHERE `pet_skill_id` = 757;                       -- Beak Lunge, was Scission
