@@ -306,11 +306,11 @@ UPDATE `mob_pools` SET `mJob` = 4, `sJob` = 4 WHERE `poolid` = 4639;
 -- A short list rather than the family's full Beastmen_BLM, which reaches
 -- Ancient Magic. The spawn hook in modules/sanctum/bst/frog.lua is what
 -- actually compiles it; setting the pool column keeps the data honest.
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 171, 1, 255); -- water_iii
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 200, 1, 255); -- waterga_ii
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 214, 1, 255); -- flood
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 240, 1, 255); -- drown
-INSERT INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 247, 1, 255); -- aspir
+REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 171, 1, 255); -- water_iii
+REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 200, 1, 255); -- waterga_ii
+REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 214, 1, 255); -- flood
+REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 240, 1, 255); -- drown
+REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 247, 1, 255); -- aspir
 
 UPDATE `mob_pools` SET `spellList` = 900 WHERE `poolid` = 4639; -- was 0
 
@@ -318,14 +318,14 @@ UPDATE `mob_pools` SET `spellList` = 900 WHERE `poolid` = 4639; -- was 0
 -- block and already had empty name and description records in the client.
 -- mob_skill 1960 and animation 1362 are the Poroggo's own, so the animation is
 -- native to the model.
-INSERT INTO `abilities` VALUES (739, 'frog_cheer', 9, 25, 257, 3, 102, 0, 0, 0, 2000, 0, 6, 3.0, 0, 10, 1, 60, 0, 0, NULL);
+REPLACE INTO `abilities` VALUES (739, 'frog_cheer', 9, 25, 257, 3, 102, 0, 0, 0, 2000, 0, 6, 3.0, 0, 10, 1, 60, 0, 0, NULL);
 
 -- 1 = radial from the pet, 3 = SELF | PLAYER_PARTY, 238 is the message the
 -- other party-facing moves use. The literal 0s are SKILLFLAG_NONE and no
 -- skillchain; the @ variables only exist while pet_skills.sql itself runs.
-INSERT INTO `pet_skills` VALUES (739, 1960, 1362, 'frog_cheer', 1, 10, 3, 2000, 1500, 3, 238, 0, 0, 11, 0, 0, 0, 0);
+REPLACE INTO `pet_skills` VALUES (739, 1960, 1362, 'frog_cheer', 1, 10, 3, 2000, 1500, 3, 238, 0, 0, 11, 0, 0, 0, 0);
 
-INSERT INTO `mob_skill_lists` VALUES ('Jug_Frog', 30002, 739);
+REPLACE INTO `mob_skill_lists` VALUES ('Jug_Frog', 30002, 739);
 
 UPDATE `mob_pools` SET `skill_list_id` = 30002 WHERE `poolid` = 4639; -- was 0
 
