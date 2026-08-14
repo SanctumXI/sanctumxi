@@ -45,7 +45,7 @@ INSERT INTO `skill_ranks` VALUES (2,'dagger',5,0,0,9,4,1,10,7,6,5,5,10,6,10,10,0
 INSERT INTO `skill_ranks` VALUES (3,'sword',3,0,0,0,2,9,1,5,10,6,9,6,7,4,0,1,5,0,9,0,0,2);
 INSERT INTO `skill_ranks` VALUES (4,'great sword',1,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1);
 INSERT INTO `skill_ranks` VALUES (5,'axe',2,0,0,0,0,0,0,8,2,0,5,0,0,0,0,0,0,0,0,0,0,5);
-INSERT INTO `skill_ranks` VALUES (6,'great axe',1,0,0,0,0,0,0,8,1,0,0,0,0,0,0,0,0,0,0,0,0,4);
+INSERT INTO `skill_ranks` VALUES (6,'great axe',1,0,0,0,0,0,0,8,2,0,0,0,0,0,0,0,0,0,0,0,0,4);
 INSERT INTO `skill_ranks` VALUES (7,'scythe',3,0,0,5,0,0,0,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (8,'polearm',3,0,0,0,0,0,8,0,0,0,0,5,0,1,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (9,'katana',0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0);
