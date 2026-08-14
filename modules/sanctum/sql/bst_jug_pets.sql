@@ -21,6 +21,10 @@ UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_
 -- for Fast Cast, Magic Atk/Def Bonus and Resist Petrify. Net +9 INT, -11 STR.
 UPDATE `mob_pools` SET `mJob` = 5 WHERE `poolid` = 4614; -- Funguar Familiar
 
+-- Beast Affinity merits are applied after the master level cap, so 71 lands a
+-- merited master at 74 to 76. The Funguar still never reaches the roster's 80.
+UPDATE `pet_list` SET `maxLevel` = 71 WHERE `petid` = 32; -- Funguar Familiar, was 65
+
 -- Sheep: Sheep Familiar / Lullaby Melodia / Nursery Nazuna
 -- Sheep Charge opens Reverberation and Lamb Chop closes it for Impaction, so
 -- the pair costs the full charge bar.
@@ -244,7 +248,7 @@ UPDATE `pet_skills` SET `pet_skill_distance` = 5.0 WHERE `pet_skill_id` = 678; -
 
 -- Beast Affinity merits are added after the level cap in petutils, so this is a
 -- soft cap: a master with the merits can still exceed it.
-UPDATE `pet_list` SET `maxLevel` = 69 WHERE `petid` = 39; -- Saber Siravarde, was 75
+UPDATE `pet_list` SET `maxLevel` = 72 WHERE `petid` = 39; -- Saber Siravarde, was 75
 
 UPDATE `mob_family_system` SET `STR` = 3, `AGI` = 3, `DEF` = 4 WHERE `familyID` = 114; -- was STR 4 / AGI 4 / DEF 3
 
@@ -387,7 +391,7 @@ UPDATE `mob_family_system` SET `DEX` = 3, `AGI` = 2 WHERE `familyID` = 444; -- w
 
 -- Beast Affinity merits are added after the cap, so 70 lands a merited master
 -- at 73 to 75. Note this is a reduction: the row read 75, not the 65 assumed.
-UPDATE `pet_list` SET `maxLevel` = 70 WHERE `petid` = 41; -- Shellbuster Orob, was 75
+UPDATE `pet_list` SET `maxLevel` = 72 WHERE `petid` = 41; -- Shellbuster Orob, was 75
 
 UPDATE `abilities` SET `recastTime` = 2 WHERE `abilityId` = 712; -- Cursed Sphere, was 1
 

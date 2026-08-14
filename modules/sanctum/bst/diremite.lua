@@ -73,6 +73,33 @@ m:addOverride('xi.actions.abilities.pets.grapple.onPetAbility', function(target,
 end)
 
 -----------------------------------
+-- Spinning Top
+-- A twofold attack. At one hit it was the worst rate on the roster by some
+-- way: three charges, the whole bar, for less damage per charge than any
+-- single charge move in the game. The second hit is what the family's premium
+-- closer should have been paying out all along.
+-----------------------------------
+
+m:addOverride('xi.actions.abilities.pets.spinning_top.onPetAbility', function(target, pet, petskill, owner, action)
+    local params = {}
+
+    params.baseDamage     = pet:getWeaponDmg()
+    params.numHits        = 2
+    params.fTP            = { 1.5, 1.5, 1.5 }
+    params.attackType     = xi.attackType.PHYSICAL
+    params.damageType     = xi.damageType.SLASHING
+    params.shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_3
+
+    local info = xi.mobskills.mobPhysicalMove(pet, target, petskill, action, params)
+
+    if xi.mobskills.processDamage(pet, target, petskill, action, info) then
+        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+    end
+
+    return info.damage
+end)
+
+-----------------------------------
 -- Filamented Hold
 -- Conal slow, cut from 120 to 60 seconds now that it costs a single charge.
 -----------------------------------
