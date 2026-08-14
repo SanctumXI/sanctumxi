@@ -12,3 +12,4 @@ xi.effect.KICK_DAMAGE      = 808
 xi.effect.LUCKY_CHARM      = 809
 xi.effect.RESOLVE          = 810
 xi.effect.INVIGORATE_REGEN = 811
+xi.effect.FROG_CHEER       = 813

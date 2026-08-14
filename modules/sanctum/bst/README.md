@@ -110,12 +110,12 @@ type change too. That is intended.
 ## Status
 
 **Done:** Crab, Funguar, Sheep, Hill Lizard, Rabbit, Beetle, Sabotender,
-Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap
+Diremite, Apkallu, Eft, Ladybug, Mandragora, Tiger, Flytrap, Frog
 
 **Cut:** Pugil. Recipe 74516 is deleted and nothing else in the database grants
 jug 17906, so Turbid Toloi is retired instead of rebalanced.
 
-**Remaining:** Coeurl, Frog, Antlion, Fly
+**Remaining:** Coeurl, Antlion, Fly
 
 ### Per-family workflow
 
@@ -135,13 +135,25 @@ jug 17906, so Turbid Toloi is retired instead of rebalanced.
   auto-attacks awake
 - **Coeurl** has no damaging move at all. Charged Whisker and Frenzied Rage exist
   in `pet_skills` but are wired only to Jug_Lynx at 99
-- **Frog** (Slippery Silas) has `skill_list_id 0` and `spellList 0` — completely inert
-- **`mob_pools.spellList` does nothing for pets.** `petutils` assigns
-  `m_SpellListContainer`, the raw database list, but never calls
-  `mobutils::GetAvailableSpells` to compile it into `SpellContainer`. That is
-  what `CanCastSpells` checks through `HasSpells()`, so it is always empty and
-  no pet ever casts. Confirmed in game. Several jug pets carry a list that has
-  never done anything: Flytrap on list 3 (Beastmen_RDM), and Antlion, Mite,
-  Lifedrinker Lars and Chopsuey Chucky on list 5
+- **Frog Cheer is a new ability id (739)**, taken from a free slot inside the
+  jug pet block whose client name and description records were empty
+  placeholders. Needs in-game confirmation that it lists in the Ready menu.
+  Its status effect reuses id 813, so the client will label the buff whatever
+  it calls that effect until the status name DAT is edited too
+- **Only Elemental ecosystem pets cast.** `CPetEntity::Spawn` calls
+  `mobutils::GetAvailableSpells` behind `m_EcoSystem == Ecosystem::Elemental`,
+  so spirits and avatars compile `mob_pools.spellList` into `SpellContainer` and
+  every jug pet leaves it empty. `CanCastSpells` fails on `HasSpells()` first,
+  so a jug pet never casts however full its list is. Confirmed in game. Flytrap
+  (list 3), Antlion, Mite, Lifedrinker Lars and Chopsuey Chucky (list 5) all
+  carry lists that have never fired
+- **To make one pet cast**, call `pet:setSpellList(id)` on spawn:
+  `mobutils::SetSpellList` compiles the container, which is the step the
+  ecosystem gate skips. The hook is `xi.pets.jug.onMobSpawn` —
+  `CPetEntity::Spawn` calls `OnMobSpawn` and `GetScriptName` returns `jug` for
+  every jug pet. There is no `scripts/globals/pets/jug.lua` yet; the other pet
+  types all have one
+- **MP is granted by main job only**, in `LoadJugStats`: PLD, WHM, BLM, RDM,
+  DRK, BLU and SCH. Any other job gets a flat 0 and cannot pay for a spell
 - **Sabotender** moves fast but does not swing fast; needs the delay fix
 - Wing Slap and Beak Lunge tooltips say fivefold/twofold; the code does 4 and 1
