@@ -33,6 +33,10 @@ CREATE TABLE IF NOT EXISTS `linkshell_recruitment_applications`
     `decided_by_charid`    int unsigned NULL,
     `decision_note`        varchar(1000) NOT NULL DEFAULT '',
     `pearl_delivered_at`   datetime(6) NULL,
+    -- NULL until the player first declines. Every approved offer still has an
+    -- absolute seven-day deadline based on decided_at.
+    `pearl_claim_expires_at` datetime(6) NULL,
+    `pearl_online_notified_at` datetime(6) NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_linkshell_recruitment_active`
         (`linkshell_id`, `applicant_charid`, `active_slot`),
@@ -40,8 +44,24 @@ CREATE TABLE IF NOT EXISTS `linkshell_recruitment_applications`
         (`linkshell_id`, `status`, `applied_at`),
     KEY `idx_linkshell_recruitment_applicant`
         (`applicant_charid`, `applied_at`),
+    KEY `idx_linkshell_recruitment_notification`
+        (`status`, `pearl_online_notified_at`, `decided_at`),
     CONSTRAINT `chk_linkshell_recruitment_status`
         CHECK (`status` IN ('pending', 'approved', 'rejected', 'joined', 'withdrawn')),
     CONSTRAINT `chk_linkshell_recruitment_active_slot`
         CHECK (`active_slot` IS NULL OR `active_slot` = 1)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Upgrade existing installations without requiring the recruitment tables to
+-- be dropped and recreated.
+ALTER TABLE `linkshell_recruitment_applications`
+    ADD COLUMN IF NOT EXISTS `pearl_claim_expires_at` datetime(6) NULL
+    AFTER `pearl_delivered_at`;
+
+ALTER TABLE `linkshell_recruitment_applications`
+    ADD COLUMN IF NOT EXISTS `pearl_online_notified_at` datetime(6) NULL
+    AFTER `pearl_claim_expires_at`;
+
+ALTER TABLE `linkshell_recruitment_applications`
+    ADD INDEX IF NOT EXISTS `idx_linkshell_recruitment_notification`
+    (`status`, `pearl_online_notified_at`, `decided_at`);

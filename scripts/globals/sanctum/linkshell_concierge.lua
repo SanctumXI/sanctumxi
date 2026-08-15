@@ -277,6 +277,66 @@ local function showEntryMenu(player, npc)
     })
 end
 
+local function showPendingLinkpearlMenu(player, npc, linkshellName)
+    say(player, npc, 'It appears someone has left something for you.')
+    player:customMenu(
+    {
+        title = string.format('Take the linkpearl for %s?', linkshellName),
+        options =
+        {
+            {
+                'Yes',
+                function(claimingPlayer)
+                    if claimingPlayer:getFreeSlotsCount() == 0 then
+                        say(claimingPlayer, npc, 'Your inventory is full. Come back when you have space.')
+                        return
+                    end
+
+                    local result = xi.linkshellRecruitment.claimPendingLinkpearl(claimingPlayer, linkshellName)
+                    if result == 'delivered' then
+                        say(claimingPlayer, npc, string.format(
+                            'Here you are. The linkpearl for %s has been placed in your inventory.',
+                            linkshellName
+                        ))
+                    elseif result == 'already_member' then
+                        say(claimingPlayer, npc, string.format(
+                            'You already carry a pearl for %s, so I have cleared the duplicate delivery.',
+                            linkshellName
+                        ))
+                    elseif result == 'inventory_full' then
+                        say(claimingPlayer, npc, 'Your inventory is full. Come back when you have space.')
+                    elseif result == 'unavailable' then
+                        say(claimingPlayer, npc, 'That linkpearl is no longer available.')
+                    else
+                        say(claimingPlayer, npc, 'I could not retrieve that linkpearl. Please try again later.')
+                    end
+                end,
+            },
+            {
+                'No',
+                function(claimingPlayer)
+                    local secondsRemaining = xi.linkshellRecruitment.deferPendingLinkpearl(
+                        claimingPlayer,
+                        linkshellName
+                    )
+
+                    if secondsRemaining > 0 then
+                        say(claimingPlayer, npc, string.format(
+                            'Very well. You have %s to pick up the linkpearl. After that, it will no longer be available.',
+                            libraryInstance.formatRegistrationCooldown(secondsRemaining)
+                        ))
+                    else
+                        say(claimingPlayer, npc, 'I could not hold that linkpearl. Please speak with me again.')
+                    end
+                end,
+            },
+        },
+        onCancelled = function(claimingPlayer)
+            say(claimingPlayer, npc, 'The linkpearl is still waiting. Choose No if you want me to hold it for three days.')
+        end,
+    })
+end
+
 concierge.onTrigger = function(player, npc)
     local refundedGil = libraryInstance.claimPendingRefund(player)
     if refundedGil > 0 then
@@ -284,6 +344,14 @@ concierge.onTrigger = function(player, npc)
             '%s gil from a reversed Library registration has been returned to you.',
             formatGil(refundedGil)
         ))
+    end
+
+    if xi.linkshellRecruitment then
+        local linkshellName = xi.linkshellRecruitment.getPendingLinkpearlName(player)
+        if linkshellName and linkshellName ~= '' then
+            showPendingLinkpearlMenu(player, npc, linkshellName)
+            return
+        end
     end
 
     local equippedId = libraryInstance.getEquippedLinkshellID(player)
