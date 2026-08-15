@@ -107,13 +107,15 @@ UPDATE `abilities` SET `recastTime` = 1 WHERE `abilityId` = 708; -- Hi-Freq Fiel
 -- Fragmentation as its secondary, the best chain properties on any pet move.
 -- Neither closes the other, so no self chain.
 
+-- Speed is NOT set here. dbtool imports this module's SQL in sorted path order
+-- and mob_family_overrides.sql comes later, so a speed written here is silently
+-- overwritten by that file. The Sabotender's 90 lives there instead.
 UPDATE `mob_family_system`
-   SET `STR`   = 4,
-       `DEX`   = 1,
-       `AGI`   = 1,
-       `EVA`   = 1,
-       `speed` = 90
- WHERE `familyID` = 334; -- was STR 2 / DEX 5 / AGI 3 / EVA 3 / speed 40
+   SET `STR` = 4,
+       `DEX` = 1,
+       `AGI` = 1,
+       `EVA` = 1
+ WHERE `familyID` = 334; -- was STR 2 / DEX 5 / AGI 3 / EVA 3
 
 UPDATE `mob_resistances`
    SET `fire_res_rank` = -3,
