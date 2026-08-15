@@ -2366,18 +2366,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
                 distancePenalty = distancePenaltyResult.get_type() == sol::type::number ? distancePenaltyResult.get<int16>(0) : 0;
             }
 
-            if (distancePenalty == 0)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackPummels;
-            }
-            else if (distancePenalty <= 15)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackSquarely;
-            }
-            else
-            {
-                actionResult.messageID = MsgBasic::RangedAttackHit;
-            }
+            // No sweet spot tiers. A clean shot is a plain hit, anything taken from
+            // inside the minimum distance barely lands.
+            actionResult.messageID = distancePenalty == 0 ? MsgBasic::RangedAttackHit : MsgBasic::RangedAttackBarely;
         }
 
         // any misses with barrage/sange cause remaining shots to miss, meaning we must check Action.reaction
@@ -2595,7 +2586,7 @@ void CCharEntity::HandleErrorMessage(std::unique_ptr<CBasicPacket>& msg)
 {
     TracyZoneScoped;
 
-    if (msg && !isCharmed)
+    if (msg && !isCharmed && !m_suppressActionErrors)
     {
         pushPacket(std::move(msg));
     }
@@ -2863,12 +2854,14 @@ void CCharEntity::Die()
 {
     TracyZoneScoped;
 
-    if (auto* PLastAttacker = GetEntity(lastAttackerId_.targid); PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
+    CBaseEntity* PLastAttacker = GetEntity(lastAttackerId_.targid);
+    if (PLastAttacker && PLastAttacker->id == lastAttackerId_.id)
     {
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(PLastAttacker, this, 0, 0, MsgBasic::PlayerDefeatedBy));
     }
     else
     {
+        PLastAttacker = nullptr;
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE>(this, this, 0, 0, MsgBasic::FallsToGround));
     }
 
@@ -2892,7 +2885,7 @@ void CCharEntity::Die()
         GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
         float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
-        charutils::DelExperiencePoints(this, retainPercent, 0);
+        charutils::DelExperiencePoints(this, retainPercent, 0, PLastAttacker, true);
     }
 
     luautils::OnPlayerDeath(this);

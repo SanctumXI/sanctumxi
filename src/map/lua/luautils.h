@@ -436,7 +436,8 @@ auto GetFurthestValidPosition(CLuaBaseEntity* fromTarget, float distance, float 
 
 void OnPlayerDeath(CCharEntity* PChar);
 void OnPlayerLevelUp(CCharEntity* PChar);
-void OnPlayerLevelDown(CCharEntity* PChar);
+void OnPlayerLevelDown(CCharEntity* PChar, CBaseEntity* PSource, uint8 previousLevel, bool isDeath);
+void OnPlayerJobUnlock(CCharEntity* PChar, uint8 jobId);
 void OnPlayerSynthesis(CCharEntity* PChar, uint16 itemId, uint8 quantity, uint8 skillType);
 void OnPlayerCraftSkillUp(CCharEntity* PChar, uint8 skillType, uint16 oldSkill, uint16 newSkill);
 void OnPlayerItemAdded(CCharEntity* PChar, uint16 itemId, uint32 quantity);

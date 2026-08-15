@@ -1,12 +1,12 @@
 -----------------------------------
 -- Server First Announcements
 --
--- Editable server-wide first-achievement configuration. Event catalogues are
--- grouped below; the callback logic begins after the Configuration section.
+-- Everything worth shouting about the first time somebody pulls it off. The
+-- lists below are the parts you edit; the callbacks that fire them are down
+-- at the bottom of the file.
 --
--- Title note:
---   setTitle() makes a client-supported title active and permanently unlocks
---   it. New custom titles also require the appropriate DAT changes.
+-- NOTE: setTitle() turns a title on and unlocks it for good, but only for
+-- titles the client already knows about. Anything new needs DAT work first.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/battlefield')
@@ -21,11 +21,34 @@ local m = Module:new('ServerFirst')
 -- Configuration
 -----------------------------------
 
--- Chat decorations used for normal and legendary announcements.
+-- Symbols wrapped around the shout. Legendary weapons get their own.
 local decoration =
 {
     standard  = '\129\154', -- gold star
     legendary = '\129\159',
+}
+
+-- Ordinary, per-character milestones. These are deliberately separate from
+-- the SERVER FIRST wording below: every character can earn one of these.
+local firstLevel75Messages =
+{
+    'A new hero! %s has reached level 75 as a %s!',
+    'Raise a glass: %s has reached level 75 as a %s!',
+    'Word travels fast: %s has reached level 75 as a %s!',
+}
+
+-- Delevel notices only occur after a death that drops a level. The callback
+-- receives the pre-delevel level, so a level 20 character falling to 19 is
+-- still announced.
+local minimumDelevelAnnouncementLevel = 20
+local delevelMessages =
+{
+    'A costly defeat....! %s has sent %s back to level %u!',
+    '%s learned a harsh lesson from %s, falling to level %u!',
+    'Ouch. %s defeated %s, reducing them to level %u!',
+    '%s has cut %s down to size...level %u, to be precise!',
+    '%s has been thoroughly humbled by %s and de-levels to %u!',
+    'Somewhere, %s is feeling very proud. %s falls to level %u!',
 }
 
 local function eventKey(part)
@@ -42,8 +65,8 @@ local function addNMEvent(tableRef, mobName, displayName, zoneName, title)
     }
 end
 
--- Notorious monsters. Zone restrictions keep Nyzul and battlefield variants
--- from claiming an open-world server first.
+-- Notorious monsters. The zone restriction stops Nyzul and battlefield copies
+-- of a mob from stealing the open-world first.
 local nmEvents = {}
 addNMEvent(nmEvents, 'Jaggedy-Eared_Jack',       'Jaggedy-Eared Jack',       'West_Ronfaure')
 addNMEvent(nmEvents, 'Leaping_Lizzy',            'Leaping Lizzy',            'South_Gustaberg')
@@ -99,11 +122,10 @@ addNMEvent(nmEvents, 'Sarameya',                 'Sarameya',                 'Mo
 addNMEvent(nmEvents, 'Tyger',                    'Tyger',                    'Caedarva_Mire')
 addNMEvent(nmEvents, 'Pandemonium_Warden',       'Pandemonium Warden',       'Aydeewa_Subterrane', xi.title.PANDEMONIUM_QUELLER)
 addNMEvent(nmEvents, 'Proto-Omega',              'Proto-Omega',              'Apollyon')
-addNMEvent(nmEvents, 'Proto-Ultima',              'Proto-Ultima',             'Temenos')
+addNMEvent(nmEvents, 'Proto-Ultima',             'Proto-Ultima',             'Temenos')
 
--- Each entry is an authoritative synthesis result ID. Keep the event key
--- stable once published; the display name is safe to edit for presentation.
--- addCraftEvent(itemId, eventKeySuffix, displayName)
+-- Keyed on the item ID the synth produces. Once an event key has gone live on
+-- the server, leave it alone; display names are safe to reword any time.
 local craftEvents = {}
 
 local function addCraftEvent(itemId, eventKeySuffix, displayName)
@@ -115,7 +137,7 @@ local function addCraftEvent(itemId, eventKeySuffix, displayName)
     }
 end
 
--- Curated iconic crafts, regardless of their skill requirements.
+-- Hand picked for being iconic, not for how hard they are to make.
 addCraftEvent(12579, 'scorpion_harness', 'Scorpion Harness')
 addCraftEvent(13734, 'scorpion_harness_plus1', 'Scorpion Harness +1')
 addCraftEvent(12555, 'haubergeon', 'Haubergeon')
@@ -124,7 +146,6 @@ addCraftEvent(12556, 'hauberk', 'Hauberk')
 addCraftEvent(13793, 'hauberk_plus1', 'Hauberk +1')
 addCraftEvent(13748, 'vermillion_cloak', 'Vermillion Cloak')
 addCraftEvent(13749, 'royal_cloak', 'Royal Cloak')
-addCraftEvent(12605, 'nobles_tunic', "Noble's Tunic")
 addCraftEvent(13774, 'aristocrats_coat', "Aristocrat's Coat")
 addCraftEvent(13779, 'black_cloak', 'Black Cloak')
 addCraftEvent(13780, 'demons_cloak', "Demon's Cloak")
@@ -232,8 +253,31 @@ local specialItemEvents =
     },
 }
 
--- Every completed relic and mythic is archived; the first of either kind also
--- receives the separate "first legendary weapon" announcement.
+-- Hand picked drops. Noble's Tunic sits here rather than in craftEvents so the
+-- first one to turn up gets the wording we want, and a later synth can't fire a
+-- second announcement for it.
+local rareItemEvents = {}
+
+local function addRareItemEvent(itemId, eventKeySuffix, displayName)
+    rareItemEvents[itemId] =
+    {
+        eventKey = 'item.' .. eventKeySuffix,
+        category = 'rare_item',
+        display = displayName,
+    }
+end
+
+-- addRareItemEvent(itemId, eventKeySuffix, displayName)
+addRareItemEvent(13056, 'peacock_charm', 'Peacock Charm')
+addRareItemEvent(17440, 'kraken_club', 'Kraken Club')
+addRareItemEvent(13189, 'speed_belt', 'Speed Belt')
+addRareItemEvent(17652, 'joyeuse', 'Joyeuse')
+addRareItemEvent(12605, 'nobles_tunic', "Noble's Tunic")
+addRareItemEvent(16555, 'ridill', 'Ridill')
+addRareItemEvent(13566, 'defending_ring', 'Defending Ring')
+
+-- Every finished relic and mythic gets written down. The first one of either
+-- kind on the server also gets its own louder announcement.
 local legendaryWeapons =
 {
     [15070] = { name = 'Aegis',         kind = 'relic' },
@@ -274,10 +318,13 @@ local legendaryWeapons =
     [19008] = { name = 'Kenkonken',     kind = 'mythic' },
 }
 
--- Only these item IDs need the onPlayerItemAdded callback, avoiding Lua work
--- for ordinary item acquisition.
+-- Only these IDs register onPlayerItemAdded, so picking up ordinary loot never
+-- has to come through here.
 local trackedItemIds = {}
 for itemId in pairs(specialItemEvents) do
+    table.insert(trackedItemIds, itemId)
+end
+for itemId in pairs(rareItemEvents) do
     table.insert(trackedItemIds, itemId)
 end
 for itemId in pairs(legendaryWeapons) do
@@ -298,8 +345,28 @@ local skillMilestones =
     [xi.skill.COOKING]      = { name = 'Cooking',      title = xi.title.LEGENDARY_CULINARIAN },
 }
 
--- Battlefield IDs are resolved once during module load. Missing IDs are
--- reported and skipped so a branch without optional content keeps loading.
+-- Advanced jobs worth announcing the first unlock of. The names are spelled out
+-- rather than derived so the list stays easy to edit.
+local advancedJobEvents =
+{
+    [xi.job.PLD] = { eventKey = 'job.unlock_paladin',      display = 'Paladin' },
+    [xi.job.DRK] = { eventKey = 'job.unlock_dark_knight',  display = 'Dark Knight' },
+    [xi.job.BST] = { eventKey = 'job.unlock_beastmaster',  display = 'Beastmaster' },
+    [xi.job.BRD] = { eventKey = 'job.unlock_bard',         display = 'Bard' },
+    [xi.job.RNG] = { eventKey = 'job.unlock_ranger',       display = 'Ranger' },
+    [xi.job.SAM] = { eventKey = 'job.unlock_samurai',      display = 'Samurai' },
+    [xi.job.NIN] = { eventKey = 'job.unlock_ninja',        display = 'Ninja' },
+    [xi.job.DRG] = { eventKey = 'job.unlock_dragoon',      display = 'Dragoon' },
+    [xi.job.SMN] = { eventKey = 'job.unlock_summoner',     display = 'Summoner' },
+    [xi.job.BLU] = { eventKey = 'job.unlock_blue_mage',    display = 'Blue Mage' },
+    [xi.job.COR] = { eventKey = 'job.unlock_corsair',      display = 'Corsair' },
+    [xi.job.PUP] = { eventKey = 'job.unlock_puppetmaster', display = 'Puppetmaster' },
+    [xi.job.DNC] = { eventKey = 'job.unlock_dancer',       display = 'Dancer' },
+    [xi.job.SCH] = { eventKey = 'job.unlock_scholar',      display = 'Scholar' },
+}
+
+-- IDs are looked up once at load. Anything missing gets printed and skipped so
+-- a branch without that content still loads.
 local battlefieldEvents = {}
 local function addBattlefieldEvent(enumName, displayName, title)
     local id = xi.battlefield.id[enumName]
@@ -461,6 +528,7 @@ local function participantFor(entity)
         char_id            = participant.char_id,
         char_name          = participant.char_name,
         linkshell_name     = participant.linkshell_name or '',
+        in_alliance        = participant.in_alliance or false,
         is_party_leader    = participant.is_party_leader or false,
         is_alliance_leader = participant.is_alliance_leader or false,
         is_leader          = false,
@@ -492,32 +560,94 @@ local function collectAllianceParticipants(player, zoneId)
     return collectParticipants(player:getAlliance(), zoneId)
 end
 
+-- A party caps at six, so anything bigger came out of an alliance even if the
+-- flag went missing on whoever we happened to look at.
+local function isAllianceRun(participants)
+    if #participants > 6 then
+        return true
+    end
+
+    for _, participant in ipairs(participants) do
+        if participant.in_alliance then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Player1, Player2, and Player3
+local function nameList(participants)
+    local names = {}
+    for _, participant in ipairs(participants) do
+        table.insert(names, participant.char_name)
+    end
+
+    if #names == 1 then
+        return names[1]
+    elseif #names == 2 then
+        return string.format('%s and %s', names[1], names[2])
+    end
+
+    local last = table.remove(names)
+    return string.format('%s, and %s', table.concat(names, ', '), last)
+end
+
+-- A linkshell only takes the credit when it brought at least half the group.
+local function majorityLinkshell(participants)
+    local counts = {}
+    for _, participant in ipairs(participants) do
+        local linkshell = participant.linkshell_name
+        if linkshell ~= '' then
+            counts[linkshell] = (counts[linkshell] or 0) + 1
+        end
+    end
+
+    local winner = nil
+    local winnerCount = 0
+    for linkshell, count in pairs(counts) do
+        local hasMajority = count * 2 >= #participants
+        local winsCount = count > winnerCount
+        -- pairs() order is not stable, so ties settle alphabetically.
+        local winsTieBreak = count == winnerCount and (not winner or linkshell < winner)
+        if hasMajority and (winsCount or winsTieBreak) then
+            winner = linkshell
+            winnerCount = count
+        end
+    end
+
+    return winner
+end
+
+local function findLeader(participants, wantAllianceLeader)
+    for _, participant in ipairs(participants) do
+        local isEligibleLeader =
+            (wantAllianceLeader and participant.is_alliance_leader) or
+            (not wantAllianceLeader and participant.is_party_leader)
+        if isEligibleLeader then
+            return participant
+        end
+    end
+
+    return participants[1]
+end
+
 local function resolveAttribution(participants)
     if #participants == 0 then
         return 'unknown', 'unknown', 'an uncredited group'
     end
 
-    local linkshells = {}
-    local linkshellWinner = nil
-    local linkshellCount = 0
+    -- Up to a full party everybody gets named. Past that the shout turns into
+    -- a wall of text, so alliances fall back to a linkshell or their leader.
+    if not isAllianceRun(participants) then
+        local leader = findLeader(participants, false)
+        leader.is_leader = true
 
-    for _, participant in ipairs(participants) do
-        local linkshell = participant.linkshell_name
-        if linkshell ~= '' then
-            linkshells[linkshell] = (linkshells[linkshell] or 0) + 1
-        end
+        local creditType = #participants == 1 and 'player' or 'party'
+        return creditType, leader.char_name, nameList(participants)
     end
 
-    for linkshell, count in pairs(linkshells) do
-        local hasMajority = count * 2 >= #participants
-        local winsCount = count > linkshellCount
-        local winsTieBreak = count == linkshellCount and (not linkshellWinner or linkshell < linkshellWinner)
-        if hasMajority and (winsCount or winsTieBreak) then
-            linkshellWinner = linkshell
-            linkshellCount = count
-        end
-    end
-
+    local linkshellWinner = majorityLinkshell(participants)
     if linkshellWinner then
         for _, participant in ipairs(participants) do
             participant.is_leader = false
@@ -526,31 +656,35 @@ local function resolveAttribution(participants)
         return 'linkshell', linkshellWinner, string.format('the linkshell %s', linkshellWinner)
     end
 
-    local wantAllianceLeader = #participants > 6
-    local leader = nil
-    for _, participant in ipairs(participants) do
-        local isEligibleLeader =
-            (wantAllianceLeader and participant.is_alliance_leader) or
-            (not wantAllianceLeader and participant.is_party_leader)
-        if isEligibleLeader then
-            leader = participant
-            break
-        end
-    end
-    leader = leader or participants[1]
+    local leader = findLeader(participants, true)
     leader.is_leader = true
 
-    if wantAllianceLeader then
-        return 'alliance', leader.char_name, string.format('an alliance led by %s', leader.char_name)
-    end
-
-    return 'party', leader.char_name, string.format("%s's party", leader.char_name)
+    return 'alliance', leader.char_name, string.format('an alliance led by %s', leader.char_name)
 end
 
 -- Announcement delivery
 local function decorate(message, kind)
     local mark = decoration[kind or 'standard']
     return string.format('%s %s %s', mark, message, mark)
+end
+
+local function randomMessage(messages, ...)
+    return string.format(messages[math.randomInt(1, #messages)], ...)
+end
+
+local function jobDisplayName(jobId)
+    local job = xi.jobName[jobId]
+    return job and job[2] or 'adventurer'
+end
+
+local function hasAnotherLevel75Job(player, currentJob)
+    for jobId in pairs(xi.jobName) do
+        if jobId > 0 and jobId ~= currentJob and player:getJobLevel(jobId) >= 75 then
+            return true
+        end
+    end
+
+    return false
 end
 
 local function awardTitle(participants, title)
@@ -602,6 +736,26 @@ local function announceSolo(definition, player, message)
     return announceFirst(definition, participants, player, message, 'player', participants[1].char_name)
 end
 
+local function announceCraftMastery(player, craft)
+    local participant = participantFor(player)
+    if not participant then
+        return false
+    end
+
+    participant.is_leader = true
+    return announceFirst(
+        {
+            eventKey = string.format('craft.personal_100.%u.%s', participant.char_id, eventKey(craft.name)),
+            category = 'personal_milestone',
+            display = craft.name .. ' 100',
+        },
+        { participant },
+        player,
+        string.format('A new master artisan has emerged! %s has mastered %s!', player:getName(), craft.name),
+        'player',
+        participant.char_name)
+end
+
 local function announceLegend(player, itemId, weapon)
     local participant = participantFor(player)
     if not participant or not xi.serverFirst or not xi.serverFirst.recordLegend then
@@ -621,9 +775,8 @@ local function announceLegend(player, itemId, weapon)
         string.format('awakened the mythic weapon %s', weapon.name) or
         string.format('restored the legendary relic weapon %s', weapon.name)
 
-    -- The permanent every-weapon record must succeed before either kind of
-    -- legendary notice is sent.  A first-event row alone is not enough: the
-    -- all-legends archive is part of the feature's guarantee.
+    -- Nothing gets announced until the weapon is safely in the archive. The
+    -- full relic/mythic list is the point of that table, not just the first.
     if not xi.serverFirst.recordLegend(
         {
             char_id = participant.char_id,
@@ -662,6 +815,14 @@ local function receivedItem(player, itemId)
         announceSolo(special, player, special.message(player))
     end
 
+    local rareItem = rareItemEvents[itemId]
+    if rareItem then
+        announceSolo(
+            rareItem,
+            player,
+            string.format("A realm first! %s has obtained the server's first %s!", player:getName(), rareItem.display))
+    end
+
     local weapon = legendaryWeapons[itemId]
     if weapon then
         announceLegend(player, itemId, weapon)
@@ -696,6 +857,30 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         creditName)
 end)
 
+m:addOverride('xi.player.onPlayerJobUnlock', function(player, jobId)
+    super(player, jobId)
+
+    -- This setting unlocks every advanced job automatically at character
+    -- creation, which is intentionally not treated as a realm-first quest.
+    if xi.settings.main.ADVANCED_JOB_LEVEL == 0 then
+        return
+    end
+
+    local definition = advancedJobEvents[jobId]
+    if not definition then
+        return
+    end
+
+    announceSolo(
+        {
+            eventKey = definition.eventKey,
+            category = 'job_unlock',
+            display = definition.display .. ' job',
+        },
+        player,
+        string.format('A realm first! %s is the first to unlock the %s job!', player:getName(), definition.display))
+end)
+
 m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
     super(player, ...)
 
@@ -704,6 +889,31 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
     end
 
     local playerName = player:getName()
+    local jobId = player:getMainJob()
+    local jobName = jobDisplayName(jobId)
+
+    -- Each character gets one personal first-level-75 event. The unique
+    -- event key makes it permanent across delevels and restarts. Checking
+    -- existing jobs also avoids announcing a second job for characters that
+    -- already had a level 75 before this feature was introduced.
+    if not hasAnotherLevel75Job(player, jobId) then
+        local participant = participantFor(player)
+        if participant then
+            participant.is_leader = true
+            announceFirst(
+                {
+                    eventKey = string.format('level.personal_first_75.%u', participant.char_id),
+                    category = 'personal_milestone',
+                    display = 'first level 75 job',
+                },
+                { participant },
+                player,
+                randomMessage(firstLevel75Messages, playerName, jobName),
+                'player',
+                participant.char_name)
+        end
+    end
+
     announceSolo(
         {
             eventKey = 'level.first_75',
@@ -713,8 +923,6 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
         player,
         string.format("SERVER FIRST! %s has become Vana'diel's first level 75 adventurer!", playerName))
 
-    local jobId = player:getMainJob()
-    local jobName = xi.jobName[jobId] and xi.jobName[jobId][2]
     local jobKey = xi.jobName[jobId] and xi.jobName[jobId][1]
     if jobName and jobKey then
         announceSolo(
@@ -728,6 +936,22 @@ m:addOverride('xi.player.onPlayerLevelUp', function(player, ...)
     end
 end)
 
+m:addOverride('xi.player.onPlayerLevelDown', function(player, source, previousLevel, isDeath)
+    super(player, source, previousLevel, isDeath)
+
+    if not isDeath or previousLevel < minimumDelevelAnnouncementLevel then
+        return
+    end
+
+    local enemyName = source and source:getName() or 'an unknown foe'
+    player:printToArea(
+        decorate(randomMessage(delevelMessages, enemyName, player:getName(), previousLevel - 1)),
+        xi.msg.channel.SYSTEM_3,
+        xi.msg.area.SYSTEM,
+        '',
+        false)
+end)
+
 m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldSkill, newSkill)
     super(player, skillType, oldSkill, newSkill)
 
@@ -736,7 +960,7 @@ m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldS
         return
     end
 
-    announceSolo(
+    local isServerFirst = announceSolo(
         {
             eventKey = 'craft.first_100_' .. eventKey(craft.name),
             category = 'craft_skill',
@@ -745,6 +969,10 @@ m:addOverride('xi.player.onPlayerCraftSkillUp', function(player, skillType, oldS
         },
         player,
         string.format('SERVER FIRST! %s has become Vana\'diel\'s first %s 100 artisan!', player:getName(), craft.name))
+
+    if not isServerFirst then
+        announceCraftMastery(player, craft)
+    end
 end)
 
 m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, skillType)
@@ -752,7 +980,7 @@ m:addOverride('xi.player.onPlayerSynthesis', function(player, itemId, quantity, 
 
     local definition = craftEvents[itemId]
     if definition then
-    announceSolo(
+        announceSolo(
             definition,
             player,
             string.format('SERVER FIRST! A %s has been crafted by %s!', definition.display, player:getName()))
@@ -837,12 +1065,12 @@ m:addOverride('xi.dynamis.megaBossOnDeath', function(mob, player, optParams)
     end
 
     local participants = collectAllianceParticipants(player, mob:getZoneID())
-    local creditType, creditName = resolveAttribution(participants)
+    local creditType, creditName, creditPhrase = resolveAttribution(participants)
     announceFirst(
         definition,
         participants,
         player,
-        string.format('SERVER FIRST! %s has been overcome!', definition.display),
+        string.format('SERVER FIRST! %s has been overcome by %s!', definition.display, creditPhrase),
         creditType,
         creditName)
 end)

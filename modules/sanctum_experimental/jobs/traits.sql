@@ -50,6 +50,9 @@ WHERE (`traitid`,`job`,`level`,`rank`,`modifier`) IN
     (107,1,45,1,903),
     (107,1,58,2,903),
     (107,1,71,3,903),
+    (107,5,12,1,903),
+    (107,5,37,2,903),
+    (107,5,65,3,903),
     (107,9,80,1,903),
     (107,9,87,2,903),
     (107,9,94,3,903),
@@ -104,14 +107,9 @@ INSERT INTO `traits` VALUES (84,'recycle',17,65,2,305,20,NULL,0);
 INSERT INTO `traits` VALUES (84,'recycle',17,95,3,305,30,NULL,0);
 INSERT INTO `traits` VALUES (101,'tactical guard',2,45,1,899,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (101,'tactical guard',2,75,2,899,45,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',1,45,1,903,400,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',1,58,2,903,600,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',1,71,3,903,800,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',9,80,1,903,400,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',9,87,2,903,600,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',9,94,3,903,800,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',10,85,1,903,400,'ABYSSEA',0);
-INSERT INTO `traits` VALUES (107,'fencer',10,95,2,903,600,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (107,'fencer',5,12,1,903,200,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (107,'fencer',5,37,2,903,300,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (107,'fencer',5,65,3,903,400,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (108,'conserve tp',19,50,1,944,15,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',4,50,1,902,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (109,'occult acumen',4,75,2,902,50,'ABYSSEA',0);

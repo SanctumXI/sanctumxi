@@ -1,8 +1,8 @@
--- Server-wide Server First archive.
+-- Server First archive.
 --
--- Apply with dbtool (or your normal module SQL deployment) before enabling
--- ServerFirst.lua.  The tables are intentionally append-only: they preserve
--- the complete roster and every relic/mythic award for posterity.
+-- Run this with dbtool before turning ServerFirst.lua on. Nothing here ever
+-- gets updated or deleted. The full roster and every relic/mythic award are
+-- meant to stay on the books.
 
 CREATE TABLE IF NOT EXISTS `server_first_events` (
     `event_key`         varchar(96)  NOT NULL,

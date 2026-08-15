@@ -60,6 +60,16 @@ status_effects:
       - on_jobchange
       - no_cancel
 
+  trust_aura_exp:
+    id: 809
+    name: lucky_charm
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+    element: light
+
   trust_aura_refresh:
     id: 811
     name: invigorate_regen
@@ -69,3 +79,21 @@ status_effects:
       - death
     element: light
     sort_key: 700
+
+  trust_aura_magic_attack:
+    id: 813
+    name: frog_cheer
+    flags:
+      - dispelable
+      - empathy
+      - death
+      - on_zone
+    element: water
+
+  # Upstream points this at magic_evasion_boost_ii, which has no script, so the
+  # effect grants nothing. Point it back at the script that exists.
+  magic_evasion_boost:
+    id: 611
+    name: magic_evasion_boost
+    flags:
+      - death

@@ -6631,7 +6631,7 @@ void AddCapacityPoints(CCharEntity* PChar, CBaseEntity* PMob, uint32 capacityPoi
  *                                                                       *
  ************************************************************************/
 
-void DelExperiencePoints(CCharEntity* PChar, float retainPercent, uint16 forcedXpLoss)
+void DelExperiencePoints(CCharEntity* PChar, float retainPercent, uint16 forcedXpLoss, CBaseEntity* PSource, bool isDeath)
 {
     TracyZoneScoped;
 
@@ -6682,6 +6682,7 @@ void DelExperiencePoints(CCharEntity* PChar, float retainPercent, uint16 forcedX
         if (PChar->jobs.job[PChar->GetMJob()] > 1)
         {
             // de-level!
+            const uint8 previousLevel = PChar->jobs.job[PChar->GetMJob()];
             int32 lowerLevelMaxExp = GetExpNEXTLevel(PChar->jobs.job[PChar->GetMJob()] - 1);
             exploss -= PChar->jobs.exp[PChar->GetMJob()];
             PChar->jobs.exp[PChar->GetMJob()] = std::max(0, lowerLevelMaxExp - exploss);
@@ -6728,7 +6729,7 @@ void DelExperiencePoints(CCharEntity* PChar, float retainPercent, uint16 forcedX
             }
 
             PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE2>(PChar, PChar, PChar->jobs.job[PChar->GetMJob()], 0, MsgBasic::LevelDown));
-            luautils::OnPlayerLevelDown(PChar);
+            luautils::OnPlayerLevelDown(PChar, PSource, previousLevel, isDeath);
             PChar->updatemask |= UPDATE_HP;
         }
         else

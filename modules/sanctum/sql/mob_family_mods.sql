@@ -22,7 +22,10 @@ INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUE
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (23,247,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- BINDRES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (44,250,-20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- SLOWRES: -20
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (46,241,20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- POISONRES: 20
+INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (46,459,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- FIRE_ABSORB: 100
+INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (47,459,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- FIRE_ABSORB: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (48,241,20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- POISONRES: 20
+INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (48,460,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- ICE_ABSORB: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (49,240,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- SLEEPRES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (49,241,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- POISONRES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (49,245,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- PLAGUERES: 100
@@ -40,6 +43,7 @@ INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUE
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (52,245,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- PLAGUERES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (52,1211,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- DISEASERES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (59,241,20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- POISONRES: 20
+INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (59,459,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- FIRE_ABSORB: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (60,240,100,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- SLEEPRES: 100
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (60,241,20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- POISONRES: 20
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (60,1211,20,0) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- DISEASERES: 20

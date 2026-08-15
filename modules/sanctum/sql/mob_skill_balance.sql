@@ -1,0 +1,32 @@
+UPDATE `mob_skills`
+SET `mob_skill_distance` = CASE `mob_skill_id` WHEN 1236 THEN 20.0 ELSE 22.0 END
+WHERE (`mob_skill_id`, `mob_skill_name`) IN (
+    (284, 'cold_stare'),
+    (292, 'blank_gaze_dispel'),
+    (319, 'bad_breath'),
+    (349, 'cold_breath'),
+    (376, 'foul_breath'),
+    (377, 'frost_breath'),
+    (425, 'gastric_bomb'),
+    (428, 'mp_absorption'),
+    (727, 'bad_breath'),
+    (800, 'heat_breath'),
+    (819, 'blizzard_breath'),
+    (820, 'thunder_breath'),
+    (821, 'radiant_breath'),
+    (822, 'chaos_breath'),
+    (953, 'dragon_breath'),
+    (1041, 'dragon_breath'),
+    (1113, 'tormentful_glare'),
+    (1115, 'torpid_glare'),
+    (1236, 'guided_missile'),
+    (1241, 'rear_lasers'),
+    (1281, 'fiery_breath'),
+    (1291, 'glacial_breath'),
+    (1311, 'sable_breath'),
+    (2664, 'cosmic_breath'),
+    (2708, 'cosmic_breath'),
+    (2968, 'scalding_breath'),
+    (3032, 'crushing_gaze'),
+    (3438, 'dragon_breath')
+);

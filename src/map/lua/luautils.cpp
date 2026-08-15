@@ -5175,11 +5175,18 @@ void OnPlayerLevelUp(CCharEntity* PChar)
     callGlobal<void>("xi.player.onPlayerLevelUp", PChar);
 }
 
-void OnPlayerLevelDown(CCharEntity* PChar)
+void OnPlayerLevelDown(CCharEntity* PChar, CBaseEntity* PSource, uint8 previousLevel, bool isDeath)
 {
     TracyZoneScoped;
 
-    callGlobal<void>("xi.player.onPlayerLevelDown", PChar);
+    callGlobal<void>("xi.player.onPlayerLevelDown", PChar, PSource, previousLevel, isDeath);
+}
+
+void OnPlayerJobUnlock(CCharEntity* PChar, const uint8 jobId)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onPlayerJobUnlock", PChar, jobId);
 }
 
 void OnPlayerSynthesis(CCharEntity* PChar, const uint16 itemId, const uint8 quantity, const uint8 skillType)
