@@ -2160,7 +2160,15 @@ fishresponse_t* FishingCheck(CCharEntity* PChar, uint8 fishingSkill, rod_t* rod,
     std::vector<fishmob_t*>   MobPool;
     std::vector<uint32>       ChestPool;
 
-    FishPool  = GetFishPool(PChar->getZone(), area->areaId, bait->baitID);
+    const bool goldfishRod  = (rod->rodFlags & RODFLAG_GOLDFISH_SCOOPING) != 0;
+    const bool goldfishBait = (bait->baitFlags & BAITFLAG_GOLDFISH_SCOOPING) != 0;
+
+    // Goldfish scooping requires the event rod and bait as a matched pair.
+    if (goldfishRod == goldfishBait)
+    {
+        FishPool = GetFishPool(PChar->getZone(), area->areaId, bait->baitID);
+    }
+
     ItemPool  = GetItemPool(PChar->getZone(), area->areaId);
     MobPool   = GetMobPool(PChar->getZone());
     ChestPool = GetChestPool(PChar->getZone());

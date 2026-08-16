@@ -116,4 +116,11 @@ m:addOverride('xi.actions.mobskills.typhoon.onMobWeaponSkill', function(mob, tar
     return info.damage
 end)
 
+-- The fishing system checks this timestamp before Devil Manta can be hooked again.
+-- This mob has no base script, so install its despawn callback directly.
+xi.module.ensureTable('xi.zones.Kuftal_Tunnel.mobs.Devil_Manta')
+xi.zones.Kuftal_Tunnel.mobs.Devil_Manta.onMobDespawn = function(mob)
+    mob:setLocalVar('lastTOD', GetSystemTime())
+end
+
 return m
