@@ -7,6 +7,49 @@ require('scripts/globals/npc_util')
 
 local m = Module:new('sanctum_miscfixes')
 
+-- Ix'aern DRK resists enfeebles but only has a hard immunity to Stun.
+-- Retain its standard NM Terror immunity while allowing Bind/Shadowbind.
+local ixDrkEnfeebleImmunities =
+{
+    xi.immunity.BIND,
+    xi.immunity.BLIND,
+    xi.immunity.DARK_SLEEP,
+    xi.immunity.ELEGY,
+    xi.immunity.GRAVITY,
+    xi.immunity.LIGHT_SLEEP,
+    xi.immunity.PARALYZE,
+    xi.immunity.SILENCE,
+    xi.immunity.SLOW,
+}
+
+m:addOverride('xi.zones.The_Garden_of_RuHmet.mobs.Ixaern_DRK.onMobInitialize', function(mob)
+    super(mob)
+
+    for _, immunity in ipairs(ixDrkEnfeebleImmunities) do
+        mob:delImmunity(immunity)
+    end
+end)
+
+-- Ix'aern DRG's Wynavs cannot be slept, but they can be bound.
+m:addOverride('xi.zones.The_Garden_of_RuHmet.mobs.Ixaern_DRGs_Wynav.onMobSpawn', function(mob)
+    super(mob)
+    mob:delImmunity(xi.immunity.BIND)
+end)
+
+-- Manipulator does not award gil on defeat.
+m:addOverride('xi.zones.Temple_of_Uggalepih.mobs.Manipulator.onMobInitialize', function(mob)
+    super(mob)
+    mob:setMobMod(xi.mobMod.GIL_MIN, -1)
+    mob:setMobMod(xi.mobMod.GIL_MAX, -1)
+end)
+
+-- Sabotender Bailarin has a 10% lottery chance from its Bailaor placeholder.
+m:addOverride('xi.zones.Quicksand_Caves.mobs.Sabotender_Bailaor.onMobDespawn', function(mob)
+    local ID = zones[xi.zone.QUICKSAND_CAVES]
+
+    xi.mob.phOnDespawn(mob, ID.mob.SABOTENDER_BAILARIN, 10, 9000)
+end)
+
 -- Chocobo rentals cost a flat 500 gil in every rental zone.
 m:addOverride('xi.chocobo.getPrice', function(player)
     return 500

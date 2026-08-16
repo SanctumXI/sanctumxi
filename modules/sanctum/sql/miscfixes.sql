@@ -12,3 +12,18 @@ UPDATE `item_basic` SET `stackSize` = 1 WHERE `itemid` = 905;
 -- Tiny Goldfish have been removed from all fishing pools.
 DELETE FROM `fishing_group` WHERE `fishid` = 4310;
 DELETE FROM `fishing_bait_affinity` WHERE `fishid` = 4310;
+
+-- Fulminous Fury and No Quarter are centered AoEs, like Self-Destruct.
+UPDATE `mob_skills` SET `mob_skill_aoe` = 1 WHERE `mob_skill_id` IN (3657, 3658);
+
+-- Notorious Bombs do not randomly select Self-Destruct. NMs with scripted
+-- Self-Destruct conditions can still explicitly select it from their Lua.
+DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 31002;
+INSERT INTO `mob_skill_lists` VALUES ('Sanctum_Bomb_NM', 31002, 510);
+
+UPDATE `mob_pools`
+SET `skill_list_id` = 31002
+WHERE
+    `familyid` = 46 AND
+    (`mobType` & 2) != 0 AND
+    `skill_list_id` = 56;
