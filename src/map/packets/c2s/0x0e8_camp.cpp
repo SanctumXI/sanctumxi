@@ -24,16 +24,27 @@
 #include "0x0e7_reqlogout.h"
 #include "ai/ai_container.h"
 #include "entities/char_entity.h"
+#include "entities/pet_entity.h"
 #include "status_effect_container.h"
 
 auto GP_CLI_COMMAND_CAMP::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    const auto mode = static_cast<GP_CLI_COMMAND_CAMP_MODE>(Mode);
+    const bool isStartingHealing =
+        mode == GP_CLI_COMMAND_CAMP_MODE::On ||
+        (mode == GP_CLI_COMMAND_CAMP_MODE::Toggle && PChar->animation != ANIMATION_HEALING);
+    const bool hasAvatar =
+        PChar->PPet &&
+        PChar->PPet->objtype == TYPE_PET &&
+        static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PET_TYPE::AVATAR;
+
     return PacketValidator()
         .isNormalStatus(PChar)
         .isNotPreventedAction(PChar)
         .isNotCrafting(PChar)
         .mustNotEqual(PChar->PAI->IsEngaged(), true, "Cannot heal while engaged in combat")
         .oneOf<GP_CLI_COMMAND_REQLOGOUT_MODE>(Mode)
+        .mustNotEqual(isStartingHealing && hasAvatar, true, "Cannot heal while an avatar is summoned")
         .mustNotEqual(
             PChar->animation == ANIMATION_HEALING &&
                 Mode == static_cast<uint32_t>(GP_CLI_COMMAND_CAMP_MODE::On),
