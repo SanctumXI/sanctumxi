@@ -458,7 +458,6 @@ content.groups =
         superlinkGroup = 1,
     },
 
-    -- NOTE: Rabbit is spawned on start, but wyvern is a result of an on engage action.
     {
         mobIds =
         {
@@ -468,7 +467,6 @@ content.groups =
         },
 
         superlinkGroup = 1,
-        spawned        = false,
     },
 }
 

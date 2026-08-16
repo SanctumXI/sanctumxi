@@ -7,6 +7,178 @@ require('scripts/globals/npc_util')
 
 local m = Module:new('sanctum_miscfixes')
 
+-- Inside the Belly originally accepted 18 fish. The remaining trades were
+-- added in version updates from 2009 onward.
+local outOfEraInsideTheBellyFish =
+{
+    [xi.item.BLADEFISH_1]       = true,
+    [xi.item.GAVIAL_FISH]       = true,
+    [xi.item.VEYDAL_WRASSE_1]   = true,
+    [xi.item.MORINABALIGI]      = true,
+    [xi.item.TURNABALIGI]       = true,
+    [xi.item.KALKANBALIGI]      = true,
+    [xi.item.PTERYGOTUS]        = true,
+    [xi.item.GERROTHORAX]       = true,
+    [xi.item.PIRARUCU]          = true,
+    [xi.item.MEGALODON]         = true,
+    [xi.item.YAYINBALIGI]       = true,
+    [xi.item.LAKERDA]           = true,
+    [xi.item.KILICBALIGI]       = true,
+    [xi.item.MONKE_ONKE_1]      = true,
+    [xi.item.AHTAPOT]           = true,
+    [xi.item.ARMORED_PISCES]    = true,
+    [xi.item.MOLA_MOLA]         = true,
+    [xi.item.GUGRU_TUNA_1]      = true,
+    [xi.item.ISTAVRIT_1]        = true,
+    [xi.item.GIGANT_OCTOPUS_1]  = true,
+    [xi.item.THREE_EYED_FISH_1] = true,
+    [xi.item.GIGANT_SQUID]      = true,
+    [xi.item.RHINOCHIMERA_1]    = true,
+    [xi.item.GRIMMONITE]        = true,
+    [xi.item.TITANIC_SAWFISH]   = true,
+    [xi.item.PELAZOEA]          = true,
+    [xi.item.DORADO_GAR]        = true,
+    [xi.item.CROCODILOS]        = true,
+    [xi.item.ABAIA]             = true,
+    [xi.item.MATSYA]            = true,
+    [xi.item.SORYU]             = true,
+    [xi.item.SEKIRYU]           = true,
+    [xi.item.HAKURYU]           = true,
+    [xi.item.FAR_EAST_PUFFER]   = true,
+}
+
+m:addOverride('xi.server.onServerStart', function()
+    super()
+
+    xi.module.modifyInteractionEntry('scripts/quests/otherAreas/Inside_the_Belly', function(quest)
+        for _, sectionIdx in ipairs({ 2, 3 }) do
+            local zaldon      = quest.sections[sectionIdx][xi.zone.SELBINA]['Zaldon']
+            local baseOnTrade = zaldon.onTrade
+
+            zaldon.onTrade = function(player, npc, trade)
+                for itemSlot = 0, trade:getSlotCount() - 1 do
+                    if outOfEraInsideTheBellyFish[trade:getItemId(itemSlot)] then
+                        return
+                    end
+                end
+
+                return baseOnTrade(player, npc, trade)
+            end
+
+            zaldon.onTrigger = function(player, npc)
+                local fishingSkill = xi.crafting.getTotalSkill(player, xi.skill.FISHING)
+                local tier         = 4
+
+                if fishingSkill < 40 then
+                    tier = 1
+                elseif fishingSkill < 50 then
+                    tier = 2
+                elseif fishingSkill < 75 then
+                    tier = 3
+                end
+
+                local csTier =
+                {
+                    {
+                        162,
+                        xi.item.GIANT_CATFISH_1,
+                        xi.item.DARK_BASS_1,
+                        xi.item.OGRE_EEL_1,
+                        xi.item.ZAFMLUG_BASS,
+                    },
+
+                    {
+                        163,
+                        xi.item.ZAFMLUG_BASS,
+                        xi.item.GIANT_DONKO_1,
+                        xi.item.BHEFHEL_MARLIN_1,
+                        xi.item.JUNGLE_CATFISH,
+                        xi.item.SILVER_SHARK,
+                    },
+
+                    {
+                        164,
+                        xi.item.JUNGLE_CATFISH,
+                        xi.item.EMPEROR_FISH,
+                        xi.item.SILVER_SHARK,
+                        xi.item.TAKITARO,
+                        xi.item.SEA_ZOMBIE,
+                        xi.item.GIANT_CHIRAI,
+                    },
+
+                    {
+                        165,
+                        xi.item.TAKITARO,
+                        xi.item.SEA_ZOMBIE,
+                        xi.item.TITANICTUS,
+                        xi.item.CAVE_CHERAX,
+                        xi.item.TRICORN,
+                        xi.item.RYUGU_TITAN,
+                        xi.item.LIK,
+                        xi.item.GUGRUSAURUS,
+                    },
+                }
+
+                return quest:event(unpack(csTier[tier]))
+            end
+        end
+    end)
+
+    xi.module.modifyInteractionEntry('scripts/quests/jeuno/Tenshodo_Membership', function(quest)
+        local section = quest.sections[1]
+        local legacyNpcs =
+        {
+            section[xi.zone.PORT_BASTOK]['Jabbar'],
+            section[xi.zone.PORT_BASTOK]['Silver_Owl'],
+        }
+
+        section.check = function(player, status, vars)
+            return status == xi.questStatus.QUEST_ACCEPTED or
+                (status == xi.questStatus.QUEST_AVAILABLE and
+                player:getFameLevel(xi.fameArea.JEUNO) >= 3)
+        end
+
+        for _, npcEntry in ipairs(legacyNpcs) do
+            local baseOnTrigger = npcEntry.onTrigger
+
+            npcEntry.onTrigger = function(player, npc)
+                if
+                    player:getQuestStatus(quest.areaId, quest.questId) == xi.questStatus.QUEST_ACCEPTED and
+                    quest:getVar(player, 'Prog') == 0
+                then
+                    quest:setVar(player, 'Prog', 1)
+                end
+
+                return baseOnTrigger(player, npc)
+            end
+        end
+    end)
+end)
+
+local function copRingOnDrop(target, item, recycleBin)
+    if recycleBin then
+        return
+    end
+
+    local missionArea = xi.mission.log_id.COP
+    local missionId   = xi.mission.id.cop.DAWN
+    local ringDrops   = xi.mission.getVar(target, missionArea, missionId, 'ringDrops')
+    local expiry      = NextJstDay()
+
+    if ringDrops > 0 then
+        expiry = GetSystemTime() + 7 * 24 * 60 * 60
+    end
+
+    xi.mission.setVar(target, missionArea, missionId, 'Timer', 1, expiry)
+    xi.mission.setVar(target, missionArea, missionId, 'ringDrops', ringDrops + 1)
+end
+
+for _, itemName in ipairs({ 'rajas_ring', 'sattva_ring', 'tamas_ring' }) do
+    m:addOverride('xi.items.' .. itemName .. '.onItemDrop', function(target, item, recycleBin)
+        copRingOnDrop(target, item, recycleBin)
+    end)
+end
+
 -- Ix'aern DRK resists enfeebles but only has a hard immunity to Stun.
 -- Retain its standard NM Terror immunity while allowing Bind/Shadowbind.
 local ixDrkEnfeebleImmunities =

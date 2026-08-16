@@ -482,7 +482,6 @@ content.groups =
         },
 
         superlinkGroup = 1,
-        spawned        = false,
     },
 }
 
