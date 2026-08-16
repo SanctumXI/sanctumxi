@@ -16,10 +16,16 @@ local function usage(player)
 end
 
 commandObj.onTrigger = function(player, action, targetName)
+    local friendsApi = xi.sanctumFriends
+    if friendsApi == nil then
+        player:printToPlayer('The Friends server component has not been built yet.', xi.msg.channel.SYSTEM_3, 'Friends')
+        return
+    end
+
     action = string.lower(action or '')
 
     if action == 'list' then
-        player:printToPlayer(xi.sanctumFriends.list(player), xi.msg.channel.SYSTEM_3, 'Friends')
+        player:printToPlayer(friendsApi.list(player), xi.msg.channel.SYSTEM_3, 'Friends')
         return
     end
 
@@ -30,13 +36,13 @@ commandObj.onTrigger = function(player, action, targetName)
 
     local result
     if action == 'add' then
-        result = xi.sanctumFriends.request(player, targetName)
+        result = friendsApi.request(player, targetName)
     elseif action == 'accept' then
-        result = xi.sanctumFriends.accept(player, targetName)
+        result = friendsApi.accept(player, targetName)
     elseif action == 'decline' then
-        result = xi.sanctumFriends.decline(player, targetName)
+        result = friendsApi.decline(player, targetName)
     elseif action == 'remove' then
-        result = xi.sanctumFriends.remove(player, targetName)
+        result = friendsApi.remove(player, targetName)
     else
         usage(player)
         return
@@ -46,4 +52,3 @@ commandObj.onTrigger = function(player, action, targetName)
 end
 
 return commandObj
-

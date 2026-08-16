@@ -10,10 +10,12 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
 
     if not zoning then
         player:timer(2500, function(playerArg)
-            xi.sanctumFriends.notifyFriendsOfLogin(playerArg)
+            local friendsApi = xi.sanctumFriends
+            if friendsApi ~= nil and friendsApi.notifyFriendsOfLogin ~= nil then
+                friendsApi.notifyFriendsOfLogin(playerArg)
+            end
         end)
     end
 end)
 
 return m
-

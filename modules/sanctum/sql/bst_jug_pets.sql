@@ -346,10 +346,10 @@ REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 247, 1, 255); -- aspir
 
 UPDATE `mob_pools` SET `spellList` = 900 WHERE `poolid` = 4639; -- was 0
 
--- Frog Cheer as a ready move. Ability 739 was a free slot inside the jug pet
--- block and already had empty name and description records in the client.
--- mob_skill 1960 and animation 1362 are the Poroggo's own, so the animation is
--- native to the model.
+-- Frog Cheer uses unused ability 739. Its client action-metadata record must
+-- also be populated with valid Ready targeting; the name and description DATs
+-- alone are not enough. mob_skill 1960 and animation 1362 are the Poroggo's
+-- own, so the animation is native to the model.
 REPLACE INTO `abilities` VALUES (739, 'frog_cheer', 9, 25, 257, 3, 102, 0, 0, 0, 2000, 0, 6, 3.0, 0, 10, 1, 60, 0, 0, NULL);
 
 -- 1 = radial from the pet, 3 = SELF | PLAYER_PARTY, 238 is the message the

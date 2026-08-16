@@ -43,7 +43,7 @@ Gauntlet
 items
 limbus
 npc
-# Includes the Linkshell Dashboard's recruitment and live-message bridges.
+# Includes the Linkshell Dashboard recruitment, live-message, and Friends bridges.
 sanctum
 warps
 LQS

@@ -6198,27 +6198,27 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         }
                         else
                         {
-                            if (PMember->GetMLevel() <= 10)
+                            if (moblevel <= 10)
                             {
                                 PMember->expChain.chainTime = timer::now() + 60s;
                             }
-                            else if (PMember->GetMLevel() <= 20)
+                            else if (moblevel <= 20)
                             {
                                 PMember->expChain.chainTime = timer::now() + 100s;
                             }
-                            else if (PMember->GetMLevel() <= 30)
+                            else if (moblevel <= 30)
                             {
                                 PMember->expChain.chainTime = timer::now() + 150s;
                             }
-                            else if (PMember->GetMLevel() <= 40)
+                            else if (moblevel <= 40)
                             {
                                 PMember->expChain.chainTime = timer::now() + 200s;
                             }
-                            else if (PMember->GetMLevel() <= 50)
+                            else if (moblevel <= 50)
                             {
                                 PMember->expChain.chainTime = timer::now() + 250s;
                             }
-                            else if (PMember->GetMLevel() <= 60)
+                            else if (moblevel <= 60)
                             {
                                 PMember->expChain.chainTime = timer::now() + 300s;
                             }
@@ -6229,7 +6229,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                             PMember->expChain.chainNumber = 1;
                         }
 
-                        if (chainactive && PMember->GetMLevel() <= 10)
+                        if (chainactive && moblevel <= 10)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
@@ -6249,14 +6249,14 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                             }
                         }
-                        else if (chainactive && PMember->GetMLevel() <= 20)
+                        else if (chainactive && moblevel <= 20)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
@@ -6276,14 +6276,14 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                             }
                         }
-                        else if (chainactive && PMember->GetMLevel() <= 30)
+                        else if (chainactive && moblevel <= 30)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
@@ -6303,14 +6303,14 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                             }
                         }
-                        else if (chainactive && PMember->GetMLevel() <= 40)
+                        else if (chainactive && moblevel <= 40)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
@@ -6330,14 +6330,14 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                             }
                         }
-                        else if (chainactive && PMember->GetMLevel() <= 50)
+                        else if (chainactive && moblevel <= 50)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
@@ -6357,14 +6357,14 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                                     PMember->expChain.chainTime = timer::now() + 60s;
                                     break;
                                 case 5:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                                 default:
-                                    PMember->expChain.chainTime = timer::now() + 60s;
+                                    PMember->expChain.chainTime = timer::now() + 45s;
                                     break;
                             }
                         }
-                        else if (chainactive && PMember->GetMLevel() <= 60)
+                        else if (chainactive && moblevel <= 60)
                         {
                             switch (PMember->expChain.chainNumber)
                             {
