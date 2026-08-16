@@ -2,9 +2,79 @@
 -- Targeted gameplay fixes that do not require engine changes.
 -----------------------------------
 require('modules/module_utils')
+require('scripts/globals/npc_util')
 -----------------------------------
 
 local m = Module:new('sanctum_miscfixes')
+
+-- Chocobo rentals cost a flat 500 gil in every rental zone.
+m:addOverride('xi.chocobo.getPrice', function(player)
+    return 500
+end)
+
+-- Trial-sized avatars do not inherit the Prime Avatar Light resistance rank.
+local trialAvatarSpawnPaths =
+{
+    'xi.zones.Cloister_of_Flames.mobs.Ifrit_Prime_TSTBF.onMobSpawn',
+    'xi.zones.Cloister_of_Frost.mobs.Shiva_Prime_TSTBI.onMobSpawn',
+    'xi.zones.Cloister_of_Gales.mobs.Garuda_Prime_TSTBW.onMobSpawn',
+    'xi.zones.Cloister_of_Storms.mobs.Ramuh_Prime_TSTBL.onMobSpawn',
+    'xi.zones.Cloister_of_Tides.mobs.Leviathan_Prime_TSTBW.onMobSpawn',
+    'xi.zones.Cloister_of_Tremors.mobs.Titan_Prime_TSTBE.onMobSpawn',
+}
+
+for _, spawnPath in ipairs(trialAvatarSpawnPaths) do
+    m:addOverride(spawnPath, function(mob)
+        super(mob)
+        mob:setMod(xi.mod.LIGHT_RES_RANK, 0)
+    end)
+end
+
+-- Ghebi Damomohe grants Astral Covenant on the normal real-time ENM cooldown.
+m:addOverride('xi.zones.Lower_Jeuno.npcs.Ghebi_Damomohe.onTrade', function(player, npc, trade)
+    local astralCovenantCooldown = player:getCharVar('[ENM]AstralCovenant')
+
+    if
+        npcUtil.tradeMatches(trade, xi.item.FLORID_STONE) and
+        player:hasKeyItem(xi.ki.PSOXJA_PASS) and
+        astralCovenantCooldown <= GetSystemTime()
+    then
+        player:startEvent(10047, xi.item.FLORID_STONE)
+        player:confirmTrade()
+        return
+    end
+
+    return super(player, npc, trade)
+end)
+
+m:addOverride('xi.zones.Lower_Jeuno.npcs.Ghebi_Damomohe.onTrigger', function(player, npc)
+    local astralCovenantCooldown = player:getCharVar('[ENM]AstralCovenant')
+
+    if
+        player:hasKeyItem(xi.ki.PSOXJA_PASS) and
+        not player:hasKeyItem(xi.ki.ASTRAL_COVENANT)
+    then
+        if astralCovenantCooldown <= GetSystemTime() then
+            player:startEvent(106, 4, 1, xi.item.FLORID_STONE, xi.ki.PSOXJA_PASS, xi.ki.ASTRAL_COVENANT)
+        else
+            local cooldownExpiry = VanadielTime() + astralCovenantCooldown - GetSystemTime()
+
+            player:startEvent(106, 4, 2, xi.ki.ASTRAL_COVENANT, cooldownExpiry)
+        end
+    else
+        player:startEvent(106, 4)
+    end
+end)
+
+m:addOverride('xi.zones.Lower_Jeuno.npcs.Ghebi_Damomohe.onEventFinish', function(player, csid, option, npc)
+    if csid == 10047 then
+        player:setCharVar('[ENM]AstralCovenant', GetSystemTime() + xi.settings.main.ENM_COOLDOWN * 3600)
+        npcUtil.giveKeyItem(player, xi.ki.ASTRAL_COVENANT)
+        return
+    end
+
+    return super(player, csid, option, npc)
+end)
 
 local function isBarSpellEffect(effectId)
     return
