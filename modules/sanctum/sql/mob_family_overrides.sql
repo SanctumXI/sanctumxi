@@ -1,5 +1,4 @@
 -- Sanctum custom family values translated to the species-based family system.
--- Shinryu intentionally keeps upstream ecosystem 17 (SupremeBeings).
 -- Loaded after the core mob_family_system table by dbtool.
 
 UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 1; -- Acuex
@@ -175,7 +174,7 @@ UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 327; -- Yovra
 UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 328; -- Bird_Ghrah
 UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 331; -- Zdei
 UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 332; -- Belladonna
-UPDATE `mob_family_system` SET `speed` = 90 WHERE `familyID` = 334; -- Sabotender, raised from 65 by the BST jug pet pass; this file owns speed because it imports after bst_jug_pets.sql
+UPDATE `mob_family_system` SET `speed` = 90 WHERE `familyID` = 334; -- Sabotender
 UPDATE `mob_family_system` SET `speed` = 45 WHERE `familyID` = 336; -- Flytrap
 UPDATE `mob_family_system` SET `speed` = 45 WHERE `familyID` = 338; -- Funguar
 UPDATE `mob_family_system` SET `speed` = 55 WHERE `familyID` = 342; -- Leafkin
