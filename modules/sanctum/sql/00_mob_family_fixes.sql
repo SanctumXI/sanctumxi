@@ -1,4 +1,5 @@
 -- Sanctum: thematic corrections to shared family and resistance rows.
+-- The 00_ prefix keeps these broad fixes ahead of BST's specific pool overrides.
 -- Separate from bst_jug_pets.sql because none of these are pet balance; they
 -- apply to wild mobs of the type and were found auditing the wider table.
 

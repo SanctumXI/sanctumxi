@@ -721,19 +721,23 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
             PMob->health.maxhp = PMob->HPmodifier;
         }
 
-        // Apply NM/Mob HP multiplier from settings
+        // Apply the level-based NM or regular mob HP multiplier from settings.
+        float hpMultiplier = 1.0f;
         if (isNM)
         {
-            float hpMultiplierNM = settings::get<float>("map.NM_HP_MULTIPLIER");
-            hpMultiplierNM       = (hpMultiplierNM >= 0.1f && hpMultiplierNM <= 2.0f) ? hpMultiplierNM : 1.0f;
-            PMob->health.maxhp   = (int32)(PMob->health.maxhp * hpMultiplierNM);
+            const uint8 levelThreshold = settings::get<uint8>("map.NM_HP_LEVEL_THRESHOLD");
+            hpMultiplier              = mLvl <= levelThreshold ? settings::get<float>("map.NM_HP_MULTIPLIER") :
+                                                                 settings::get<float>("map.NM_HP_HIGH_LEVEL_MULTIPLIER");
         }
         else
         {
-            float hpMultiplierMob = settings::get<float>("map.MOB_HP_MULTIPLIER");
-            hpMultiplierMob       = (hpMultiplierMob >= 0.1f && hpMultiplierMob <= 2.0f) ? hpMultiplierMob : 1.0f;
-            PMob->health.maxhp    = (int32)(PMob->health.maxhp * hpMultiplierMob);
+            const uint8 levelThreshold = settings::get<uint8>("map.MOB_HP_LEVEL_THRESHOLD");
+            hpMultiplier              = mLvl <= levelThreshold ? settings::get<float>("map.MOB_HP_MULTIPLIER") :
+                                                                 settings::get<float>("map.MOB_HP_HIGH_LEVEL_MULTIPLIER");
         }
+
+        hpMultiplier      = (hpMultiplier >= 0.1f && hpMultiplier <= 2.0f) ? hpMultiplier : 1.0f;
+        PMob->health.maxhp = static_cast<int32>(PMob->health.maxhp * hpMultiplier);
 
         // MP Calculations
         bool hasMp = false;

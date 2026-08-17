@@ -233,7 +233,10 @@ REPLACE INTO `mob_spell_lists` VALUES ('Jug_Frog', 900, 247, 1, 255); -- aspir
 
 UPDATE `mob_pools` SET `spellList` = 900 WHERE `poolid` = 4639; -- was 0
 
--- Frog Cheer
+-- Frog Cheer uses unused ability 739. Its client action-metadata record must
+-- also be populated with valid Ready targeting; the name and description DATs
+-- alone are not enough. mob_skill 1960 and animation 1362 are the Poroggo's
+-- own, so the animation is native to the model.
 REPLACE INTO `abilities` VALUES (739, 'frog_cheer', 9, 25, 257, 3, 102, 0, 0, 0, 2000, 0, 6, 3.0, 0, 10, 1, 60, 0, 0, NULL);
 REPLACE INTO `pet_skills` VALUES (739, 1960, 1362, 'frog_cheer', 1, 10, 3, 2000, 1500, 3, 238, 0, 0, 11, 0, 0, 0, 0);
 REPLACE INTO `mob_skill_lists` VALUES ('Jug_Frog', 30002, 739);
