@@ -51,8 +51,8 @@ GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
     packet.ItemNum[LOC_MOGLOCKER]  = 1 + storage(LOC_MOGLOCKER)->GetSize();
     packet.ItemNum[LOC_MOGSATCHEL] = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetSize();
     packet.ItemNum[LOC_MOGSACK]    = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGSACK)->GetSize();
-    packet.ItemNum[LOC_MOGCASE]    = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGCASE)->GetSize();
-    packet.ItemNum[LOC_WARDROBE]   = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE)->GetSize();
+    packet.ItemNum[LOC_MOGCASE]    = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_MOGCASE)->GetSize();
+    packet.ItemNum[LOC_WARDROBE]   = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE)->GetSize();
     packet.ItemNum[LOC_MOGSAFE2]   = 1 + storage(LOC_MOGSAFE2)->GetSize();
     packet.ItemNum[LOC_WARDROBE2]  = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE2)->GetSize();
     packet.ItemNum[LOC_WARDROBE3]  = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE3)->GetSize();
@@ -75,8 +75,8 @@ GP_SERV_COMMAND_ITEM_MAX::GP_SERV_COMMAND_ITEM_MAX(const CCharEntity* PChar)
                                           : 0x00;
     packet.ItemNum2[LOC_MOGSATCHEL] = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGSATCHEL)->GetBuff();
     packet.ItemNum2[LOC_MOGSACK]    = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGSACK)->GetBuff();
-    packet.ItemNum2[LOC_MOGCASE]    = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
-    packet.ItemNum2[LOC_WARDROBE]   = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
+    packet.ItemNum2[LOC_MOGCASE]    = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_MOGCASE)->GetBuff();
+    packet.ItemNum2[LOC_WARDROBE]   = inLinkshellLibrary ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE)->GetBuff();
     packet.ItemNum2[LOC_MOGSAFE2]   = personalBankUnavailable ? 0x00 : 1 + storage(LOC_MOGSAFE2)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE2]  = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE2)->GetBuff();
     packet.ItemNum2[LOC_WARDROBE3]  = linkshellBankActive ? 0x00 : 1 + PChar->getStorage(LOC_WARDROBE3)->GetBuff();

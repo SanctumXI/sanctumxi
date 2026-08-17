@@ -22,7 +22,9 @@ local m = Module:new('sanctum_bst_lizard')
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.secretion.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.EVASION_BOOST, 25, 0, 90))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 90)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.EVASION_BOOST, 25, 0, duration))
 
     return xi.effect.EVASION_BOOST
 end)

@@ -195,7 +195,7 @@ xi.merit =
     KILLER_EFFECTS              = meritCategory.BST_1 + 0x00,
     REWARD_RECAST               = meritCategory.BST_1 + 0x02,
     PET_BOOST                   = meritCategory.BST_1 + 0x04,
-    SIC_RECAST                  = meritCategory.BST_1 + 0x06,
+    READY_BUFF                  = meritCategory.BST_1 + 0x06,
     TAME_RECAST                 = meritCategory.BST_1 + 0x08,
 
     -- BRD 1

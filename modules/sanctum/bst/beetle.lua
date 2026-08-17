@@ -79,7 +79,9 @@ end)
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.rhino_guard.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(pet, xi.effect.COUNTER_BOOST, 20, 0, 90))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 90)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(pet, xi.effect.COUNTER_BOOST, 20, 0, duration))
 
     return xi.effect.COUNTER_BOOST
 end)

@@ -72,7 +72,9 @@ end)
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.bubble_curtain.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.MAGIC_EVASION_BOOST, 25, 3, 75))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 75)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.MAGIC_EVASION_BOOST, 25, 3, duration))
 
     return xi.effect.MAGIC_EVASION_BOOST
 end)
@@ -117,7 +119,9 @@ end)
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.scissor_guard.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.DEFENSE_BOOST, 20, 0, 60))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 60)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.DEFENSE_BOOST, 20, 0, duration))
 
     return xi.effect.DEFENSE_BOOST
 end)
@@ -132,10 +136,11 @@ end)
 
 m:addOverride('xi.actions.abilities.pets.metallic_body.onPetAbility', function(target, pet, petskill, owner, action)
     local power = math.floor(pet:getMaxHP() * 0.2)
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 300)
 
     target:delStatusEffect(xi.effect.STONESKIN)
 
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.STONESKIN, power, 0, 300))
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.STONESKIN, power, 0, duration))
 
     return xi.effect.STONESKIN
 end)

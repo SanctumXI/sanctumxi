@@ -23,7 +23,9 @@ local m = Module:new('sanctum_bst_sheep')
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.rage.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.BERSERK, 25, 0, 180))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 180)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.BERSERK, 25, 0, duration))
 
     return xi.effect.BERSERK
 end)

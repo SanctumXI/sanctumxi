@@ -35,17 +35,9 @@
 # Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
 #
 # Live example:
-chainbreakers
 custom/commands/
-CustomHNM
-era
-Gauntlet
-items
-limbus
-npc
 # Includes the Linkshell Dashboard recruitment, live-message, and Friends bridges.
 sanctum
-warps
 LQS
 LQS.lua
 lqs_util.cpp

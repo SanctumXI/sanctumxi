@@ -114,7 +114,7 @@ INSERT INTO `merits` VALUES (840,'weapon_bash_effect',5,6,128,6,12);
 INSERT INTO `merits` VALUES (896,'killer_effects',5,1,256,6,13);
 INSERT INTO `merits` VALUES (898,'reward_recast',5,10,256,6,13);
 INSERT INTO `merits` VALUES (900,'pet_boost',5,3,256,6,13);
-INSERT INTO `merits` VALUES (902,'sic_recast',5,3,256,3,13);
+INSERT INTO `merits` VALUES (902,'ready_buff',5,1,256,3,13);
 INSERT INTO `merits` VALUES (904,'tame_recast',5,60,256,6,13);
 INSERT INTO `merits` VALUES (960,'lullaby_recast',5,1,512,6,14);
 INSERT INTO `merits` VALUES (962,'finale_recast',5,1,512,6,14);

@@ -12,7 +12,7 @@
 return LQS.teleporter({
     name = "Smelly Bastard",
     zone = "Lower_Jeuno",
-    pos  = { 11.577, -1.000, 44.801, 255 }, -- !pos 11.577 -1.000 44.801 245
+    pos  = { -2.706, 0.000, -9.891, 150 }, 
     look = LQS.look({
         race = xi.race.HUME_F,
         face = LQS.face.A5,

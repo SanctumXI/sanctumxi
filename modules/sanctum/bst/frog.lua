@@ -16,6 +16,7 @@ require('modules/module_utils')
 -----------------------------------
 
 local m = Module:new('sanctum_bst_frog')
+local frogCheerIcon = 634
 
 -----------------------------------
 -- Spell list, applied on spawn.
@@ -47,9 +48,17 @@ end)
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.frog_cheer.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.FROG_CHEER, 22, 0, 60))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 60)
+    local effectApplied = target:addStatusEffect(xi.effect.FROG_CHEER, {
+        power    = 22,
+        duration = duration,
+        origin   = target,
+        icon     = frogCheerIcon,
+    })
 
-    return xi.effect.FROG_CHEER
+    petskill:setMsg(effectApplied and xi.msg.basic.SKILL_GAIN_EFFECT or xi.msg.basic.SKILL_NO_EFFECT)
+
+    return frogCheerIcon
 end)
 
 -----------------------------------

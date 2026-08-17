@@ -89,7 +89,9 @@ end)
 -----------------------------------
 
 m:addOverride('xi.actions.abilities.pets.noisome_powder.onPetAbility', function(target, pet, petskill, owner, action)
-    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.LUCKY_CHARM, 5, 0, 90))
+    local duration = xi.job_utils.beastmaster.getReadyBuffDuration(owner, 90)
+
+    petskill:setMsg(xi.mobskills.mobBuffMove(target, xi.effect.LUCKY_CHARM, 5, 0, duration))
 
     return xi.effect.LUCKY_CHARM
 end)

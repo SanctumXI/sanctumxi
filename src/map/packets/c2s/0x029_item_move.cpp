@@ -61,10 +61,14 @@ const auto validContainers = [](const CCharEntity* PChar) -> std::set<CONTAINER_
     // These are always available in both LSB and retail.
     std::set allowedContainers = {
         LOC_INVENTORY,
-        LOC_MOGCASE,
-        LOC_WARDROBE,
         LOC_WARDROBE2,
     };
+
+    if (!inLinkshellLibrary)
+    {
+        allowedContainers.insert(LOC_MOGCASE);
+        allowedContainers.insert(LOC_WARDROBE);
+    }
 
     // Global containers optionally unlockable
     const std::set unlockableContainers = {
