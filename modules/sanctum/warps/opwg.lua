@@ -11,7 +11,9 @@ return LQS.outpostTeleporter({
     -- Optional overrides (uncomment to customize)
     -- greeting       = "Welcome to the Outpost Warp Service!",
     -- itemsPerPage   = 5,
-    teleportDelay  = 1500,
+    teleportDelay          = 1500,
+    hideLockedDestinations = true,
+    addonMenu              = true,
 
     -- Override specific outpost costs (optional)
     -- outpostOverrides = {

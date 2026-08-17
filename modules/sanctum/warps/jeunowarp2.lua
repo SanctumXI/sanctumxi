@@ -10,11 +10,11 @@
 -----------------------------------
 
 return LQS.teleporter({
-    name = "Smelly Bastard",
-    zone = "Lower_Jeuno",
-    pos  = { -2.706, 0.000, -9.891, 150 }, 
+    name = "Morris",
+    zone = "Upper_Jeuno",
+    pos  = { -77.440, 0.000, 154.925, 101 }, -- !pos -77.440 0.000 154.925 244
     look = LQS.look({
-        race = xi.race.HUME_F,
+        race = xi.race.HUME_M,
         face = LQS.face.A5,
         body = 17,
         legs = 22,

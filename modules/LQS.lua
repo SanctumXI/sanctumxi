@@ -2136,13 +2136,14 @@ LQS.teleporter = function(config)
 
     -- Default configuration
     local defaults = {
-        itemsPerPage      = 5,
-        teleportDelay     = 1500,
-        greeting          = "Where would you like to go?",
-        noDestinations    = "You haven't unlocked any destinations.",
-        insufficientGil   = "You don't have enough Gil.",
-        insufficientCP    = "You don't have enough conquest points.",
-        cancelled         = "Safe travels!",
+        itemsPerPage           = 5,
+        teleportDelay          = 1500,
+        hideLockedDestinations = false,
+        greeting               = "Where would you like to go?",
+        noDestinations         = "You haven't unlocked any destinations.",
+        insufficientGil        = "You don't have enough Gil.",
+        insufficientCP         = "You don't have enough conquest points.",
+        cancelled              = "Safe travels!",
     }
 
     -- Merge defaults with config
@@ -2227,24 +2228,30 @@ local function executeTeleport(player, destination)
     end)
 end
 
+        local function tryPurchaseAndTeleport(player, npc, destination)
+            local gilCost = destination.costs and destination.costs.gil or 0
+
+            if gilCost > 0 and player:getGil() < gilCost then
+                player:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
+                return false
+            end
+
+            if gilCost > 0 then
+                player:delGil(gilCost)
+            end
+
+            executeTeleport(player, destination)
+            return true
+        end
+
         -- Helper: Show travel confirmation menu
         local function showPaymentMenu(player, npc, destination)
-            local gilCost = destination.costs and destination.costs.gil or 0
 
             local options = {
                 {
                     "Yes",
                     function(playerArg)
-                        if gilCost > 0 then
-                            if playerArg:getGil() >= gilCost then
-                                playerArg:delGil(gilCost)
-                                executeTeleport(playerArg, destination)
-                            else
-                                playerArg:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
-                            end
-                        else
-                            executeTeleport(playerArg, destination)
-                        end
+                        tryPurchaseAndTeleport(playerArg, npc, destination)
                     end,
                 },
                 {
@@ -2310,7 +2317,9 @@ end
                     entry.locked = true
                 end
 
-                table.insert(menuDestinations, entry)
+                if not config.hideLockedDestinations or not entry.locked then
+                    table.insert(menuDestinations, entry)
+                end
             end
 
             return menuDestinations
@@ -2335,10 +2344,33 @@ end
                     player:printToPlayer(config.greeting, xi.msg.channel.SYSTEM_3)
                 end
 
+                local menuDestinations = buildDestinationMenu(player)
+                local addonMenu = rawget(_G, 'SanctumOutpostMenu')
+                if
+                    config.addonMenu and
+                    addonMenu ~= nil and
+                    addonMenu.open(player, npc, menuDestinations, function(playerArg, destination, npcArg)
+                        if destination.locked or not isDestinationUnlocked(playerArg, destination) then
+                            local lockText = destination.lockText or "You must complete the prerequisites."
+
+                            playerArg:printToPlayer(
+                                string.format("%s is locked. %s.", destination.name, lockText),
+                                0,
+                                npcArg:getPacketName()
+                            )
+                            return false
+                        end
+
+                        return tryPurchaseAndTeleport(playerArg, npcArg, destination)
+                    end)
+                then
+                    return
+                end
+
                 -- Use paginated menu
                 LQS.paginatedMenu(player, {
                     title        = config.menuTitle or "Select Destination",
-                    items        = buildDestinationMenu(player),
+                    items        = menuDestinations,
                     itemsPerPage = config.itemsPerPage,
                     npc          = npc,
                     onSelect     = function(playerArg, destination, npcArg)

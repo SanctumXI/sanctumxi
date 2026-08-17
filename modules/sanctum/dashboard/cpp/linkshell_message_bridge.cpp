@@ -1,18 +1,26 @@
 /*
- * Sanctum companion linkshell-message bridge.
+ * Sanctum companion map-server bridge.
  *
  * The companion API only queues authenticated shellholder requests. A map
  * process claims each request atomically and publishes it through the normal
- * CLinkshell path so online members receive the standard in-game packet.
+ * CLinkshell path so online members receive the standard in-game packet. The
+ * same module records accepted yells for the companion's 150-message history.
  */
 
 #include "common/database.h"
 #include "common/logging.h"
+#include "common/scheduler.h"
 
+#include "map/entities/char_entity.h"
 #include "map/items/item_linkshell.h"
 #include "map/linkshell.h"
+#include "map/map_session.h"
+#include "map/packets/basic.h"
+#include "map/packets/c2s/0x0b5_chat_std.h"
 #include "map/utils/moduleutils.h"
+#include "map/utils/zoneutils.h"
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <optional>
@@ -23,6 +31,7 @@ namespace
 {
 
 constexpr std::size_t MaxLinkshellMessageLength = 127;
+constexpr uint32      MaximumStoredYells        = 150;
 
 struct MessageCommand
 {
@@ -50,6 +59,100 @@ auto messageSchemaExists() -> bool
         "AND table_name = 'linkshell_message_commands' LIMIT 1");
     schemaExists = result && result->rowsCount() > 0;
     return *schemaExists;
+}
+
+auto yellSchemaExists() -> bool
+{
+    static std::optional<bool> schemaExists;
+    if (schemaExists.has_value())
+    {
+        return *schemaExists;
+    }
+
+    const auto result = db::preparedStmt(
+        "SELECT 1 FROM information_schema.tables "
+        "WHERE table_schema = DATABASE() "
+        "AND table_name = 'sanctum_yells' LIMIT 1");
+    schemaExists = result && result->rowsCount() > 0;
+    return *schemaExists;
+}
+
+void recordYell(const uint32 senderCharacterId, const std::string& senderName, const uint16 zoneId, const std::string& message)
+{
+    const auto insert = db::preparedStmt(
+        "INSERT INTO sanctum_yells (sender_charid, sender_name, zone_id, message, sent_at) "
+        "VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP(6))",
+        senderCharacterId,
+        senderName,
+        zoneId,
+        message);
+    if (!insert || insert->rowsAffected() != 1)
+    {
+        ShowWarningFmt("LinkshellMessageBridge could not record a yell from {}.", senderName);
+        return;
+    }
+
+    const auto prune = db::preparedStmt(
+        "DELETE FROM sanctum_yells "
+        "WHERE id < ("
+        "SELECT cutoff.id FROM ("
+        "SELECT id FROM sanctum_yells ORDER BY id DESC LIMIT 1 OFFSET ?"
+        ") AS cutoff"
+        ")",
+        MaximumStoredYells - 1);
+    if (!prune)
+    {
+        ShowWarning("LinkshellMessageBridge could not prune old yell history.");
+    }
+}
+
+void queueAcceptedYell(MapSession* session, CCharEntity* PChar, CBasicPacket& packet)
+{
+    if (!session || !session->scheduler || !PChar || !yellSchemaExists() || packet.getType() != 0x0B5)
+    {
+        return;
+    }
+
+    const auto* chatPacket = packet.as<GP_CLI_COMMAND_CHAT_STD>();
+    if (chatPacket->Kind != static_cast<uint8>(GP_CLI_COMMAND_CHAT_STD_KIND::Yell) ||
+        PChar->getCharVar("[YELL]Cooldown") == 1)
+    {
+        return;
+    }
+
+    const auto packetSize = static_cast<std::size_t>(chatPacket->header.size) * 4;
+    if (packetSize <= 0x6)
+    {
+        return;
+    }
+
+    const auto messageLength = std::min<std::size_t>(packetSize - 0x6, sizeof(chatPacket->Str));
+    const auto message       = asStringFromUntrustedSource(chatPacket->Str, messageLength);
+    if (message.empty())
+    {
+        return;
+    }
+
+    const auto senderCharacterId = PChar->id;
+    const auto senderName        = PChar->getName();
+    const auto zoneId            = PChar->getZone();
+    auto*      scheduler         = session->scheduler;
+
+    scheduler->postToMainThread(
+        [scheduler, senderCharacterId, senderName, zoneId, message]()
+        {
+            const auto* currentCharacter = zoneutils::GetChar(senderCharacterId);
+            if (!currentCharacter || currentCharacter->getCharVar("[YELL]Cooldown") != 1)
+            {
+                return;
+            }
+
+            scheduler->postToWorkerThread(
+                [senderCharacterId, senderName, zoneId, message]()
+                {
+                    recordYell(senderCharacterId, senderName, zoneId, message);
+                });
+        });
 }
 
 auto makeClaimToken(const void* moduleAddress) -> std::string
@@ -226,6 +329,7 @@ class LinkshellMessageBridgeModule final : public CPPModule
     void OnInit() override
     {
         claimToken_ = makeClaimToken(this);
+        yellSchemaExists();
         if (messageSchemaExists())
         {
             // A process can die after claiming a row. Returning only old claims
@@ -236,6 +340,12 @@ class LinkshellMessageBridgeModule final : public CPPModule
                 "WHERE status = 'processing' "
                 "AND claimed_at < CURRENT_TIMESTAMP(6) - INTERVAL 2 MINUTE");
         }
+    }
+
+    auto OnIncomingPacket(MapSession* session, CCharEntity* PChar, CBasicPacket& packet) -> bool override
+    {
+        queueAcceptedYell(session, PChar, packet);
+        return false;
     }
 
     void OnTimeServerTick() override
