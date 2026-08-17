@@ -1325,6 +1325,10 @@ void SetupDynamisMob(CMobEntity* PMob)
     PMob->setMobMod(xi::MobMod::GilMax, -1);
     PMob->setMobMod(xi::MobMod::MugGil, -1);
 
+    // Offensive AoEs can hit every valid player in range, not only the
+    // targeted alliance. Target validation still keeps mob buffs off players.
+    PMob->setMobMod(xi::MobMod::AoeHitAll, 1);
+
     // boost dynamis mobs weapon damage
     PMob->setMobMod(xi::MobMod::BaseDamageModifier, 30); // Add approximately 30 flat damage until proven otherwise (In-line with the 35% added previously)
     // job resist traits are much more powerful in dynamis

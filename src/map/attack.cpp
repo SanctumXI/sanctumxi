@@ -197,7 +197,7 @@ bool CAttack::CheckGuarded()
 
 bool CAttack::CheckParried()
 {
-    if (m_attackType != PHYSICAL_ATTACK_TYPE::DAKEN)
+    if (m_attackType != PHYSICAL_ATTACK_TYPE::DAKEN && !m_victim->StatusEffectContainer->HasPreventActionEffect(true))
     {
         if (attackutils::IsParried(m_attacker, m_victim))
         {

@@ -33,7 +33,6 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobEngage = function(mob, target)
-    xi.mob.callPets(mob, mob:getID() + 3)
     mob:setLocalVar('jumpTimer', GetSystemTime() + 30)
     mob:messageText(mob, ID.text.SHIKAREE_ROS_ENGAGE)
 end

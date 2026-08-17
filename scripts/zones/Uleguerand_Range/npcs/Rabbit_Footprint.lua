@@ -83,13 +83,9 @@ entity.onTimeTrigger = function(npc, triggerID)
     local whiteConey = GetMobByID(ID.mob.WHITE_CONEY)
     local blackConey = GetMobByID(ID.mob.BLACK_CONEY)
     local activeTime = npc:getLocalVar('activeTime')
-    local isSpawned =  nil
-
-    if whiteConey then
-        isSpawned = whiteConey:isSpawned()
-    elseif blackConey then
-        isSpawned = blackConey:isSpawned()
-    end
+    local isSpawned =
+        (whiteConey and whiteConey:isSpawned()) or
+        (blackConey and blackConey:isSpawned())
 
     if not isSpawned then
         if
