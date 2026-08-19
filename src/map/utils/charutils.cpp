@@ -6140,19 +6140,21 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         exp *= monsterbonus;
                     }
                         
-                    // Per monster caps pulled from: https://ffxiclopedia.fandom.com/wiki/Experience_Points
-                    if (PMember->GetMLevel() <= 50)
+                    uint16 expCap = 0;
+                    if (memberlevel <= 50)
                     {
-                        exp = std::fmin(exp, 400.0f);
+                        expCap = settings::get<uint16>("sanctum.EXP_KILL_CAP_1_TO_50");
                     }
-                    else if (PMember->GetMLevel() <= 60)
+                    else if (memberlevel <= 65)
                     {
-                        exp = std::fmin(exp, 500.0f);
+                        expCap = settings::get<uint16>("sanctum.EXP_KILL_CAP_51_TO_65");
                     }
                     else
                     {
-                        exp = std::fmin(exp, 600.0f);
+                        expCap = settings::get<uint16>("sanctum.EXP_KILL_CAP_66_PLUS");
                     }
+
+                    exp = std::fmin(exp, static_cast<float>(expCap));
 
                     // Skillchain / Magic Burst EXP Bonus (Sanctum custom)
                     // Bonus scales with the SC/MB damage dealt: bonus exp = exp * (accumulated dmg * pct), capped.
