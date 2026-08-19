@@ -10,23 +10,23 @@
 -----------------------------------
 
 return LQS.teleporter({
-    name = "Skeevy Bastard",
+    name = "Wawaru-Tawaru",
     zone = "Aht_Urhgan_Whitegate",
     pos  = { -80.861, 0.000, -70.591, 128 }, -- !pos -80.861 0.000 -70.591 50,
     look = LQS.look({
-        race = xi.race.HUME_M,
-        face = LQS.face.A1,
-        body = 15,
-        legs = 15,
-        feet = 15,
+        race = xi.race.TARU_M,
+        face = LQS.face.A3,
+        body = 19,
+        legs = 12,
+        feet = 10,
     }),
 
     -- Greeting shown when NPC is triggered
-    greeting = "Oi, 'ere the hell you want to go mate?",
+    greeting = "I'll twist your body into time and space",
 
     -- Menu customization
     menuTitle    = "Choose Your Destination",
-    itemsPerPage = 3,
+    itemsPerPage = 5,
 
     -- Teleport settings
     teleportDelay = 1500,
@@ -49,33 +49,6 @@ return LQS.teleporter({
     destinations = {
         -- Using direct coordinates (cross-zone)
         {
-            name     = "Lower Jeuno",
-            lockText = "Complete 'A Chocobo's Wounds'",
-            pos      = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
-            costs    = { gil = 1500 },
-            level    = 1,
-            check = function(player)
-                return player:hasCompletedQuest(
-                    xi.questLog.JEUNO,
-                    xi.quest.id.jeuno.CHOCOBOS_WOUNDS
-                )
-            end
-        },
-
-        {
-            name     = "Tavnazian Safehold",
-            lockText = "Complete 'The Mothercrystals'",
-            pos      = { 0.015, -21.876, 2.125, 67, 26 }, -- !pos 0.015 -21.876 2.125 26
-            costs    = { gil = 1500 },
-            check = function(player)
-                return player:hasCompletedMission(
-                    xi.mission.log_id.COP,
-                    xi.mission.id.cop.THE_MOTHERCRYSTALS
-                )
-            end
-        },
-
-        {
             name     = "Nashmau",
             lockText = "Complete 'Royal Puppeteer'",
             pos      = { 0.117, 0.000, -31.918, 190, 53 }, -- !pos 0.117 0.000 -31.918 53
@@ -85,6 +58,20 @@ return LQS.teleporter({
                 return player:hasCompletedMission(
                     xi.mission.log_id.TOAU,
                     xi.mission.id.toau.ROYAL_PUPPETEER
+                )
+            end
+        },
+        
+        {
+            name     = "Lower Jeuno",
+            lockText = "Complete 'A Chocobo's Wounds'",
+            pos      = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
+            costs    = { gil = 1500 },
+            level    = 1,
+            check = function(player)
+                return player:hasCompletedQuest(
+                    xi.questLog.JEUNO,
+                    xi.quest.id.jeuno.CHOCOBOS_WOUNDS
                 )
             end
         },

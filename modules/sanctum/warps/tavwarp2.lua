@@ -49,20 +49,6 @@ return LQS.teleporter({
     destinations = {
         -- Using direct coordinates (cross-zone)
         {
-            name     = "Whitegate",
-            lockText = "Complete 'Land of Sacred Serpents'",
-            pos      = { -91.938, 0.000, -72.111, 254, 50 }, -- !pos -91.938 0.000 -72.111 50
-            costs    = { gil = 2000 },
-            level    = 20,
-            check = function(player)
-                return player:hasCompletedMission(
-                    xi.mission.log_id.TOAU,
-                    xi.mission.id.toau.LAND_OF_SACRED_SERPENTS
-                )
-            end
-        },
-
-        {
             name     = "Lower Jeuno",
             lockText = "Complete 'A Chocobo's Wounds'",
             pos      = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
@@ -109,76 +95,6 @@ return LQS.teleporter({
             end
         },
 
-        {
-            name     = "Mhaura",
-            lockText = "Sub Job Required",
-            pos      = { 0.003, -4.000, 117.971, 65, 249 }, -- !pos 0.003 -4.000 117.971 249
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.THE_OLD_LADY
-                    ) or
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.ELDER_MEMORIES
-                    )
-            end
-        },
-
-        {
-            name     = "Selbina",
-            lockText = "Sub Job Required",
-            pos      = { 17.981, -14.559, 99.830, 64, 248 }, -- !pos 17.981 -14.559 99.830 248
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.THE_OLD_LADY
-                    ) or
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.ELDER_MEMORIES
-                    )
-            end
-        },
-
-        {
-            name     = "Rabao",
-            lockText = "Fame 4 Required",
-            pos      = { -0.622, 0.000, -75.861, 191, 247 }, -- !pos -0.622 0.000 -75.861 247
-            costs    = { gil = 1000 },
-            level    = 30,
-            check = function(player)
-                return player:getFameLevel(xi.fameArea.SELBINA_RABAO) >= 4
-            end
-        },
-
-        {
-            name     = "Norg",
-            lockText = "Fame 4 Required",
-            pos      = { -19.724, 0.172, -55.122, 191, 252 }, -- !pos -19.724 0.172 -55.122 252
-            costs    = { gil = 1000 },
-            level    = 30,
-            check = function(player)
-                return player:getFameLevel(xi.fameArea.NORG) >= 4
-            end
-        },
-
-        {
-            name     = "Khazam",
-            lockText = "Kazham Airship Pass Required",
-            pos      = { -28.059, -4.000, -32.657, 62, 250 }, -- !pos -28.059 -4.000 -32.657 250
-            costs    = { gil = 1000 },
-            level    = 30,
-            check = function(player)
-                return player:hasKeyItem(xi.ki.AIRSHIP_PASS_FOR_KAZHAM)
-            end
-        },
     },
 
     -- Messages

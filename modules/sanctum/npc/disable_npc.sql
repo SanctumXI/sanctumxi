@@ -48,7 +48,14 @@ WHERE BINARY `name` IN
     'Pursuivant',
     'Tillecoe',
     'Curio_Vendor_Moogle',
-    'Chat_Manual'
+    'Chat_Manual',
+    'Honorine',
+    'Darcia',
+    'Promurouve',
+    'Biora',
+    'Danzhor'
+
+
     
 )
 -- Treasure Coffers associated with Gobbie Mystery NPCs

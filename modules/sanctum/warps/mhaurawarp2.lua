@@ -48,57 +48,11 @@ return LQS.teleporter({
     -- Custom destinations
     destinations = {
         -- Using direct coordinates (cross-zone)
-        {
-            name     = "Lower Jeuno",
-            lockText = "Complete 'A Chocobo's Wounds'",
-            pos      = { -35.059, 0.000, -48.293, 214, 245 }, -- !pos -35.059 0.000 -48.293 245
-            costs    = { gil = 1000 },
-            level    = 20,
-            check = function(player)
-                return player:hasCompletedQuest(
-                    xi.questLog.JEUNO,
-                    xi.quest.id.jeuno.CHOCOBOS_WOUNDS
-                )
-            end
-        },
-
-        {
-            name     = "Northern San d'Oria",
-            lockText = "Rank 3 Required",
-            pos      = { 111.108, -0.199, -8.846, 222, 231 }, -- !pos 111.108 -0.199 -8.846 231
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end
-        },
-
-        {
-            name     = "Bastok Mines",
-            lockText = "Rank 3 Required",
-            pos      = { 89.570, 0.623, -71.851, 127, 234 }, -- !pos 89.570 0.623 -71.851 234
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end
-        },
-
-        {
-            name     = "Port Windurst",
-            lockText = "Rank 3 Required",
-            pos      = { 197.209, -12.000, 222.625, 65, 240 }, -- !pos 197.209 -12.000 222.625 240
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end
-        },
-
+        
         {
             name     = "Selbina",
-            lockText = "Sub Job Required",
-            pos      = { 17.981, -14.559, 99.830, 64, 248 }, -- !pos 17.981 -14.559 99.830 248
+            lockText = "Sub Job required",
+            pos      = { 17.981, -14.559, 99.830, 64, 248 },
             costs    = { gil = 500 },
             level    = 10,
             check = function(player)
@@ -111,8 +65,10 @@ return LQS.teleporter({
                         xi.questLog.OTHER_AREAS,
                         xi.quest.id.otherAreas.ELDER_MEMORIES
                     )
-            end
+            end,
         },
+
+
     },
 
     -- Messages

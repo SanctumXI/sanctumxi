@@ -1,12 +1,12 @@
 -----------------------------------
--- Upper Jeuno Native Outpost Menu
+-- Lower Jeuno Native Outpost Menu
 -----------------------------------
 require('modules/module_utils')
 
-local m = Module:new('upper_jeuno_native_outpost')
+local m = Module:new('lower_jeuno_native_outpost')
 m:setEnabled(true)
 
-local eventId = 10000
+local eventId = 65000
 local entity  = {}
 
 entity.onTrigger = function(player, npc)
@@ -21,7 +21,7 @@ entity.onEventFinish = function(player, csid, option, npc)
     xi.conquest.teleporterOnEventFinish(player, csid, option, eventId)
 end
 
-xi.module.ensureTable('xi.zones.Upper_Jeuno.npcs')
-xi.zones.Upper_Jeuno.npcs.Outpost_Liaison = entity
+xi.module.ensureTable('xi.zones.Lower_Jeuno.npcs')
+xi.zones.Lower_Jeuno.npcs.Outpost_Liaison = entity
 
 return m

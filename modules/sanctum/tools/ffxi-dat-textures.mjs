@@ -367,7 +367,7 @@ function neutralTerrainGate(r, g, b) {
   return (1 - strongGreen) * (1 - strongBlue) * smoothstep(24, 72, max)
 }
 
-function gradeSand(source, styleSource, styleTarget, regions, coverageRadius = 0, normalizeSource = false, weightFunction = sandWeight) {
+function gradeSand(source, styleSource, styleTarget, regions, coverageRadius = 0, normalizeSource = false, weightFunction = sandWeight, strength = 1) {
   const sourceStats = weightedStats(source, regions, weightFunction)
   const styleSourceRegions = [{ x0: 0, y0: 0, x1: styleSource.width, y1: styleSource.height }]
   const styleTargetRegions = [{ x0: 0, y0: 0, x1: styleTarget.width, y1: styleTarget.height }]
@@ -397,7 +397,7 @@ function gradeSand(source, styleSource, styleTarget, regions, coverageRadius = 0
     for (let c = 0; c < 3; c++) {
       const sourceValue = source.rgba[p + c]
       const graded = styleTargetStats.mean[c] + (sourceValue - referenceStats.mean[c]) * scales[c]
-      output[p + c] = Math.round(Math.max(0, Math.min(255, sourceValue + (graded - sourceValue) * weight)))
+      output[p + c] = Math.round(Math.max(0, Math.min(255, sourceValue + (graded - sourceValue) * weight * strength)))
     }
   }
   return { rgba: output, mask, changed, sourceStats, styleSourceStats, styleTargetStats }
@@ -515,18 +515,20 @@ function main() {
     return
   }
   if (command === 'grade-bmp-sand-match') {
-    const [styleSourcePath, styleTargetPath, outputPath, regionSpec = 'full', maskPath, rawRadius = '3'] = args
-    if (!styleSourcePath || !styleTargetPath || !outputPath) throw new Error('Usage: grade-bmp-sand-match <source.bmp> <style-source.bmp> <style-target.bmp> <output.bmp> [regions] [mask.bmp] [radius]')
+    const [styleSourcePath, styleTargetPath, outputPath, regionSpec = 'full', maskPath, rawRadius = '3', rawStrength = '1'] = args
+    if (!styleSourcePath || !styleTargetPath || !outputPath) throw new Error('Usage: grade-bmp-sand-match <source.bmp> <style-source.bmp> <style-target.bmp> <output.bmp> [regions] [mask.bmp] [radius] [strength]')
     const source = readBmp(datPath)
     const styleSource = readBmp(styleSourcePath)
     const styleTarget = readBmp(styleTargetPath)
     const regions = parseRegions(regionSpec, source.width, source.height)
     const radius = Number(rawRadius)
     if (!Number.isInteger(radius) || radius < 1 || radius > 64) throw new Error('Coverage radius must be an integer from 1 to 64')
-    const result = gradeSand(source, styleSource, styleTarget, regions, radius, true, strictSandWeight)
+    const strength = Number(rawStrength)
+    if (!Number.isFinite(strength) || strength < 0 || strength > 1) throw new Error('Strength must be from 0 to 1')
+    const result = gradeSand(source, styleSource, styleTarget, regions, radius, true, strictSandWeight, strength)
     writeBmp(outputPath, source.width, source.height, result.rgba)
     if (maskPath) writeBmp(maskPath, source.width, source.height, result.mask)
-    console.log(`Matched ${result.changed} strict sand pixels in ${outputPath}`)
+    console.log(`Matched ${result.changed} strict sand pixels in ${outputPath} at ${strength} strength`)
     console.log(`Texture sand mean: ${result.sourceStats.mean.map(v => v.toFixed(1)).join(', ')}; target: ${result.styleTargetStats.mean.map(v => v.toFixed(1)).join(', ')}`)
     return
   }

@@ -1,3 +1,6 @@
+DELETE FROM `npc_list`
+WHERE `npcid` = 17776912 AND `name` = 'Outpost_Liaison';
+
 INSERT INTO `npc_list`
 (
     `npcid`, `name`, `polutils_name`, `pos_rot`, `pos_x`, `pos_y`, `pos_z`,
@@ -6,7 +9,7 @@ INSERT INTO `npc_list`
 )
 VALUES
 (
-    17776912, 'Outpost_Liaison', 'Outpost Liaison', 100, -79.001, 0.000, 158.191,
+    17781073, 'Outpost_Liaison', 'Outpost Liaison', 8, -60.104, 6.000, -75.708,
     0, 40, 40, 0, 1, 0,
     0, 27, 0x0000870500000000000000000000000000000000, 32, NULL, 1
 )

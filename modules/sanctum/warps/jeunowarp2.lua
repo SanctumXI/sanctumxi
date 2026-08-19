@@ -10,11 +10,11 @@
 -----------------------------------
 
 return LQS.teleporter({
-    name = "Morris",
-    zone = "Upper_Jeuno",
-    pos  = { -77.440, 0.000, 154.925, 101 }, -- !pos -77.440 0.000 154.925 244
+    name = "Portaru-Ruru",
+    zone = "Lower_Jeuno",
+    pos  = { -39.147, -1.000, -15.505, 17 }, -- !pos -39.147 -1.000 -15.505 245
     look = LQS.look({
-        race = xi.race.HUME_M,
+        race = xi.race.TARU_M,
         face = LQS.face.A5,
         body = 17,
         legs = 22,
@@ -26,7 +26,7 @@ return LQS.teleporter({
 
     -- Menu customization
     menuTitle    = "Choose Your Destination",
-    itemsPerPage = 4,
+    itemsPerPage = 5,
 
     -- Teleport settings
     teleportDelay = 1500,
@@ -66,77 +66,6 @@ return LQS.teleporter({
             costs    = { gil = 1500 },
             check = function(player)
                 return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.THE_MOTHERCRYSTALS)
-            end,
-        },
-
-        {
-            name     = "Port Windurst",
-            lockText = "Rank 3 Required",
-            pos      = { 197.209, -12.000, 222.625, 65, 240 }, -- !pos 197.209 -12.000 222.625 240,
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end,
-        },
-
-        {
-            name     = "Bastok Mines",
-            lockText = "Rank 3 Required",
-            pos      = { 89.570, 0.623, -71.851, 127, 234 }, -- !pos 89.570 0.623 -71.851 234,
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end,
-        },
-
-        {
-            name     = "Northern San d'Oria",
-            lockText = "Rank 3 Required",
-            pos      = { 111.108, -0.199, -8.846, 222, 231 }, -- !pos 111.108 -0.199 -8.846 231
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return player:getRank(player:getNation()) >= 3
-            end,
-        },
-
-        {
-            name     = "Mhaura",
-            lockText = "Sub Job Required",
-            pos      = { 0.003, -4.000, 117.971, 65, 249 }, -- !pos 0.003 -4.000 117.971 249
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.THE_OLD_LADY
-                    ) or
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.ELDER_MEMORIES
-                    )
-            end,
-        },
-
-        {
-            name     = "Selbina",
-            lockText = "Sub Job Required",
-            pos      = { 17.981, -14.559, 99.830, 64, 248 }, -- !pos 17.981 -14.559 99.830 248
-            costs    = { gil = 500 },
-            level    = 10,
-            check = function(player)
-                return
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.THE_OLD_LADY
-                    ) or
-                    player:hasCompletedQuest(
-                        xi.questLog.OTHER_AREAS,
-                        xi.quest.id.otherAreas.ELDER_MEMORIES
-                    )
             end,
         },
 
