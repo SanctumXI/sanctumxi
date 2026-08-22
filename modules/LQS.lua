@@ -2228,16 +2228,28 @@ local function executeTeleport(player, destination)
     end)
 end
 
-        local function tryPurchaseAndTeleport(player, npc, destination)
+        local function tryPurchaseAndTeleport(player, npc, destination, currency)
             local gilCost = destination.costs and destination.costs.gil or 0
+            local cpCost  = destination.costs and destination.costs.cp or 0
 
-            if gilCost > 0 and player:getGil() < gilCost then
-                player:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
-                return false
+            if currency == nil then
+                currency = gilCost > 0 and 'gil' or cpCost > 0 and 'cp' or 'free'
             end
 
-            if gilCost > 0 then
+            if currency == 'gil' then
+                if player:getGil() < gilCost then
+                    player:printToPlayer(config.insufficientGil, 0, npc:getPacketName())
+                    return false
+                end
+
                 player:delGil(gilCost)
+            elseif currency == 'cp' then
+                if player:getCP() < cpCost then
+                    player:printToPlayer(config.insufficientCP, 0, npc:getPacketName())
+                    return false
+                end
+
+                player:delCP(cpCost)
             end
 
             executeTeleport(player, destination)
@@ -2247,20 +2259,39 @@ end
         -- Helper: Show travel confirmation menu
         local function showPaymentMenu(player, npc, destination)
 
-            local options = {
-                {
-                    "Yes",
+            local gilCost = destination.costs and destination.costs.gil or 0
+            local cpCost  = destination.costs and destination.costs.cp or 0
+            local options = {}
+
+            if gilCost > 0 and cpCost > 0 then
+                table.insert(options, {
+                    string.format('Pay %d Gil', gilCost),
+                    function(playerArg)
+                        tryPurchaseAndTeleport(playerArg, npc, destination, 'gil')
+                    end,
+                })
+
+                table.insert(options, {
+                    string.format('Pay %d CP', cpCost),
+                    function(playerArg)
+                        tryPurchaseAndTeleport(playerArg, npc, destination, 'cp')
+                    end,
+                })
+            else
+                table.insert(options, {
+                    'Yes',
                     function(playerArg)
                         tryPurchaseAndTeleport(playerArg, npc, destination)
                     end,
-                },
-                {
-                    "No",
-                    function(playerArg)
-                        playerArg:printToPlayer(config.cancelled, 0, npc:getPacketName())
-                    end,
-                },
-            }
+                })
+            end
+
+            table.insert(options, {
+                'No',
+                function(playerArg)
+                    playerArg:printToPlayer(config.cancelled, 0, npc:getPacketName())
+                end,
+            })
 
             player:timer(100, function(playerArg)
                 playerArg:customMenu({
@@ -2301,11 +2332,16 @@ end
                 end
 
                 local gilCost = destination.costs and destination.costs.gil or 0
+                local cpCost  = destination.costs and destination.costs.cp or 0
                 local label   = destination.name
 
                 if isDestinationUnlocked(player, destination) then
-                    if gilCost > 0 then
-                        label = string.format("%s (%d Gil)", label, gilCost)
+                    if gilCost > 0 and cpCost > 0 then
+                        label = string.format('%s (%d Gil / %d CP)', label, gilCost, cpCost)
+                    elseif gilCost > 0 then
+                        label = string.format('%s (%d Gil)', label, gilCost)
+                    elseif cpCost > 0 then
+                        label = string.format('%s (%d CP)', label, cpCost)
                     end
 
                     entry.label  = label
@@ -2313,7 +2349,7 @@ end
                 else
                     local lockText = destination.lockText or "Locked"
 
-                    entry.label  = string.format("%s", label)
+                    entry.label  = string.format('%s - %s', label, lockText)
                     entry.locked = true
                 end
 
@@ -2359,6 +2395,14 @@ end
                                 npcArg:getPacketName()
                             )
                             return false
+                        end
+
+                        local gilCost = destination.costs and destination.costs.gil or 0
+                        local cpCost  = destination.costs and destination.costs.cp or 0
+
+                        if gilCost > 0 and cpCost > 0 then
+                            showPaymentMenu(playerArg, npcArg, destination)
+                            return true
                         end
 
                         return tryPurchaseAndTeleport(playerArg, npcArg, destination)

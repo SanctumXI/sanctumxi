@@ -18,15 +18,16 @@ end
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
-    params.baseDamage     = mob:getWeaponDmg()
-    params.numHits        = 3 -- TODO: Confirm numJits
-    params.fTP            = { 2.25, 2.5, 2.75 }
-    params.attackType     = xi.attackType.PHYSICAL
-    params.damageType     = xi.damageType.SLASHING
+    params.baseDamage     = mob:getMainLvl() + 2
+    params.numHits        = 3 
+    params.fTP            = { 5.0, 5.5, 6.0 }
+    params.element        = xi.element.NONE -- TODO: Capture element.
+    params.attackType     = xi.attackType.MAGICAL
+    params.damageType     = xi.damageType.ELEMENTAL
     params.shadowBehavior = xi.mobskills.shadowBehavior.IGNORE_SHADOWS
     -- TODO: Possible accuracy modifier
 
-    local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
+    local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)

@@ -37,6 +37,9 @@ const std::set immobilePets = {
     PETID_ATOMOS,
 };
 
+constexpr float PetFollowTolerance{ 0.5f };
+constexpr float PetRepathDistance{ 1.0f };
+
 }
 
 CPetController::CPetController(CMobEntity* _PPet)
@@ -127,7 +130,42 @@ auto CPetController::DoRoamTick(timer::time_point tick) -> Task<void>
         co_return;
     }
 
-    float currentDistance = distance(PPet->loc.p, PPet->PMaster->loc.p);
+    const bool isPlayerPet =
+        PPet->objtype == TYPE_PET ||
+        (PPet->objtype == TYPE_MOB && PPet->PMaster->objtype == TYPE_PC);
+
+    if (isPlayerPet)
+    {
+        const position_t followPosition = nearPosition(PPet->PMaster->loc.p, PetRoamDistance, static_cast<float>(M_PI));
+        const bool       needsNewPath   =
+            !PPet->PAI->PathFind->IsFollowingPath() ||
+            distance(PPet->PAI->PathFind->GetDestination(), followPosition) > PetRepathDistance;
+
+        if (distance(PPet->loc.p, followPosition) > PetFollowTolerance)
+        {
+            if (needsNewPath)
+            {
+                if (!PPet->PAI->PathFind->ValidPosition(followPosition) ||
+                    !PPet->PAI->PathFind->PathTo(followPosition, PATHFLAG_RUN | PATHFLAG_WALLHACK | PATHFLAG_SLIDE))
+                {
+                    if (!PPet->PAI->PathFind->PathAround(PPet->PMaster->loc.p, PetRoamDistance, PATHFLAG_RUN | PATHFLAG_WALLHACK))
+                    {
+                        PPet->PAI->PathFind->WarpTo(PPet->PMaster->loc.p, PetRoamDistance);
+                    }
+                }
+            }
+
+            PPet->PAI->PathFind->FollowPath(m_Tick);
+        }
+        else if (PPet->PAI->PathFind->IsFollowingPath())
+        {
+            PPet->PAI->PathFind->Clear();
+        }
+
+        co_return;
+    }
+
+    const float currentDistance = distance(PPet->loc.p, PPet->PMaster->loc.p);
 
     if (currentDistance > PetRoamDistance)
     {

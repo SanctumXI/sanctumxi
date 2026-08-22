@@ -36,6 +36,7 @@ instanceObject.afterInstanceRegister = function(player)
 end
 
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
+    hnmInstances.onTimeUpdate(instance, elapsed)
 end
 
 instanceObject.onInstanceFailure = function(instance)

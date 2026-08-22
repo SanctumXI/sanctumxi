@@ -6754,7 +6754,7 @@ void DelExperiencePoints(CCharEntity* PChar, float retainPercent, uint16 forcedX
  *                                                                       *
  ************************************************************************/
 
-void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck, bool isexpchain)
+void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMob, uint32 exp, EMobDifficulty mobCheck, bool isexpchain, bool showMessage)
 {
     TracyZoneScoped;
 
@@ -6784,7 +6784,7 @@ void AddExperiencePoints(bool expFromRaise, CCharEntity* PChar, CBaseEntity* PMo
     }
 
     // exp added from raise shouldn't display a message. Don't need a message for zero exp either
-    if (!expFromRaise && exp > 0)
+    if (showMessage && !expFromRaise && exp > 0)
     {
         if (mobCheck >= EMobDifficulty::TooWeak && isexpchain)
         {

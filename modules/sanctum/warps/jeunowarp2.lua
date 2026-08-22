@@ -92,7 +92,7 @@ return LQS.teleporter({
         },
 
         {
-            name     = "Khazam",
+            name     = "Kazham",
             lockText = "Kazham Airship Pass Required",
             pos      = { -28.059, -4.000, -32.657, 62, 250 }, -- !pos -28.059 -4.000 -32.657 250
             costs    = { gil = 1000 },

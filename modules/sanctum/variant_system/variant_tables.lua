@@ -18,49 +18,51 @@ local legacyCosmetics =
     poroggoCassock   = 23803,
 }
 
+local function modifierEntry(name, mod, value)
+    return { name = name, modifiers = { { mod = mod, value = value } } }
+end
+
+local function modifierListEntry(name, modifiers)
+    return { name = name, modifiers = modifiers }
+end
+
+local function flagEntry(name, flag)
+    return { name = name, flags = { [flag] = true } }
+end
+
 data.settings =
 {
-    variantChance        = 10,
-    chainbreakerChance   = 15,
-    criticalRevealChance = 25,
-    chainbreakerDelay    = 5000,
-    chainbreakerLockout  = 3600,
-    chainbreakerScale    = 1.25,
-    claimPriority        = 30000,
+    variantChance           = 10,
+    chainbreakerChance      = 15,
+    criticalRevealChance    = 25,
+    chainbreakerDelay       = 30000,
+    chainbreakerLockoutMin  = 1800,
+    chainbreakerLockoutMax  = 3600,
+    chainbreakerScale       = 1.25,
+    claimPriority           = 30000,
+    zoneBossThreshold       = 20,
+    zoneBossChance          = 25,
+    zoneBossSpawnDelay      = 5000,
+    zoneBossBuffCount       = 5,
+    zoneBossActionPoints    = 1,
 }
 
 data.buffCatalog =
 {
-    hp_25 =
-    {
-        name     = 'HP +25%',
-        minLevel = 1,
-        modifiers =
-        {
-            { mod = xi.mod.HPP, value = 25 },
-        },
-    },
-
+    hp_25 = modifierEntry('HP +25%', xi.mod.HPP, 25),
     base_stats_10 =
     {
-        name     = 'Base Stats +10%',
-        minLevel = 1,
+        name = 'Base Stats +10%',
         buildModifiers = function(mob)
             local modifiers = {}
             local stats =
             {
-                xi.mod.STR,
-                xi.mod.DEX,
-                xi.mod.VIT,
-                xi.mod.AGI,
-                xi.mod.INT,
-                xi.mod.MND,
-                xi.mod.CHR,
+                xi.mod.STR, xi.mod.DEX, xi.mod.VIT, xi.mod.AGI,
+                xi.mod.INT, xi.mod.MND, xi.mod.CHR,
             }
 
             for _, stat in ipairs(stats) do
-                modifiers[#modifiers + 1] =
-                {
+                modifiers[#modifiers + 1] = {
                     mod   = stat,
                     value = math.max(1, math.floor(mob:getStat(stat) * 0.10)),
                 }
@@ -69,293 +71,111 @@ data.buffCatalog =
             return modifiers
         end,
     },
+    attack_15           = modifierEntry('Attack +15%', xi.mod.ATTP, 15),
+    defense_20          = modifierEntry('Defense +20%', xi.mod.DEFP, 20),
+    accuracy_25         = modifierEntry('Accuracy +25', xi.mod.ACC, 25),
+    evasion_25          = modifierEntry('Evasion +25', xi.mod.EVA, 25),
+    regen_3             = modifierEntry('Regen +3', xi.mod.REGEN, 3),
+    poison_attacks      = flagEntry('Poison Attacks', 'poisonAttacks'),
+    double_attack_10    = modifierEntry('Double Attack +10%', xi.mod.DOUBLE_ATTACK, 10),
+    haste_10            = modifierEntry('Haste +10%', xi.mod.HASTE_ABILITY, 1000),
+    regain_50           = modifierEntry('Regain +50', xi.mod.REGAIN, 50),
+    magic_attack_20     = modifierEntry('Magic Attack +20', xi.mod.MATT, 20),
+    magic_defense_20    = modifierEntry('Magic Defense +20', xi.mod.MDEF, 20),
+    fast_cast_15        = modifierEntry('Fast Cast +15%', xi.mod.FASTCAST, 15),
+    refresh_3           = modifierEntry('Refresh +3', xi.mod.REFRESH, 3),
+    store_tp_20         = modifierEntry('Store TP +20', xi.mod.STORETP, 20),
+    triple_attack_5     = modifierEntry('Triple Attack +5%', xi.mod.TRIPLE_ATTACK, 5),
+    damage_taken_10     = modifierEntry('Damage Taken -10%', xi.mod.DMG, -1000),
+    magic_evasion_40    = modifierEntry('Magic Evasion +40', xi.mod.MEVA, 40),
+    counter_10          = modifierEntry('Counter +10%', xi.mod.COUNTER, 10),
+    critical_hit_rate_10 = modifierEntry('Critical Hit Rate +10%', xi.mod.CRITHITRATE, 10),
+    subtle_blow_25      = modifierEntry('Subtle Blow +25', xi.mod.SUBTLE_BLOW, 25),
+}
 
-    attack_15 =
+data.buffCategoryOrder = { 'physical', 'magical', 'misc' }
+
+data.buffCategoryNames =
+{
+    physical = 'Physical',
+    magical  = 'Magical',
+    misc     = 'Miscellaneous',
+}
+
+local levelOneBuffs =
+{
+    physical =
     {
-        name      = 'Attack +15%',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.ATTP, value = 15 },
-        },
+        'attack_15', 'defense_20', 'accuracy_25',
+        'evasion_25', 'poison_attacks', 'double_attack_10',
     },
-
-    defense_20 =
+    magical = {},
+    misc =
     {
-        name      = 'Defense +20%',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.DEFP, value = 20 },
-        },
-    },
-
-    accuracy_25 =
-    {
-        name      = 'Accuracy +25',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.ACC, value = 25 },
-        },
-    },
-
-    evasion_25 =
-    {
-        name      = 'Evasion +25',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.EVA, value = 25 },
-        },
-    },
-
-    regen_3 =
-    {
-        name      = 'Regen +3',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.REGEN, value = 3 },
-        },
-    },
-
-    poison_attacks =
-    {
-        name     = 'Poison Attacks',
-        minLevel = 1,
-        flags =
-        {
-            poisonAttacks = true,
-        },
-    },
-
-    double_attack_10 =
-    {
-        name      = 'Double Attack +10%',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.DOUBLE_ATTACK, value = 10 },
-        },
-    },
-
-    haste_10 =
-    {
-        name      = 'Haste +10%',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.HASTE_ABILITY, value = 1000 },
-        },
-    },
-
-    regain_50 =
-    {
-        name      = 'Regain +50',
-        minLevel  = 1,
-        modifiers =
-        {
-            { mod = xi.mod.REGAIN, value = 50 },
-        },
-    },
-
-    magic_attack_20 =
-    {
-        name      = 'Magic Attack +20',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.MATT, value = 20 },
-        },
-    },
-
-    magic_defense_20 =
-    {
-        name      = 'Magic Defense +20',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.MDEF, value = 20 },
-        },
-    },
-
-    fast_cast_15 =
-    {
-        name      = 'Fast Cast +15%',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.FASTCAST, value = 15 },
-        },
-    },
-
-    refresh_3 =
-    {
-        name      = 'Refresh +3',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.REFRESH, value = 3 },
-        },
-    },
-
-    store_tp_20 =
-    {
-        name      = 'Store TP +20',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.STORETP, value = 20 },
-        },
-    },
-
-    triple_attack_5 =
-    {
-        name      = 'Triple Attack +5%',
-        minLevel  = 51,
-        modifiers =
-        {
-            { mod = xi.mod.TRIPLE_ATTACK, value = 5 },
-        },
-    },
-
-    damage_taken_10 =
-    {
-        name      = 'Damage Taken -10%',
-        minLevel  = 66,
-        modifiers =
-        {
-            { mod = xi.mod.DMG, value = -1000 },
-        },
-    },
-
-    magic_evasion_40 =
-    {
-        name      = 'Magic Evasion +40',
-        minLevel  = 66,
-        modifiers =
-        {
-            { mod = xi.mod.MEVA, value = 40 },
-        },
-    },
-
-    counter_10 =
-    {
-        name      = 'Counter +10%',
-        minLevel  = 66,
-        modifiers =
-        {
-            { mod = xi.mod.COUNTER, value = 10 },
-        },
-    },
-
-    critical_hit_rate_10 =
-    {
-        name      = 'Critical Hit Rate +10%',
-        minLevel  = 66,
-        modifiers =
-        {
-            { mod = xi.mod.CRITHITRATE, value = 10 },
-        },
-    },
-
-    subtle_blow_25 =
-    {
-        name      = 'Subtle Blow +25',
-        minLevel  = 66,
-        modifiers =
-        {
-            { mod = xi.mod.SUBTLE_BLOW, value = 25 },
-        },
+        'hp_25', 'base_stats_10', 'regen_3', 'haste_10', 'regain_50',
     },
 }
 
-data.regionBuffPools =
+local levelFiftyOneBuffs =
 {
-    [xi.region.ZULKHEIM] =
+    physical =
     {
-        'hp_25',
-        'base_stats_10',
-        'attack_15',
-        'defense_20',
-        'accuracy_25',
-        'evasion_25',
-        'regen_3',
-        'poison_attacks',
-        'double_attack_10',
-        'haste_10',
-        'regain_50',
-        'magic_attack_20',
-        'magic_defense_20',
-        'fast_cast_15',
-        'refresh_3',
-        'store_tp_20',
-        'triple_attack_5',
-        'damage_taken_10',
-        'magic_evasion_40',
-        'counter_10',
-        'critical_hit_rate_10',
-        'subtle_blow_25',
+        'store_tp_20', 'triple_attack_5',
     },
+    magical =
+    {
+        'magic_attack_20', 'magic_defense_20', 'fast_cast_15', 'refresh_3',
+    },
+    misc = {},
+}
+
+local levelSixtySixBuffs =
+{
+    physical =
+    {
+        'counter_10', 'critical_hit_rate_10', 'subtle_blow_25',
+    },
+    magical = { 'magic_evasion_40' },
+    misc     = { 'damage_taken_10' },
+}
+
+local function combineBuffTiers(...)
+    local result = { physical = {}, magical = {}, misc = {} }
+
+    for _, tier in ipairs({ ... }) do
+        for _, category in ipairs(data.buffCategoryOrder) do
+            for _, buffId in ipairs(tier[category] or {}) do
+                result[category][#result[category] + 1] = buffId
+            end
+        end
+    end
+
+    return result
+end
+
+data.levelBuffPools =
+{
+    { minLevel = 1,  maxLevel = 50, buffs = combineBuffTiers(levelOneBuffs) },
+    { minLevel = 51, maxLevel = 65, buffs = combineBuffTiers(levelOneBuffs, levelFiftyOneBuffs) },
+    { minLevel = 66, maxLevel = 86, buffs = combineBuffTiers(levelOneBuffs, levelFiftyOneBuffs, levelSixtySixBuffs) },
 }
 
 data.weaknessCatalog =
 {
-    piercing_25 =
+    piercing_25 = modifierEntry('Piercing damage +25%', xi.mod.PIERCE_SDT, 2500),
+    blunt_25 = modifierListEntry('Blunt damage +25%',
     {
-        name = 'Piercing damage +25%',
-        modifiers =
-        {
-            { mod = xi.mod.PIERCE_SDT, value = 2500 },
-        },
-    },
-
-    blunt_25 =
-    {
-        name = 'Blunt damage +25%',
-        modifiers =
-        {
-            { mod = xi.mod.IMPACT_SDT, value = 2500 },
-            { mod = xi.mod.HTH_SDT, value = 2500 },
-        },
-    },
-
-    slashing_25 =
-    {
-        name = 'Slashing damage +25%',
-        modifiers =
-        {
-            { mod = xi.mod.SLASH_SDT, value = 2500 },
-        },
-    },
-
-    magic_25 =
-    {
-        name = 'Magic damage +25%',
-        modifiers =
-        {
-            { mod = xi.mod.UDMGMAGIC, value = 2500 },
-        },
-    },
-
-    skillchain_25 =
-    {
-        name = 'Skillchain damage +25%',
-        flags =
-        {
-            skillchainWeakness = true,
-        },
-    },
+        { mod = xi.mod.IMPACT_SDT, value = 2500 },
+        { mod = xi.mod.HTH_SDT, value = 2500 },
+    }),
+    slashing_25   = modifierEntry('Slashing damage +25%', xi.mod.SLASH_SDT, 2500),
+    magic_25      = modifierEntry('Magic damage +25%', xi.mod.UDMGMAGIC, 2500),
+    skillchain_25 = flagEntry('Skillchain damage +25%', 'skillchainWeakness'),
 }
 
 data.globalWeaknessPool =
 {
-    'piercing_25',
-    'blunt_25',
-    'slashing_25',
-    'magic_25',
-    'skillchain_25',
+    'piercing_25', 'blunt_25', 'slashing_25', 'magic_25', 'skillchain_25',
 }
 
 data.cosmeticPools =

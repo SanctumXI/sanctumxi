@@ -1,7 +1,7 @@
 -----------------------------------
 -- NM Hitbox Scale
 --
--- Companion to the client-side 'SanctumSize' Ashita addon that enlarges
+-- Companion to the client-side 'SanctumClient' Ashita addon that enlarges
 -- enemies. Then, this module scales the server-size mob value to match.
 -- Bigger hitbox, better coffee.
 -----------------------------------
@@ -23,6 +23,7 @@ local nmsToScale =
     { 'The_Shrine_of_RuAvitau', 'Kirin', 4.4, 2.0 },
     { 'Waughroon_Shrine', 'Queen_Jelly', 3.3, 2.0 },
     -- 150%
+    { 'Apollyon', 'Proto-Omega', 1.7, 1.5 },
     { 'Balgas_Dais', 'Giant_Moa', 3.7, 1.5 },
     { 'Beaucedine_Glacier', 'Gargantua', 2.2, 1.5 },
     { 'Behemoths_Dominion', 'King_Behemoth', 4.5, 1.5 },
@@ -48,6 +49,7 @@ local nmsToScale =
     { 'Sea_Serpent_Grotto', 'Charybdis', 2.5, 1.5 },
     { 'Ship_bound_for_Mhaura', 'Sea_Horror', 2.5, 1.5 },
     { 'Ship_bound_for_Selbina', 'Sea_Horror', 2.5, 1.5 },
+    { 'Temenos', 'Proto-Ultima', 1.5, 1.5 },
     { 'The_Boyahda_Tree', 'Aquarius', 1.6, 1.5 },
     { 'Waughroon_Shrine', 'Flayer_Franz', 1.8, 1.5 },
     -- 120%

@@ -22,6 +22,8 @@
 #include "0x0f4_tracking_list.h"
 
 #include "entities/char_entity.h"
+#include "entities/mob_entity.h"
+#include "data/enums/mob_mod.h"
 
 GP_SERV_COMMAND_TRACKING_LIST::GP_SERV_COMMAND_TRACKING_LIST(const CCharEntity* PChar, CBaseEntity* PEntity)
 {
@@ -30,7 +32,17 @@ GP_SERV_COMMAND_TRACKING_LIST::GP_SERV_COMMAND_TRACKING_LIST(const CCharEntity* 
     packet.ActIndex = PEntity->targid;
     if (PEntity->objtype == TYPE_MOB)
     {
-        packet.Level = static_cast<CBattleEntity*>(PEntity)->GetMLevel();
+        auto*      PMob = static_cast<CMobEntity*>(PEntity);
+        const auto& localVars = PMob->GetLocalVars();
+        const auto  variantSystemVar = localVars.find("VariantSystemActive");
+        const bool  isVariantSystemMob =
+            variantSystemVar != localVars.end() && variantSystemVar->second > 0;
+        const bool isImpossibleToGauge =
+            PMob->m_Type & MOBTYPE_NOTORIOUS ||
+            PMob->m_Type & MOBTYPE_BATTLEFIELD ||
+            PMob->getMobMod(xi::MobMod::CheckAsNm) > 0;
+
+        packet.Level = isImpossibleToGauge && !isVariantSystemMob ? 0 : PMob->GetMLevel();
     }
 
     // 0 - Black dot (Char??)

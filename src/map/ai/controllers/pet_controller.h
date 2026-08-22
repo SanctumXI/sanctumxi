@@ -30,7 +30,7 @@ class CPetController : public CMobController
 public:
     CPetController(CMobEntity* PPet);
 
-    static constexpr float PetRoamDistance{ 2.1f };
+    static constexpr float PetRoamDistance{ 2.0f };
     virtual auto           DoRoamTick(timer::time_point tick) -> Task<void> override;
     bool                   PetSkill(uint16 targid, uint16 abilityid);
 

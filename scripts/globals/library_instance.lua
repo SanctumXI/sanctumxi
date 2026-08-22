@@ -22,6 +22,21 @@ libraryInstance.linkshellAccessCost =
     xi.settings.sanctum and
     xi.settings.sanctum.LIBRARY_LINKSHELL_ACCESS_COST or
     500000
+libraryInstance.idleTimeoutSeconds =
+    xi.settings and
+    xi.settings.sanctum and
+    xi.settings.sanctum.LIBRARY_INSTANCE_IDLE_TIMEOUT or
+    15 * 60
+libraryInstance.creationTimeoutMs =
+    xi.settings and
+    xi.settings.sanctum and
+    xi.settings.sanctum.LIBRARY_INSTANCE_CREATION_TIMEOUT or
+    3 * 60 * 1000
+libraryInstance.maxActiveCopies =
+    xi.settings and
+    xi.settings.sanctum and
+    xi.settings.sanctum.LIBRARY_MAX_ACTIVE_INSTANCES or
+    64
 libraryInstance.linkshellHolderType = 1
 libraryInstance.purchaseResult =
 {
@@ -253,6 +268,10 @@ local function getLinkshellConfig(linkshellId)
         exitZone        = xi.zone.EASTERN_ADOULIN,
         exitPosition    = { x = -86.2, y = -0.15, z = -76, rot = 220 },
         copyKey         = string.format('linkshell_library_%u', linkshellId),
+        creationTimeoutMs  = libraryInstance.creationTimeoutMs,
+        idleTimeoutSeconds = libraryInstance.idleTimeoutSeconds,
+        maxActiveCopies    = libraryInstance.maxActiveCopies,
+        sleepWhenEmpty     = true,
         canEnter        = function(player)
             return libraryInstance.isRegisteredMember(player, linkshellId)
         end,
@@ -590,6 +609,10 @@ end
 
 libraryInstance.onComplete = function(instance)
     return instanceManager.onInstanceComplete(instance)
+end
+
+libraryInstance.onTimeUpdate = function(instance, elapsed)
+    return instanceManager.onInstanceTimeUpdate(instance, elapsed)
 end
 
 return libraryInstance

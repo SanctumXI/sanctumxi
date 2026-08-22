@@ -9,6 +9,9 @@ local pendingByRequester      = {}
 local requesterBlockedUntil   = {}
 local stateKeyByRuntimeId     = {}
 local nextRequestToken        = 0
+local idleTimeoutVar          = '[SanctumInstance]IdleTimeoutMs'
+local emptySinceVar           = '[SanctumInstance]EmptySinceMs'
+local sleepWhenEmptyVar       = '[SanctumInstance]SleepWhenEmpty'
 
 local function log(config, message)
     print(string.format('[SanctumInstance:%s] %s', config.copyKey, message))
@@ -22,7 +25,16 @@ local function validateConfig(config)
         type(config.exitZone) ~= 'number' or
         type(config.copyKey) ~= 'string' or
         config.copyKey == '' or
-        (config.entryMessage ~= nil and type(config.entryMessage) ~= 'function')
+        (config.entryMessage ~= nil and type(config.entryMessage) ~= 'function') or
+        (config.sleepWhenEmpty ~= nil and type(config.sleepWhenEmpty) ~= 'boolean') or
+        (config.creationTimeoutMs ~= nil and
+            (type(config.creationTimeoutMs) ~= 'number' or config.creationTimeoutMs <= 0)) or
+        (config.idleTimeoutSeconds ~= nil and
+            (type(config.idleTimeoutSeconds) ~= 'number' or config.idleTimeoutSeconds < 0)) or
+        (config.maxActiveCopies ~= nil and
+            (type(config.maxActiveCopies) ~= 'number' or
+                config.maxActiveCopies < 1 or
+                config.maxActiveCopies % 1 ~= 0))
     then
         return false, 'Invalid Sanctum instance configuration.'
     end
@@ -126,6 +138,21 @@ local function getDestinationZone(config)
     end
 
     return zone
+end
+
+local function countPendingCopies(config)
+    local count = 0
+    for _, state in pairs(copyStates) do
+        if
+            state.creating and
+            state.config.definitionId == config.definitionId and
+            state.config.destinationZone == config.destinationZone
+        then
+            count = count + 1
+        end
+    end
+
+    return count
 end
 
 local function getLiveInstance(state)
@@ -324,6 +351,7 @@ local function expireCreation(stateKey, state, message)
 
     cancelPendingRequest(stateKey, state)
     notifyWaiters(state, message or 'Instance creation timed out. Wait for the canceled request to clear, then try again.')
+    copyStates[stateKey] = nil
 end
 
 instanceManager.checkPendingCreation = function(stateKey, requestToken)
@@ -385,7 +413,25 @@ instanceManager.enter = function(player, config)
     local destinationZone = getDestinationZone(config)
     if not destinationZone then
         player:printToPlayer('The requested instance zone is unavailable.')
+        copyStates[stateKey] = nil
         return false
+    end
+
+    if config.maxActiveCopies then
+        local activeCount  = #destinationZone:getInstancesByDefinition(config.definitionId)
+        local pendingCount = countPendingCopies(config)
+        if activeCount + pendingCount >= config.maxActiveCopies then
+            player:printToPlayer('All available copies of this instance are currently in use. Please try again later.')
+            log(config, string.format(
+                'creation refused at copy limit %u (%u active, %u pending)',
+                config.maxActiveCopies,
+                activeCount,
+                pendingCount
+            ))
+
+            copyStates[stateKey] = nil
+            return false
+        end
     end
 
     nextRequestToken = nextRequestToken + 1
@@ -537,6 +583,10 @@ instanceManager.onInstanceCreated = function(requester, instance)
     state.runtimeId                = runtimeId
     stateKeyByRuntimeId[runtimeId] = pending.stateKey
 
+    instance:setLocalVar(idleTimeoutVar, math.floor((config.idleTimeoutSeconds or 0) * 1000))
+    instance:setLocalVar(emptySinceVar, 0)
+    instance:setLocalVar(sleepWhenEmptyVar, config.sleepWhenEmpty and 1 or 0)
+
     log(config, string.format(
         'creation callback accepted for definition %u, runtime %u',
         definitionId,
@@ -555,6 +605,44 @@ instanceManager.onInstanceCreated = function(requester, instance)
         end
     end
 
+    return true
+end
+
+instanceManager.onInstanceTimeUpdate = function(instance, elapsed)
+    local idleTimeoutMs = instance and instance:getLocalVar(idleTimeoutVar) or 0
+    if idleTimeoutMs == 0 then
+        return false
+    end
+
+    if #instance:getChars() > 0 then
+        instance:setLocalVar(emptySinceVar, 0)
+        return false
+    end
+
+    local emptySince = instance:getLocalVar(emptySinceVar)
+    if emptySince == 0 or elapsed < emptySince then
+        instance:setLocalVar(emptySinceVar, math.max(elapsed, 1))
+        return false
+    end
+
+    if elapsed - emptySince < idleTimeoutMs then
+        return false
+    end
+
+    local runtimeId = instance:getRuntimeID()
+    local stateKey  = stateKeyByRuntimeId[runtimeId]
+    local state     = stateKey and copyStates[stateKey] or nil
+    if state then
+        log(state.config, string.format(
+            'retiring runtime %u after %u seconds empty',
+            runtimeId,
+            math.floor((elapsed - emptySince) / 1000)
+        ))
+    else
+        print(string.format('[SanctumInstance] retiring untracked runtime %u after idle timeout', runtimeId))
+    end
+
+    instance:fail()
     return true
 end
 
@@ -583,6 +671,7 @@ local function finishInstance(instance, reason)
     ))
 
     clearRuntimeState(stateKey, state)
+    copyStates[stateKey] = nil
 
     local exitPosition = config.exitPosition or { x = 0, y = 0, z = 0, rot = 0 }
     for _, player in ipairs(instance:getChars()) do
@@ -640,6 +729,7 @@ instanceManager.clear = function(config, destroyInstance)
     end
 
     clearRuntimeState(stateKey, state)
+    copyStates[stateKey] = nil
     return true
 end
 

@@ -259,7 +259,7 @@ local unlocks =
         {
             [10] = { 'Vermin Killer' },
             [15] = { 'Resist Slow', 'Resist Amnesia' },
-            [20] = { 'Bird Killer' },
+            [20] = { 'Bird Killer', 'Predator' },
             [30] = { 'Amorph Killer' },
             [35] = { 'Resist Slow II', 'Resist Amnesia II' },
             [40] = { 'Lizard Killer', 'Tandem Blow' },

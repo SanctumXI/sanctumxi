@@ -16,6 +16,7 @@ instanceObject.afterInstanceRegister = function(player)
 end
 
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
+    libraryInstance.onTimeUpdate(instance, elapsed)
 end
 
 instanceObject.onInstanceFailure = function(instance)

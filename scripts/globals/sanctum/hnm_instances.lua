@@ -14,6 +14,22 @@ hnmInstances.reisenjimaHenge =
     exitZone        = xi.zone.REISENJIMA,
     exitPosition    = { x = -500.023, y = -19.074, z = -487.686, rot = 190 },
     copyKey         = 'henge_hnm_test',
+    creationTimeoutMs =
+        xi.settings and
+        xi.settings.sanctum and
+        xi.settings.sanctum.HNM_INSTANCE_CREATION_TIMEOUT or
+        60 * 1000,
+    idleTimeoutSeconds =
+        xi.settings and
+        xi.settings.sanctum and
+        xi.settings.sanctum.HNM_INSTANCE_IDLE_TIMEOUT or
+        5 * 60,
+    maxActiveCopies =
+        xi.settings and
+        xi.settings.sanctum and
+        xi.settings.sanctum.HNM_MAX_ACTIVE_INSTANCES or
+        16,
+    sleepWhenEmpty = true,
 }
 
 hnmInstances.enterTest = function(player)
@@ -38,6 +54,10 @@ end
 
 hnmInstances.onComplete = function(instance)
     return instanceManager.onInstanceComplete(instance)
+end
+
+hnmInstances.onTimeUpdate = function(instance, elapsed)
+    return instanceManager.onInstanceTimeUpdate(instance, elapsed)
 end
 
 -- Example only: the caller must supply a new server-side instance_list ID.

@@ -50,6 +50,7 @@ public:
 
     void RegisterChar(CCharEntity*);
     bool UnregisterChar(CCharEntity*);
+    void ReleaseRegisteredChars();
 
     uint16             GetID() const;
     uint64_t           GetRuntimeID() const;

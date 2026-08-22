@@ -29,6 +29,7 @@
 #include "ai/ai_container.h"
 #include "entities/char_entity.h"
 #include "lua/luautils.h"
+#include "utils/zoneutils.h"
 #include "zone.h"
 
 #include "common/timer.h"
@@ -149,6 +150,11 @@ void CInstance::LoadInstance()
 
 void CInstance::RegisterChar(CCharEntity* PChar)
 {
+    if (CharRegistered(PChar))
+    {
+        return;
+    }
+
     if (m_registeredChars.empty())
     {
         m_commander = PChar->id;
@@ -164,6 +170,21 @@ bool CInstance::UnregisterChar(CCharEntity* PChar)
         m_registeredChars.end());
 
     return previousSize != m_registeredChars.size();
+}
+
+void CInstance::ReleaseRegisteredChars()
+{
+    for (const auto charId : m_registeredChars)
+    {
+        if (auto* PChar = zoneutils::GetChar(charId); PChar && PChar->PInstance == this)
+        {
+            PChar->PInstance = nullptr;
+        }
+    }
+
+    m_registeredChars.clear();
+    m_enteredChars.clear();
+    m_commander = 0;
 }
 
 uint8 CInstance::GetLevelCap() const

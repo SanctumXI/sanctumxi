@@ -28,6 +28,11 @@
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
 
+namespace
+{
+const std::string sleepWhenEmptyVar = "[SanctumInstance]SleepWhenEmpty";
+}
+
 CZoneInstance::CZoneInstance(Scheduler& scheduler, MapConfig config, ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
 : CZone(scheduler, config, ZoneID, RegionID, ContinentID, levelRestriction)
 {
@@ -388,30 +393,46 @@ auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
 {
     TracyZoneScoped;
 
-    std::vector<CInstance*> instancesToRemove;
+    std::vector<CInstance*> instances;
+    instances.reserve(m_InstanceList.size());
     for (const auto& PInstance : m_InstanceList)
     {
-        co_await PInstance->ZoneServer(tick);
+        instances.emplace_back(PInstance.get());
+    }
+
+    std::vector<CInstance*> instancesToRemove;
+    for (auto* PInstance : instances)
+    {
+        const bool sleeping = PInstance->CharListEmpty() && PInstance->GetLocalVar(sleepWhenEmptyVar) != 0;
+        if (!sleeping)
+        {
+            co_await PInstance->ZoneServer(tick);
+        }
+
         PInstance->CheckTime(tick);
 
         if ((PInstance->Failed() || PInstance->Completed()) && PInstance->CharListEmpty())
         {
-            instancesToRemove.push_back(PInstance.get());
+            instancesToRemove.push_back(PInstance);
         }
     }
 
-    for (const auto& PInstance : instancesToRemove)
+    for (auto* PInstance : instancesToRemove)
     {
-        ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
+        const auto instance = std::find_if(
+            m_InstanceList.begin(),
+            m_InstanceList.end(),
+            [PInstance](const auto& element)
+            {
+                return element.get() == PInstance;
+            });
 
-        m_InstanceList.erase(
-            std::find_if(
-                m_InstanceList.begin(),
-                m_InstanceList.end(),
-                [&PInstance](const auto& el)
-                {
-                    return el.get() == PInstance;
-                }));
+        if (instance != m_InstanceList.end())
+        {
+            ShowDebug("[CZoneInstance] ZoneServer cleaned up Instance %s", PInstance->GetName());
+            PInstance->ReleaseRegisteredChars();
+            m_InstanceList.erase(instance);
+        }
     }
 }
 

@@ -22,11 +22,12 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
 end
 
 mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
+    local power   = math.floor(mob:getMainLvl() * 0.3) - 5
     local drained = 0
 
     for i = 1, 7 do
         if math.randomInt(0, 100) < 40 then
-            skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, attributesDown[i], 10, 3, 60))
+            skill:setMsg(xi.mobskills.mobDrainAttribute(mob, target, attributesDown[i], power, 3, 60))
             drained = drained + 1
         end
     end
