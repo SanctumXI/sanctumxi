@@ -109,11 +109,6 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
             accBonus = accBonus + attacker:getStatusEffect(xi.effect.INNIN):getPower()
         end
 
-        -- Yonin reduces your accuracy regardless of position
-        if attacker:hasStatusEffect(xi.effect.YONIN) then
-            accBonus = accBonus - attacker:getStatusEffect(xi.effect.YONIN):getPower()
-        end
-
         if attacker:isPC() and attacker:isFacing(target) then
             accBonus = accBonus + attacker:getMerit(xi.merit.CLOSED_POSITION)
         end

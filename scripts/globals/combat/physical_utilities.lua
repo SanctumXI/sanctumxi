@@ -638,7 +638,8 @@ end
     local pDifLowerCap       = 0
     local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
     local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
-    local pDifFinalCap       = (xi.combat.physical.pDifWeaponCapTable[weaponType][2] + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
+    local basePDIF           = actor:isPet() and 2 or xi.combat.physical.pDifWeaponCapTable[weaponType][2]
+    local pDifFinalCap       = (basePDIF + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
 
     if actor:isPC() then
         -- https://www.bg-wiki.com/ffxi/PDIF#Average_Melee_pDIF(qRatio)
@@ -802,7 +803,8 @@ end
     ----------------------------------------
     local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
     local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
-    local pDifFinalCap       = (xi.combat.physical.pDifWeaponCapTable[weaponType][2] + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
+    local basePDIF           = actor:isPet() and 3 or xi.combat.physical.pDifWeaponCapTable[weaponType][2]
+    local pDifFinalCap       = (basePDIF + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
 
     -- Shares the melee band. The pair ranged used to carry inverted above cRatio 3
     -- (lower ended up over upper), which pinned every capped shot to one number.

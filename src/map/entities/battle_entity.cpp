@@ -1330,7 +1330,7 @@ auto CBattleEntity::RACC(uint16 bonusAcc) -> uint16
 
         RACC = GetAccFromSkill(skillLevel);
         RACC += std::floor(AGI() * 0.5);
-        RACC += m_modStat[Mod::ACC] + bonusAcc;
+        RACC += m_modStat[Mod::RACC] + bonusAcc;
 
         // Tandem Strike is listed here in ACC call but no clue if it works for automatons or RACC in general
     }
