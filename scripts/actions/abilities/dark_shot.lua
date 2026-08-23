@@ -32,6 +32,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     local bonusAcc = player:getStat(xi.mod.AGI) / 2 + player:getMerit(xi.merit.QUICK_DRAW_ACCURACY) + player:getMod(xi.mod.QUICK_DRAW_MACC)
     local resist   = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, 0, xi.element.DARK, 0, 0, bonusAcc)
 
+    target:updateClaim(player)
+
     if resist < 0.25 then
         ability:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
         return 0
@@ -87,8 +89,6 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     end
 
     local _ = player:delItem(xi.item.DARK_CARD, 1) or player:delItem(xi.item.TRUMP_CARD, 1)
-    target:updateClaim(player)
-
     return dispelledEffect
 end
 

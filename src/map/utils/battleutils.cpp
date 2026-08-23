@@ -914,7 +914,8 @@ auto HandleSpikesDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, acti
     Action->spikesParam   = std::max<int16>(PDefender->getMod(Mod::SPIKES_DMG), 0);
 
 // Handle Retaliation
-    if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_RETALIATION) &&
+    if (!PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE) &&
+        PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_RETALIATION) &&
         PDefender->PAI->IsEngaged() &&
         battleutils::GetHitRate(PDefender, PAttacker) / 2 > xirand::GetRandomNumber(100) &&
         facing(PDefender->loc.p, PAttacker->loc.p, 64))
