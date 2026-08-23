@@ -47,6 +47,38 @@ local outOfEraInsideTheBellyFish =
     [xi.item.FAR_EAST_PUFFER]   = true,
 }
 
+local skulkersCapeId = 13692
+local talismanCapeId = 15485
+
+local wakingTheBeastKeyItems =
+{
+    xi.ki.EYE_OF_FLAMES,
+    xi.ki.EYE_OF_FROST,
+    xi.ki.EYE_OF_GALES,
+    xi.ki.EYE_OF_STORMS,
+    xi.ki.EYE_OF_TIDES,
+    xi.ki.EYE_OF_TREMORS,
+    xi.ki.RAINBOW_RESONATOR,
+}
+
+local function hasWakingTheBeastKeyItems(player)
+    for _, keyItem in ipairs(wakingTheBeastKeyItems) do
+        if not player:hasKeyItem(keyItem) then
+            return false
+        end
+    end
+
+    return true
+end
+
+local function finishWakingTheBeast(player)
+    for _, keyItem in ipairs(wakingTheBeastKeyItems) do
+        player:delKeyItem(keyItem)
+    end
+
+    npcUtil.giveKeyItem(player, xi.ki.FADED_RUBY)
+end
+
 m:addOverride('xi.server.onServerStart', function()
     super()
 
@@ -153,6 +185,23 @@ m:addOverride('xi.server.onServerStart', function()
             end
         end
     end)
+
+    local wakingTheBeast = xi.battlefield.contents[xi.battlefield.id.WAKING_THE_BEAST_FULLMOON]
+    if wakingTheBeast then
+        local baseOnBattlefieldWin = wakingTheBeast.onBattlefieldWin
+
+        wakingTheBeast.onBattlefieldWin = function(content, player, battlefield)
+            if hasWakingTheBeastKeyItems(player) then
+                player:setLocalVar('battlefieldWin', battlefield:getID())
+
+                if player:isDead() then
+                    finishWakingTheBeast(player)
+                end
+            end
+
+            return baseOnBattlefieldWin(content, player, battlefield)
+        end
+    end
 end)
 
 local function copRingOnDrop(target, item, recycleBin)
@@ -302,7 +351,16 @@ end
 -- through 180 skill, scaling to a 240-second cap.
 m:addOverride('xi.spells.enhancing.calculateEnhancingDuration', function(caster, target, spell, spellId, spellGroup, spellEffect)
     if not isBarSpellEffect(spellEffect) then
-        return super(caster, target, spell, spellId, spellGroup, spellEffect)
+        local duration = super(caster, target, spell, spellId, spellGroup, spellEffect)
+
+        if
+            (spellEffect == xi.effect.SNEAK or spellEffect == xi.effect.INVISIBLE) and
+            caster:hasEquipped(skulkersCapeId)
+        then
+            duration = duration * 1.5
+        end
+
+        return duration
     end
 
     local duration = 150
@@ -381,6 +439,32 @@ m:addOverride('xi.actions.abilities.pets.earthen_ward.onPetAbility', function(ta
     return typeEffect
 end)
 
+m:addOverride('xi.actions.spells.white.stoneskin.onSpellCast', function(caster, target, spell)
+    local currentStoneskin = target:getStatusEffect(xi.effect.STONESKIN)
+
+    if currentStoneskin and currentStoneskin:getTier() == 1 then
+        local spellId   = spell:getID()
+        local basePower = xi.spells.enhancing.calculateEnhancingBasePower(caster, target, spell, spellId, xi.effect.STONESKIN)
+        local newPower  = xi.spells.enhancing.calculateEnhancingFinalPower(caster, target, spell, basePower, spell:getSpellGroup(), 1, xi.effect.STONESKIN)
+
+        if newPower > currentStoneskin:getPower() then
+            target:delStatusEffectSilent(xi.effect.STONESKIN)
+        end
+    end
+
+    return super(caster, target, spell)
+end)
+
+m:addOverride('xi.items.mistmelt.onItemCheck', function(target, item, param, player)
+    if target:getName() ~= 'Ouryu' then
+        return xi.msg.basic.ITEM_UNABLE_TO_USE
+    elseif target:checkDistance(player) > 10 then
+        return xi.msg.basic.TOO_FAR_AWAY
+    end
+
+    return 0
+end)
+
 -- Trusts must use their master's party when Moonlight applies its area Refresh.
 m:addOverride('xi.actions.weaponskills.moonlight.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
     if player:isPC() then
@@ -437,6 +521,31 @@ end)
 xi.module.ensureTable('xi.zones.Kuftal_Tunnel.mobs.Devil_Manta')
 xi.zones.Kuftal_Tunnel.mobs.Devil_Manta.onMobDespawn = function(mob)
     mob:setLocalVar('lastTOD', GetSystemTime())
+end
+
+xi.module.ensureTable('xi.items.talisman_cape')
+local talismanCape = xi['items']['talisman_cape']
+
+talismanCape.onItemCheck = function(target, item, param, user)
+    if target:getStatusEffectBySource(xi.effect.ENCHANTMENT, xi.effectSourceType.EQUIPPED_ITEM, talismanCapeId) then
+        target:delStatusEffect(xi.effect.ENCHANTMENT, nil, xi.effectSourceType.EQUIPPED_ITEM, talismanCapeId)
+    end
+
+    return 0
+end
+
+talismanCape.onItemUse = function(target, user)
+    if target:hasEquipped(talismanCapeId) then
+        target:addStatusEffect(xi.effect.ENCHANTMENT, { duration = 1800, origin = user, sourceType = xi.effectSourceType.EQUIPPED_ITEM, sourceTypeParam = talismanCapeId })
+    end
+end
+
+talismanCape.onEffectGain = function(target, effect)
+    effect:addMod(xi.mod.MP, 12)
+    effect:addMod(xi.mod.ENMITY, -2)
+end
+
+talismanCape.onEffectLose = function(target, effect)
 end
 
 return m

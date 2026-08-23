@@ -27,3 +27,6 @@ WHERE
     `familyid` = 46 AND
     (`mobType` & 2) != 0 AND
     `skill_list_id` = 56;
+
+DELETE FROM `item_mods`
+WHERE `itemId` = 13692 AND `modId` IN (946, 947);
