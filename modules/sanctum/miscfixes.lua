@@ -496,6 +496,15 @@ m:addOverride('xi.actions.weaponskills.moonlight.onUseWeaponSkill', function(pla
     return 1, 0, false, damagemod
 end)
 
+m:addOverride('xi.actions.mobskills.sticky_thread.onMobWeaponSkill', function(mob, target, skill, action)
+    if target:hasStatusEffect(xi.effect.HASTE) then
+        skill:setMsg(xi.msg.basic.SKILL_NO_EFFECT)
+        return xi.effect.NONE
+    end
+
+    return super(mob, target, skill, action)
+end)
+
 -- Doll Typhoon strikes a random two to four times.
 m:addOverride('xi.actions.mobskills.typhoon.onMobWeaponSkill', function(mob, target, skill, action)
     local params = {}
