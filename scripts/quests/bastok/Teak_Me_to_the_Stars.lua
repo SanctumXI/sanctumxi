@@ -71,7 +71,6 @@ quest.sections =
                 [865] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         player:tradeComplete()
-                        xi.quest.setMustZone(player, xi.questLog.BASTOK, xi.quest.id.bastok.HYPER_ACTIVE)
                     end
                 end,
             },

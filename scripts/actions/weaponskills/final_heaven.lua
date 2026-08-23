@@ -6,7 +6,7 @@
 -- Mods : VIT:60%
 -- 100%TP     200%TP     300%TP
 -- 3.0x        3.0x    3.0x
--- +10 Subtle Blow for a short duration after using the weapon skill. (Not implemented)
+-- +10 Subtle Blow for a short duration after using the weapon skill.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}

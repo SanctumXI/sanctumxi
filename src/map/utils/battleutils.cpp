@@ -6439,7 +6439,7 @@ timer::duration CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
         }
     }
 
-    recast = std::max<timer::duration>(recast, 0s);
+    recast = std::max<timer::duration>(recast, std::chrono::floor<std::chrono::milliseconds>(base * 0.5f)); // 50% cap
 
     return recast;
 }

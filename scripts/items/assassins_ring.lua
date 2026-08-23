@@ -2,7 +2,7 @@
 -- ID: 14678
 -- Item: Assassin's Ring
 -- Item Effect: Ranged Accuracy 20
--- Duration 3 Minutes
+-- Duration 5 Minutes
 -----------------------------------
 ---@type TItem
 local itemObject = {}
@@ -17,7 +17,7 @@ end
 
 itemObject.onItemUse = function(target, user)
     if target:hasEquipped(xi.item.ASSASSINS_RING) then
-        target:addStatusEffect(xi.effect.ENCHANTMENT, { duration = 180, origin = user, sourceType = xi.effectSourceType.EQUIPPED_ITEM, sourceTypeParam = xi.item.ASSASSINS_RING })
+        target:addStatusEffect(xi.effect.ENCHANTMENT, { duration = 300, origin = user, sourceType = xi.effectSourceType.EQUIPPED_ITEM, sourceTypeParam = xi.item.ASSASSINS_RING })
     end
 end
 

@@ -118,9 +118,10 @@ quest.sections =
                 onTrade = function(player, npc, trade)
                     if npcUtil.tradeMatches(trade, { { xi.item.FALLEN_STAR, 1 } }) then
                         local isNight = VanadielTOTD() == xi.time.NIGHT or VanadielTOTD() == xi.time.MIDNIGHT
+                        local weather = player:getWeather()
 
                         if
-                            player:getWeather() == xi.weather.NONE and
+                            (weather == xi.weather.NONE or weather == xi.weather.SUNSHINE) and
                             isNight
                         then
                             return quest:progressEvent(334)
