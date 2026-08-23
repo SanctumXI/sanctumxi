@@ -365,6 +365,11 @@ bool CPetEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
 bool CPetEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    if (StatusEffectContainer->HasPreventActionEffect(true))
+    {
+        return false;
+    }
+
     // prevent pets from attacking mobs that the PC master does not own
     if (this->PMaster)
     {
