@@ -40,6 +40,34 @@
 #include "party.h"
 #include "spell.h"
 
+namespace
+{
+
+bool isGuaranteedLearnSpell(SpellID spellId)
+{
+    switch (spellId)
+    {
+        case SpellID::Pollen:
+        case SpellID::Sandspin:
+        case SpellID::Foot_Kick:
+        case SpellID::Sprout_Smack:
+        case SpellID::Wild_Oats:
+        case SpellID::Cocoon:
+        case SpellID::Power_Attack:
+        case SpellID::Metallic_Body:
+        case SpellID::Queasyshroom:
+        case SpellID::Hysteric_Barrage:
+        case SpellID::Vertical_Cleave:
+        case SpellID::Cannonball:
+        case SpellID::Spinal_Cleave:
+            return true;
+        default:
+            return false;
+    }
+}
+
+} // namespace
+
 namespace blueutils
 {
 
@@ -161,7 +189,7 @@ void TryLearningSpells(CCharEntity* PChar, CMobEntity* PMob)
             // make sure the difference between spell skill and player is at most 31 points
             if (playerSkillLvl >= skillLvlForSpell - 31)
             {
-                auto chanceToLearn = 33 + PBlueMage->getMod(Mod::BLUE_LEARN_CHANCE);
+                auto chanceToLearn = isGuaranteedLearnSpell(PSpell->getID()) ? 100 : 33 + PBlueMage->getMod(Mod::BLUE_LEARN_CHANCE);
                 if (xirand::GetRandomNumber(100) < chanceToLearn)
                 {
                     if (charutils::addSpell(PBlueMage, static_cast<uint16>(PSpell->getID())))
