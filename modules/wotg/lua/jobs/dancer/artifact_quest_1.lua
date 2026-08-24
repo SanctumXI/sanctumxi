@@ -1,10 +1,10 @@
 -----------------------------------
--- Sanctum: Dancer AF1
+-- WotG-free Dancer artifact quest 1
 -- Moves The Unfinished Waltz encounter from Grauberg [S] to Valkurm Dunes.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local m = Module:new('sanctum_dancer_af1')
+local m = Module:new('wotg_free_dancer_artifact_quest_1')
 -----------------------------------
 
 local migratoryHippogryphId = 17199662

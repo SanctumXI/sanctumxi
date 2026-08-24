@@ -4,7 +4,7 @@
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_removed_job_limit_breaks')
+local m = Module:new('sanctum_retired_job_limit_break_quests')
 
 -- Keep the quest IDs intact for character-data compatibility. DNC and SCH do
 -- not have executable quest resources in this branch, but are listed here so

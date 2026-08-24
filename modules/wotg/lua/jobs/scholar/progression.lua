@@ -1,10 +1,10 @@
 -----------------------------------
--- Sanctum: Scholar Progression
+-- WotG-free Scholar progression
 -- Moves the Scholar unlock and artifact quests to accessible locations.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local m = Module:new('sanctum_scholar_unlock')
+local m = Module:new('wotg_free_scholar_progression')
 -----------------------------------
 
 local windurstWatersText =

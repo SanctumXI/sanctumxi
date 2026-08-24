@@ -1,4 +1,4 @@
-describe('Retired job-specific level breaks', function()
+describe('Retired job-specific limit-break quests', function()
     it('tracks all five retired quest routes', function()
         local removedLimitBreaks = xi.sanctum.removedJobLimitBreaks
         local seenJobs          = {}

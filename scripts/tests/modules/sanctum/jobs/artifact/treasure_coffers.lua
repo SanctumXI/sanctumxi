@@ -1,4 +1,4 @@
-describe('Sanctum artifact coffers', function()
+describe('Sanctum artifact treasure coffers', function()
     local cofferLevelByZone =
     {
         [xi.zone.SEA_SERPENT_GROTTO]   = 55,

@@ -4,6 +4,10 @@
 -- !addquest 7 34
 -- Erlene : !pos -57.5238 -5.5000 104.9193 238
 -----------------------------------
+require('modules/module_utils')
+-----------------------------------
+
+local m = Module:new('wotg_free_scholar_artifact_quest_3')
 
 local downwardHelixQuest = xi.quest.id.crystalWar.DOWNWARD_HELIX
 local quest = Quest:new(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.SEEING_BLOOD_RED)
@@ -82,4 +86,9 @@ quest.sections =
     },
 }
 
-return quest
+m:addOverride('xi.server.onServerStart', function()
+    super()
+    InteractionGlobal.lookup:addContainer(quest)
+end)
+
+return m

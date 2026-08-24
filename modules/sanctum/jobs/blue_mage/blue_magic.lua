@@ -1,5 +1,5 @@
 -----------------------------------
--- Sanctum Blue Magic adjustments
+-- Sanctum Blue Mage adjustments
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------

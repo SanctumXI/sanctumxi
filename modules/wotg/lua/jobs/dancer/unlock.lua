@@ -1,10 +1,10 @@
 -----------------------------------
--- Sanctum: Dancer Unlock
+-- WotG-free Dancer unlock
 -- Replaces the WotG-dependent Lakeside Minuet route with a Snow Lily trial.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local m = Module:new('sanctum_dancer_unlock')
+local m = Module:new('wotg_free_dancer_unlock')
 -----------------------------------
 
 m:addOverride('xi.server.onServerStart', function()

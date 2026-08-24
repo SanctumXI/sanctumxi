@@ -1,10 +1,10 @@
 -----------------------------------
--- Sanctum: Dancer AF2
+-- WotG-free Dancer artifact quest 2
 -- Replaces The Road to Divadom's WotG route with an Ifrit's Cauldron trial.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local m = Module:new('sanctum_dancer_af2')
+local m = Module:new('wotg_free_dancer_artifact_quest_2')
 -----------------------------------
 
 local cauldronReflectionText =

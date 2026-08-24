@@ -1,4 +1,4 @@
-describe('Sanctum WotG-free Dancer and Scholar quests', function()
+describe('WotG-free Dancer artifact quest 1', function()
     it('grants persistent Hippogryph kill credit to nearby eligible party members', function()
         local player = xi.test.world:spawnPlayer(
         {

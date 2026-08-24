@@ -36,9 +36,11 @@
 #
 # Live example:
 custom/commands/
+# WotG-free job progression. Load before Sanctum's shared artifact-coffer module.
+wotg/lua/jobs/
+wotg/sql/
 # Includes the Linkshell Dashboard recruitment, live-message, and Friends bridges.
 sanctum
 LQS
 LQS.lua
 lqs_util.cpp
-
