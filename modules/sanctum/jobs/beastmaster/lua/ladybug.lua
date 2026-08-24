@@ -7,12 +7,12 @@
 -- the party a critical hit rate buff.
 --
 -- Skillchain properties, charge costs, Lucky Charm's targeting and the family
--- data live in modules/sanctum/sql/bst_jug_pets.sql.
+-- data live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_ladybug')
+local m = Module:new('sanctum_beastmaster_ladybug')
 
 -----------------------------------
 -- Sudden Lunge

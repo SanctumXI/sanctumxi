@@ -8,12 +8,12 @@
 -- nothing else on the roster supplies either.
 --
 -- The job, family ranks, Orob's level cap and Cursed Sphere's charge cost live
--- in modules/sanctum/sql/bst_jug_pets.sql.
+-- in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_fly')
+local m = Module:new('sanctum_beastmaster_fly')
 
 -----------------------------------
 -- Cursed Sphere

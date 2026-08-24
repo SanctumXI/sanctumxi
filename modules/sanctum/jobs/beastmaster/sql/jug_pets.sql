@@ -32,7 +32,6 @@ UPDATE `pet_list` SET `minLevel` = 73, `maxLevel` = 73 WHERE `petid` = 57; -- Nu
 
 -- Lizard: Lizard Familiar / Coldblood Como / Audacious Anna
 
-
 UPDATE `pet_skills` SET `pet_skill_aoe` = 1, `pet_skill_radius` = 10 WHERE `pet_skill_id` = 688; -- Secretion, party
 
 UPDATE `mob_family_system` SET `STR` = 4, `INT` = 4 WHERE `familyID` = 338; -- Funguar, was STR 3 / INT 5
@@ -192,7 +191,6 @@ UPDATE `pet_skills` SET `pet_skill_distance` = 5.0 WHERE `pet_skill_id` = 678; -
 
 -- Tiger: Tiger Familiar / Saber Siravarde
 
-
 UPDATE `pet_list` SET `maxLevel` = 72 WHERE `petid` = 39; -- Saber Siravarde, was 75
 UPDATE `mob_family_system` SET `STR` = 3, `AGI` = 3, `DEF` = 4 WHERE `familyID` = 114; -- was STR 4 / AGI 4 / DEF 3
 
@@ -259,7 +257,6 @@ UPDATE `pet_skills` SET `pet_skill_radius` = 12 WHERE `pet_skill_id` = 716; -- V
 -- Coeurl: Crafty Clyvonne
 
 UPDATE `mob_family_system` SET `AGI` = 3, `CHR` = 2, `INT` = 2 WHERE `familyID` = 92; -- was AGI 4 / CHR 4 / INT 3
-
 
 INSERT INTO `mob_family_mods` (`familyid`, `modid`, `value`, `is_mob_mod`) VALUES (92, 383, 2500, 0)
     ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- HASTE_ABILITY 25%

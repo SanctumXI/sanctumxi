@@ -9,12 +9,12 @@
 -- wild crab in the game also runs. Overriding onPetAbility here keeps these
 -- changes on jug pets only.
 --
--- Charge costs and AoE shape live in modules/sanctum/sql/bst_jug_pets.sql.
+-- Charge costs and AoE shape live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_crab')
+local m = Module:new('sanctum_beastmaster_crab')
 
 -----------------------------------
 -- Magic Evasion Boost

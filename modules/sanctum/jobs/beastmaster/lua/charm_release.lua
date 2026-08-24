@@ -4,7 +4,7 @@
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_charm_release')
+local m = Module:new('sanctum_beastmaster_charm_release')
 
 m:addOverride('xi.job_utils.beastmaster.useLeave', function(player, target, ability)
     local pet          = player:getPet()

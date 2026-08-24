@@ -6,12 +6,12 @@
 -- 1 and PUP brings Evasion Bonus IV on top.
 --
 -- Family stats, resistances and the radius live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_sabotender')
+local m = Module:new('sanctum_beastmaster_sabotender')
 
 -----------------------------------
 -- 1,000 Needles

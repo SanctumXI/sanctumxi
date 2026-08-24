@@ -6,12 +6,12 @@
 -- roster. A ranks in attack, accuracy and, through WAR, strength.
 --
 -- Charge costs, family ranks, Roar's targeting, Siravarde's level cap and the
--- skillchain properties live in modules/sanctum/sql/bst_jug_pets.sql.
+-- skillchain properties live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_tiger')
+local m = Module:new('sanctum_beastmaster_tiger')
 
 -----------------------------------
 -- Roar

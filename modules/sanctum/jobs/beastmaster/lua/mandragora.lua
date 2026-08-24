@@ -6,12 +6,12 @@
 -- the cheapest area sleep anyone can bring. The rest of the kit pays for it.
 --
 -- Charge costs, family INT, resistances, skillchain properties and Leaf
--- Dagger's range live in modules/sanctum/sql/bst_jug_pets.sql.
+-- Dagger's range live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_mandragora')
+local m = Module:new('sanctum_beastmaster_mandragora')
 
 -----------------------------------
 -- Dream Flower

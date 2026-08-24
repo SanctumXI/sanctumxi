@@ -6,12 +6,12 @@
 -- and Accuracy Bonus IV carry the ranged half.
 --
 -- Charge costs, the main job, family ranks, resistances and Toxic Spit's range
--- live in modules/sanctum/sql/bst_jug_pets.sql.
+-- live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_eft')
+local m = Module:new('sanctum_beastmaster_eft')
 
 -----------------------------------
 -- Toxic Spit

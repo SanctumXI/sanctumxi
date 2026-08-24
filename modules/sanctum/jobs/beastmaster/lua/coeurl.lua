@@ -7,12 +7,12 @@
 -- Clyvonne carries 40%, which takes her 4000ms swing down to 2400.
 --
 -- Family ranks, the family haste modifier, Blaster's charge cost and the model
--- sizes live in modules/sanctum/sql/bst_jug_pets.sql.
+-- sizes live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_coeurl')
+local m = Module:new('sanctum_beastmaster_coeurl')
 
 -----------------------------------
 -- Haste, applied on spawn.

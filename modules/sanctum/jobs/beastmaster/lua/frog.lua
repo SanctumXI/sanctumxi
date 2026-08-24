@@ -10,12 +10,12 @@
 -- water and drain list, with Frog Cheer as his one ready move.
 --
 -- The job, the lists, the charge cost and Frog Cheer's targeting live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_frog')
+local m = Module:new('sanctum_beastmaster_frog')
 local frogCheerIcon = 634
 
 -----------------------------------

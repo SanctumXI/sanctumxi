@@ -4,7 +4,7 @@
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_predator')
+local m = Module:new('sanctum_beastmaster_predator')
 
 xi.trait.PREDATOR = 140
 

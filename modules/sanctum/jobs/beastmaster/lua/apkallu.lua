@@ -11,12 +11,12 @@
 -- pet, so the checks are dropped here.
 --
 -- Resistances and skillchain properties live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_apkallu')
+local m = Module:new('sanctum_beastmaster_apkallu')
 
 m:addOverride('xi.actions.abilities.pets.wing_slap.onAbilityCheck', function(player, target, ability)
     return 0

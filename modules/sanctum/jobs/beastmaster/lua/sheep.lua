@@ -3,12 +3,12 @@
 -- Sheep Familiar (19-35) / Lullaby Melodia (43-65) / Nursery Nazuna (75-80)
 --
 -- Charge costs, Sheep Song's radius and Nursery Nazuna's model live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_sheep')
+local m = Module:new('sanctum_beastmaster_sheep')
 
 -----------------------------------
 -- Rage

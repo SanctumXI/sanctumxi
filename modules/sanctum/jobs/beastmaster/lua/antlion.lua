@@ -8,12 +8,12 @@
 --
 -- Sandpit and Venom Spray are left to the upstream scripts; only their shape
 -- changes. Family ranks, the earth resistance and the area shapes live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_antlion')
+local m = Module:new('sanctum_beastmaster_antlion')
 
 -----------------------------------
 -- Mandibular Bite

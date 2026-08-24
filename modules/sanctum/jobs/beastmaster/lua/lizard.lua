@@ -6,12 +6,12 @@
 -- roster: Brain Crush opens Liquefaction, Tail Blow closes it for Fusion.
 --
 -- Secretion's party reach and radius live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_lizard')
+local m = Module:new('sanctum_beastmaster_lizard')
 
 -----------------------------------
 -- Secretion

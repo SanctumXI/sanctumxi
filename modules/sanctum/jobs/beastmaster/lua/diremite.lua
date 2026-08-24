@@ -10,12 +10,12 @@
 -- though, gated behind objtype & TYPE_PC.
 --
 -- Charge costs, skillchain properties and family stats live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_diremite')
+local m = Module:new('sanctum_beastmaster_diremite')
 
 -----------------------------------
 -- Double Claw

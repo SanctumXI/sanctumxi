@@ -12,12 +12,12 @@
 -- shrooms no longer advance the counter.
 --
 -- Charge costs and the RDM main job live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_funguar')
+local m = Module:new('sanctum_beastmaster_funguar')
 
 -- The three shrooms share a body apart from their rider.
 local function shroomAttack(target, pet, petskill, action, applyEffect)

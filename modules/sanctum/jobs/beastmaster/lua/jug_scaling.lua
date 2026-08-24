@@ -35,7 +35,7 @@ local HP_SCALE      = 0.95
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_jug_scaling')
+local m = Module:new('sanctum_beastmaster_jug_scaling')
 
 -- 0.95 * 100 lands on 95.00000000000001 in floating point, so round before
 -- converting rather than truncating a number that is already fractionally over.

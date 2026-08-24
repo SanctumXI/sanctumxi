@@ -3,6 +3,7 @@
 This directory contains job systems shared across expansions.
 
 - `artifact/` owns shared artifact-equipment acquisition rules.
+- `beastmaster/` owns Beastmaster rules, jug pets, and equipment access.
 - `blue_mage/` owns Blue Mage spell and learning adjustments.
 - `limit_breaks/` owns shared level-cap and retired job-quest rules.
 

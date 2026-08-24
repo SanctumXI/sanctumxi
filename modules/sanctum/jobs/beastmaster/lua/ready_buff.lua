@@ -4,7 +4,7 @@
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_ready_buff')
+local m = Module:new('sanctum_beastmaster_ready_buff')
 
 xi.job_utils.beastmaster.getReadyBuffDuration = function(owner, duration)
     return duration * (1 + owner:getMerit(xi.merit.READY_BUFF) * 0.05)

@@ -4,7 +4,7 @@
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_charm_success')
+local m = Module:new('sanctum_beastmaster_charm_success')
 
 local subjobCharmEffectiveness = 0.75
 

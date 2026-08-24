@@ -7,12 +7,12 @@
 -- Whirl Claws rather than sitting beside it.
 --
 -- Main job, Keeneared Steffi's model and Snow Cloud's charge cost and shape
--- live in modules/sanctum/sql/bst_jug_pets.sql.
+-- live in modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_rabbit')
+local m = Module:new('sanctum_beastmaster_rabbit')
 
 -----------------------------------
 -- Whirl Claws

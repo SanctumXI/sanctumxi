@@ -10,12 +10,12 @@
 -- hate button.
 --
 -- Resistances and Hi-Freq Field's charge cost live in
--- modules/sanctum/sql/bst_jug_pets.sql.
+-- modules/sanctum/jobs/beastmaster/sql/jug_pets.sql.
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
 
-local m = Module:new('sanctum_bst_beetle')
+local m = Module:new('sanctum_beastmaster_beetle')
 
 -----------------------------------
 -- Power Attack
