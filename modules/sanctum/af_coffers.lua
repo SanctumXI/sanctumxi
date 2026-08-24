@@ -9,6 +9,8 @@ local m = Module:new('sanctum_af_coffers')
 
 local cofferVar = '[AF]SanctumCoffer'
 
+-- Numbered DNC/SCH quest modules load first so these coffer sections are appended last.
+
 -- This is the complete final distribution for the 30 original direct-coffer
 -- pieces.  Old gauntlet locations are intentionally not changed.
 local classicDistribution =

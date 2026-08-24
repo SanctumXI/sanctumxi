@@ -92,6 +92,61 @@ describe('Sanctum artifact coffers', function()
         assert(utils.mask.getBit(player:getCharVar(xi.sanctum.afCoffers.cofferVar), 0))
     end)
 
+    it('keeps Dancer coffer rewards after the WotG-free quest override loads', function()
+        local player = xi.test.world:spawnPlayer(
+        {
+            zone  = xi.zone.QUICKSAND_CAVES,
+            job   = xi.job.DNC,
+            level = 99,
+        })
+        local dancerEntry = xi.sanctum.afCoffers.additionalDistribution[10]
+        local rewardId    = xi.sanctum.afCoffers.resolveReward(player, dancerEntry)
+
+        player:addQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.THE_ROAD_TO_DIVADOM)
+        player:completeQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.THE_ROAD_TO_DIVADOM)
+        player:addItem(xi.item.QUICKSAND_COFFER_KEY)
+
+        xi.test.world:skipTime(6)
+        player.actions:tradeNpc('Treasure_Coffer',
+        {
+            {
+                itemId   = xi.item.QUICKSAND_COFFER_KEY,
+                quantity = 1,
+            },
+        })
+        xi.test.world:skipTime(3)
+
+        player.assert:hasItem(rewardId)
+        assert(utils.mask.getBit(player:getCharVar(xi.sanctum.afCoffers.cofferVar), dancerEntry.bit))
+    end)
+
+    it('keeps Scholar coffer rewards after the WotG-free quest override loads', function()
+        local player = xi.test.world:spawnPlayer(
+        {
+            zone  = xi.zone.SEA_SERPENT_GROTTO,
+            job   = xi.job.SCH,
+            level = 99,
+        })
+        local scholarEntry = xi.sanctum.afCoffers.additionalDistribution[13]
+
+        player:addQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.DOWNWARD_HELIX)
+        player:completeQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.DOWNWARD_HELIX)
+        player:addItem(xi.item.GROTTO_COFFER_KEY)
+
+        xi.test.world:skipTime(6)
+        player.actions:tradeNpc('Treasure_Coffer',
+        {
+            {
+                itemId   = xi.item.GROTTO_COFFER_KEY,
+                quantity = 1,
+            },
+        })
+        xi.test.world:skipTime(3)
+
+        player.assert:hasItem(scholarEntry.item)
+        assert(utils.mask.getBit(player:getCharVar(xi.sanctum.afCoffers.cofferVar), scholarEntry.bit))
+    end)
+
     it('does not accept materials for a legacy Blue Mage commission', function()
         local player = xi.test.world:spawnPlayer(
         {
