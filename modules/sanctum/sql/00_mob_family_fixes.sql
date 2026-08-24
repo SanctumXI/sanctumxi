@@ -1,5 +1,5 @@
 -- Sanctum: thematic corrections to shared family and resistance rows.
--- Separate from bst_jug_pets.sql because none of these are pet balance; they
+-- Separate from jobs/beastmaster/sql/jug_pets.sql because none of these are pet balance; they
 -- apply to wild mobs of the type and were found auditing the wider table.
 
 -- Skeletons were backwards on both elements they care about. Every row in the

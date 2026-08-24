@@ -2537,6 +2537,8 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         // Camouflage not up, so remove all detectable status effects
         StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
     }
+
+    StatusEffectContainer->DelStatusEffect(EFFECT_MAZURKA);
 }
 
 bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)

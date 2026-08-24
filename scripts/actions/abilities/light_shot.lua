@@ -32,6 +32,8 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     local bonusAcc = player:getStat(xi.mod.AGI) / 2 + player:getMerit(xi.merit.QUICK_DRAW_ACCURACY) + player:getMod(xi.mod.QUICK_DRAW_MACC)
     local resist   = xi.combat.magicHitRate.calculateResistRate(player, target, 0, 0, 0, xi.element.LIGHT, 0, 0, bonusAcc)
 
+    target:updateClaim(player)
+
     if resist < 0.5 then
         ability:setMsg(xi.msg.basic.JA_MISS_2) -- resist message
         return xi.effect.SLEEP_I
@@ -54,36 +56,41 @@ abilityObject.onUseAbility = function(player, target, ability, action)
     end
 
     if #effects > 0 then
-        local effect = effects[math.randomInt(1, #effects)]
-        -- TODO: duration here overwrites all previous values, this logic needs to be verified
-        duration = effect:getDuration()
-        local startTime = effect:getStartTime()
-        local tick      = effect:getTick()
-        local power     = effect:getPower()
-        local subpower  = effect:getSubPower()
-        local tier      = effect:getTier()
-        local effectId  = effect:getEffectType()
-        local subId     = effect:getSubType()
-        power    = power * 1.5
-        subpower = subpower * 1.5
+        local effect         = effects[math.randomInt(1, #effects)]
+        local effectDuration = effect:getDuration() / 1000
+        local startTime      = effect:getStartTime()
+        local tick           = effect:getTick() / 1000
+        local power          = effect:getPower()
+        local subpower       = effect:getSubPower()
+        local tier           = effect:getTier()
+        local effectId       = effect:getEffectType()
+        local subId          = effect:getSubType()
+        local originId       = effect:getOriginID()
+
+        if effectId == xi.effect.DIA then
+            power    = power + 1
+            subpower = subpower + 5
+        else
+            power = power * 1.5
+        end
+
         target:delStatusEffectSilent(effectId)
-        target:addStatusEffect(effectId, { power = power, duration = duration, origin = player, tick = tick, subType = subId, subPower = subpower, tier = tier })
+        target:addStatusEffect(effectId, { power = power, duration = effectDuration, origin = player, tick = tick, subType = subId, subPower = subpower, tier = tier })
 
         local newEffect = target:getStatusEffect(effectId)
         if newEffect then
             newEffect:setStartTime(startTime)
+            newEffect:setOriginID(originId)
         end
     end
 
-    if target:addStatusEffect(xi.effect.SLEEP_I, { power = 1, duration = duration, origin = player }) then
+    if target:addStatusEffect(xi.effect.SLEEP_I, { power = 1, duration = duration, origin = player, subPower = xi.element.LIGHT }) then
         ability:setMsg(xi.msg.basic.JA_ENFEEB_IS)
     else
         ability:setMsg(xi.msg.basic.JA_NO_EFFECT_2)
     end
 
     local _ = player:delItem(xi.item.LIGHT_CARD, 1) or player:delItem(xi.item.TRUMP_CARD, 1)
-    target:updateClaim(player)
-
     return xi.effect.SLEEP_I
 end
 

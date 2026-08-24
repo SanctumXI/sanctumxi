@@ -36,6 +36,9 @@ local addTable =
 local function enterFlight(mob)
     mob:setMobSkillAttack(425)
     mob:addStatusEffect(xi.effect.ALL_MISS, { power = 1, origin = mob, icon = 0 })
+    mob:addImmunity(xi.immunity.DARK_SLEEP)
+    mob:addImmunity(xi.immunity.LIGHT_SLEEP)
+    mob:wakeUp()
     mob:setBehavior(bit.band(mob:getBehavior(), bit.bnot(xi.behavior.NO_TURN)))
     mob:setAnimationSub(1)
 end
@@ -44,6 +47,8 @@ local function exitFlight(mob)
     mob:setMobSkillAttack(0)
     mob:useMobAbility(xi.mobSkill.TOUCHDOWN_1)
     mob:delStatusEffect(xi.effect.ALL_MISS)
+    mob:delImmunity(xi.immunity.DARK_SLEEP)
+    mob:delImmunity(xi.immunity.LIGHT_SLEEP)
     mob:setBehavior(bit.bor(mob:getBehavior(), xi.behavior.NO_TURN))
     mob:setAnimationSub(2)
 end
@@ -59,6 +64,8 @@ local function executeMistmelt(mob)
         mob:injectActionPacket(mob:getID(), 11, 974, 0, 0x18, 0, 0, 0)
         mob:setAnimationSub(2)
         mob:delStatusEffect(xi.effect.ALL_MISS)
+        mob:delImmunity(xi.immunity.DARK_SLEEP)
+        mob:delImmunity(xi.immunity.LIGHT_SLEEP)
         mob:setMobSkillAttack(0)
     end
 
@@ -77,6 +84,8 @@ end
 entity.onMobSpawn = function(mob)
     mob:setMobSkillAttack(0)
     mob:setAnimationSub(0)
+    mob:delImmunity(xi.immunity.DARK_SLEEP)
+    mob:delImmunity(xi.immunity.LIGHT_SLEEP)
 
     -- Level 90 + 2 + 53 = 145 Base Weapon Damage
     mob:setMod(xi.mod.UDMGRANGE, -5000)
@@ -119,18 +128,11 @@ entity.onMobFight = function(mob, target)
     {
         conditions =
         {
-            mob:checkDistance(target) >= 15,
+            mob:checkDistance(target) >= 30,
         },
         position = mob:getPos(),
     }
     utils.drawIn(target, drawInTable)
-
-    if
-        mob:getAnimationSub() == 1 and
-        mob:hasStatusEffect(xi.effect.SLEEP_I)
-    then
-        mob:wakeUp()
-    end
 
     if xi.combat.behavior.isEntityBusy(mob) then
         return
@@ -204,6 +206,9 @@ entity.onMobSpellChoose = function(mob, target, spellId)
 end
 
 entity.onMobDisengage = function(mob)
+    mob:delImmunity(xi.immunity.DARK_SLEEP)
+    mob:delImmunity(xi.immunity.LIGHT_SLEEP)
+
     if mob:getAnimationSub() == 1 then
         mob:setMobSkillAttack(0)
         mob:injectActionPacket(mob:getID(), 11, 974, 0, 0x18, 0, 0, 0)

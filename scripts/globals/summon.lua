@@ -41,8 +41,8 @@ local function getDexCritRate(source, target)
     return math.min(critRate, 15) * sign
 end
 
-local function getRandRatio(wRatio)
-    local maxRatio   = 4.25 -- 4.25 for Avatars, they count as 1H but same as mobs don't have a non-crit cap
+local function getRandRatio(wRatio, isCritical)
+    local maxRatio   = 2 + (isCritical and 1 or 0)
 
     local upperLimit = math.min(wRatio + 0.375, maxRatio)
     if wRatio < 0.5 then
@@ -209,7 +209,7 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
                 didCrit = true
             end
 
-            local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max
+            local qRatio = getRandRatio(wRatio, isCrit)          -- Get a random ratio from min and max
             local pDif   = qRatio * (1 + (math.randomFloat(0, 1) * 0.05)) -- Final pDif is qRatio randomized with a 1-1.05 multiplier
 
             if isCrit then
@@ -228,7 +228,7 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
                 didCrit = true
             end
 
-            local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max.
+            local qRatio = getRandRatio(wRatio, isCrit)          -- Get a random ratio from min and max.
             local pDif   = qRatio * (1 + math.randomFloat(0, 1) * 0.05) -- Final pDif is qRatio randomized with a 1-1.05 multiplier.
 
             if isCrit then

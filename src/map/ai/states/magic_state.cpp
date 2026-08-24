@@ -24,6 +24,7 @@
 #include "action/action.h"
 #include "action/interrupts.h"
 #include "ai/ai_container.h"
+#include "ai/controllers/mob_controller.h"
 #include "ai/controllers/pet_controller.h"
 #include "ai/states/inactive_state.h"
 #include "common/utils.h"
@@ -248,6 +249,15 @@ bool CMagicState::Update(timer::time_point tick)
         if (battleutils::IsIntimidated(m_PEntity, PTarget))
         {
             ActionInterrupts::MagicIntimidated(m_PEntity, m_PSpell.get(), PTarget);
+
+            if (auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity))
+            {
+                if (auto* PMobController = dynamic_cast<CMobController*>(PMob->PAI->GetController()))
+                {
+                    PMobController->OnCastStopped(*this, action);
+                }
+            }
+
             Complete();
             return false;
         }

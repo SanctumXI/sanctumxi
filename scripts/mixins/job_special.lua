@@ -119,6 +119,12 @@ local job2hr =
 --  [xi.job.RUN] = xi.mobSkill.ELEMENTAL_SFORZO,
 }
 
+local astralFlowAbilities =
+{
+    [xi.mobSkill.ASTRAL_FLOW_1]    = true,
+    [xi.mobSkill.ASTRAL_FLOW_MAAT] = true,
+}
+
 -- eagle eye shot ability IDs by mob family
 local familyEES =
 {
@@ -250,7 +256,10 @@ local abilitiesReady = function(mob)
         local numAbilities = mob:getLocalVar('[jobSpecial]numAbilities')
 
         for i = 1, numAbilities do
+            local ability = mob:getLocalVar('[jobSpecial]ability_' .. i)
+
             if
+                (not astralFlowAbilities[ability] or mob:getLocalVar('[jobSpecial]astralFlowUsed') == 0) and
                 now > mob:getLocalVar('[jobSpecial]cooldown_' .. i) and
                 mob:getHPP() <= mob:getLocalVar('[jobSpecial]hpp_' .. i)
             then
@@ -290,11 +299,18 @@ g_mixins.job_special = function(jobSpecialMob)
         mob:setLocalVar('[jobSpecial]chance', 100)     -- chance that mob will use any special at all during engagement
         mob:setLocalVar('[jobSpecial]delayInitial', 2) -- default wait until mob can use its first special (prevents insta-flow)
         mob:setLocalVar('[jobSpecial]readyInitial', 0) -- reset from previous spawn
+        mob:setLocalVar('[jobSpecial]astralFlowUsed', 0)
     end)
 
     jobSpecialMob:addListener('ENGAGE', 'JOB_SPECIAL_ENGAGE', function(mob)
         if math.randomInt(1, 100) <= mob:getLocalVar('[jobSpecial]chance') then
             mob:setLocalVar('[jobSpecial]readyInitial', GetSystemTime() + mob:getLocalVar('[jobSpecial]delayInitial'))
+        end
+    end)
+
+    jobSpecialMob:addListener('WEAPONSKILL_STATE_EXIT', 'JOB_SPECIAL_ASTRAL_FLOW', function(mob, skillId, wasExecuted)
+        if wasExecuted and astralFlowAbilities[skillId] then
+            mob:setLocalVar('[jobSpecial]astralFlowUsed', 1)
         end
     end)
 

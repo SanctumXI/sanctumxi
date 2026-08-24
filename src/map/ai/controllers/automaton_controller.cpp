@@ -1537,7 +1537,7 @@ auto CAutomatonController::TryTPMove() -> bool
         for (auto skillid : FrameSkills)
         {
             auto* PSkill = battleutils::GetMobSkill(skillid);
-            if (PSkill && PAutomaton->GetSkill(skilltype) > PSkill->getParam() && PSkill->getParam() != -1 &&
+            if (PSkill && PAutomaton->GetSkill(skilltype) >= PSkill->getParam() && PSkill->getParam() != -1 &&
                 distance(PAutomaton->loc.p, PTarget->loc.p) < PSkill->getRadius())
             {
                 validSkills.emplace_back(PSkill);
@@ -1548,25 +1548,52 @@ auto CAutomatonController::TryTPMove() -> bool
         CMobSkill* PWSkill          = nullptr;
         int8       currentManeuvers = -1;
 
+        auto hasSkillPriority = [&](const CMobSkill* PNewSkill, int8 newManeuvers)
+        {
+            if (newManeuvers != currentManeuvers)
+            {
+                return newManeuvers > currentManeuvers;
+            }
+
+            if (PNewSkill->getParam() != currentSkill)
+            {
+                return PNewSkill->getParam() > currentSkill;
+            }
+
+            return PWSkill && PNewSkill->getID() > PWSkill->getID();
+        };
+
         bool attemptChain = (PAutomaton->getMod(Mod::AUTO_TP_EFFICIENCY) != 0);
+        auto* PSCEffect    = PTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
+
+        if (attemptChain && PSCEffect && PSCEffect->GetStartTime() + 3s >= timer::now())
+        {
+            return false;
+        }
 
         if (attemptChain)
         {
-            CStatusEffect* PSCEffect = PTarget->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
-            if (PSCEffect && PSCEffect->GetStartTime() + 3s < timer::now())
+            if (PSCEffect)
             {
                 std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
 
                 if (uint16 power = PSCEffect->GetPower())
                 {
-                    resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)(power & 0xF));
-                    resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)((power >> 4) & 0xF));
-                    resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)(power >> 8));
+                    if (PSCEffect->GetTier() == 0)
+                    {
+                        resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)(power & 0xF));
+                        resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)((power >> 4) & 0xF));
+                        resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)(power >> 8));
+                    }
+                    else
+                    {
+                        resonanceProperties.emplace_back((SKILLCHAIN_ELEMENT)power);
+                    }
                 }
 
                 for (auto* PSkill : validSkills)
                 {
-                    if (PSkill->getParam() > currentSkill)
+                    if (hasSkillPriority(PSkill, 1))
                     {
                         std::list<SKILLCHAIN_ELEMENT> skillProperties;
                         skillProperties.emplace_back((SKILLCHAIN_ELEMENT)PSkill->getPrimarySkillchain());
@@ -1588,7 +1615,7 @@ auto CAutomatonController::TryTPMove() -> bool
             for (auto* PSkill : validSkills)
             {
                 int8 maneuvers = luautils::OnAutomatonAbilityCheck(PTarget, PAutomaton, PSkill);
-                if (maneuvers > -1 && (maneuvers > currentManeuvers || (maneuvers == currentManeuvers && PSkill->getParam() > currentSkill)))
+                if (maneuvers > -1 && hasSkillPriority(PSkill, maneuvers))
                 {
                     currentManeuvers = maneuvers;
                     currentSkill     = PSkill->getParam();

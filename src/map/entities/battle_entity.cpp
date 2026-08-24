@@ -1185,13 +1185,15 @@ auto CBattleEntity::RATT(uint16 bonusAtt) -> uint16
         return 0;
     }
 
-    uint16 skillLevel    = 0;
-    double strMultiplier = 0.5;
+    uint16 skillLevel     = 0;
+    double statMultiplier = 0.5;
+    uint16 rangedStat     = STR();
 
     if (objtype == TYPE_PC)
     {
-        strMultiplier = settings::get<float>("main.RANGED_STR_ATTACK_MULTIPLIER");
-        auto* weapon  = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]);
+        statMultiplier = 0.75;
+        rangedStat     = DEX();
+        auto* weapon   = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]);
 
         // Return 0 if ranged weapon but no ammo
         if (weapon && weapon->getSkillType() != SKILL_THROWING && dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_AMMO]) == nullptr)
@@ -1231,7 +1233,7 @@ auto CBattleEntity::RATT(uint16 bonusAtt) -> uint16
     }
     else if (objtype & TYPE_TRUST)
     {
-        strMultiplier = 0.75; // TODO: verify
+        statMultiplier = 0.75; // TODO: verify
 
         auto archery_acc      = this->GetSkill(SKILL_ARCHERY);
         auto marksmanship_acc = this->GetSkill(SKILL_MARKSMANSHIP);
@@ -1241,7 +1243,7 @@ auto CBattleEntity::RATT(uint16 bonusAtt) -> uint16
     }
     // mobs and pets don't have "skill level" -- it's baked into m_modStat[Mod::RATT]
 
-    int32 RATT = 8 + skillLevel + bonusAtt + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + std::floor(STR() * strMultiplier);
+    int32 RATT = 8 + skillLevel + bonusAtt + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + std::floor(rangedStat * statMultiplier);
     // use max to prevent any underflow
     return std::max<int16>(1, RATT + (RATT * m_modStat[Mod::RATTP] / 100.f) + std::min<int16>((RATT * m_modStat[Mod::FOOD_RATTP] / 100.f), m_modStat[Mod::FOOD_RATT_CAP]));
 }
@@ -1320,7 +1322,7 @@ auto CBattleEntity::RACC(uint16 bonusAcc) -> uint16
         RACC += getMod(Mod::RACC);
         RACC += bonusAcc;
         RACC += battleutils::GetRangedAccuracyBonuses(this);
-        RACC += std::floor(AGI() * settings::get<float>("main.RANGED_AGI_ACCURACY_MULTIPLIER"));
+        RACC += std::floor(AGI() * 0.5);
     }
     else if (objtype & TYPE_PET && static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AUTOMATON)
     {
@@ -1328,7 +1330,7 @@ auto CBattleEntity::RACC(uint16 bonusAcc) -> uint16
 
         RACC = GetAccFromSkill(skillLevel);
         RACC += std::floor(AGI() * 0.5);
-        RACC += m_modStat[Mod::ACC] + bonusAcc;
+        RACC += m_modStat[Mod::RACC] + bonusAcc;
 
         // Tandem Strike is listed here in ACC call but no clue if it works for automatons or RACC in general
     }

@@ -1147,6 +1147,7 @@ xi.item =
     SNOW_LILY                           = 1725,
     EGRET_FISHING_ROD                   = 1726,
     GARHADA_TEAK_LUMBER                 = 1727,
+    CHUNK_OF_ORDRYNITE                  = 1728,
     MOBLIN_HOTROK                       = 1729,
     SHAKUDO_INGOT                       = 1738,
     SQUARE_OF_BALLON_CLOTH              = 1739,

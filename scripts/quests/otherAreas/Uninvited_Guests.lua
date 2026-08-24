@@ -87,16 +87,16 @@ local giveReward = function(player)
         rewardID = generateReward(player)
     end
 
-    if rewardID == xi.item.GIL and quest:complete(player) then
-        if npcUtil.giveCurrency(player, 'gil', 10000) then
-            quest:setVar(player, var.CONQUEST_WAIT, NextConquestTally())
-            player:setCharVar(var.QUEST_REWARD, 0)
-        end
-    elseif quest:complete(player) then
-        if npcUtil.giveItem(player, rewardID) then
-            quest:setVar(player, var.CONQUEST_WAIT, NextConquestTally())
-            player:setCharVar(var.QUEST_REWARD, 0)
-        end
+    local rewardGiven
+    if rewardID == xi.item.GIL then
+        rewardGiven = npcUtil.giveCurrency(player, 'gil', 10000)
+    else
+        rewardGiven = npcUtil.giveItem(player, rewardID)
+    end
+
+    if rewardGiven and quest:complete(player) then
+        quest:setVar(player, var.CONQUEST_WAIT, NextConquestTally())
+        player:setCharVar(var.QUEST_REWARD, 0)
     end
 end
 
@@ -209,9 +209,6 @@ quest.sections =
                 -- Victory; Wait gets set with Reward.
                 [572] = function(player, csid, option, npc)
                     giveReward(player)
-                    if quest:complete(player) then
-                        quest:setVar(player, var.CONQUEST_WAIT, NextConquestTally())
-                    end
                 end,
 
                 -- Repeat quest

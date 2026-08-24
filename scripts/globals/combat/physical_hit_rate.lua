@@ -109,11 +109,6 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
             accBonus = accBonus + attacker:getStatusEffect(xi.effect.INNIN):getPower()
         end
 
-        -- Yonin reduces your accuracy regardless of position
-        if attacker:hasStatusEffect(xi.effect.YONIN) then
-            accBonus = accBonus - attacker:getStatusEffect(xi.effect.YONIN):getPower()
-        end
-
         if attacker:isPC() and attacker:isFacing(target) then
             accBonus = accBonus + attacker:getMerit(xi.merit.CLOSED_POSITION)
         end
@@ -160,17 +155,8 @@ local function accuracyAndEvasionToHitRate(attacker, target, acc, eva)
     if shouldApplyLevelCorrection then
         local dlvl = attacker:getMainLvl() - target:getMainLvl()
 
-        -- cap dlvl for avatars. It's known to cap at 38
-        if attacker:isAvatar() then
-            dlvl = utils.clamp(dlvl, 0, 38)
-        end
-
-        -- Accuracy Bonus, doesn't apply to PCs
-        if not attacker:isPC() and attacker:getMainLvl() > target:getMainLvl() then
-            acc = acc + dlvl * 4
-
         -- Accuracy Penalty, only applies to PCs -- TODO: does this apply to player pets?
-        elseif attacker:isPC() and attacker:getMainLvl() < target:getMainLvl() then
+        if attacker:isPC() and dlvl < 0 then
             acc = acc + dlvl * 4
         end
     end

@@ -40,15 +40,13 @@ entity.onTrigger = function(player, npc)
         VanadielRSELocation() == 2 and
         VanadielRSERace() == playerRace and
         not player:hasItem(sachet) and
-        -- ??? set to hidden and respawns 10-30 minutes after NM is defeated.
-        npcUtil.popFromQM(player, npc, ID.mob.AROMA_CRAWLER, { claim = true, hide = math.randomInt(600, 1800), look = true, radius = 1 })
+        npcUtil.popFromQM(player, npc, ID.mob.AROMA_CRAWLER, { claim = true, hide = 600, look = true, radius = 1 })
     then
         GetMobByID(ID.mob.AROMA_CRAWLER):addListener('ITEM_DROPS', 'ITEM_DROPS_RSE', function(mob, loot)
             loot:addItem(sachet, xi.drop_rate.UNCOMMON)
         end)
 
-        -- Move the ??? to a new spawn point for the next pop
-        npcUtil.queueMove(npc, aromaCrawlerSpawnPoints[math.randomInt(1, 3)])
+        npcUtil.queueMove(npc, npcUtil.pickNewPosition(npc:getID(), aromaCrawlerSpawnPoints))
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end

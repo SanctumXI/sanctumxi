@@ -1349,7 +1349,6 @@ INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Diamond',107,245,1,255); -- drai
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Diamond',107,247,1,255); -- aspir (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Diamond',107,274,1,255); -- sleepga_ii (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Diamond',107,361,1,255); -- blindga (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Diamond',107,367,1,255); -- death (1~255)
 
 -- Diabolos_Club (108)
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,232,1,255); -- bio_iii (1~255)
@@ -1358,7 +1357,6 @@ INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,247,1,255); -- aspir (
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,274,1,255); -- sleepga_ii (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,360,1,255); -- dispelga (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,361,1,255); -- blindga (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,367,1,255); -- death (1~255)
 
 -- Ouryu (Ouryu from CoP 4-3 The Savage) (109)
 INSERT INTO `mob_spell_lists` VALUES ('Ouryu_The_Savage',109,54,1,255);  -- stoneskin (1~255)
