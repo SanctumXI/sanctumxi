@@ -94,6 +94,14 @@ local function matchesConfiguredMob(mobConfig, mobName)
     return false
 end
 
+local function isConfiguredVariantLevel(mobConfig, mob)
+    local level = mob:getMainLvl()
+
+    return
+        level >= (mobConfig.minLevel or 1) and
+        level <= (mobConfig.maxLevel or 255)
+end
+
 local function scaleHitbox(mob, scale)
     local baseHitbox = mob:getHitboxSize()
 
@@ -530,7 +538,8 @@ local function prepareZoneBoss(runtime, level)
     runtime.zoneBossPending = false
 
     boss:setMobLevel(level or bossConfig.level)
-    boss:setLocalVar('VariantSystemActive', 1)
+    -- Zone bosses must not use the tracking-list level exemption for variants.
+    boss:setLocalVar('VariantSystemActive', 0)
     boss:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
     boss:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.UNCLAIMABLE)
     boss:setMobMod(xi.mobMod.NO_AGGRO, 1)
@@ -900,7 +909,10 @@ local function registerVariantMob(runtime, mobConfig, mob)
     mob:addListener('SPAWN', 'SANCTUM_VARIANT_SPAWN', function()
         resetVariant(state)
 
-        if math.randomInt(1, 100) <= variantChance then
+        if
+            isConfiguredVariantLevel(mobConfig, mob) and
+            math.randomInt(1, 100) <= variantChance
+        then
             activateVariant(state)
         end
     end)

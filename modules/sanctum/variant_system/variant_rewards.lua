@@ -2,9 +2,9 @@ local data = require('modules/sanctum/variant_system/variant_tables')
 
 local rewards = {}
 
--- FFXI chat palette color 256 is item green; color 255 restores the message color.
-local itemColor  = string.char(0x1E, 0x02)
-local colorReset = string.char(0x1E, 0x01)
+-- Custom chat packets require the standard palette; extended colors truncate the line.
+local itemColor  = string.char(0x1F, 214)
+local colorReset = string.char(0x1F, 36)
 
 local function getCosmeticsForLevel(level)
     local available = {}

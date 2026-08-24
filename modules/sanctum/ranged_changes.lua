@@ -1,5 +1,4 @@
------------------------------------
--- Replaces the sweet spot with a single close-range rule.
+-- Sanctum ranged-combat changes.
 --
 -- Guns and crossbows are fully effective at any distance. Bows, cannons and
 -- thrown weapons need room to work: inside the minimum distance they lose a
@@ -10,6 +9,35 @@ require('modules/module_utils')
 -----------------------------------
 
 local m = Module:new('ranged_changes')
+
+m:addOverride('xi.combat.physical.criticalRateFromAGIDiff', function(actor, target)
+    local dAgi = math.max(0, actor:getStat(xi.mod.AGI) - target:getStat(xi.mod.AGI))
+
+    return math.floor(dAgi / 10) / 100
+end)
+
+m:addOverride('xi.combat.physical.calculateRangedCriticalRate', function(actor, target, actorTP, slot, optCritModTable)
+    local tpFactor = 0
+
+    if optCritModTable then
+        tpFactor = xi.combat.physical.calculateTPfactor(actorTP, optCritModTable)
+    end
+
+    local criticalRate =
+        0.05 +
+        xi.combat.physical.criticalRateFromAGIDiff(actor, target) +
+        xi.combat.physical.criticalRateFromInnin(actor, target) +
+        xi.combat.physical.criticalRateFromFencer(actor) +
+        xi.combat.physical.criticalRateFromFlourish(actor) +
+        xi.combat.physical.criticalRateFromWeaponSlot(actor, slot) +
+        actor:getMod(xi.mod.CRITHITRATE) / 100 +
+        actor:getMerit(xi.merit.CRIT_HIT_RATE) / 100 -
+        target:getMod(xi.mod.CRITICAL_HIT_EVASION) / 100 -
+        target:getMerit(xi.merit.ENEMY_CRIT_RATE) / 100 +
+        tpFactor
+
+    return utils.clamp(criticalRate, 0.05, 1)
+end)
 
 -- Distance a bow, cannon or thrown weapon needs between the two hitboxes
 -- before it reaches full effect.
