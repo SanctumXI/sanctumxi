@@ -1,11 +1,3 @@
--- Steady Wing is available only when Dragoon is the character's main job.
-UPDATE `abilities` SET `addType` = `addType` | 4 WHERE `abilityId` = 295;
-
--- Natural weapon skills introduced at 290 skill or later are out of era.
-UPDATE `weapon_skills`
-SET `jobs` = 0x00000000000000000000000000000000000000000000
-WHERE `skilllevel` >= 290;
-
 -- Wyvern Skulls do not stack.
 UPDATE `item_basic` SET `stackSize` = 1 WHERE `itemid` = 905;
 
@@ -13,34 +5,8 @@ UPDATE `item_basic` SET `stackSize` = 1 WHERE `itemid` = 905;
 DELETE FROM `fishing_group` WHERE `fishid` = 4310;
 DELETE FROM `fishing_bait_affinity` WHERE `fishid` = 4310;
 
--- Fulminous Fury and No Quarter are centered AoEs, like Self-Destruct.
-UPDATE `mob_skills` SET `mob_skill_aoe` = 1 WHERE `mob_skill_id` IN (3657, 3658);
-
--- Notorious Bombs do not randomly select Self-Destruct. NMs with scripted
--- Self-Destruct conditions can still explicitly select it from their Lua.
-DELETE FROM `mob_skill_lists` WHERE `skill_list_id` = 31002;
-INSERT INTO `mob_skill_lists` VALUES ('Sanctum_Bomb_NM', 31002, 510);
-
-UPDATE `mob_pools`
-SET `skill_list_id` = 31002
-WHERE
-    `familyid` = 46 AND
-    (`mobType` & 2) != 0 AND
-    `skill_list_id` = 56;
-
 DELETE FROM `item_mods`
 WHERE `itemId` = 13692 AND `modId` IN (946, 947);
-
-UPDATE `mob_pools`
-SET `mJob` = 7, `sJob` = 7
-WHERE `packet_name` IN ('Buffalo', 'Giant_Buffalo', 'King_Buffalo', 'Mountain_Buffalo');
-
-UPDATE `mob_droplist` SET `itemRate` = 1000 WHERE `dropId` = 578 AND `dropType` = 0 AND `itemId` = 1014;
-UPDATE `mob_droplist` SET `itemRate` = 1000 WHERE `dropId` = 1827 AND `dropType` = 0 AND `itemId` = 1012;
-
-UPDATE `mob_spawn_points` SET `minLevel` = 44, `maxLevel` = 45 WHERE `mobid` = 17268851;
-UPDATE `mob_spawn_points` SET `minLevel` = 46, `maxLevel` = 47 WHERE `mobid` = 17231971;
-UPDATE `mob_spawn_points` SET `minLevel` = 47, `maxLevel` = 49 WHERE `mobid` = 17568127;
 
 -- Sand Gloves: Evasion +7 in earth weather.
 DELETE FROM `item_latents` WHERE `itemId` = 14064 AND `modId` = 68;
