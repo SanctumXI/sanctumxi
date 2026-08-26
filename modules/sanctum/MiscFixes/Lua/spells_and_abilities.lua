@@ -111,13 +111,7 @@ m:addOverride('xi.actions.spells.white.stoneskin.onSpellCast', function(caster, 
     local currentStoneskin = target:getStatusEffect(xi.effect.STONESKIN)
 
     if currentStoneskin and currentStoneskin:getTier() == 1 then
-        local spellId   = spell:getID()
-        local basePower = xi.spells.enhancing.calculateEnhancingBasePower(caster, target, spell, spellId, xi.effect.STONESKIN)
-        local newPower  = xi.spells.enhancing.calculateEnhancingFinalPower(caster, target, spell, basePower, spell:getSpellGroup(), 1, xi.effect.STONESKIN)
-
-        if newPower > currentStoneskin:getPower() then
-            target:delStatusEffectSilent(xi.effect.STONESKIN)
-        end
+        target:delStatusEffectSilent(xi.effect.STONESKIN)
     end
 
     return super(caster, target, spell)
