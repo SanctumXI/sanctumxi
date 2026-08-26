@@ -133,7 +133,12 @@ bool CPlayerController::Disengage()
 bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
 {
     auto* PChar = static_cast<CCharEntity*>(POwner);
-    if (canAct() && PChar->PAI->CanChangeState())
+
+    // Aiming a ranged attack would normally block the ability. Let the ability win and
+    // spend the shot on it instead; !ra repeat lines up another once it resolves.
+    const bool spendsRangedAttack = PChar->PAI->IsCurrentState<CRangeState>();
+
+    if (canAct() && (spendsRangedAttack || PChar->PAI->CanChangeState()))
     {
         CAbility* PAbility = ability::GetAbility(abilityid);
         if (!PAbility)
@@ -162,6 +167,14 @@ bool CPlayerController::Ability(uint16 targid, uint16 abilityid)
         {
             return false;
         }
+
+        // Last, so a refused ability (usually a recast) never costs the shot. Still has to
+        // come before Internal_Ability, which won't change state while the shot holds it.
+        if (spendsRangedAttack)
+        {
+            PChar->PAI->CancelRangedAttack();
+        }
+
         return PChar->PAI->Internal_Ability(targid, abilityid);
     }
     else

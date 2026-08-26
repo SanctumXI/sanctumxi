@@ -214,18 +214,42 @@ bool CRangeState::Update(timer::time_point tick)
 
     if (IsCompleted() && tick > GetEntryTime() + m_aimTime + m_returnWeaponDelay)
     {
-        if (auto* PChar = dynamic_cast<CCharEntity*>(m_PEntity))
-        {
-            PChar->m_LastRangedAttackTime = GetEntryTime() + m_aimTime + m_returnWeaponDelay;
-        }
-        else if (auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity))
-        {
-            PMob->m_LastRangedAttackTime = GetEntryTime() + m_aimTime + m_freePhaseTime;
-        }
+        StampLastRangedAttackTime();
         return true;
     }
 
     return false;
+}
+
+void CRangeState::StampLastRangedAttackTime()
+{
+    if (auto* PChar = dynamic_cast<CCharEntity*>(m_PEntity))
+    {
+        PChar->m_LastRangedAttackTime = GetEntryTime() + m_aimTime + m_returnWeaponDelay;
+    }
+    else if (auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity))
+    {
+        PMob->m_LastRangedAttackTime = GetEntryTime() + m_aimTime + m_freePhaseTime;
+    }
+}
+
+void CRangeState::CancelSilently()
+{
+    if (IsCompleted())
+    {
+        // Shot already went off, so keep its cooldown and just skip the rest of the tail.
+        StampLastRangedAttackTime();
+        return;
+    }
+
+    // Still aiming: nothing fires and no cooldown is stamped, so the next shot can start
+    // right away. RangedInterrupt has no message id, so the client just drops the aim.
+    ActionInterrupts::RangedInterrupt(m_PEntity);
+
+    action_t action{};
+    m_PEntity->PAI->EventHandler.triggerListener("RANGE_STATE_EXIT", m_PEntity, nullptr, &action);
+
+    Complete();
 }
 
 void CRangeState::Cleanup(timer::time_point tick)
