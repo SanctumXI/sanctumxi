@@ -126,6 +126,36 @@ auto OnIncomingPacket(MapSession* PSession, CCharEntity* PChar, CBasicPacket& pa
     return false;
 }
 
+auto OnSpellCostCheck(CBattleEntity* PCaster, CSpell* PSpell) -> bool
+{
+    TracyZoneScoped;
+
+    for (auto* module : cppModules())
+    {
+        if (module->OnSpellCostCheck(PCaster, PSpell))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+auto OnSpellCostSpend(CBattleEntity* PCaster, CSpell* PSpell, int32 cost) -> bool
+{
+    TracyZoneScoped;
+
+    for (auto* module : cppModules())
+    {
+        if (module->OnSpellCostSpend(PCaster, PSpell, cost))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 struct Override
 {
     std::string              filename;

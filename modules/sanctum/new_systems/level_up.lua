@@ -537,9 +537,10 @@ local unlocks =
     {
         abilities =
         {
+            [1] = { 'Steps', 'Quickstep' },
             [5] = { 'Sambas', 'Drain Samba' },
+            [10] = { 'Flourishes I', 'Animated Flourish' },
             [15] = { 'Waltzes', 'Curing Waltz' },
-            [20] = { 'Steps', 'Flourishes I', 'Quickstep', 'Animated Flourish' },
             [25] = { 'Aspir Samba', 'Divine Waltz', 'Spectral Jig', 'Jigs' },
             [30] = { 'Curing Waltz II', 'Box Step', 'Desperate Flourish' },
             [35] = { 'Drain Samba II', 'Healing Waltz' },
@@ -554,16 +555,17 @@ local unlocks =
 
         traits =
         {
-            [15] = { 'Evasion Bonus' },
+            [15] = { 'Evasion Bonus', 'Subtle Blow' },
             [20] = { 'Dual Wield', 'Resist Slow' },
-            [25] = { 'Subtle Blow' },
             [30] = { 'Accuracy Bonus' },
+            [35] = { 'Subtle Blow II' },
             [40] = { 'Dual Wield II' },
-            [45] = { 'Evasion Bonus II', 'Subtle Blow II', 'Skillchain Bonus' },
-            [55] = { 'Resist Slow II' },
+            [45] = { 'Evasion Bonus II', 'Skillchain Bonus' },
+            [50] = xi.module.isContentEnabled('ABYSSEA') and { 'Conserve TP' } or nil,
+            [55] = { 'Resist Slow II', 'Subtle Blow III' },
             [58] = { 'Skillchain Bonus II' },
             [60] = { 'Accuracy Bonus II', 'Dual Wield III' },
-            [65] = { 'Subtle Blow III' },
+            [70] = xi.module.isContentEnabled('ABYSSEA') and { 'Subtle Blow IV' } or nil,
             [71] = { 'Skillchain Bonus III' },
             [75] = { 'Evasion Bonus III' },
         },

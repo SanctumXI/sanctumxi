@@ -76,6 +76,7 @@
 #include "spell.h"
 #include "status_effect_container.h"
 #include "trait.h"
+#include "utils/moduleutils.h"
 #include "utils/petutils.h"
 #include "weapon_skill.h"
 #include "zoneutils.h"
@@ -1407,32 +1408,24 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
 
     if (previous_daze != EFFECT_NONE)
     {
-        if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
+        const auto removePartyDaze = [&](CBattleEntity* PMember)
         {
-            for (auto* PMember : PAttacker->PParty->members)
-            {
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PMember->id);
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PMember->id);
-                PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PMember->id);
-            }
+            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PMember->id);
+            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PMember->id);
+            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PMember->id);
+        };
+
+        if (PChar)
+        {
+            PChar->ForPartyWithTrusts(removePartyDaze);
         }
         else if (PAttacker->objtype == TYPE_TRUST && PAttacker->PMaster)
         {
-            // clang-format off
-                static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts(
-                [&](CBattleEntity* PMember)
-                {
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PMember->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PMember->id);
-                    PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PMember->id);
-                });
-            // clang-format on
+            static_cast<CCharEntity*>(PAttacker->PMaster)->ForPartyWithTrusts(removePartyDaze);
         }
         else
         {
-            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_DRAIN_DAZE, PAttacker->id);
-            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_HASTE_DAZE, PAttacker->id);
-            PDefender->StatusEffectContainer->DelStatusEffect(EFFECT_ASPIR_DAZE, PAttacker->id);
+            removePartyDaze(PAttacker);
         }
         if (PDefender->objtype == TYPE_PC)
         {
@@ -1657,61 +1650,41 @@ void HandleEnspell(CBattleEntity* PAttacker, CBattleEntity* PDefender, action_re
         {
             int32 delay = PAttacker->GetWeaponDelay(false) / 10; // TODO: What kind of value did this ACTUALLY expect?
 
-            EFFECT daze       = EFFECT_NONE;
-            uint32 attackerID = 0;
-            uint16 power      = 0;
+            EFFECT daze  = EFFECT_NONE;
+            uint16 power = 0;
 
-            if (hasDrainDaze)
+            const auto findPartyDaze = [&](CBattleEntity* PMember)
             {
-                daze = EFFECT_DRAIN_DAZE;
-            }
-            else if (hasAspirDaze)
-            {
-                daze = EFFECT_ASPIR_DAZE;
-            }
-            else if (hasHasteDaze)
-            {
-                daze = EFFECT_HASTE_DAZE;
-            }
-
-            attackerID = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetSubID();
-
-            if (PAttacker->objtype == TYPE_PC && PAttacker->PParty != nullptr)
-            {
-                if (PChar)
+                if (daze != EFFECT_NONE)
                 {
-                    // clang-format off
-                        PChar->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                        {
-                            if (attackerID == PMember->id)
-                            {
-                                power = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetPower();
-                            }
-                        });
-                    // clang-format on
+                    return;
                 }
+
+                for (const auto effectId : { EFFECT_DRAIN_DAZE, EFFECT_ASPIR_DAZE, EFFECT_HASTE_DAZE })
+                {
+                    if (auto* effect = PDefender->StatusEffectContainer->GetStatusEffect(effectId, PMember->id))
+                    {
+                        daze  = effectId;
+                        power = effect->GetPower();
+                        return;
+                    }
+                }
+            };
+
+            if (PChar)
+            {
+                PChar->ForPartyWithTrusts(findPartyDaze);
             }
             else if (PAttacker->objtype == TYPE_TRUST)
             {
                 if (auto* PMaster = dynamic_cast<CCharEntity*>(PAttacker->PMaster))
                 {
-                    // clang-format off
-                        PMaster->ForPartyWithTrusts([&](CBattleEntity* PMember)
-                        {
-                            if (attackerID == PMember->id)
-                            {
-                                power = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetPower();
-                            }
-                        });
-                    // clang-format on
+                    PMaster->ForPartyWithTrusts(findPartyDaze);
                 }
             }
             else if (PAttacker->PMaster == nullptr)
             {
-                if (attackerID == PAttacker->id)
-                {
-                    power = PDefender->StatusEffectContainer->GetStatusEffect(daze)->GetPower();
-                }
+                findPartyDaze(PAttacker);
             }
 
             if (daze == EFFECT_DRAIN_DAZE && power > 0)
@@ -5226,26 +5199,18 @@ auto HandleSevereDamage(CBattleEntity* PDefender, int32 damage, bool isPhysical)
 
 int32 HandleFanDance(CBattleEntity* PDefender, int32 damage)
 {
-    // Handle Fan Dance - Sanctum Custom Change w/ Merits
-    if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_FAN_DANCE))
+    if (auto* effect = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_FAN_DANCE))
     {
-        int   power  = PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_FAN_DANCE)->GetPower();
-        float resist = 1.0f - (power / 10000.0f);
-        damage       = (int32)(damage * resist);
-        int minimumPower = 1200;
+        const int32 power        = effect->GetPower();
+        constexpr int32 minPower = 2000;
+        damage                   = static_cast<int32>(damage * (1.0f - power / 10000.0f));
 
-        if (PDefender->objtype == TYPE_PC)
+        if (power > minPower)
         {
-            auto* PChar = static_cast<CCharEntity*>(PDefender);
-            minimumPower += PChar->PMeritPoints->GetMeritValue(MERIT_FAN_DANCE, PChar) * 200;
-        }
-
-        if (power > minimumPower)
-        {
-            // reduce fan dance effectiveness by 10% each hit, to a min of 20%
-            PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_FAN_DANCE)->SetPower(power - 1000);
+            effect->SetPower(std::max(minPower, power - 1000));
         }
     }
+
     return damage;
 }
 
@@ -6265,6 +6230,11 @@ bool CanAffordSpell(CBattleEntity* PEntity, CSpell* PSpell, uint8 flags)
     // Check if spell has MP cost and if entity has enough MP
     if (PSpell->hasMPCost())
     {
+        if (moduleutils::OnSpellCostCheck(PEntity, PSpell))
+        {
+            return true;
+        }
+
         uint16 spellCost = CalculateSpellCost(PEntity, PSpell);
         return PEntity->health.mp >= spellCost;
     }

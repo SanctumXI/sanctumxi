@@ -673,7 +673,7 @@ bool CStatusEffectContainer::DelStatusEffectSilent(EFFECT StatusID)
     return false;
 }
 
-bool CStatusEffectContainer::DelStatusEffect(EFFECT StatusID, uint16 SubID)
+bool CStatusEffectContainer::DelStatusEffect(EFFECT StatusID, uint32 SubID)
 {
     for (CStatusEffect* PStatusEffect : m_StatusEffectSet)
     {

@@ -1,9 +1,22 @@
-# Sanctum runtime overrides for upstream status-effect definitions.
-# The YAML keys intentionally match upstream so the module deep-merges the
-# records without introducing duplicate IDs. The name field selects the
-# Sanctum effect script while retaining the existing numeric effect ID.
+# Sanctum runtime status-effect overrides and custom definitions.
 
 status_effects:
+  sleep_i:
+    id: 2
+    name: sleep
+
+  sleep_ii:
+    id: 19
+    name: sleep
+
+  forbidden_seal:
+    id: 514
+    name: unbridled_wisdom
+    flags:
+      - death
+      - on_zone
+      - on_jobchange
+
   dodge:
     id: 60
     name: iron_guard

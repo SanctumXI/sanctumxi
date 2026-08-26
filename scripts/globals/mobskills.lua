@@ -359,7 +359,7 @@ local function handleSinglePhysicalHit(mob, target, baseHitDamage, params)
 
     -- TODO: Convert Damage to MP + Cover Bonus
 
-    -- TODO: Fan Dance Reduction
+    hitDamage = target:handleFanDance(hitDamage)
 
     -- Pre phalanx check - if stoneskin breaks we can get TP from shield mastery
     if
@@ -475,7 +475,7 @@ local function handleSingleRangedHit(mob, target, baseHitDamage, params)
 
     -- TODO: Convert Damage to MP + Cover Bonus
 
-    -- TODO: Fan Dance Reduction
+    hitDamage = target:handleFanDance(hitDamage)
 
     -- Pre phalanx check - if stoneskin breaks we can get TP from shield mastery
     if

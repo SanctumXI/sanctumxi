@@ -3405,6 +3405,12 @@ end
 function CBaseEntity:handleSevereDamage(damage, isPhysical)
 end
 
+---@nodiscard
+---@param damage integer
+---@return integer
+function CBaseEntity:handleFanDance(damage)
+end
+
 ---@param arg0 integer? Optional Pet ID
 ---@return nil
 function CBaseEntity:spawnPet(arg0)

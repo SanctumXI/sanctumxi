@@ -52,7 +52,7 @@ public:
     bool AddStatusEffect(CStatusEffect* StatusEffect, EffectNotice = EffectNotice::ShowMessage);
     bool DelStatusEffect(EFFECT StatusID);
     bool DelStatusEffectSilent(EFFECT StatusID);
-    bool DelStatusEffect(EFFECT StatusID, uint16 SubID);
+    bool DelStatusEffect(EFFECT StatusID, uint32 SubID);
     bool DelStatusEffectBySource(EFFECT StatusID, EffectSourceType EffectSourceType, uint16 SourceTypeParam);
     void DelStatusEffectsByFlag(uint32 flag, EffectNotice notice = EffectNotice::ShowMessage); // Remove all the status effects with the specified type
     void DelStatusEffectsByIcon(uint16 BuffNo);                                                // Remove all effects with the specified icon

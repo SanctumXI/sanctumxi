@@ -40,6 +40,13 @@ add_executable(xi_test
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${resource})
 
+get_target_property(module_sources xi_map SOURCES)
+list(FILTER module_sources INCLUDE REGEX "/modules/.*\\.cpp$")
+if(module_sources)
+    target_sources(xi_test PRIVATE ${module_sources})
+    target_include_directories(xi_test PRIVATE $<TARGET_PROPERTY:xi_map,INCLUDE_DIRECTORIES>)
+endif()
+
 set(TEST_LIB_SOURCES ${SOURCES})
 add_library(xi_test_lib
     STATIC
