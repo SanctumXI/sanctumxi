@@ -10,8 +10,4 @@ end
 xi.module.ensureTable('xi.zones.Lower_Jeuno.npcs')
 xi.zones.Lower_Jeuno.npcs.Linkshell_Concierge = entity
 
--- Keep the Adoulin entry dormant until that content is opened.
-m:addOverride('xi.zones.Eastern_Adoulin.npcs.Eppel-Treppel.onTrigger', function()
-end)
-
 return m

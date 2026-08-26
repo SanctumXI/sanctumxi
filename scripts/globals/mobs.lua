@@ -149,7 +149,7 @@ xi.mob.phOnDespawn = function(ph, phNmId, chance, cooldown, params)
 
     chance = math.ceil((chance + bonuschance) * 10) -- chance / 1000.
     print(string.format("chance = %s",chance))
-    
+
     if
         GetSystemTime() <= pop or
         lotteryPrimed(phList, nmId) or
@@ -187,7 +187,7 @@ xi.mob.phOnDespawn = function(ph, phNmId, chance, cooldown, params)
 
     -- if params.immediate is true, spawn the nm params.immediately (1ms) else use placeholder's timer
     nm:setRespawnTime(params.immediate and 1 or GetMobRespawnTime(phId))
-    
+
     SetServerVariable(string.format("[LOTTOBONUS]%s", nmId), 0)
 
     nm:addListener('DESPAWN', 'DESPAWN_' .. nmId, function(m)

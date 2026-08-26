@@ -17,16 +17,16 @@
 #
 # init.txt:
 # ---------------------
-# | 
+# |
 # | renamer
-# | 
+# |
 # ---------------------
 #
 # Will load everything under the renamer folder.
 #
 # init.txt:
 # ---------------------
-# | 
+# |
 # | custom/cpp/custom_module.cpp
 # | custom/lua/claim_shield.lua
 # |
@@ -35,12 +35,9 @@
 # Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
 #
 # Live example:
-custom/commands/
 # WotG-free job progression. Load before Sanctum's shared artifact-coffer module.
 wotg/lua/jobs/
 wotg/sql/
-# Includes the Linkshell Dashboard recruitment, live-message, and Friends bridges.
 sanctum
-LQS
 LQS.lua
 lqs_util.cpp

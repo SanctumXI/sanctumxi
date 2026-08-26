@@ -2934,7 +2934,7 @@ local getMobSteps = function(event, var, entity, steps, entities)
                 end
 
                 if entity.points.item ~= nil then
-                    if 
+                    if
                         not npcUtil.giveItem(member, entity.points.item) and
                         entity.points.missed ~= nil
                     then
@@ -3304,7 +3304,7 @@ LQS.add = function(source, tbl)
                     end
                 end
 
-                if entity.look ~= nil then 
+                if entity.look ~= nil then
                     dynamicEntity.look = entity.look
                 end
 

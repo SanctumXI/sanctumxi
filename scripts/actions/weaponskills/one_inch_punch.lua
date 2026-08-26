@@ -31,7 +31,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
                 -- Add critical hit buff after WS for 45 seconds
     player:addStatusEffect(xi.effect.CRITICAL_BOOST, { power = 10, duration = 45, origin = player })
-   
+
     return tpHits, extraHits, criticalHit, damage
 end
 

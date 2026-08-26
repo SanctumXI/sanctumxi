@@ -20,6 +20,7 @@ local poolOverrides =
     [738] = { speed = 30 },
     [1053] = { speed = 55 },
     [1154] = { speed = 60 },
+    [1306] = { detection = bit.bor(xi.detects.MAGIC, xi.detects.SIGHT) },
     [1798] = { speed = 55 },
     [1841] = { speed = 55 },
     [1851] = { speed = 50 },
@@ -48,6 +49,7 @@ local poolOverrides =
     [4713] = { speed = 65 },
     [4714] = { speed = 65 },
     [5067] = { acc = 2 },
+    [5128] = { detection = bit.bor(xi.detects.MAGIC, xi.detects.SIGHT) },
     [5691] = { speed = 65 },
     [5692] = { speed = 65 },
     [6055] = { speed = 55 },
@@ -82,10 +84,10 @@ local zoneMobNames =
     ['Mount_Zhayolm'] = { 'Anantaboga', 'Claret', 'Khromasoul_Bhurborlor' },
     ['Nyzul_Isle'] = { 'Aiatar', 'Seiryu', 'Suzaku' },
     ['Riverne-Site_A01'] = { 'Aiatar' },
-    ['RuAun_Gardens'] = { 'Seiryu', 'Suzaku' },
+    ['RuAun_Gardens'] = { 'Groundskeeper', 'Seiryu', 'Suzaku' },
     ['Ruhotz_Silvermines'] = { 'Guivre' },
     ['Sacrificial_Chamber'] = { 'Graviton', 'Molybiton', 'Tungsiton' },
-    ['The_Shrine_of_RuAvitau'] = { 'Qing_Long', 'Seiryu_pet', 'Suzaku_pet', 'Zhu_Que' },
+    ['The_Shrine_of_RuAvitau'] = { 'Faust', 'Qing_Long', 'Seiryu_pet', 'Suzaku_pet', 'Zhu_Que' },
     ['Upper_Delkfutts_Tower'] = { 'Porphyrion' },
     ['Wajaom_Woodlands'] = { 'Gurfurlur_the_Menacing', 'Vulpangue' },
     ['Walk_of_Echoes'] = { 'Larzos' },
@@ -105,6 +107,10 @@ local function applyPoolOverride(mob)
 
     if override.acc then
         mob:setStatRank(xi.stat.ACC, override.acc)
+    end
+
+    if override.detection then
+        mob:setMobMod(xi.mobMod.DETECTION, override.detection)
     end
 end
 

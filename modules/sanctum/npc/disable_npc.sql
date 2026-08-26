@@ -56,7 +56,7 @@ WHERE BINARY `name` IN
     'Danzhor'
 
 
-    
+
 )
 -- Treasure Coffers associated with Gobbie Mystery NPCs
 OR npcid IN (

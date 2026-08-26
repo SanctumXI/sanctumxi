@@ -86,7 +86,7 @@ m:addOverride('xi.zones.Apollyon.Zone.onInitialize', function(zone)
             player:customMenu(soapMenu)
         end,
     })
-        
+
 end)
 
 return m

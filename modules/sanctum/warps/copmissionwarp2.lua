@@ -72,7 +72,7 @@ return LQS.teleporter({
             name     = "Mine Shaft-#2716",
             lockText = "Complete Desires of Emptiness",
             pos   = { -68.192, -120.000, -580.105, 255, 13 }, -- !pos -68.192 -120.000 -580.105 13
-            costs = { gil = 2000}, 
+            costs = { gil = 2000},
             check = function(player)
                 return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DESIRES_OF_EMPTINESS)
             end,

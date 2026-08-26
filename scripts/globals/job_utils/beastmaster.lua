@@ -403,7 +403,7 @@ xi.job_utils.beastmaster.useBestialLoyalty = function(player, target, ability)
     if pet then
         pet:setBaseSpeed(55) -- same as player base speed
     end
-    
+
     player:addRecast(xi.recast.ABILITY, 102, 1)
 end
 
@@ -707,7 +707,7 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action) 
     -- all but regen are a 15% bonus
     local power = 15
     local pet = player:getPet()
-    local duration = player:getMerit(xi.merit.RUN_WILD) + 60 
+    local duration = player:getMerit(xi.merit.RUN_WILD) + 60
     if pet then
         -- store the exact bonuses granted so we remove precisely this much when the buff fades
         local accBonus  = pet:getACC() * power / 100

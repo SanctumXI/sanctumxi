@@ -357,11 +357,11 @@ xi.job_utils.dancer.useReverseFlourishAbility = function(player, target, ability
     local gearMod              = player:getMod(xi.mod.REVERSE_FLOURISH_EFFECT)
     local numMoves             = player:getStatusEffect(xi.effect.FINISHING_MOVE_1):getPower()
     local tpGained             = 0
-    
+
     local usedMoves = math.min(numMoves, 5)
 
     tpGained = (95 + reverseFlourishBonus) * usedMoves + (5 + gearMod) * usedMoves ^ 2 + 30 * (numMerits / 3)
-    
+
     player:addTP(tpGained)
     setFinishingMoves(player, 0)
 

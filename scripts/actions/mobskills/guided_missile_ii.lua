@@ -19,7 +19,7 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.baseDamage     = mob:getMainLvl() + 2
-    params.numHits        = 3 
+    params.numHits        = 3
     params.fTP            = { 5.0, 5.5, 6.0 }
     params.element        = xi.element.NONE -- TODO: Capture element.
     params.attackType     = xi.attackType.MAGICAL

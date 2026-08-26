@@ -6,7 +6,7 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.ADDITIVE_GUARD, 25)
-        
+
     -- Iron Guard Merits reduce your enmity loss
     local merit = target:getMerit(xi.merit.IRON_GUARD_EFFECT)
     if merit > 0 then

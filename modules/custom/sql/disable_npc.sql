@@ -45,7 +45,7 @@ WHERE BINARY `name` IN
     'Pursuivant',
     'Tillecoe'
 
-    
+
 )
 -- Treasure Coffers associated with Gobbie Mystery NPCs
 OR npcid IN (

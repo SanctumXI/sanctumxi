@@ -1,6 +1,6 @@
 require('modules/module_utils')
 
-local m = Module:new('Jeishu')
+local m = Module:new('sanctum_jeishu')
 m:setEnabled(true)
 
 m:addOverride('xi.zones.La_Theine_Plateau.Zone.onInitialize', function(zone)
@@ -100,21 +100,21 @@ m:addOverride('xi.zones.La_Theine_Plateau.Zone.onInitialize', function(zone)
                             addMob:setMagicCastingEnabled(true)
                             addMob:setMobMod(xi.mobMod.SUPERLINK, mob:getTargID())
                         end,
-      
+
                         onMobMobskillChoose = function(mob, target, skillId)
                             local skills =
                             {
                                 xi.mobSkill.DARK_NOVA,
                                 xi.mobSkill.DISPELLING_WIND,
-                            }    
-                        
+                            }
+
                             return skills[math.randomInt(1, #skills)]
                         end,
 
                         onMobSpellChoose = function(mob, target, spellId)
                             local spellList =
                         {
-                            
+
                         [ 1] = { xi.magic.spell.BLIZZARD_IV, target, false, xi.action.type.DAMAGE_TARGET,        nil,                 0, 100 },
                         [ 2] = { xi.magic.spell.FREEZE_II,  target, false, xi.action.type.DAMAGE_TARGET,        nil,                 0, 100 },
                         [ 3] = { xi.magic.spell.SILENCEGA, target, false, xi.action.type.ENFEEBLING_TARGET,    xi.effect.SILENCE,   0, 100 },
@@ -159,7 +159,7 @@ end,
                 xi.mobSkill.PYRIC_BLAST,
                 xi.mobSkill.WING_THRUST,
                 xi.mobSkill.DISPELLING_WIND,
-                
+
             }
 
             return skills[math.randomInt(1, #skills)]

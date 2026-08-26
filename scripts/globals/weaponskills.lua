@@ -669,7 +669,7 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.accStat                 = attacker:getACC()
     calcParams.melee                   = true
     calcParams.mustMiss                = target:hasStatusEffect(xi.effect.PERFECT_DODGE) or (target:hasStatusEffect(xi.effect.ALL_MISS) and not wsParams.hitsHigh)
-    
+
     local hasSA = attacker:hasStatusEffect(xi.effect.SNEAK_ATTACK)
     local ignorePosition = attacker:getMainJob() == xi.job.THF
 

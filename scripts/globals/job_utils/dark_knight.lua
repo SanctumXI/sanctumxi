@@ -81,7 +81,7 @@ xi.job_utils.dark_knight.useDarkSeal = function(player, target, ability, action)
     -- Sub Power: Enhances Dark Seal effect by increasing duration of Dark Magic by 10% per merit level (total of 50% bonus).
     -- local power    = player:getMerit(xi.merit.DARK_SEAL) - 10
     local subPower = player:getMerit(xi.merit.DARK_SEAL) * (player:getMod(xi.mod.ENHANCES_DARK_SEAL) / 10)
-  
+
     player:addStatusEffect(xi.effect.DARK_SEAL, { power = 1, duration = 30, origin = player, subPower = subPower })
 
     return xi.effect.DARK_SEAL

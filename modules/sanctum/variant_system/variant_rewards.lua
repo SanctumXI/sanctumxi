@@ -2,10 +2,6 @@ local data = require('modules/sanctum/variant_system/variant_tables')
 
 local rewards = {}
 
--- Custom chat packets require the standard palette; extended colors truncate the line.
-local itemColor  = string.char(0x1F, 214)
-local colorReset = string.char(0x1F, 36)
-
 local function getCosmeticsForLevel(level)
     local available = {}
     local seen      = {}
@@ -42,15 +38,31 @@ local function getZoneText(player, key)
     return zone ~= nil and zone.text ~= nil and zone.text[key] or nil
 end
 
-local function addParticipationExp(player, amount)
+local function addExpReward(player, amount)
     local bridge = xi.variantSystemRewards
 
     if bridge ~= nil and bridge.addExpSilent ~= nil then
-        return bridge.addExpSilent(player, amount)
+        if bridge.addExpSilent(player, amount) then
+            return true, true
+        end
     end
 
     player:addExp(amount)
-    return true
+    return true, false
+end
+
+local function getExpRewardName(player)
+    local bridge = xi.variantSystemRewards
+
+    if
+        bridge ~= nil and
+        bridge.usesLimitPoints ~= nil and
+        bridge.usesLimitPoints(player)
+    then
+        return 'limit points'
+    end
+
+    return 'experience points'
 end
 
 local function getZoneBossCosmetics(bossConfig)
@@ -58,20 +70,21 @@ local function getZoneBossCosmetics(bossConfig)
 end
 
 local function announceZoneBossPersonalReward(player, boss, state, itemId)
-    local itemName        = getItemName(itemId)
-    local coloredItemName = itemColor .. itemName .. colorReset
+    local obtainsMessage = getZoneText(player, 'PLAYER_OBTAINS_ITEM')
 
-    player:printToPlayer(
-        string.format(
-            'You find a %s on the %s.',
-            coloredItemName,
-            state.config.displayName or boss:getPacketName()),
-        xi.msg.channel.SYSTEM_3)
+    if obtainsMessage == nil then
+        local obtainedMessage = getZoneText(player, 'ITEM_OBTAINED')
 
-    local obtainsMessage = string.format(
-        '%s obtains a %s.',
-        player:getName(),
-        coloredItemName)
+        if obtainedMessage ~= nil then
+            player:messageSpecial(obtainedMessage, itemId)
+        else
+            player:printToPlayer(
+                string.format('Obtained: %s.', getItemName(itemId)),
+                xi.msg.channel.SYSTEM_3)
+        end
+
+        return
+    end
 
     for participantId, participant in pairs(state.participants) do
         local audience = GetPlayerByID(participantId)
@@ -82,7 +95,7 @@ local function announceZoneBossPersonalReward(player, boss, state, itemId)
             audience:isPC() and
             audience:getZoneID() == boss:getZoneID()
         then
-            audience:printToPlayer(obtainsMessage, xi.msg.channel.SYSTEM_3)
+            audience:messageName(obtainsMessage, player, itemId)
         end
     end
 end
@@ -178,10 +191,14 @@ function rewards.awardBonusExp(mob, killer, amount, label, halveBelowEvenMatch)
                 memberReward = math.floor(memberReward / 2)
             end
 
-            member:addExp(memberReward)
-            member:printToPlayer(
-                string.format('%s bonus: %u EXP.', label, memberReward),
-                xi.msg.channel.SYSTEM_3)
+            local rewardName = getExpRewardName(member)
+            local _, awardedSilently = addExpReward(member, memberReward)
+
+            if awardedSilently then
+                member:printToPlayer(
+                    string.format('%s bonus: %u %s.', label, memberReward, rewardName),
+                    xi.msg.channel.SYSTEM_3)
+            end
         end
     end
 
@@ -233,6 +250,7 @@ function rewards.awardZoneBossRewards(boss, state)
                         xi.msg.channel.SYSTEM_3)
                 else
                     local expReward = 0
+                    local rewardName = getExpRewardName(player)
 
                     if player:checkDifficulty(boss) > xi.mobDifficulty.TOO_WEAK then
                         expReward = math.min(
@@ -240,16 +258,17 @@ function rewards.awardZoneBossRewards(boss, state)
                             math.floor(participant.points * (bossConfig.xpPerPoint or 0)))
 
                         if expReward > 0 then
-                            addParticipationExp(player, expReward)
+                            addExpReward(player, expReward)
                         end
                     end
 
                     player:printToPlayer(
                         string.format(
-                            '%s participation: %u points, %u EXP.',
+                            '%s participation: %u points, %u %s.',
                             bossConfig.displayName,
                             participant.points,
-                            expReward),
+                            expReward,
+                            rewardName),
                         xi.msg.channel.SYSTEM_3)
                 end
 

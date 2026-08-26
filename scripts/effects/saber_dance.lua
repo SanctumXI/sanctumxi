@@ -28,7 +28,7 @@ effectObject.onEffectTick = function(target, effect)
     if effect:getPower() > floor then
         effect:setPower(math.max(floor, effect:getPower() - 3))
     end
-        
+
 end
 
 effectObject.onEffectLose = function(target, effect)

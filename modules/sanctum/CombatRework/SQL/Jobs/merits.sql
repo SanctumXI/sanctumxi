@@ -12,7 +12,7 @@ WHERE `meritid` IN
     2838,3008,3076,3138,3140,3142
 );
 
-INSERT INTO `merits` VALUES (68,'max_merits',10,1,1048575,9,0);
+INSERT INTO `merits` VALUES (68,'max_merits',10,3,1048575,9,0);
 INSERT INTO `merits` VALUES (386,'retaliation_damage',5,5,1,6,5);
 INSERT INTO `merits` VALUES (448,'focus_recast',5,12,2,6,6);
 INSERT INTO `merits` VALUES (450,'iron_guard_effect',5,5,2,6,6);

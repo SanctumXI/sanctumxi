@@ -57,7 +57,7 @@ return LQS.teleporter({
 
         {
             name     = "Horlais Peak",
-            pos = { -522.801, 159.800, -209.811, 1, 139 }, -- !pos -522.801 159.800 -209.811 139 
+            pos = { -522.801, 159.800, -209.811, 1, 139 }, -- !pos -522.801 159.800 -209.811 139
             costs    = { gil = 2000},
             level    = 10,
         },
@@ -65,7 +65,7 @@ return LQS.teleporter({
         {
             name  = "Waughroon Shrine",
             pos   = { -361.434, 104.245, -259.996, 0, 144 }, -- !pos -361.434 104.245 -259.996 144
-            costs = { gil = 2000}, 
+            costs = { gil = 2000},
             level = 10,
         },
 

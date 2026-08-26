@@ -29,7 +29,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
         params.vit_wsc = 0.6
         params.atkVaries = { 1.25, 1.25, 1.25 }
     end
-    
+
     if player:getMainJob() == xi.job.WAR then
         params.str_wsc = 0.7
         params.vit_wsc = 0.3

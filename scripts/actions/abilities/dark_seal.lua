@@ -16,7 +16,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onUseAbility = function(player, target, ability, action)
-    return xi.job_utils.dark_knight.useDarkSeal(player, target, ability, action) 
+    return xi.job_utils.dark_knight.useDarkSeal(player, target, ability, action)
 end
 
 return abilityObject

@@ -1,21 +1,31 @@
 local packetAliases =
 {
+    ['CB Boreal Noctules']      = 'CB Bor Noctules',
     ['CB Catastrophic Weapon']  = 'CB Cata Weapon',
     ['CB Chasm Creeper']        = 'CB Chasm Creep',
     ['CB Chocoshoe Crab']       = 'CB Choco Crab',
     ['CB Crawler Queen']        = 'CB Crawl Queen',
     ['CB Drogaroga Stalker']    = 'CB Droga Stalk',
     ['CB Funerary Ichor']       = 'CB Funeral Ich',
+    ['CB Frigid Executioner']   = 'CB Frig Exec',
+    ['CB Frozen Millstone']     = 'CB Frost Mill',
     ['CB Goblin Postman']       = 'CB Gob Postman',
+    ['CB Icebound Legionnaire'] = 'CB Ice Legion',
+    ['CB Infernal Armory']      = 'CB Inf Armory',
     ['CB Ironwood Horn']        = 'CB Iron Horn',
     ['CB Labyrinth Borer']      = 'CB Lab Borer',
     ['CB Lesser Vampire']       = 'CB Less Vamp',
     ['CB Ordelle Dweller']      = 'CB Ord Dweller',
+    ['CB Onzozo Scourge']       = 'CB Onz Scourge',
     ['CB Orcish Siege Engine']  = 'CB Orc Siege',
     ['CB Orcish Warmonger']     = 'CB Orc Warmong',
+    ['CB Oubliette Noctules']   = 'CB Oub Noct',
     ['CB Primeval Spider']      = 'CB Prime Spider',
+    ['CB Prison Wraith']        = 'CB Pris Wraith',
+    ['CB Sewer Pustule']        = 'CB Sew Pustule',
     ['CB Shadfly Emperor']      = 'CB Shad Emp',
     ['CB Sinister Weapon']      = 'CB Sin Weapon',
+    ['CB Tempest Maahes']       = 'CB Temp Maahes',
     ['CB Vociferous Vine']      = 'CB Voci Vine',
     ['CB Yagudo Bishop']        = 'CB Yag Bishop',
     ['CB Zepwell Digger']       = 'CB Zep Digger',
@@ -28,10 +38,12 @@ local packetAliases =
     ['V Goblin Leecher']        = 'V Gob Leecher',
     ['V Goblin Pathfinder']     = 'V Gob Pathfind',
     ['V Goliath Beetle']        = 'V Gol Beetle',
+    ['V Hellish Weapon']        = 'V Hell Weapon',
     ['V Hunter Antlion']        = 'V Hunt Antlion',
-    ['V Jugner Funguar']        = 'V Jug Funguar',
     ['V Infernal Weapon']       = 'V Infer Weapon',
+    ['V Jugner Funguar']        = 'V Jug Funguar',
     ['V Killing Weapon']        = 'V Kill Weapon',
+    ['V Lesser Colibri']        = 'V Less Colibri',
     ['V Ominous Weapon']        = 'V Omin Weapon',
     ['V Orcish Flamethrower']   = 'V Orc Flame',
     ['V Orcish Neckchopper']    = 'V Orc Neckchop',
@@ -41,6 +53,7 @@ local packetAliases =
     ['V Tracker Antlion']       = 'V Track Antlion',
     ['V Trench Antlion']        = 'V Trench Ant',
     ['V Tulwar Scorpion']       = 'V Tul Scorpion',
+    ['V Underworld Bats']       = 'V Under Bats',
     ['V Wandering Sapling']     = 'V Wand Sapling',
     ['V Yagudo Assassin']       = 'V Yag Assassin',
     ['V Yagudo Chanter']        = 'V Yag Chanter',
@@ -57,6 +70,7 @@ local packetAliases =
     ['V Yagudo Theologist']     = 'V Yag Theolog',
     ['ZB Attohwa Dreadmaw']     = 'ZB Atto Dread',
     ['ZB Batallia Nightlord']   = 'ZB Bata Night',
+    ['ZB Bhaflau Rainwing']     = 'ZB Bha Rainwing',
     ['ZB Boyahda Matriarch']    = 'ZB Boy Matri',
     ['ZB Buburimu Skyking']     = 'ZB Bubu Skyking',
     ['ZB Crawler Kingpin']      = 'ZB Crawl King',
@@ -1403,6 +1417,97 @@ local zones =
         },
     },
     {
+        zoneId   = xi.zone.FEIYIN,
+        zoneName = 'FeiYin',
+        mobs =
+        {
+            variantWithChainbreaker('underworld_bats', 'Underworld_Bats', 'Boreal_Noctules', 19, 204,
+                '0x0000070100000000000000000000000000000000', 1.8),
+            variantWithChainbreaker('camazotz', 'Camazotz', 'Rimewing', 22, 204,
+                '0x0000010100000000000000000000000000000000', 1.2),
+            variantWithChainbreaker('droma', 'Droma', 'Frozen_Millstone', 21, 204,
+                '0x00009D0100000000000000000000000000000000', 4.3),
+            variantWithChainbreaker('specter', 'Specter', 'Icebound_Legionnaire', 24, 204,
+                '0x0000230200000000000000000000000000000000', 1.7),
+            variantWithChainbreaker('killing_weapon', 'Killing_Weapon', 'Frigid_Executioner', 31, 204,
+                '0x0000DC0100000000000000000000000000000000', 2.2),
+            variantWithChainbreaker('hellish_weapon', 'Hellish_Weapon', 'Infernal_Armory', 32, 204,
+                '0x0000DE0100000000000000000000000000000000', 2.2),
+        },
+    },
+    {
+        zoneId   = xi.zone.BOSTAUNIEUX_OUBLIETTE,
+        zoneName = 'Bostaunieux_Oubliette',
+        mobs =
+        {
+            variantWithChainbreaker('funnel_bats', 'Funnel_Bats', 'Oubliette_Noctules', 4, 167,
+                '0x0000070100000000000000000000000000000000', 1.8),
+            variantWithChainbreaker('werebat', 'Werebat', 'Bloodfang', 6, 167,
+                '0x0000010100000000000000000000000000000000', 1.2),
+            variantWithChainbreaker('mousse', 'Mousse', 'Sewer_Pustule', 10, 167,
+                '0x0000250100000000000000000000000000000000', 3.7),
+            variantWithChainbreaker('haunt', 'Haunt', 'Prison_Wraith', 7, 167,
+                '0x0000700100000000000000000000000000000000', 0.8),
+        },
+    },
+    {
+        zoneId   = xi.zone.LABYRINTH_OF_ONZOZO,
+        zoneName = 'Labyrinth_of_Onzozo',
+        mobs =
+        {
+            variantWithChainbreaker('cockatrice', 'Cockatrice', 'Gorgonbeak', 6, 213,
+                '0x0000210100000000000000000000000000000000', 3.7),
+            variantWithChainbreaker('mushussu', 'Mushussu', 'Onzozo_Scourge', 9, 213,
+                '0x00003B0800000000000000000000000000000000', 3.9),
+            variantWithChainbreaker('flying_manta', 'Flying_Manta', 'Abyssal_Ray', 15, 213,
+                '0x0000610100000000000000000000000000000000', 1.7),
+            variantWithChainbreaker('torama', 'Torama', 'Tempest_Maahes', 19, 213,
+                '0x00009F0800000000000000000000000000000000', 2.5),
+        },
+    },
+    {
+        zoneId   = xi.zone.WAJAOM_WOODLANDS,
+        zoneName = 'Wajaom_Woodlands',
+        zoneBoss = makeZoneBoss(
+        {
+            name        = 'Mammuthus',
+            groupId     = 15,
+            groupZoneId = 51,
+            look        = '0x0000CA0600000000000000000000000000000000',
+            baseHitbox  = 2.0,
+            level       = 72,
+            maxHp       = 22000,
+            xpCap       = 6000,
+            spawn       = { x = 663.000, y = -18.000, z = 198.000, rotation = 127 },
+        }),
+        mobs =
+        {
+            variantWithChainbreaker('lesser_colibri', 'Lesser_Colibri', 'Ramphastos', 7, 51,
+                '0x0000B50800000000000000000000000000000000', 1.2),
+        },
+    },
+    {
+        zoneId   = xi.zone.BHAFLAU_THICKETS,
+        zoneName = 'Bhaflau_Thickets',
+        zoneBoss = makeZoneBoss(
+        {
+            name        = 'Bhaflau_Rainwing',
+            groupId     = 7,
+            groupZoneId = 52,
+            look        = '0x0000B50800000000000000000000000000000000',
+            baseHitbox  = 1.2,
+            level       = 72,
+            maxHp       = 22000,
+            xpCap       = 6000,
+            spawn       = { x = 338.000, y = -10.000, z = 26.000, rotation = 127 },
+        }),
+        mobs =
+        {
+            variantWithChainbreaker('lesser_colibri', 'Lesser_Colibri', 'Ramphastos', 7, 52,
+                '0x0000B50800000000000000000000000000000000', 1.2),
+        },
+    },
+    {
         zoneId   = xi.zone.RUAUN_GARDENS,
         zoneName = 'RuAun_Gardens',
         zoneBoss = makeZoneBoss(
@@ -1569,7 +1674,9 @@ local zones =
 }
 
 for _, zoneConfig in ipairs(zones) do
-    zoneConfig.zoneBoss.packetName = getPacketAlias(zoneConfig.zoneBoss.packetName)
+    if zoneConfig.zoneBoss ~= nil then
+        zoneConfig.zoneBoss.packetName = getPacketAlias(zoneConfig.zoneBoss.packetName)
+    end
 
     for _, mobConfig in ipairs(zoneConfig.mobs) do
         if mobConfig.variantPacketName ~= nil then
