@@ -789,6 +789,7 @@ public:
     auto  takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, xi::DamageType dmgType) -> int32;
     int32 checkDamageCap(int32 damage);
     auto  handleSevereDamage(int32 damage, bool isPhysical) -> int32;
+    auto  handleFanDance(int32 damage) -> int32;
 
     // Pets and Automations
     void spawnPet(const sol::object& arg0);
