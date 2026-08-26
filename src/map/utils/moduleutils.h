@@ -33,6 +33,8 @@
 
 // Forward declare
 class CPPModule;
+class CBattleEntity;
+class CSpell;
 namespace moduleutils
 {
 
@@ -64,6 +66,16 @@ public:
     {
         return false;
     };
+    // Return true when the module can provide an alternative to MP payment.
+    virtual auto OnSpellCostCheck(CBattleEntity* PCaster, CSpell* PSpell) -> bool
+    {
+        return false;
+    };
+    // Return true after handling the final, modified spell cost.
+    virtual auto OnSpellCostSpend(CBattleEntity* PCaster, CSpell* PSpell, int32 cost) -> bool
+    {
+        return false;
+    };
 
     template <typename T>
     static T* Register()
@@ -91,6 +103,8 @@ void OnCharZoneIn(CCharEntity* PChar);
 void OnCharZoneOut(CCharEntity* PChar);
 void OnPushPacket(CCharEntity* PChar, const std::unique_ptr<CBasicPacket>& packet);
 auto OnIncomingPacket(MapSession* PSession, CCharEntity* PChar, CBasicPacket& packet) -> bool;
+auto OnSpellCostCheck(CBattleEntity* PCaster, CSpell* PSpell) -> bool;
+auto OnSpellCostSpend(CBattleEntity* PCaster, CSpell* PSpell, int32 cost) -> bool;
 
 // The program has two "states":
 // - Load-time: As all data is being loaded and init'd

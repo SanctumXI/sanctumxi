@@ -76,6 +76,7 @@
 #include "spell.h"
 #include "status_effect_container.h"
 #include "trait.h"
+#include "utils/moduleutils.h"
 #include "utils/petutils.h"
 #include "weapon_skill.h"
 #include "zoneutils.h"
@@ -6265,6 +6266,11 @@ bool CanAffordSpell(CBattleEntity* PEntity, CSpell* PSpell, uint8 flags)
     // Check if spell has MP cost and if entity has enough MP
     if (PSpell->hasMPCost())
     {
+        if (moduleutils::OnSpellCostCheck(PEntity, PSpell))
+        {
+            return true;
+        }
+
         uint16 spellCost = CalculateSpellCost(PEntity, PSpell);
         return PEntity->health.mp >= spellCost;
     }

@@ -39,6 +39,7 @@
 #include "spell.h"
 #include "status_effect_container.h"
 #include "utils/battleutils.h"
+#include "utils/moduleutils.h"
 
 CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid, uint8 flags)
 : CState(PEntity, targid)
@@ -492,7 +493,10 @@ void CMagicState::SpendCost()
             cost = (int16)(cost * (xirand::GetRandomNumber(8.0f, 16.0f) / 16.0f));
         }
 
-        m_PEntity->addMP(-cost);
+        if (!moduleutils::OnSpellCostSpend(m_PEntity, GetSpell(), cost))
+        {
+            m_PEntity->addMP(-cost);
+        }
     }
 }
 
