@@ -72,7 +72,7 @@ return LQS.teleporter({
             name      = "Al'Taieu - East",
             lockText = "Sea Access Required",
             pos   = { 566.169, -2.040, -187.122, 9, 33 }, -- !pos 566.169 -2.040 -187.122 33
-            costs = { gil = 2000}, 
+            costs = { gil = 2000},
              check = function(player)
                 return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.GARDEN_OF_ANTIQUITY)
             end,

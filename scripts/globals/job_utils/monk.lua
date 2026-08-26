@@ -100,7 +100,7 @@ xi.job_utils.monk.useChiBlast = function(player, target, ability)
 
     local level = player:getMainLvl()
     if level > 65 then
-        target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })  
+        target:addStatusEffect(xi.effect.PLAGUE, { power = 15, duration = 30, origin = player })
     end
 
     local dmg = math.floor(player:getStat(xi.mod.VIT) * (1.4 + (math.randomFloat(0, 1) / 2))) * multiplier
@@ -126,7 +126,7 @@ end
 xi.job_utils.monk.useIronGuard = function(player, target, ability)
     --local jpLevel  = target:getJobPointLevel(xi.jp.DODGE_EFFECT)
     --local dodgeMod = target:getMod(xi.mod.DODGE_EFFECT)
-    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 300, origin = player }) 
+    player:addStatusEffect(xi.effect.IRON_GUARD, { power = 1, duration = 300, origin = player })
     return xi.effect.IRON_GUARD
 end
 

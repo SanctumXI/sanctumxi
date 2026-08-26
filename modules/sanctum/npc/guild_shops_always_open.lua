@@ -135,7 +135,7 @@ m:addOverride("xi.zones.Port_Bastok.npcs.Silver_Owl.onTrigger", function(player,
     end
 end)
 
-m:addOverride("xi.zones.Port_Bastok.npcs.Jabbar.onTrigger", function(player, npc)   
+m:addOverride("xi.zones.Port_Bastok.npcs.Jabbar.onTrigger", function(player, npc)
     local ID = require("scripts/zones/Port_Bastok/IDs")
     if player:hasKeyItem(xi.ki.TENSHODO_MEMBERS_CARD) then
         if player:sendGuild(60419, 0, 24, 4) then

@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS=0;
 -- ------------------------------
--- Table structure for char_flags 
+-- Table structure for char_flags
 -- ------------------------------
 DROP TABLE IF EXISTS `char_flags`;
 CREATE TABLE `char_flags` (

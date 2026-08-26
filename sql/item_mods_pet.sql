@@ -928,10 +928,10 @@ INSERT INTO `item_mods_pet` VALUES (23316,23,20,0); -- Pet: ATT: 20
 INSERT INTO `item_mods_pet` VALUES (23316,25,20,0); -- Pet: ACC: 20
 
 -- Convokers Pigaches +2
-INSERT INTO `item_mods_pet` VALUES (23322,23,30,1); -- Avatar: ACC: 30 
+INSERT INTO `item_mods_pet` VALUES (23322,23,30,1); -- Avatar: ACC: 30
 INSERT INTO `item_mods_pet` VALUES (23322,30,30,1); -- Avatar: MACC: 30
 INSERT INTO `item_mods_pet` VALUES (23322,68,30,1); -- Avatar: EVA: 30
-INSERT INTO `item_mods_pet` VALUES (23322,126,8,1); -- Avatar: BP_DAMAGE: 8 
+INSERT INTO `item_mods_pet` VALUES (23322,126,8,1); -- Avatar: BP_DAMAGE: 8
 
 -- Foire Babouches +2
 INSERT INTO `item_mods_pet` VALUES (23325,28,20,3);   -- Automaton - MATT: 20

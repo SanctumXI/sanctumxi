@@ -7,7 +7,7 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     local bonusPower = effect:getPower()
-    local monkLevel = utils.getActiveJobLevel(target, xi.job.MNK) 
+    local monkLevel = utils.getActiveJobLevel(target, xi.job.MNK)
 
     -- Accuracy
     effect:addMod(xi.mod.ACC, (monkLevel +1) + bonusPower)

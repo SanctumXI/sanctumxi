@@ -426,7 +426,7 @@ content.loot =
     },
 
     [ID.npc.NE_LOOT_CRATE] =
-    
+
     {
         {
             quantity = 6,

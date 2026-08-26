@@ -539,7 +539,7 @@ void CAttack::ProcessDamage()
     if (settings::get<bool>("map.ENABLE_AUTO_ATTACK_LUA"))
     {
         // Sneak attack.
-        if (m_attacker->GetMJob() == JOB_THF && m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK)) 
+        if (m_attacker->GetMJob() == JOB_THF && m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK))
         {
             m_isSA = true;
         }

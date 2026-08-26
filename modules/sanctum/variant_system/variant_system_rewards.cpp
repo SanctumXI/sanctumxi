@@ -10,6 +10,29 @@ class VariantSystemRewardsModule final : public CPPModule
         auto xiTable = lua["xi"].get_or_create<sol::table>();
         auto table   = xiTable["variantSystemRewards"].get_or_create<sol::table>();
 
+        table.set_function("usesLimitPoints", [](CLuaBaseEntity* entity)
+        {
+            if (entity == nullptr)
+            {
+                return false;
+            }
+
+            auto* player = dynamic_cast<CCharEntity*>(entity->GetBaseEntity());
+
+            if (player == nullptr)
+            {
+                return false;
+            }
+
+            const auto level = player->jobs.job[player->GetMJob()];
+
+            return
+                (player->MeritMode && level > 74) ||
+                (level > 74 &&
+                 level >= player->jobs.genkai &&
+                 player->jobs.exp[player->GetMJob()] == charutils::GetExpNEXTLevel(level) - 1);
+        });
+
         table.set_function("addExpSilent", [](CLuaBaseEntity* entity, uint32 exp)
         {
             if (entity == nullptr)

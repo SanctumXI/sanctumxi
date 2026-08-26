@@ -496,7 +496,7 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
         PChar &&
         PChar->PAI &&
         PChar->PAI->CanChangeState()
-    ) 
+    )
     {
         auto* playerController = dynamic_cast<CPlayerController*>(Controller.get());
 
@@ -505,7 +505,7 @@ auto CAIContainer::Tick(timer::time_point tick) -> Task<void>
             m_Tick - PChar->m_LastRangedAttackTime > std::chrono::milliseconds(1100) &&
             playerController &&
             playerController->canAct()
-        ) 
+        )
         {
             const auto queuedRangedAttack = m_queuedRangedAttack;
 

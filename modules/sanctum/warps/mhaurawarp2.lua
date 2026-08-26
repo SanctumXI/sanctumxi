@@ -48,7 +48,7 @@ return LQS.teleporter({
     -- Custom destinations
     destinations = {
         -- Using direct coordinates (cross-zone)
-        
+
         {
             name     = "Selbina",
             lockText = "Sub Job required",

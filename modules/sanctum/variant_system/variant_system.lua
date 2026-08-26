@@ -852,6 +852,12 @@ local function activateVariant(state)
         buffCount,
         0)
     applyWeakness(mob, state)
+
+    mob:timer(250, function(mobArg)
+        if state.isVariant and mobArg:isSpawned() then
+            mobArg:renameEntity(state.variantPacketName, true)
+        end
+    end)
 end
 
 local function resetVariant(state)
@@ -886,7 +892,7 @@ local function registerVariantMob(runtime, mobConfig, mob)
         return false
     end
 
-    local originalPacketName = mob:getPacketName()
+    local originalPacketName = mobConfig.packetName or mob:getName():gsub('_', ' ')
     local variantPacketNames = mobConfig.variantPacketNames or {}
     local variantPacketName  =
         variantPacketNames[originalPacketName] or

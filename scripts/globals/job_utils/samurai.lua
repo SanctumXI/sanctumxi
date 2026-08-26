@@ -214,7 +214,7 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action) --
     local tp = player:getTPPerHit()
     local samuraiLvl = utils.getActiveJobLevel(player, xi.job.SAM)
         -- Blade Bash merits: +25% damage per merit
-    local merits = player:getMerit(xi.merit.BLADE_BASH_EFFECT) 
+    local merits = player:getMerit(xi.merit.BLADE_BASH_EFFECT)
     local damage        = math.floor((samuraiLvl + 325) / 4)
 
     if merits > 0 then

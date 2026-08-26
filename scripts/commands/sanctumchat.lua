@@ -47,10 +47,15 @@ local function sendPetMapping(recipient, owner)
         return
     end
 
+    local packetName = pet:getPacketName()
+    if packetName == '' then
+        packetName = pet:getName()
+    end
+
     recipient:printToPlayer(string.format(
         '%s%s|%s|%s|%u',
         mappingPrefix,
-        sanitizeProtocolField(pet:getPacketName()),
+        sanitizeProtocolField(packetName),
         sanitizeProtocolField(owner:getName()),
         sanitizeProtocolField(formatPetDisplayName(pet:getName(), owner:hasJugPet())),
         pet:getID()), xi.msg.channel.SYSTEM_1)

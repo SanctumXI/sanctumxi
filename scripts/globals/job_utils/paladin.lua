@@ -178,7 +178,7 @@ xi.job_utils.paladin.useDivineEmblem = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useFealty = function(player, target, ability)
-    local merits    = player:getMerit(xi.merit.FEALTY) 
+    local merits    = player:getMerit(xi.merit.FEALTY)
     --local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
     --local duration  = 60 + merits + enhFealty
 

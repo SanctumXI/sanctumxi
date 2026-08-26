@@ -81,7 +81,7 @@ onMobDeath = function(mob, player, optParams)
             local minLevel = 24
             local maxLevel = 34
 
-          
+
             if members == nil or #members < 1 or #members > 6 then
                 player:printToPlayer(
                     'Party size is invalid. No bonus EXP awarded.',
@@ -124,15 +124,15 @@ onMobDeath = function(mob, player, optParams)
 
             if allValid then
                 local bonusExp = 750 * #eligibleMembers
-                
+
                     player:addExp(bonusExp)
-                                    
+
             else
                 player:printToPlayer(
                     'A party member is outside the level range of 24-34. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
-            end   
+            end
         end,
 
         onMobDespawn = function(mob)
@@ -249,7 +249,7 @@ local function setupMonster2(zone)
             end
 
             local members = player:getParty()
-        
+
             if members == nil or #members < 1 or #members > 6 then
                 player:printToPlayer(
                     'Party size is invalid. No bonus EXP awarded.',
@@ -294,15 +294,15 @@ local function setupMonster2(zone)
 
             if allValid then
                 local bonusExp = 1250 * #eligibleMembers
-                
+
                     player:addExp(bonusExp)
-                                    
+
             else
                 player:printToPlayer(
                     'A party member is outside the level range of 30-40. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
-            end   
+            end
         end,
 
         onMobDespawn = function(mob)

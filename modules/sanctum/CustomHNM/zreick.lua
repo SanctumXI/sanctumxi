@@ -1,6 +1,6 @@
 require('modules/module_utils')
 
-local m = Module:new('zreick')
+local m = Module:new('sanctum_zreick')
 m:setEnabled(true)
 
 m:addOverride('xi.zones.Konschtat_Highlands.Zone.onInitialize', function(zone)
@@ -41,7 +41,7 @@ m:addOverride('xi.zones.Konschtat_Highlands.Zone.onInitialize', function(zone)
             mob:setMobMod(xi.mobMod.CHECK_AS_NM, 1)
             mob:setMobAbilityEnabled(true)
             mob:setMagicCastingEnabled(true)
-            
+
         end,
 
         onMobMobskillChoose = function(mob, target, skillId)
@@ -52,7 +52,7 @@ m:addOverride('xi.zones.Konschtat_Highlands.Zone.onInitialize', function(zone)
             xi.mobSkill.IMPACT_STREAM,
             xi.mobSkill.MEDUSA_JAVELIN,
             xi.mobSkill.POLAR_BLAST,
-            
+
         }
 
             return skills[math.randomInt(1, #skills)]
@@ -124,9 +124,9 @@ end,
             end)
 
             print(string.format('[Zreick] Respawn in %.2f minutes', RESPAWN_DELAY / 60000))
-            
+
             end,
-              
+
     })
     -- Spawn on zone/server initialize
     mob:setDropID(0)

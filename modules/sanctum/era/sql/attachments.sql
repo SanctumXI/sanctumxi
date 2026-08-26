@@ -1,8 +1,8 @@
------------------------------------
+-- -----------------------------------
 -- Attachment equip cost adjustments for the WoTG Era.
 -- https://wiki.ffo.jp/html/25853.html
 -- https://wiki.ffo.jp/html/37589.html
------------------------------------
+-- -----------------------------------
 UPDATE `item_puppet` SET `element` =      2 WHERE `name` = 'tension_spring';     -- 2 Fire
 UPDATE `item_puppet` SET `element` =      3 WHERE `name` = 'tension_spring_ii';  -- 3 Fire
 UPDATE `item_puppet` SET `element` =      2 WHERE `name` = 'reactive_shield';    -- 2 Fire

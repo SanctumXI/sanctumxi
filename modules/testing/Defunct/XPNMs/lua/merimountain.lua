@@ -37,7 +37,7 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
             end
 
             local members = player:getParty()
-        
+
             if members == nil or #members < 1 or #members > 6 then
                 player:printToPlayer(
                     'Party size is invalid. No bonus EXP awarded.',
@@ -78,17 +78,17 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
 
             if allValid then
                 local bonusExp = 5000 * #eligibleMembers
-                
+
                     player:addExp(bonusExp)
-                                    
+
             else
                 player:printToPlayer(
                     'A party member is outside the level range of 65-75. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
-            end   
+            end
         end,
-             
+
         onMobDespawn = function(mob, player, optParams)
 
             local RESPAWN_DELAY = math.randomInt(64800000, 79200000) -- 18 - 22 hrs
@@ -101,9 +101,9 @@ m:addOverride('xi.zones.Meriphataud_Mountains.Zone.onInitialize', function(zone)
             end)
 
             print(string.format('[tzargul] Respawn in %.2f minutes', RESPAWN_DELAY / 60000))
-            
+
             end,
-              
+
     })
     -- Spawn on zone/server initialize
     mob:setDropID(0)

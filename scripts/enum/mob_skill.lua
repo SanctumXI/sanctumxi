@@ -823,7 +823,7 @@ xi.mobSkill =
     VAMPIRIC_ROOT                 = 1793,
 
     MALEDICTION                   = 1795,
-    
+
     XENOGLOSSIA                   = 1823, -- Unique entry.
 
     PYRIC_BLAST                   = 1828,
@@ -1054,7 +1054,7 @@ xi.mobSkill =
     REVERSE_CURRENT                  = 3075,
     SPARKSTORM                       = 3076,
 
-   
+
     -- MEIKYO_SHISUI                 = 3175,
 
     LIGHT_BLADE_2                 = 3214,

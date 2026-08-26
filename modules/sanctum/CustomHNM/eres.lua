@@ -1,6 +1,6 @@
 require('modules/module_utils')
 
-local m = Module:new('eres')
+local m = Module:new('sanctum_eres')
 m:setEnabled(true)
 
 m:addOverride('xi.zones.Tahrongi_Canyon.Zone.onInitialize', function(zone)
@@ -51,7 +51,7 @@ m:addOverride('xi.zones.Tahrongi_Canyon.Zone.onInitialize', function(zone)
             xi.mobSkill.HELLSTORM,
             xi.mobSkill.HELL_SCISSORS,
             xi.mobSkill.SPIRAL_HELL,
-            
+
         }
 
             return skills[math.randomInt(1, #skills)]

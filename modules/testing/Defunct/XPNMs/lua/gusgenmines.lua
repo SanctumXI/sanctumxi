@@ -18,9 +18,9 @@ local weirdoSpawns =
 
     {
         label    = 'Weirdo_2',
-        x        = -92.76, 
+        x        = -92.76,
         y        = -37.41,
-        z        = 226.58, 
+        z        = 226.58,
         rotation = 0,
     },
 }
@@ -136,7 +136,7 @@ local function setupWeirdo(zone, spawnData)
                 local bonusExp = 1250 * #eligibleMembers
 
                     player:addExp(bonusExp)
-               
+
             else
                 player:printToPlayer(
                     'A party member is outside the level range of 34-44. No bonus EXP awarded.',

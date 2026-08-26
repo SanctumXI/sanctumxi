@@ -64,7 +64,7 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
             mob:setMobFlags(mob:getMobFlags())
             mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, 125)
             mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
-            
+
             print(string.format(
                 '[crawler_king] Spawned at X: %.2f Y: %.2f Z: %.2f',
                 mob:getXPos(),
@@ -79,7 +79,7 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
             end
 
             local members = player:getParty()
-        
+
             if members == nil or #members < 1 or #members > 6 then
                 player:printToPlayer(
                     'Party size is invalid. No bonus EXP awarded.',
@@ -122,17 +122,17 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
 
             if allValid then
                 local bonusExp = 500 * #eligibleMembers
-                
+
                     player:addExp(bonusExp)
-                                    
+
             else
                 player:printToPlayer(
                     'A party member is outside the level range of 14-24. No bonus EXP awarded.',
                     xi.msg.channel.SYSTEM_3
                 )
-            end   
+            end
         end,
-             
+
         onMobDespawn = function(mob)
             local RESPAWN_DELAY = math.randomInt(1800000, 3600000) -- 30 to 60 minutes
 
@@ -153,9 +153,9 @@ m:addOverride('xi.zones.Buburimu_Peninsula.Zone.onInitialize', function(zone)
             end)
 
             print(string.format('[crawler_king] Respawn in %.2f minutes', RESPAWN_DELAY / 60000))
-            
+
             end,
-              
+
     })
     -- Spawn on zone/server initialize
     local x, y, z, rot = getRandomSpawn()

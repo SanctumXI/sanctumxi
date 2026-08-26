@@ -61,7 +61,7 @@ return LQS.teleporter({
                 )
             end
         },
-        
+
         {
             name     = "Lower Jeuno",
             lockText = "Complete 'A Chocobo's Wounds'",

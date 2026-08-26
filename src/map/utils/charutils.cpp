@@ -6139,7 +6139,7 @@ void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob)
                         const float monsterbonus = 1.0f + PMob->getMobMod(xi::MobMod::ExpBonus) / 100.0f;
                         exp *= monsterbonus;
                     }
-                        
+
                     uint16 expCap = 0;
                     if (memberlevel <= 50)
                     {

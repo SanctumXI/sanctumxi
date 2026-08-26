@@ -68,8 +68,6 @@ namespace petutils
 
 namespace
 {
-constexpr char        SanctumPetOwnerSeparator       = '@';
-constexpr size_t      SanctumOwnerIdTokenLength      = 7;
 constexpr const char* SanctumChatEnabledLocalVar     = "[SanctumChat]Enabled";
 constexpr const char* SanctumChatMappingRecordPrefix = "[SCMAP1]";
 
@@ -151,50 +149,6 @@ std::string GetSanctumPetDisplayName(CPetEntity* PPet)
     return displayName;
 }
 
-std::string FormatSanctumOwnerIdToken(const uint32 ownerId)
-{
-    // A uint32 requires at most seven base-36 characters. Unlike the previous
-    // shortened name hash, the character's server ID cannot collide with
-    // another active player.
-    static constexpr char Base36Digits[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uint32                value          = ownerId;
-    std::string           token(SanctumOwnerIdTokenLength, '0');
-
-    for (size_t index = SanctumOwnerIdTokenLength; index > 0; --index)
-    {
-        token[index - 1] = Base36Digits[value % 36U];
-        value /= 36U;
-    }
-
-    return token;
-}
-
-std::string GetSanctumPetPacketName(const std::string& displayPetName, const std::string& ownerName, const uint32 ownerId)
-{
-    constexpr size_t  maxVisibleNameLength = PacketNameLength - 1;
-    const std::string possessivePrefix     = ownerName + "'s ";
-    const std::string possessiveName       = possessivePrefix + displayPetName;
-
-    if (possessiveName.size() <= maxVisibleNameLength)
-    {
-        return possessiveName;
-    }
-
-    // A player can only have one active pet, so retaining the complete owner
-    // name keeps this alias authoritative while giving the client the most
-    // readable name that fits its 15-character spawn-packet limit.
-    if (possessivePrefix.size() < maxVisibleNameLength)
-    {
-        return possessivePrefix + displayPetName.substr(0, maxVisibleNameLength - possessivePrefix.size());
-    }
-
-    // Exceptionally long owner names leave no room for a readable pet name.
-    // Keep part of the owner visible and add the collision-free entity token.
-    const std::string tokenSuffix = SanctumPetOwnerSeparator + FormatSanctumOwnerIdToken(ownerId);
-    const size_t      ownerLength = maxVisibleNameLength - tokenSuffix.size();
-    return ownerName.substr(0, ownerLength) + tokenSuffix;
-}
-
 std::string SanitizeSanctumChatProtocolField(std::string value)
 {
     std::replace_if(
@@ -209,25 +163,13 @@ std::string SanitizeSanctumChatProtocolField(std::string value)
     return value;
 }
 
-void ApplySanctumPetPacketName(CBattleEntity* PMaster, CPetEntity* PPet)
-{
-    if (PMaster->objtype != TYPE_PC ||
-        PPet->getPetType() == PET_TYPE::WYVERN ||
-        PPet->name.empty() ||
-        PMaster->getName().empty())
-    {
-        return;
-    }
-
-    PPet->packetName = GetSanctumPetPacketName(GetSanctumPetDisplayName(PPet), PMaster->getName(), PMaster->id);
-    PPet->isRenamed  = true;
-}
-
 void PushSanctumPetMapping(CBattleEntity* PMaster, CPetEntity* PPet)
 {
+    const std::string& packetName = PPet->packetName.empty() ? PPet->getName() : PPet->packetName;
+
     if (PMaster->objtype != TYPE_PC ||
         PPet->getPetType() == PET_TYPE::WYVERN ||
-        PPet->packetName.empty() ||
+        packetName.empty() ||
         PMaster->loc.zone == nullptr)
     {
         return;
@@ -236,7 +178,7 @@ void PushSanctumPetMapping(CBattleEntity* PMaster, CPetEntity* PPet)
     const std::string mappingRecord = fmt::format(
         "{}{}|{}|{}|{}",
         SanctumChatMappingRecordPrefix,
-        SanitizeSanctumChatProtocolField(PPet->packetName),
+        SanitizeSanctumChatProtocolField(packetName),
         SanitizeSanctumChatProtocolField(PMaster->getName()),
         SanitizeSanctumChatProtocolField(GetSanctumPetDisplayName(PPet)),
         PPet->id);
@@ -1309,7 +1251,7 @@ void CalculateJugPetStats(CBattleEntity* PMaster, CPetEntity* PPet)
             highestLvl = capLevel;
         }
 
- 
+
     // Randomize: 0-2 lvls lower, less Monster Gloves(+1/+2) bonus
     highestLvl -= xirand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
 
@@ -1527,8 +1469,6 @@ void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
 
         PPet->PMaster = PMaster;
         PPet->setBattleID(PMaster->getBattleID());
-
-        ApplySanctumPetPacketName(PMaster, PPet);
 
         if (PMaster->PBattlefield)
         {
