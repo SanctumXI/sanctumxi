@@ -1,5 +1,6 @@
 local packetAliases =
 {
+    ['CB Catastrophic Weapon']  = 'CB Cata Weapon',
     ['CB Chasm Creeper']        = 'CB Chasm Creep',
     ['CB Chocoshoe Crab']       = 'CB Choco Crab',
     ['CB Crawler Queen']        = 'CB Crawl Queen',
@@ -10,11 +11,15 @@ local packetAliases =
     ['CB Labyrinth Borer']      = 'CB Lab Borer',
     ['CB Lesser Vampire']       = 'CB Less Vamp',
     ['CB Ordelle Dweller']      = 'CB Ord Dweller',
+    ['CB Orcish Siege Engine']  = 'CB Orc Siege',
+    ['CB Orcish Warmonger']     = 'CB Orc Warmong',
     ['CB Primeval Spider']      = 'CB Prime Spider',
     ['CB Shadfly Emperor']      = 'CB Shad Emp',
+    ['CB Sinister Weapon']      = 'CB Sin Weapon',
     ['CB Vociferous Vine']      = 'CB Voci Vine',
     ['CB Yagudo Bishop']        = 'CB Yag Bishop',
     ['CB Zepwell Digger']       = 'CB Zep Digger',
+    ['V Apocalyptic Weapon']    = 'V Apoc Weapon',
     ['V Bark Tarantula']        = 'V Bark Tarant',
     ['V Burrow Antlion']        = 'V Bur Antlion',
     ['V Desert Dhalmel']        = 'V Des Dhalmel',
@@ -25,6 +30,12 @@ local packetAliases =
     ['V Goliath Beetle']        = 'V Gol Beetle',
     ['V Hunter Antlion']        = 'V Hunt Antlion',
     ['V Jugner Funguar']        = 'V Jug Funguar',
+    ['V Infernal Weapon']       = 'V Infer Weapon',
+    ['V Killing Weapon']        = 'V Kill Weapon',
+    ['V Ominous Weapon']        = 'V Omin Weapon',
+    ['V Orcish Flamethrower']   = 'V Orc Flame',
+    ['V Orcish Neckchopper']    = 'V Orc Neckchop',
+    ['V Orcish Stonechucker']   = 'V Orc Stonechk',
     ['V Sabertooth Tiger']      = 'V Saber Tiger',
     ['V Tracer Antlion']        = 'V Trace Antlion',
     ['V Tracker Antlion']       = 'V Track Antlion',
@@ -51,6 +62,7 @@ local packetAliases =
     ['ZB Crawler Kingpin']      = 'ZB Crawl King',
     ['ZB Duneweaver Empress']   = 'ZB Dune Empress',
     ['ZB Garlaige Revenant']    = 'ZB Garl Reven',
+    ['ZB Ghelsba Overlord']     = 'ZB Ghel Over',
     ['ZB Jugner Ironheart']     = 'ZB Jug Iron',
     ['ZB Korroloka Underlord']  = 'ZB Korr Under',
     ['ZB Kuftal Tyrant']        = 'ZB Kuft Tyrant',
@@ -58,6 +70,7 @@ local packetAliases =
     ['ZB Ordelle Burrowlord']   = 'ZB Ord Burrow',
     ['ZB Oztroja Hierophant']   = 'ZB Ozt Hiero',
     ['ZB Pashhow Mirelord']     = 'ZB Pash Mire',
+    ['ZB RoMaeve Warmaster']    = 'ZB Ro Warmast',
     ['ZB RuAun Ascendant']      = 'ZB Ruaun Asc',
     ['ZB RuAvitau Archon']      = 'ZB Rua Archon',
     ['ZB Sauromugue Warchief']  = 'ZB Sauro Chief',
@@ -105,6 +118,13 @@ local function variantWithChainbreaker(key, mobName, chainbreakerName, groupId, 
         baseHitbox       = baseHitbox,
         specialCosmetics = {},
     }
+
+    return config
+end
+
+local function withLevelRange(config, minLevel, maxLevel)
+    config.minLevel = minLevel
+    config.maxLevel = maxLevel
 
     return config
 end
@@ -1426,6 +1446,124 @@ local zones =
                 '0x00009D0100000000000000000000000000000000', 4.3),
             variantWithChainbreaker('aura_statue', 'Aura_Statue', 'Blood_Golem', 11, 178,
                 '0x0000B10100000000000000000000000000000000', 2.7),
+        },
+    },
+    {
+        zoneId   = xi.zone.FORT_GHELSBA,
+        zoneName = 'Fort_Ghelsba',
+        zoneBoss = makeZoneBoss(
+        {
+            name          = 'Ghelsba_Overlord',
+            groupId       = 16,
+            groupZoneId   = 150,
+            look          = '0x0000F30300000000000000000000000000000000',
+            baseHitbox    = 1.7,
+            level         = 22,
+            maxHp         = 6000,
+            cosmeticLevel = 20,
+            xpCap         = 1500,
+            spawn         = { x = 47.264, y = -49.375, z = 21.902, rotation = 127 },
+        }),
+        mobs =
+        {
+            {
+                key      = 'orcish_infantry',
+                minLevel = 14,
+                maxLevel = 17,
+                mobNames =
+                {
+                    'Orcish_Grunt',
+                    'Orcish_Neckchopper',
+                    'Orcish_Stonechucker',
+                },
+                chainbreaker =
+                {
+                    name        = 'Orcish_Warmonger',
+                    packetName  = 'CB Orcish Warmonger',
+                    displayName = 'Orcish Warmonger',
+                    groupId     = 6,
+                    groupZoneId = 155,
+                    look        = '0x0000F60700000000000000000000000000000000',
+                    baseHitbox  = 1.7,
+                    specialCosmetics =
+                    {
+                    },
+                },
+            },
+            withLevelRange(
+                variantWithChainbreaker(
+                    'orcish_flamethrower',
+                    'Orcish_Flamethrower',
+                    'Orcish_Siege_Engine',
+                    46,
+                    80,
+                    '0x0000720800000000000000000000000000000000',
+                    3.8),
+                14,
+                17),
+        },
+    },
+    {
+        zoneId   = xi.zone.ROMAEVE,
+        zoneName = 'RoMaeve',
+        zoneBoss = makeZoneBoss(
+        {
+            name        = 'RoMaeve_Warmaster',
+            groupId     = 18,
+            groupZoneId = 122,
+            look        = '0x0000DE0100000000000000000000000000000000',
+            baseHitbox  = 2.2,
+            level       = 84,
+            maxHp       = 30000,
+            xpCap       = 7500,
+            spawn       = { x = -120.799, y = -8.500, z = 59.911, rotation = 127 },
+        }),
+        mobs =
+        {
+            {
+                key      = 'low_level_weapons',
+                mobNames =
+                {
+                    'Killing_Weapon',
+                    'Ominous_Weapon',
+                },
+                chainbreaker =
+                {
+                    name        = 'Sinister_Weapon',
+                    packetName  = 'CB Sinister Weapon',
+                    displayName = 'Sinister Weapon',
+                    groupId     = 1,
+                    groupZoneId = 177,
+                    look        = '0x0000DD0100000000000000000000000000000000',
+                    baseHitbox  = 2.0,
+                    specialCosmetics =
+                    {
+                    },
+                },
+            },
+            {
+                key      = 'high_level_weapons',
+                mobNames =
+                {
+                    'Apocalyptic_Weapon',
+                    'Infernal_Weapon',
+                },
+                chainbreaker =
+                {
+                    name        = 'Catastrophic_Weapon',
+                    packetName  = 'CB Catastrophic Weapon',
+                    displayName = 'Catastrophic Weapon',
+                    groupId     = 15,
+                    groupZoneId = 206,
+                    look        = '0x0000DF0100000000000000000000000000000000',
+                    baseHitbox  = 2.2,
+                    specialCosmetics =
+                    {
+                    },
+                },
+            },
+            variantWithChainbreaker('cursed_puppet', 'Cursed_Puppet', 'Haunted_Doll', 12, 158,
+                '0x0000300100000000000000000000000000000000', 3.4),
         },
     },
 }
