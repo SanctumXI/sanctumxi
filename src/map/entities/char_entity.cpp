@@ -2247,6 +2247,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         hitCount = 3;
     }
 
+    bool removeUnlimitedShot = false;
+    bool unlimitedShotReady  = StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT);
+
     // loop for barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
@@ -2315,20 +2318,17 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         recycleChance += this->PJobPoints->GetJobPointValue(JP_AMMO_CONSUMPTION);
 
-        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_UNLIMITED_SHOT))
+        if (unlimitedShotReady)
         {
             // Never consume ammo with Unlimited Shot active
             recycleChance = 100;
             // Remove unlimited shot unless retained on miss via RETAIN_UNLIMITED_SHOT mod
             if (hitOccured || this->getMod(Mod::RETAIN_UNLIMITED_SHOT) <= 0)
             {
-                StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
+                removeUnlimitedShot = true;
+                unlimitedShotReady  = false;
             }
         }
-
-        // Flashy Shot / Stealth Shot: Consumed after the next ranged attack
-        StatusEffectContainer->DelStatusEffect(EFFECT_FLASHY_SHOT);
-        StatusEffectContainer->DelStatusEffect(EFFECT_STEALTH_SHOT);
 
         if (PAmmo != nullptr && xirand::GetRandomNumber(100) > recycleChance)
         {
@@ -2424,6 +2424,15 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         actionResult.param      = shadowsTaken;
     }
 
+    if (removeUnlimitedShot)
+    {
+        StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
+    }
+
+    // Keep one-shot effects active through damage, TP, and enmity calculations.
+    StatusEffectContainer->DelStatusEffect(EFFECT_FLASHY_SHOT);
+    StatusEffectContainer->DelStatusEffect(EFFECT_STEALTH_SHOT);
+
     // Barrage/Sange: override message to display as ability
     if (isBarrage || isSange)
     {
@@ -2457,7 +2466,23 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         int16 retainChance     = 40; // Estimate base ~40% chance to keep Camouflage on a ranged attack
         uint8 rotAllowance     = 25; // Allow for some slight variance in direction faced to be "behind" or "beside" the mob
         float distanceToTarget = distance(this->loc.p, PTarget->loc.p);
-        float meleeRange       = PTarget->GetMeleeRange(PTarget);
+        float meleeRange       = GetMeleeRange(PTarget);
+
+        auto interpolateChance = [distanceToTarget](float lowerBound, float upperBound)
+        {
+            if (distanceToTarget <= lowerBound)
+            {
+                return int16(0);
+            }
+
+            if (distanceToTarget >= upperBound)
+            {
+                return int16(100);
+            }
+
+            const float progress = (distanceToTarget - lowerBound) / (upperBound - lowerBound);
+            return static_cast<int16>(40.0f + 60.0f * progress);
+        };
 
         if (isBarrage)
         {
@@ -2469,57 +2494,24 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             // Max melee distance + .6 = safe
             // Max melee distance + (.1~.5) = chance of deactivation
             // Under max melee distance = certain deactivation
-            if (distanceToTarget > meleeRange + .6)
-            {
-                retainChance = 100;
-            }
-            else if (distanceToTarget > meleeRange + .1)
-            {
-                retainChance += 1.6 * distanceToTarget;
-            }
-            else
-            {
-                retainChance = 0;
-            }
+            retainChance = interpolateChance(meleeRange + .1f, meleeRange + .6f);
         }
         else if (beside(this->loc.p, PTarget->loc.p, rotAllowance))
         {
             // Max melee distance + 5 yalms = safe
             // (Max melee distance + 3.3) + (0.0~1.6) = chance of deactivation
             // Under Max melee distance + 3.3 = certain deactivation
-            if (distanceToTarget > meleeRange + 5)
-            {
-                retainChance = 100;
-            }
-            else if (distanceToTarget > meleeRange + 3.3)
-            {
-                retainChance += 1.6 * distanceToTarget;
-            }
-            else
-            {
-                retainChance = 0;
-            }
+            retainChance = interpolateChance(meleeRange + 3.3f, meleeRange + 5.0f);
         }
         else
         {
             // Max melee distance + 8.1 yalms = safe
             // (Max melee distance + 7.1) + (0.0~.99) = chance of deactivation
             // Under Max melee distance + 7.1 = certain deactivation
-            if (distanceToTarget > meleeRange + 8.1)
-            {
-                retainChance = 100;
-            }
-            else if (distanceToTarget > meleeRange + 7.1)
-            {
-                retainChance += 1.6 * distanceToTarget;
-            }
-            else
-            {
-                retainChance = 0;
-            }
+            retainChance = interpolateChance(meleeRange + 7.1f, meleeRange + 8.1f);
         }
 
-        if (xirand::GetRandomNumber(100) > retainChance)
+        if (xirand::GetRandomNumber(100) >= retainChance)
         {
             // Camouflage was up, but is lost, so now all detectable effects must be dropped
             StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
