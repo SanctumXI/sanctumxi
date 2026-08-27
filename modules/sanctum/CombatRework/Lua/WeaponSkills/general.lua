@@ -73,6 +73,215 @@ local physicalAdjustments =
         params.critVaries = { 0.2, 0.4, 0.6 }
     end,
 
+    [xi.weaponskill.VIPER_BITE] = function(params)
+        replaceWsc(params, { dex_wsc = 0.5 })
+        params.ftpMod    = { 1.0, 1.25, 1.5 }
+        params.atkVaries = { 1.75, 1.75, 1.75 }
+    end,
+
+    [xi.weaponskill.SHADOWSTITCH] = function(params)
+        replaceWsc(params, { chr_wsc = 0.5 })
+        params.ftpMod = { 1.5, 1.75, 2.0 }
+    end,
+
+    [xi.weaponskill.DANCING_EDGE] = function(params)
+        params.ftpMod = { 1.0, 1.2, 1.4 }
+    end,
+
+    [xi.weaponskill.SHARK_BITE] = function(params)
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.MERCY_STROKE] = function(params)
+        params.ftpMod    = { 3.5, 3.75, 4.0 }
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.MANDALIC_STAB] = function(params)
+        params.ftpMod    = { 3.0, 3.5, 4.0 }
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.HARD_SLASH] = function(params)
+        params.ftpMod = { 2.0, 2.25, 2.5 }
+    end,
+
+    [xi.weaponskill.POWER_SLASH] = function(params)
+        params.critVaries = { 0.25, 0.5, 0.75 }
+    end,
+
+    [xi.weaponskill.SHOCKWAVE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, mnd_wsc = 0.5 })
+        params.ftpMod = { 1.5, 2.0, 2.5 }
+    end,
+
+    [xi.weaponskill.CRESCENT_MOON] = function(params)
+        params.ftpMod    = { 1.5, 2.0, 2.5 }
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.SICKLE_MOON] = function(params)
+        replaceWsc(params, { str_wsc = 0.2, agi_wsc = 0.4 })
+        params.ftpMod = { 2.0, 2.5, 3.0 }
+    end,
+
+    [xi.weaponskill.SPINNING_SLASH] = function(params)
+        replaceWsc(params, { str_wsc = 0.5 })
+        params.ftpMod    = { 2.0, 2.5, 3.0 }
+        params.atkVaries = nil
+    end,
+
+    [xi.weaponskill.GROUND_STRIKE] = function(params)
+        params.atkVaries = nil
+    end,
+
+    [xi.weaponskill.SCOURGE] = function(params)
+        params.ftpMod    = { 3.0, 3.5, 4.0 }
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.TORCLEAVER] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, vit_wsc = 0.4 })
+        params.ftpMod = { 4.0, 4.5, 5.5 }
+    end,
+
+    [xi.weaponskill.SMASH_AXE] = function(params)
+        params.ftpMod = { 1.25, 1.5, 1.75 }
+    end,
+
+    [xi.weaponskill.GALE_AXE] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, int_wsc = 0.2 })
+    end,
+
+    [xi.weaponskill.AVALANCHE_AXE] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, int_wsc = 0.2 })
+    end,
+
+    [xi.weaponskill.SPINNING_AXE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.5 })
+    end,
+
+    [xi.weaponskill.CALAMITY] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, vit_wsc = 0.4 })
+        params.ftpMod    = { 2.0, 2.5, 3.0 }
+        params.atkVaries = { 1.25, 1.25, 1.25 }
+    end,
+
+    [xi.weaponskill.DECIMATION] = function(params)
+        params.ftpMod    = { 1.75, 2.0, 2.5 }
+        params.accVaries = { 20, 40, 80 }
+    end,
+
+    [xi.weaponskill.ONSLAUGHT] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.3 })
+        params.ftpMod    = { 2.75, 3.25, 4.0 }
+        params.atkVaries = { 1.25, 1.25, 1.25 }
+    end,
+
+    [xi.weaponskill.NIGHTMARE_SCYTHE] = function(params)
+        replaceWsc(params, { str_wsc = 0.25, int_wsc = 0.5 })
+        params.ftpMod = { 1.25, 1.5, 1.75 }
+    end,
+
+    [xi.weaponskill.SPINNING_SCYTHE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, int_wsc = 0.2 })
+        params.ftpMod = { 1.0, 1.5, 2.0 }
+    end,
+
+    [xi.weaponskill.VORPAL_SCYTHE] = function(params)
+        replaceWsc(params, { str_wsc = 0.5, int_wsc = 0.2 })
+        params.critVaries = { 0.33, 0.66, 1.0 }
+    end,
+
+    [xi.weaponskill.GUILLOTINE] = function(params)
+        replaceWsc(params, { str_wsc = 0.25, int_wsc = 0.25 })
+        params.numHits = 4
+        params.ftpMod  = { 1.0, 1.0, 1.0 }
+    end,
+
+    [xi.weaponskill.CROSS_REAPER] = function(params)
+        replaceWsc(params, { str_wsc = 0.5, int_wsc = 0.3 })
+        params.ftpMod = { 2.25, 2.5, 3.0 }
+    end,
+
+    [xi.weaponskill.INSURGENCY] = function(params)
+        replaceWsc(params, { str_wsc = 0.2, int_wsc = 0.5 })
+        params.numHits = 4
+        params.ftpMod  = { 1.0, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.VORPAL_THRUST] = function(params)
+        params.ftpMod     = { 1.0, 1.25, 1.5 }
+        params.critVaries = { 0.33, 0.66, 1.0 }
+    end,
+
+    [xi.weaponskill.WHEELING_THRUST] = function(params)
+        params.ftpMod          = { 1.5, 1.75, 2.0 }
+        params.ignoredDefense = { 0.2, 0.4, 0.6 }
+    end,
+
+    [xi.weaponskill.IMPULSE_DRIVE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.3 })
+        params.ftpMod          = { 2.0, 2.5, 3.0 }
+        params.ignoredDefense = nil
+    end,
+
+    [xi.weaponskill.GEIRSKOGUL] = function(params)
+        params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.DRAKESBANE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.3 })
+        params.atkVaries = nil
+    end,
+
+    [xi.weaponskill.STARDIVER] = function(params)
+        replaceWsc(params, { str_wsc = 0.8 })
+        params.ftpMod = { 0.75, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.BRAINSHAKER] = function(params)
+        params.ftpMod = { 1.0, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.SKULLBREAKER] = function(params)
+        replaceWsc(params, { str_wsc = 0.6 })
+    end,
+
+    [xi.weaponskill.TRUE_STRIKE] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, mnd_wsc = 0.3 })
+        params.ftpMod     = { 1.25, 1.5, 1.75 }
+        params.critVaries = { 1.0, 1.0, 1.0 }
+        params.atkVaries  = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.JUDGMENT] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, mnd_wsc = 0.4 })
+        params.ftpMod = { 2.5, 3.0, 3.5 }
+    end,
+
+    [xi.weaponskill.HEXA_STRIKE] = function(params)
+        replaceWsc(params, { str_wsc = 0.2 })
+        params.ftpMod     = { 1.0, 1.0, 1.0 }
+        params.critVaries = { 0.1, 0.3, 0.5 }
+    end,
+
+    [xi.weaponskill.BLACK_HALO] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, int_wsc = 0.5 })
+        params.ftpMod = { 1.5, 2.5, 3.0 }
+    end,
+
+    [xi.weaponskill.RANDGRITH] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, mnd_wsc = 0.4 })
+        params.ftpMod    = { 2.75, 3.0, 3.25 }
+        params.atkVaries = { 2.0, 2.0, 2.0 }
+    end,
+
+    [xi.weaponskill.GATE_OF_TARTARUS] = function(params)
+        replaceWsc(params, { int_wsc = 0.6 })
+        params.ftpMod = { 3.0, 3.5, 4.0 }
+    end,
+
     [xi.weaponskill.FLAT_BLADE] = function(params)
         params.ftpMod = { 1.0, 1.5, 2.0 }
     end,
@@ -232,6 +441,51 @@ local rangedAdjustments =
 
 local magicAdjustments =
 {
+    [xi.weaponskill.GUST_SLASH] = function(params)
+        replaceWsc(params, { dex_wsc = 0.2, int_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.CYCLONE] = function(params)
+        replaceWsc(params, { dex_wsc = 0.3, int_wsc = 0.4 })
+    end,
+
+    [xi.weaponskill.AEOLIAN_EDGE] = function(params)
+        replaceWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.FROSTBITE] = function(params)
+        params.ftpMod = { 1.5, 2.0, 2.5 }
+    end,
+
+    [xi.weaponskill.FREEZEBITE] = function(params)
+        replaceWsc(params, { int_wsc = 0.6 })
+        params.ftpMod = { 1.5, 2.0, 2.5 }
+    end,
+
+    [xi.weaponskill.HERCULEAN_SLASH] = function(params)
+        replaceWsc(params, { vit_wsc = 1.0 })
+        params.ftpMod = { 3.0, 3.3, 3.6 }
+    end,
+
+    [xi.weaponskill.EARTH_CRUSHER] = function(params)
+        params.ftpMod = { 1.95, 2.6, 3.25 }
+    end,
+
+    [xi.weaponskill.VIDOHUNIR] = function(params)
+        replaceWsc(params, { int_wsc = 0.5 })
+        params.ftpMod = { 2.0, 2.5, 3.0 }
+    end,
+
+    [xi.weaponskill.GARLAND_OF_BLISS] = function(params)
+        replaceWsc(params, { int_wsc = 0.5, mnd_wsc = 0.5 })
+        params.ftpMod = { 2.5, 3.0, 3.5 }
+    end,
+
+    [xi.weaponskill.OMNISCIENCE] = function(params)
+        replaceWsc(params, { int_wsc = 0.5, mnd_wsc = 0.5 })
+        params.ftpMod = { 2.5, 3.0, 3.5 }
+    end,
+
     [xi.weaponskill.BURNING_BLADE] = function(params)
         replaceWsc(params, { str_wsc = 0.2, int_wsc = 0.3 })
     end,
