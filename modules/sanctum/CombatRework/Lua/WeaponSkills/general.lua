@@ -59,8 +59,8 @@ local physicalAdjustments =
 
     [xi.weaponskill.FINAL_HEAVEN] = function(params)
         replaceWsc(params, { str_wsc = 0.6, mnd_wsc = 0.6 })
-        params.ftpMod    = { 2.5, 3.0, 3.5 }
-        params.atkVaries = { 1.2, 1.4, 2.0 }
+        params.ftpMod    = { 2.45, 3.0, 3.45 }
+        params.atkVaries = { 1.3, 1.425, 1.55 }
     end,
 
     [xi.weaponskill.STRINGING_PUMMEL] = function(params)
@@ -165,7 +165,7 @@ local rangedAdjustments =
     [xi.weaponskill.BLAST_ARROW] = function(params)
         replaceWsc(params, { str_wsc = 0.3, int_wsc = 0.3 })
         params.numHits   = 1
-        params.ftpMod    = { 2.5, 3.0, 3.5 }
+        params.ftpMod    = { 2.9, 3.45, 4.05 }
         params.accVaries = { 20, 50, 100 }
     end,
 
@@ -244,14 +244,16 @@ local magicAdjustments =
         replaceWsc(params, { str_wsc = 0.3, mnd_wsc = 0.4 })
     end,
 
+    -- Magical WS do not use atkVaries, so their intended damage increase is
+    -- expressed through their native fTP curves instead.
     [xi.weaponskill.TRUEFLIGHT] = function(params)
         replaceWsc(params, { agi_wsc = 0.3, mnd_wsc = 0.3 })
-        params.atkVaries = { 1.5, 1.5, 1.5 }
+        params.ftpMod = { 4.6, 4.9, 5.5 }
     end,
 
     [xi.weaponskill.LEADEN_SALUTE] = function(params)
         replaceWsc(params, { agi_wsc = 0.3, int_wsc = 0.3 })
-        params.atkVaries = { 1.5, 1.5, 1.5 }
+        params.ftpMod = { 4.6, 4.9, 5.5 }
     end,
 }
 

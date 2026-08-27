@@ -228,12 +228,15 @@ describe('Sanctum ranged weapon skills', function()
         xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.TRUEFLIGHT, params, 1000, {}, true)
         assert(captured.str_wsc == nil and captured.dex_wsc == nil)
         assert(captured.agi_wsc == 0.3 and captured.mnd_wsc == 0.3 and captured.int_wsc == nil)
-        assert(captured.atkVaries[1] == 1.5 and captured.atkVaries[3] == 1.5)
+        assert(captured.ftpMod[1] == 4.6 and captured.ftpMod[2] == 4.9 and captured.ftpMod[3] == 5.5)
+        assert(captured.atkVaries == nil)
 
         params = { skill = xi.skill.MARKSMANSHIP, str_wsc = 0.4 }
         xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.LEADEN_SALUTE, params, 1000, {}, true)
         assert(captured.str_wsc == nil and captured.dex_wsc == nil)
         assert(captured.agi_wsc == 0.3 and captured.int_wsc == 0.3 and captured.mnd_wsc == nil)
+        assert(captured.ftpMod[1] == 4.6 and captured.ftpMod[2] == 4.9 and captured.ftpMod[3] == 5.5)
+        assert(captured.atkVaries == nil)
 
         params = { skill = xi.skill.SWORD, str_wsc = 0.4 }
         xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.RED_LOTUS_BLADE, params, 1000, {}, true)
@@ -289,7 +292,7 @@ describe('Sanctum ranged weapon skills', function()
             assert(xi.combat.ranged.attackDistancePenalty(target, attacker) == 180)
             assert(xi.combat.ranged.accuracyDistancePenalty(target, attacker) == 132)
             assert(params.numHits == 1)
-            assert(params.ftpMod[1] == 2.5 and params.ftpMod[2] == 3 and params.ftpMod[3] == 3.5)
+            assert(params.ftpMod[1] == 2.9 and params.ftpMod[2] == 3.45 and params.ftpMod[3] == 4.05)
             assert(params.str_wsc == 0.3 and params.int_wsc == 0.3)
             assert(params.accVaries[1] == 20 and params.accVaries[3] == 100)
             return 37, false, 1, 0, nil

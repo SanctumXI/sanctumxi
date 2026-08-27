@@ -86,8 +86,8 @@ describe('Sanctum weapon skill balance adjustments', function()
 
         params = physical(xi.weaponskill.FINAL_HEAVEN, { str_wsc = 0.6 })
         assert(params.str_wsc == 0.6 and params.mnd_wsc == 0.6)
-        assertTriplet(params.ftpMod, 2.5, 3.0, 3.5)
-        assertTriplet(params.atkVaries, 1.2, 1.4, 2.0)
+        assertTriplet(params.ftpMod, 2.45, 3.0, 3.45)
+        assertTriplet(params.atkVaries, 1.3, 1.425, 1.55)
 
         params = physical(xi.weaponskill.STRINGING_PUMMEL, { str_wsc = 0.32, vit_wsc = 0.32 })
         assert(params.str_wsc == 0.3 and params.dex_wsc == 0.3 and params.vit_wsc == nil)
