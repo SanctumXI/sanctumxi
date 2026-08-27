@@ -182,3 +182,24 @@ UPDATE `mob_pools` SET `modelSize` = 3, `modelHitboxSize` = 47 WHERE `poolid` IN
 UPDATE `mob_pools` SET `modelSize` = 0, `modelHitboxSize` = 17 WHERE `poolid` IN (5779);
 UPDATE `mob_pools` SET `modelSize` = 2, `modelHitboxSize` = 32 WHERE `poolid` IN (5780);
 UPDATE `mob_pools` SET `modelSize` = 2, `modelHitboxSize` = 22 WHERE `poolid` IN (6964);
+
+-- ---------------------------------------------------------------------------
+-- Stray elemental magic evasion on two Beastmen.
+--
+-- Elemental MEVA (mods 15-22) is read by exactly one thing on the server: the
+-- enspell resist ladder in battleutils::CalculateEnspellDamage. It is otherwise
+-- a player-side stat that comes from gear and bar-spells. Real mob elemental
+-- resistance lives in mob_resistances, where both of these already have proper
+-- rows, so these two mods only ever changed how much enspell damage the mob
+-- took and nothing else.
+--
+-- Neither value looks deliberate. A Goblin has no reason to shrug off wind, and
+-- 1 is below the point where the ladder does anything measurable. The Orc's 97
+-- is worse: the ladder saturates at 100, so it was eating 1/16 damage from
+-- Enlight and Auspice roughly 88% of the time.
+
+DELETE FROM `mob_pool_mods`
+ WHERE `poolid` = 1648 AND `modid` = 17; -- Goblin_Digger_near, WIND_MEVA was 1
+
+DELETE FROM `mob_pool_mods`
+ WHERE `poolid` = 3796 AND `modid` = 21; -- Stubborn_Dredvodd, LIGHT_MEVA was 97
