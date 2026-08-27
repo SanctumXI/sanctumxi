@@ -245,7 +245,7 @@ describe('Sanctum weapon skill balance adjustments', function()
                 ftp = { 2.0, 2.5, 3.0 },
                 removeAtk = true,
             },
-            { id = xi.weaponskill.GROUND_STRIKE, removeAtk = true },
+            { id = xi.weaponskill.GROUND_STRIKE, atk = { 1.75, 1.75, 1.75 } },
             { id = xi.weaponskill.SCOURGE, ftp = { 3.0, 3.5, 4.0 }, atk = { 1.5, 1.5, 1.5 } },
             {
                 id = xi.weaponskill.TORCLEAVER,
@@ -395,6 +395,59 @@ describe('Sanctum weapon skill balance adjustments', function()
                 wsc = { int_wsc = 0.5, mnd_wsc = 0.5 },
                 ftp = { 2.5, 3.0, 3.5 },
             },
+        })
+    end)
+
+    it('applies the requested great axe formulas', function()
+        assertCases(physical,
+        {
+            { id = xi.weaponskill.SHIELD_BREAK, ftp = { 1.0, 1.25, 1.5 } },
+            { id = xi.weaponskill.STURMWIND, ftp = { 0.75, 1.0, 1.25 }, removeAtk = true },
+            { id = xi.weaponskill.ARMOR_BREAK, ftp = { 1.0, 1.25, 1.5 } },
+            { id = xi.weaponskill.KEEN_EDGE, wsc = { str_wsc = 0.5 } },
+            { id = xi.weaponskill.WEAPON_BREAK, ftp = { 1.0, 1.25, 1.5 } },
+            { id = xi.weaponskill.FULL_BREAK, ftp = { 1.5, 1.75, 2.1 } },
+            {
+                id = xi.weaponskill.STEEL_CYCLONE,
+                wsc = { str_wsc = 0.4, vit_wsc = 0.4 },
+                ftp = { 1.5, 1.75, 2.0 },
+                atk = { 1.25, 1.5, 1.75 },
+            },
+            { id = xi.weaponskill.METATRON_TORMENT, ftp = { 3.5, 4.0, 4.5 } },
+        })
+    end)
+
+    it('applies the requested katana formulas while retaining hybrid flags', function()
+        local params = physical(xi.weaponskill.BLADE_TEKI, { str_wsc = 0.3, hybridWS = true })
+        assertWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+        assert(params.hybridWS)
+
+        params = physical(xi.weaponskill.BLADE_TO, { str_wsc = 0.3, hybridWS = true })
+        assertWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+        assert(params.hybridWS)
+
+        params = physical(xi.weaponskill.BLADE_CHI, { str_wsc = 0.3, hybridWS = true, numHits = 2 })
+        assertWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+        assert(params.hybridWS and params.numHits == 2)
+
+        assertCases(physical,
+        {
+            { id = xi.weaponskill.BLADE_JIN, wsc = { str_wsc = 0.3, dex_wsc = 0.3 } },
+            {
+                id = xi.weaponskill.BLADE_METSU,
+                wsc = { str_wsc = 0.3, dex_wsc = 0.5 },
+                atk = { 1.25, 1.25, 1.25 },
+            },
+            {
+                id = xi.weaponskill.BLADE_KAMU,
+                ftp = { 1.5, 1.7, 1.8 },
+                defense = { 0.2, 0.3, 0.4 },
+            },
+        })
+
+        assertCases(magic,
+        {
+            { id = xi.weaponskill.BLADE_EI, wsc = { str_wsc = 0.3, int_wsc = 0.6 } },
         })
     end)
 

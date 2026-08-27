@@ -132,7 +132,7 @@ local physicalAdjustments =
     end,
 
     [xi.weaponskill.GROUND_STRIKE] = function(params)
-        params.atkVaries = nil
+        params.atkVaries = { 1.75, 1.75, 1.75 }
     end,
 
     [xi.weaponskill.SCOURGE] = function(params)
@@ -176,6 +176,41 @@ local physicalAdjustments =
         replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.3 })
         params.ftpMod    = { 2.75, 3.25, 4.0 }
         params.atkVaries = { 1.25, 1.25, 1.25 }
+    end,
+
+    [xi.weaponskill.SHIELD_BREAK] = function(params)
+        params.ftpMod = { 1.0, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.STURMWIND] = function(params)
+        params.ftpMod    = { 0.75, 1.0, 1.25 }
+        params.atkVaries = nil
+    end,
+
+    [xi.weaponskill.ARMOR_BREAK] = function(params)
+        params.ftpMod = { 1.0, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.KEEN_EDGE] = function(params)
+        replaceWsc(params, { str_wsc = 0.5 })
+    end,
+
+    [xi.weaponskill.WEAPON_BREAK] = function(params)
+        params.ftpMod = { 1.0, 1.25, 1.5 }
+    end,
+
+    [xi.weaponskill.FULL_BREAK] = function(params)
+        params.ftpMod = { 1.5, 1.75, 2.1 }
+    end,
+
+    [xi.weaponskill.STEEL_CYCLONE] = function(params)
+        replaceWsc(params, { str_wsc = 0.4, vit_wsc = 0.4 })
+        params.ftpMod    = { 1.5, 1.75, 2.0 }
+        params.atkVaries = { 1.25, 1.5, 1.75 }
+    end,
+
+    [xi.weaponskill.METATRON_TORMENT] = function(params)
+        params.ftpMod = { 3.5, 4.0, 4.5 }
     end,
 
     [xi.weaponskill.NIGHTMARE_SCYTHE] = function(params)
@@ -307,6 +342,32 @@ local physicalAdjustments =
 
     [xi.weaponskill.KNIGHTS_OF_ROUND] = function(params)
         params.atkVaries = { 1.5, 1.5, 1.5 }
+    end,
+
+    [xi.weaponskill.BLADE_TEKI] = function(params)
+        replaceWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.BLADE_TO] = function(params)
+        replaceWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.BLADE_CHI] = function(params)
+        replaceWsc(params, { dex_wsc = 0.3, int_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.BLADE_JIN] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.3 })
+    end,
+
+    [xi.weaponskill.BLADE_METSU] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, dex_wsc = 0.5 })
+        params.atkVaries = { 1.25, 1.25, 1.25 }
+    end,
+
+    [xi.weaponskill.BLADE_KAMU] = function(params)
+        params.ftpMod          = { 1.5, 1.7, 1.8 }
+        params.ignoredDefense = { 0.2, 0.3, 0.4 }
     end,
 
     [xi.weaponskill.TACHI_HOBAKU] = function(params)
@@ -465,6 +526,10 @@ local magicAdjustments =
     [xi.weaponskill.HERCULEAN_SLASH] = function(params)
         replaceWsc(params, { vit_wsc = 1.0 })
         params.ftpMod = { 3.0, 3.3, 3.6 }
+    end,
+
+    [xi.weaponskill.BLADE_EI] = function(params)
+        replaceWsc(params, { str_wsc = 0.3, int_wsc = 0.6 })
     end,
 
     [xi.weaponskill.EARTH_CRUSHER] = function(params)
