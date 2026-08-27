@@ -7,6 +7,7 @@ require('scripts/globals/weaponskills')
 
 local m = Module:new('sanctum_general_weaponskills')
 local blastArrowUsers = {}
+local rangedWeaponskillStats = {}
 
 local wscFields =
 {
@@ -582,7 +583,8 @@ m:addOverride('xi.combat.physical.calculateRangedStatFactor', function(actor, ta
     end
 
     local weaponRank = actor:getRangedDmgRank()
-    local statDiff   = actor:getStat(xi.mod.DEX) - target:getStat(xi.mod.VIT)
+    local stat       = rangedWeaponskillStats[actor:getID()] or xi.mod.DEX
+    local statDiff   = actor:getStat(stat) - target:getStat(xi.mod.VIT)
 
     statDiff = utils.clamp(statDiff, (7 + weaponRank * 2) * -2, (14 + weaponRank * 2) * 2)
 
@@ -648,21 +650,23 @@ m:addOverride('xi.weaponskills.doRangedWeaponskill', function(attacker, target, 
         adjustment(params)
     end
 
-    if attacker:getWeaponSkillType(xi.slot.RANGED) == xi.skill.MARKSMANSHIP then
+    local skill = attacker:getWeaponSkillType(xi.slot.RANGED)
+
+    if skill == xi.skill.MARKSMANSHIP then
         replaceStrengthModifier(params)
     end
 
-    if wsID ~= xi.weaponskill.BLAST_ARROW then
-        return super(attacker, target, wsID, params, tp, action, primary)
-    end
-
-    -- Exempt only this actor's active Blast Arrow, including error unwinding.
-    local actorId  = attacker:getID()
-    local previous = blastArrowUsers[actorId]
-    blastArrowUsers[actorId] = true
+    -- Scope WS-only stat selection and Blast Arrow's range exemption to this
+    -- actor, including nested calls and error unwinding.
+    local actorId      = attacker:getID()
+    local previousStat = rangedWeaponskillStats[actorId]
+    local previousBlast = blastArrowUsers[actorId]
+    rangedWeaponskillStats[actorId] = skill == xi.skill.ARCHERY and xi.mod.STR or xi.mod.DEX
+    blastArrowUsers[actorId] = wsID == xi.weaponskill.BLAST_ARROW and true or nil
 
     local ok, damage, critical, tpHits, extraHits, shadows = pcall(super, attacker, target, wsID, params, tp, action, primary)
-    blastArrowUsers[actorId] = previous
+    rangedWeaponskillStats[actorId] = previousStat
+    blastArrowUsers[actorId] = previousBlast
 
     if not ok then
         error(damage, 0)

@@ -5,7 +5,7 @@ describe('Sanctum ranged weapon skills', function()
     local rangedBody
 
     local function makeEntity(id)
-        local entity = { id = id, dex = 180, vit = 110, rank = 13, skill = xi.skill.ARCHERY, distance = 4 }
+        local entity = { id = id, str = 130, dex = 180, vit = 110, rank = 13, skill = xi.skill.ARCHERY, distance = 4 }
 
         function entity:getID()
             return self.id
@@ -24,7 +24,9 @@ describe('Sanctum ranged weapon skills', function()
         end
 
         function entity:getStat(stat)
-            if stat == xi.mod.DEX then
+            if stat == xi.mod.STR then
+                return self.str
+            elseif stat == xi.mod.DEX then
                 return self.dex
             elseif stat == xi.mod.VIT then
                 return self.vit
@@ -150,6 +152,23 @@ describe('Sanctum ranged weapon skills', function()
         assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 42)
         attacker.rank = 14
         assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 44)
+    end)
+
+    it('uses fSTR for bow WS, fDEX for gun WS, and fDEX for ordinary shots', function()
+        assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 37)
+
+        rangedBody = function(actor, defender)
+            return xi.combat.physical.calculateRangedStatFactor(actor, defender), false, 1, 0, nil
+        end
+
+        local damage = ranged(xi.weaponskill.SIDEWINDER)
+        assert(damage == 12)
+        assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 37)
+
+        attacker.skill = xi.skill.MARKSMANSHIP
+        damage = ranged(xi.weaponskill.SLUG_SHOT)
+        assert(damage == 37)
+        assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 37)
     end)
 
     it('retains the ranged lower caps for weak weapons', function()
@@ -307,6 +326,7 @@ describe('Sanctum ranged weapon skills', function()
     it('restores distance penalties when Blast Arrow raises an error', function()
         rangedBody = function(actor, defender)
             assert(xi.combat.ranged.attackDistancePenalty(actor, defender) == 0)
+            assert(xi.combat.physical.calculateRangedStatFactor(actor, defender) == 12)
             error('expected Blast Arrow failure')
         end
 
@@ -314,6 +334,7 @@ describe('Sanctum ranged weapon skills', function()
         assert(not ok and message:find('expected Blast Arrow failure', 1, true))
         assert(xi.combat.ranged.attackDistancePenalty(attacker, target) == 180)
         assert(xi.combat.ranged.accuracyDistancePenalty(attacker, target) == 132)
+        assert(xi.combat.physical.calculateRangedStatFactor(attacker, target) == 37)
     end)
 
     it('keeps other close-range bow skills penalized and guns exempt', function()
