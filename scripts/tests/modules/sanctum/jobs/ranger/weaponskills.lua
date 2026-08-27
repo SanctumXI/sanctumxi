@@ -68,10 +68,13 @@ describe('Sanctum ranged weapon skills', function()
         return entity
     end
 
-    local function applyModule(path, distanceOnly)
+    local function applyModule(path, distanceOnly, excludePhysical)
         local module = dofile(path)
         for _, override in ipairs(module.overrides) do
-            if not distanceOnly or override.name:find('DistancePenalty', 1, true) then
+            if
+                (not distanceOnly or override.name:find('DistancePenalty', 1, true)) and
+                (not excludePhysical or override.name ~= 'xi.weaponskills.doPhysicalWeaponskill')
+            then
                 local parts = {}
                 for part in override.name:gmatch('[^.]+') do
                     table.insert(parts, part)
@@ -134,7 +137,7 @@ describe('Sanctum ranged weapon skills', function()
         end)
 
         applyModule('modules/sanctum/CombatRework/Lua/Core/ranged_changes.lua', true)
-        applyModule('modules/sanctum/jobs/ranger/weaponskills.lua')
+        applyModule('modules/sanctum/CombatRework/Lua/WeaponSkills/general.lua', false, true)
     end)
 
     local function ranged(wsID, params)
@@ -220,11 +223,18 @@ describe('Sanctum ranged weapon skills', function()
         assert(captured.critVaries[1] == 0.15 and captured.critVaries[3] == 0.45)
     end)
 
-    it('converts magical ranged modifiers without changing magical melee modifiers', function()
+    it('applies magical gun modifiers without changing magical melee modifiers', function()
         local params = { skill = xi.skill.MARKSMANSHIP, str_wsc = 0.4 }
         xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.TRUEFLIGHT, params, 1000, {}, true)
-        assert(captured.str_wsc == nil and captured.dex_wsc == 0.4)
+        assert(captured.str_wsc == nil and captured.dex_wsc == nil)
+        assert(captured.agi_wsc == 0.3 and captured.mnd_wsc == 0.3 and captured.int_wsc == nil)
         assert(captured.atkVaries[1] == 1.5 and captured.atkVaries[3] == 1.5)
+
+        params = { skill = xi.skill.MARKSMANSHIP, str_wsc = 0.4 }
+        xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.LEADEN_SALUTE, params, 1000, {}, true)
+        assert(captured.str_wsc == nil and captured.dex_wsc == nil)
+        assert(captured.agi_wsc == 0.3 and captured.int_wsc == 0.3 and captured.mnd_wsc == nil)
+
         params = { skill = xi.skill.SWORD, str_wsc = 0.4 }
         xi.weaponskills.doMagicWeaponskill(attacker, target, xi.weaponskill.RED_LOTUS_BLADE, params, 1000, {}, true)
         assert(captured.str_wsc == 0.4 and captured.dex_wsc == nil)
@@ -279,7 +289,7 @@ describe('Sanctum ranged weapon skills', function()
             assert(xi.combat.ranged.attackDistancePenalty(target, attacker) == 180)
             assert(xi.combat.ranged.accuracyDistancePenalty(target, attacker) == 132)
             assert(params.numHits == 1)
-            assert(params.ftpMod[1] == 2.3 and params.ftpMod[2] == 2.5 and params.ftpMod[3] == 2.7)
+            assert(params.ftpMod[1] == 2.5 and params.ftpMod[2] == 3 and params.ftpMod[3] == 3.5)
             assert(params.str_wsc == 0.3 and params.int_wsc == 0.3)
             assert(params.accVaries[1] == 20 and params.accVaries[3] == 100)
             return 37, false, 1, 0, nil
