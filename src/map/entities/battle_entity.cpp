@@ -51,6 +51,7 @@
 #include "utils/battleutils.h"
 #include "utils/messageutils.h"
 #include "utils/mobutils.h"
+#include "utils/moduleutils.h"
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
 #include "utils/zoneutils.h"
@@ -2389,6 +2390,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     MsgBasic msg                 = MsgBasic::None;
     MsgBasic initialSpellMessage = PSpell->getMessage();
+    bool     magicBurstLanded    = false;
 
     for (auto* PTarget : PAI->TargetFind->m_targets)
     {
@@ -2426,6 +2428,20 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         else
         {
             damage = luautils::OnSpellCast(this, PTarget, PSpell);
+
+            // The script swaps in a burst message when one lands. The spell's own
+            // magicBurstMessage only tells us anything when it differs from the
+            // normal one, so check the known burst ids as well.
+            const auto spellMessage = PSpell->getMessage();
+            const auto burstMessage = PSpell->getMagicBurstMessage();
+
+            magicBurstLanded = magicBurstLanded ||
+                               (burstMessage != MsgBasic::None && burstMessage != initialSpellMessage && spellMessage == burstMessage) ||
+                               spellMessage == MsgBasic::MagicBurstDamage ||
+                               spellMessage == MsgBasic::MagicBurstReceivesEffect ||
+                               spellMessage == MsgBasic::MagicBurstStatus ||
+                               spellMessage == MsgBasic::MagicBurstDrainsHP ||
+                               spellMessage == MsgBasic::MagicBurstDrainsMP;
 
             // Remove Saboteur
             if (PSpell->getSkillType() == SKILLTYPE::SKILL_ENFEEBLING_MAGIC)
@@ -2536,6 +2552,11 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         {
             battleutils::handleSecondaryTargetEnmity(this, PActionTarget);
         }
+    }
+
+    if (magicBurstLanded)
+    {
+        moduleutils::OnMagicBurst(this, PSpell);
     }
 
     if ((!(PSpell->isHeal()) || PSpell->tookEffect()) && PActionTarget->isAlive())

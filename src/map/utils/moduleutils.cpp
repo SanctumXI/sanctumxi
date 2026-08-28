@@ -156,6 +156,51 @@ auto OnSpellCostSpend(CBattleEntity* PCaster, CSpell* PSpell, int32 cost) -> boo
     return false;
 }
 
+void OnMagicBurst(CBattleEntity* PCaster, CSpell* PSpell)
+{
+    TracyZoneScoped;
+    for (auto* module : cppModules())
+    {
+        module->OnMagicBurst(PCaster, PSpell);
+    }
+}
+
+void OnSkillchain(CBattleEntity* PAttacker)
+{
+    TracyZoneScoped;
+    for (auto* module : cppModules())
+    {
+        module->OnSkillchain(PAttacker);
+    }
+}
+
+void OnStatusEffectDuration(CBattleEntity* PTarget, CStatusEffect* PStatusEffect)
+{
+    TracyZoneScoped;
+    for (auto* module : cppModules())
+    {
+        module->OnStatusEffectDuration(PTarget, PStatusEffect);
+    }
+}
+
+void OnSpellRecast(CBattleEntity* PCaster, timer::duration& recast)
+{
+    TracyZoneScoped;
+    for (auto* module : cppModules())
+    {
+        module->OnSpellRecast(PCaster, recast);
+    }
+}
+
+void OnAbilityRecast(CBattleEntity* PUser, timer::duration& recast, timer::duration& chargeTime)
+{
+    TracyZoneScoped;
+    for (auto* module : cppModules())
+    {
+        module->OnAbilityRecast(PUser, recast, chargeTime);
+    }
+}
+
 struct Override
 {
     std::string              filename;

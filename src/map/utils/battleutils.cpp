@@ -565,10 +565,39 @@ const std::vector<uint16>& GetMobSkillList(uint16 ListID)
     return g_PMobSkillLists[ListID];
 }
 
+namespace
+{
+    // Enspell damage scales off the delay of the hand that swung. Fast weapons proc more
+    // often, so each proc is worth less: 1.0x at 180 delay up to 1.5x at 480 and above.
+    auto GetEnspellDelayMultiplier(CItemWeapon* PWeapon) -> float
+    {
+        if (PWeapon == nullptr)
+        {
+            return 1.0f;
+        }
+
+        float mult = 1.0f + 0.5f * std::clamp((PWeapon->getDelay() - 180.0f) / 300.0f, 0.0f, 1.0f);
+
+        // Hand-to-hand takes two swings a round off a single delay value, so each is worth half.
+        if (PWeapon->isHandToHand())
+        {
+            mult *= 0.5f;
+        }
+
+        return mult;
+    }
+} // namespace
+
 // TODO: Apply fire in generous quantities. Replace with existing lua functions.
 int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 Tier, uint8 element, CItemWeapon* pWeaponHit)
 {
     int32 damage = 0;
+
+    // element indexes the day/weather/resist tables below. ELEMENT_NONE would run off the front.
+    if (element < ELEMENT_FIRE || element > ELEMENT_DARK)
+    {
+        return 0;
+    }
 
     auto* PChar    = dynamic_cast<CCharEntity*>(PAttacker);
     int32 totalMod = PAttacker->getMod(Mod::ENSPELL_DMG_BONUS);
@@ -596,63 +625,24 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
             damage += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar);
         }
     }
-    else if (Tier == 2)
+    else if (Tier == 2) // Auspice
     {
-        // Tier 2 enspells calculate the damage on each hit and increment the potency in Mod::ENSPELL_DMG per hit
-        uint16 skill = PAttacker->GetSkill(SKILL_ENHANCING_MAGIC);
-        uint16 cap   = 3 + 6 * skill / 100;
-        if (skill > 200)
-        {
-            cap = 5 + 5 * skill / 100;
-        }
-        cap *= 2;
+        // Flat damage, no ramp. The old version incremented Mod::ENSPELL_DMG in place
+        // and the status effect only ever subtracted its original power on wear-off,
+        // so the leftover stuck to the player and inflated every later enspell.
+        damage = PAttacker->getMod(Mod::ENSPELL_DMG) + bonus;
 
-        if (PAttacker->getMod(Mod::ENSPELL_DMG) > cap)
-        {
-            PAttacker->setModifier(Mod::ENSPELL_DMG, cap);
-            damage = cap;
-        }
-        else if (PAttacker->getMod(Mod::ENSPELL_DMG) == cap)
-        {
-            damage = cap;
-        }
-        else if (PAttacker->getMod(Mod::ENSPELL_DMG) < cap)
-        {
-            PAttacker->addModifier(Mod::ENSPELL_DMG, 1);
-            damage = PAttacker->getMod(Mod::ENSPELL_DMG) - 1;
-        }
-        damage += bonus;
-
-        auto* PChar = dynamic_cast<CCharEntity*>(PAttacker);
         if (PChar)
         {
             damage += PChar->PMeritPoints->GetMeritValue(MERIT_ENSPELL_DAMAGE, PChar) * 2;
         }
     }
-    else if (Tier == 3) // enlight or endark - Sanctum Custom Handling
+    else if (Tier == 3) // enlight or endark
     {
-        const EFFECT effectId = element == ELEMENT_DARK ? EFFECT_ENDARK : EFFECT_ENLIGHT;
-
-        if (auto* PEffect = PAttacker->StatusEffectContainer->GetStatusEffect(effectId))
-        {
-            damage = PEffect->GetPower();
-
-            if (damage > 1)
-            {
-                PEffect->SetPower(damage - 1);
-            }
-            else
-            {
-                PAttacker->StatusEffectContainer->DelStatusEffect(effectId);
-            }
-        }
-        else
-        {
-            // Sanctum Custom light/dark enspells (Holy Circle, etc.)
-            damage = PAttacker->getMod(Mod::ENSPELL_DMG);
-        }
-
-        damage += bonus;
+        // No decay. Damage and the hidden accuracy/attack bonus both read Mod::ENSPELL_DMG,
+        // so leaving it alone keeps them at full strength for the whole duration and keeps
+        // the job point bonus (added to the mod by the effect script) in the damage.
+        damage = PAttacker->getMod(Mod::ENSPELL_DMG) + bonus;
     }
     else if (Tier == 4) // Rune Enhancement
     {
@@ -726,6 +716,20 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
         }
     }
 
+    // Weapon delay scaling. Rune Enhancement already derives its damage from weapon
+    // DPS, so it sits this one out.
+    if (Tier >= 1 && Tier <= 3)
+    {
+        CItemWeapon* PSwingWeapon = pWeaponHit;
+
+        if (PSwingWeapon == nullptr)
+        {
+            PSwingWeapon = dynamic_cast<CItemWeapon*>(PAttacker->m_Weapons[SLOT_MAIN]);
+        }
+
+        damage = static_cast<int32>(std::floor(damage * GetEnspellDelayMultiplier(PSwingWeapon)));
+    }
+
     // --------------------------
     // Enspell % multiplier bucket
     // --------------------------
@@ -777,7 +781,7 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
         (Tier == 1 || Tier == 2) &&
         (element >= 1 && element <= 6))
     {
-        mult += 2.0f; // +200% => triple
+        mult += 1.0f; // +100% => double
     }
 
     // 3) This hand's weapon-only enspell dmg % (Crocea Mors Path C etc)
@@ -806,7 +810,9 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
     // Hachirin-no-Obi guarantees BOTH the bonus roll and the penalty roll.
     bool obiBonusAndPenalty = PAttacker->getMod(Mod::FORCE_DW_BONUS_PENALTY) >= 1;
 
-    double half      = (double)(PDefender->getMod(resistarray[element - 1])) / 100;
+    // Treated as a 0-1 resist rate. Above 1 the ladder inverts and 1/16 becomes the
+    // most likely result instead of the least, so cap it.
+    double half      = std::min((double)(PDefender->getMod(resistarray[element - 1])) / 100, 1.0);
     double quart     = pow(half, 2);
     double eighth    = pow(half, 3);
     double sixteenth = pow(half, 4);
@@ -3683,7 +3689,7 @@ auto GetSkillChainEffect(const CBattleEntity* PDefender, uint8 primary, uint8 se
         return ActionProcSkillChain::None;
     }
 
-    Mod resistanceRankMods[] = { Mod::FIRE_RES_RANK, Mod::ICE_RES_RANK, Mod::WIND_RES_RANK, Mod::EARTH_RES_RANK, Mod::THUNDER_RES_RANK, Mod::ICE_RES_RANK, Mod::LIGHT_RES_RANK, Mod::DARK_RES_RANK };
+    Mod resistanceRankMods[] = { Mod::FIRE_RES_RANK, Mod::ICE_RES_RANK, Mod::WIND_RES_RANK, Mod::EARTH_RES_RANK, Mod::THUNDER_RES_RANK, Mod::WATER_RES_RANK, Mod::LIGHT_RES_RANK, Mod::DARK_RES_RANK };
 
     // Reset the effects resistance rank mods
     for (const auto& resistanceRank : resistanceRankMods)
@@ -3954,6 +3960,8 @@ auto TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, in
         ShowWarning("chainLevel (%d) or chainCount (%d) exceeds bounds.", chainLevel, chainCount);
         return 0;
     }
+
+    moduleutils::OnSkillchain(PAttacker);
 
     // Skill chain damage = (Closing Damage)
     //                      × (Skill chain Level/Number from Table)
@@ -6411,6 +6419,8 @@ timer::duration CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
     }
 
     recast = std::max<timer::duration>(recast, std::chrono::floor<std::chrono::milliseconds>(base * 0.5f)); // 50% cap
+
+    moduleutils::OnSpellRecast(PEntity, recast);
 
     return recast;
 }

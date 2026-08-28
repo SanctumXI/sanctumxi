@@ -793,6 +793,7 @@ public:
     auto   GetSourceType() const -> uint16;
     auto   GetSourceTypeParam() const -> uint32;
     auto   GetOriginID() const -> uint32;
+    auto   HasDurationHookApplied() const -> bool;
     uint16 GetIcon() const;
     uint16 GetPower() const;
     uint16 GetSubPower() const;
@@ -822,6 +823,7 @@ public:
     void SetOwner(CBattleEntity* Owner);
     void SetTickTime(timer::duration tick);
     auto SetOriginID(uint32 originID) -> void;
+    auto SetDurationHookApplied(bool applied) -> void;
 
     void IncrementElapsedTickCount();
     void SetStartTime(timer::time_point StartTime);
@@ -860,6 +862,7 @@ private:
     timer::duration   m_Duration{ 0ms }; // Duration of effect
     timer::time_point m_StartTime;       // Time to obtain effect
     int               m_tickCount{ 0 };  // Elapsed ticks
+    bool              m_durationHookApplied{ false }; // Prevents duration modules from reapplying to loaded or copied effects
 
     std::string m_Name; // Effect name for scripts
 };

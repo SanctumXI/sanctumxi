@@ -88,6 +88,9 @@ public:
     void    ClearStateStack();
     void    InterruptStates();
 
+    // Drop an in-progress ranged attack with no message. False if there wasn't one.
+    bool CancelRangedAttack();
+
     // Pop the top state if it's the expected state
     template <typename State>
     bool PopState();

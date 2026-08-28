@@ -89,6 +89,11 @@ auto CStatusEffect::GetOriginID() const -> uint32
     return m_OriginID;
 }
 
+auto CStatusEffect::HasDurationHookApplied() const -> bool
+{
+    return m_durationHookApplied;
+}
+
 uint16 CStatusEffect::GetEffectType() const
 {
     return m_Type;
@@ -189,6 +194,11 @@ auto CStatusEffect::SetSource(uint16 sourceType, uint32 sourceTypeParam) -> void
 auto CStatusEffect::SetOriginID(uint32 originID) -> void
 {
     m_OriginID = originID;
+}
+
+auto CStatusEffect::SetDurationHookApplied(bool applied) -> void
+{
+    m_durationHookApplied = applied;
 }
 
 void CStatusEffect::SetEffectType(uint16 Type)

@@ -596,6 +596,24 @@ void CAIContainer::InterruptStates()
     }
 }
 
+bool CAIContainer::CancelRangedAttack()
+{
+    auto* rangeState = dynamic_cast<CRangeState*>(m_currentState.get());
+    if (!rangeState)
+    {
+        return false;
+    }
+
+    rangeState->CancelSilently();
+
+    // Via the base pointer: CRangeState redeclares Cleanup protected.
+    m_currentState->Cleanup(timer::now());
+    resumeNextState();
+
+    // A queued follow-up shot is left alone; it fires once the next state clears.
+    return true;
+}
+
 bool CAIContainer::IsSpawned()
 {
     return PEntity->status != STATUS_TYPE::DISAPPEAR;

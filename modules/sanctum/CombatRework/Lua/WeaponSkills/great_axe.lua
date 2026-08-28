@@ -76,7 +76,7 @@ do
     m:addOverride('xi.actions.weaponskills.full_break.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params   = {}
         params.numHits = 1
-        params.ftpMod  = { 1, 1.25, 1.5 }
+        params.ftpMod  = { 1.4, 1.7, 2.05 }
         params.str_wsc = 0.3
         params.vit_wsc = 0.7
 
@@ -290,13 +290,13 @@ do
     m:addOverride('xi.actions.weaponskills.raging_rush.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 3
-        params.ftpMod = { 1.0, 1.0, 1.0 }
-        params.str_wsc = 0.5
+        params.ftpMod = { 0.65, 0.65, 0.65 }
+        params.str_wsc = 0.35
         params.critVaries = { 0.25, 0.35, 0.5 }
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
             params.critVaries = { 0.15, 0.3, 0.5 }
-            params.str_wsc = 0.5
+            params.str_wsc = 0.35
         end
 
         local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
@@ -375,12 +375,12 @@ do
     m:addOverride('xi.actions.weaponskills.steel_cyclone.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 1
-        params.ftpMod = { 1.75, 2.0, 2.5 }
+        params.ftpMod = { 1.55, 1.75, 2.2 }
         params.str_wsc = 0.6 params.vit_wsc = 0.6
         --params.atkVaries = { 1.66, 1.66, 1.66 }
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-            params.ftpMod = { 1.5, 2.5, 4.0 }
+            params.ftpMod = { 1.3, 2.2, 3.55 }
             params.str_wsc = 0.6 params.vit_wsc = 0.6
             params.atkVaries = { 1.5, 1.5, 1.5 }
         end
@@ -433,12 +433,12 @@ do
     m:addOverride('xi.actions.weaponskills.sturmwind.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 2
-        params.ftpMod = { 1.0, 1.0, 1.0 }
-        params.str_wsc = 0.5
+        params.ftpMod = { 0.75, 0.75, 0.75 }
+        params.str_wsc = 0.35
         params.atkVaries = { 1.0, 1.75, 2.5 }
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
-            params.str_wsc = 0.6
+            params.str_wsc = 0.45
         end
 
         local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)

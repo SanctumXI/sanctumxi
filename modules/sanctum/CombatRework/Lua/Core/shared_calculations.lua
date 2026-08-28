@@ -961,11 +961,6 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     calcParams = xi.weaponskills.calculateRawWSDmg(attacker, target, wsID, tp, action, wsParams, calcParams)
     local finaldmg = calcParams.finalDmg
 
-    -- Delete statuses that may have been spent by the WS
-    attacker:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
-    attacker:delStatusEffect(xi.effect.FLASHY_SHOT)
-    attacker:delStatusEffect(xi.effect.STEALTH_SHOT)
-
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(finaldmg)
     finaldmg = finaldmg * (1 + target:getMod(xi.mod.PIERCE_SDT) / 10000)
@@ -983,6 +978,11 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     calcParams.finalDmg = finaldmg
 
     finaldmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+
+    -- Keep one-shot effects active through defender TP and enmity calculations.
+    attacker:delStatusEffectsByFlag(xi.effectFlag.DETECTABLE)
+    attacker:delStatusEffect(xi.effect.FLASHY_SHOT)
+    attacker:delStatusEffect(xi.effect.STEALTH_SHOT)
 
     -- Ammo needs to be removed after xi.weaponskills.takeWeaponskillDamage for delay/tp return uses
     if calcParams.ammoUsed and calcParams.ammoUsed > 0 then

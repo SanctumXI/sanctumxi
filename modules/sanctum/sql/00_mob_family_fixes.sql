@@ -182,3 +182,77 @@ UPDATE `mob_pools` SET `modelSize` = 3, `modelHitboxSize` = 47 WHERE `poolid` IN
 UPDATE `mob_pools` SET `modelSize` = 0, `modelHitboxSize` = 17 WHERE `poolid` IN (5779);
 UPDATE `mob_pools` SET `modelSize` = 2, `modelHitboxSize` = 32 WHERE `poolid` IN (5780);
 UPDATE `mob_pools` SET `modelSize` = 2, `modelHitboxSize` = 22 WHERE `poolid` IN (6964);
+
+-- ---------------------------------------------------------------------------
+-- Stray elemental magic evasion on two Beastmen.
+--
+-- Elemental MEVA (mods 15-22) is read by exactly one thing on the server: the
+-- enspell resist ladder in battleutils::CalculateEnspellDamage. It is otherwise
+-- a player-side stat that comes from gear and bar-spells. Real mob elemental
+-- resistance lives in mob_resistances, where both of these already have proper
+-- rows, so these two mods only ever changed how much enspell damage the mob
+-- took and nothing else.
+--
+-- Neither value looks deliberate. A Goblin has no reason to shrug off wind, and
+-- 1 is below the point where the ladder does anything measurable. The Orc's 97
+-- is worse: the ladder saturates at 100, so it was eating 1/16 damage from
+-- Enlight and Auspice roughly 88% of the time.
+
+DELETE FROM `mob_pool_mods`
+ WHERE `poolid` = 1648 AND `modid` = 17; -- Goblin_Digger_near, WIND_MEVA was 1
+
+DELETE FROM `mob_pool_mods`
+ WHERE `poolid` = 3796 AND `modid` = 21; -- Stubborn_Dredvodd, LIGHT_MEVA was 97
+
+-- ---------------------------------------------------------------------------
+-- Elemental identity, found auditing the resistance table.
+
+-- Wyvern pets were weak to all eight elements while every wild wyvern row
+-- resists fire at +4. Pool 5551 is the Dragoon's own wyvern, so the pet was
+-- taking extra damage from everything its wild kin shrug off.
+UPDATE `mob_resistances`
+   SET `fire_res_rank`      =  4,
+       `ice_res_rank`       =  0,
+       `wind_res_rank`      =  4,
+       `earth_res_rank`     =  0,
+       `lightning_res_rank` =  0,
+       `water_res_rank`     =  0,
+       `light_res_rank`     =  4,
+       `dark_res_rank`      = -3
+ WHERE `resist_id` = 193; -- Wyvern-Pet, 32 pools, all eight were -2
+
+-- Sarameya is the Tier 4 ZNM version of Cerberus and shipped with no
+-- resistances at all, leaving it softer than the mob it upgrades. Same profile
+-- as Cerberus now, sleep and blind included. Both are immune to fire at 11.
+UPDATE `mob_resistances`
+   SET `fire_res_rank`        = 11,
+       `light_res_rank`       = 10,
+       `dark_res_rank`        = 10,
+       `light_sleep_res_rank` = 10,
+       `dark_sleep_res_rank`  = 10,
+       `blind_res_rank`       = 10
+ WHERE `resist_id` = 314; -- Cerberus - Sarameya, 1 pool, every rank was 0.
+                          -- Cerberus (62, 13 pools) already sits at fire 11.
+
+-- Magic pots were a flat +2 on all eight. Earth-aligned pottery: give them a
+-- real earth wall and a soft spot to wind. Their blunt weakness in the
+-- physical columns is untouched.
+UPDATE `mob_resistances`
+   SET `wind_res_rank`  = -2,
+       `earth_res_rank` =  8
+ WHERE `resist_id` = 175; -- Magic_Pot, 44 pools, both were +2
+
+-- Bismarck resisted lightning at +4, which is backwards for a whale. It takes
+-- extra from it now and drinks water outright. The absorb is a pool mod rather
+-- than a family one so the other three Pteraketos do not get it. water_res_rank
+-- stays at +8: an absorbed spell skips the resist tier, so it only still
+-- matters for water enfeebles.
+UPDATE `mob_resistances`
+   SET `lightning_res_rank` = -3
+ WHERE `resist_id` = 510; -- Bismarck, 1 pool, was +4
+
+INSERT INTO `mob_pool_mods` (`poolid`, `modid`, `value`, `is_mob_mod`) VALUES (4669,464,100,0)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `is_mob_mod` = VALUES(`is_mob_mod`); -- Bismarck: WATER_ABSORB 100
+
+-- Golems already sit at +2 across all eight, which is the slight resistance to
+-- everything they want. Left alone.

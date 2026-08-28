@@ -42,6 +42,10 @@ public:
 
     bool IsWithinRangedAttackQueueWindow(timer::time_point tick, timer::duration window);
 
+    // Drop this shot with no message. Go through CAIContainer::CancelRangedAttack,
+    // which pops the state afterwards.
+    void CancelSilently();
+
 protected:
     virtual bool CanChangeState() override;
     virtual bool CanFollowPath() override
@@ -56,6 +60,8 @@ protected:
     virtual void Cleanup(timer::time_point tick) override;
     bool         CanUseRangedAttack(CBattleEntity* PTarget, bool isEndOfAttack);
     bool         HasMoved();
+    // Marks when the weapon-return finishes, which is what gates the next shot.
+    void         StampLastRangedAttackTime();
 
 private:
     CBattleEntity* const m_PEntity;

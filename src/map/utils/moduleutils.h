@@ -24,6 +24,7 @@
 
 #include "common/database.h"
 #include "common/logging.h"
+#include "common/timer.h"
 #include "lua/luautils.h"
 
 #include <memory>
@@ -35,6 +36,7 @@
 class CPPModule;
 class CBattleEntity;
 class CSpell;
+class CStatusEffect;
 namespace moduleutils
 {
 
@@ -76,6 +78,11 @@ public:
     {
         return false;
     };
+    virtual void OnMagicBurst(CBattleEntity* PCaster, CSpell* PSpell) {};
+    virtual void OnSkillchain(CBattleEntity* PAttacker) {};
+    virtual void OnStatusEffectDuration(CBattleEntity* PTarget, CStatusEffect* PStatusEffect) {};
+    virtual void OnSpellRecast(CBattleEntity* PCaster, timer::duration& recast) {};
+    virtual void OnAbilityRecast(CBattleEntity* PUser, timer::duration& recast, timer::duration& chargeTime) {};
 
     template <typename T>
     static T* Register()
@@ -105,6 +112,11 @@ void OnPushPacket(CCharEntity* PChar, const std::unique_ptr<CBasicPacket>& packe
 auto OnIncomingPacket(MapSession* PSession, CCharEntity* PChar, CBasicPacket& packet) -> bool;
 auto OnSpellCostCheck(CBattleEntity* PCaster, CSpell* PSpell) -> bool;
 auto OnSpellCostSpend(CBattleEntity* PCaster, CSpell* PSpell, int32 cost) -> bool;
+void OnMagicBurst(CBattleEntity* PCaster, CSpell* PSpell);
+void OnSkillchain(CBattleEntity* PAttacker);
+void OnStatusEffectDuration(CBattleEntity* PTarget, CStatusEffect* PStatusEffect);
+void OnSpellRecast(CBattleEntity* PCaster, timer::duration& recast);
+void OnAbilityRecast(CBattleEntity* PUser, timer::duration& recast, timer::duration& chargeTime);
 
 // The program has two "states":
 // - Load-time: As all data is being loaded and init'd
