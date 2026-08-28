@@ -120,7 +120,10 @@ class NewEquipmentStatsModule final : public CPPModule
 
     void OnMagicBurst(CBattleEntity* PCaster, CSpell* PSpell) override
     {
-        if (!PCaster || !PSpell || PCaster->objtype != TYPE_PC)
+        // Songs, ninjutsu and trusts keep something else in the cost field. Ninjutsu
+        // keeps the tool's item id there, so refunding a percent of it hands out
+        // free MP. hasMPCost() is the same check the rest of the server uses.
+        if (!PCaster || !PSpell || PCaster->objtype != TYPE_PC || !PSpell->hasMPCost())
         {
             return;
         }

@@ -55,7 +55,12 @@ A proc chance of zero stays at zero. 115 items carry `ITEM_ADDEFFECT_TYPE` with 
 
 ## Magic Burst MP coverage
 
-A burst is detected from the message the spell script swaps in. `spell_list.magicBurstMessage` is the authoritative per-spell value and is used whenever it differs from the spell's normal message, which covers Aspir and MP Drainkiss (275) and the ninjutsu enfeebles (267). Cures (7), Paralyze (84) and elemental ninjutsu (2) reuse their normal message for the burst, so a burst on those is not detectable and pays nothing; none of them are meaningful MP refunds. Blue magic enfeebles hardcode their burst message instead of reading the column, so the known burst-only ids are checked as well.
+Only spells that actually pay MP are refunded. Songs, ninjutsu and trusts keep something else in the `mpCost` column — ninjutsu keeps the tool's item id, so a bursted Hojo would otherwise refund a percentage of 1182. `CSpell::hasMPCost` gates this, the same way the rest of the server does.
+
+A burst is detected from the message the spell script swaps in, checked against the known burst ids plus the spell's own `spell_list.magicBurstMessage` whenever that differs from its normal message. Two gaps, both harmless:
+
+- Cures (7), Paralyze (84) and elemental ninjutsu (2) reuse their normal message for the burst, so a burst on those is indistinguishable and pays nothing.
+- Aspir, Aspir II and MP Drainkiss carry `magicBurstMessage` 275, but the drain path in `absorb_spell.lua` never checks for a burst or sets that message, so 275 never appears. If that script is ever taught to set it, the column-based check will pick it up with no change here.
 
 ## Recast behavior
 
