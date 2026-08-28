@@ -285,8 +285,10 @@ end
 ---@return physicalHitInfo
 local function handleSinglePhysicalHit(mob, target, baseHitDamage, params)
     local hitNumber                = params.hitNumber
-    local hitParried               = xi.combat.physical.isParried(target, mob) and not params.skipParry
-    local hitGuarded               = xi.combat.physical.isGuarded(target, mob) and not params.skipGuard
+    -- Check the skip flags first. These rolls hand out skill ups and TP on the
+    -- way past, so don't make them for a hit that can't be parried or guarded.
+    local hitParried               = not params.skipParry and xi.combat.physical.isParried(target, mob)
+    local hitGuarded               = not params.skipGuard and xi.combat.physical.isGuarded(target, mob)
     local isCritical               = false
     local hitBlocked               = false
     local blockedWithShieldMastery = false
@@ -331,8 +333,8 @@ local function handleSinglePhysicalHit(mob, target, baseHitDamage, params)
     hitDamage = math.floor(baseHitDamage * pDif)
 
     if
-        xi.combat.physical.isBlocked(target, mob) and
-        not params.skipBlock
+        not params.skipBlock and
+        xi.combat.physical.isBlocked(target, mob)
     then
         hitBlocked = true
 
@@ -406,8 +408,10 @@ end
 ---@return physicalHitInfo
 local function handleSingleRangedHit(mob, target, baseHitDamage, params)
     local hitNumber                = params.hitNumber
-    local hitParried               = xi.combat.physical.isParried(target, mob) and not params.skipParry
-    local hitGuarded               = xi.combat.physical.isGuarded(target, mob) and not params.skipGuard
+    -- Check the skip flags first. These rolls hand out skill ups and TP on the
+    -- way past, so don't make them for a hit that can't be parried or guarded.
+    local hitParried               = not params.skipParry and xi.combat.physical.isParried(target, mob)
+    local hitGuarded               = not params.skipGuard and xi.combat.physical.isGuarded(target, mob)
     local isCritical               = false
     local hitBlocked               = false
     local blockedWithShieldMastery = false
@@ -452,8 +456,8 @@ local function handleSingleRangedHit(mob, target, baseHitDamage, params)
     hitDamage = math.floor(baseHitDamage * pDif)
 
     if
-        xi.combat.physical.isBlocked(target, mob) and
-        not params.skipBlock
+        not params.skipBlock and
+        xi.combat.physical.isBlocked(target, mob)
     then
         hitBlocked = true
 

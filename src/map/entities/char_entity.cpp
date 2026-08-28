@@ -1604,13 +1604,10 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 (StatusEffectContainer->HasStatusEffect(EFFECT_CHAIN_AFFINITY) || StatusEffectContainer->HasStatusEffect(EFFECT_AZURE_LORE)) &&
                 static_cast<CBlueSpell*>(PSpell)->getPrimarySkillchain() != 0)
             {
-                auto*      PBlueSpell = static_cast<CBlueSpell*>(PSpell);
-                const auto effect     = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0);
-                if (effect != ActionProcSkillChain::None)
-                {
-                    actionResult.recordSkillchain(effect, battleutils::TakeSkillchainDamage(this, PTarget, actionResult.param, taChar));
-                }
+                auto* PBlueSpell = static_cast<CBlueSpell*>(PSpell);
 
+                // Spend the TP first, same as weaponskills do. The other way round
+                // wipes anything the skillchain hands back.
                 if (StatusEffectContainer->HasStatusEffect({ EFFECT_SEKKANOKI, EFFECT_MEIKYO_SHISUI }))
                 {
                     health.tp = (health.tp > 1000 ? health.tp - 1000 : 0);
@@ -1618,6 +1615,12 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
                 else
                 {
                     health.tp = 0;
+                }
+
+                const auto effect = battleutils::GetSkillChainEffect(PTarget, PBlueSpell->getPrimarySkillchain(), PBlueSpell->getSecondarySkillchain(), 0);
+                if (effect != ActionProcSkillChain::None)
+                {
+                    actionResult.recordSkillchain(effect, battleutils::TakeSkillchainDamage(this, PTarget, actionResult.param, taChar));
                 }
 
                 StatusEffectContainer->DelStatusEffectSilent(EFFECT_CHAIN_AFFINITY);
@@ -1974,7 +1977,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
             // Localvar will set the BP ability timer when the move consumes MP
             // The delay is snapshot when the player uses the ability: https://www.bg-wiki.com/ffxi/Blood_Pact_Ability_Delay
-            this->SetLocalVar("bpRecastTime", static_cast<uint16>(timer::count_seconds(std::max<timer::duration>(0s, action.recast - std::chrono::seconds(bloodPactDelayReduction)))));
+            auto bloodPactRecast = std::max<timer::duration>(0s, action.recast - std::chrono::seconds(bloodPactDelayReduction));
+            auto noChargeTime    = 0ns;
+            moduleutils::OnAbilityRecast(this, bloodPactRecast, noChargeTime);
+            this->SetLocalVar("bpRecastTime", static_cast<uint16>(timer::count_seconds(bloodPactRecast)));
 
             // Recast is actually triggered when the bp goes off (no recast packet at all on using a bp and the target moving out of range of the pet)
             action.recast = 0s;
@@ -1983,6 +1989,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         // Chakra and SP abilities must remain usable while paralyzed.
         if (!ability::IgnoresParalysis(PAbility) && battleutils::IsParalyzed(this))
         {
+            moduleutils::OnAbilityRecast(this, action.recast, baseChargeTime);
             charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, action.recast);
             ActionInterrupts::AbilityParalyzed(this, PTarget);
             return;
@@ -2165,6 +2172,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         // Cleanup "consumed" abilities after action like Contradance
         StatusEffectContainer->DelStatusEffect(PAbility->getPostActionEffectCleanup());
 
+        moduleutils::OnAbilityRecast(this, action.recast, baseChargeTime);
         charutils::ApplyAbilityRecast(this, PAbility, charge, baseChargeTime, action.recast);
     }
     else if (errMsg)

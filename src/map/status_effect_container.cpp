@@ -58,6 +58,7 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
 #include "utils/itemutils.h"
+#include "utils/moduleutils.h"
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
 
@@ -470,6 +471,12 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, Effec
         OverwriteStatusEffect(PStatusEffect);
 
         SetEffectParams(PStatusEffect);
+
+        if (!PStatusEffect->HasDurationHookApplied())
+        {
+            moduleutils::OnStatusEffectDuration(m_POwner, PStatusEffect);
+            PStatusEffect->SetDurationHookApplied(true);
+        }
 
         // remove effects with same type
         DelStatusEffectsByType(PStatusEffect->GetEffectType());
@@ -1061,6 +1068,7 @@ auto CStatusEffectContainer::ApplyCorsairEffect(CStatusEffect* PStatusEffect, ui
                 if (PStatusEffect->GetSubPower() < 12)
                 {
                     PStatusEffect->SetDuration(PEffect->GetDuration());
+                    PStatusEffect->SetDurationHookApplied(PEffect->HasDurationHookApplied());
                     PStatusEffect->SetEffectSlot(PEffect->GetEffectSlot());
                     DelStatusEffectSilent(PStatusEffect->GetStatusID());
                     AddStatusEffect(PStatusEffect, EffectNotice::Silent);
@@ -1390,6 +1398,8 @@ CStatusEffect* CStatusEffectContainer::StealStatusEffect(EFFECTFLAG flag, Effect
             oldEffect->GetSourceTypeParam(),
             oldEffect->GetOriginID());
 
+        EffectCopy->SetDurationHookApplied(oldEffect->HasDurationHookApplied());
+
         RemoveStatusEffect(oldEffect, notice);
 
         return EffectCopy;
@@ -1716,6 +1726,8 @@ void CStatusEffectContainer::LoadStatusEffects()
                               rset->get<uint16>("sourcetype"),
                               rset->get<uint32>("sourcetypeparam"),
                               rset->get<uint32>("originid"));
+
+        PStatusEffect->SetDurationHookApplied(true);
 
         PEffectList.emplace_back(PStatusEffect);
 

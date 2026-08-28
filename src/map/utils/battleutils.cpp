@@ -3961,6 +3961,8 @@ auto TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, in
         return 0;
     }
 
+    moduleutils::OnSkillchain(PAttacker);
+
     // Skill chain damage = (Closing Damage)
     //                      × (Skill chain Level/Number from Table)
     //                      × (1 + Skill chain Bonus ÷ 100)
@@ -6417,6 +6419,8 @@ timer::duration CalculateSpellRecastTime(CBattleEntity* PEntity, CSpell* PSpell)
     }
 
     recast = std::max<timer::duration>(recast, std::chrono::floor<std::chrono::milliseconds>(base * 0.5f)); // 50% cap
+
+    moduleutils::OnSpellRecast(PEntity, recast);
 
     return recast;
 }

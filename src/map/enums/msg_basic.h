@@ -160,8 +160,11 @@ enum class MsgBasic : uint16_t
     TargetTakesDamage               = 264, // <target> takes <amount> points of damage.
     TargetGainsEffect               = 266, // <target> gains the effect of <status>.
     TargetReceivesEffectAbility     = 267, // <target> receives the effect of <status>.
+    MagicBurstReceivesEffect        = 268, // <caster> casts <spell>. Magic Burst! <target> receives the effect of <status>.
+    MagicBurstStatus                = 271, // <caster> casts <spell>. Magic Burst! <target> is <status>.
     TargetTeleport                  = 273, // <target> vanishes.
     MagicBurstDrainsHP              = 274, // <caster> casts <spell>. Magic Burst! <amount> HP drained from <target>.
+    MagicBurstDrainsMP              = 275, // <caster> casts <spell>. Magic Burst! <amount> MP drained from <target>.
     TargetRecoversMP                = 276, // <target> recovers <amount> MP.
     TargetStatus                    = 277, // <target> is <status>.
     TargetReceivesEffect            = 278, // <target> receives the effect of <status>.

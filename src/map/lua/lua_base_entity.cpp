@@ -13793,6 +13793,8 @@ auto CLuaBaseEntity::copyStatusEffect(const CLuaStatusEffect* PStatusEffect) con
         POriginal->GetSourceTypeParam(),
         POriginal->GetOriginID());
 
+    PNewEffect->SetDurationHookApplied(POriginal->HasDurationHookApplied());
+
     return PBattleEntity->StatusEffectContainer->AddStatusEffect(PNewEffect);
 }
 
@@ -14759,6 +14761,11 @@ bool CLuaBaseEntity::addBardSong(CLuaBaseEntity* PEntity, uint16 effectID, uint1
                                                subPower,                       // SubPower
                                                tier                            // Tier
     );
+
+    if (PEntity && PEntity->m_PBaseEntity)
+    {
+        PEffect->SetOriginID(PEntity->m_PBaseEntity->id);
+    }
 
     uint8 maxSongs = 2;
 
