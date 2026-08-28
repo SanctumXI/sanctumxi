@@ -1,3 +1,5 @@
+local data = require('modules/sanctum/variant_system/variant_tables')
+
 local packetAliases =
 {
     ['CB Boreal Noctules']      = 'CB Bor Noctules',
@@ -150,7 +152,6 @@ local function makeZoneBoss(config)
     config.displayName      = displayName
     config.hitboxScale      = config.hitboxScale or 2.0
     config.damageMultiplier = config.damageMultiplier or 125
-    config.cosmeticLevel    = config.cosmeticLevel or config.level
     config.xpPerPoint       = config.xpPerPoint or 10
     config.fallbackItem     = config.fallbackItem or
         (config.level <= 30 and xi.item.DRAGON_CHRONICLES or xi.item.MIRATETES_MEMOIRS)
@@ -174,7 +175,6 @@ local zones =
             maxHp            = 7500,
             hitboxScale      = 2.0,
             damageMultiplier = 125,
-            cosmeticLevel    = 20,
             xpPerPoint       = 10,
             xpCap            = 1500,
             fallbackItem     = xi.item.DRAGON_CHRONICLES,
@@ -247,7 +247,6 @@ local zones =
             maxHp            = 10500,
             hitboxScale      = 2.0,
             damageMultiplier = 125,
-            cosmeticLevel    = 30,
             xpPerPoint       = 10,
             xpCap            = 2500,
             fallbackItem     = xi.item.MIRATETES_MEMOIRS,
@@ -337,7 +336,6 @@ local zones =
             maxHp            = 10500,
             hitboxScale      = 2.0,
             damageMultiplier = 125,
-            cosmeticLevel    = 40,
             xpPerPoint       = 10,
             xpCap            = 2500,
             fallbackItem     = xi.item.MIRATETES_MEMOIRS,
@@ -407,7 +405,6 @@ local zones =
             maxHp            = 12000,
             hitboxScale      = 2.5,
             damageMultiplier = 125,
-            cosmeticLevel    = 40,
             xpPerPoint       = 10,
             xpCap            = 3500,
             fallbackItem     = xi.item.MIRATETES_MEMOIRS,
@@ -596,7 +593,6 @@ local zones =
             maxHp            = 12000,
             hitboxScale      = 1.5,
             damageMultiplier = 125,
-            cosmeticLevel    = 40,
             xpPerPoint       = 10,
             xpCap            = 3000,
             fallbackItem     = xi.item.MIRATETES_MEMOIRS,
@@ -668,7 +664,6 @@ local zones =
             maxHp            = 7500,
             hitboxScale      = 2.0,
             damageMultiplier = 125,
-            cosmeticLevel    = 20,
             xpPerPoint       = 10,
             xpCap            = 1500,
             fallbackItem     = xi.item.DRAGON_CHRONICLES,
@@ -1565,7 +1560,6 @@ local zones =
             baseHitbox    = 1.7,
             level         = 22,
             maxHp         = 6000,
-            cosmeticLevel = 20,
             xpCap         = 1500,
             spawn         = { x = 47.264, y = -49.375, z = 21.902, rotation = 127 },
         }),
@@ -1674,8 +1668,15 @@ local zones =
 }
 
 for _, zoneConfig in ipairs(zones) do
+    local zoneCosmetics = data.cosmeticCamps[zoneConfig.zoneName]
+    local cosmeticCamps = {}
+
+    assert(zoneCosmetics ~= nil, string.format('No cosmetic camps are configured for %s.', zoneConfig.zoneName))
+
     if zoneConfig.zoneBoss ~= nil then
         zoneConfig.zoneBoss.packetName = getPacketAlias(zoneConfig.zoneBoss.packetName)
+        zoneConfig.zoneBoss.cosmeticZone  = zoneConfig.zoneName
+        zoneConfig.zoneBoss.cosmeticCamps = cosmeticCamps
     end
 
     for _, mobConfig in ipairs(zoneConfig.mobs) do
@@ -1699,6 +1700,13 @@ for _, zoneConfig in ipairs(zones) do
         end
 
         if mobConfig.chainbreaker ~= nil then
+            assert(
+                zoneCosmetics[mobConfig.key] ~= nil and #zoneCosmetics[mobConfig.key] > 0,
+                string.format('No cosmetics are configured for %s:%s.', zoneConfig.zoneName, mobConfig.key))
+
+            mobConfig.chainbreaker.cosmeticZone = zoneConfig.zoneName
+            mobConfig.chainbreaker.cosmeticCamp = mobConfig.key
+            cosmeticCamps[#cosmeticCamps + 1] = mobConfig.key
             mobConfig.chainbreaker.packetName = getPacketAlias(mobConfig.chainbreaker.packetName)
         end
     end

@@ -2,21 +2,33 @@ local data = require('modules/sanctum/variant_system/variant_tables')
 
 local rewards = {}
 
-local function getCosmeticsForLevel(level)
+local function addCosmetics(available, seen, items)
+    for _, item in ipairs(items or {}) do
+        local itemId = type(item) == 'table' and (item.itemId or item.id) or item
+
+        if itemId ~= nil and not seen[itemId] then
+            available[#available + 1] = itemId
+            seen[itemId] = true
+        end
+    end
+end
+
+local function getCampCosmetics(zoneName, campKey)
+    local zoneCamps = data.cosmeticCamps[zoneName]
+
+    if zoneCamps == nil then
+        return {}
+    end
+
+    return zoneCamps[campKey] or {}
+end
+
+local function getZoneBossCosmetics(bossConfig)
     local available = {}
     local seen      = {}
 
-    for _, pool in ipairs(data.cosmeticPools) do
-        if level >= pool.minLevel and level <= pool.maxLevel then
-            for _, item in ipairs(pool.items) do
-                local itemId = type(item) == 'table' and (item.itemId or item.id) or item
-
-                if itemId ~= nil and not seen[itemId] then
-                    available[#available + 1] = itemId
-                    seen[itemId] = true
-                end
-            end
-        end
+    for _, campKey in ipairs(bossConfig.cosmeticCamps or {}) do
+        addCosmetics(available, seen, getCampCosmetics(bossConfig.cosmeticZone, campKey))
     end
 
     return available
@@ -63,10 +75,6 @@ local function getExpRewardName(player)
     end
 
     return 'experience points'
-end
-
-local function getZoneBossCosmetics(bossConfig)
-    return getCosmeticsForLevel(bossConfig.cosmeticLevel or bossConfig.level or 1)
 end
 
 local function announceZoneBossPersonalReward(player, boss, state, itemId)
@@ -206,8 +214,13 @@ function rewards.awardBonusExp(mob, killer, amount, label, halveBelowEvenMatch)
 end
 
 function rewards.addCosmeticDrops(boss, chainConfig)
-    boss:addListener('ITEM_DROPS', 'SANCTUM_VARIANT_COSMETICS', function(mobArg, loot)
-        local available = getCosmeticsForLevel(mobArg:getMainLvl())
+    boss:addListener('ITEM_DROPS', 'SANCTUM_VARIANT_COSMETICS', function(_, loot)
+        local available = {}
+
+        addCosmetics(
+            available,
+            {},
+            getCampCosmetics(chainConfig.cosmeticZone, chainConfig.cosmeticCamp))
 
         if #available > 0 then
             loot:addItemFixed(available[math.randomInt(1, #available)], 1000)

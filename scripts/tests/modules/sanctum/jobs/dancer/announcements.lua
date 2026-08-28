@@ -31,7 +31,7 @@ describe('Sanctum Dancer expansion-dependent announcements', function()
             table.insert(announcements, message)
         end
 
-        local module = dofile('modules/sanctum/level_up.lua')
+        local module = dofile('modules/sanctum/new_systems/level_up.lua')
         local onLevelUp = module.overrides[1].func
         setfenv(onLevelUp, setmetatable(
         {

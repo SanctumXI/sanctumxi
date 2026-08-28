@@ -1,6 +1,7 @@
 -----------------------------------
 -- Announce new abilities/traits on level up
--- Generated from abilities.sql and traits.sql
+-- Generated from the active ability/trait SQL and Sanctum overrides
+-- Merit-only, conditional pet, and unused expansion entries are excluded
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
@@ -15,8 +16,9 @@ local unlocks =
         {
             [5] = { 'Provoke' },
             [15] = { 'Berserk' },
-            [25] = { 'Defender', 'Retaliation' },
+            [25] = { 'Defender' },
             [35] = { 'Warcry' },
+            [40] = { 'Retaliation' },
             [45] = { 'Aggressor' },
         },
 
@@ -44,6 +46,7 @@ local unlocks =
             [35] = { 'Chakra' },
             [41] = { 'Chi Blast' },
             [45] = { 'Counterstance' },
+            [60] = { 'Double Palm Shield' },
             [65] = { 'Footwork' },
         },
 
@@ -58,12 +61,11 @@ local unlocks =
             [31] = { 'Martial Arts III' },
             [35] = { 'Max HP Boost III' },
             [40] = { 'Subtle Blow III' },
-            [45] = { 'Max HP Boost IV' },
+            [45] = { 'Max HP Boost IV', 'Tactical Guard' },
             [46] = { 'Martial Arts IV' },
             [50] = { 'Counter II' },
             [51] = { 'Kick Attacks' },
             [55] = { 'Max HP Boost V' },
-            [60] = { 'Tactical Guard' },
             [61] = { 'Martial Arts V' },
             [65] = { 'Max HP Boost VI', 'Subtle Blow IV' },
             [71] = { 'Kick Attacks II' },
@@ -101,6 +103,9 @@ local unlocks =
         abilities =
         {
             [15] = { 'Elemental Seal' },
+            [45] = { 'Enmity Douse' },
+            [60] = { 'Mana Wall' },
+            [70] = { 'Manawell' },
         },
 
         traits =
@@ -110,12 +115,12 @@ local unlocks =
             [20] = { 'Conserve MP' },
             [30] = { 'Magic Atk. Bonus II', 'Clear Mind II' },
             [45] = { 'Clear Mind III', 'Mag. Burst Bonus' },
-            [50] = { 'Magic Atk. Bonus III', 'Elemental Celerity' },
+            [50] = { 'Magic Atk. Bonus III', 'Occult Acumen', 'Elemental Celerity' },
             [58] = { 'Mag. Burst Bonus II' },
             [60] = { 'Clear Mind IV', 'Elemental Celerity II' },
             [70] = { 'Magic Atk. Bonus IV', 'Elemental Celerity III' },
             [71] = { 'Mag. Burst Bonus III' },
-            [75] = { 'Clear Mind V', 'Occult Acumen' },
+            [75] = { 'Clear Mind V', 'Occult Acumen II' },
         },
     },
 
@@ -173,7 +178,7 @@ local unlocks =
             [30] = { 'Evasion Bonus II' },
             [37] = { 'Resist Gravity II' },
             [40] = { 'Dual Wield' },
-            [45] = { 'Treasure Hunter II II', 'Assassin' },
+            [45] = { 'Treasure Hunter II', 'Assassin' },
             [50] = { 'Evasion Bonus III' },
             [55] = { 'Triple Attack' },
             [66] = { 'Resist Gravity III' },
@@ -219,6 +224,7 @@ local unlocks =
             [20] = { 'Weapon Bash' },
             [30] = { 'Souleater' },
             [55] = { 'Consume Mana' },
+            [75] = { 'Nether Void' },
         },
 
         traits =
@@ -235,7 +241,7 @@ local unlocks =
             [60] = { 'Resist Paralyze III', 'Stalwart Soul II' },
             [70] = { 'Attack Bonus IV' },
             [71] = { 'Occult Acumen III' },
-            [75] = { 'Resist Paralyze IV', 'Stalwart Soul III' },
+            [75] = { 'Resist Paralyze IV', 'Occult Acumen IV', 'Stalwart Soul III' },
         },
     },
 
@@ -247,12 +253,13 @@ local unlocks =
             [12] = { 'Reward', 'Call Beast', 'Foot Kick' },
             [15] = { 'Stay', 'Big Scissors' },
             [19] = { 'Lamb Chop' },
+            [20] = { 'Leave' },
             [23] = { 'Bestial Loyalty' },
-            [25] = { 'Sic', 'Ready'},
+            [25] = { 'Sic', 'Ready' },
             [30] = { 'Tame' },
-            [35] = { 'Leave' },
             [45] = { 'Snarl' },
             [65] = { 'Feral Howl' },
+            [75] = { 'Run Wild' },
         },
 
         traits =
@@ -276,6 +283,7 @@ local unlocks =
         abilities =
         {
             [20] = { 'Pianissimo' },
+            [75] = { 'Marcato' },
         },
 
         traits =
@@ -428,11 +436,12 @@ local unlocks =
             [49] = { 'Noctoshield' },
             [50] = { 'Elemental Siphon', 'Double Slap' },
             [54] = { 'Ecliptic Howl' },
-            [55] = { 'Avatars Favor', 'Meteorite', 'Eerie Eye' },
+            [55] = { "Avatar's Favor", "Meteorite", "Eerie Eye" },
             [56] = { 'Dream Shroud' },
             [60] = { 'Fire IV', 'Stone IV', 'Water IV', 'Aero IV', 'Blizzard IV', 'Thunder IV' },
             [65] = { 'Healing Ruby II', 'Eclipse Bite', 'Nether Blast', 'Sonic Buffet' },
             [70] = { 'Flaming Crush', 'Mountain Buster', 'Spinning Dive', 'Predator Claws', 'Rush', 'Chaotic Strike' },
+            [75] = { 'Level ? Holy', 'Deconstruction', 'Chronoshift', 'Tornado II' },
         },
 
         traits =
@@ -454,6 +463,7 @@ local unlocks =
     {
         abilities =
         {
+            [10] = { 'Forbidden Seal' },
             [25] = { 'Burst Affinity' },
             [40] = { 'Chain Affinity' },
         },
@@ -512,7 +522,6 @@ local unlocks =
             [10] = { 'Retrieve' },
             [15] = { 'Repair' },
             [30] = { 'Maintenance' },
-            [60] = { 'Heady Artifice' },
         },
 
         traits =

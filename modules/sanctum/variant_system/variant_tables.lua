@@ -178,160 +178,255 @@ data.globalWeaknessPool =
     'piercing_25', 'blunt_25', 'slashing_25', 'magic_25', 'skillchain_25',
 }
 
-data.cosmeticPools =
+-- Charged items and activatable enchantments are reserved for level 60+ camps.
+data.specialEffectCosmetics =
 {
+    [xi.item.AGENT_COAT]              = true,
+    [xi.item.ARK_SABER]               = true,
+    [xi.item.ARK_SCYTHE]              = true,
+    [xi.item.ARK_SWORD]               = true,
+    [xi.item.ARK_TABAR]               = true,
+    [xi.item.ARK_TACHI]               = true,
+    [legacyCosmetics.charmWand]       = true,
+    [xi.item.CHOCOBO_BERET]           = true,
+    [xi.item.CITRULLUS_SHIRT]         = true,
+    [xi.item.DESTRIER_BERET]          = true,
+    [xi.item.DREAM_BOOTS_P1]          = true,
+    [xi.item.DREAM_HAT_P1]            = true,
+    [xi.item.DREAM_MITTENS_P1]        = true,
+    [legacyCosmetics.guideBeret]      = true,
+    [legacyCosmetics.ibushiShinai]    = true,
+    [xi.item.KORRIGAN_BERET]          = true,
+    [xi.item.KORRIGAN_MASQUE]         = true,
+    [xi.item.KORRIGAN_SUIT]           = true,
+    [xi.item.MAESTROS_BATON]          = true,
+    [legacyCosmetics.mandragoraBeret] = true,
+    [xi.item.MELOMANE_MALLET]         = true,
+    [xi.item.MOOGLE_CAP]              = true,
+    [xi.item.MOOGLE_ROD]              = true,
+    [legacyCosmetics.moogleShirt]     = true,
+    [xi.item.MOOGLE_SUIT]             = true,
+    [xi.item.NOMAD_CAP]               = true,
+    [xi.item.PACHYPODIUM_MASQUE]      = true,
+    [xi.item.REDEYES]                 = true,
+    [xi.item.SHADOW_LORD_SHIRT]       = true,
+    [legacyCosmetics.snowBunnyHat]    = true,
+    [legacyCosmetics.sproutBeret]     = true,
+    [xi.item.STARLET_JABOT]           = true,
+    [xi.item.TOWN_MOOGLE_SHIELD]      = true,
+}
+
+data.levelSixtyPlusCosmeticCamps =
+{
+    FeiYin = { hellish_weapon = true },
+    Bostaunieux_Oubliette =
     {
-        minLevel = 1,
-        maxLevel = 20,
-        items =
-        {
-            legacyCosmetics.sproutBeret,
-            legacyCosmetics.guideBeret,
-            xi.item.EGG_HELM,
-            legacyCosmetics.pumpkinHead,
-            xi.item.HORROR_HEAD,
-            xi.item.DREAM_HAT_P1,
-            legacyCosmetics.charmWand,
-            legacyCosmetics.woodenKatana,
-            xi.item.SHINAI,
-            xi.item.BATTLEDORE,
-        },
+        mousse = true,
+        haunt  = true,
     },
+    Labyrinth_of_Onzozo = { torama = true },
+    Wajaom_Woodlands    = { lesser_colibri = true },
+    Bhaflau_Thickets    = { lesser_colibri = true },
+    RuAun_Gardens =
     {
-        minLevel = 21,
-        maxLevel = 30,
-        items =
-        {
-            xi.item.REDEYES,
-            legacyCosmetics.snowBunnyHat,
-            legacyCosmetics.witchHat,
-            xi.item.DREAM_ROBE_P1,
-            xi.item.DREAM_MITTENS_P1,
-            xi.item.DREAM_BOOTS_P1,
-            xi.item.HEART_APRON,
-            xi.item.HEARTBEATER,
-            xi.item.TREAT_STAFF,
-            legacyCosmetics.trickStaff,
-        },
+        flamingo      = true,
+        groundskeeper = true,
     },
+    The_Shrine_of_RuAvitau =
     {
-        minLevel = 31,
-        maxLevel = 40,
-        items =
-        {
-            xi.item.CHOCOBO_BERET,
-            xi.item.DESTRIER_BERET,
-            legacyCosmetics.mandragoraBeret,
-            xi.item.KORRIGAN_BERET,
-            xi.item.MOOGLE_CAP,
-            xi.item.NOMAD_CAP,
-            xi.item.MOOGLE_ROD,
-            xi.item.DREAM_BELL_P1,
-            legacyCosmetics.pitchfork,
-            xi.item.HARDWOOD_KATANA,
-        },
+        aura_pot    = true,
+        aura_statue = true,
     },
+    The_Boyahda_Tree =
     {
-        minLevel = 41,
-        maxLevel = 50,
-        items =
-        {
-            legacyCosmetics.moogleShirt,
-            xi.item.MANDRAGORA_SHIRT,
-            xi.item.CITRULLUS_SHIRT,
-            xi.item.JODY_SHIRT,
-            xi.item.GIL_NABBER_SHIRT,
-            xi.item.CRUSTACEAN_SHIRT,
-            xi.item.MITHKABOB_SHIRT,
-            xi.item.JUBILEE_SHIRT,
-            xi.item.SHADOW_LORD_SHIRT,
-            xi.item.LOTUS_KATANA,
-        },
+        bark_spider    = true,
+        death_cap      = true,
+        mourioche      = true,
+        skimmer        = true,
+        bark_tarantula = true,
     },
+    Kuftal_Tunnel =
     {
-        minLevel = 51,
-        maxLevel = 60,
-        items =
-        {
-            xi.item.CHOCOBO_MASQUE,
-            xi.item.GOBLIN_MASQUE,
-            xi.item.MANDRAGORA_MASQUE,
-            xi.item.LYCOPODIUM_MASQUE,
-            xi.item.KORRIGAN_MASQUE,
-            xi.item.PACHYPODIUM_MASQUE,
-            xi.item.ADENIUM_MASQUE,
-            xi.item.KAKAI_CAP,
-            xi.item.DREAM_TROUSERS_P1,
-            legacyCosmetics.ibushiShinai,
-        },
+        sand_lizard   = true,
+        kuftal_digger = true,
+        ovinnik       = true,
     },
+    RoMaeve =
     {
-        minLevel = 61,
-        maxLevel = 70,
-        items =
-        {
-            xi.item.CHOCOBO_SUIT,
-            xi.item.GOBLIN_SUIT,
-            xi.item.MANDRAGORA_SUIT,
-            xi.item.KORRIGAN_SUIT,
-            xi.item.ADENIUM_SUIT,
-            xi.item.DINNER_JACKET,
-            xi.item.DINNER_HOSE,
-            xi.item.STARLET_JABOT,
-            xi.item.STARLET_SKIRT,
-            xi.item.AGENT_COAT,
-        },
+        low_level_weapons  = true,
+        high_level_weapons = true,
+        cursed_puppet      = true,
     },
+}
+
+data.cosmeticCamps =
+{
+    Valkurm_Dunes =
     {
-        minLevel = 71,
-        maxLevel = 80,
-        items =
-        {
-            xi.item.MOOGLE_MASQUE,
-            xi.item.GREEN_MOOGLE_MASQUE,
-            xi.item.POROGGO_FLEECE,
-            legacyCosmetics.poroggoCassock,
-            xi.item.AGENT_HOOD,
-            xi.item.AGENT_PANTS,
-            xi.item.AGENT_BOOTS,
-            xi.item.STARLET_FLOWER,
-            xi.item.STARLET_GLOVES,
-            xi.item.STARLET_BOOTS,
-        },
+        thread_leech = { legacyCosmetics.woodenKatana },
+        hill_lizard  = { xi.item.EGG_HELM },
     },
+    Qufim_Island =
     {
-        minLevel = 81,
-        maxLevel = 84,
-        items =
-        {
-            xi.item.MOOGLE_SUIT,
-            xi.item.GREEN_MOOGLE_SUIT,
-            xi.item.POROGGO_COAT,
-            xi.item.CHOCOBO_SHIELD,
-            xi.item.MOOGLE_GUARD,
-            xi.item.TOWN_MOOGLE_SHIELD,
-            xi.item.JINGLY_ROD,
-            xi.item.MAESTROS_BATON,
-            xi.item.MELOMANE_MALLET,
-            xi.item.MALICE_MASHER,
-        },
+        greater_pugil = { xi.item.DREAM_TROUSERS_P1 },
+        land_worm     = { xi.item.DREAM_BELL_P1 },
+        clipper       = { xi.item.DREAM_ROBE_P1 },
     },
+    Korroloka_Tunnel =
     {
-        minLevel = 85,
-        maxLevel = 255,
-        items =
-        {
-            xi.item.WYRMKING_MASQUE,
-            xi.item.WYRMKING_SUIT,
-            xi.item.BEHEMOTH_MASQUE,
-            xi.item.BEHEMOTH_SUIT,
-            xi.item.BOTULUS_SUIT,
-            xi.item.ARK_SABER,
-            xi.item.ARK_SWORD,
-            xi.item.ARK_SCYTHE,
-            xi.item.ARK_TABAR,
-            xi.item.ARK_TACHI,
-        },
+        clipper = { xi.item.CRUSTACEAN_SHIRT },
+        combat  = { xi.item.HARDWOOD_KATANA },
+    },
+    Gusgen_Mines =
+    {
+        bandersnatch = { xi.item.HORROR_HEAD },
+        myconid      = { legacyCosmetics.witchHat },
+    },
+    Batallia_Downs =
+    {
+        may_fly = { xi.item.STARLET_FLOWER },
+        ba      = { xi.item.STARLET_BOOTS },
+    },
+    Jugner_Forest =
+    {
+        stag_beetle    = { xi.item.BATTLEDORE },
+        jugner_funguar = { xi.item.MANDRAGORA_SHIRT },
+    },
+    Carpenters_Landing =
+    {
+        battrap  = { xi.item.ADENIUM_MASQUE },
+        birdtrap = { xi.item.ADENIUM_SUIT },
+    },
+    Rolanberry_Fields =
+    {
+        berry_grub = { xi.item.MANDRAGORA_SUIT },
+        death_wasp = { legacyCosmetics.pumpkinHead },
+    },
+    Pashhow_Marshlands =
+    {
+        gadfly        = { xi.item.POROGGO_FLEECE },
+        marsh_funguar = { legacyCosmetics.poroggoCassock },
+    },
+    Buburimu_Peninsula =
+    {
+        bull_dhalmel = { xi.item.CHOCOBO_SHIELD },
+        zu           = { xi.item.CHOCOBO_MASQUE },
+    },
+    Maze_of_Shakhrami =
+    {
+        maze_maker = { xi.item.SHINAI },
+        abyss_worm = { legacyCosmetics.pitchfork },
+    },
+    Ordelles_Caves =
+    {
+        dung_beetle    = { xi.item.BEHEMOTH_MASQUE },
+        goliath_beetle = { xi.item.BEHEMOTH_SUIT },
+    },
+    Attohwa_Chasm =
+    {
+        antlion_family = { xi.item.BOTULUS_SUIT },
+        flesh_eater    = { xi.item.MITHKABOB_SHIRT },
+    },
+    Castle_Oztroja =
+    {
+        yagudo_family = { xi.item.MOOGLE_MASQUE },
+        cutter        = { xi.item.MOOGLE_GUARD },
+    },
+    Garlaige_Citadel =
+    {
+        funnel_bats = { xi.item.GREEN_MOOGLE_MASQUE },
+        oil_spill   = { xi.item.STARLET_GLOVES },
+    },
+    Meriphataud_Mountains =
+    {
+        wandering_sapling = { xi.item.MANDRAGORA_MASQUE },
+        raptor             = { xi.item.JODY_SHIRT },
+        coeurl             = { xi.item.LYCOPODIUM_MASQUE },
+    },
+    Sauromugue_Champaign =
+    {
+        goblin_family    = { xi.item.GOBLIN_MASQUE },
+        sabertooth_tiger = { xi.item.KAKAI_CAP },
+    },
+    The_Boyahda_Tree =
+    {
+        bark_spider    = { xi.item.KORRIGAN_BERET, xi.item.KORRIGAN_SUIT },
+        death_cap      = { legacyCosmetics.mandragoraBeret, xi.item.PACHYPODIUM_MASQUE },
+        mourioche      = { legacyCosmetics.snowBunnyHat },
+        skimmer        = { legacyCosmetics.sproutBeret },
+        bark_tarantula = { xi.item.KORRIGAN_MASQUE },
+    },
+    Kuftal_Tunnel =
+    {
+        sand_lizard   = { xi.item.DESTRIER_BERET, xi.item.CHOCOBO_BERET },
+        kuftal_digger = { xi.item.MOOGLE_ROD },
+        ovinnik       = { xi.item.MELOMANE_MALLET, xi.item.MAESTROS_BATON },
+    },
+    Eastern_Altepa_Desert =
+    {
+        giant_spider   = { xi.item.HEART_APRON },
+        sand_beetle    = { xi.item.HEARTBEATER },
+        flesh_eater    = { xi.item.TREAT_STAFF },
+        desert_dhalmel = { xi.item.CHOCOBO_SUIT },
+    },
+    Western_Altepa_Desert =
+    {
+        desert_worm     = { legacyCosmetics.trickStaff },
+        desert_dhalmel  = { xi.item.DINNER_JACKET },
+        desert_beetle   = { xi.item.AGENT_BOOTS },
+        tulwar_scorpion = { xi.item.LOTUS_KATANA },
+    },
+    FeiYin =
+    {
+        underworld_bats = { xi.item.JINGLY_ROD },
+        camazotz        = { xi.item.AGENT_HOOD },
+        droma           = { xi.item.STARLET_SKIRT },
+        specter         = { xi.item.MALICE_MASHER },
+        killing_weapon  = { xi.item.DINNER_HOSE },
+        hellish_weapon  = { xi.item.ARK_TABAR, xi.item.ARK_SCYTHE },
+    },
+    Bostaunieux_Oubliette =
+    {
+        funnel_bats = { xi.item.GREEN_MOOGLE_SUIT },
+        werebat     = { xi.item.POROGGO_COAT },
+        mousse      = { xi.item.MOOGLE_SUIT },
+        haunt       = { xi.item.SHADOW_LORD_SHIRT, xi.item.REDEYES },
+    },
+    Labyrinth_of_Onzozo =
+    {
+        cockatrice   = { xi.item.WYRMKING_MASQUE },
+        mushussu     = { xi.item.WYRMKING_SUIT },
+        flying_manta = { xi.item.GOBLIN_SUIT },
+        torama       = { xi.item.MOOGLE_CAP, xi.item.NOMAD_CAP },
+    },
+    Wajaom_Woodlands =
+    {
+        lesser_colibri = { legacyCosmetics.moogleShirt, legacyCosmetics.guideBeret },
+    },
+    Bhaflau_Thickets =
+    {
+        lesser_colibri = { xi.item.CITRULLUS_SHIRT },
+    },
+    RuAun_Gardens =
+    {
+        flamingo      = { xi.item.DREAM_MITTENS_P1, xi.item.DREAM_BOOTS_P1 },
+        groundskeeper = { xi.item.STARLET_JABOT, xi.item.DREAM_HAT_P1 },
+    },
+    The_Shrine_of_RuAvitau =
+    {
+        aura_pot    = { xi.item.AGENT_COAT, xi.item.AGENT_PANTS },
+        aura_statue = { xi.item.TOWN_MOOGLE_SHIELD },
+    },
+    Fort_Ghelsba =
+    {
+        orcish_infantry     = { xi.item.GIL_NABBER_SHIRT },
+        orcish_flamethrower = { xi.item.JUBILEE_SHIRT },
+    },
+    RoMaeve =
+    {
+        low_level_weapons  = { xi.item.ARK_SABER, legacyCosmetics.charmWand },
+        high_level_weapons = { xi.item.ARK_SWORD },
+        cursed_puppet      = { xi.item.ARK_TACHI, legacyCosmetics.ibushiShinai },
     },
 }
 

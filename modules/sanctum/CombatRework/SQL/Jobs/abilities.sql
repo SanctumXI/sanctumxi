@@ -83,7 +83,7 @@ INSERT INTO `abilities` VALUES (343,'bolster',21,1,1,1800,0,0,0,303,2000,0,6,0,0
 INSERT INTO `abilities` VALUES (387,'bestial_loyalty',9,23,1,1200,94,100,0,83,2000,0,6,0,0,0,1,0,900,0,NULL);
 INSERT INTO `abilities` VALUES (388,'cascade',4,25,1,120,12,100,0,336,2000,0,6,0,0,0,0,0,0,0,'ROV');
 INSERT INTO `abilities` VALUES (389,'consume_mana',8,55,1,60,95,0,0,337,2000,0,6,0,0,0,1,1300,0,0,NULL);
-INSERT INTO `abilities` VALUES (394,'majesty',7,15,1,180,150,100,0,338,2000,0,6,0,0,0,0,340,768,0,'ROV');
+INSERT INTO `abilities` VALUES (394,'majesty',7,15,1,180,150,100,0,338,2000,0,6,0,0,0,0,340,768,0,NULL);
 INSERT INTO `abilities` VALUES (672,'foot_kick',9,12,257,1,102,0,0,0,2000,0,6,3,0,0,1,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (689,'lamb_chop',9,19,257,1,102,0,0,0,2000,0,6,3,0,0,1,60,0,0,NULL);
 INSERT INTO `abilities` VALUES (695,'big_scissors',9,15,257,1,102,0,0,0,2000,0,6,3,0,0,1,60,0,0,NULL);

@@ -144,10 +144,10 @@ local definitions =
             look = 1045,
             position =
             {
-                x        = 350.637,
-                y        = -9.071,
-                z        = 88.798,
-                rotation = 0,
+                x        = 305.566,
+                y        = -7.565,
+                z        = 184.933,
+                rotation = 46,
             },
         },
 

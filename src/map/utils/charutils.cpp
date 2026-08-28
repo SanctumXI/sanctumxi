@@ -5953,17 +5953,17 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
         switch (membersInZone)
         {
             case 1:
-                return 1.00;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_1");
             case 2:
-                return 0.85;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_2");
             case 3:
-                return 0.75;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_3");
             case 4:
-                return 0.70;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_4");
             case 5:
-                return 0.65;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_5");
             case 6:
-                return 0.60;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_6");
             default:
                 return 2.5 / membersInZone;
         }
@@ -5973,17 +5973,17 @@ double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
         switch (membersInZone)
         {
             case 1:
-                return 1.00;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_1");
             case 2:
-                return 0.85;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_2");
             case 3:
-                return 0.75;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_3");
             case 4:
-                return 0.70;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_4");
             case 5:
-                return 0.65;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_5");
             case 6:
-                return 0.60;
+                return settings::get<double>("sanctum.EXP_PARTY_SHARE_6");
             default:
                 return 2.5 / membersInZone;
         }
@@ -6010,13 +6010,13 @@ static float GetChainDifficultyModifier(EMobDifficulty mobCheck)
             return 1.06f;
 
         case EMobDifficulty::Tough:
-            return 1.15f;
+            return settings::get<float>("sanctum.EXP_CHAIN_MULTIPLIER_TOUGH");
 
         case EMobDifficulty::VeryTough:
-            return 1.20f;
+            return settings::get<float>("sanctum.EXP_CHAIN_MULTIPLIER_VERY_TOUGH");
 
         case EMobDifficulty::IncrediblyTough:
-            return 1.30f;
+            return settings::get<float>("sanctum.EXP_CHAIN_MULTIPLIER_INCREDIBLY_TOUGH");
 
         default:
             return 1.00f;
