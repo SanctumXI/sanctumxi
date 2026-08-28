@@ -1,6 +1,6 @@
 # NewEquipmentStats
 
-`NewEquipmentStats` adds six server-side equipment modifiers for Sanctum. Client DAT edits only control the text shown on an item; assign the matching modifier in `item_mods` to activate its gameplay effect.
+`NewEquipmentStats` adds new server-side equipment modifiers.
 
 | Gear text | Lua/C++ modifier | ID | Server behavior |
 | --- | --- | ---: | --- |
@@ -27,49 +27,3 @@ ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
 ```
 
 The names are also available to Lua as `xi.mod.MAGIC_BURST_MP`, `xi.mod.TACTICS`, `xi.mod.BUFF_DURATION`, `xi.mod.PROC_RATE`, `xi.mod.SKILLCHAIN_TP`, and `xi.mod.RECAST_RATE`.
-
-## Buff Duration eligibility
-
-This uses a safety filter rather than a brittle whitelist, so new normal buffs work without another code edit. A status is extended only when all of these are true:
-
-- It has a positive timer and a visible icon.
-- Its `origin` resolves to the equipped player, or to a pet or trust that player owns.
-- The target is allied and is a player, pet, or trust.
-- It is not a debuff, food/item effect, synthesis support, battlefield/influence effect, aura, bust, weakness, KO, skillchain window, or Overload.
-
-Note the trade-off the filter makes: it never misses a new buff, but it extends anything detrimental that carries none of the excluded flags. Overload is the known case and is denied by name in `isEligibleBuff`. Add any future self- or pet-inflicted penalty to that same switch rather than assuming the flag filter covers it.
-
-Buffs created with the standard Lua form should pass their source explicitly:
-
-```lua
-target:addStatusEffect(xi.effect.REGEN, { power = 5, duration = 60, origin = player })
-```
-
-Bard songs now set their origin in the C++ Lua binding, and Corsair rolls already carry it. Duration is extended once when the effect is created; loading, copying, stealing, and Corsair Double-Up do not apply the bonus a second time.
-
-## Proc and recast scope
-
-`PROC_RATE` covers the declarative `ITEM_ADDEFFECT_*` framework, all scripted weapons using the shared damage/status executors, and all ten direct-roll Excalibur variants currently in the repository. It intentionally does not alter enspells, spikes, double/triple attack, counters, or unrelated job-trait procs.
-
-A proc chance of zero stays at zero. 115 items carry `ITEM_ADDEFFECT_TYPE` with no `ITEM_ADDEFFECT_CHANCE` row and therefore never proc today; `PROC_RATE` does not switch them on. The shared executors treat a missing `chance` as "always proc" (see `validateParameters`), and the override preserves that default before adding the bonus.
-
-## Magic Burst MP coverage
-
-Only spells that actually pay MP are refunded. Songs, ninjutsu and trusts keep something else in the `mpCost` column — ninjutsu keeps the tool's item id, so a bursted Hojo would otherwise refund a percentage of 1182. `CSpell::hasMPCost` gates this, the same way the rest of the server does.
-
-A burst is detected from the message the spell script swaps in, checked against the known burst ids plus the spell's own `spell_list.magicBurstMessage` whenever that differs from its normal message. Two gaps, both harmless:
-
-- Cures (7), Paralyze (84) and elemental ninjutsu (2) reuse their normal message for the burst, so a burst on those is indistinguishable and pays nothing.
-- Aspir, Aspir II and MP Drainkiss carry `magicBurstMessage` 275, but the drain path in `absorb_spell.lua` never checks for a burst or sets that message, so 275 never appears. If that script is ever taught to set it, the column-based check will pick it up with no change here.
-
-## Recast behavior
-
-`RECAST_RATE` is applied after the existing percentage reductions and caps, so it can push a spell past the usual 50% floor; ordinary recasts can reach zero.
-
-Charge-based abilities are reduced per charge, not per use, and keep a one-second minimum per charge. Using two charges with `Recast -2` therefore takes four seconds off the total, not two. The reduced charge time is what gets stored in the recast container, so charge regeneration stays at the reduced rate for that timer even if the gear comes off afterwards.
-
-Blood Pact timers are reduced at the point their delayed recast is snapshotted.
-
-## Build note
-
-`modules/init.txt` already lists `sanctum`, so both files load without an edit. The CMake glob that picks up module `.cpp` files is not `CONFIGURE_DEPENDS` — only `init.txt` is tracked — so adding this module needs one CMake re-configure before it appears in the build.
