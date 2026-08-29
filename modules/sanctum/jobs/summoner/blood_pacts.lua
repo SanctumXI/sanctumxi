@@ -26,15 +26,25 @@ local function pactTPFactor(tp, values)
 end
 
 m:addOverride('xi.summon.avatarPhysicalMove', function(pet, target, skill, hits, acc, first, extra, tpEffect, ftp0, ftp1500, ftp3000)
-    if
-        not isPlayerAvatar(pet) or
-        tpEffect ~= xi.mobskills.physicalTpBonus.DMG_VARIES
-    then
+    if not isPlayerAvatar(pet) then
         return super(pet, target, skill, hits, acc, first, extra, tpEffect, ftp0, ftp1500, ftp3000)
     end
 
-    local info = super(pet, target, skill, hits, acc, first, extra, xi.mobskills.physicalTpBonus.NO_EFFECT, ftp0, ftp1500, ftp3000)
-    info.damage = info.damage * pactTPFactor(skill:getTP() + pet:getMod(xi.mod.TP_BONUS), { ftp0, ftp1500, ftp3000 })
+    pet:addMod(xi.mod.ACC, acc)
+
+    local baseTPMode = tpEffect
+    if tpEffect == xi.mobskills.physicalTpBonus.DMG_VARIES then
+        baseTPMode = xi.mobskills.physicalTpBonus.NO_EFFECT
+    end
+
+    local info = super(pet, target, skill, hits, acc, first, extra, baseTPMode, ftp0, ftp1500, ftp3000)
+
+    pet:delMod(xi.mod.ACC, acc)
+
+    if tpEffect == xi.mobskills.physicalTpBonus.DMG_VARIES then
+        info.damage = info.damage * pactTPFactor(skill:getTP() + pet:getMod(xi.mod.TP_BONUS), { ftp0, ftp1500, ftp3000 })
+    end
+
     return info
 end)
 
@@ -389,35 +399,45 @@ local physicalPacts =
     axe_kick         = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.BLUNT },
     barracuda_dive   = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.SLASHING },
     camisado         = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.BLUNT },
-    chaotic_strike   = { hits = 3, acc = 1, first = 9, extra = 2, damageType = xi.damageType.BLUNT, effect = 'chaotic_strike' },
+    chaotic_strike   = { hits = 3, acc = 1, first = 8.0, extra = 1.8, damageType = xi.damageType.BLUNT, effect = 'chaotic_strike' },
     claw             = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.PIERCING },
     crescent_fang    = { hits = 1, acc = 1, first = 6, extra = 0, damageType = xi.damageType.PIERCING, effect = 'crescent_fang' },
     double_punch     = { hits = 2, acc = 1, first = 6, extra = 2, damageType = xi.damageType.BLUNT },
     double_slap      = { hits = 2, acc = 1, first = 6, extra = 2, damageType = xi.damageType.HAND_TO_HAND },
-    eclipse_bite     = { hits = 3, acc = 1, first = 8, extra = 2, damageType = xi.damageType.SLASHING },
+    eclipse_bite     = { hits = 3, acc = 1, first = 7.1, extra = 1.8, damageType = xi.damageType.SLASHING },
     megalith_throw   = { hits = 1, acc = 1, first = 5.5, extra = 0, damageType = xi.damageType.SLASHING },
     moonlit_charge   = { hits = 1, acc = 1, first = 4, extra = 0, damageType = xi.damageType.BLUNT, effect = 'moonlit_charge' },
     mountain_buster  = { hits = 1, acc = 1, first = 12, extra = 0, damageType = xi.damageType.SLASHING },
     poison_nails     = { hits = 1, acc = 1, first = 2.5, extra = 0, damageType = xi.damageType.PIERCING, effect = 'poison_nails' },
-    predator_claws   = { hits = 3, acc = 1, first = 10, extra = 2, damageType = xi.damageType.SLASHING },
+    predator_claws   = { hits = 3, acc = 1, first = 9.3, extra = 1.85, damageType = xi.damageType.SLASHING },
     punch            = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.BLUNT },
     regal_scratch    = { hits = 3, acc = -5, first = 3, extra = 1, damageType = xi.damageType.SLASHING },
     rock_buster      = { hits = 1, acc = 1, first = 4, extra = 0, damageType = xi.damageType.SLASHING },
     rock_throw       = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.SLASHING },
-    roundhouse       = { hits = 1, acc = 1, first = 5.0, extra = 0, damageType = xi.damageType.BLUNT, tpReturn = true, tpEffect = xi.mobskills.physicalTpBonus.CRIT_VARIES },
-    rush             = { hits = 5, acc = 1, first = 5, extra = 2, damageType = xi.damageType.BLUNT },
+    roundhouse       = { hits = 1, acc = 1, first = 5.0, extra = 0, damageType = xi.damageType.BLUNT, tpReturn = true },
+    rush             = { hits = 5, acc = 1, first = 4.75, extra = 1.9, damageType = xi.damageType.BLUNT },
     shock_strike     = { hits = 1, acc = 1, first = 3.5, extra = 0, damageType = xi.damageType.BLUNT, effect = 'shock_strike' },
-    spinning_dive    = { hits = 1, acc = 1, first = 12, extra = 0, damageType = xi.damageType.BLUNT },
+    spinning_dive    = { hits = 1, acc = 1, first = 10.9, extra = 0, damageType = xi.damageType.BLUNT },
     tail_whip        = { hits = 1, acc = 1, first = 5, extra = 0, damageType = xi.damageType.PIERCING, effect = 'tail_whip' },
-    welt             = { hits = 1, acc = 1, first = 3.0, extra = 0, damageType = xi.damageType.SLASHING, tpReturn = true, tpEffect = xi.mobskills.physicalTpBonus.CRIT_VARIES },
+    welt             = { hits = 1, acc = 1, first = 3.0, extra = 0, damageType = xi.damageType.SLASHING, tpReturn = true },
 }
 
 for name, params in pairs(physicalPacts) do
     m:addOverride('xi.actions.abilities.pets.' .. name .. '.onPetAbility', function(target, pet, skill, master, action)
         xi.job_utils.summoner.onUseBloodPact(target, skill, master, action)
 
-        local tpEffect = params.tpEffect or xi.mobskills.physicalTpBonus.NO_EFFECT
-        local info = xi.summon.avatarPhysicalMove(pet, target, skill, params.hits, params.acc, params.first, params.extra, tpEffect, 1, 2, 3)
+        local info = xi.summon.avatarPhysicalMove(
+            pet,
+            target,
+            skill,
+            params.hits,
+            params.acc,
+            params.first,
+            params.extra,
+            xi.mobskills.physicalTpBonus.DMG_VARIES,
+            0.85,
+            1.00,
+            1.15)
         local damage = xi.summon.avatarFinalAdjustments(info, pet, skill, target, xi.attackType.PHYSICAL, params.damageType, params.hits)
 
         if params.tpReturn and damage ~= 0 and info.hitslanded > 0 then
@@ -446,7 +466,18 @@ end
 local function useHybridPact(target, pet, petskill, summoner, action, hits, first, extra)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 
-    local physicalDamage = xi.summon.avatarPhysicalMove(pet, target, petskill, hits, 1, first, extra, xi.mobskills.magicalTpBonus.NO_EFFECT, 1, 2, 3)
+    local physicalDamage = xi.summon.avatarPhysicalMove(
+        pet,
+        target,
+        petskill,
+        hits,
+        1,
+        first,
+        extra,
+        xi.mobskills.physicalTpBonus.DMG_VARIES,
+        0.85,
+        1.00,
+        1.15)
     local magicDamage    = 0
 
     local damage = xi.summon.avatarFinalAdjustments(physicalDamage, pet, petskill, target, xi.attackType.PHYSICAL, xi.damageType.BLUNT, hits)
@@ -509,7 +540,7 @@ m:addOverride('xi.actions.abilities.pets.burning_strike.onPetAbility', function(
 end)
 
 m:addOverride('xi.actions.abilities.pets.flaming_crush.onPetAbility', function(target, pet, skill, master, action)
-    return useHybridPact(target, pet, skill, master, action, 2, 6, 1)
+    return useHybridPact(target, pet, skill, master, action, 2, 5.6, 0.93)
 end)
 
 m:addOverride('xi.actions.abilities.pets.meteorite.onPetAbility', function(target, pet, skill, master, action)
@@ -518,7 +549,7 @@ m:addOverride('xi.actions.abilities.pets.meteorite.onPetAbility', function(targe
     local dINT = pet:getStat(xi.mod.INT) - target:getStat(xi.mod.INT)
     local params =
     {
-        baseDamage = math.max(0, 500 + 1.5 * dINT + skill:getTP() / 20),
+        baseDamage = math.max(0, 740 + 1.5 * dINT + skill:getTP() / 3),
         element = xi.element.LIGHT,
         attackType = xi.attackType.MAGICAL,
         damageType = xi.damageType.LIGHT,
@@ -535,11 +566,47 @@ m:addOverride('xi.actions.abilities.pets.meteorite.onPetAbility', function(targe
     return info.damage
 end)
 
+m:addOverride('xi.actions.abilities.pets.level_X_holy.onPetAbility', function(target, pet, skill, master, action)
+    xi.job_utils.summoner.onUseBloodPact(target, skill, master, action)
+
+    local primaryTargetID = action:getPrimaryTargetID()
+    if primaryTargetID == target:getID() then
+        action:setAnimation(primaryTargetID, 164 + math.randomInt(0, 5))
+    else
+        action:setAnimation(target:getID(), action:getAnimation(primaryTargetID))
+    end
+
+    local roll       = action:getAnimation(target:getID()) - 163
+    local multiplier = target:getMainLvl() % roll == 0 and roll or 1
+    local params =
+    {
+        baseDamage = math.floor(pet:getMainLvl() * 20 / 3),
+        fTP = { multiplier, multiplier, multiplier },
+        element = xi.element.LIGHT,
+        attackType = xi.attackType.MAGICAL,
+        damageType = xi.damageType.LIGHT,
+        shadowBehavior = xi.mobskills.shadowBehavior.NUMSHADOWS_1,
+        dStatMultiplier = 1.5,
+        dStatAttackerMod = xi.mod.MND,
+        dStatDefenderMod = xi.mod.MND,
+        canMagicBurst = true,
+        primaryMessage = xi.msg.basic.USES_JA_TAKE_DAMAGE,
+    }
+
+    local info = xi.mobskills.mobMagicalMove(pet, target, skill, action, params)
+    if xi.mobskills.processDamage(pet, target, skill, action, info) then
+        target:takeDamage(info.damage, pet, info.attackType, info.damageType)
+    end
+
+    return info.damage
+end)
+
 local magicalPacts =
 {
     fire_iv      = { fTP = { 3.6250, 5.3125, 6.1250 }, element = xi.element.FIRE, damageType = xi.damageType.FIRE, shadows = xi.mobskills.shadowBehavior.IGNORE_SHADOWS },
+    nether_blast = { fTP = { 8.5, 10.0, 12.0 }, element = xi.element.DARK, attackType = xi.attackType.BREATH, damageType = xi.damageType.DARK, shadows = xi.mobskills.shadowBehavior.NUMSHADOWS_1 },
     sonic_buffet = { fTP = { 2.0, 3.0, 4.0 }, element = xi.element.WIND, damageType = xi.damageType.WIND, shadows = xi.mobskills.shadowBehavior.NUMSHADOWS_1, dispel = true },
-    tornado_ii   = { fTP = { 6.0000, 7.6875, 8.5000 }, element = xi.element.WIND, damageType = xi.damageType.WIND, shadows = xi.mobskills.shadowBehavior.IGNORE_SHADOWS },
+    tornado_ii   = { fTP = { 8.1, 10.4, 11.5 }, element = xi.element.WIND, damageType = xi.damageType.WIND, shadows = xi.mobskills.shadowBehavior.IGNORE_SHADOWS },
 }
 
 for name, data in pairs(magicalPacts) do
@@ -552,7 +619,7 @@ for name, data in pairs(magicalPacts) do
         params.fTP             = data.fTP
         params.int_wSC         = 0.30
         params.element         = data.element
-        params.attackType      = xi.attackType.MAGICAL
+        params.attackType      = data.attackType or xi.attackType.MAGICAL
         params.damageType      = data.damageType
         params.shadowBehavior  = data.shadows
         params.dStatMultiplier = 1.5
