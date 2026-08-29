@@ -5192,7 +5192,7 @@ int32 HandleStoneskin(CBattleEntity* PDefender, int32 damage)
 auto HandleSevereDamage(CBattleEntity* PDefender, int32 damage, bool isPhysical) -> int32
 {
     damage = HandleSevereDamageEffect(PDefender, EFFECT_MIGAWARI, damage, true);
-    // TODO: Earthen Armor effect
+    damage = HandleSevereDamageEffect(PDefender, EFFECT_EARTHEN_ARMOR, damage, false);
     // TODO: Sentinel's Scherzo effect
 
     if (isPhysical && PDefender->objtype == TYPE_PET && PDefender->getMod(Mod::AUTO_SCHURZEN) != 0 && damage >= PDefender->health.hp &&
@@ -5257,9 +5257,8 @@ auto HandleSevereDamageEffect(CBattleEntity* PDefender, EFFECT effect, int32 dam
         // Severe Damage is when the Attack's Damage Exceeds a Certain Threshold
         if (damage > damageThreshold)
         {
-            uint16 severeReduction = PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower();
-            severeReduction        = std::clamp((100 - severeReduction), 0, 100) / 100;
-            damage                 = damage * severeReduction;
+            const auto severeReduction = std::clamp<int32>(100 - PDefender->StatusEffectContainer->GetStatusEffect(effect)->GetSubPower(), 0, 100);
+            damage                     = static_cast<int32>(static_cast<int64>(damage) * severeReduction / 100);
 
             if (removeEffect)
             {
