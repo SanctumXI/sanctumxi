@@ -127,4 +127,50 @@ describe('Sanctum Variant cosmetic camps', function()
         assert(drops[1] == xi.item.EGG_HELM)
         assert(drops[2] == xi.item.EGG_HELM)
     end)
+
+    it('rolls Sanctum Ring personal drops from Zone Boss level', function()
+        local rewards = require('modules/sanctum/variant_system/variant_rewards')
+        local player = {}
+        local boss = {}
+
+        function player:hasItem(itemId)
+            assert(itemId == xi.item.CALIBER_RING)
+            return false
+        end
+
+        function boss:getMainLvl()
+            return 80
+        end
+
+        stub('math.randomInt', function(minimum, maximum)
+            assert(minimum == 1)
+            assert(maximum == 800)
+            return 80
+        end)
+
+        assert(rewards.selectSanctumRingPersonalDrop(player, boss) == xi.item.CALIBER_RING)
+    end)
+
+    it('uses Dragon Chronicles as the owned-ring fallback', function()
+        local rewards = require('modules/sanctum/variant_system/variant_rewards')
+        local player = {}
+        local boss = {}
+
+        function player:hasItem(itemId)
+            assert(itemId == xi.item.CALIBER_RING)
+            return true
+        end
+
+        function boss:getMainLvl()
+            error('An owned Sanctum Ring must skip the ring roll.')
+        end
+
+        stub('math.randomInt', function(minimum, maximum)
+            assert(minimum == 1)
+            assert(maximum == 100)
+            return 75
+        end)
+
+        assert(rewards.selectSanctumRingPersonalDrop(player, boss) == xi.item.DRAGON_CHRONICLES)
+    end)
 end)

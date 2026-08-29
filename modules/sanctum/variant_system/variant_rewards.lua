@@ -1,6 +1,10 @@
 local data = require('modules/sanctum/variant_system/variant_tables')
 
 local rewards = {}
+local sanctumRingItem = xi.item.CALIBER_RING
+local sanctumRingName = 'Sanctum Ring'
+local sanctumRingOwnedScrollChance =
+    data.settings.zoneBossSanctumRingOwnedScrollChance or 75
 
 local function addCosmetics(available, seen, items)
     for _, item in ipairs(items or {}) do
@@ -35,6 +39,10 @@ local function getZoneBossCosmetics(bossConfig)
 end
 
 local function getItemName(itemId)
+    if itemId == sanctumRingItem then
+        return sanctumRingName
+    end
+
     local item = GetItemByID(itemId)
 
     if item == nil then
@@ -80,6 +88,25 @@ end
 local function announceZoneBossPersonalReward(player, boss, state, itemId)
     local obtainsMessage = getZoneText(player, 'PLAYER_OBTAINS_ITEM')
 
+    if itemId == sanctumRingItem then
+        for participantId, participant in pairs(state.participants) do
+            local audience = GetPlayerByID(participantId)
+
+            if
+                participant.points >= 1 and
+                audience ~= nil and
+                audience:isPC() and
+                audience:getZoneID() == boss:getZoneID()
+            then
+                audience:printToPlayer(
+                    string.format('%s obtains a %s.', player:getName(), sanctumRingName),
+                    xi.msg.channel.SYSTEM_3)
+            end
+        end
+
+        return
+    end
+
     if obtainsMessage == nil then
         local obtainedMessage = getZoneText(player, 'ITEM_OBTAINED')
 
@@ -108,6 +135,32 @@ local function announceZoneBossPersonalReward(player, boss, state, itemId)
     end
 end
 
+local function giveZoneBossPersonalItem(player, boss, state, itemId)
+    if itemId == nil then
+        return false
+    end
+
+    if player:addItem(itemId) == nil then
+        local messageId = getZoneText(player, 'ITEM_CANNOT_BE_OBTAINED')
+
+        if messageId ~= nil and itemId ~= sanctumRingItem then
+            player:messageSpecial(messageId, itemId)
+        else
+            player:printToPlayer(
+                string.format(
+                    'Your Zone Boss reward (%s) could not be delivered because your inventory is full.',
+                    getItemName(itemId)),
+                xi.msg.channel.SYSTEM_3)
+        end
+
+        return false
+    end
+
+    announceZoneBossPersonalReward(player, boss, state, itemId)
+
+    return true
+end
+
 local function giveZoneBossPersonalReward(player, boss, state)
     local bossConfig = state.config
     local unowned = {}
@@ -129,25 +182,23 @@ local function giveZoneBossPersonalReward(player, boss, state)
         return false
     end
 
-    if player:addItem(itemId) == nil then
-        local messageId = getZoneText(player, 'ITEM_CANNOT_BE_OBTAINED')
+    return giveZoneBossPersonalItem(player, boss, state, itemId)
+end
 
-        if messageId ~= nil then
-            player:messageSpecial(messageId, itemId)
-        else
-            player:printToPlayer(
-                string.format(
-                    'Your Zone Boss reward (%s) could not be delivered because your inventory is full.',
-                    getItemName(itemId)),
-                xi.msg.channel.SYSTEM_3)
+function rewards.selectSanctumRingPersonalDrop(player, boss)
+    if player:hasItem(sanctumRingItem) then
+        if math.randomInt(1, 100) <= sanctumRingOwnedScrollChance then
+            return xi.item.DRAGON_CHRONICLES
         end
 
-        return false
+        return nil
     end
 
-    announceZoneBossPersonalReward(player, boss, state, itemId)
+    if math.randomInt(1, 800) <= math.min(800, boss:getMainLvl()) then
+        return sanctumRingItem
+    end
 
-    return true
+    return nil
 end
 
 function rewards.getRewardOwner(killer)
@@ -285,6 +336,11 @@ function rewards.awardZoneBossRewards(boss, state)
                         xi.msg.channel.SYSTEM_3)
                 end
 
+                giveZoneBossPersonalItem(
+                    player,
+                    boss,
+                    state,
+                    rewards.selectSanctumRingPersonalDrop(player, boss))
                 giveZoneBossPersonalReward(player, boss, state)
             end
         end

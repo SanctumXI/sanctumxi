@@ -5284,7 +5284,7 @@ INSERT INTO `npc_list` VALUES (16999096,'Camp_Remnants','Camp Remnants',0,0.000,
 -- Ilrusi Atoll (Zone 55)
 -- -----------------------------------------------------------
 INSERT INTO `npc_list` VALUES (17002653,'NPC[9d]','',0,0.000,0.000,0.000,0,50,50,0,0,0,2,3,0x0000320000000000000000000000000000000000,0,'TOAU',1);
-INSERT INTO `npc_list` VALUES (17002654,'Ancient_Lockbox','Ancient Lockbox',85,414.000,-9.000,59.000,7,50,50,0,8,0,2,3715,0x0000C00300000000000000000000000000000000,0,'TOAU',1);
+INSERT INTO `npc_list` VALUES (17002654,'Ancient_Lockbox','Ancient Lockbox',85,414.000,-9.000,59.000,7,50,50,0,8,0,2,1667,0x0000C00300000000000000000000000000000000,0,'TOAU',1);
 -- golden slavage alternative spawn 380,-7.756,61.999
 -- Assault lamia 13 pos 63 -3.927 -144
 -- extermination spawn 294 -3.609 132 rot 192

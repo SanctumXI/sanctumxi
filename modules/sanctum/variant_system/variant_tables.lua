@@ -45,6 +45,7 @@ data.settings =
     zoneBossSpawnDelay      = 5000,
     zoneBossBuffCount       = 5,
     zoneBossActionPoints    = 1,
+    zoneBossSanctumRingOwnedScrollChance = 75,
 }
 
 data.buffCatalog =

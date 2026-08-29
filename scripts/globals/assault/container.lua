@@ -380,11 +380,13 @@ end
 -----------------------------------
 
 xi.assault.onInstanceComplete = function(instance, posX, posZ)
-    local chars = instance:getChars()
-    local ID    = zones[instance:getZone():getID()]
+    local chars   = instance:getChars()
+    local ID      = zones[instance:getZone():getID()]
+    local lockbox = GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance)
 
     GetNPCByID(ID.npc.RUNE_OF_RELEASE, instance):setStatus(xi.status.NORMAL)
-    GetNPCByID(ID.npc.ANCIENT_LOCKBOX, instance):setStatus(xi.status.NORMAL)
+    lockbox:setStatus(xi.status.NORMAL)
+    lockbox:setUntargetable(false)
 
     for _, entity in pairs(chars) do
         entity:messageSpecial(ID.text.RUNE_UNLOCKED_POS, posX, posZ)
