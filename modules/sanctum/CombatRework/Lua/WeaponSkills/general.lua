@@ -1,6 +1,12 @@
 -----------------------------------
 -- Sanctum general weapon skill adjustments
 -----------------------------------
+-- The tables here run inside doPhysicalWeaponskill and rewrite params by ID, so they
+-- win over the per-weapon files. Change weapon skills here, not in polearm.lua etc.
+--
+-- ignoredDefense is capped at 0.5. Higher and the weapon skill stops caring what it
+-- is hitting, which lets one weapon skill carry a job on high defense targets.
+-----------------------------------
 require('modules/module_utils')
 require('scripts/globals/weaponskills')
 -----------------------------------
@@ -45,7 +51,7 @@ local physicalAdjustments =
 
     [xi.weaponskill.ONE_INCH_PUNCH] = function(params)
         replaceWsc(params, { str_wsc = 0.2 })
-        params.ignoredDefense = { 0.25, 0.5, 0.75 }
+        params.ignoredDefense = { 0.2, 0.35, 0.5 } -- capped, see header
     end,
 
     [xi.weaponskill.EXPLODING_PALM] = function(params)
@@ -253,7 +259,7 @@ local physicalAdjustments =
 
     [xi.weaponskill.WHEELING_THRUST] = function(params)
         params.ftpMod          = { 1.5, 1.75, 2.0 }
-        params.ignoredDefense = { 0.2, 0.4, 0.6 }
+        params.ignoredDefense = { 0.2, 0.35, 0.5 } -- capped, see header
     end,
 
     [xi.weaponskill.IMPULSE_DRIVE] = function(params)
@@ -419,7 +425,7 @@ local rangedAdjustments =
     [xi.weaponskill.PIERCING_ARROW] = function(params)
         replaceWsc(params, { str_wsc = 0.2 })
         params.ftpMod          = { 0.75, 1.0, 1.25 }
-        params.ignoredDefense = { 0.25, 0.5, 0.75 }
+        params.ignoredDefense = { 0.2, 0.35, 0.5 } -- capped, see header
     end,
 
     [xi.weaponskill.DULLING_ARROW] = function(params)

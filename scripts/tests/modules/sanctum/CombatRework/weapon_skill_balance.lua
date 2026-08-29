@@ -138,7 +138,7 @@ describe('Sanctum weapon skill balance adjustments', function()
 
         params = physical(xi.weaponskill.ONE_INCH_PUNCH, { str_wsc = 0.4 })
         assert(params.str_wsc == 0.2)
-        assertTriplet(params.ignoredDefense, 0.25, 0.5, 0.75)
+        assertTriplet(params.ignoredDefense, 0.2, 0.35, 0.5)
 
         params = physical(xi.weaponskill.EXPLODING_PALM, { str_wsc = 0.75, dex_wsc = 0.5 })
         assert(params.str_wsc == 0.5 and params.dex_wsc == 0.3)
@@ -328,7 +328,7 @@ describe('Sanctum weapon skill balance adjustments', function()
             {
                 id = xi.weaponskill.WHEELING_THRUST,
                 ftp = { 1.5, 1.75, 2.0 },
-                defense = { 0.2, 0.4, 0.6 },
+                defense = { 0.2, 0.35, 0.5 },
             },
             {
                 id = xi.weaponskill.IMPULSE_DRIVE,

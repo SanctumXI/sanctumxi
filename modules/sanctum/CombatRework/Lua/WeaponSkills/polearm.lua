@@ -99,9 +99,10 @@ do
     m:addOverride('xi.actions.weaponskills.impulse_drive.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 2
-        params.ftpMod = { 1.75, 2.0, 2.25 }
-        params.str_wsc = 0.5
-        params.ignoredDefense = { 0.25, 0.25, 0.25 }
+        -- Mirrors general.lua, which is what actually runs.
+        params.ftpMod = { 2.0, 2.5, 3.0 }
+        params.str_wsc = 0.3
+        params.dex_wsc = 0.3
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
             params.ftpMod = { 1.0, 3.0, 5.5 }
@@ -252,9 +253,10 @@ do
     m:addOverride('xi.actions.weaponskills.vorpal_thrust.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 1
-        params.ftpMod = { 1.0, 1.0, 1.0 }
+        -- Mirrors general.lua, which is what actually runs.
+        params.ftpMod = { 1.0, 1.25, 1.5 }
         params.str_wsc = 0.2 params.agi_wsc = 0.2
-        params.critVaries = { 0.3, 0.6, 0.9 }
+        params.critVaries = { 0.33, 0.66, 1.0 }
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
             params.str_wsc = 0.5 params.agi_wsc = 0.5
@@ -293,10 +295,10 @@ do
     m:addOverride('xi.actions.weaponskills.wheeling_thrust.onUseWeaponSkill', function(player, target, wsID, tp, primary, action, taChar)
         local params = {}
         params.numHits = 1
-        params.ftpMod = { 1.75, 2.0, 2.25 }
+        -- Mirrors general.lua, which is what actually runs.
+        params.ftpMod = { 1.5, 1.75, 2.0 }
         params.str_wsc = 0.5
-        -- Defense ignored is 50%, 75%, 100% (50% at 100 TP is accurate, other values are guesses)
-        params.ignoredDefense = { 0.5, 0.75, 1.0 }
+        params.ignoredDefense = { 0.2, 0.35, 0.5 }
 
         if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
             params.str_wsc = 0.8
