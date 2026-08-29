@@ -753,7 +753,7 @@ enum EFFECT : uint16
     EFFECT_NUKE_WALL           = 806, // Custom effect for NM type mobs only. Applied by elemental magic damage sources
     EFFECT_CRITICAL_BOOST      = 807, // Sanctum Custom Effect for crit hit rate
     EFFECT_KICK_DAMAGE         = 808, // Sanctum Custom effect to boost Kick Damage
-    EFFECT_DOUBLE_PALM_SHIELD  = 809, // Sanctum Custom effect
+    EFFECT_LUCKY_CHARM         = 809, // matches xi.effect.LUCKY_CHARM
     EFFECT_RESOLVE             = 810, // Sanctum Custom effect for Palisade charges (client icon 26 at 5 stacks)
     EFFECT_INVIGORATE_REGEN    = 811, // Sanctum Custom effect for Chakra's Invigorate regen
     EFFECT_FROG_CHEER          = 813, // Sanctum Custom effect for Slippery Silas
