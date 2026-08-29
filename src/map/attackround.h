@@ -45,7 +45,7 @@ public:
     ~CAttackRound();
 
     void AddAttackSwing(PHYSICAL_ATTACK_TYPE type, PHYSICAL_ATTACK_DIRECTION direction, uint8 count); // Adds an attack swing.
-    void CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction);                    // Creates up to many attacks for a particular hand.
+    void CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction, bool rollMultiAttack = true); // Creates up to many attacks for a particular hand.
     void DeleteAttackSwing();                                                                         // Deletes the first attack in the list.
     void CreateKickAttacks();                                                                         // Creates kick attacks for the round.
     void CreateDakenAttack();                                                                         // Adds daken attacks

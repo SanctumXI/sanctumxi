@@ -436,12 +436,12 @@ local unlocks =
             [49] = { 'Noctoshield' },
             [50] = { 'Elemental Siphon', 'Double Slap' },
             [54] = { 'Ecliptic Howl' },
-            [55] = { "Avatar's Favor", "Meteorite", "Eerie Eye" },
+            [55] = { 'Avatar\'s Favor', 'Meteorite', 'Eerie Eye', 'Inferno Howl' },
             [56] = { 'Dream Shroud' },
-            [60] = { 'Fire IV', 'Stone IV', 'Water IV', 'Aero IV', 'Blizzard IV', 'Thunder IV' },
-            [65] = { 'Healing Ruby II', 'Eclipse Bite', 'Nether Blast', 'Sonic Buffet' },
+            [60] = { 'Fire IV', 'Stone IV', 'Water IV', 'Aero IV', 'Blizzard IV', 'Thunder IV', 'Crystal Blessing' },
+            [65] = { 'Healing Ruby II', 'Eclipse Bite', 'Nether Blast', 'Sonic Buffet', 'Earthen Armor' },
             [70] = { 'Flaming Crush', 'Mountain Buster', 'Spinning Dive', 'Predator Claws', 'Rush', 'Chaotic Strike' },
-            [75] = { 'Level ? Holy', 'Deconstruction', 'Chronoshift', 'Tornado II' },
+            [75] = { 'Level ? Holy', 'Tornado II' },
         },
 
         traits =

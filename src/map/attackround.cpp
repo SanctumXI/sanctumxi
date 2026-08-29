@@ -67,7 +67,9 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
             CreateAttacks(PMain, LEFTATTACK);
             if (!h2hSingleSwing)
             {
-                CreateAttacks(PMain, LEFTATTACK);
+                // Second fist swings but does not roll multi-attack again. One roll
+                // per round, same as every other weapon.
+                CreateAttacks(PMain, LEFTATTACK, false);
             }
         }
         else // Build main weapon attacks.
@@ -232,7 +234,7 @@ void CAttackRound::DeleteAttackSwing()
  *  Creates up to many attacks for a particular hand.                    *
  *                                                                       *
  ************************************************************************/
-void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction)
+void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction, bool rollMultiAttack)
 {
     if (!PWeapon)
     {
@@ -313,6 +315,13 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     quadAttack   = std::clamp<int16>(quadAttack, 0, 100);
     doubleAttack = std::clamp<int16>(doubleAttack, 0, 100);
     tripleAttack = std::clamp<int16>(tripleAttack, 0, 100);
+
+    if (!rollMultiAttack)
+    {
+        quadAttack   = 0;
+        doubleAttack = 0;
+        tripleAttack = 0;
+    }
 
     // Preference matters! The following are additional hits to the default hit that don't stack up
     // Mikage > Quad > Triple > Double > Mythic Aftermath > Occasionally Attacks > Hasso + Zanshin
